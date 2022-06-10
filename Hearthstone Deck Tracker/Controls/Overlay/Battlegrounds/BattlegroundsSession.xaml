@@ -34,15 +34,30 @@
                     MouseEnter="Panel_MouseEnter"
                     MouseLeave="Panel_MouseLeave"
                 >
-                    <StackPanel Name="BgBannedTribesSection" Background="#2E3235">
+                    <StackPanel Background="#2E3235" Visibility="{Binding BgBannedTribesSectionVisibility}">
                         <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
                             <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Banned}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                         </Border>
                         <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center" Height="64">
-                            <local:BattlegroundsTribe x:Name="BgTribe1" Tribe="PET"/>
-                            <local:BattlegroundsTribe x:Name="BgTribe2" Tribe="PET" Margin="8,0,0,0"/>
-                            <local:BattlegroundsTribe x:Name="BgTribe3" Tribe="PET" Margin="8,0,0,0"/>
-                            <local:BattlegroundsTribe x:Name="BgTribe4" Tribe="PET" Margin="8,0,0,0"/>
+                            <local:BattlegroundsTribe
+                                Tribe="{Binding BannedTribe1, FallbackValue=PET}"
+                                Visibility="{Binding BannedTribesVisibility}"
+                            />
+                            <local:BattlegroundsTribe
+                                Tribe="{Binding BannedTribe2, FallbackValue=PET}"
+                                Margin="8,0,0,0"
+                                Visibility="{Binding BannedTribesVisibility}"
+                            />
+                            <local:BattlegroundsTribe
+                                Tribe="{Binding BannedTribe3, FallbackValue=PET}"
+                                Margin="8,0,0,0"
+                                Visibility="{Binding BannedTribesVisibility}"
+                            />
+                            <local:BattlegroundsTribe
+                                Tribe="{Binding BannedTribe4, FallbackValue=PET}"
+                                Margin="8,0,0,0"
+                                Visibility="{Binding BannedTribesVisibility}"
+                            />
                             <TextBlock
                                 x:Name="BgTribeWaiting"
                                 Text="{lex:Loc Battlegrounds_Session_Text_WaitingNextGame}"
@@ -52,12 +67,12 @@
                                 TextAlignment="Center"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Visibility="Collapsed"
+                                Visibility="{Binding BannedTribesMsgVisibility, FallbackValue=Collapsed}"
                                 Margin="0 0 0 5"
                             />
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Name="BgStartCurrentMMRSection" Background="#2E3235">
+                    <StackPanel Background="#2E3235" Visibility="{Binding BgStartCurrentMMRSectionVisibility}">
                         <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgBannedTribesSection, Path=Visibility}"/>
                         <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
                             <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_MMR}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
@@ -75,7 +90,12 @@
                                     FontSize="11"
                                     HorizontalAlignment="Center"
                                 />
-                                <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BgRatingStart" Text="0" FontSize="18" HorizontalAlignment="Center" Margin="0,-5,0,8"/>
+                                <hearthstoneDeckTracker:HearthstoneTextBlock
+                                    Text="{Binding BgRatingStart, FallbackValue=0}"
+                                    FontSize="18"
+                                    HorizontalAlignment="Center"
+                                    Margin="0,-5,0,8"
+                                />
                             </StackPanel>
                             <Border Grid.Column="1" BorderBrush="#4A5256" BorderThickness="1,0,0,0">
                                 <StackPanel Orientation="Vertical">
@@ -86,13 +106,18 @@
                                         FontSize="11"
                                         HorizontalAlignment="Center"
                                     />
-                                    <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BgRatingCurrent" Text="0" FontSize="18" HorizontalAlignment="Center" Margin="0,-5,0,8"/>
+                                    <hearthstoneDeckTracker:HearthstoneTextBlock
+                                        Text="{Binding BgRatingCurrent, FallbackValue=0}"
+                                        FontSize="18"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,-5,0,8"
+                                    />
                                 </StackPanel>
                             </Border>
                         </Grid>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Name="BgLastestGamesSection">
+                <StackPanel Visibility="{Binding BgLastestGamesSectionVisibility}">
                     <StackPanel
                         Name="BgLastestGamesSectionHeader"
                         Background="#2E3235"
@@ -104,7 +129,7 @@
                         <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
                             <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Latest_Games}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                         </Border>
-                        <Grid Name="GridHeader">
+                        <Grid Visibility="{Binding GridHeaderVisibility, FallbackValue=Collapsed}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1.7*"/>
                                 <ColumnDefinition Width="1*"/>
@@ -135,7 +160,7 @@
                                 HorizontalAlignment="Center"
                             />
                         </Grid>
-                        <StackPanel Name="GamesEmptyState">
+                        <StackPanel Visibility="{Binding GamesEmptyStateVisibility, FallbackValue=Collapsed}">
                             <TextBlock
                                 Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState1}"
                                 Foreground="#FFFFFF"
@@ -158,7 +183,7 @@
                     </StackPanel>
                     <ItemsControl
                         Name="ItemsControlGames"
-                        ItemsSource="{Binding SessionGames, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
+                        ItemsSource="{Binding SessionGames}"
                     >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>

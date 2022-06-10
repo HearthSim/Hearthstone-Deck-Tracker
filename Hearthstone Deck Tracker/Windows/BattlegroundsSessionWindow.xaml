@@ -4,6 +4,7 @@
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
         xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
+        xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -31,6 +32,9 @@
         </DataTemplate>
     </controls:MetroWindow.IconTemplate>
     <Canvas Height="1080" Width="1920">
-        <battlegrounds:BattlegroundsSession x:Name="BattlegroundsSession"/>
+        <battlegrounds:BattlegroundsSession
+            x:Name="BattlegroundsSession"
+            DataContext="{Binding BattlegroundsSessionViewModelVM, RelativeSource={RelativeSource AncestorType=windows:BattlegroundsSessionWindow}}"
+        />
     </Canvas>
 </controls:MetroWindow>

@@ -116,8 +116,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(_game.CurrentGameStats != null && _game.CurrentGameStats.GameMode == Battlegrounds)
 			{
-				Core.Overlay.BattlegroundsSession.Update();
-				Core.Windows.BattlegroundsSessionWindow.Update();
+				Core.Game.BattlegroundsSessionViewModel.Update();
 			}
 
 			if(!_game.IsUsingPremade)
@@ -774,7 +773,7 @@ namespace Hearthstone_Deck_Tracker
 					else
 						Sentry.ClearBobsBuddyEvents();
 					RecordBattlegroundsGame();
-					Core.Overlay.BattlegroundsSession.OnGameEnd();
+					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 				}
 

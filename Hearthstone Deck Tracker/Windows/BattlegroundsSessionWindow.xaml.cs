@@ -2,12 +2,15 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class BattlegroundsSessionWindow
 	{
 		private bool _appIsClosing;
+
+		public BattlegroundsSessionViewModel? BattlegroundsSessionViewModelVM { get; } = Core.Game.BattlegroundsSessionViewModel;
 
 		public BattlegroundsSessionWindow()
 		{
@@ -38,31 +41,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BattlegroundsSessionWindow_OnLoaded(object sender, RoutedEventArgs e)
 		{
-			BattlegroundsSession.Update();
-			UpdateSectionsVisibilities();
+			Core.Game.BattlegroundsSessionViewModel.Update();
 			UpdateScaling();
-		}
-
-		public void OnGameStart()
-		{
-			Update();
-		}
-
-		public void Update()
-		{
-			BattlegroundsSession.Update();
-			UpdateBattlegroundsSessionLayoutHeight();
 		}
 
 		public void OnGameEnd()
 		{
 			if (Core.Game.Spectator)
 				return;
-
-			var currentRating = Core.Game.CurrentGameStats?.BattlegroundsRatingAfter;
-			BattlegroundsSession.BgRatingCurrent.Text = $"{currentRating:N0}";
-
-			BattlegroundsSession.UpdateLatestGames();
+			
 			UpdateBattlegroundsSessionLayoutHeight();
 		}
 
@@ -73,24 +60,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateBattlegroundsSessionLayoutHeight();
 		}
 
-		public void UpdateSectionsVisibilities()
-		{
-			BattlegroundsSession.BgBannedTribesSection.Visibility = Config.Instance.ShowSessionRecapMinionsBanned
-				   ? Visibility.Visible
-				   : Visibility.Collapsed;
-
-			BattlegroundsSession.BgStartCurrentMMRSection.Visibility = Config.Instance.ShowSessionRecapStartCurrentMMR
-				? Visibility.Visible
-				: Visibility.Collapsed;
-
-			BattlegroundsSession.BgLastestGamesSection.Visibility = Config.Instance.ShowSessionRecapLatestGames
-				? Visibility.Visible
-				: Visibility.Collapsed;
-
-			UpdateBattlegroundsSessionLayoutHeight();
-		}
-
-		private void UpdateBattlegroundsSessionLayoutHeight()
+		public void UpdateBattlegroundsSessionLayoutHeight()
 		{
 			var toolbarHeight = 34;
 			var scale = Config.Instance.OverlaySessionRecapScaling / 100;

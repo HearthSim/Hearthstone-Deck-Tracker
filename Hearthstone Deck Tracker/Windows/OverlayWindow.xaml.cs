@@ -23,6 +23,7 @@ using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -77,6 +78,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
+
+		public BattlegroundsSessionViewModel? BattlegroundsSessionViewModelVM { get; } = Core.Game.BattlegroundsSessionViewModel;
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
 
@@ -442,9 +445,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void ShowBattlegroundsSession()
 		{
+			Core.Game.BattlegroundsSessionViewModel.Update();
 			BattlegroundsSession.Show();
-			BattlegroundsSession.Update();
-			Core.Windows.BattlegroundsSessionWindow.OnGameStart();
 		}
 
 		internal void HideBattlegroundsSession()
@@ -452,12 +454,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (_battlegroundsSessionVisibleTemp)
 				return;
 			BattlegroundsSession.Hide();
-		}
-
-		internal void UpdateBattlegroundsSession()
-		{
-			BattlegroundsSession.UpdateSectionsVisibilities();
-			BattlegroundsSession.UpdateLatestGames();
 		}
 
 		internal void ShowLinkOpponentDeckDisplay()

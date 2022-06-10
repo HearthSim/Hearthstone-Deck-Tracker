@@ -1,27 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
-using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
 	public partial class BattlegroundsSession : INotifyPropertyChanged
 	{
-		private Lazy<BattlegroundsDb> _db = new Lazy<BattlegroundsDb>();
-		private BrushConverter _bc = new BrushConverter();
-
-		public ObservableCollection<BattlegroundsGameViewModel> SessionGames { get; set; } = new ObservableCollection<BattlegroundsGameViewModel>();
+		private BrushConverter _bc = new();
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -62,67 +49,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				SetValue(FinalBoardTooltipProperty, value);
 			}
 		}
-
-		public async void Update()
-		{
-			if (Core.Game.Spectator)
-				await Task.Delay(1500);
-
-			var bannedTribesUpdated = UpdateBannedTribes();
-			if(Core.Game.CurrentMode == Mode.GAMEPLAY && bannedTribesUpdated)
-				ShowBannedTribes();
-			else
-				HideBannedTribes();
-
-			var firstGame = UpdateLatestGames();
-
-			var rating = Core.Game.BattlegroundsRatingInfo?.Rating ?? 0;
-			var ratingStart = firstGame?.Rating ?? rating;
-			if (rating == 0)
-				rating = ratingStart;
-			BgRatingStart.Text = $"{ratingStart:N0}";
-			BgRatingCurrent.Text = $"{rating:N0}";
-		}
-
-		public bool UpdateBannedTribes()
-		{
-			var allRaces = _db.Value.Races;
-			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId) ?? allRaces;
-			var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL)
-				.OrderBy(t => BattlegroundsTribe.GetTribeName(t))
-				.ToList();
-
-			if(unavailableRaces.Count() >= 3)
-			{
-				BgTribe1.Tribe = unavailableRaces[0];
-				BgTribe2.Tribe = unavailableRaces[1];
-				BgTribe3.Tribe = unavailableRaces[2];
-				if(unavailableRaces.Count() == 4)
-				{
-					BgTribe4.Tribe = unavailableRaces[3];
-				}
-				else
-				{
-					BgBannedTribes.Children.Remove(BgTribe4);
-					BgTribe2.Margin = new Thickness(15, 0, 0, 0);
-					BgTribe3.Margin = new Thickness(15, 0, 0, 0);
-				}
-			}
-
-			return unavailableRaces.Count() >= 3;
-		}
-
-		public void OnGameEnd()
-		{
-			if (Core.Game.Spectator)
-				return;
-
-			var currentRating = Core.Game.CurrentGameStats?.BattlegroundsRatingAfter;
-			BgRatingCurrent.Text = $"{currentRating:N0}";
-
-			UpdateLatestGames();
-		}
-
+		
 		private void Panel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			CogBtnVisibility = Visibility.Visible;
@@ -161,150 +88,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			if (Visibility == Visibility.Visible || !Config.Instance.ShowSessionRecap)
 				return;
 
-			Update();
-			UpdateSectionsVisibilities();
 			Visibility = Visibility.Visible;
 		}
 
 		public void Hide()
 		{
 			Visibility = Visibility.Hidden;
-		}
-
-		public GameItem? UpdateLatestGames()
-		{
-			SessionGames.Clear();
-			var sortedGames = BattlegroundsLastGames.Instance.Games
-				.OrderBy(g => g.StartTime)
-				.ToList();
-			DeleteOldGames(sortedGames);
-
-			var sessionGames = GetSessionGames(sortedGames);
-			var firstGame = sessionGames.FirstOrDefault();
-
-			// Limit list to latest 10 items
-			if(sessionGames.Count > 10)
-				sessionGames.RemoveRange(0, sessionGames.Count - 10);
-
-			sessionGames.OrderByDescending(g => g.StartTime)
-				.ToList()
-				.ForEach(AddOrUpdateGame);
-
-			GridHeader.Visibility = sessionGames.Count > 0
-				? Visibility.Visible
-				: Visibility.Collapsed;
-
-			GamesEmptyState.Visibility = sessionGames.Count == 0
-				? Visibility.Visible
-				: Visibility.Collapsed;
-
-			return firstGame;
-		}
-
-		private List<GameItem> GetSessionGames(List<GameItem> sortedGames)
-		{
-			DateTime? sessionStartTime = null;
-			DateTime? previousGameEndTime = null;
-			int previousGameRatingAfter = 0;
-
-			foreach (var g in sortedGames)
-			{
-				if(previousGameEndTime != null)
-				{
-					var gStartTime = DateTime.Parse(g.StartTime);
-					TimeSpan ts = gStartTime - (DateTime)previousGameEndTime;
-
-					var diffMMR = g.Rating - previousGameRatingAfter;
-					// Check for MMR reset
-					var ratingReseted = g.Rating < 500 && diffMMR < -500;
-
-					if(ts.TotalHours >= 2 || ratingReseted)
-						sessionStartTime = gStartTime;
-				}
-				previousGameEndTime = DateTime.Parse(g.EndTime);
-				previousGameRatingAfter = g.RatingAfter;
-			};
-
-			var sessionGames = sessionStartTime == null
-				? sortedGames
-				: sortedGames.Where(g => DateTime.Parse(g.StartTime) >= sessionStartTime).ToList();
-
-			if (sessionGames.Count > 0)
-			{
-				var lastGame = sessionGames.LastOrDefault();
-
-				// Check for MMR reset on last game
-				var ratingResetedAfterLastGame = false;
-				if (Core.Game.BattlegroundsRatingInfo?.Rating != null)
-				{
-					var currentMMR = Core.Game.BattlegroundsRatingInfo?.Rating;
-					var sessionLastMMR = lastGame.RatingAfter;
-					ratingResetedAfterLastGame = currentMMR < 500 && currentMMR - sessionLastMMR < -500;
-				}
-
-				TimeSpan ts = DateTime.Now - DateTime.Parse(lastGame.EndTime);
-
-				if(ts.TotalHours >= 2 || ratingResetedAfterLastGame)
-					return new List<GameItem>();
-			}
-
-			return sessionGames;
-		}
-
-		private void DeleteOldGames(List<GameItem> sortedGames)
-		{
-			sortedGames.ForEach(g =>
-			{
-				TimeSpan ts = DateTime.Now - DateTime.Parse(g.StartTime);
-				if(g.StartTime != null && ts.TotalDays >= 7)
-					BattlegroundsLastGames.Instance.RemoveGame(g.StartTime);
-			});
-		}
-
-		private void AddOrUpdateGame(GameItem game)
-		{
-			var existingGame = SessionGames.FirstOrDefault(x => x?.StartTime == game.StartTime);
-			if (existingGame == null)
-			{
-				SessionGames.Add(new BattlegroundsGameViewModel(game, FinalBoardTooltip));
-			}
-			else
-			{
-				existingGame = new BattlegroundsGameViewModel(game, FinalBoardTooltip);
-			}
-		}
-
-		public void UpdateSectionsVisibilities()
-		{
-			BgBannedTribesSection.Visibility = Config.Instance.ShowSessionRecapMinionsBanned
-				? Visibility.Visible
-				: Visibility.Collapsed;
-
-			BgStartCurrentMMRSection.Visibility = Config.Instance.ShowSessionRecapStartCurrentMMR
-				? Visibility.Visible
-				: Visibility.Collapsed;
-
-			BgLastestGamesSection.Visibility = Config.Instance.ShowSessionRecapLatestGames
-				? Visibility.Visible
-				: Visibility.Collapsed;
-		}
-
-		public void ShowBannedTribes()
-		{
-			BgTribe1.Visibility = Visibility.Visible;
-			BgTribe2.Visibility = Visibility.Visible;
-			BgTribe3.Visibility = Visibility.Visible;
-			BgTribe4.Visibility = Visibility.Visible;
-			BgTribeWaiting.Visibility = Visibility.Collapsed;
-		}
-
-		public void HideBannedTribes()
-		{
-			BgTribe1.Visibility = Visibility.Collapsed;
-			BgTribe2.Visibility = Visibility.Collapsed;
-			BgTribe3.Visibility = Visibility.Collapsed;
-			BgTribe4.Visibility = Visibility.Collapsed;
-			BgTribeWaiting.Visibility = Visibility.Visible;
 		}
 	}
 }

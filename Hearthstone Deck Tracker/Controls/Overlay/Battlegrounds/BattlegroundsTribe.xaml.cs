@@ -50,7 +50,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		public static readonly DependencyProperty TribeProperty = DependencyProperty.Register("Tribe", typeof(Race), typeof(BattlegroundsTribe));
+		public static readonly DependencyProperty TribeProperty = DependencyProperty.Register(
+			"Tribe",
+			typeof(Race),
+			typeof(BattlegroundsTribe),
+			new FrameworkPropertyMetadata(Race.PET, (d, _) => ((BattlegroundsTribe)d).OnTribeChanged())
+		);
 
 		public Race Tribe
 		{
@@ -63,9 +68,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			set
 			{
 				SetValue(TribeProperty, value);
-				OnPropertyChanged();
-				OnPropertyChanged(nameof(ImageSrc));
-				OnPropertyChanged(nameof(TribeName));
+				OnTribeChanged();
 			}
 		}
 
@@ -75,6 +78,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			{
 				return GetTribeName(Tribe);
 			}
+		}
+
+		private void OnTribeChanged()
+		{
+			OnPropertyChanged(nameof(ImageSrc));
+			OnPropertyChanged(nameof(TribeName));
 		}
 	}
 }

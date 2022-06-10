@@ -29,9 +29,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 		public List<Entity> FinalBoardMinions { get; set; } = new List<Entity>();
 
-		public BattlegroundsGameViewModel(GameItem gameItem, bool finalBoardTooltip)
+		public BattlegroundsGameViewModel(GameItem gameItem)
 		{
-			FinalBoardTooltips = finalBoardTooltip;
 			StartTime = gameItem.StartTime;
 			Placement = gameItem.Placement;
 
@@ -70,9 +69,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 		public void OnMouseEnter(double finalBoardContainerActualWidth, double scale)
 		{
-			if(!FinalBoardTooltips)
-				return;
-
 			double battlegroundsSessionPanelLeft = Canvas.GetLeft(Core.Overlay.BattlegroundsSessionStackPanel);
 			bool tooltipToRight = battlegroundsSessionPanelLeft < (Core.Overlay.Width / 2);
 
@@ -89,8 +85,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 		public void OnMouseLeave()
 		{
-			if(!FinalBoardTooltips)
-				return;
 			FinalBoardVisibility = Visibility.Hidden;
 			OnPropertyChanged(nameof(FinalBoardVisibility));
 		}

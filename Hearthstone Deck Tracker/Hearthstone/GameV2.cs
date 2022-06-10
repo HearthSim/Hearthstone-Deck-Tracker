@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HearthDb.Enums;
 using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -35,6 +36,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 
+		public BattlegroundsSessionViewModel BattlegroundsSessionViewModel;
+
 		public GameV2()
 		{
 			Player = new Player(this, true);
@@ -44,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
+			BattlegroundsSessionViewModel = new BattlegroundsSessionViewModel();
 			Reset();
 			LiveDataManager.OnStreamingChecked += async streaming =>
 			{
@@ -286,6 +290,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsBoardState?.Reset();
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
+			BattlegroundsSessionViewModel?.Reset();
 
 			if(Core._game != null && Core.Overlay != null)
 			{
