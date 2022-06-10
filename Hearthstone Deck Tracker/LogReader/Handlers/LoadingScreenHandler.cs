@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						Core.Windows.BattlegroundsSessionWindow.Update();
 					}
 				}
-				else
+				else if (game.CurrentMode != Mode.GAMEPLAY)
 					Core.Overlay.BattlegroundsSession.Hide();
 
 				if(game.CurrentMode == Mode.LETTUCE_PLAY)

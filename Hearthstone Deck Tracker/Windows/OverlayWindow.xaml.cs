@@ -443,6 +443,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void ShowBattlegroundsSession()
 		{
 			BattlegroundsSession.Show();
+			BattlegroundsSession.Update();
 			Core.Windows.BattlegroundsSessionWindow.OnGameStart();
 		}
 
