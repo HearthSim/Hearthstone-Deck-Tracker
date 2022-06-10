@@ -201,14 +201,14 @@
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTileText7" Margin="-2.5 -11 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" TextAlignment="Center"/>
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTurnText7" Margin="-2 1 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" FontStretch="UltraCondensed" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
 
+                <StackPanel Name="BattlegroundsSessionStackPanel" Width="auto" Height="auto">
+                    <battlegrounds:BattlegroundsSession x:Name="BattlegroundsSession" Visibility="Collapsed" CornerRadius="5" FinalBoardTooltip="true"/>
+                </StackPanel>
                 <StackPanel Name="BgsTopBar" Visibility="Collapsed" Orientation="Horizontal" Canvas.Top="0" Canvas.Right="0">
                     <overlay:TurnCounter x:Name="TurnCounter" Margin="0,0,2,0"  Height="55" VerticalAlignment="Top" />
                     <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel"/>
                 </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
-                <StackPanel Name="BattlegroundsSessionStackPanel" Width="auto" Height="auto">
-                    <battlegrounds:BattlegroundsSession x:Name="BattlegroundsSession" Visibility="Collapsed" CornerRadius="5" FinalBoardTooltip="true"/>
-                </StackPanel>
                 <StackPanel Width="1000" Name="BgsOpponentInfoContainer" Canvas.Top="0" Canvas.Right="0">
                     <battlegrounds:BattlegroundsOpponentInfo x:Name="BgsOpponentInfo" Visibility="Collapsed"/>
                 </StackPanel>
