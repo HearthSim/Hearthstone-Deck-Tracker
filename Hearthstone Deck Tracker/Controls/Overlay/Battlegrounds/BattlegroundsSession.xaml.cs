@@ -68,13 +68,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			if (Core.Game.Spectator)
 				await Task.Delay(1500);
 
-			if (Core.Game.CurrentMode == Mode.BACON || Core.Game.CurrentMode == Mode.INVALID)
-				HideBannedTribes();
-			else
-			{
-				UpdateBannedTribes();
+			var bannedTribesUpdated = UpdateBannedTribes();
+			if(bannedTribesUpdated)
 				ShowBannedTribes();
-			}
+			else
+				HideBannedTribes();
 
 			var firstGame = UpdateLatestGames();
 
@@ -86,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			BgRatingCurrent.Text = $"{rating:N0}";
 		}
 
-		public void UpdateBannedTribes()
+		public bool UpdateBannedTribes()
 		{
 			var allRaces = _db.Value.Races;
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId) ?? allRaces;
@@ -110,6 +108,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 					BgTribe3.Margin = new Thickness(15, 0, 0, 0);
 				}
 			}
+
+			return unavailableRaces.Count() >= 3;
 		}
 
 		public void OnGameEnd()
