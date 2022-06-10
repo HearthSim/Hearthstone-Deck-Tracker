@@ -80,6 +80,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 			var rating = Core.Game.BattlegroundsRatingInfo?.Rating ?? 0;
 			var ratingStart = firstGame?.Rating ?? rating;
+			if (rating == 0)
+				rating = ratingStart;
 			BgRatingStart.Text = $"{ratingStart:N0}";
 			BgRatingCurrent.Text = $"{rating:N0}";
 		}
