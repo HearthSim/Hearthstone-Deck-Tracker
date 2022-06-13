@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -25,7 +26,7 @@
                 ClipToBounds="True"
                 MouseEnter="Game_MouseEnter"
                 MouseLeave="Game_MouseLeave"
-                ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltips}"
+                ext:OverlayExtensions.IsOverlayHoverVisible="True"
             >
                 <Image
                     Canvas.Left="-35"
@@ -111,7 +112,6 @@
                         Width="{Binding ElementName=FinalBoardContainer, Path=ActualWidth}"
                     >
                         <Label
-                            Grid.Column="0"
                             Content="{lex:Loc Battlegrounds_Session_Game_Tooltip_Final_Board}"
                             Foreground="#FFFFFF"
                             Opacity=".55"

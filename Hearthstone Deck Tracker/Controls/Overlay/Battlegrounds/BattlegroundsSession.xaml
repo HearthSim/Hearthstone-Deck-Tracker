@@ -187,7 +187,10 @@
                     >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:BattlegroundsGameView DataContext="{Binding}"/>
+                                <local:BattlegroundsGameView
+                                    DataContext="{Binding}"
+                                    FinalBoardTooltip="{Binding FinalBoardTooltip, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
+                                />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>

@@ -69,8 +69,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 		public void OnMouseEnter(double finalBoardContainerActualWidth, double scale)
 		{
-			double battlegroundsSessionPanelLeft = Canvas.GetLeft(Core.Overlay.BattlegroundsSessionStackPanel);
-			bool tooltipToRight = battlegroundsSessionPanelLeft < (Core.Overlay.Width / 2);
+			var battlegroundsSessionPanelLeft = Canvas.GetLeft(Core.Overlay.BattlegroundsSessionStackPanel);
+			var tooltipToRight = battlegroundsSessionPanelLeft < (Core.Overlay.Width / 2);
 
 			FinalBoardCanvasLeft = tooltipToRight ? 227 : (int)(finalBoardContainerActualWidth * -scale) - 10;
 			FinalBoardArrowCanvasLeft = tooltipToRight ? 0 : (int)finalBoardContainerActualWidth + 2;
@@ -119,6 +119,5 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public int FinalBoardCanvasLeft { get; set; }
 		public int FinalBoardArrowCanvasLeft { get; set; }
 		public Thickness FinalBoardArrowBorderThickness { get; set; }
-		public bool FinalBoardTooltips { get; }
 	}
 }
