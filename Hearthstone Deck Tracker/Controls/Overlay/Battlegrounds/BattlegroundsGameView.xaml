@@ -135,7 +135,7 @@
                             Foreground="#FFFFFF"
                             Opacity=".55"
                             FontSize="18"
-                            Margin="30, 20"
+                            Margin="30,20,20,20"
                             HorizontalAlignment="Center"
                             Visibility="{Binding FinalBoardEmptyLabelVisibility, FallbackValue=Collapsed}"
                         />
