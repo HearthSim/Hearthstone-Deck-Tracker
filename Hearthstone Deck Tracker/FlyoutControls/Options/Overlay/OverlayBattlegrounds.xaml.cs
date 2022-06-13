@@ -256,7 +256,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			}
 
 			SaveConfig(true);
-			if(Core.Game.IsBattlegroundsMatch)
+			if(Core.Game.IsBattlegroundsMatch || (Config.Instance.ShowSessionRecapBetweenGames && Core.Game.CurrentMode == Mode.BACON))
 				Core.Overlay.ShowBattlegroundsSession();
 			Influx.OnSessionRecapEnabledChanged(true);
 		}
@@ -267,9 +267,29 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowSessionRecap = false;
 			SaveConfig(true);
-			if(Core.Game.IsBattlegroundsMatch)
+			if(Core.Game.IsBattlegroundsMatch || Core.Game.CurrentMode == Mode.BACON)
 				Core.Overlay.HideBattlegroundsSession();
 			Influx.OnSessionRecapEnabledChanged(false);
+		}
+
+		private void CheckboxShowSessionRecapBetweenGames_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecapBetweenGames = true;
+			SaveConfig(true);
+			if (Core.Game.CurrentMode == Mode.BACON)
+				Core.Overlay.ShowBattlegroundsSession();
+		}
+
+		private void CheckboxShowSessionRecapBetweenGames_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecapBetweenGames = false;
+			SaveConfig(true);
+			if (!Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.HideBattlegroundsSession();
 		}
 
 		private void CheckboxShowMinionsBanned_Checked(object sender, RoutedEventArgs e)
@@ -351,26 +371,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 			SaveConfig(true);
 			Core.Game.BattlegroundsSessionViewModel.UpdateSectionsVisibilities();
-		}
-
-		private void CheckboxShowSessionRecapBetweenGames_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowSessionRecapBetweenGames = true;
-			SaveConfig(true);
-			if (Core.Game.CurrentMode == Mode.BACON)
-				Core.Overlay.ShowBattlegroundsSession();
-		}
-
-		private void CheckboxShowSessionRecapBetweenGames_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowSessionRecapBetweenGames = false;
-			SaveConfig(true);
-			if (!Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.HideBattlegroundsSession();
 		}
 
 		private void CheckboxShowExternalWindow_Checked(object sender, RoutedEventArgs e)
