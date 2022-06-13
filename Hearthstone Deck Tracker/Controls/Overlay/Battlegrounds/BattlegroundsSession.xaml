@@ -18,7 +18,11 @@
         CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
         Width="220"
     >
-        <Grid>
+        <Grid
+            Name="BattlegroundsSessionPanelTopGroup"
+            MouseEnter="Panel_MouseEnter"
+            MouseLeave="Panel_MouseLeave"
+        >
             <Border
                 Name="BorderMask"
                 Background="#2E3235"
@@ -29,10 +33,7 @@
                     <VisualBrush Visual="{Binding ElementName=BorderMask}" />
                 </StackPanel.OpacityMask>
                 <StackPanel
-                    Name="BattlegroundsSessionPanelTopGroup"
                     Orientation="Vertical"
-                    MouseEnter="Panel_MouseEnter"
-                    MouseLeave="Panel_MouseLeave"
                 >
                     <StackPanel Background="#2E3235" Visibility="{Binding BgBannedTribesSectionVisibility}">
                         <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
@@ -122,8 +123,6 @@
                         Name="BgLastestGamesSectionHeader"
                         Background="#2E3235"
                         Orientation="Vertical"
-                        MouseEnter="Panel_MouseEnter"
-                        MouseLeave="Panel_MouseLeave"
                     >
                         <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgStartCurrentMMRSection, Path=Visibility}"/>
                         <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">

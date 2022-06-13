@@ -71,16 +71,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 		private void BtnOptions_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			CogBtnVisibility = Visibility.Visible;
-			OnPropertyChanged(nameof(CogBtnVisibility));
 			BtnOptions.Background = (Brush)_bc.ConvertFromString("#22FFFFFF");
 		}
 
 		private void BtnOptions_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			BtnOptions.Background = (Brush)_bc.ConvertFromString("#00FFFFFF");
-			CogBtnVisibility = Visibility.Hidden;
-			OnPropertyChanged(nameof(CogBtnVisibility));
 		}
 
 		public void Show()
