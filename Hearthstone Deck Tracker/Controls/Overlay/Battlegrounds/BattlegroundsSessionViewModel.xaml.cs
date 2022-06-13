@@ -42,27 +42,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			var currentRating = Core.Game.CurrentGameStats?.BattlegroundsRatingAfter;
 			BgRatingCurrent = $"{currentRating:N0}";
 
+			OnPropertyChanged(nameof(BgRatingCurrent));
 			UpdateLatestGames();
-		}
-
-		public void UpdateSectionsVisibilities()
-		{
-			BgBannedTribesSectionVisibility = Config.Instance.ShowSessionRecapMinionsBanned
-				? Visibility.Visible
-				: Visibility.Collapsed;
-
-			BgStartCurrentMMRSectionVisibility = Config.Instance.ShowSessionRecapStartCurrentMMR
-				? Visibility.Visible
-				: Visibility.Collapsed;
-
-			BgLastestGamesSectionVisibility = Config.Instance.ShowSessionRecapLatestGames
-				? Visibility.Visible
-				: Visibility.Collapsed;
-
-			OnPropertyChanged(nameof(BgBannedTribesSectionVisibility));
-			OnPropertyChanged(nameof(BgStartCurrentMMRSectionVisibility));
-			OnPropertyChanged(nameof(BgLastestGamesSectionVisibility));
-			Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
 		}
 
 		public async void Update()
@@ -83,6 +64,26 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 			OnPropertyChanged(nameof(BgRatingStart));
 			OnPropertyChanged(nameof(BgRatingCurrent));
+		}
+
+		public void UpdateSectionsVisibilities()
+		{
+			BgBannedTribesSectionVisibility = Config.Instance.ShowSessionRecapMinionsBanned
+				? Visibility.Visible
+				: Visibility.Collapsed;
+
+			BgStartCurrentMMRSectionVisibility = Config.Instance.ShowSessionRecapStartCurrentMMR
+				? Visibility.Visible
+				: Visibility.Collapsed;
+
+			BgLastestGamesSectionVisibility = Config.Instance.ShowSessionRecapLatestGames
+				? Visibility.Visible
+				: Visibility.Collapsed;
+
+			OnPropertyChanged(nameof(BgBannedTribesSectionVisibility));
+			OnPropertyChanged(nameof(BgStartCurrentMMRSectionVisibility));
+			OnPropertyChanged(nameof(BgLastestGamesSectionVisibility));
+			Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
 		}
 
 		private void UpdateBannedTribes()
