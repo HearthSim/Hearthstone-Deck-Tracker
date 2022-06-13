@@ -14,13 +14,13 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Canvas
-        Name="BattlegroundsGameViewCanvas"
         Height="34"
         Width="217"
         Background="#AA000000"
     >
         <Border BorderBrush="#1C2022" BorderThickness="0,1,0,0">
             <Canvas
+                Name="BattlegroundsGameViewCanvas"
                 Height="34"
                 Width="217"
                 ClipToBounds="True"
