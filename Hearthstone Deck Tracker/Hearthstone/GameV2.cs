@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 
-		public BattlegroundsSessionViewModel BattlegroundsSessionViewModel;
+		public BattlegroundsSessionViewModel BattlegroundsSessionViewModel { get; } = new();
 
 		public GameV2()
 		{
@@ -47,7 +47,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
-			BattlegroundsSessionViewModel = new BattlegroundsSessionViewModel();
 			Reset();
 			LiveDataManager.OnStreamingChecked += async streaming =>
 			{
@@ -290,7 +289,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsBoardState?.Reset();
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
-			BattlegroundsSessionViewModel?.Reset();
+			BattlegroundsSessionViewModel.Reset();
 
 			if(Core._game != null && Core.Overlay != null)
 			{
