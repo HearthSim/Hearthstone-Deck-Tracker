@@ -118,9 +118,9 @@
                         </Grid>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Visibility="{Binding BgLastestGamesSectionVisibility}">
+                <StackPanel Visibility="{Binding BgLatestGamesSectionVisibility}">
                     <StackPanel
-                        Name="BgLastestGamesSectionHeader"
+                        Name="BgLatestGamesSectionHeader"
                         Background="#2E3235"
                         Orientation="Vertical"
                     >

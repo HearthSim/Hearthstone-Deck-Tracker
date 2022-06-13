@@ -76,13 +76,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				? Visibility.Visible
 				: Visibility.Collapsed;
 
-			BgLastestGamesSectionVisibility = Config.Instance.ShowSessionRecapLatestGames
+			BgLatestGamesSectionVisibility = Config.Instance.ShowSessionRecapLatestGames
 				? Visibility.Visible
 				: Visibility.Collapsed;
 
 			OnPropertyChanged(nameof(BgBannedTribesSectionVisibility));
 			OnPropertyChanged(nameof(BgStartCurrentMMRSectionVisibility));
-			OnPropertyChanged(nameof(BgLastestGamesSectionVisibility));
+			OnPropertyChanged(nameof(BgLatestGamesSectionVisibility));
 			Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
 		}
 
@@ -237,6 +237,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public Visibility GamesEmptyStateVisibility { get; set; }
 		public Visibility BgBannedTribesSectionVisibility { get; set; }
 		public Visibility BgStartCurrentMMRSectionVisibility { get; set; }
-		public Visibility BgLastestGamesSectionVisibility { get; set; }
+		public Visibility BgLatestGamesSectionVisibility { get; set; }
 	}
 }
