@@ -10,7 +10,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		private bool _appIsClosing;
 
-		public BattlegroundsSessionViewModel? BattlegroundsSessionViewModelVM { get; } = Core.Game.BattlegroundsSessionViewModel;
+		public BattlegroundsSessionViewModel BattlegroundsSessionViewModelVM => Core.Game.BattlegroundsSessionViewModel;
 
 		public BattlegroundsSessionWindow()
 		{
@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BattlegroundsSessionWindow_OnLoaded(object sender, RoutedEventArgs e)
 		{
-			Core.Game.BattlegroundsSessionViewModel.Update();
+			BattlegroundsSessionViewModelVM.Update();
 			UpdateScaling();
 		}
 

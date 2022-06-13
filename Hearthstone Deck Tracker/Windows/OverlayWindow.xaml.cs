@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
 
-		public BattlegroundsSessionViewModel? BattlegroundsSessionViewModelVM { get; } = Core.Game.BattlegroundsSessionViewModel;
+		public BattlegroundsSessionViewModel BattlegroundsSessionViewModelVM => Core.Game.BattlegroundsSessionViewModel;
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
 
@@ -445,7 +445,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void ShowBattlegroundsSession()
 		{
-			Core.Game.BattlegroundsSessionViewModel.Update();
+			BattlegroundsSessionViewModelVM.Update();
 			BattlegroundsSession.Show();
 		}
 
