@@ -65,6 +65,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				}
 
 			FinalBoardVisibility = Visibility.Hidden;
+			FinalBoardEmptyLabelVisibility = FinalBoardMinions.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
 		}
 
 		public void OnMouseEnter(double finalBoardContainerActualWidth, double scale)
@@ -73,12 +74,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			var tooltipToRight = battlegroundsSessionPanelLeft < (Core.Overlay.Width / 2);
 
 			FinalBoardCanvasLeft = tooltipToRight ? 227 : (int)(finalBoardContainerActualWidth * -scale) - 10;
+			FinalBoardCanvasTop = FinalBoardMinions.Count > 0 ? -70 : -30;
 			FinalBoardArrowCanvasLeft = tooltipToRight ? 0 : (int)finalBoardContainerActualWidth + 2;
+			FinalBoardArrowCanvasTop = FinalBoardMinions.Count > 0 ? 135 : 70; 
 			FinalBoardArrowBorderThickness = tooltipToRight ? new Thickness(1, 0, 0, 1) : new Thickness(0, 1, 1, 0);
 			FinalBoardVisibility = Visibility.Visible;
 
 			OnPropertyChanged(nameof(FinalBoardCanvasLeft));
+			OnPropertyChanged(nameof(FinalBoardCanvasTop));
 			OnPropertyChanged(nameof(FinalBoardArrowCanvasLeft));
+			OnPropertyChanged(nameof(FinalBoardArrowCanvasTop));
 			OnPropertyChanged(nameof(FinalBoardArrowBorderThickness));
 			OnPropertyChanged(nameof(FinalBoardVisibility));
 		}
@@ -117,7 +122,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public Visibility CrownVisibility { get; }
 		public Visibility FinalBoardVisibility { get; set; }
 		public int FinalBoardCanvasLeft { get; set; }
+		public int FinalBoardCanvasTop { get; set; }
 		public int FinalBoardArrowCanvasLeft { get; set; }
+		public int FinalBoardArrowCanvasTop { get; set; }
 		public Thickness FinalBoardArrowBorderThickness { get; set; }
+		public Visibility FinalBoardEmptyLabelVisibility { get; set; }
 	}
 }

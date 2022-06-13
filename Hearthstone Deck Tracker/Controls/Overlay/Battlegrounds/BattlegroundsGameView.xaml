@@ -89,7 +89,7 @@
         <Canvas
             Name="FinalBoardCanvas"
             Opacity=".95"
-            Canvas.Top="-69"
+            Canvas.Top="{Binding FinalBoardCanvasTop}"
             Canvas.Left="{Binding FinalBoardCanvasLeft}"
             Visibility="{Binding FinalBoardVisibility}"
         >
@@ -130,6 +130,15 @@
                                 <Setter Property="Margin" Value="0,15,-10,15"/>
                             </Style>
                         </StackPanel.Resources>
+                        <Label
+                            Content="{lex:Loc Battlegrounds_Session_Game_Tooltip_Final_Board_Empty}"
+                            Foreground="#FFFFFF"
+                            Opacity=".55"
+                            FontSize="18"
+                            Margin="30, 20"
+                            HorizontalAlignment="Center"
+                            Visibility="{Binding FinalBoardEmptyLabelVisibility, FallbackValue=Collapsed}"
+                        />
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -141,7 +150,7 @@
                 Height="14"
                 Width="14"
                 Canvas.Left="{Binding FinalBoardArrowCanvasLeft}"
-                Canvas.Top="135"
+                Canvas.Top="{Binding FinalBoardArrowCanvasTop}"
             >
                 <Border.RenderTransform>
                     <RotateTransform Angle="45" />
