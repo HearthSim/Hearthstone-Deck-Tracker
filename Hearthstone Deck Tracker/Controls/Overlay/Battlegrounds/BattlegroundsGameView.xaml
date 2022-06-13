@@ -20,13 +20,9 @@
     >
         <Border BorderBrush="#1C2022" BorderThickness="0,1,0,0">
             <Canvas
-                Name="BattlegroundsGameViewCanvas"
                 Height="34"
                 Width="217"
                 ClipToBounds="True"
-                MouseEnter="Game_MouseEnter"
-                MouseLeave="Game_MouseLeave"
-                ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltip, RelativeSource={RelativeSource AncestorType=battlegrounds:BattlegroundsGameView}}"
             >
                 <Image
                     Canvas.Left="-35"
@@ -44,7 +40,13 @@
                         </LinearGradientBrush>
                     </Image.OpacityMask>
                 </Image>
-                <Grid Height="34" Width="217">
+                <Grid
+                    Name="BattlegroundsGameViewContent"
+                    Height="34" Width="217"
+                    MouseEnter="Game_MouseEnter"
+                    MouseLeave="Game_MouseLeave"
+                    ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltip, RelativeSource={RelativeSource AncestorType=battlegrounds:BattlegroundsGameView}}"
+                >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.7*"/>
                         <ColumnDefinition Width="1*"/>
