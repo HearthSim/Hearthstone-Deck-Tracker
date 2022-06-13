@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
@@ -18,18 +16,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
 	public partial class BattlegroundsSessionViewModel : ViewModel, INotifyPropertyChanged
 	{
-		private Lazy<BattlegroundsDb> _db = new ();
+		private Lazy<BattlegroundsDb> _db = new();
 
-		public ObservableCollection<BattlegroundsGameViewModel> SessionGames { get; set; } = new ObservableCollection<BattlegroundsGameViewModel>();
-
-		public event PropertyChangedEventHandler? PropertyChanged;
-
-		[NotifyPropertyChangedInvocator]
-		internal virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
+		public ObservableCollection<BattlegroundsGameViewModel> SessionGames { get; set; } = new();
+		
 		public void Reset()
 		{
 			BgRatingStart = "0";
