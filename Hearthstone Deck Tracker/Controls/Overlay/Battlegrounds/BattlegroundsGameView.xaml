@@ -26,7 +26,7 @@
                 ClipToBounds="True"
                 MouseEnter="Game_MouseEnter"
                 MouseLeave="Game_MouseLeave"
-                ext:OverlayExtensions.IsOverlayHoverVisible="True"
+                ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltip, RelativeSource={RelativeSource AncestorType=battlegrounds:BattlegroundsGameView}}"
             >
                 <Image
                     Canvas.Left="-35"

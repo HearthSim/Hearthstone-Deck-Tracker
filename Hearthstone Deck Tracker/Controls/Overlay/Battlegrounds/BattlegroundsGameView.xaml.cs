@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			set
 			{
 				SetValue(FinalBoardTooltipProperty, value);
+				OnPropertyChanged(nameof(FinalBoardTooltip));
 			}
 		}
 
