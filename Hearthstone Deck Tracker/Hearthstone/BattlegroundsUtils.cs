@@ -48,19 +48,5 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public static string GetOriginalHeroId(string heroId) => TransformableHeroCardidTable.TryGetValue(heroId, out var mapped) ? mapped : heroId;
-
-		private static Dictionary<Race, string> TribeNames = new Dictionary<Race, string>() {
-			{Race.PET , "Beast"},
-			{Race.MECHANICAL , "Mech"},
-			{Race.MURLOC , "Murloc"},
-			{Race.DEMON , "Demon"},
-			{Race.DRAGON , "Dragon"},
-			{Race.PIRATE , "Pirate"},
-			{Race.ELEMENTAL , "Elemental"},
-			{Race.QUILBOAR , "Quilboar"},
-			{Race.NAGA , "Naga"},
-		};
-
-		public static string GetTribeName(Race tribe) => TribeNames.TryGetValue(tribe, out var name) ? name : TribeNames[Race.PET];
 	}
 }

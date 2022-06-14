@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			}
 		}
 
-		private string _tribeName = BattlegroundsUtils.GetTribeName(Race.BEAST);
+		private string _tribeName = HearthDbConverter.RaceConverter(Race.BEAST) ?? "";
 		public string TribeName
 		{
 			get => _tribeName;
@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 		private void OnTribeChanged()
 		{
-			TribeName = BattlegroundsUtils.GetTribeName(Tribe);
+			TribeName = HearthDbConverter.RaceConverter(Tribe) ?? "";
 			OnPropertyChanged(nameof(ImageSrc));
 		}
 	}
