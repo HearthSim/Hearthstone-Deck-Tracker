@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
@@ -26,20 +27,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			{Race.NAGA , "naga"},
 		};
 
-		private static Dictionary<Race, string> TribeNames = new Dictionary<Race, string>() {
-			{Race.PET , "Beast"},
-			{Race.MECHANICAL , "Mech"},
-			{Race.MURLOC , "Murloc"},
-			{Race.DEMON , "Demon"},
-			{Race.DRAGON , "Dragon"},
-			{Race.PIRATE , "Pirate"},
-			{Race.ELEMENTAL , "Elemental"},
-			{Race.QUILBOAR , "Quilboar"},
-			{Race.NAGA , "Naga"},
-		};
-
-		public static string GetTribeName(Race tribe) => TribeNames.TryGetValue(tribe, out var name) ? name : TribeNames[Race.PET];
-
 		public string ImageSrc => $"/HearthstoneDeckTracker;component/Resources/TribeIcons/{TribeImages[Tribe]}.jpg";
 
 		public event PropertyChangedEventHandler? PropertyChanged;
@@ -61,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		{
 			get {
 				var tribe = (Race)GetValue(TribeProperty);
-				if(TribeImages.TryGetValue(tribe, out _))
+				if (TribeImages.ContainsKey(tribe))
 					return tribe;
 				return Race.PET;
 			}
@@ -72,18 +59,21 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			}
 		}
 
+		private string _tribeName;
 		public string TribeName
 		{
-			get
+			get => _tribeName;
+			set
 			{
-				return GetTribeName(Tribe);
+				_tribeName = value;
+				OnPropertyChanged();
 			}
 		}
 
 		private void OnTribeChanged()
 		{
+			TribeName = BattlegroundsUtils.GetTribeName(Tribe);
 			OnPropertyChanged(nameof(ImageSrc));
-			OnPropertyChanged(nameof(TribeName));
 		}
 	}
 }
