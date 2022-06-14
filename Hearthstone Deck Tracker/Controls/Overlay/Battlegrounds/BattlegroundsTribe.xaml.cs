@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			}
 		}
 
-		private string _tribeName;
+		private string _tribeName = BattlegroundsUtils.GetTribeName(Race.BEAST);
 		public string TribeName
 		{
 			get => _tribeName;

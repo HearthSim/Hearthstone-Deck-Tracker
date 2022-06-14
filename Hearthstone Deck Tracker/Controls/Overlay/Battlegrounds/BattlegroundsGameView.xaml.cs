@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Media;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
