@@ -104,7 +104,7 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center" Width="150"
                         Value="{Binding SessionRecapScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayBattlegrounds}, Delay=100}"
-                        Minimum="1" SmallChange="1" LargeChange="10" Maximum="200"
+                        SmallChange="1" LargeChange="10" Minimum="50" Maximum="200"
                     />
                     <TextBox
                         PreviewTextInput="TextBoxSessionRecapScaling_OnPreviewTextInput"
