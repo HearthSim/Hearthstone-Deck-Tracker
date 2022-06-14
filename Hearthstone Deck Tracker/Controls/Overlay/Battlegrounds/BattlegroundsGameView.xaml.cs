@@ -1,22 +1,12 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.Annotations;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
-	public partial class BattlegroundsGameView : INotifyPropertyChanged {
+	public partial class BattlegroundsGameView {
 
 		private bool _minionsRendered;
-
-		public event PropertyChangedEventHandler? PropertyChanged;
-
-		[NotifyPropertyChangedInvocator]
-		internal virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+		
 
 		public static readonly DependencyProperty FinalBoardTooltipProperty = DependencyProperty.Register("FinalBoardTooltip", typeof(bool), typeof(BattlegroundsGameView));
 
@@ -31,7 +21,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			set
 			{
 				SetValue(FinalBoardTooltipProperty, value);
-				OnPropertyChanged(nameof(FinalBoardTooltip));
 			}
 		}
 

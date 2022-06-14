@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,7 +13,7 @@ using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGam
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
-	public partial class BattlegroundsSessionViewModel : ViewModel, INotifyPropertyChanged
+	public partial class BattlegroundsSessionViewModel : ViewModel
 	{
 		private Lazy<BattlegroundsDb> _db = new();
 

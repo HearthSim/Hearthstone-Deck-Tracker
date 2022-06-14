@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility;
@@ -17,16 +14,8 @@ using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGam
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
-	public class BattlegroundsGameViewModel : ViewModel, INotifyPropertyChanged
+	public class BattlegroundsGameViewModel : ViewModel
 	{
-		public event PropertyChangedEventHandler? PropertyChanged;
-
-		[NotifyPropertyChangedInvocator]
-		internal virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
 		public List<Entity> FinalBoardMinions { get; set; } = new List<Entity>();
 
 		public BattlegroundsGameViewModel(GameItem gameItem)
