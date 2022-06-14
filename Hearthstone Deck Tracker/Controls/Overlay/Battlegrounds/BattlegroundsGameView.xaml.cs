@@ -40,8 +40,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			}
 
 			var finalBoardContainerActualWidth = FinalBoardContainer.ActualWidth;
-			var scale = ((ScaleTransform)FinalBoardCanvas.RenderTransform).ScaleX;
-			((BattlegroundsGameViewModel) DataContext).OnMouseEnter(finalBoardContainerActualWidth, scale);
+			((BattlegroundsGameViewModel) DataContext).OnMouseEnter(finalBoardContainerActualWidth);
 		}
 
 		private void Game_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
