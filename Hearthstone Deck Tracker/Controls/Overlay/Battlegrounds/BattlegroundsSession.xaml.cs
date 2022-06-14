@@ -27,9 +27,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			CogBtnVisibility = Visibility.Hidden;
 		}
 
+		private Visibility _cogBtnVisibility;
 		public Visibility CogBtnVisibility
 		{
-			get; set;
+			get => _cogBtnVisibility;
+			set
+			{
+				_cogBtnVisibility = value;
+				OnPropertyChanged();
+			}
 		}
 
 		public CornerRadius CornerRadius
@@ -53,13 +59,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		private void Panel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			CogBtnVisibility = Visibility.Visible;
-			OnPropertyChanged(nameof(CogBtnVisibility));
 		}
 
 		private void Panel_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			CogBtnVisibility = Visibility.Hidden;
-			OnPropertyChanged(nameof(CogBtnVisibility));
 		}
 
 		private void BtnOptions_MouseUp(object sender, System.Windows.Input.MouseEventArgs e)

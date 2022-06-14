@@ -68,19 +68,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			FinalBoardArrowCanvasTop = FinalBoardMinions.Count > 0 ? 135 : 70; 
 			FinalBoardArrowBorderThickness = tooltipToRight ? new Thickness(1, 0, 0, 1) : new Thickness(0, 1, 1, 0);
 			FinalBoardVisibility = Visibility.Visible;
-
-			OnPropertyChanged(nameof(FinalBoardCanvasLeft));
-			OnPropertyChanged(nameof(FinalBoardCanvasTop));
-			OnPropertyChanged(nameof(FinalBoardArrowCanvasLeft));
-			OnPropertyChanged(nameof(FinalBoardArrowCanvasTop));
-			OnPropertyChanged(nameof(FinalBoardArrowBorderThickness));
-			OnPropertyChanged(nameof(FinalBoardVisibility));
 		}
 
 		public void OnMouseLeave()
 		{
 			FinalBoardVisibility = Visibility.Hidden;
-			OnPropertyChanged(nameof(FinalBoardVisibility));
 		}
 
 		public SolidColorBrush PlacementTextBrush
@@ -109,12 +101,82 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public string MMRDeltaText { get; }
 		public CardAssetViewModel CardImage { get; }
 		public Visibility CrownVisibility { get; }
-		public Visibility FinalBoardVisibility { get; set; }
-		public int FinalBoardCanvasLeft { get; set; }
-		public int FinalBoardCanvasTop { get; set; }
-		public int FinalBoardArrowCanvasLeft { get; set; }
-		public int FinalBoardArrowCanvasTop { get; set; }
-		public Thickness FinalBoardArrowBorderThickness { get; set; }
-		public Visibility FinalBoardEmptyLabelVisibility { get; set; }
+
+		private Visibility _finalBoardVisibility;
+		public Visibility FinalBoardVisibility
+		{
+			get => _finalBoardVisibility;
+			set
+			{
+				_finalBoardVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private int _finalBoardCanvasLeft;
+		public int FinalBoardCanvasLeft
+		{
+			get => _finalBoardCanvasLeft;
+			set
+			{
+				_finalBoardCanvasLeft = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private int _finalBoardCanvasTop;
+		public int FinalBoardCanvasTop
+		{
+			get => _finalBoardCanvasTop;
+			set
+			{
+				_finalBoardCanvasTop = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private int _finalBoardArrowCanvasLeft;
+		public int FinalBoardArrowCanvasLeft
+		{
+			get => _finalBoardArrowCanvasLeft;
+			set
+			{
+				_finalBoardArrowCanvasLeft = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private int _finalBoardArrowCanvasTop;
+		public int FinalBoardArrowCanvasTop
+		{
+			get => _finalBoardArrowCanvasTop;
+			set
+			{
+				_finalBoardArrowCanvasTop = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Thickness _finalBoardArrowBorderThickness;
+		public Thickness FinalBoardArrowBorderThickness
+		{
+			get => _finalBoardArrowBorderThickness;
+			set
+			{
+				_finalBoardArrowBorderThickness = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _finalBoardEmptyLabelVisibility;
+		public Visibility FinalBoardEmptyLabelVisibility
+		{
+			get => _finalBoardEmptyLabelVisibility;
+			set
+			{
+				_finalBoardEmptyLabelVisibility = value;
+				OnPropertyChanged();
+			}
+		}
 	}
 }
