@@ -47,6 +47,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			return entity;
 		}
 
+		public void ClearCardId()
+		{
+			CardId = null;
+			Info.ClearCardId();
+		}
+
 		public EntityInfo Info { get; }
 		public Dictionary<GameTag, int> Tags { get; set; }
 		public string? Name { get; set; }
@@ -261,6 +267,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			if(dbfId <= 0)
 				return;
 			OriginalCardId = Database.GetCardFromDbfId(dbfId)?.Id;
+		}
+
+		public void ClearCardId()
+		{
+			OriginalCardId = null;
+			LatestCardId = null;
 		}
 
 		public int GetCreatorId()
