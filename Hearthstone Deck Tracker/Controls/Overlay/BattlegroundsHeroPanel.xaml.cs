@@ -12,6 +12,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		}
 
 		public int[]? HeroIds { get; internal set; }
+		public int? MMR { get; internal set; }
 
 		private void UserControl_MouseEnter(object sender, MouseEventArgs e)
 		{
@@ -27,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			Core.Overlay.HideBattlegroundsHeroPanel();
 			if(HeroIds != null)
-				Helper.OpenBattlegroundsHeroPicker(HeroIds);
+				Helper.OpenBattlegroundsHeroPicker(HeroIds, MMR);
 		}
 	}
 }

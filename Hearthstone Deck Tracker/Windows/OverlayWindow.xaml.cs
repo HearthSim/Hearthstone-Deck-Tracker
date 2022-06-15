@@ -414,6 +414,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void ShowBattlegroundsHeroPanel(int[] heroIds)
 		{
 			HeroNotificationPanel.HeroIds = heroIds;
+			HeroNotificationPanel.MMR = _game.BattlegroundsRatingInfo?.Rating;
 			_heroNotificationBehavior.Show();
 		}
 

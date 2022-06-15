@@ -729,10 +729,14 @@ namespace Hearthstone_Deck_Tracker
 			return name + "/" + GetCurrentVersion();
 		}
 
-		internal static void OpenBattlegroundsHeroPicker(int[] heroIds)
+		internal static void OpenBattlegroundsHeroPicker(int[] heroIds, int? mmr)
 		{
 			var encodedHeroIds = HttpUtility.UrlEncode(string.Join(",", heroIds));
 			var url = $"{BuildHsReplayNetUrl("battlegrounds/heroes", "bgs_toast")}#heroes={encodedHeroIds}";
+
+			if(mmr.HasValue)
+				url += $"&mmr={mmr.Value}";
+
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId);
 			if(availableRaces?.Count > 0)
 			{
