@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -38,6 +39,108 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top" Checked="CheckboxAlwaysShowAverageDamage_Checked"
                           Unchecked="CheckboxAlwaysShowAverageDamage_Unchecked" Margin="0,5,0,0" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="{lex:Loc Options_Overlay_Battlegrounds_Group_Label}" Margin="5,10,5,5">
+            <StackPanel>
+                <CheckBox
+                    x:Name="CheckboxShowSessionRecap"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowSessionRecap}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowSessionRecap_Checked"
+                    Unchecked="CheckboxShowSessionRecap_Unchecked"
+                    Margin="0"
+                />
+                <CheckBox
+                    x:Name="CheckboxShowSessionRecapBetweenGames"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowSessionRecapBetweenGames}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowSessionRecapBetweenGames_Checked"
+                    Unchecked="CheckboxShowSessionRecapBetweenGames_Unchecked"
+                    Margin="0,5,0,0"
+                />
+                <CheckBox
+                    x:Name="CheckboxShowExternalWindow"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowExternalWindow}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowExternalWindow_Checked"
+                    Unchecked="CheckboxShowExternalWindow_Unchecked"
+                    Margin="0,5,0,0"
+                />
+                <CheckBox
+                    x:Name="CheckboxShowMinionsBanned"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowMinionsBanned}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowMinionsBanned_Checked"
+                    Unchecked="CheckboxShowMinionsBanned_Unchecked"
+                    Margin="0,5,0,0"
+                />
+                <CheckBox
+                    x:Name="CheckboxShowStartCurrentMMR"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowMMR}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowStartCurrentMMR_Checked"
+                    Unchecked="CheckboxShowStartCurrentMMR_Unchecked"
+                    Margin="0,5,0,0"
+                />
+                <CheckBox
+                    x:Name="CheckboxShowLatestGames"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowLatestGames}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowLatestGames_Checked"
+                    Unchecked="CheckboxShowLatestGames_Unchecked"
+                    Margin="0,5,0,0"
+                />
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{lex:Loc Options_Overlay_Battlegrounds_Label_Scaling}" />
+                    <Slider
+                        x:Name="SliderSessionRecapScaling"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center" Width="150"
+                        Value="{Binding SessionRecapScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayBattlegrounds}, Delay=100}"
+                        SmallChange="1" LargeChange="10" Minimum="50" Maximum="200"
+                    />
+                    <TextBox
+                        PreviewTextInput="TextBoxSessionRecapScaling_OnPreviewTextInput"
+                        Text="{Binding SessionRecapScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayBattlegrounds}}"
+                        Margin="5,0,0,0" Width="50"
+                    />
+                </StackPanel>
+                <DockPanel Margin="0,5,0,0">
+                    <Button
+                        Width="150"
+                        Content="{lex:Loc Options_Overlay_General_Button_Reset}"
+                        Command="{Binding ResetSessionCommand, RelativeSource={RelativeSource AncestorType=overlay:OverlayBattlegrounds}}"
+                        VerticalAlignment="Top"
+                        Margin="0,3,0,0"
+                        DockPanel.Dock="Right"
+                    />
+                    <Label Content="{lex:Loc Options_Overlay_Battlegrounds_Button_ResetSession}" DockPanel.Dock="Left"/>
+                </DockPanel>
+                <TextBlock
+                    Text="{lex:Loc Options_Overlay_Battlegrounds_Label_ResetSessionDesc}"
+                    Foreground="White"
+                    Opacity=".55"
+                    TextWrapping="WrapWithOverflow"
+                    TextAlignment="Left"
+                    Margin="5,0,5,0"
+                />
+                <DockPanel Margin="0,5,0,0">
+                    <Button Name="BtnUnlockOverlay" Content="{lex:Loc Options_Overlay_General_Button_UnlockOverlay}" Width="150"
+                    Click="BtnUnlockOverlay_Click" DockPanel.Dock="Right" />
+                    <Label Content="{lex:Loc Options_Overlay_General_Label_MoveResize}" DockPanel.Dock="Left"/>
+                </DockPanel>
+                <DockPanel Margin="0,5,0,0">
+                    <Button x:Name="BtnResetOverlay" Content="{lex:Loc Options_Overlay_General_Button_Reset}" Width="150" Click="BtnResetOverlay_Click"
+                    DockPanel.Dock="Right" />
+                    <Label Content="{lex:Loc Options_Overlay_General_Label_Reset}" DockPanel.Dock="Left" />
+                </DockPanel>
             </StackPanel>
         </GroupBox>
         <Button x:Name="OverlayHelpButton"

@@ -20,6 +20,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("whizbang_decks")]
 			public List<WhizbangDeck>? WhizbangDecks { get; set; }
 
+			[JsonProperty("battlegrounds_short_names")]
+			public List<CardShortName>? BattlegroundsShortNames { get; set; }
+
 			[JsonProperty("battlegrounds_tag_overrides")]
 			public List<TagOverride>? BattlegroundsTagOverrides { get; set; }
 
@@ -91,6 +94,14 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			public int Count { get; set; }
 		}
 
+		internal class CardShortName
+		{
+			[JsonProperty("dbf_id")]
+			public int DbfId { get; set; }
+
+			[JsonProperty("short_name")]
+			public string? ShortName { get; set; }
+		}
 
 		internal class TagOverride
 		{

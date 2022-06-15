@@ -26,6 +26,7 @@ using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 
 #endregion
 
@@ -111,6 +112,11 @@ namespace Hearthstone_Deck_Tracker
 				ArenaStats.Instance.UpdateArenaRuns();
 				ArenaStats.Instance.UpdateArenaStats();
 				ArenaStats.Instance.UpdateArenaStatsHighlights();
+			}
+
+			if(_game.CurrentGameStats != null && _game.CurrentGameStats.GameMode == Battlegrounds)
+			{
+				Core.Game.BattlegroundsSessionViewModel.Update();
 			}
 
 			if(!_game.IsUsingPremade)
@@ -496,7 +502,10 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.LinkOpponentDeckDisplay.IsFriendlyMatch = _game.IsFriendlyMatch;
 
 			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
+			{
 				Core.Overlay.ShowBgsTopBar();
+				Core.Overlay.ShowBattlegroundsSession();
+			}
 			if(_game.IsFriendlyMatch)
 				if(!Config.Instance.InteractedWithLinkOpponentDeck)
 					Core.Overlay.ShowLinkOpponentDeckDisplay();
@@ -763,6 +772,9 @@ namespace Hearthstone_Deck_Tracker
 						Sentry.SendQueuedBobsBuddyEvents(_game.CurrentGameStats.HsReplay.UploadId);
 					else
 						Sentry.ClearBobsBuddyEvents();
+					RecordBattlegroundsGame();
+					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
+					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 				}
 
 				Influx.SendQueuedMetrics();
@@ -780,6 +792,41 @@ namespace Hearthstone_Deck_Tracker
 			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
 			while(_lastGame != null && _lastGame.GameMode == None && (DateTime.Now - startTime) < timeout)
 				await Task.Delay(100);
+		}
+
+		private void RecordBattlegroundsGame()
+		{
+			if (Core.Game.Spectator)
+				return;
+
+			var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
+			var startTime = _game.CurrentGameStats?.StartTime.ToString("o");
+			var endTime = _game.CurrentGameStats?.EndTime.ToString("o");
+			var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
+			var rating = _game.CurrentGameStats?.BattlegroundsRating;
+			var ratingAfter = _game.CurrentGameStats?.BattlegroundsRatingAfter;
+			var placement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE);
+			var finalBoard = _game.Entities.Values
+				.Where(x => x.IsMinion && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Player.Id))
+				.Select(x => x.Clone())
+				.ToArray();
+
+			if(startTime != null && endTime != null && heroCardId != null && rating != null && ratingAfter != null && placement != null)
+			{
+				BattlegroundsLastGames.Instance.AddGame(
+					startTime,
+					endTime,
+					heroCardId,
+					(int)rating,
+					(int)ratingAfter,
+					(int)placement,
+					finalBoard
+				);
+			}
+			else
+			{
+				Log.Error("Missing data while trying to record battleground game");
+			}
 		}
 
 		private void LogEvent(string type, string id = "", int turn = 0, int from = -1, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
@@ -1007,6 +1054,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Core.Overlay.ShowBgsTopBar();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
+			Core.Overlay.ShowBattlegroundsSession();
 		}
 
 		#region Player

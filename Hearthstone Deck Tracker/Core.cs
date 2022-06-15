@@ -166,6 +166,9 @@ namespace Hearthstone_Deck_Tracker
 
 			AssetDownloaders.SetupAssetDownloaders();
 
+			if(Config.Instance.BattlegroundsSessionRecapWindowOnStart)
+				Windows.BattlegroundsSessionWindow.Show();
+
 			Initialized = true;
 
 			Influx.OnAppStart(
@@ -390,11 +393,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			private static PlayerWindow? _playerWindow;
 			private static OpponentWindow? _opponentWindow;
+			private static BattlegroundsSessionWindow? _bgsSessionWindow;
 			private static TimerWindow? _timerWindow;
 			private static StatsWindow? _statsWindow;
 
 			public static PlayerWindow PlayerWindow => _playerWindow ??= new PlayerWindow(Game);
 			public static OpponentWindow OpponentWindow => _opponentWindow ??= new OpponentWindow(Game);
+			public static BattlegroundsSessionWindow BattlegroundsSessionWindow => _bgsSessionWindow ??= new BattlegroundsSessionWindow();
 			public static TimerWindow TimerWindow => _timerWindow ??= new TimerWindow(Config.Instance);
 			public static StatsWindow StatsWindow => _statsWindow ??= new StatsWindow();
 			public static CapturableOverlayWindow? CapturableOverlay;

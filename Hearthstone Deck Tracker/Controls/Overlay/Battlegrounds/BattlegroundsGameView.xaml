@@ -1,0 +1,161 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.BattlegroundsGameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             MouseEnter="Game_MouseEnter"
+             MouseLeave="Game_MouseLeave"
+             ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltip, RelativeSource={RelativeSource AncestorType=battlegrounds:BattlegroundsGameView}}"
+>
+    <Canvas
+        Height="34"
+        Width="217"
+        Background="#AA000000"
+    >
+        <Border BorderBrush="#1C2022" BorderThickness="0,1,0,0">
+            <Canvas
+                Height="34"
+                Width="217"
+                ClipToBounds="True"
+            >
+                <Image
+                    Canvas.Left="-35"
+                    Canvas.Top="5"
+                    Source="{Binding CardImage.AssetPath}"
+                    Height="34"
+                    Width="145"
+                    Margin="-10,-5,0,0"
+                    RenderOptions.BitmapScalingMode="Fant"
+                >
+                    <Image.OpacityMask>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#AA000000" Offset="0"/>
+                            <GradientStop Color="Transparent" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Image.OpacityMask>
+                </Image>
+                <Grid Height="34" Width="217">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.7*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <hearthstoneDeckTracker:HearthstoneTextBlock
+                        Grid.Column="0"
+                        Text="{Binding HeroName}"
+                        FontSize="13"
+                        HorizontalAlignment="Left"
+                        Margin="8,0,0,0"
+                    />
+                    <Canvas Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="18" Width="22">
+                        <TextBlock
+                            Text="{Binding PlacementText}"
+                            FontSize="13"
+                            FontWeight="Bold"
+                            Foreground="{Binding PlacementTextBrush}"
+                            TextAlignment="Center"
+                            Width="23"
+                        />
+                        <Image
+                            Canvas.Left="-8"
+                            Canvas.Top="-7"
+                            Height="16"
+                            Width="16"
+                            Source="/HearthstoneDeckTracker;component/Resources/bgs_crown.png"
+                            Visibility="{Binding CrownVisibility}"
+                        />
+                    </Canvas>
+                    <TextBlock
+                        Grid.Column="2"
+                        Text="{Binding MMRDeltaText}"
+                        FontSize="13"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{Binding MMRDeltaTextBrush}"
+                    />
+                </Grid>
+            </Canvas>
+        </Border>
+        <Canvas
+            Name="FinalBoardCanvas"
+            Opacity=".95"
+            Canvas.Top="{Binding FinalBoardCanvasTop}"
+            Canvas.Left="{Binding FinalBoardCanvasLeft}"
+            Visibility="{Binding FinalBoardVisibility}"
+        >
+            <Canvas.RenderTransform>
+                <ScaleTransform ScaleX=".6" ScaleY=".6"/>
+            </Canvas.RenderTransform>
+            <Border
+                Background="#23272A"
+                BorderBrush="#404345"
+                BorderThickness="1 0 1 1"
+                CornerRadius="3"
+            >
+                <StackPanel Name="FinalBoardContainer" Orientation="Vertical">
+                    <Border
+                        BorderBrush="#4A5256"
+                        BorderThickness="0,0,0,1"
+                        Background="#1C2022"
+                        HorizontalAlignment="Center"
+                        CornerRadius="3 3 0 0"
+                        Width="{Binding ElementName=FinalBoardContainer, Path=ActualWidth}"
+                    >
+                        <Label
+                            Content="{lex:Loc Battlegrounds_Session_Game_Tooltip_Final_Board}"
+                            Foreground="#FFFFFF"
+                            Opacity=".55"
+                            FontSize="18"
+                            HorizontalAlignment="Center"
+                        />
+                    </Border>
+                    <StackPanel
+                        Name="FinalBoard"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,10,0"
+                    >
+                        <StackPanel.Resources>
+                            <Style TargetType="controls:BattlegroundsMinion">
+                                <Setter Property="Margin" Value="0,15,-10,15"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Label
+                            Content="{lex:Loc Battlegrounds_Session_Game_Tooltip_Final_Board_Empty}"
+                            Foreground="#FFFFFF"
+                            Opacity=".55"
+                            FontSize="18"
+                            Margin="30,20,20,20"
+                            HorizontalAlignment="Center"
+                            Visibility="{Binding FinalBoardEmptyLabelVisibility, FallbackValue=Collapsed}"
+                        />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border
+                Name="FinalBoardArrow"
+                Background="#23272A"
+                BorderBrush="#404345"
+                BorderThickness="{Binding FinalBoardArrowBorderThickness}"
+                Height="14"
+                Width="14"
+                Canvas.Left="{Binding FinalBoardArrowCanvasLeft}"
+                Canvas.Top="{Binding FinalBoardArrowCanvasTop}"
+            >
+                <Border.RenderTransform>
+                    <RotateTransform Angle="45" />
+                </Border.RenderTransform>
+            </Border>
+        </Canvas>
+    </Canvas>
+</UserControl>

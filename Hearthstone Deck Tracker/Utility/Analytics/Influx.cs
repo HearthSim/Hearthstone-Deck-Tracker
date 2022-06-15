@@ -288,6 +288,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(new InfluxPointBuilder("hdt_bb_enabled_changed").Tag("new_state", newState).Build());
 		}
 
+		public static void OnSessionRecapEnabledChanged(bool newState)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_session_recap_enabled_changed").Tag("new_state", newState).Build());
+		}
+
 		public static void OnMulliganToastClose(bool wasClicked, bool hasData) 
 		{
 			if(!Config.Instance.GoogleAnalytics)

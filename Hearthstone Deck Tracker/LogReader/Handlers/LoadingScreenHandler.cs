@@ -101,7 +101,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					Core.Game.CacheBrawlInfo();
 
 				if(game.CurrentMode == Mode.BACON)
+				{
 					Core.Game.CacheBattlegroundRatingInfo();
+					Core.Game.BattlegroundsSessionViewModel.Update();
+					if (Config.Instance.ShowSessionRecapBetweenGames)
+					{
+						Core.Overlay.BattlegroundsSession.Show();
+					}
+				}
+				else if (game.CurrentMode != Mode.GAMEPLAY)
+					Core.Overlay.BattlegroundsSession.Hide();
 
 				if(game.CurrentMode == Mode.LETTUCE_PLAY)
 					Core.Game.CacheMercenariesRatingInfo();

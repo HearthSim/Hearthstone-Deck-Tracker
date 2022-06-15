@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HearthDb.Enums;
 using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -34,6 +35,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BattlegroundsBoardState? _battlegroundsBoardState;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
+
+		public BattlegroundsSessionViewModel BattlegroundsSessionViewModel { get; } = new();
 
 		public GameV2()
 		{

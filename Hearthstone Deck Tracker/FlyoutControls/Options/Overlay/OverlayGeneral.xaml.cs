@@ -105,7 +105,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				BtnUnlockOverlay.Content = "Unlock";
 			}
 
-
 			Config.Instance.Reset(nameof(Config.PlayerDeckTop));
 			Config.Instance.Reset(nameof(Config.PlayerDeckLeft));
 			Config.Instance.Reset(nameof(Config.PlayerDeckHeight));

@@ -23,6 +23,7 @@ using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -61,6 +62,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private bool _opponentCardsHidden;
 		private bool _playerCardsHidden;
 		private bool _resizeElement;
+		private bool _battlegroundsSessionVisibleTemp;
 		private bool _secretsTempVisible;
 		private UIElement? _selectedUiElement;
 		private bool _uiMovable;
@@ -76,6 +78,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
+
+		public BattlegroundsSessionViewModel BattlegroundsSessionViewModelVM => Core.Game.BattlegroundsSessionViewModel;
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
 
@@ -438,6 +442,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_bgsTopBarBehavior.Hide();
 			TurnCounter.UpdateTurn(1);
 			HideBobsBuddyPanel();
+		}
+
+		internal void ShowBattlegroundsSession()
+		{
+			BattlegroundsSessionViewModelVM.Update();
+			BattlegroundsSession.Show();
+		}
+
+		internal void HideBattlegroundsSession()
+		{
+			if (_battlegroundsSessionVisibleTemp)
+				return;
+			BattlegroundsSession.Hide();
 		}
 
 		internal void ShowLinkOpponentDeckDisplay()
