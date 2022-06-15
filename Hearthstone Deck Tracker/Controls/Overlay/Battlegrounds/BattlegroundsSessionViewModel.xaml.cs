@@ -19,20 +19,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 		public ObservableCollection<BattlegroundsGameViewModel> SessionGames { get; set; } = new();
 
-		public void Reset()
-		{
-			BgRatingStart = "0";
-			BgRatingCurrent = "0";
-			BannedTribe1 = Race.BEAST;
-			BannedTribe2 = Race.BEAST;
-			BannedTribe3 = Race.BEAST;
-			BannedTribe4 = Race.BEAST;
-			BannedTribesVisibility = Visibility.Collapsed;
-			BannedTribesMsgVisibility = Visibility.Visible;
-			GridHeaderVisibility = Visibility.Collapsed;
-			GamesEmptyStateVisibility = Visibility.Visible;
-		}
-
 		public void OnGameEnd()
 		{
 			if(Core.Game.Spectator)

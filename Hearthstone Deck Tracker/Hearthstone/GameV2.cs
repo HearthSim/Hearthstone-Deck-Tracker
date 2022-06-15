@@ -289,7 +289,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsBoardState?.Reset();
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
-			BattlegroundsSessionViewModel.Reset();
 
 			if(Core._game != null && Core.Overlay != null)
 			{
