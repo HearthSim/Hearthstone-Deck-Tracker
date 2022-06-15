@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
 	public partial class BattlegroundsSessionViewModel : ViewModel
 	{
-		private Lazy<BattlegroundsDb> _db = new();
+		private readonly Lazy<BattlegroundsDb> _db = new();
 
 		public ObservableCollection<BattlegroundsGameViewModel> SessionGames { get; set; } = new();
 

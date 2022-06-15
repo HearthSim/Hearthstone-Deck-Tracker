@@ -8,7 +8,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
 	public partial class BattlegroundsSession : INotifyPropertyChanged
 	{
-		private BrushConverter _bc = new();
+		private readonly BrushConverter _bc = new();
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 
