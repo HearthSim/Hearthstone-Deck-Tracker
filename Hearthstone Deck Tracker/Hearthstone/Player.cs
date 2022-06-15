@@ -317,7 +317,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(IsLocalPlayer && entity.CardId != null)
 			{
-				UpdateKnownEntitesInDeck(entity.CardId);
+				UpdateKnownEntitiesInDeck(entity.CardId);
 				entity.Info.Hidden = false;
 			}
 			if(!IsLocalPlayer)
@@ -342,7 +342,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void Play(Entity entity, int turn)
 		{
 			if(!IsLocalPlayer && entity.CardId != null)
-				UpdateKnownEntitesInDeck(entity.CardId, entity.Info.Turn);
+				UpdateKnownEntitiesInDeck(entity.CardId, entity.Info.Turn);
 			switch(entity.GetTag(GameTag.CARDTYPE))
 			{
 				case (int)CardType.TOKEN:
@@ -374,7 +374,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void DeckToPlay(Entity entity, int turn)
 		{
 			if(entity.CardId != null)
-				UpdateKnownEntitesInDeck(entity.CardId);
+				UpdateKnownEntitiesInDeck(entity.CardId);
 			entity.Info.Turn = turn;
 			Log(entity);
 		}
@@ -427,7 +427,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void HandDiscard(Entity entity, int turn)
 		{
 			if(!IsLocalPlayer && entity.CardId != null)
-				UpdateKnownEntitesInDeck(entity.CardId, entity.Info.Turn);
+				UpdateKnownEntitiesInDeck(entity.CardId, entity.Info.Turn);
 			entity.Info.Turn = turn;
 			entity.Info.Discarded = true;
 			Log(entity);
@@ -436,7 +436,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void DeckDiscard(Entity entity, int turn)
 		{
 			if(entity.CardId != null)
-				UpdateKnownEntitesInDeck(entity.CardId);
+				UpdateKnownEntitiesInDeck(entity.CardId);
 			entity.Info.Turn = turn;
 			entity.Info.Discarded = true;
 			Log(entity);
@@ -480,7 +480,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log(entity);
 		}
 
-		private void UpdateKnownEntitesInDeck(string cardId, int turn = int.MaxValue)
+		private void UpdateKnownEntitiesInDeck(string cardId, int turn = int.MaxValue)
 		{
 			var card = InDeckPrecitions.FirstOrDefault(x => x.CardId == cardId && turn >= x.Turn);
 			if(card != null)
@@ -497,7 +497,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void SecretPlayedFromDeck(Entity entity, int turn)
 		{
 			if(entity.CardId != null)
-				UpdateKnownEntitesInDeck(entity.CardId);
+				UpdateKnownEntitiesInDeck(entity.CardId);
 			entity.Info.Turn = turn;
 			Log(entity);
 		}
