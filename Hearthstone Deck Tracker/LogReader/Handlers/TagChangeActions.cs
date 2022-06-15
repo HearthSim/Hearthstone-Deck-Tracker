@@ -82,6 +82,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => gameState.GameHandler?.HandleBattlegroundsPlayerTechLevel(id, value);
 				case PLAYER_TRIPLES:
 					return () => gameState.GameHandler?.HandleBattlegroundsPlayerTriples(id, value);
+                case IMMOLATESTAGE:
+                    return () => OnImmolateStateChange(id, value, game);
 			}
 			return null;
 		}
@@ -818,6 +820,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(game.Entities.TryGetValue(id, out var entity))
 				game.SecretsManager.OnEntityRevealedAsMinion(entity);
+		}
+
+		private void OnImmolateStateChange(int id, int value, IGame game)
+		{
+			if(value == 4 && game.Entities.TryGetValue(id, out var entity) && entity.CardId != NonCollectible.Neutral.TheCoinCore)
+				entity.ClearCardId();
 		}
 	}
 }
