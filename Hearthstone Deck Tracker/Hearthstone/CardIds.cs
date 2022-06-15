@@ -178,7 +178,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard IceBarrier = new MultiIdCard(Collectible.Mage.IceBarrier, Collectible.Mage.IceBarrierCore, Collectible.Mage.IceBarrierVanilla);
 				public static readonly MultiIdCard IceBlock = new MultiIdCard(Collectible.Mage.IceBlock, Collectible.Mage.IceBlockVanilla);
 				public static readonly MultiIdCard ManaBind = new MultiIdCard(Collectible.Mage.ManaBind);
-				public static readonly MultiIdCard MirrorEntity = new MultiIdCard(Collectible.Mage.MirrorEntityPLACEHOLDER_202204, Collectible.Mage.MirrorEntityExpert1, Collectible.Mage.MirrorEntityVanilla);
+				public static readonly MultiIdCard MirrorEntity = new MultiIdCard(Collectible.Mage.MirrorEntityExpert1, Collectible.Mage.MirrorEntityVanilla);
 				public static readonly MultiIdCard NetherwindPortal = new MultiIdCard(Collectible.Mage.NetherwindPortal);
 				public static readonly MultiIdCard OasisAlly = new MultiIdCard(Collectible.Mage.OasisAlly);
 				public static readonly MultiIdCard PotionOfPolymorph = new MultiIdCard(Collectible.Mage.PotionOfPolymorph);
