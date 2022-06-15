@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		private Lazy<BattlegroundsDb> _db = new();
 
 		public ObservableCollection<BattlegroundsGameViewModel> SessionGames { get; set; } = new();
-		
+
 		public void Reset()
 		{
 			BgRatingStart = "0";
@@ -41,7 +41,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			var currentRating = Core.Game.CurrentGameStats?.BattlegroundsRatingAfter;
 			BgRatingCurrent = $"{currentRating:N0}";
 
-			OnPropertyChanged(nameof(BgRatingCurrent));
 			UpdateLatestGames();
 		}
 
@@ -60,9 +59,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				rating = ratingStart;
 			BgRatingStart = $"{ratingStart:N0}";
 			BgRatingCurrent = $"{rating:N0}";
-
-			OnPropertyChanged(nameof(BgRatingStart));
-			OnPropertyChanged(nameof(BgRatingCurrent));
 		}
 
 		public void UpdateSectionsVisibilities()
@@ -79,9 +75,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				? Visibility.Visible
 				: Visibility.Collapsed;
 
-			OnPropertyChanged(nameof(BgBannedTribesSectionVisibility));
-			OnPropertyChanged(nameof(BgStartCurrentMMRSectionVisibility));
-			OnPropertyChanged(nameof(BgLatestGamesSectionVisibility));
 			Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
 		}
 
@@ -100,11 +93,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				BannedTribe2 = unavailableRaces[1];
 				BannedTribe3 = unavailableRaces[2];
 				BannedTribe4 = unavailableRaces[3];
-
-				OnPropertyChanged(nameof(BannedTribe1));
-				OnPropertyChanged(nameof(BannedTribe2));
-				OnPropertyChanged(nameof(BannedTribe3));
-				OnPropertyChanged(nameof(BannedTribe4));
 			}
 
 			if(Core.Game.CurrentMode == Mode.GAMEPLAY && bannedTribesUpdated)
@@ -117,8 +105,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				BannedTribesVisibility = Visibility.Collapsed;
 				BannedTribesMsgVisibility = Visibility.Visible;
 			}
-			OnPropertyChanged(nameof(BannedTribesVisibility));
-			OnPropertyChanged(nameof(BannedTribesMsgVisibility));
 		}
 
 		private GameItem? UpdateLatestGames()
@@ -143,13 +129,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			GridHeaderVisibility = sessionGames.Count > 0
 				? Visibility.Visible
 				: Visibility.Collapsed;
-			
+
 			GamesEmptyStateVisibility = sessionGames.Count == 0
 				? Visibility.Visible
 				: Visibility.Collapsed;
 
-			OnPropertyChanged(nameof(GridHeaderVisibility));
-			OnPropertyChanged(nameof(GamesEmptyStateVisibility));
 			Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
 
 			return firstGame;
@@ -224,18 +208,148 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			}
 		}
 
-		public string? BgRatingStart { get; set; }
-		public string? BgRatingCurrent { get; set; }
-		public Race BannedTribe1 { get; set; }
-		public Race BannedTribe2 { get; set; }
-		public Race BannedTribe3 { get; set; }
-		public Race BannedTribe4 { get; set; }
-		public Visibility BannedTribesVisibility { get; set; }
-		public Visibility BannedTribesMsgVisibility { get; set; }
-		public Visibility GridHeaderVisibility { get; set; }
-		public Visibility GamesEmptyStateVisibility { get; set; }
-		public Visibility BgBannedTribesSectionVisibility { get; set; }
-		public Visibility BgStartCurrentMMRSectionVisibility { get; set; }
-		public Visibility BgLatestGamesSectionVisibility { get; set; }
+
+		private string? _bgRatingStart;
+		public string? BgRatingStart
+		{
+			get => _bgRatingStart;
+			set
+			{
+				_bgRatingStart = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private string? _bgRatingCurrent;
+		public string? BgRatingCurrent
+		{
+			get => _bgRatingCurrent;
+			set
+			{
+				_bgRatingCurrent = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Race _bannedTribe1;
+		public Race BannedTribe1
+		{
+			get => _bannedTribe1;
+			set
+			{
+				_bannedTribe1 = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Race _bannedTribe2;
+		public Race BannedTribe2
+		{
+			get => _bannedTribe2;
+			set
+			{
+				_bannedTribe2 = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Race _bannedTribe3;
+		public Race BannedTribe3
+		{
+			get => _bannedTribe3;
+			set
+			{
+				_bannedTribe3 = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Race _bannedTribe4;
+		public Race BannedTribe4
+		{
+			get => _bannedTribe4;
+			set
+			{
+				_bannedTribe4 = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _bannedTribesVisibility;
+		public Visibility BannedTribesVisibility
+		{
+			get => _bannedTribesVisibility;
+			set
+			{
+				_bannedTribesVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _bannedTribesMsgVisibility;
+		public Visibility BannedTribesMsgVisibility
+		{
+			get => _bannedTribesMsgVisibility;
+			set
+			{
+				_bannedTribesMsgVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _gridHeaderVisibility;
+		public Visibility GridHeaderVisibility
+		{
+			get => _gridHeaderVisibility;
+			set
+			{
+				_gridHeaderVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _gamesEmptyStateVisibility;
+		public Visibility GamesEmptyStateVisibility
+		{
+			get => _gamesEmptyStateVisibility;
+			set
+			{
+				_gamesEmptyStateVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _bgBannedTribesSectionVisibility;
+		public Visibility BgBannedTribesSectionVisibility
+		{
+			get => _bgBannedTribesSectionVisibility;
+			set
+			{
+				_bgBannedTribesSectionVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _bgStartCurrentMMRSectionVisibility;
+		public Visibility BgStartCurrentMMRSectionVisibility
+		{
+			get => _bgStartCurrentMMRSectionVisibility;
+			set
+			{
+				_bgStartCurrentMMRSectionVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _bgLatestGamesSectionVisibility;
+		public Visibility BgLatestGamesSectionVisibility
+		{
+			get => _bgLatestGamesSectionVisibility;
+			set
+			{
+				_bgLatestGamesSectionVisibility = value;
+				OnPropertyChanged();
+			}
+		}
 	}
 }
