@@ -1,3 +1,14 @@
+## **Release v1.18.5 - 2022-06-16**
+**Updated for Hearthstone 23.4.3**
+
+**New**:
+- Added a Battlegrounds Session Recap overlay & window, showing Banned Minions, MMR changes, and Recent Games.
+- Added a counter for Abyssal Curse
+
+**Fixes**:
+- Fixed an issue where Mirror Entity was displayed in Standard games.
+- Fixed an issue where information about cards discarded by Immolation was unintentionally revealed.
+
 ## **Release v1.18.4 - 2022-06-01**
 **Fixes**:
 - Fixed an issue where the Ozumat Hero Power was not working correctly.
