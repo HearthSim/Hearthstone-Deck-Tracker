@@ -38,11 +38,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 		}
 
 		public void AddGame(
-			string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool save = true
+			string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, bool save = true
 		)
 		{
 			RemoveGame(startTime, false);
-			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter, placemenent, finalBoard));
+			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter, placemenent, finalBoard, friendlyGame));
 			if(save)
 				Save();
 		}
@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 
 		public class GameItem
 		{
-			public GameItem(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard)
+			public GameItem(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame)
 			{
 				StartTime = startTime;
 				EndTime = endTime;
@@ -85,6 +85,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 				RatingAfter = ratingAfter;
 				Placement = placemenent;
 				FinalBoard = new FinalBoardItem(finalBoard);
+				FriendlyGame = friendlyGame;
 			}
 
 			public GameItem()
@@ -111,6 +112,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 
 			[XmlElement("FinalBoard")]
 			public FinalBoardItem? FinalBoard { get; set; }
+
+			[XmlAttribute("FriendlyGame")]
+			public bool FriendlyGame { get; set; }
 
 		}
 

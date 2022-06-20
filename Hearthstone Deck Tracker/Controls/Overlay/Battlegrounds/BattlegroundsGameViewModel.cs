@@ -17,9 +17,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 	public class BattlegroundsGameViewModel : ViewModel
 	{
 		public List<Entity> FinalBoardMinions { get; set; } = new List<Entity>();
+		private readonly GameItem _gameItem;
 
 		public BattlegroundsGameViewModel(GameItem gameItem)
 		{
+			_gameItem = gameItem;
 			StartTime = gameItem.StartTime;
 			Placement = gameItem.Placement;
 
@@ -38,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 			MMRDelta = gameItem.RatingAfter - gameItem.Rating;
 			var signal = MMRDelta > 0 ? "+" : "";
-			MMRDeltaText = Math.Abs(MMRDelta) > 500 ? "-" : $"{signal}{MMRDelta}";
+			MMRDeltaText = Math.Abs(MMRDelta) > 500 || gameItem.FriendlyGame ? "-" : $"{signal}{MMRDelta}";
 
 			CrownVisibility = gameItem.Placement == 1 ? Visibility.Visible : Visibility.Hidden;
 
@@ -87,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		{
 			get
 			{
-				if(MMRDelta == 0 || Math.Abs(MMRDelta) > 500)
+				if(MMRDelta == 0 || Math.Abs(MMRDelta) > 500 || _gameItem.FriendlyGame)
 					return new SolidColorBrush(Colors.White);
 				return new SolidColorBrush(MMRDelta > 0 ? Color.FromRgb(139, 210, 134) : Color.FromRgb(236, 105, 105));
 			}
