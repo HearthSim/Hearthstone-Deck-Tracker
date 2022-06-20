@@ -810,6 +810,7 @@ namespace Hearthstone_Deck_Tracker
 				.Where(x => x.IsMinion && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Player.Id))
 				.Select(x => x.Clone())
 				.ToArray();
+			var friendlyGame = Core.Game.CurrentGameType == GameType.GT_BATTLEGROUNDS_FRIENDLY;
 
 			if(startTime != null && endTime != null && heroCardId != null && rating != null && ratingAfter != null && placement != null)
 			{
@@ -820,7 +821,8 @@ namespace Hearthstone_Deck_Tracker
 					(int)rating,
 					(int)ratingAfter,
 					(int)placement,
-					finalBoard
+					finalBoard,
+					friendlyGame
 				);
 			}
 			else
