@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 			UpdateBannedTribes();
 
-			var firstGame = UpdateLatestGames();
+			var firstGame = await UpdateLatestGames();
 
 			var rating = Core.Game.BattlegroundsRatingInfo?.Rating ?? 0;
 			var ratingStart = firstGame?.Rating ?? rating;
@@ -93,10 +93,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			}
 		}
 
-		private GameItem? UpdateLatestGames()
+		private async Task<GameItem?> UpdateLatestGames()
 		{
 			SessionGames.Clear();
-			var sortedGames = BattlegroundsLastGames.Instance.Games
+			var sortedGames = (await BattlegroundsLastGames.Instance.PlayerGames())
 				.OrderBy(g => g.StartTime)
 				.ToList();
 			DeleteOldGames(sortedGames);

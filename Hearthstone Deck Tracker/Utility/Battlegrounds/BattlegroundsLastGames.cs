@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 using HearthDb.Enums;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -37,12 +39,34 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			return new BattlegroundsLastGames();
 		}
 
-		public void AddGame(
+		private async Task<string?> GetPlayerId()
+		{
+			var accountId = await Helper.RetryWhileNull(Reflection.GetAccountId, 2, 3000);
+			return accountId != null ? $"{accountId.Hi}_{accountId.Lo}" : null;
+		}
+
+		public async Task<List<GameItem>> PlayerGames()
+		{
+			var playerId = await GetPlayerId();
+			if (playerId == null)
+				return new List<GameItem>();
+			
+			return Games.Where(g => g.Player == null || g.Player == playerId).ToList();
+		}
+
+		public async void AddGame(
 			string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, bool save = true
 		)
 		{
+			var playerId = await GetPlayerId();
+			if(playerId == null)
+			{
+				Log.Info("Unable to save the game. User account can not found...");
+				return;
+			}
+			
 			RemoveGame(startTime, false);
-			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter, placemenent, finalBoard, friendlyGame));
+			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter, placemenent, finalBoard, friendlyGame, playerId));
 			if(save)
 				Save();
 		}
@@ -76,7 +100,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 
 		public class GameItem
 		{
-			public GameItem(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame)
+			public GameItem(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, string player)
 			{
 				StartTime = startTime;
 				EndTime = endTime;
@@ -86,11 +110,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 				Placement = placemenent;
 				FinalBoard = new FinalBoardItem(finalBoard);
 				FriendlyGame = friendlyGame;
+				Player = player;
 			}
 
 			public GameItem()
 			{
 			}
+
+			[XmlAttribute("Player")]
+			public string? Player { get; set; }
 
 			[XmlAttribute("StartTime")]
 			public string? StartTime { get; set; }
