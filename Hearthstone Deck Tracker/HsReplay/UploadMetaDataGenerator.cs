@@ -121,6 +121,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					opposing.StarLevel = game.OpponentStarLevel;
 			}
 
+			var playerDeckSize = game.PlayerCards.Sum(x => x.Count);
 			if(game.GameMode == GameMode.Battlegrounds)
 			{
 				if(game.BattlegroundsRating > 0)
@@ -135,7 +136,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(game.MercenariesRatingAfter > 0)
 					friendly.MercenariesRatingAfter = game.MercenariesRatingAfter;
 			}
-			else if(game.PlayerCards.Sum(x => x.Count) == 30 || game.IsPVPDungeonMatch || game.IsDungeonMatch == true && game.DeckId != Guid.Empty)
+			else if(playerDeckSize == 30 || playerDeckSize == 40 || game.IsPVPDungeonMatch || game.IsDungeonMatch == true && game.DeckId != Guid.Empty)
 			{
 				friendly.DeckList = game.PlayerCards.Where(x => x.Id != Database.UnknownCardId).SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
 				if(game.HsDeckId > 0)
