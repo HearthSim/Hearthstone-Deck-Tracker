@@ -165,7 +165,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			}
 		}
 
-		public string CardCount => $"{Deck.Cards.Sum(x => x.Count)} / {MaxDeckSize}";
+		public string CardCount => $"{Deck.Cards.Sum(x => x.Count)} / {(Cards.Any(x => x.Id == HearthDb.CardIds.Collectible.Neutral.PrinceRenathal) ? 40 : 30)}";
 
 		public CostFilter SelectedCostFilter
 		{
@@ -368,9 +368,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 				OnPropertyChanged();
 			}
 		}
-
-		public const int MaxDeckSize = 30;
-
+		
 		private void RemoveCardFromDeck(Card card)
 		{
 			if(Deck == null || card == null)
@@ -413,12 +411,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		private void UpdateCardCountWarning()
 		{
 			var count = Cards.Sum(x => x.Count);
-			if(count == 30)
+			if(Cards.Any(x => x.Id == HearthDb.CardIds.Collectible.Neutral.PrinceRenathal))
+			{
 				Warnings &= ~(DeckEditorWarnings.LessThan30Cards | DeckEditorWarnings.MoreThan30Cards);
-			else if(count > 30)
-				Warnings |= DeckEditorWarnings.MoreThan30Cards;
+				if(count == 40)
+					Warnings &= ~(DeckEditorWarnings.LessThan40Cards | DeckEditorWarnings.MoreThan40Cards);
+				else if(count > 40)
+					Warnings |= DeckEditorWarnings.MoreThan40Cards;
+				else
+					Warnings |= DeckEditorWarnings.LessThan40Cards;
+			}
 			else
-				Warnings |= DeckEditorWarnings.LessThan30Cards;
+			{
+				Warnings &= ~(DeckEditorWarnings.LessThan40Cards | DeckEditorWarnings.MoreThan40Cards);
+				if(count == 30)
+					Warnings &= ~(DeckEditorWarnings.LessThan30Cards | DeckEditorWarnings.MoreThan30Cards);
+				else if(count > 30)
+					Warnings |= DeckEditorWarnings.MoreThan30Cards;
+				else
+					Warnings |= DeckEditorWarnings.LessThan30Cards;
+			}
 		}
 
 		private void UpdateDeckNameError()

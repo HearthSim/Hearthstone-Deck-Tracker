@@ -12,5 +12,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		MoreThan30Cards = 1 << 1,
 		[LocDescription("Enum_DeckEditorWarnings_NameAlreadyExists")]
 		NameAlreadyExists = 1 << 2,
+		[LocDescription("Enum_DeckEditorWarnings_LessThan40")]
+		LessThan40Cards = 1 << 3,
+		[LocDescription("Enum_DeckEditorWarnings_MoreThan40")]
+		MoreThan40Cards = 1 << 4,
 	}
 }
