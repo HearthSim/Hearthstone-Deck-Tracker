@@ -119,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			try
 			{
 				var count = deck.Cards.Sum(c => c.Count);
-				return count == 30 || count == 1
+				return count == 30 || count == 40 || count == 1
 					&& deck.Cards.First().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful;
 			}
 			catch(OverflowException e)
