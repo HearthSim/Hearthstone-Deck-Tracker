@@ -88,6 +88,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			if (Visibility == Visibility.Visible || !Config.Instance.ShowSessionRecap)
 				return;
 
+			Core.Game.BattlegroundsSessionViewModel.UpdateSectionsVisibilities();
 			Visibility = Visibility.Visible;
 		}
 
