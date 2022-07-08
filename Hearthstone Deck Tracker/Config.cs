@@ -579,6 +579,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0)]
 		public int OffsetY = 0;
 
+		[DefaultValue(false)]
+		public bool OnboardingSeen = false;
+
 		[DefaultValue(72)]
 		public double OpponentDeckHeight = 72;
 

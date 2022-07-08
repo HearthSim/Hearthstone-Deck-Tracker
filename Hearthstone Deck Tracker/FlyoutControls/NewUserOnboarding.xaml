@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.NewUserOnboarding"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600"
+             Name="Control"
+             >
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Hyperlink}">
+            <Setter Property="Foreground" Value="DodgerBlue"/>
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Storyboard x:Key="StoryboardFadeIn" Duration="0:0:0.25">
+            <DoubleAnimation Storyboard.TargetName="Control" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.25"/>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardFadeOut" Duration="0:0:0.25">
+            <DoubleAnimation Storyboard.TargetName="Control" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.25"/>
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid>
+        <Image
+            Name="BackgroundImage" Source="{StaticResource NewUserOnboardingBackground}"
+            Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant"
+            HorizontalAlignment="Center"
+        />
+        <StackPanel Margin="0,10" VerticalAlignment="Center">
+            <Label Content="{Binding WelcomeLabelText}" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0" Opacity="0.74" FontSize="24" />
+            <Label Content="Hearthstone Deck Tracker" DockPanel.Dock="Top" 
+                   FontSize="36" HorizontalAlignment="Center" Margin="0,-15,0,5" FontWeight="Bold"/>
+            <TextBlock TextWrapping="Wrap" FontSize="15" TextAlignment="Center" Opacity="0.74" HorizontalAlignment="Center" Width="600" Text="{lex:Loc NewUserOnboarding_Preamble}" />
+            <Button x:Name="ButtonGo" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonGo_OnClick" Width="250" Margin="0, 20, 0, 0">
+                <TextBlock FontSize="16" Padding="0,5" Text="{lex:Loc NewUserOnboarding_Continue}"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

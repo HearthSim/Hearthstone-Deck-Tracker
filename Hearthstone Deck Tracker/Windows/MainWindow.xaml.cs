@@ -233,7 +233,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
 			};
 
-			HSReplayNetHelper.CollectionUploaded += () =>
+			HSReplayNetHelper.CollectionUploaded += (_) =>
 			{
 				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable)); 
 			};
@@ -720,6 +720,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return !synced && (Remote.Config.Data?.CollectionBanner?.RemovablePreSync ?? false)
 					|| synced && (Remote.Config.Data?.CollectionBanner?.RemovablePostSync ?? false);
 			}
+		}
+		public void SetNewUserOnboarding(bool visible)
+		{
+			if(visible)
+				NewUserOnboardingOverlay.Show();
+			else 
+				NewUserOnboardingOverlay.Hide();
 		}
 	}
 }

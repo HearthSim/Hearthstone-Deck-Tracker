@@ -431,5 +431,22 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			Error,
 			TokenAlreadyClaimed
 		}
+		public static async Task<string?> IdentifyClientAnalyticsToken(string token = "")
+		{
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return null;
+				}
+				return await Client.Value.IdentifyClientAnalyticsToken(token);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
 	}
 }

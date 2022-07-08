@@ -183,126 +183,129 @@
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
-    <DockPanel>
-        <StatusBar Name="StatusBarDev" DockPanel.Dock="Bottom" Visibility="Collapsed">
-            <StatusBarItem Margin="2,0,0,0">
-                <TextBlock FontSize="14">
-                    <Run FontWeight="SemiBold" Text="Development build (unstable) - join"/>
-                    <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkDevDiscord_OnClick">
-                        <Run Text="#hdt on the dev discord"/>
-                    </Hyperlink>
-                    <Run FontWeight="SemiBold" Text="for feedback/issues"/>
-                </TextBlock>
-            </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Right">
-                <CheckBox Foreground="White" Content="check for dev updates" FlowDirection="RightToLeft" 
-                    IsChecked="{Binding CheckForDevUpdates, Source={StaticResource ConfigWrapper}}" />
-            </StatusBarItem>
-        </StatusBar>
-        <StatusBar Name="StatusBarUpdate" DockPanel.Dock="Top" Margin="0,1,0,0" Visibility="{Binding Visibility, Source={x:Static utility:Updater.StatusBar}}">
-            <StatusBarItem Margin="10,0,0,0" HorizontalAlignment="Center">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" FontSize="14">
-                        <Run FontWeight="SemiBold" Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_NewUpdateAvailable}"/>
-                        <Run FontWeight="SemiBold">-</Run>
-                        <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkUpdateNow_OnClick">
-                            <Run Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_ClickToUpdate}"/>
+    <Grid>
+        <DockPanel>
+            <StatusBar Name="StatusBarDev" DockPanel.Dock="Bottom" Visibility="Collapsed">
+                <StatusBarItem Margin="2,0,0,0">
+                    <TextBlock FontSize="14">
+                        <Run FontWeight="SemiBold" Text="Development build (unstable) - join"/>
+                        <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkDevDiscord_OnClick">
+                            <Run Text="#hdt on the dev discord"/>
                         </Hyperlink>
+                        <Run FontWeight="SemiBold" Text="for feedback/issues"/>
                     </TextBlock>
-                </StackPanel>
-            </StatusBarItem>
-        </StatusBar>
-        <mainWindowControls:NewsBarView x:Name="NewsBar" DockPanel.Dock="Top"/>
-        <mainWindowControls:MainWindowMenuView x:Name="MainWindowMenu" DockPanel.Dock="Top"/>
-        <Separator DockPanel.Dock="Top" Panel.ZIndex="2" Margin="0,-1,0,0"/>
-        <DockPanel Margin="5">
-            <DockPanel Width="236" DockPanel.Dock="Right" Margin="5,0,0,0">
-                <controls1:StartHearthstoneButton DockPanel.Dock="Top" Margin="0,0,0,5"/>
-                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Visibility="Collapsed" Margin="0,0,0,5" DockPanel.Dock="Top">
-                    <DockPanel>
-                        <TextBlock Text="{lex:LocTextUpper MainWindow_Label_SelectedVersion}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                        <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding ShortVersionString}" FontWeight="SemiBold"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                </Border>
-                <local:ManaCurve x:Name="ManaCurveMyDecks" Height="150" Margin="0,5,0,0" DockPanel.Dock="Bottom"/>
-                <ListView x:Name="ListViewDeck" Background="#696969"
-                                    Foreground="White" FontWeight="Bold" BorderThickness="1"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    ScrollViewer.CanContentScroll="False" FontFamily="Arial"
-                                    HorizontalAlignment="Center" Width="236" Height="auto">
-                    <ListView.Resources>
-                        <Style TargetType="GridViewColumnHeader">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </Style>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Margin" Value="-4,-3,-3,0"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="BorderBrush" Value="Blue" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListView.Resources>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <controls1:Card/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </DockPanel>
-            <DockPanel Name="MyGamesPanel" Width="380" DockPanel.Dock="Right" Margin="5,0,0,0">
-                <GroupBox x:Name="GroupBoxHsReplayDeckInfo" Header="{lex:LocTextUpper MainWindow_Header_GlobalDeckStatistics}" DockPanel.Dock="Top" Margin="0,0,0,5">
-                    <mainWindowControls:HsReplayDeckInfoView x:Name="HsReplayDeckInfo"/>
-                </GroupBox>
-                <GroupBox Margin="0,0,0,0" DockPanel.Dock="Top">
-                    <GroupBox.Header>
-                        <Grid>
-                            <TextBlock Text="{lex:LocTextUpper MainWindow_Header_MyGames}" Foreground="White"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" MouseDown="MyGamesFilters_OnClick">
-                                <StackPanel.Style>
-                                    <Style>
-                                        <Setter Property="StackPanel.Opacity" Value="0.7"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="StackPanel.IsMouseOver" Value="True">
-                                                <Setter Property="StackPanel.Opacity" Value="0.9"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </StackPanel.Style>
-                                <TextBlock Text="{lex:LocTextUpper MainWindow_MyGames_HasActiveFilters}" Foreground="White" DockPanel.Dock="Right" Margin="8,0" Opacity="1"
-                                    Visibility="{Binding ActiveFiltersWarningVisibility, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}"/>
-                                <Rectangle Width="16" Height="16" DockPanel.Dock="Right" Opacity="0.8">
-                                    <Rectangle.Fill>
-                                        <VisualBrush Visual="{StaticResource appbar_settings}" />
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </StackPanel>
-                        </Grid>
-                    </GroupBox.Header>
-                    <mainWindowControls:DeckChartsView x:Name="DeckCharts" DockPanel.Dock="Top"/>
-                </GroupBox>
-            </DockPanel>
-            <DockPanel>
-                <controls1:RemovableBanner DockPanel.Dock="Top" Click="RemovableBanner_OnClick" Close="RemovableBanner_OnClose"
-                                           Background="{StaticResource HSReplayNetBlue}" Foreground="White"
-                                           Visibility="{Binding CollectionSyncingBannerVisbiility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"
-                                           Removable="{Binding CollectionSyncingBannerRemovable, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
-                    <mainWindowControls:CollectionSyncingBannerView Margin="8"/>
-                </controls1:RemovableBanner>
-                <Grid Margin="0,2,0,0">
-                    <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
-                    <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray" 
-                           FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                           Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />
-                </Grid>
+                </StatusBarItem>
+                <StatusBarItem HorizontalAlignment="Right">
+                    <CheckBox Foreground="White" Content="check for dev updates" FlowDirection="RightToLeft"
+                        IsChecked="{Binding CheckForDevUpdates, Source={StaticResource ConfigWrapper}}" />
+                </StatusBarItem>
+            </StatusBar>
+            <StatusBar Name="StatusBarUpdate" DockPanel.Dock="Top" Margin="0,1,0,0" Visibility="{Binding Visibility, Source={x:Static utility:Updater.StatusBar}}">
+                <StatusBarItem Margin="10,0,0,0" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" FontSize="14">
+                            <Run FontWeight="SemiBold" Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_NewUpdateAvailable}"/>
+                            <Run FontWeight="SemiBold">-</Run>
+                            <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkUpdateNow_OnClick">
+                                <Run Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_ClickToUpdate}"/>
+                            </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                </StatusBarItem>
+            </StatusBar>
+            <mainWindowControls:NewsBarView x:Name="NewsBar" DockPanel.Dock="Top"/>
+            <mainWindowControls:MainWindowMenuView x:Name="MainWindowMenu" DockPanel.Dock="Top"/>
+            <Separator DockPanel.Dock="Top" Panel.ZIndex="2" Margin="0,-1,0,0"/>
+            <DockPanel Margin="5">
+                <DockPanel Width="236" DockPanel.Dock="Right" Margin="5,0,0,0">
+                    <controls1:StartHearthstoneButton DockPanel.Dock="Top" Margin="0,0,0,5"/>
+                    <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Visibility="Collapsed" Margin="0,0,0,5" DockPanel.Dock="Top">
+                        <DockPanel>
+                            <TextBlock Text="{lex:LocTextUpper MainWindow_Label_SelectedVersion}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                            <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ShortVersionString}" FontWeight="SemiBold"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DockPanel>
+                    </Border>
+                    <local:ManaCurve x:Name="ManaCurveMyDecks" Height="150" Margin="0,5,0,0" DockPanel.Dock="Bottom"/>
+                    <ListView x:Name="ListViewDeck" Background="#696969"
+                                        Foreground="White" FontWeight="Bold" BorderThickness="1"
+                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                        ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                        ScrollViewer.CanContentScroll="False" FontFamily="Arial"
+                                        HorizontalAlignment="Center" Width="236" Height="auto">
+                        <ListView.Resources>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </Style>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Margin" Value="-4,-3,-3,0"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="BorderBrush" Value="Blue" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <controls1:Card/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DockPanel>
+                <DockPanel Name="MyGamesPanel" Width="380" DockPanel.Dock="Right" Margin="5,0,0,0">
+                    <GroupBox x:Name="GroupBoxHsReplayDeckInfo" Header="{lex:LocTextUpper MainWindow_Header_GlobalDeckStatistics}" DockPanel.Dock="Top" Margin="0,0,0,5">
+                        <mainWindowControls:HsReplayDeckInfoView x:Name="HsReplayDeckInfo"/>
+                    </GroupBox>
+                    <GroupBox Margin="0,0,0,0" DockPanel.Dock="Top">
+                        <GroupBox.Header>
+                            <Grid>
+                                <TextBlock Text="{lex:LocTextUpper MainWindow_Header_MyGames}" Foreground="White"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" MouseDown="MyGamesFilters_OnClick">
+                                    <StackPanel.Style>
+                                        <Style>
+                                            <Setter Property="StackPanel.Opacity" Value="0.7"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="StackPanel.IsMouseOver" Value="True">
+                                                    <Setter Property="StackPanel.Opacity" Value="0.9"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                    <TextBlock Text="{lex:LocTextUpper MainWindow_MyGames_HasActiveFilters}" Foreground="White" DockPanel.Dock="Right" Margin="8,0" Opacity="1"
+                                        Visibility="{Binding ActiveFiltersWarningVisibility, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}"/>
+                                    <Rectangle Width="16" Height="16" DockPanel.Dock="Right" Opacity="0.8">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{StaticResource appbar_settings}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox.Header>
+                        <mainWindowControls:DeckChartsView x:Name="DeckCharts" DockPanel.Dock="Top"/>
+                    </GroupBox>
+                </DockPanel>
+                <DockPanel>
+                    <controls1:RemovableBanner DockPanel.Dock="Top" Click="RemovableBanner_OnClick" Close="RemovableBanner_OnClose"
+                                               Background="{StaticResource HSReplayNetBlue}" Foreground="White"
+                                               Visibility="{Binding CollectionSyncingBannerVisbiility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"
+                                               Removable="{Binding CollectionSyncingBannerRemovable, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
+                        <mainWindowControls:CollectionSyncingBannerView Margin="8"/>
+                    </controls1:RemovableBanner>
+                    <Grid Margin="0,2,0,0">
+                        <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
+                        <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray"
+                               FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />
+                    </Grid>
+                </DockPanel>
             </DockPanel>
         </DockPanel>
-    </DockPanel>
+        <flyoutControls:NewUserOnboarding x:Name="NewUserOnboardingOverlay" Visibility="Collapsed" />
+    </Grid>
 </controls:MetroWindow>

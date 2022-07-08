@@ -45,6 +45,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Dust = collection.Dust;
 		}
 
+		public int Size()
+		{
+			return Cards.Sum(x => x.Value.Sum());
+		}
+
 		private static int GetDbfId(string cardId) => Database.GetCardFromId(cardId)?.DbfId ?? 0;
 
 		[JsonProperty("collection")]

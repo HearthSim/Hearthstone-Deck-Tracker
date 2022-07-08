@@ -67,6 +67,7 @@
                     <ImageSource x:Key="MercsIcon">Resources/merc_icon.png</ImageSource>
                     <ImageSource x:Key="MercsFrame">Resources/merc_frame.png</ImageSource>
                     <ImageSource x:Key="MercsCheckmark">Resources/checkmark.png</ImageSource>
+                    <ImageSource x:Key="NewUserOnboardingBackground">Resources/onboarding-background.jpg</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

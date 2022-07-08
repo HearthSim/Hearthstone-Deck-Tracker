@@ -35,6 +35,7 @@ using Region = Hearthstone_Deck_Tracker.Enums.Region;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using System.Web;
 using System.Security.Cryptography.X509Certificates;
+using Hearthstone_Deck_Tracker.HsReplay;
 
 #endregion
 
@@ -746,6 +747,7 @@ namespace Hearthstone_Deck_Tracker
 
 			}
 			TryOpenUrl(url);
+			HSReplayNetClientAnalytics.TryTrackToastClick("battlegrounds_hero_picker");
 		}
 
 		public static async Task<T?> RetryWhileNull<T>(Func<T> func, int tries = 5, int delay = 150)

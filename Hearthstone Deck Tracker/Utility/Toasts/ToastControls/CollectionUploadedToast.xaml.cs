@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 		{
 			ToastManager.ForceCloseToast(this);
 			HSReplayNetHelper.OpenDecksUrlWithCollection("collection_uploaded_toast");
+			HSReplayNetClientAnalytics.TryTrackToastClick("constructed_collection_uploaded");
 		}
 	}
 }

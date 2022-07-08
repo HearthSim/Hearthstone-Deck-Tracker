@@ -57,6 +57,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 				var url = Helper.BuildHsReplayNetUrl($"/decks/{_shortId}", "mulligan_toast", null, new[] { ids, opponent, playerInitiative, playerStarLevel });
 				Helper.TryOpenUrl(url);
+				HSReplayNetClientAnalytics.TryTrackToastClick("mulligan");
 			}
 		}
 
