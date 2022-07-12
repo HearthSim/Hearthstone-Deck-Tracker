@@ -1,3 +1,6 @@
+## **Release v1.18.8 - 2022-07-12**
+- Fixed an issue where Battlegrounds Session Recap was not respecting some settings
+
 ## **Release v1.18.6 - 2022-06-27**
 **Updated for Hearthstone 23.6.0**
 
