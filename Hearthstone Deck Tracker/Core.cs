@@ -72,6 +72,7 @@ namespace Hearthstone_Deck_Tracker
 			LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("en-US");
 			_startUpTime = DateTime.UtcNow;
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+			ServicePointManager.DefaultConnectionLimit = 10;
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			Config.Load();
 			Log.Info($"HDT: {Helper.GetCurrentVersion()}, Operating System: {Helper.GetWindowsVersion()}, .NET Framework: {Helper.GetInstalledDotNetVersion()}");
