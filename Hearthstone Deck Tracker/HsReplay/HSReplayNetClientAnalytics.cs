@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			TrackEvent("app_start", new
 			{
-				app_version = Helper.GetCurrentVersion().ToVersionString(),
+				app_version = Helper.GetCurrentVersion().ToVersionString(true),
 				is_first_start = ConfigManager.PreviousVersion == null,
 				is_autostart = Config.Instance.StartWithWindows,
 				is_onboarding = isOnboarding
