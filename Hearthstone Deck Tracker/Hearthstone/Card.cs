@@ -81,9 +81,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public int DeckListIndex;
 
-		[XmlIgnore]
-		public SpellSchool SpellSchool;
-
 		public Card()
 		{
 			Count = 1;
@@ -91,8 +88,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Card(string id, string? playerClass, Rarity rarity, string? type, string? name, int cost, string? localizedName, int inHandCount,
 		            int count, string? text, string? englishText, int attack, int health, string? race, string[]? mechanics, int? durability,
-		            string? artist, string? set, bool baconCard, SpellSchool spellSchool, List<string>? alternativeNames = null, List<string>? alternativeTexts = null,
-		            HearthDb.Card? dbCard = null)
+		            string? artist, string? set, bool baconCard, List<string>? alternativeNames = null, List<string>? alternativeTexts = null, HearthDb.Card? dbCard = null)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -113,7 +109,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Artist = artist;
 			Set = set;
 			BaconCard = baconCard;
-			SpellSchool = spellSchool;
 			if(alternativeNames != null)
 				AlternativeNames = alternativeNames;
 			if(alternativeTexts != null)
@@ -158,8 +153,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Set = HearthDbConverter.SetConverter(dbCard.Set);
 			BaconCard = baconCard;
 			_loaded = true;
-			SpellSchool = (SpellSchool) dbCard.SpellSchool;
-	}
+		}
 
 		public int Count
 		{
@@ -464,7 +458,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[XmlIgnore]
 		public string FlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage)) ?? "";
-
+		
 		[XmlIgnore]
 		public string FormattedFlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage), false) ?? "";
 
@@ -472,7 +466,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool Collectible => _dbCard?.Collectible ?? false;
 
 		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, _text, EnglishText, Attack,
-										  Health, Race, Mechanics, Durability, Artist, Set, BaconCard, SpellSchool, AlternativeNames, AlternativeTexts, _dbCard);
+										  Health, Race, Mechanics, Durability, Artist, Set, BaconCard, AlternativeNames, AlternativeTexts, _dbCard);
 
 		public override string ToString() => Name + "(" + Count + ")";
 
