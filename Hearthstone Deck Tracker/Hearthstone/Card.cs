@@ -81,6 +81,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public int DeckListIndex;
 
+		[XmlIgnore]
+		public SpellSchool SpellSchool => (SpellSchool?) _dbCard?.SpellSchool ?? SpellSchool.NONE;
+
 		public Card()
 		{
 			Count = 1;
