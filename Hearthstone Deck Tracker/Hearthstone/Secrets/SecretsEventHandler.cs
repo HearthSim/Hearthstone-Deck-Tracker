@@ -100,7 +100,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				}
 
 				if(freeSpaceOnBoard)
+				{
 					exclude.Add(Hunter.WanderingMonster);
+
+					if(attacker.IsMinion)
+						exclude.Add(Mage.VengefulVisage);
+				}
 
 				exclude.Add(Mage.IceBarrier);
 				exclude.Add(Hunter.ExplosiveTrap);
@@ -180,6 +185,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if(FreeSpaceInHand)
 				exclude.Add(Mage.FrozenClone);
+
+			exclude.Add(Rogue.Kidnap);
 
 			//Hidden cache will only trigger if the opponent has a minion in hand. 
 			//We might not know this for certain - requires additional tracking logic.
@@ -428,6 +435,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 						exclude.Add(Mage.Spellbender);
 					exclude.Add(Hunter.CatTrick);
 					exclude.Add(Mage.NetherwindPortal);
+					exclude.Add(Rogue.StickySituation);
 				}
 
 				if (Game.PlayerMinionCount > 0)
@@ -488,6 +496,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			// This triggers regardless of cards in hand
 			if (Game.Player.CardsPlayedThisTurn.Count > 0)
 				Exclude(Rogue.Plagiarize);
+		}
+
+		public void HandleManaRemaining(int mana)
+		{
+			if(mana == 0 && FreeSpaceInHand)
+				Exclude(Rogue.DoubleCross);
 		}
 	}
 }

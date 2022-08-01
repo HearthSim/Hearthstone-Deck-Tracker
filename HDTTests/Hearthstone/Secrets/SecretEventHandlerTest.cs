@@ -189,7 +189,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.FreezingTrap, HunterSecrets.WanderingMonster);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard, MageSecrets.VengefulVisage);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.JudgmentOfJustice);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.ShadowClone);
 
@@ -197,7 +197,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard, MageSecrets.VengefulVisage);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.JudgmentOfJustice);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.SuddenBetrayal, RogueSecrets.ShadowClone);
 		}
@@ -267,7 +267,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
-			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
 		}
 
 		[TestMethod]
@@ -278,7 +278,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.MirrorEntity, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All);
-			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
 		}
 
 		[TestMethod]
@@ -338,7 +338,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.OhMyYogg);
-			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks, RogueSecrets.StickySituation);
 		}
 
 		[TestMethod]
@@ -349,7 +349,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.OhMyYogg);
-			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks, RogueSecrets.StickySituation);
 		}
 
 		[TestMethod]
@@ -361,7 +361,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender, PaladinSecrets.OhMyYogg);
-			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks, RogueSecrets.StickySituation);
 		}
 
 		[TestMethod]
@@ -527,7 +527,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.WanderingMonster);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.VengefulVisage);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.JudgmentOfJustice);
 			VerifySecrets(3, RogueSecrets.All);
 		}
@@ -540,7 +540,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All);
-			VerifySecrets(3, RogueSecrets.All);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Kidnap);
 		}
 
 		[TestMethod]
@@ -610,7 +610,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
-			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
 		}
 
 

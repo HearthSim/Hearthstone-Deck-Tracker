@@ -186,6 +186,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard Spellbender = new MultiIdCard(Collectible.Mage.Spellbender, Collectible.Mage.SpellbenderVanilla);
 				public static readonly MultiIdCard SplittingImage = new MultiIdCard(Collectible.Mage.SplittingImage);
 				public static readonly MultiIdCard Vaporize = new MultiIdCard(Collectible.Mage.Vaporize, Collectible.Mage.VaporizeVanilla);
+				public static readonly MultiIdCard VengefulVisage = new MultiIdCard(Collectible.Mage.VengefulVisage);
 			}
 
 			public class Paladin : EnumerateMultiId<Paladin>
@@ -214,10 +215,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard Bamboozle = new MultiIdCard(Collectible.Rogue.Bamboozle);
 				public static readonly MultiIdCard CheatDeath = new MultiIdCard(Collectible.Rogue.CheatDeath);
 				public static readonly MultiIdCard DirtyTricks = new MultiIdCard(Collectible.Rogue.DirtyTricks);
+				public static readonly MultiIdCard DoubleCross = new MultiIdCard(Collectible.Rogue.DoubleCross);
 				public static readonly MultiIdCard Evasion = new MultiIdCard(Collectible.Rogue.Evasion);
+				public static readonly MultiIdCard Kidnap = new MultiIdCard(Collectible.Rogue.Kidnap);
 				public static readonly MultiIdCard Plagiarize = new MultiIdCard(Collectible.Rogue.Plagiarize);
 				public static readonly MultiIdCard ShadowClone = new MultiIdCard(Collectible.Rogue.ShadowClone);
 				public static readonly MultiIdCard Shenanigans = new MultiIdCard(Collectible.Rogue.Shenanigans);
+				public static readonly MultiIdCard StickySituation = new MultiIdCard(Collectible.Rogue.StickySituation);
 				public static readonly MultiIdCard SuddenBetrayal = new MultiIdCard(Collectible.Rogue.SuddenBetrayal);
 			}
 		}

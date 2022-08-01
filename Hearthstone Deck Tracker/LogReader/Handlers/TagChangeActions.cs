@@ -84,8 +84,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => gameState.GameHandler?.HandleBattlegroundsPlayerTriples(id, value);
                 case IMMOLATESTAGE:
                     return () => OnImmolateStateChange(id, value, game);
+				case RESOURCES_USED:
+					return () => OnResourcesUsedChange(id, value, game);
 			}
 			return null;
+		}
+
+		private void OnResourcesUsedChange(int id, int value, IGame game)
+		{
+			if(id != game.PlayerEntity.Id)
+				return;
+			var available = game.PlayerEntity.GetTag(RESOURCES) + game.PlayerEntity.GetTag(TEMP_RESOURCES);
+			game.SecretsManager.HandleManaRemaining(Math.Max(0, available - value));
 		}
 
 		private void OnRebornChange(int id, int value, IGame game)
