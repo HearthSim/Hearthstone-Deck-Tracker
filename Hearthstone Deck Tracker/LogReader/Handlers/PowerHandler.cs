@@ -519,7 +519,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, Collectible.Druid.Bottomfeeder, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Shaman.PiranhaPoacher:
-								AddKnownCardId(gameState, Collectible.Neutral.PiranhaSwarmer); // Is this the correct token? These are 4 different ones
+								AddKnownCardId(gameState, Collectible.Neutral.PiranhaSwarmer); 
+								break;
+							case Collectible.Paladin.SinfulSousChef:
+								AddKnownCardId(gameState, NonCollectible.Paladin.SilverHandRecruitLegacyToken, 2); 
 								break;
 						}
 					}
@@ -820,6 +823,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Rogue.BootstrapSunkeneer:
 								if(target != null)
 									AddKnownCardId(gameState, target, 1, DeckLocation.Bottom);
+								break;
+							case Collectible.Mage.FrozenTouch:
+								AddKnownCardId(gameState, NonCollectible.Mage.FrozenTouch_FrozenTouchToken); 
 								break;
 
 							default:
