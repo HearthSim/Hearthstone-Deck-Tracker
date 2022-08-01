@@ -1,3 +1,6 @@
+## **Release v1.18.10 - 2022-08-01**
+**Added support for Murder at Castle Nathria**
+
 ## **Release v1.18.9 - 2022-07-26**
 **Updated for Hearthstone 24.0.0**
 
