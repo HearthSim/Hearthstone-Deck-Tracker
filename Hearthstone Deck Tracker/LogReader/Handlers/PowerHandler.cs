@@ -244,7 +244,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(entity.Info.GuessedCardState == GuessedCardState.Revealed)
 							entity.Info.GuessedCardState = GuessedCardState.Guessed;
 						if(gameState.CurrentBlock?.CardId == Collectible.Neutral.KingTogwaggle
-							|| gameState.CurrentBlock?.CardId == NonCollectible.Neutral.KingTogwaggle_KingsRansomToken)
+							|| gameState.CurrentBlock?.CardId == NonCollectible.Neutral.KingTogwaggle_KingsRansomToken
+							|| gameState.CurrentBlock?.CardId == Collectible.Mage.SuspiciousAlchemist
+							|| gameState.CurrentBlock?.CardId == Collectible.Priest.SuspiciousUsher
+							|| gameState.CurrentBlock?.CardId == Collectible.Warrior.SuspiciousPirate)
 						{
 							entity.Info.Hidden = true;
 						}
