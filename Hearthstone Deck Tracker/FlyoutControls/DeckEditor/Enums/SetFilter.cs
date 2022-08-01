@@ -70,5 +70,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		ALTERAD_VALLUY = 1626,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_SunkenCity")]
 		THE_SUNKEN_CITY = 1658,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Nathria")]
+		REVENDRETH = 1691,
 	}
 }
