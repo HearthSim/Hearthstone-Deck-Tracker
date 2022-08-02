@@ -515,6 +515,16 @@ namespace Hearthstone_Deck_Tracker
 				// Called here so that UpdatePostGameMercenariesRewards can generate an accurate delta.
 				MercenariesCoins.Update();
 			}
+
+			HSReplayNetClientAnalytics.TryTrackMatchStart(
+				HearthDbConverter.GetBnetGameType(_game.CurrentGameType, _game.CurrentFormat),
+				_game.CurrentSelectedDeck != null && _game.CurrentFormat != null ? HearthDbConverter.ToHearthDbDeck(
+					_game.CurrentSelectedDeck,
+					HearthDbConverter.GetFormatType(_game.CurrentFormat)
+				) : null,
+				_game.Spectator,
+				timestamp
+			);
 		}
 
 		private void HandleAdventureRestart()
@@ -972,7 +982,18 @@ namespace Hearthstone_Deck_Tracker
 		public void HandlePlayerMulliganDone()
 		{
 			if(_game.IsBattlegroundsMatch)
+			{
 				Core.Overlay.HideBattlegroundsHeroPanel();
+
+				var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
+				var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
+				var originalHero = heroCardId != null ? Database.GetCardFromId(heroCardId) : null;
+				if(originalHero != null)
+					HSReplayNetClientAnalytics.TryTrackBattlegroundsHeroPick(
+						originalHero,
+						HearthDbConverter.GetBnetGameType(_game.CurrentGameType, _game.CurrentFormat)
+					);
+			}
 			else if(_game.IsConstructedMatch)
 				Core.Overlay.HideMulliganPanel(false);
 		}

@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.Enums.BnetGameType;
 
 #endregion
@@ -244,6 +245,40 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				};
 			}
 			return null;
+		}
+
+		public static HearthDb.Deckstrings.Deck? ToHearthDbDeck(HearthMirror.Objects.Deck deck, FormatType format)
+		{
+			var heroCard = Database.GetCardFromId(deck.Hero);
+			if(heroCard == null)
+				return null;
+
+			var cards = deck.Cards.Select(x =>
+			{
+				var card = Database.GetCardFromId(x.Id);
+				if(card == null)
+					return null;
+				card.Count = x.Count;
+				return card;
+			}).WhereNotNull();
+
+			Dictionary<int, int> dbfIds;
+			try
+			{
+				dbfIds = cards.ToDictionary(c => c.DbfId, c => c.Count);
+			}
+			catch
+			{
+				return null;
+			}
+
+			return new HearthDb.Deckstrings.Deck
+			{
+				Name = deck.Name,
+				Format = format,
+				HeroDbfId = heroCard.DbfId,
+				CardDbfIds = dbfIds,
+			};
 		}
 
 		public static Deck FromHearthDbDeck(HearthDb.Deckstrings.Deck hDbDeck)

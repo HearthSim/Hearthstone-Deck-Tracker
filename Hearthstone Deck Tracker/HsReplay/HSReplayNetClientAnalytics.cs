@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using HearthDb.Deckstrings;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -87,6 +90,40 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			TrackEvent("toast_click", new {
 				toast = toastId
+			});
+		}
+
+		/**
+		 * Keep track of the match starts we've already tracked to prevent double-emits when the Deck changes.
+		 */
+		private static HashSet<long> MatchStarts = new HashSet<long>();
+
+		public static void TryTrackMatchStart(
+			BnetGameType bnetGameType,
+			HearthDb.Deckstrings.Deck? deck,
+			bool isSpectator,
+			DateTime idempotencyTimestamp
+		) {
+			if(MatchStarts.Contains(idempotencyTimestamp.ToUnixTime()))
+				return;
+
+			var deckstring = deck != null ? DeckSerializer.Serialize(deck, false) : null;
+			TrackEvent("match_start", new
+			{
+				hearthstone_bnet_game_type = (int) bnetGameType,
+				deck_string = deckstring,
+				is_spectator = isSpectator,
+			});
+			MatchStarts.Add(idempotencyTimestamp.ToUnixTime());
+		}
+
+		public static void TryTrackBattlegroundsHeroPick(Card hero, BnetGameType bnetGameType)
+		{
+			TrackEvent("battlegrounds_hero_pick", new
+			{
+				battlegrounds_hero_dbf_id = hero.DbfId,
+				battlegrounds_hero_name = hero.Name,
+				hearthstone_bnet_game_type = (int)bnetGameType,
 			});
 		}
 
