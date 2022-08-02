@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class CardIds
 	{
 		public const int KeyMasterAlabasterDbfId = 61174;
+		public const int SuspiciousMysteryDbfId = 75867;
 
 		public static List<string> HiddenCardidPrefixes = new List<string>()
 		{

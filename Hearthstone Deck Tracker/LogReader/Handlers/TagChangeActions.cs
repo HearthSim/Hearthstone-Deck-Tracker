@@ -137,6 +137,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(entity.IsControlledBy(game.Opponent.Id))
 				return;
 
+			if(entity.GetTag(CREATOR_DBID) == Hearthstone.CardIds.SuspiciousMysteryDbfId)
+			{
+				// Card was created by Suspicious Alchemist/Usher/Pirate
+				return;
+			}
+
+
 			if(string.IsNullOrEmpty(targetEntity.CardId))
 			{
 				targetEntity.CardId = entity.Info.LatestCardId;
