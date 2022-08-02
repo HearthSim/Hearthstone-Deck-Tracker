@@ -74,9 +74,11 @@ namespace HDTTests.Hearthstone.Secrets
 
 		public SecretsManager SecretsManager { get; set; }
 		public int OpponentMinionCount { get; set; }
+		public int OpponentBoardCount { get; set; }
 		public int OpponentHandCount { get; set; }
 		public bool IsMinionInPlay { get; set; }
 		public int PlayerMinionCount { get; set; }
+		public int PlayerBoardCount { get; set; }
 		public GameType CurrentGameType { get; set; }
 		public Format? CurrentFormat { get; set; }
 		public int ProposedAttacker { get; set; }
