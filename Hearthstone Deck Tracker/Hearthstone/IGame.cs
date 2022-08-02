@@ -42,10 +42,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		string GetStoredPlayerName(int id);
 		SecretsManager SecretsManager { get; }
 		int OpponentMinionCount { get; }
+		int OpponentBoardCount { get; }
 		int OpponentHandCount { get; }
 		int OpponentSecretCount { get; }
 		bool IsMinionInPlay { get; }
 		int PlayerMinionCount { get; }
+		int PlayerBoardCount { get; }
 		GameType CurrentGameType { get; }
 		Format? CurrentFormat { get; }
 		int ProposedAttacker { get; set; }

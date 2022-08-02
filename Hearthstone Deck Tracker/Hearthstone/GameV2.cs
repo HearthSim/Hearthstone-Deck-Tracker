@@ -76,16 +76,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<string> PowerLog { get; } = new List<string>();
 		public Deck? IgnoreIncorrectDeck { get; set; }
 		public GameTime GameTime { get; } = new GameTime();
-		public bool IsMinionInPlay => Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion)).Value != null;
-
-		public bool IsOpponentMinionInPlay
-			=> Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))).Value != null;
-
-		public int OpponentMinionCount => Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id)));
-		public int PlayerMinionCount => Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Player.Id)));
-		public int OpponentHandCount => Entities.Count(x => x.Value.IsInHand && x.Value.IsControlledBy(Opponent.Id));
-		public int OpponentSecretCount => Entities.Count(x => x.Value.IsInSecret && x.Value.IsSecret && x.Value.IsControlledBy(Opponent.Id));
-		public int PlayerHandCount => Entities.Count(x => x.Value.IsInHand && x.Value.IsControlledBy(Player.Id));
+		public bool IsMinionInPlay => Entities.Values.FirstOrDefault(x => x.IsInPlay && x.IsMinion) != null;
+		public bool IsOpponentMinionInPlay => Entities.Values.FirstOrDefault(x => x.IsInPlay && x.IsMinion && x.IsControlledBy(Opponent.Id)) != null;
+		public int OpponentMinionCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinion && x.IsControlledBy(Opponent.Id));
+		public int OpponentBoardCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinionOrLocation && x.IsControlledBy(Opponent.Id));
+		public int PlayerMinionCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinion && x.IsControlledBy(Player.Id));
+		public int PlayerBoardCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinionOrLocation && x.IsControlledBy(Player.Id));
+		public int OpponentHandCount => Entities.Values.Count(x => x.IsInHand && x.IsControlledBy(Opponent.Id));
+		public int OpponentSecretCount => Entities.Values.Count(x => x.IsInSecret && x.IsSecret && x.IsControlledBy(Opponent.Id));
+		public int PlayerHandCount => Entities.Values.Count(x => x.IsInHand && x.IsControlledBy(Player.Id));
 
 		public Player Player { get; set; }
 		public Player Opponent { get; set; }

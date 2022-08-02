@@ -100,8 +100,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_cardMarks[i].Visibility = Collapsed;
 			}
 
-			var oppBoard = Core.Game.Opponent.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
-			var playerBoard = Core.Game.Player.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
+			var oppBoard = Core.Game.Opponent.Board.Where(x => x.IsMinionOrLocation).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
+			var playerBoard = Core.Game.Player.Board.Where(x => x.IsMinionOrLocation).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
 			if(!_game.IsInMenu && (_game.IsMulliganDone || _game.IsBattlegroundsMatch || _game.IsMercenariesMatch) && User32.IsHearthstoneInForeground() && IsVisible)
 				DetectMouseOver(playerBoard, oppBoard);

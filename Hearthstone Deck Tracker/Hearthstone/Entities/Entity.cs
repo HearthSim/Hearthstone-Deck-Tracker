@@ -80,10 +80,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsOpponent => !IsPlayer && HasTag(GameTag.PLAYER_ID);
 
 		[JsonIgnore]
+		public bool IsMinionOrLocation => IsMinion || IsLocation;
+
+		[JsonIgnore]
 		public bool IsMinion => GetTag(GameTag.CARDTYPE) == (int)CardType.MINION;
 
 		[JsonIgnore]
-		public bool IsPlayableCard => IsMinion || IsSpell || IsWeapon || IsPlayableHero;
+		public bool IsLocation => GetTag(GameTag.CARDTYPE) == (int)CardType.LOCATION;
+
+		[JsonIgnore]
+		public bool IsPlayableCard => IsMinionOrLocation || IsSpell || IsWeapon || IsPlayableHero;
 
 		[JsonIgnore]
 		public bool IsWeapon => GetTag(GameTag.CARDTYPE) == (int)CardType.WEAPON;
