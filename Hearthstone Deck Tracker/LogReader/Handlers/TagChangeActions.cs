@@ -92,6 +92,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void OnResourcesUsedChange(int id, int value, IGame game)
 		{
+			if(game.PlayerEntity == null)
+				return;
 			if(id != game.PlayerEntity.Id)
 				return;
 			var available = game.PlayerEntity.GetTag(RESOURCES) + game.PlayerEntity.GetTag(TEMP_RESOURCES);
