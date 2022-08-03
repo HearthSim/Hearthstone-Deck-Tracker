@@ -1,4 +1,4 @@
-## **Release v1.18.11 - 2022-08-01**
+## **Release v1.18.12 - 2022-08-03**
 **Fixes**:
 - Fixed an issue where Location cards were not working correctly with the Twitch Extension.
 - Fixed an issue where the chosen cards of Suspicious Alchemist/Usher/Pirate was revealed.
