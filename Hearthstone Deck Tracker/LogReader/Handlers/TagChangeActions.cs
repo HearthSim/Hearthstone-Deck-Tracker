@@ -598,6 +598,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler?.HandleOpponentSecretTrigger(entity, cardId, gameState.GetTurnNumber(), id);
 					}
 					break;
+				case Zone.SETASIDE:
+					if(controller == game.Opponent.Id)
+					{
+						if(!game.Entities.TryGetValue(id, out var entity))
+							return;
+						gameState.GameHandler?.HandleOpponentSecretRemove(entity, cardId, gameState.GetTurnNumber());
+					}
+					break;
 				default:
 					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 					break;

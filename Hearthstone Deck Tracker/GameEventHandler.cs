@@ -1571,6 +1571,15 @@ namespace Hearthstone_Deck_Tracker
 				GameEvents.OnOpponentPlayToDeck.Execute(card);
 		}
 
+		public void HandleOpponentSecretRemove(Entity entity, string? cardId, int turn)
+		{
+			if(!entity.IsSecret)
+				return;
+			_game.Opponent.RemoveFromPlay(entity, turn);
+			_game.SecretsManager.RemoveSecret(entity);
+			Core.UpdateOpponentCards();
+		}
+
 		public void HandleOpponentSecretTrigger(Entity entity, string? cardId, int turn, int otherId)
 		{
 			if (!entity.IsSecret)
