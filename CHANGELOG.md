@@ -1,3 +1,9 @@
+## **Release v1.18.13 - 2022-08-16**
+**Updated for Hearthstone 24.0.3**
+
+**Fixes**:
+- Fixed an issue where Secrets countered by Blademaster Okami were not handled correctly.
+
 ## **Release v1.18.12 - 2022-08-03**
 **Fixes**:
 - Fixed an issue where Location cards were not working correctly with the Twitch Extension.
