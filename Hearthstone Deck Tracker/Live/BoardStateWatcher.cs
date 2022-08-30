@@ -120,6 +120,11 @@ namespace Hearthstone_Deck_Tracker.Live
 			return buddyDbfId;
 		}
 
+		private int? BgsQuestReward(Player player, bool heroPower)
+		{
+			return player.QuestRewards.FirstOrDefault(x => x.HasTag(GameTag.BACON_IS_HEROPOWER_QUESTREWARD) == heroPower)?.Card.DbfId;
+		}
+
 		private BoardState? GetBoardState()
 		{
 			if(Core.Game.PlayerEntity == null || Core.Game.OpponentEntity == null)
@@ -172,8 +177,8 @@ namespace Hearthstone_Deck_Tracker.Live
 						Cards = SortedDbfIds(player.Hand),
 						Size = player.HandCount
 					},
-					HeroPower = DbfId(FindHeroPower(player)),
-					Weapon = BuddyDbfId(player) ?? DbfId(Find(player, WeaponId(Core.Game.PlayerEntity))),
+					HeroPower = BgsQuestReward(player, true) ?? DbfId(FindHeroPower(player)),
+					Weapon = BgsQuestReward(player, false) ?? DbfId(Find(player, WeaponId(Core.Game.PlayerEntity))),
 					Quest = Quest(player.Quests.FirstOrDefault()),
 					Fatigue = Core.Game.PlayerEntity.GetTag(GameTag.FATIGUE)
 				},
@@ -189,8 +194,8 @@ namespace Hearthstone_Deck_Tracker.Live
 						Size = opponent.HandCount
 					},
 					Hero = DbfId(Find(opponent, HeroId(Core.Game.OpponentEntity))),
-					HeroPower = DbfId(FindHeroPower(opponent)),
-					Weapon = BuddyDbfId(opponent) ?? DbfId(Find(opponent, WeaponId(Core.Game.OpponentEntity))),
+					HeroPower = BgsQuestReward(opponent, true) ?? DbfId(FindHeroPower(opponent)),
+					Weapon = BgsQuestReward(opponent, false) ?? DbfId(Find(opponent, WeaponId(Core.Game.OpponentEntity))),
 					Quest = Quest(opponent.Quests.FirstOrDefault()),
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},
