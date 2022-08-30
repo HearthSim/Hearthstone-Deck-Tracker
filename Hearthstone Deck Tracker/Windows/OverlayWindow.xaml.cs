@@ -479,15 +479,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void ShowExperienceCounter()
 		{
-			//_experienceCounterBehavior.Show();
-			if(Config.Instance.ShowExperienceCounter)
-				ExperienceCounter.Visibility = Visible;
+			// Disabled for the time being with patch 24.2
+			//if(Config.Instance.ShowExperienceCounter)
+				//ExperienceCounter.Visibility = Visible;
 		}
 
 		internal void HideExperienceCounter()
 		{
-			if(!AnimatingXPBar)
-				ExperienceCounter.Visibility = Collapsed;
+			// Disabled for the time being with patch 24.2
+			//if(!AnimatingXPBar)
+				//ExperienceCounter.Visibility = Collapsed;
 		}
 		internal void ShowMercenariesTasksButton()
 		{
