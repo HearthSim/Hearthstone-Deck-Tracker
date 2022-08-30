@@ -329,6 +329,48 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var opponentHeroPower = _game.Opponent.Board.FirstOrDefault(x => x.IsHeroPower);
 			input.SetOpponentHeroPower(opponentHeroPower?.CardId ?? "", WasHeroPowerActivated(opponentHeroPower), opponentHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0);
 
+			foreach(var quest in _game.Player.Quests)
+			{
+				var rewardDbfId = quest.GetTag(GameTag.QUEST_REWARD_DATABASE_ID);
+				var reward = Database.GetCardFromDbfId(rewardDbfId, false);
+				input.PlayerQuests.Add(new QuestData()
+				{
+					QuestProgress = quest.GetTag(GameTag.QUEST_PROGRESS),
+					QuestProgressTotal = quest.GetTag(GameTag.QUEST_PROGRESS_TOTAL),
+					QuestCardId = quest.CardId ?? "",
+					RewardCardId = reward?.Id ?? ""
+				});
+			}
+
+			foreach(var reward in _game.Player.QuestRewards)
+			{
+				input.PlayerQuests.Add(new QuestData()
+				{
+					RewardCardId = reward.CardId ?? ""
+				});
+			}
+
+			foreach(var quest in _game.Opponent.Quests)
+			{
+				var rewardDbfId = quest.GetTag(GameTag.QUEST_REWARD_DATABASE_ID);
+				var reward = Database.GetCardFromDbfId(rewardDbfId, false);
+				input.OpponentQuests.Add(new QuestData()
+				{
+					QuestProgress = quest.GetTag(GameTag.QUEST_PROGRESS),
+					QuestProgressTotal = quest.GetTag(GameTag.QUEST_PROGRESS_TOTAL),
+					QuestCardId = quest.CardId ?? "",
+					RewardCardId = reward?.Id ?? ""
+				});
+			}
+
+			foreach(var reward in _game.Opponent.QuestRewards)
+			{
+				input.OpponentQuests.Add(new QuestData()
+				{
+					RewardCardId = reward.CardId ?? ""
+				});
+			}
+
 			input.SetPlayerHandSize(_game.Player.HandCount);
 
 			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfId).ToList(), true);
@@ -384,9 +426,17 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				foreach(var minion in _input.playerSide)
 					DebugLog(minion.ToString());
 
+				foreach(var quest in _input.PlayerQuests)
+					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+
+				DebugLog("---");
 				DebugLog($"Opponent: heroPower={_input.OpponentHeroPower.CardId}, used={_input.OpponentHeroPower.IsActivated}");
 				foreach(var minion in _input.opponentSide)
 					DebugLog(minion.ToString());
+
+				foreach(var quest in _input.OpponentQuests)
+					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+
 
 				if(_input.PlayerSecrets.Count() > 0)
 				{

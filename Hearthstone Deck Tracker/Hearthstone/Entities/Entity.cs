@@ -146,6 +146,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public bool IsHeroPower => GetTag(GameTag.CARDTYPE) == (int)CardType.HERO_POWER;
 
+		public bool IsBgsQuestReward => GetTag(GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_QUEST_REWARD;
+
 		public bool IsCurrentPlayer => HasTag(GameTag.CURRENT_PLAYER);
 
 		public bool HasCardId => !string.IsNullOrEmpty(CardId);

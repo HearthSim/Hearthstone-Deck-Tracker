@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BobsBuddy;
+using BobsBuddy.Factory;
 using BobsBuddy.Simulation;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -11,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
 	internal static class BobsBuddyUtils
 	{
-		private const string ReplicatingMenace_Normal = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantment;
+		private const string ReplicatingMenace_Normal = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantmentBATTLEGROUNDS;
 		private const string ReplicatingMenace_Golden = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantmentTavernBrawl;
 		private const string LivingSpores = NonCollectible.Neutral.LivingSporesToken2;
 		public const string RebornRiteEnchmantment = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
@@ -22,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal static Minion GetMinionFromEntity(MinionFactory minionFactory, bool player, Entity entity, IEnumerable<Entity> attachedEntities) 
 		{
 			var cardId = entity.Info.LatestCardId ?? "Unknown";
-			var minion = minionFactory.GetMinionFromCardid(cardId, player);
+			var minion = minionFactory.CreateFromCardId(cardId, player);
 
 			minion.baseAttack = entity.GetTag(GameTag.ATK);
 			minion.baseHealth = entity.GetTag(GameTag.HEALTH);
