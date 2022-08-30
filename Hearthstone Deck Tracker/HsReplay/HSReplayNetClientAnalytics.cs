@@ -107,7 +107,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(MatchStarts.Contains(idempotencyTimestamp.ToUnixTime()))
 				return;
 
-			var deckstring = deck != null ? DeckSerializer.Serialize(deck, false) : null;
+
+			var deckstring = "";
+			try
+			{
+				deckstring = deck != null ? DeckSerializer.Serialize(deck, false) : null;
+			}
+			catch
+			{
+				// likely due to unknown cards, doesn't matter.
+			}
 			TrackEvent("match_start", new
 			{
 				hearthstone_bnet_game_type = (int) bnetGameType,
