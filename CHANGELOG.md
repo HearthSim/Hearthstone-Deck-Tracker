@@ -1,3 +1,8 @@
+## **Release v1.18.15 - 2022-08-30**
+**Fixes**:
+- Fixed an issue in Bob's Buddy where Quest Rewards would sometimes incorrectly be considered active.
+- Fixed an issue where Quest Rewards were not appearing in the Twitch Extension.
+
 ## **Release v1.18.14 - 2022-08-30**
 **Updated for Hearthstone 24.2.0**
 
