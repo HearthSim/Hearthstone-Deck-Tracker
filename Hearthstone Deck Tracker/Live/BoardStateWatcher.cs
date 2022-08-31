@@ -170,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.Live
 						Losses = games?.Count(g => g.Result == GameResult.Loss) ?? 0,
 						Size = player.DeckCount
 					},
-					Secrets = SortedDbfIds(player.Secrets),
+					Secrets = SortedDbfIds(player.PlayerEntities.Where(x => x.IsInSecret)),
 					Hero = DbfId(Find(player, HeroId(Core.Game.PlayerEntity))),
 					Hand = new BoardStateHand
 					{
@@ -179,7 +179,6 @@ namespace Hearthstone_Deck_Tracker.Live
 					},
 					HeroPower = BgsQuestReward(player, true) ?? DbfId(FindHeroPower(player)),
 					Weapon = BgsQuestReward(player, false) ?? DbfId(Find(player, WeaponId(Core.Game.PlayerEntity))),
-					Quest = Quest(player.Quests.FirstOrDefault()),
 					Fatigue = Core.Game.PlayerEntity.GetTag(GameTag.FATIGUE)
 				},
 				Opponent = new BoardStatePlayer
@@ -193,10 +192,10 @@ namespace Hearthstone_Deck_Tracker.Live
 					{
 						Size = opponent.HandCount
 					},
+					Secrets = SortedDbfIds(opponent.PlayerEntities.Where(x => x.IsInSecret)),
 					Hero = DbfId(Find(opponent, HeroId(Core.Game.OpponentEntity))),
 					HeroPower = BgsQuestReward(opponent, true) ?? DbfId(FindHeroPower(opponent)),
 					Weapon = BgsQuestReward(opponent, false) ?? DbfId(Find(opponent, WeaponId(Core.Game.OpponentEntity))),
-					Quest = Quest(opponent.Quests.FirstOrDefault()),
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},
 				GameType = gameType,
