@@ -1,3 +1,9 @@
+## **Release v1.18.17 - 2022-08-31**
+**Fixes**:
+- Fixed various Bob's Buddy simulation issues related to Hearthstone 24.2.0.
+- Fixed an issue where the opponents Battlegrounds Hero was not correctly appearing in the Twitch Extension.
+- Fixed an issue where multiple Battlegrounds Quests were not correctly appearing in the Twitch Extension.
+
 ## **Release v1.18.16 - 2022-08-30**
 **Fixes**:
 - Fixed an issue in Bob's Buddy where Quest Rewards would sometimes incorrectly be considered active.
