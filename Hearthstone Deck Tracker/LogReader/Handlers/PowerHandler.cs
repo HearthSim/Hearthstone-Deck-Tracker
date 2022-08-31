@@ -90,6 +90,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							entity = unnamedPlayers.Single();
 						else if(unnamedPlayers.Count == 2 && tag == GameTag.CURRENT_PLAYER && value == 0)
 							entity = game.Entities.FirstOrDefault(x => x.Value?.HasTag(GameTag.CURRENT_PLAYER) ?? false);
+						else if(tag == GameTag.HERO_ENTITY)
+						{
+							var bob = players.FirstOrDefault(x => x.Value.HasTag(GameTag.BACON_DUMMY_PLAYER));
+							if(bob.Value != null)
+							{
+								entity = bob;
+							}
+						}
 						if(entity.Value != null)
 						{
 							entity.Value.Name = tmpEntity.Name;
