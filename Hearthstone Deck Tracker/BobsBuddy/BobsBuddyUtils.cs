@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.poisonous = entity.HasTag(GameTag.POISONOUS);
 			minion.windfury = entity.HasTag(GameTag.WINDFURY);
 			minion.megaWindfury = entity.HasTag(GameTag.MEGA_WINDFURY) || MinionFactory.cardIdsWithMegaWindfury.Contains(cardId);
+			minion.stealth = entity.HasTag(GameTag.STEALTH);
 			minion.golden = entity.HasTag(GameTag.PREMIUM);
 			minion.tier = entity.GetTag(GameTag.TECH_LEVEL);
 			minion.reborn = entity.HasTag(GameTag.REBORN);
