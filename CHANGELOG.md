@@ -1,3 +1,7 @@
+## **Release v1.18.18 - 2022-09-01**
+**Fixes**:
+- Fixed various more Bob's Buddy simulation issues related to Hearthstone 24.2.0.
+
 ## **Release v1.18.17 - 2022-08-31**
 **Fixes**:
 - Fixed various Bob's Buddy simulation issues related to Hearthstone 24.2.0.
