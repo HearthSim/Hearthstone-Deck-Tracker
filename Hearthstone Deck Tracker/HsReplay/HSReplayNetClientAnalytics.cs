@@ -126,6 +126,17 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			MatchStarts.Add(idempotencyTimestamp.ToUnixTime());
 		}
 
+		public static void TryTrackEndFirstDailyBattlegroundsMatch(int finalPlacement)
+		{
+			TrackEvent("end_first_daily_bgs_match", new
+			{
+				is_minion_overlay_enabled = Config.Instance.ShowBattlegroundsTiers,
+				is_bobs_buddy_enabled = Config.Instance.RunBobsBuddy,
+				is_session_recap_enabled = Config.Instance.ShowSessionRecap,
+				final_placement = finalPlacement,
+			});
+		}
+
 		public static void TryTrackBattlegroundsHeroPick(Card hero, BnetGameType bnetGameType)
 		{
 			TrackEvent("battlegrounds_hero_pick", new

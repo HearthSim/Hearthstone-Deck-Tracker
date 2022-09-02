@@ -546,6 +546,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("")]
 		public string LastDeck = "";
 
+		[DefaultValue("")]
+		public string LastBattlegroundsGameDate = "";
+
 		[DefaultValue(Language.enUS)]
 		public Language Localization = Language.enUS;
 

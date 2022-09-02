@@ -785,6 +785,15 @@ namespace Hearthstone_Deck_Tracker
 					RecordBattlegroundsGame();
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
+
+					var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
+					var finalPlacement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0;
+					var battlegroundsGameDate = DateTime.Now.ToString("yyyy/MM/dd");
+					if(Config.Instance.LastBattlegroundsGameDate != battlegroundsGameDate && finalPlacement > 0 && !_game.Spectator)
+					{
+						HSReplayNetClientAnalytics.TryTrackEndFirstDailyBattlegroundsMatch(finalPlacement);
+						Config.Instance.LastBattlegroundsGameDate = battlegroundsGameDate;
+					}
 				}
 
 				Influx.SendQueuedMetrics();
