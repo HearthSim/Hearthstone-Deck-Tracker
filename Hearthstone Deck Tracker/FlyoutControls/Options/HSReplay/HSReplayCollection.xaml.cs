@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			InitializeComponent();
 			HSReplayNetOAuth.Authenticated += Update;
 			HSReplayNetOAuth.LoggedOut += Update;
-			HSReplayNetHelper.CollectionUploaded += (_) => CollectionUpdated();
+			HSReplayNetHelper.CollectionUploaded += (_, _) => CollectionUpdated();
 			HSReplayNetHelper.CollectionAlreadyUpToDate += CollectionUpdated;
 			HSReplayNetHelper.CollectionUploadThrottled += () =>
 			{

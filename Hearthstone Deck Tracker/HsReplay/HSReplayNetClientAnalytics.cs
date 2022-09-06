@@ -28,15 +28,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			HSReplayNetHelper.Authenticating += OnAuthenticating;
 			HSReplayNetHelper.CollectionUploaded += CollectionUploaded;
-			OnboardingComplete += () => OnAppStart(true);
+			OnboardingComplete += () => OnAppStart();
 
 			if(await EnsureOnboarded())
-				OnAppStart(false);
-		}
-
-		private static void TrackEvent(string eventName)
-		{
-			TrackEvent(eventName, new {});
+				OnAppStart();
 		}
 
 		private static void TrackEvent(string eventName, object properties)
@@ -47,15 +42,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Client.Value.TrackEvent(token, eventName, properties).Forget();
 		}
 
-		private static void OnAppStart(bool isOnboarding)
+		private static void OnAppStart()
 		{
-			TrackEvent("app_start", new
+			var isFirstStart = ConfigManager.PreviousVersion == null;
+			if(isFirstStart)
 			{
-				app_version = Helper.GetCurrentVersion().ToVersionString(true),
-				is_first_start = ConfigManager.PreviousVersion == null,
-				is_autostart = Config.Instance.StartWithWindows,
-				is_onboarding = isOnboarding
-			});
+				TrackEvent("first_app_start", new
+				{
+					app_version = Helper.GetCurrentVersion().ToVersionString(true),
+				});
+			}
 		}
 
 		private static void OnAuthenticating(bool authenticating)
@@ -81,9 +77,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			return new ClientAnalyticsClient(Helper.GetUserAgent());
 		}
 
-		private static void CollectionUploaded(Collection collection)
+		private static void CollectionUploaded(Collection collection, bool firstUpload)
 		{
-			TrackEvent("collection_upload", new { collection_size = collection.Size() });
+			if(firstUpload)
+			{
+				TrackEvent("first_collection_upload", new { collection_size = collection.Size() });
+			}
 		}
 
 		public static void TryTrackToastClick(string toastId)
@@ -93,59 +92,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			});
 		}
 
-		/**
-		 * Keep track of the match starts we've already tracked to prevent double-emits when the Deck changes.
-		 */
-		private static HashSet<long> MatchStarts = new HashSet<long>();
-
-		public static void TryTrackMatchStart(
-			BnetGameType bnetGameType,
-			HearthDb.Deckstrings.Deck? deck,
-			bool isSpectator,
-			DateTime idempotencyTimestamp
-		) {
-			if(MatchStarts.Contains(idempotencyTimestamp.ToUnixTime()))
-				return;
-
-
-			var deckstring = "";
-			try
-			{
-				deckstring = deck != null ? DeckSerializer.Serialize(deck, false) : null;
-			}
-			catch
-			{
-				// likely due to unknown cards, doesn't matter.
-			}
-			TrackEvent("match_start", new
-			{
-				hearthstone_bnet_game_type = (int) bnetGameType,
-				deck_string = deckstring,
-				is_spectator = isSpectator,
-			});
-			MatchStarts.Add(idempotencyTimestamp.ToUnixTime());
-		}
-
 		public static void TryTrackEndFirstDailyBattlegroundsMatch(int finalPlacement)
 		{
 			TrackEvent("end_first_daily_bgs_match", new
 			{
-				is_completely_hidden = Config.Instance.HideOverlay,
+				is_overlay_enabled = !Config.Instance.HideOverlay,
 				is_minion_overlay_enabled = Config.Instance.ShowBattlegroundsTiers,
 				is_bobs_buddy_enabled = Config.Instance.RunBobsBuddy,
 				is_session_recap_enabled = Config.Instance.ShowSessionRecap,
 				is_hero_notification_enabled = Config.Instance.ShowBattlegroundsToast,
 				final_placement = finalPlacement,
-			});
-		}
-
-		public static void TryTrackBattlegroundsHeroPick(Card hero, BnetGameType bnetGameType)
-		{
-			TrackEvent("battlegrounds_hero_pick", new
-			{
-				battlegrounds_hero_dbf_id = hero.DbfId,
-				battlegrounds_hero_name = hero.Name,
-				hearthstone_bnet_game_type = (int)bnetGameType,
 			});
 		}
 

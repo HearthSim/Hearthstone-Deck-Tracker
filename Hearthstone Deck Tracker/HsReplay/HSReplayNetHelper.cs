@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			ConfigWrapper.CollectionSyncingChanged += () => SyncCollection().Forget();
 			CollectionHelpers.Hearthstone.OnCollectionChanged += () => SyncCollection().Forget();
 			CollectionHelpers.Mercenaries.OnCollectionChanged += () => SyncMercenariesCollection().Forget();
-			CollectionUploaded += (_) =>
+			CollectionUploaded += (_, _) =>
 			{
 				ToastManager.ShowCollectionUpdatedToast();
 				Influx.OnCollectionSynced(true);
@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			HSReplayNetOAuth.Authenticated += () => Influx.OnOAuthLoginComplete(AuthenticationErrorType.None);
 		}
 
-		public static event Action<Collection>? CollectionUploaded;
+		public static event Action<Collection, bool>? CollectionUploaded;
 		public static event Action? MercenariesCollectionUploaded;
 		public static event Action? CollectionUploadError;
 		public static event Action? MercenariesCollectionUploadError;
@@ -146,10 +146,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				}
 				if(await HSReplayNetOAuth.UpdateCollection(collection))
 				{
+					var firstUpload = !Account.Instance.CollectionState.ContainsKey(account);
 					Account.Instance.CollectionState[account] = new Account.SyncState(hash);
 					Account.Save();
 					Log.Debug("Collection synced");
-					CollectionUploaded?.Invoke(collection);
+					CollectionUploaded?.Invoke(collection, firstUpload);
 				}
 				else
 				{

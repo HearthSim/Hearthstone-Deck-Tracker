@@ -233,7 +233,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
 			};
 
-			HSReplayNetHelper.CollectionUploaded += (_) =>
+			HSReplayNetHelper.CollectionUploaded += (_, _) =>
 			{
 				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable)); 
 			};
