@@ -76,6 +76,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					metaData.MercenariesBountyRunCompletedNodes = game!.MercenariesBountyRunCompletedNodes;
 				}
 			}
+
+			if(HSReplayNetClientAnalytics.TryGetToken(out var token))
+				metaData.MixpanelToken = token;
+
 			return metaData;
 		}
 

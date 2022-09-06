@@ -258,7 +258,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			return false;
 		}
 
-		private static bool TryGetToken(out string token)
+		internal static bool TryGetToken(out string token)
 		{
 			token = "";
 
