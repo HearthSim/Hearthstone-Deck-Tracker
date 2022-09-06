@@ -130,9 +130,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			TrackEvent("end_first_daily_bgs_match", new
 			{
+				is_completely_hidden = Config.Instance.HideOverlay,
 				is_minion_overlay_enabled = Config.Instance.ShowBattlegroundsTiers,
 				is_bobs_buddy_enabled = Config.Instance.RunBobsBuddy,
 				is_session_recap_enabled = Config.Instance.ShowSessionRecap,
+				is_hero_notification_enabled = Config.Instance.ShowBattlegroundsToast,
 				final_placement = finalPlacement,
 			});
 		}
