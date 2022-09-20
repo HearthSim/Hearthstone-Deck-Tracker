@@ -30,6 +30,7 @@
                     <ImageSource x:Key="ClassIconDruidRound">Resources/ClassIcons/Round/druid.png</ImageSource>
                     <ImageSource x:Key="ClassIconHunterRound">Resources/ClassIcons/Round/hunter.png</ImageSource>
                     <ImageSource x:Key="ClassIconMageRound">Resources/ClassIcons/Round/mage.png</ImageSource>
+                    <ImageSource x:Key="ClassIconNeutralRound">Resources/ClassIcons/Round/neutral.png</ImageSource>
                     <ImageSource x:Key="ClassIconPaladinRound">Resources/ClassIcons/Round/paladin.png</ImageSource>
                     <ImageSource x:Key="ClassIconPriestRound">Resources/ClassIcons/Round/priest.png</ImageSource>
                     <ImageSource x:Key="ClassIconRogueRound">Resources/ClassIcons/Round/rogue.png</ImageSource>

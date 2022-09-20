@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
@@ -286,15 +287,20 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 								Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
 							});
 
+		public Visibility NeutralVisiblity => Config.Instance.ConstructedStatsModeFilter == GameMode.Duels
+			? Visibility.Visible
+			: Visibility.Hidden;
 
 		public IEnumerable<ConstructedMatchup> Matchups
 		{
 			get
 			{
 				var games = GetFilteredGames(playerClass: false, oppClass: false).ToList();
-				foreach(var c in Enum.GetValues(typeof(HeroClass)).Cast<HeroClass>())
-					yield return new ConstructedMatchup(c, games);
-				yield return new ConstructedMatchup(games);
+				var isDuels = Config.Instance.ConstructedStatsModeFilter == GameMode.Duels;
+				foreach(var c in Enum.GetValues(typeof(HeroClassNeutral)).Cast<HeroClassNeutral>())
+					if (c != HeroClassNeutral.Neutral || isDuels)
+						yield return new ConstructedMatchup(c, games, isDuels);
+				yield return new ConstructedMatchup(games, isDuels);
 			}
 		}
 
@@ -344,7 +350,10 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			if(Config.Instance.ConstructedStatsActiveDeckOnly)
 				OnPropertyChanged(nameof(DeckDetails));
 			else
+			{
 				OnPropertyChanged(nameof(Matchups));
+				OnPropertyChanged(nameof(NeutralVisiblity));
+			}
 		}
 
 		[NotifyPropertyChangedInvocator]

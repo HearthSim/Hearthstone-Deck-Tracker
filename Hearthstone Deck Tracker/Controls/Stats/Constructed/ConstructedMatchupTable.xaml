@@ -156,6 +156,19 @@
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
+            <DataGridTextColumn Binding="{Binding Neutral.Summary}" MinWidth="47" Visibility="{Binding NeutralVisiblity, Source={x:Static compiledStats:ConstructedStats.Instance}}">
+                <DataGridTextColumn.HeaderTemplate>
+                    <DataTemplate>
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Neutral}" ToolTip="{lex:Loc Neutral}" Width="24" Height="24" />
+                    </DataTemplate>
+                </DataGridTextColumn.HeaderTemplate>
+                <DataGridTextColumn.ElementStyle>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="Foreground" Value="{Binding Neutral.WinRateTextBrush}" />
+                    </Style>
+                </DataGridTextColumn.ElementStyle>
+            </DataGridTextColumn>
             <DataGridTextColumn Header="{lex:Loc Stats_Constructed_MatchupTable_Total}" Binding="{Binding Total.Summary}" MinWidth="47">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">

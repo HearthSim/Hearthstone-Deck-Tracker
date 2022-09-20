@@ -34,6 +34,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static BitmapImage Shaman => GetClassIcon(HeroClassAll.Shaman);
 		public static BitmapImage Warlock => GetClassIcon(HeroClassAll.Warlock);
 		public static BitmapImage Warrior => GetClassIcon(HeroClassAll.Warrior);
+		public static BitmapImage Neutral => GetImage($"ClassIcons/{Config.Instance.ClassIconStyle}/neutral.png");
 
 		public static BitmapImage GetImage(string resourcePath, string basePath = "Resources")
 		{
@@ -46,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 
 		public static BitmapImage GetClassIcon(string? className)
-			=> Enum.TryParse(className, out HeroClassAll heroClass) ? GetClassIcon(heroClass) : new BitmapImage();
+			=> className == "Neutral" ? Neutral : Enum.TryParse(className, out HeroClassAll heroClass) ? GetClassIcon(heroClass) : new BitmapImage();
 
 		public static BitmapImage GetClassIcon(HeroClassAll @class)
 		{

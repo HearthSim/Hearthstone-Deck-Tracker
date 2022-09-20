@@ -136,6 +136,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		};
 
+		public static readonly Dictionary<string, string[]> DuelsHeroNameClass = new Dictionary<string, string[]>
+		{
+			{"Star Student Stelina", new string[]{"DemonHunter"}},
+			{"Forest Warden Omu", new string[]{"Druid"}},
+			{"Elise Starseeker", new string[]{"Druid", "Priest"}},
+			{"Professor Slate", new string[]{"Hunter"}},
+			{"Brann Bronzebeard", new string[]{"Hunter", "Warrior"}},
+			{"Mozaki, Master Duelist", new string[]{"Mage"}},
+			{"Reno Jackson", new string[]{"Mage", "Rogue"}},
+			{"Turalyon, the Tenured", new string[]{"Paladin"}},
+			{"Sir Finley", new string[]{"Paladin", "Shaman"}},
+			{"Mindrender Illucia", new string[]{"Priest"}},
+			{"Infiltrator Lilian", new string[]{"Rogue"}},
+			{"Instructor Fireheart", new string[]{"Shaman"}},
+			{"Archwitch Willow", new string[]{"Warlock"}},
+			{"Darius Crowley", new string[]{"Warrior"}},
+			{"Rattlegore", new string[]{"Warrior"}},
+			{"Drek'Thar", new string[]{"Neutral"}},
+			{"Vanndar Stormpike", new string[]{"Neutral"}},
+		};
+
 		public static class Secrets
 		{
 			public static readonly IReadOnlyList<MultiIdCard> FastCombat = new List<MultiIdCard>
