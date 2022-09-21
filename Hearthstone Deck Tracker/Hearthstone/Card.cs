@@ -397,17 +397,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return classes;
 			}
 
-			int count = 1;
+			int cardClass = 1;
 			while (multipleClasses != 0u)
 			{
 				if (1u == (multipleClasses & 1u))
 				{
-					var cardClass = (CardClass)count;
-					CardIds.CardClassHeroNameDict.TryGetValue(cardClass, out var className);
+					CardIds.CardClassHeroNameDict.TryGetValue((CardClass)cardClass, out var className);
 					classes.Add(className);
 				}
 				multipleClasses >>= 1;
-				count++;
+				cardClass++;
 			}
 			return classes;
 		}
