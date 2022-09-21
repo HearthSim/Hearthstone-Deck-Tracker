@@ -390,24 +390,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			List<string> classes = new List<string>();
 
-			var num = _dbCard?.Entity.GetTag(GameTag.MULTIPLE_CLASSES);
-			if (num == 0u)
+			var multipleClasses = _dbCard?.Entity.GetTag(GameTag.MULTIPLE_CLASSES);
+			if (multipleClasses == 0u)
 			{
 				classes.Add(GetPlayerClass);
 				return classes.ToArray();
 			}
 
-			int num2 = 1;
-			while (num != 0u)
+			int count = 1;
+			while (multipleClasses != 0u)
 			{
-				if (1u == (num & 1u))
+				if (1u == (multipleClasses & 1u))
 				{
-					var cardClass = (CardClass)num2;
+					var cardClass = (CardClass)count;
 					CardIds.CardClassHeroNameDict.TryGetValue(cardClass, out var className);
 					classes.Add(className);
 				}
-				num >>= 1;
-				num2++;
+				multipleClasses >>= 1;
+				count++;
 			}
 			return classes.ToArray();
 		}
