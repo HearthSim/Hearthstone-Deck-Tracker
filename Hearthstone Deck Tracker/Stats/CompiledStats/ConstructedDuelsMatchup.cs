@@ -14,11 +14,10 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public ConstructedDuelsMatchup(HeroClassNeutral player, IEnumerable<GameStats> games) : base(player, games)
 		{
-			_games = games.Where(x =>
-				x.PlayerHero != null &&
-				CardIds.DuelsHeroNameClass.TryGetValue(x.PlayerHero, out var playerHeroClassNeutrals) &&
-				playerHeroClassNeutrals.Contains(player.ToString())
-			);
+			_games = games.Where(x => {
+				var playerHeroClasses = GetPlayerHeroClasses(x);
+				return playerHeroClasses != null && playerHeroClasses.Contains(player.ToString());
+			});
 		}
 
 		public ConstructedDuelsMatchup(IEnumerable<GameStats> games) : base(games)
@@ -26,12 +25,14 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			_games = games.Select(g =>
 				{
 					var games = new List<GameStats>();
-					if(g.PlayerHero != null && g.OpponentHero != null)
-					{
-						CardIds.DuelsHeroNameClass.TryGetValue(g.PlayerHero, out var playerHeroClassNeutrals);
-						foreach(var playerHeroClassNeutral in playerHeroClassNeutrals)
-							games.Add(new GameStats(g.Result, g.OpponentHero, playerHeroClassNeutral));
-					}
+					var playerHeroClasses = GetPlayerHeroClasses(g);
+					if(playerHeroClasses != null)
+						foreach(var playerHeroClass in playerHeroClasses)
+						{
+							var game = new GameStats(g.Result, g.OpponentHero, playerHeroClass);
+							game.OpponentHeroClasses = g.OpponentHeroClasses;
+							games.Add(game);
+						}
 					else
 						games.Add(g);
 					return games;
@@ -44,15 +45,14 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			_games.Select(g =>
 			{
 				var games = new List<GameStats>();
-				if(g.PlayerHero != null && g.OpponentHero != null)
-				{
-					CardIds.DuelsHeroNameClass.TryGetValue(g.OpponentHero, out var opponentHeroClassNeutrals);
-					if(opponentHeroClassNeutrals != null)
-						foreach(var opponentHeroClassNeutral in opponentHeroClassNeutrals)
-							games.Add(new GameStats(g.Result, opponentHeroClassNeutral, g.PlayerHero));
-					else
-						games.Add(g);
-				}
+				var opponentHeroClasses = GetOpponentHeroClasses(g);
+				if(opponentHeroClasses != null)
+					foreach(var opponentHeroClass in opponentHeroClasses)
+					{
+						var game = new GameStats(g.Result, opponentHeroClass, g.PlayerHero);
+						game.PlayerHeroClasses = g.PlayerHeroClasses;
+						games.Add(game);
+					}
 				else
 					games.Add(g);
 				return games;
@@ -62,11 +62,20 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		protected override MatchupStats GetMatchupStats(HeroClassNeutral opponent)
 			=> new MatchupStats(
 				opponent.ToString(),
-				_games.Where(x =>
-					x.OpponentHero != null &&
-					CardIds.DuelsHeroNameClass.TryGetValue(x.OpponentHero, out var opponentHeroClassNeutrals) &&
-					opponentHeroClassNeutrals.Contains(opponent.ToString())
-				).Select(x => x)
+				_games.Where(x => {
+					var opponentHeroClasses = GetOpponentHeroClasses(x);
+					return opponentHeroClasses != null && opponentHeroClasses.Contains(opponent.ToString());
+				}).Select(x => x)
 			);
+
+		private string[]? GetPlayerHeroClasses(GameStats game) => game.PlayerHeroClasses != null
+			? game.PlayerHeroClasses
+			: game.PlayerHero != null && CardIds.DuelsHeroNameClass.TryGetValue(game.PlayerHero, out var playerHeroClasses)
+				? playerHeroClasses : null;
+
+		private string[]? GetOpponentHeroClasses(GameStats game) => game.OpponentHeroClasses != null
+			? game.OpponentHeroClasses
+			: game.OpponentHero != null && CardIds.DuelsHeroNameClass.TryGetValue(game.OpponentHero, out var opponentHeroClasses)
+				? opponentHeroClasses : null;
 	}
 }

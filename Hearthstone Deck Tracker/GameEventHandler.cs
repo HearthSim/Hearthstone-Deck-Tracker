@@ -366,27 +366,32 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetOpponentHero(string? cardId)
 		{
-			var hero = Database.GetHeroNameFromId(cardId);
-			if(string.IsNullOrEmpty(hero))
+			var hero = Database.GetCardFromId(cardId);
+			if(hero == null)
 				return;
-			_game.Opponent.Class = hero!;
+			_game.Opponent.Class = hero!.Name;
 			if(_game.CurrentGameStats != null)
 			{
-				_game.CurrentGameStats.OpponentHero = hero;
+				_game.CurrentGameStats.OpponentHero = hero.Name;
 				_game.CurrentGameStats.OpponentHeroCardId = cardId;
+				_game.CurrentGameStats.OpponentHeroClasses = hero.GetClasses();
 			}
-			Log.Info("Opponent=" + hero);
+			Log.Info("Opponent=" + hero.Name);
 		}
 
 		public void SetPlayerHero(string? cardId)
 		{
-			var hero = Database.GetHeroNameFromId(cardId);
-			if(string.IsNullOrEmpty(hero))
+			var hero = Database.GetCardFromId(cardId);
+			if(hero == null)
 				return;
-			_game.Player.Class = hero!;
+			_game.Player.Class = hero.Name;
 			if(_game.CurrentGameStats != null)
-				_game.CurrentGameStats.PlayerHero = hero!;
-			Log.Info("Player=" + hero);
+			{
+				_game.CurrentGameStats.PlayerHero = hero.Name;
+				_game.CurrentGameStats.PlayerHeroCardId = cardId;
+				_game.CurrentGameStats.PlayerHeroClasses = hero.GetClasses();
+			}
+			Log.Info("Player=" + hero.Name);
 		}
 
 		private readonly Queue<Tuple<ActivePlayer, int>> _turnQueue = new Queue<Tuple<ActivePlayer, int>>();

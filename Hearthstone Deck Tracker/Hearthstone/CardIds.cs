@@ -122,6 +122,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{CardClass.DEMONHUNTER, Collectible.Demonhunter.IllidanStormrageHeroHeroSkins}
 		};
 
+		public static readonly Dictionary<CardClass, string> CardClassHeroNameDict = new Dictionary<CardClass, string>
+		{
+			{CardClass.WARRIOR, "Warrior"},
+			{CardClass.SHAMAN, "Shaman"},
+			{CardClass.ROGUE, "Rogue"},
+			{CardClass.PALADIN, "Paladin"},
+			{CardClass.HUNTER, "Hunter"},
+			{CardClass.DRUID, "Druid"},
+			{CardClass.WARLOCK, "Warlock"},
+			{CardClass.MAGE, "Mage"},
+			{CardClass.PRIEST, "Priest"},
+			{CardClass.DEMONHUNTER, "DemonHunter"},
+			{CardClass.NEUTRAL, "Neutral"}
+		};
+
 		// cards that should have an entourage list but don't in the game data
 		public static readonly Dictionary<string, string[]> EntourageAdditionalCardIds = new Dictionary<string, string[]>
 		{

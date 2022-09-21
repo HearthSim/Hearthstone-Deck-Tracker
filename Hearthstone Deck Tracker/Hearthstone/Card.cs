@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Xml.Serialization;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Themes;
@@ -245,6 +246,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public int LettuceCooldown => _dbCard?.Entity.GetTag(GameTag.LETTUCE_COOLDOWN_CONFIG) ?? 0;
 
+		public int MultipleClasses => _dbCard?.Entity.GetTag(GameTag.MULTIPLE_CLASSES) ?? 0;
+
 		[XmlIgnore]
 		public string? Race { get; set; }
 
@@ -383,6 +386,31 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.Any(x => string.Equals(x.ToString(), playerClass, StringComparison.CurrentCultureIgnoreCase));
 		}
 
+		public string[] GetClasses()
+		{
+			List<string> classes = new List<string>();
+
+			var num = _dbCard?.Entity.GetTag(GameTag.MULTIPLE_CLASSES);
+			if (num == 0u)
+			{
+				classes.Add(GetPlayerClass);
+				return classes.ToArray();
+			}
+
+			int num2 = 1;
+			while (num != 0u)
+			{
+				if (1u == (num & 1u))
+				{
+					var cardClass = (CardClass)num2;
+					CardIds.CardClassHeroNameDict.TryGetValue(cardClass, out var className);
+					classes.Add(className);
+				}
+				num >>= 1;
+				num2++;
+			}
+			return classes.ToArray();
+		}
 		public SolidColorBrush ColorPlayer
 		{
 			get

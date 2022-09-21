@@ -288,7 +288,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int BrawlLosses { get; set; }
 
+		public string? PlayerHeroCardId { get; set; }
+		public string[]? PlayerHeroClasses { get; set; }
+
 		public string? OpponentHeroCardId { get; set; }
+		public string[]? OpponentHeroClasses { get; set; }
 
 		public Region Region
 		{
