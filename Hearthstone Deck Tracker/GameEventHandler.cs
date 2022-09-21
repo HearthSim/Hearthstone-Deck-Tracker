@@ -374,7 +374,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.CurrentGameStats.OpponentHero = hero.Name;
 				_game.CurrentGameStats.OpponentHeroCardId = cardId;
-				_game.CurrentGameStats.OpponentHeroClasses = hero.GetClasses();
+				_game.CurrentGameStats.OpponentHeroClasses = hero.GetClasses().ToArray();
 			}
 			Log.Info("Opponent=" + hero.Name);
 		}
@@ -389,7 +389,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.CurrentGameStats.PlayerHero = hero.Name;
 				_game.CurrentGameStats.PlayerHeroCardId = cardId;
-				_game.CurrentGameStats.PlayerHeroClasses = hero.GetClasses();
+				_game.CurrentGameStats.PlayerHeroClasses = hero.GetClasses().ToArray();
 			}
 			Log.Info("Player=" + hero.Name);
 		}

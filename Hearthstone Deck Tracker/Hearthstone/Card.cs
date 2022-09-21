@@ -386,7 +386,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.Any(x => string.Equals(x.ToString(), playerClass, StringComparison.CurrentCultureIgnoreCase));
 		}
 
-		public string[] GetClasses()
+		public List<string> GetClasses()
 		{
 			List<string> classes = new List<string>();
 
@@ -394,7 +394,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if (multipleClasses == 0u)
 			{
 				classes.Add(GetPlayerClass);
-				return classes.ToArray();
+				return classes;
 			}
 
 			int count = 1;
@@ -409,7 +409,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				multipleClasses >>= 1;
 				count++;
 			}
-			return classes.ToArray();
+			return classes;
 		}
 		public SolidColorBrush ColorPlayer
 		{
