@@ -366,32 +366,36 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetOpponentHero(string? cardId)
 		{
-			var hero = Database.GetCardFromId(cardId);
-			if(hero == null)
+			var heroName = Database.GetHeroNameFromId(cardId);
+			if(heroName == null)
 				return;
-			_game.Opponent.Class = hero!.Name;
+			_game.Opponent.Class = heroName;
 			if(_game.CurrentGameStats != null)
 			{
-				_game.CurrentGameStats.OpponentHero = hero.Name;
+				_game.CurrentGameStats.OpponentHero = heroName;
 				_game.CurrentGameStats.OpponentHeroCardId = cardId;
-				_game.CurrentGameStats.OpponentHeroClasses = hero.GetClasses().ToArray();
+				var hero = Database.GetCardFromId(cardId);
+				if (hero != null)
+					_game.CurrentGameStats.OpponentHeroClasses = hero.GetClasses().ToArray();
 			}
-			Log.Info("Opponent=" + hero.Name);
+			Log.Info("Opponent=" + heroName);
 		}
 
 		public void SetPlayerHero(string? cardId)
 		{
-			var hero = Database.GetCardFromId(cardId);
-			if(hero == null)
+			var heroName = Database.GetHeroNameFromId(cardId);
+			if(heroName == null)
 				return;
-			_game.Player.Class = hero.Name;
+			_game.Player.Class = heroName;
 			if(_game.CurrentGameStats != null)
 			{
-				_game.CurrentGameStats.PlayerHero = hero.Name;
+				_game.CurrentGameStats.PlayerHero = heroName;
 				_game.CurrentGameStats.PlayerHeroCardId = cardId;
-				_game.CurrentGameStats.PlayerHeroClasses = hero.GetClasses().ToArray();
+				var hero= Database.GetCardFromId(cardId);
+				if (hero != null)
+					_game.CurrentGameStats.PlayerHeroClasses = hero.GetClasses().ToArray();
 			}
-			Log.Info("Player=" + hero.Name);
+			Log.Info("Player=" + heroName);
 		}
 
 		private readonly Queue<Tuple<ActivePlayer, int>> _turnQueue = new Queue<Tuple<ActivePlayer, int>>();
