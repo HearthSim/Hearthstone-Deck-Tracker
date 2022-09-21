@@ -297,10 +297,11 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			{
 				var games = GetFilteredGames(playerClass: false, oppClass: false).ToList();
 				var isDuels = Config.Instance.ConstructedStatsModeFilter == GameMode.Duels;
+
 				foreach(var c in Enum.GetValues(typeof(HeroClassNeutral)).Cast<HeroClassNeutral>())
 					if (c != HeroClassNeutral.Neutral || isDuels)
-						yield return new ConstructedMatchup(c, games, isDuels);
-				yield return new ConstructedMatchup(games, isDuels);
+						yield return isDuels ? new ConstructedDuelsMatchup(c, games) : new ConstructedMatchup(c, games);
+				yield return isDuels ? new ConstructedDuelsMatchup(games) : new ConstructedMatchup(games);
 			}
 		}
 
