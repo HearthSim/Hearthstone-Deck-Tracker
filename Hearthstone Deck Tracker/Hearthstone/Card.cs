@@ -402,8 +402,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				if (1u == (multipleClasses & 1u))
 				{
-					CardIds.CardClassHeroNameDict.TryGetValue((CardClass)cardClass, out var className);
-					classes.Add(className);
+					var className = HearthDbConverter.ConvertClass((CardClass)cardClass);
+					classes.Add(className ?? "Neutral");
 				}
 				multipleClasses >>= 1;
 				cardClass++;
