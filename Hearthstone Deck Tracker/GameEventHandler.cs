@@ -367,7 +367,7 @@ namespace Hearthstone_Deck_Tracker
 		public void SetOpponentHero(string? cardId)
 		{
 			var heroName = Database.GetHeroNameFromId(cardId);
-			if(heroName == null)
+			if(string.IsNullOrEmpty(heroName))
 				return;
 			_game.Opponent.Class = heroName;
 			if(_game.CurrentGameStats != null)
@@ -384,14 +384,14 @@ namespace Hearthstone_Deck_Tracker
 		public void SetPlayerHero(string? cardId)
 		{
 			var heroName = Database.GetHeroNameFromId(cardId);
-			if(heroName == null)
+			if(string.IsNullOrEmpty(heroName))
 				return;
 			_game.Player.Class = heroName;
 			if(_game.CurrentGameStats != null)
 			{
 				_game.CurrentGameStats.PlayerHero = heroName;
 				_game.CurrentGameStats.PlayerHeroCardId = cardId;
-				var hero= Database.GetCardFromId(cardId);
+				var hero = Database.GetCardFromId(cardId);
 				if (hero != null)
 					_game.CurrentGameStats.PlayerHeroClasses = hero.GetClasses().ToArray();
 			}
