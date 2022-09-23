@@ -588,6 +588,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeArenaLosses() => ArenaLosses > 0;
 		public bool ShouldSerializeBrawlWins() => BrawlWins > 0;
 		public bool ShouldSerializeBrawlLosses() => BrawlLosses > 0;
+		public bool ShouldSerializePlayerHeroCardId() => PlayerHeroCardId != null;
+		public bool ShouldSerializePlayerHeroClasses() => PlayerHeroClasses != null;
+		public bool ShouldSerializeOpponentHeroCardId() => OpponentHeroCardId != null;
+		public bool ShouldSerializeOpponentHeroClasses() => OpponentHeroClasses != null;
 		public bool ShouldSerializeBattlegroundsRating() => BattlegroundsRating > 0;
 		public bool ShouldSerializeBattlegroundsRatingAfter() => BattlegroundsRatingAfter > 0;
 		public bool ShouldSerializeMercenariesRating() => MercenariesRating > 0;
