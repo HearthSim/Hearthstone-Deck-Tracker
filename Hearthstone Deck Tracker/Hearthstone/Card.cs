@@ -246,8 +246,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public int LettuceCooldown => _dbCard?.Entity.GetTag(GameTag.LETTUCE_COOLDOWN_CONFIG) ?? 0;
 
-		public int MultipleClasses => _dbCard?.Entity.GetTag(GameTag.MULTIPLE_CLASSES) ?? 0;
-
 		[XmlIgnore]
 		public string? Race { get; set; }
 
