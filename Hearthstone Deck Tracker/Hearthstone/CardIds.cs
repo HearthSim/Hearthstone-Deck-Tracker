@@ -155,6 +155,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{"Rattlegore", new string[]{"Warrior"}},
 			{"Drek'Thar", new string[]{"Neutral"}},
 			{"Vanndar Stormpike", new string[]{"Neutral"}},
+			{"Diablo", new string[]{ "Warlock", "Warrior"}},
 		};
 
 		public static class Secrets
