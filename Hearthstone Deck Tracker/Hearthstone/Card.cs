@@ -388,7 +388,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			List<string> classes = new List<string>();
 
-			var multipleClasses = _dbCard?.Entity.GetTag(GameTag.MULTIPLE_CLASSES);
+			var multipleClasses = _dbCard?.Entity.GetTag(GameTag.MULTIPLE_CLASSES) ?? 0;
 			if (multipleClasses == 0u)
 			{
 				classes.Add(GetPlayerClass);
