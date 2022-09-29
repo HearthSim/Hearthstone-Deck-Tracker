@@ -180,6 +180,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard HiddenCache = new MultiIdCard(Collectible.Hunter.HiddenCache);
 				public static readonly MultiIdCard IceTrap = new MultiIdCard(Collectible.Hunter.IceTrap);
 				public static readonly MultiIdCard Misdirection = new MultiIdCard(Collectible.Hunter.Misdirection, Collectible.Hunter.MisdirectionVanilla);
+				public static readonly MultiIdCard MotionDenied = new MultiIdCard(Collectible.Hunter.MotionDenied);
 				public static readonly MultiIdCard OpenTheCages = new MultiIdCard(Collectible.Hunter.OpenTheCages);
 				public static readonly MultiIdCard PackTactics = new MultiIdCard(Collectible.Hunter.PackTactics);
 				public static readonly MultiIdCard PressurePlate = new MultiIdCard(Collectible.Hunter.PressurePlate);
@@ -204,6 +205,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard MirrorEntity = new MultiIdCard(Collectible.Mage.MirrorEntityExpert1, Collectible.Mage.MirrorEntityVanilla);
 				public static readonly MultiIdCard NetherwindPortal = new MultiIdCard(Collectible.Mage.NetherwindPortal);
 				public static readonly MultiIdCard OasisAlly = new MultiIdCard(Collectible.Mage.OasisAlly);
+				public static readonly MultiIdCard Objection = new MultiIdCard(Collectible.Mage.Objection);
 				public static readonly MultiIdCard PotionOfPolymorph = new MultiIdCard(Collectible.Mage.PotionOfPolymorph);
 				public static readonly MultiIdCard RiggedFaireGame = new MultiIdCard(Collectible.Mage.RiggedFaireGame);
 				public static readonly MultiIdCard Spellbender = new MultiIdCard(Collectible.Mage.Spellbender, Collectible.Mage.SpellbenderVanilla);
@@ -241,6 +243,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard DoubleCross = new MultiIdCard(Collectible.Rogue.DoubleCross);
 				public static readonly MultiIdCard Evasion = new MultiIdCard(Collectible.Rogue.Evasion);
 				public static readonly MultiIdCard Kidnap = new MultiIdCard(Collectible.Rogue.Kidnap);
+				public static readonly MultiIdCard Perjury = new MultiIdCard(Collectible.Rogue.Perjury);
 				public static readonly MultiIdCard Plagiarize = new MultiIdCard(Collectible.Rogue.Plagiarize);
 				public static readonly MultiIdCard ShadowClone = new MultiIdCard(Collectible.Rogue.ShadowClone);
 				public static readonly MultiIdCard Shenanigans = new MultiIdCard(Collectible.Rogue.Shenanigans);

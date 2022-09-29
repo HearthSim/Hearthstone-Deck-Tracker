@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using static Hearthstone_Deck_Tracker.Hearthstone.CardIds;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 {
@@ -26,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		public void Exclude(MultiIdCard cardId)
 		{
-			if(Excluded.ContainsKey(cardId))
+			if(Excluded.ContainsKey(cardId) && !Entity.HasTag(GameTag.SECRET_LOCKED))
 				Excluded[cardId] = true;
 		}
 

@@ -265,7 +265,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
 		}
@@ -353,6 +353,21 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
+		public void SingleSecret_NoMinionTarget_SpellPlayed_ThirdThisTurn()
+		{
+			_game.PlayerEntity.SetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN, 3);
+			_game.SecretsManager.HandleCardPlayed(_playerSpell2, "");
+			_game.GameTime.Time += TimeSpan.FromSeconds(1);
+
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap, HunterSecrets.MotionDenied, HunterSecrets.RatTrap);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.OhMyYogg, PaladinSecrets.GallopingSavior, PaladinSecrets.HiddenWisdom);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks, RogueSecrets.StickySituation);
+
+			_game.PlayerEntity.SetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN, 0);
+		}
+
+		[TestMethod]
 		public void SingleSecret_MinionOnBoard_NoMinionTarget_SpellPlayed()
 		{
 			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
@@ -395,6 +410,17 @@ namespace HDTTests.Hearthstone.Secrets
 		//	VerifySecrets(2, PaladinSecrets.All);
 		//	VerifySecrets(3, RogueSecrets.All);
 		//}
+
+		[TestMethod]
+		public void SingleSecret_OpponentTurnStart()
+		{
+			_opponentEntity.SetTag(GameTag.CURRENT_PLAYER, 1);
+			_gameEventHandler.HandleTurnsInPlayChange(_opponentMinion1, 1);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.RiggedFaireGame);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.CompetitiveSpirit);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Perjury);
+		}
 
 		[TestMethod]
 		public void SingleSecret_Retarget_FriendlyHitsFriendly()
@@ -608,7 +634,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
 			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion2);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
 		}
