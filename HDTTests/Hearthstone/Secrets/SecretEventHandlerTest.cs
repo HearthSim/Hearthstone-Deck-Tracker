@@ -634,7 +634,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
 			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion2);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
 		}
