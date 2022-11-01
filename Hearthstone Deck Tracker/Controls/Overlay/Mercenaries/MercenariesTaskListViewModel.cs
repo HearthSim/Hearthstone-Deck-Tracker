@@ -56,9 +56,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries
 			Tasks = tasks.Select(task =>
 			{
 				var taskData = _taskData.FirstOrDefault(x => x.Id == task.TaskId);
-				if(taskData == null)
+				if(taskData == null || taskData.MercenaryDefaultDbfId == null)
 					return null;
-				var card = Database.GetCardFromDbfId(taskData.MercenaryDefaultDbfId, false);
+				var card = Database.GetCardFromDbfId(taskData.MercenaryDefaultDbfId.Value, false);
 				if(card == null)
 					return null;
 				var title = taskData.Title.Contains(":") ? taskData.Title : string.Format(LocUtil.Get("MercenariesTaskList_TaskTitle"), task.TaskChainProgress + 1, taskData.Title);
