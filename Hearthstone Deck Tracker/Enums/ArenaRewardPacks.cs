@@ -72,5 +72,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_Nathria")]
 		Nathria = CardSet.REVENDRETH,
+
+		[LocDescription("Enum_ArenaRewardPacks_LichKing")]
+		LichKing = CardSet.RETURN_OF_THE_LICH_KING,
 	}
 }

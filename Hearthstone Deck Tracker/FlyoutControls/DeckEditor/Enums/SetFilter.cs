@@ -72,5 +72,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		THE_SUNKEN_CITY = 1658,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Nathria")]
 		REVENDRETH = 1691,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_LichKing")]
+		RETURN_OF_THE_LICH_KING = 1776,
 	}
 }

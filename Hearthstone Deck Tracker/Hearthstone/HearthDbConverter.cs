@@ -59,6 +59,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1578, "United in Stormwind"},
 			{1626, "Fractured in Alterac Valley"},
 			{1691, "Murder at Castle Nathria" },
+			{1776, "March of the Lich King" },
 		};
 
 		public static string? ConvertClass(CardClass cardClass)
