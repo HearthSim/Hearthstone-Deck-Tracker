@@ -1,3 +1,8 @@
+## **Release v1.18.25 - 2022-11-03**
+**Fixes**:
+- Fixed an issue in Bob's Buddy where Volatile Venom was not working correctly.
+- Fixed an issue where Venomstrike Trap and Frozen Clone were not showing up in the secret tracker.
+
 ## **Release v1.18.24 - 2022-11-01**
 **Updated for Hearthstone 24.6.0**
 
