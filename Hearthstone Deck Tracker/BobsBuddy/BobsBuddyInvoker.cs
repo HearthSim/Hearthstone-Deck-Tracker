@@ -346,7 +346,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				input.PlayerQuests.Add(new QuestData()
 				{
-					RewardCardId = reward.CardId ?? ""
+					RewardCardId = reward.Info.LatestCardId ?? ""
 				});
 			}
 
@@ -367,7 +367,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				input.OpponentQuests.Add(new QuestData()
 				{
-					RewardCardId = reward.CardId ?? ""
+					RewardCardId = reward.Info.LatestCardId ?? ""
 				});
 			}
 
