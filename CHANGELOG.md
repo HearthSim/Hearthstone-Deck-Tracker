@@ -1,3 +1,7 @@
+## **Release UNRELEASED - 2022-11-TBD**
+**Fixes**:
+- Fixed various Bob's Buddy simulation issues related to Hearthstone 24.6.0.
+
 ## **Release v1.18.25 - 2022-11-03**
 **Fixes**:
 - Fixed an issue in Bob's Buddy where Volatile Venom was not working correctly.
