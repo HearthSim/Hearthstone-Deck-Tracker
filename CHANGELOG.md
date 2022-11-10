@@ -1,4 +1,6 @@
-## **Release UNRELEASED - 2022-11-TBD**
+## **Release v1.18.26 - 2022-11-10**
+**Updated for Hearthstone 24.6.2**
+
 **Fixes**:
 - Fixed various Bob's Buddy simulation issues related to Hearthstone 24.6.0.
 
