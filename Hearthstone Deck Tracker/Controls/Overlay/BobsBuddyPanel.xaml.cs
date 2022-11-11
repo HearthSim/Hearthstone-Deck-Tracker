@@ -79,6 +79,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private string? _winTieDifference;
+		public string? WinTieDifference
+		{
+			get => _winTieDifference;
+			set
+			{
+				_winTieDifference = value;
+				OnPropertyChanged();
+			}
+		}
+
 		private string? _averageDamageGivenDisplay;
 		public string? AverageDamageGivenDisplay
 		{
@@ -276,7 +287,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private static List<int>? _playerDamageDealtBounds;
 		private static List<int>? _opponentDamageDealtBounds;
 
-		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
+		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults, double? oldWinTieRate, double? newWinTieRate)
 		{
 			ShowPercentagesHideSpinners();
 			_lastCombatPossibilities = possibleResults;
@@ -286,6 +297,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			LossRateDisplay = string.Format("{0:0.#%}", lossRate);
 			PlayerLethalDisplay = string.Format("{0:0.#%}", playerLethal);
 			OpponentLethalDisplay = string.Format("{0:0.#%}", opponentLethal);
+
+			if(oldWinTieRate != null && newWinTieRate != null)
+			{
+				// not rendering diff here want to TODO
+				//var oldWinTieRate = (int)Math.Ceiling(invoker.oldCombatResult.winRate + invoker.oldCombatResult.tieRate);
+				//var newWinTieRate = (int)Math.Ceiling(winRate + tieRate);
+
+				var percentDiff = string.Format("{0:0.#%}", newWinTieRate - oldWinTieRate);
+				WinTieDifference = $"{(newWinTieRate >= oldWinTieRate ? "+" : "")}{percentDiff} from last";
+			}
 
 			PlayerLethalOpacity = playerLethal > 0 ? 1 : SoftLabelOpacity;
 			OpponentLethalOpacity = opponentLethal > 0 ? 1 : SoftLabelOpacity;
@@ -352,7 +373,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			};
 		}
 
-		private string FormatDamageBoundsFrom(List<int> from) => string.Join("–", from.Distinct());
+		private string FormatDamageBoundsFrom(List<int> from)
+		{
+			return string.Join("–", from.Distinct());
+		}
 
 		/// <summary>
 		/// called when user enters a new game of BG
@@ -383,6 +407,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			OpponentLethalDisplay = "-";
 			AverageDamageGivenDisplay = "-";
 			AverageDamageTakenDisplay = "-";
+			WinTieDifference = "";
 		}
 
 		internal void HidePercentagesShowSpinners()
@@ -503,7 +528,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				(FindResource("StoryboardExpandAverageDamageInstant") as Storyboard)?.Begin();
 			else
 				(FindResource("StoryboardCollapseAverageDamageInstant") as Storyboard)?.Begin();
-		} 
+		}
 
 		private void BottomBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
@@ -555,6 +580,26 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			AverageDamageInfoVisibility = Visibility.Collapsed;
 			if(!Config.Instance.AlwaysShowAverageDamage)
 				ShowAverageDamagesPanels(false);
+		}
+
+		public BobsBuddyInvoker? invoker;
+		public void SetInvoker(BobsBuddyInvoker invoker)
+		{
+			this.invoker = invoker;
+		}
+
+		public void Rerun(int opponentId = -1)
+		{
+			if(invoker != null)
+				invoker.Rerun(opponentId);
+		}
+
+		private void Recalculate_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			e.Handled = true;
+
+			if(invoker != null)
+				invoker.Rerun();
 		}
 
 		private void Question_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
