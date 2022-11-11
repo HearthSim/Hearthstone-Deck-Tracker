@@ -19,9 +19,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void MouseInputOnLmbUp(object sender, EventArgs eventArgs)
 		{
-			if (Visibility != Visibility.Visible)
+			if(Visibility != Visibility.Visible)
 				return;
-			if (_selectedUiElement != null)
+			if(_selectedUiElement != null)
 				Config.Save();
 			_selectedUiElement = null;
 			_lmbDown = false;
@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void MouseInputOnMouseMoved(object sender, EventArgs eventArgs)
 		{
-			if (!_lmbDown || Visibility != Visibility.Visible)
+			if(!_lmbDown || Visibility != Visibility.Visible)
 				return;
 
 			var pos = User32.GetMousePos();
@@ -72,10 +72,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						Config.Instance.OpponentDeckTop += delta.Y / Height;
 						Config.Instance.OpponentDeckLeft += delta.X / Width;
 						Canvas.SetTop(_movableElements[border], Height * Config.Instance.OpponentDeckTop / 100);
-			}						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.OpponentDeckLeft / 100);
 					}
-					return;
+					Canvas.SetLeft(_movableElements[border], Width * Config.Instance.OpponentDeckLeft / 100);
 				}
+				return;
+			}
 
 
 			if(_selectedUiElement is Panel panel)
@@ -140,9 +141,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
-			if (_selectedUiElement is HearthstoneTextBlock timer)
+			if(_selectedUiElement is HearthstoneTextBlock timer)
 			{
-				if (timer.Equals(LblPlayerTurnTime))
+				if(timer.Equals(LblPlayerTurnTime))
 				{
 					Config.Instance.TimersVerticalSpacing += delta.Y / 100;
 					Config.Instance.TimersHorizontalSpacing += delta.X / 100;
@@ -152,7 +153,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 								   Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
 					return;
 				}
-				if (timer.Equals(LblTurnTime))
+				if(timer.Equals(LblTurnTime))
 				{
 					Config.Instance.TimersVerticalPosition += delta.Y / Height;
 					Config.Instance.TimersHorizontalPosition += delta.X / Width;
@@ -170,16 +171,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void MouseInputOnLmbDown(object sender, EventArgs eventArgs)
 		{
-			if (!User32.IsHearthstoneInForeground() || Visibility != Visibility.Visible)
+			if(!User32.IsHearthstoneInForeground() || Visibility != Visibility.Visible)
 				return;
 
 			var pos = User32.GetMousePos();
 			_mousePos = new Point(pos.X, pos.Y);
 
-			if (_uiMovable)
+			if(_mouseIsOverLeaderboardIcon && BobsBuddyDisplay.invoker != null)
+			{
+				BobsBuddyDisplay.invoker.Rerun(_hoveredPlayerNumber);
+			}
+
+			if(_uiMovable)
 			{
 				_lmbDown = true;
-				foreach (var element in _movableElements)
+				foreach(var element in _movableElements)
 				{
 					var relativePos = element.Value.PointFromScreen(_mousePos);
 					if(element.Key is Border && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
@@ -217,10 +223,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			_uiMovable = !_uiMovable;
 			Update(false);
-			if (_uiMovable)
+			if(_uiMovable)
 			{
 				HookMouse();
-				if (battlegroundsMode)
+				if(battlegroundsMode)
 				{
 					Config.Instance.HideDecksInOverlay = true;
 					Config.Instance.HidePlayerFatigueCount = true;
@@ -234,7 +240,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				else
 				{
-					if (StackPanelSecrets.Visibility != Visibility.Visible)
+					if(StackPanelSecrets.Visibility != Visibility.Visible)
 					{
 						_secretsTempVisible = true;
 						var secrets = CardIds.Secrets.Mage.All.Select(x => Database.GetCardFromId(x.Ids[0]))
@@ -249,11 +255,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					WotogIconsOpponent.ForceShow(true);
 				}
 
-				foreach (var movableElement in _movableElements)
+				foreach(var movableElement in _movableElements)
 				{
 					try
 					{
-						if (!CanvasInfo.Children.Contains(movableElement.Value))
+						if(!CanvasInfo.Children.Contains(movableElement.Value))
 							CanvasInfo.Children.Add(movableElement.Value);
 
 						movableElement.Value.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#4C0000FF");
@@ -262,18 +268,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 						Canvas.SetLeft(movableElement.Value, Canvas.GetLeft(movableElement.Key));
 
 						var elementSize = GetUiElementSize(movableElement.Key);
-						if (movableElement.Key == BorderStackPanelPlayer)
+						if(movableElement.Key == BorderStackPanelPlayer)
 						{
-							if (!TrySetResizeGripHeight(movableElement.Value, Config.Instance.PlayerDeckHeight * Height / 100))
+							if(!TrySetResizeGripHeight(movableElement.Value, Config.Instance.PlayerDeckHeight * Height / 100))
 							{
 								Config.Instance.Reset("PlayerDeckHeight");
 								TrySetResizeGripHeight(movableElement.Value, Config.Instance.PlayerDeckHeight * Height / 100);
 							}
-							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width * Config.Instance.OverlayPlayerScaling/100 : 0;
+							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width * Config.Instance.OverlayPlayerScaling / 100 : 0;
 						}
-						else if (movableElement.Key == BorderStackPanelOpponent)
+						else if(movableElement.Key == BorderStackPanelOpponent)
 						{
-							if (!TrySetResizeGripHeight(movableElement.Value, Config.Instance.OpponentDeckHeight * Height / 100))
+							if(!TrySetResizeGripHeight(movableElement.Value, Config.Instance.OpponentDeckHeight * Height / 100))
 							{
 								Config.Instance.Reset("OpponentDeckHeight");
 								TrySetResizeGripHeight(movableElement.Value, Config.Instance.OpponentDeckHeight * Height / 100);
@@ -301,7 +307,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 							: movableElement.Key != BattlegroundsSessionStackPanel;
 						movableElement.Value.Visibility = shouldBeVisible ? Visibility.Visible : Visibility.Collapsed;
 					}
-					catch (Exception ex)
+					catch(Exception ex)
 					{
 						Log.Info(ex.ToString());
 					}
@@ -321,11 +327,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						HideBattlegroundsSession();
 					}
 				}
-				if (!(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook))
+				if(!(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook))
 					UnHookMouse();
-				if (_secretsTempVisible)
+				if(_secretsTempVisible)
 					HideSecrets();
-				if (_game.IsInMenu)
+				if(_game.IsInMenu)
 					HideTimers();
 
 				WotogIconsPlayer.ForceShow(false);
@@ -340,7 +346,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private bool TrySetResizeGripHeight(ResizeGrip element, double height)
 		{
-			if (height <= 0)
+			if(height <= 0)
 				return false;
 			element.Height = height;
 			return true;
@@ -348,13 +354,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private Size GetUiElementSize(UIElement element)
 		{
-			if (element == null)
+			if(element == null)
 				return new Size();
-			if (element is Border border)
+			if(element is Border border)
 				return new Size(border.ActualWidth, border.ActualHeight);
 			if(element is Panel panel)
 				return new Size(panel.ActualWidth, panel.ActualHeight);
-			if (element is HearthstoneTextBlock block)
+			if(element is HearthstoneTextBlock block)
 				return new Size(block.ActualWidth, block.ActualHeight);
 			if(element is WotogCounter wotogIcons)
 				return new Size(wotogIcons.IconWidth * _wotogSize, wotogIcons.ActualHeight * _wotogSize);
@@ -362,7 +368,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 		public void HookMouse()
 		{
-			if (_mouseInput != null)
+			if(_mouseInput != null)
 				return;
 			_mouseInput = new User32.MouseInput();
 			_mouseInput.LmbDown += MouseInputOnLmbDown;
@@ -373,7 +379,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void UnHookMouse()
 		{
-			if (_uiMovable || _mouseInput == null)
+			if(_uiMovable || _mouseInput == null)
 				return;
 			_mouseInput.Dispose();
 			_mouseInput = null;
@@ -382,10 +388,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void GrayOutSecrets(Point mousePos)
 		{
-			if (!PointInsideControl(StackPanelSecrets.PointFromScreen(mousePos), StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
+			if(!PointInsideControl(StackPanelSecrets.PointFromScreen(mousePos), StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
 				return;
 
-			if (string.IsNullOrEmpty(ToolTipCardBlock.CardId))
+			if(string.IsNullOrEmpty(ToolTipCardBlock.CardId))
 				return;
 
 			_game.SecretsManager.Toggle(ToolTipCardBlock.CardId!);
@@ -394,24 +400,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private async void HideCardsWhenFriendsListOpen(Point clickPos)
 		{
 			var panels = new List<Border>();
-			if (Canvas.GetLeft(BorderStackPanelPlayer) - 200 < 500)
+			if(Canvas.GetLeft(BorderStackPanelPlayer) - 200 < 500)
 				panels.Add(BorderStackPanelPlayer);
-			if (Canvas.GetLeft(BorderStackPanelOpponent) < 500)
+			if(Canvas.GetLeft(BorderStackPanelOpponent) < 500)
 				panels.Add(BorderStackPanelOpponent);
 
 			_isFriendsListOpen = null;
 			if(Config.Instance.HideDecksInOverlay)
 				return;
-			foreach (var panel in panels)
+			foreach(var panel in panels)
 			{
 				//if panel visible, only continue of click was in the button left corner
-				if (!(clickPos.X < 150 && clickPos.Y > Height - 100) && panel.Visibility == Visibility.Visible)
+				if(!(clickPos.X < 150 && clickPos.Y > Height - 100) && panel.Visibility == Visibility.Visible)
 					continue;
 
 				var checkForFriendsList = true;
-				if (panel.Equals(BorderStackPanelPlayer) && Config.Instance.HidePlayerCards)
+				if(panel.Equals(BorderStackPanelPlayer) && Config.Instance.HidePlayerCards)
 					checkForFriendsList = false;
-				else if (panel.Equals(BorderStackPanelOpponent) && Config.Instance.HideOpponentCards)
+				else if(panel.Equals(BorderStackPanelOpponent) && Config.Instance.HideOpponentCards)
 					checkForFriendsList = false;
 				if(!checkForFriendsList)
 					continue;
@@ -420,7 +426,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					await Task.Delay(500);
 					_isFriendsListOpen = Reflection.IsFriendsListVisible();
 				}
-				if (_isFriendsListOpen.Value)
+				if(_isFriendsListOpen.Value)
 				{
 					var childPanel = Helper.FindVisualChildren<StackPanel>(panel).FirstOrDefault();
 					if(childPanel == null)
@@ -440,12 +446,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 							_opponentCardsHidden = true;
 					}
 				}
-				else if (panel.Visibility == Visibility.Collapsed)
+				else if(panel.Visibility == Visibility.Collapsed)
 				{
-					if (!(_game.IsInMenu && Config.Instance.HideInMenu))
+					if(!(_game.IsInMenu && Config.Instance.HideInMenu))
 					{
 						panel.Visibility = Visibility.Visible;
-						if (panel.Equals(BorderStackPanelPlayer))
+						if(panel.Equals(BorderStackPanelPlayer))
 							_playerCardsHidden = false;
 						else
 							_opponentCardsHidden = false;

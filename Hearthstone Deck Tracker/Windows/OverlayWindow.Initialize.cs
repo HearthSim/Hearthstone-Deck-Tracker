@@ -153,6 +153,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_clickableElements.Add(BattlegroundsMinionsPanel.BgTierIcons);
 			_clickableElements.Add(HeroNotificationPanel);
 			_clickableElements.Add(MulliganNotificationPanel);
+			// here is where clickable elements are being added
 			_clickableElements.Add(BobsBuddyDisplay);
 			_clickableElements.Add(BattlegroundsSession.BtnOptions);
 			_clickableElements.Add(BattlegroundsSession.BattlegroundsSessionPanelTopGroup);

@@ -15,10 +15,13 @@ using System.Text.RegularExpressions;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
+using BobsBuddy;
+using NuGet;
+using Hearthstone_Deck_Tracker.Controls;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
-	internal class BobsBuddyInvoker
+	public class BobsBuddyInvoker
 	{
 		private const int Iterations = 10_000;
 		private const int StateChangeDelay = 500;
@@ -36,6 +39,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static bool ReportErrors => Remote.Config.Data?.BobsBuddy?.SentryReporting ?? false;
 
 		private Input? _input;
+		public Output? combatResult;
+		private float? _original_win_chance;
 		private int _turn;
 		static int LogLinesKept = Remote.Config.Data?.BobsBuddy?.LogLinesKept ?? 100;
 		public string OpponentCardId = "";
@@ -50,7 +55,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
 		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
-		private bool RunSimulationAfterCombat => _currentOpponentSecrets.Any();
+		// private bool RunSimulationAfterCombat => _currentOpponentSecrets.Any();
+		private bool RunSimulationAfterCombat => false;
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
 		{
@@ -62,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_currentGameId = gameId;
 
 			var key = $"{gameId}_{turn}";
-			
+
 			if(!_instances.TryGetValue(key, out var instance) && createInstanceIfNoneFound)
 			{
 				instance = new BobsBuddyInvoker(key);
@@ -139,6 +145,148 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return true;
 		}
 
+		private async Task<IEnumerable<Minion>> GetBestSetup(
+			IEnumerable<Minion> minions,
+			IEnumerable<Minion> bestMinions,
+			int numberOfIterations = 20,
+			int currentIteration = 0,
+			int winChance = 0,
+			int medianDamage = 0,
+			int originalWinChance = 0
+			)
+		{
+			if(_input == null)
+				return bestMinions;
+
+			if(currentIteration >= numberOfIterations)
+			{
+				_input.playerSide.Clear();
+
+				_input.playerSide.AddRange(bestMinions);
+				await RunAndDisplaySimulationAsync();
+
+				return bestMinions;
+			}
+
+			_input.playerSide.Clear();
+
+			Random random = new Random();
+			minions = minions.OrderBy(x => random.Next()).ToArray();
+
+			_input.playerSide.AddRange(minions);
+
+			if(currentIteration == 0 && combatResult != null)
+				_original_win_chance = (int)Math.Ceiling(combatResult.winRate + combatResult.tieRate);
+
+			await RunAndDisplaySimulationAsync();
+
+			if(combatResult == null)
+				return bestMinions;
+
+			var newWinChance = (int)Math.Ceiling(combatResult.winRate + combatResult.tieRate);
+			var newMedianDamage = (int)combatResult.medianDamage;
+
+			if(newWinChance > winChance)
+			{
+				bestMinions = minions;
+				medianDamage = newMedianDamage;
+				winChance = newWinChance;
+			}
+			else if(newWinChance == winChance)
+			{
+				if(combatResult.medianDamage > medianDamage)
+				{
+					bestMinions = minions;
+					medianDamage = newMedianDamage;
+					winChance = newWinChance;
+				}
+			}
+
+			return await GetBestSetup(minions, bestMinions, numberOfIterations, currentIteration + 1, winChance, medianDamage, originalWinChance);
+		}
+
+		// add this to button to retry
+
+		// next prio would be clicking opponents on side to sim aginst their last board state
+
+		// this is where im changing
+		public async void Rerun(int opponentId = -1)
+		{
+			// add this to re-run in shopping?
+			if(_input == null)
+				return;
+
+			// kinda working but sometimes numbers seem weird?
+
+			// what if i re-run with every minion arrangement to find the best?
+
+			// expanding on that, what if i make each character icon clickable
+			// - each player has a "last board" saved
+			//  - re-run my setup against that
+			//  - re-run all orders of minions to find highest win%
+			//  - show that comp somewhere
+
+			// add comparison of win rate and avg damage vs now? to see if actually worth swapping
+			// need to figure out how to display stuff
+			// also make a button instead of hijacking ?
+
+			var playerMinions = GetOrderedMinions(_game.Player.Board)
+				.Where(e => e.IsControlledBy(_game.Player.Id))
+				.Select(e => GetMinionFromEntity(_input.simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)));
+
+			// maybe add this back someday
+			// var playerSide = await GetBestSetup(playerMinions, playerMinions, (int)(Math.Pow(playerMinions.Count(), 2)));
+
+			if(combatResult == null)
+				return;
+
+			_input.playerSide.Clear();
+
+			_input.playerSide.AddRange(playerMinions);
+
+			DebugLog($"rerunning with player id {opponentId}");
+
+			if(opponentId >= 0)
+			{
+
+				var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == opponentId + 1).FirstOrDefault();
+				var state = _game.GetBattlegroundsBoardStateFor(entity.CardId);
+
+
+				if(state != null && state.Entities.Any())
+				{
+					_input.opponentSide.Clear();
+					_original_win_chance = null;
+
+
+					foreach(var e in state.Entities)
+						if(e.CardId != null)
+						{
+							DebugLog($"minion to string {e.ToString()}");
+
+							// getting closer... I am down here but it is not adding any minions
+
+							// set opponent hero power somehow here too
+
+							var minion = GetMinionFromEntity(_input.simulator.MinionFactory, false, e, GetAttachedEntities(e.Id));
+							_input.opponentSide.Add(minion);
+						}
+
+				}
+
+			}
+
+			await RunAndDisplaySimulationAsync();
+
+			DebugLog($"win+tie% before: {_original_win_chance * 100}%");
+			DebugLog($"win+tie% after: {(int)Math.Ceiling(combatResult.winRate + combatResult.tieRate) * 100}%");
+
+			// DebugLog($"best order:");
+
+			// for(int index = 0; index < playerSide.Count(); index++)
+			// 	DebugLog($"{index + 1} {playerSide.ElementAt(index).minionName}");
+		}
+
 		public async void StartCombat()
 		{
 			try
@@ -151,6 +299,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					DebugLog($"{_instanceKey} already in {State} state. Exiting");
 					return;
 				}
+				_original_win_chance = null;
 				State = BobsBuddyState.Combat;
 				SnapshotBoardState(_game.GetTurnNumber());
 				DebugLog($"{_instanceKey} Waiting for state changes...");
@@ -211,13 +360,22 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			else
 			{
 				DebugLog("Displaying simulation results");
+				var oldWinChance = _original_win_chance;
+				_original_win_chance = result.winRate + result.tieRate;
+				DebugLog($"{oldWinChance} {_original_win_chance}");
+
+				combatResult = result;
+				DebugLog($"oldCombatResult: {_original_win_chance}");
+				DebugLog($"combatResult: {combatResult?.winRate + combatResult?.tieRate}");
 				BobsBuddyDisplay.ShowCompletedSimulation(
 					result.winRate,
 					result.tieRate,
 					result.lossRate,
 					result.theirDeathRate,
 					result.myDeathRate,
-					result.damageResults.ToList()
+					result.damageResults.ToList(),
+					oldWinChance,
+					result.winRate + result.tieRate
 				);
 			}
 		}
@@ -250,6 +408,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					await RunAndDisplaySimulationAsync();
 				}
 
+				BobsBuddyDisplay.SetInvoker(this);
+
+				// maybe don't do this v
 				ValidateSimulationResultAsync().Forget();
 			}
 			catch(Exception e)
@@ -307,7 +468,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog("Hero(es) could not be found. Exiting.");
 				return;
 			}
-		
+
 
 			//We set OpponentCardId and PlayerCardId here so that later we can do lookups for these entites without using _game.Opponent/Player, which might be innacurate or null depending on when they're accessed.
 			OpponentCardId = opponentHero.CardId ?? "";
@@ -496,7 +657,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			if(LastAttackingHero != null)
 				return LastAttackingHeroAttack;
-			return 0;	
+			return 0;
 		}
 
 		private CombatResult GetLastCombatResult()
@@ -554,7 +715,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog("Nothing to report. Exiting.");
 				return;
 			}
-			
+
 			//We delay checking the combat results because the tag changes can sometimes be read by the parser with a bit of delay after they're printed in the log.
 			//Without this delay they can occasionally be missed.
 
@@ -572,10 +733,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			var terminalCase = false;
 
-			if (IsIncorrectCombatResult(result))
+			if(IsIncorrectCombatResult(result))
 			{
 				terminalCase = true;
-				if (ReportErrors)
+				if(ReportErrors)
 					AlertWithLastInputOutput(result.ToString());
 			}
 
@@ -601,7 +762,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					AlertWithLastInputOutput(lethalResult.ToString());
 			}
 
-			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
+			if(metricSampling > 0 && _rnd.NextDouble() < metricSampling)
 				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, terminalCase);
 		}
 

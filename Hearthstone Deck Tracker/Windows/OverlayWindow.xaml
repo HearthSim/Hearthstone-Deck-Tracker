@@ -210,11 +210,13 @@
                         FinalBoardTooltip="true"
                     />
                 </StackPanel>
+                <!-- TODO: add button here -->
                 <StackPanel Name="BgsTopBar" Visibility="Collapsed" Orientation="Horizontal" Canvas.Top="0" Canvas.Right="0">
                     <overlay:TurnCounter x:Name="TurnCounter" Margin="0,0,2,0"  Height="55" VerticalAlignment="Top" />
                     <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel"/>
                 </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
+                <!-- TODO: fix the last opponent minions display on full screen (probs here?) -->
                 <StackPanel Width="1000" Name="BgsOpponentInfoContainer" Canvas.Top="0" Canvas.Right="0">
                     <battlegrounds:BattlegroundsOpponentInfo x:Name="BgsOpponentInfo" Visibility="Collapsed"/>
                 </StackPanel>
