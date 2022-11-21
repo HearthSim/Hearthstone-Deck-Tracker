@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using HearthDb.Deckstrings;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using HSReplay.ClientAnalytics;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -17,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private static readonly Lazy<ClientAnalyticsClient> Client;
 		private static readonly int[] Ports = { 17881, 17882, 17883, 17884, 17885, 17886, 17887, 17888, 17889 };
 
-		private static event Action? OnboardingComplete;
+		private static event System.Action? OnboardingComplete;
 
 		static HSReplayNetClientAnalytics()
 		{
@@ -34,12 +40,25 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				OnAppStart();
 		}
 
-		private static void TrackEvent(string eventName, object properties)
+		private static void TrackAction(VMAction action)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
-			if(TryGetToken(out var token))
-				Client.Value.TrackEvent(token, eventName, properties).Forget();
+
+			try
+			{
+				action.AddProperties(ValueMomentUtils.EnrichedEventProperties(action));
+
+				var valueMoments = ValueMomentManager.GetValueMoments(action);
+				action.AddProperties(ValueMomentManager.GetValueMomentsProperties(valueMoments));
+
+				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action))
+					Client.Value.TrackEvent(token, action.EventName, action.Properties).Forget();
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+			}
 		}
 
 		private static void OnAppStart()
@@ -47,10 +66,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var isFirstStart = ConfigManager.PreviousVersion == null;
 			if(isFirstStart)
 			{
-				TrackEvent("first_app_start", new
+				var action = new VMActions.InstallAction(new Dictionary<string, object>
 				{
-					app_version = Helper.GetCurrentVersion().ToVersionString(true),
+					{ "app_version", Helper.GetCurrentVersion().ToVersionString(true) },
+					{ "franchise", new [] {
+						Franchise.HSConstructed.Value,
+						Franchise.Battlegrounds.Value,
+						Franchise.Mercenaries.Value,
+					} },
 				});
+				TrackAction(action);
 			}
 		}
 
@@ -81,28 +106,125 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			if(firstUpload)
 			{
-				TrackEvent("first_collection_upload", new { collection_size = collection.Size() });
+				var action = new VMActions.FirstCollectionUploadAction(new Dictionary<string, object>
+				{
+					{ "collection_size", collection.Size() },
+					{ "franchise", new string[] { Franchise.HSConstructed.Value } },
+				});
+				TrackAction(action);
 			}
 		}
 
-		public static void TryTrackToastClick(string toastId)
+		public static void OnConstructedMatchEnds(GameStats gameStats, GameMode gameMode, GameType gameType)
 		{
-			TrackEvent("toast_click", new {
-				toast = toastId
+			var heroCard = Database.GetCardFromId(gameStats.PlayerHeroCardId);
+			if(heroCard == null)
+				return;
+
+			string? subFranchise = gameMode switch
+			{
+				GameMode.Arena => "Arena",
+				GameMode.Brawl => "Brawl",
+				GameMode.Duels => "Duels",
+				_ => null
+			};
+
+			OnMatchEnds(Franchise.HSConstructed, new Dictionary<string, object>
+			{
+				{ "hero_dbf_id", heroCard.DbfId },
+				{ "hero_name", heroCard.Name ?? "" },
+				{ "sub_franchise", subFranchise != null ? new [] { subFranchise } : new string[] { } },
+				{ "match_result", gameStats.Result.ToString() },
+				{ "game_type", gameType.ToString() },
+				{ "star_level ", gameMode == GameMode.Ranked ? gameStats.StarLevel : "" },
+			});
+		}
+		
+		public static void OnBattlegroundsMatchEnds(string? heroCardId, int finalPlacement, GameStats gameStats, GameMetrics gameMetrics, GameType gameType)
+		{
+			var bgHeroCard = Database.GetCardFromId(heroCardId);
+			if(bgHeroCard == null)
+				return;
+
+			OnMatchEnds(Franchise.Battlegrounds, new Dictionary<string, object>
+			{
+				{ "hero_dbf_id", bgHeroCard.DbfId },
+				{ "hero_name", bgHeroCard.Name ?? "" },
+				{ "final_placement", finalPlacement },
+				{ "game_type", gameType.ToString() },
+				{ "battlegrounds_rating", gameStats.BattlegroundsRatingAfter },
+				{ ValueMomentUtils.NUM_CLICK_BATTLEGROUNDS_MINION_TAB, gameMetrics.BattlegroundsMinionsTabClicks },
+			});
+		}
+		
+		public static void OnMercenariesMatchEnds(GameStats gameStats, GameMetrics gameMetrics, GameType gameType)
+		{
+			OnMatchEnds(Franchise.Mercenaries, new Dictionary<string, object>
+			{
+				{ "match_result", gameStats.Result.ToString() },
+				{ "game_type", gameType.ToString() },
+				{ ValueMomentUtils.NUM_HOVER_OPPONENT_MERC_ABILITY, gameMetrics.MercenariesHoversOpponentMercToShowAbility },
+				{ ValueMomentUtils.NUM_HOVER_MERC_TASK_OVERLAY, gameMetrics.MercenariesHoverTasksDuringMatch },
 			});
 		}
 
-		public static void TryTrackEndFirstDailyBattlegroundsMatch(int finalPlacement)
+		private static void OnMatchEnds(Franchise franchise, Dictionary<string, object> properties)
 		{
-			TrackEvent("end_first_daily_bgs_match", new
+			var action = new VMActions.EndMatchAction(new Dictionary<string, object>(properties)
 			{
-				is_overlay_enabled = !Config.Instance.HideOverlay,
-				is_minion_overlay_enabled = Config.Instance.ShowBattlegroundsTiers,
-				is_bobs_buddy_enabled = Config.Instance.RunBobsBuddy,
-				is_session_recap_enabled = Config.Instance.ShowSessionRecap,
-				is_hero_notification_enabled = Config.Instance.ShowBattlegroundsToast,
-				final_placement = finalPlacement,
+				{ "franchise", new string[] { franchise.Value } },
+				{ "action_name", "end_match"},
 			});
+			action.AddProperties(ValueMomentUtils.GetFranchiseProperties(franchise));
+
+			TrackAction(action);
+		}
+
+		public static void OnCopyDeck(string target)
+		{
+			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
+			{
+				{ "action_name", target },
+				{ "franchise", new string[] { Franchise.HSConstructed.Value } },
+			});
+			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
+
+			TrackAction(action);
+		}
+
+		public static void OnScreenshotDeck(string actionName)
+		{
+			var action = new VMActions.ClickAction(new Dictionary<string, object>
+			{
+				{ "franchise", new string[] { Franchise.HSConstructed.Value } },
+				{ "action_name", actionName},
+			});
+			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
+
+			TrackAction(action);
+		}
+
+		public static void OnShowPersonalStats(string actionName, string? subFranchise)
+		{
+			var action = new VMActions.ClickAction(new Dictionary<string, object>
+			{
+				{ "franchise", new string[] { Franchise.HSConstructed.Value } },
+				{ "action_name", actionName },
+				{ "sub_franchise", subFranchise != null ? new string[] { subFranchise } : new string[] { } },
+			});
+			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
+
+			TrackAction(action);
+		}
+
+		public static void TryTrackToastClick(string toastId, Franchise franchise)
+		{
+			var action = new VMActions.ToastAction(new Dictionary<string, object>
+			{
+				{ "toast", toastId },
+				{ "franchise", new string[] { franchise.Value } },
+			});
+			TrackAction(action);
 		}
 
 		public static async Task<bool> EnsureOnboarded()
@@ -259,7 +381,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				return false;
 			}
 		}
-		
+
 		private static RegistryKey GetOrCreateSubkey(RegistryKey key, string subkeyName, bool writable = false)
 		{
 			var subKey = key.OpenSubKey(subkeyName, writable);

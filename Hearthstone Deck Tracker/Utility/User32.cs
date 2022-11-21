@@ -247,7 +247,6 @@ namespace Hearthstone_Deck_Tracker
 			SetForegroundWindow(mainWindowHandle);
 		}
 
-
 		//http://joelabrahamsson.com/detecting-mouse-and-keyboard-input-with-net/
 		public class MouseInput : IDisposable
 		{

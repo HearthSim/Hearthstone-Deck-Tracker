@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments;
 using HSReplay;
 using HSReplay.OAuth.Data;
 
@@ -37,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 
 		public BattlegroundsSessionViewModel BattlegroundsSessionViewModel { get; } = new();
+		public GameMetrics Metrics { get; private set; } = new();
 
 		public GameV2()
 		{
@@ -288,6 +290,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsBoardState?.Reset();
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
+			Metrics = new GameMetrics();
 
 			if(Core._game != null && Core.Overlay != null)
 			{

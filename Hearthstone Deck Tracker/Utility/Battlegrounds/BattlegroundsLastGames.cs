@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using HearthDb.Enums;
 using HearthMirror;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -22,15 +21,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 		[XmlElement("Game")]
 		public List<GameItem> Games { get; set; } = new List<GameItem>();
 
-		private static string ConfigPath => Path.Combine(Config.Instance.ConfigDir, "BgsLastGames.xml");
+		private static string DataPath => Path.Combine(Config.AppDataPath, "BgsLastGames.xml");
 
 		private static BattlegroundsLastGames Load()
 		{
-			if(!File.Exists(ConfigPath))
+			if(!File.Exists(DataPath))
 				return new BattlegroundsLastGames();
 			try
 			{
-				return XmlManager<BattlegroundsLastGames>.Load(ConfigPath);
+				return XmlManager<BattlegroundsLastGames>.Load(DataPath);
 			}
 			catch(Exception ex)
 			{
@@ -84,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 		{
 			try
 			{
-				XmlManager<BattlegroundsLastGames>.Save(ConfigPath, Instance);
+				XmlManager<BattlegroundsLastGames>.Save(DataPath, Instance);
 			}
 			catch(Exception ex)
 			{

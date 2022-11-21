@@ -505,7 +505,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			ShowMercenariesTasksButton();
 			if(MercenariesTaskListVM.Update())
+			{
 				_mercenariesTaskListBehavior.Show();
+				if(_game.IsMercenariesMatch)
+					_game.Metrics.IncrementMercenariesTaskHoverDuringMatch();
+			}
 		}
 
 		private void HideMercenariesTasks()

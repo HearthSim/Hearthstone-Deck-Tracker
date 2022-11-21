@@ -29,6 +29,8 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Updating;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Windows.MainWindowControls;
 #if(SQUIRREL)
 	using Squirrel;
@@ -443,7 +445,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(matches)
 					Core.StatsOverview.TreeViewItemArenaRunsOverview.IsSelected = true;
 				else
+				{
 					Core.StatsOverview.TreeViewItemArenaRunsSummary.IsSelected = true;
+					HSReplayNetClientAnalytics.OnShowPersonalStats(VMActions.ClickAction.ActionName.StatsArena, "Arena");
+				}
 				Core.StatsOverview.ContentControlFilter.Content = Core.StatsOverview.ArenaFilters;
 			}
 			else
@@ -451,7 +456,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(matches)
 					Core.StatsOverview.TreeViewItemConstructedGames.IsSelected = true;
 				else
+				{
 					Core.StatsOverview.TreeViewItemConstructedSummary.IsSelected = true;
+					HSReplayNetClientAnalytics.OnShowPersonalStats(VMActions.ClickAction.ActionName.StatsConstructed, null);
+				}
 				Core.StatsOverview.ContentControlFilter.Content = Core.StatsOverview.ConstructedFilters;
 			}
 			Core.StatsOverview.UpdateStats();

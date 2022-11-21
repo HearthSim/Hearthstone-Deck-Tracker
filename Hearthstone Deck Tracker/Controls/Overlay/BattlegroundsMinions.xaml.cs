@@ -30,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var tier = ((BattlegroundsTier)sender).Tier;
 			var races = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId) ?? _db.Value.Races;
 			Update(tier == ActiveTier ? 0 : tier, races);
+			Core.Game.Metrics.IncrementBattlegroundsMinionsTabClick();
 		}
 
 		public void Reset()

@@ -27,6 +27,9 @@ using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
+using ControlzEx.Standard;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+
 
 #endregion
 
@@ -775,6 +778,13 @@ namespace Hearthstone_Deck_Tracker
 
 				await SaveReplays(_game.CurrentGameStats);
 
+				if(_game.IsConstructedMatch || _game.CurrentGameMode == GameMode.Duels)
+					HSReplayNetClientAnalytics.OnConstructedMatchEnds(
+						_game.CurrentGameStats,
+						_game.CurrentGameMode,
+						_game.CurrentGameType
+					);
+
 				if(_game.IsBattlegroundsMatch)
 				{
 					if(LogContainsStateComplete)
@@ -787,14 +797,22 @@ namespace Hearthstone_Deck_Tracker
 
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
 					var finalPlacement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0;
-					var battlegroundsGameDate = DateTime.Now.ToString("yyyy/MM/dd");
-					if(Config.Instance.LastBattlegroundsGameDate != battlegroundsGameDate && finalPlacement > 0 && !_game.Spectator)
-					{
-						HSReplayNetClientAnalytics.TryTrackEndFirstDailyBattlegroundsMatch(finalPlacement);
-						Config.Instance.LastBattlegroundsGameDate = battlegroundsGameDate;
-						Config.Save();
-					}
+
+					HSReplayNetClientAnalytics.OnBattlegroundsMatchEnds(
+						hero?.CardId,
+						finalPlacement,
+						_game.CurrentGameStats,
+						_game.Metrics,
+						_game.CurrentGameType
+					);
 				}
+
+				if(_game.IsMercenariesMatch)
+					HSReplayNetClientAnalytics.OnMercenariesMatchEnds(
+						_game.CurrentGameStats,
+						_game.Metrics,
+						_game.CurrentGameType
+					);
 
 				Influx.SendQueuedMetrics();
 			}

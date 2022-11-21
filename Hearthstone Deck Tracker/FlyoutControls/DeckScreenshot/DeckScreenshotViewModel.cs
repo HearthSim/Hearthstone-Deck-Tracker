@@ -9,8 +9,12 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+
 
 #endregion
 
@@ -179,6 +183,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			var file = DeckScreenshotHelper.Save(Deck, DeckImage);
 			if(file != null)
 				SavedFile = new FileInfo(file);
+			HSReplayNetClientAnalytics.OnScreenshotDeck(VMActions.ClickAction.ActionName.ScreenshotSaveToDisk);
 		}
 
 		private async void Upload()
@@ -199,6 +204,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 				ImgurUrl = url;
 				UploadButtonText = LocUtil.Get(ImgurUploaded, true);
 			}
+			HSReplayNetClientAnalytics.OnScreenshotDeck(VMActions.ClickAction.ActionName.ScreenshotUploadToImgur);
 		}
 
 		public async void CopyToClipboard()
@@ -211,6 +217,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			CopyToClipboardButtonText = LocUtil.Get(ClipboardCopied, true);
 			await Task.Delay(2000);
 			CopyToClipboardButtonText = LocUtil.Get(ClipboardDefault, true);
+			HSReplayNetClientAnalytics.OnScreenshotDeck(VMActions.ClickAction.ActionName.ScreenshotCopyToClipboard);
 		}
 
 		public void UpdateImage()

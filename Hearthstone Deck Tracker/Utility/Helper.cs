@@ -36,6 +36,9 @@ using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using System.Web;
 using System.Security.Cryptography.X509Certificates;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+using System.Windows.Forms;
+
 
 #endregion
 
@@ -747,7 +750,7 @@ namespace Hearthstone_Deck_Tracker
 
 			}
 			TryOpenUrl(url);
-			HSReplayNetClientAnalytics.TryTrackToastClick("battlegrounds_hero_picker");
+			HSReplayNetClientAnalytics.TryTrackToastClick("battlegrounds_hero_picker", Franchise.Battlegrounds);
 		}
 
 		public static async Task<T?> RetryWhileNull<T>(Func<T> func, int tries = 5, int delay = 150)
@@ -760,6 +763,13 @@ namespace Hearthstone_Deck_Tracker
 				await Task.Delay(delay);
 			}
 			return default;
+		}
+
+		public static Rectangle GetHearthstoneMonitorRect()
+		{
+			var rect = GetHearthstoneRect(true);
+			var screen = Screen.FromPoint(rect.Location);
+			return screen.Bounds;
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 				var url = Helper.BuildHsReplayNetUrl($"/decks/{_shortId}", "mulligan_toast", null, new[] { ids, opponent, playerInitiative, playerStarLevel });
 				Helper.TryOpenUrl(url);
-				HSReplayNetClientAnalytics.TryTrackToastClick("mulligan");
+				HSReplayNetClientAnalytics.TryTrackToastClick("mulligan", Franchise.HSConstructed);
 			}
 		}
 

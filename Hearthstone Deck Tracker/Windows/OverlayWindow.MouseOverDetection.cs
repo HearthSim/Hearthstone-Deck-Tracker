@@ -209,6 +209,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						elements[i].ShowQuestionmark = abilityData!.Entity == null && abilityData.HasTiers;
 					}
 				}
+				_game.Metrics.IncrementMercenariesHoversOpponentMercToShowAbility();
 			}
 			else
 				ClearMercHover();
