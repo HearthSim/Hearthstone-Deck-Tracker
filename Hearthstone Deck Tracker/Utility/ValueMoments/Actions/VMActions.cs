@@ -73,5 +73,15 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			)
 			{ }
 		}
+
+		public class EndSpectateMatchAction : VMAction
+		{
+			public const string Name = "End Spectate Match Action HDT";
+
+			public EndSpectateMatchAction(Dictionary<string, object> properties) : base(
+				Name, Source.App, "End Spectate Match Action", 1, properties
+			)
+			{ }
+		}
 	}
 }

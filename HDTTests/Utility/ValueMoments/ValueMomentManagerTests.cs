@@ -89,6 +89,20 @@ namespace HDTTests.Utility.ValueMoments
 		}
 
 		[TestMethod]
+		public void GetValueMoments_ReturnsDecklistVisibleValueMomentSpectate()
+		{
+			var action = new VMActions.EndSpectateMatchAction(new Dictionary<string, object>
+			{
+				{ "franchise", new [] { Franchise.HSConstructedValue } },
+				{ "hdt_general_settings_enabled", new string[] { } },
+				{ "hdt_general_settings_disabled", new [] { ValueMomentUtils.OVERLAY_HIDE_COMPLETELY } }
+			});
+			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
+			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.DecklistVisible);
+			Assert.IsTrue(valueMoment.IsFree);
+		}
+
+		[TestMethod]
 		public void GetValueMoments_ReturnsBGBobsBuddyValueMoment()
 		{
 			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
@@ -158,6 +172,21 @@ namespace HDTTests.Utility.ValueMoments
 		}
 
 		[TestMethod]
+		public void GetValueMoments_ReturnsBGMinionBrowserValueMomentSpectate()
+		{
+			var action = new VMActions.EndSpectateMatchAction(new Dictionary<string, object>
+			{
+				{ "franchise", new [] { Franchise.BattlegroundsValue } },
+				{ "hdt_battlegrounds_settings_enabled", new string[] {} },
+				{ "num_click_battlegrounds_minion_tab", 1 }
+			});
+			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
+
+			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.BGMinionBrowser);
+			Assert.IsTrue(valueMoment.IsFree);
+		}
+
+		[TestMethod]
 		public void GetValueMoments_ReturnsMercOpponentAbilitiesValueMoment()
 		{
 			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
@@ -172,7 +201,7 @@ namespace HDTTests.Utility.ValueMoments
 		}
 
 		[TestMethod]
-		public void GetValueMoments_ReturnsMercMyTasksValueMoment()
+		public void GetValueMoments_ReturnsMercFriendlyTasksValueMoment()
 		{
 			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
 			{
@@ -182,7 +211,22 @@ namespace HDTTests.Utility.ValueMoments
 			});
 			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
 
-			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.MercMyTasks);
+			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.MercFriendlyTasks);
+			Assert.IsTrue(valueMoment.IsFree);
+		}
+
+		[TestMethod]
+		public void GetValueMoments_ReturnsMercFriendlyTasksValueMomentSpectate()
+		{
+			var action = new VMActions.EndSpectateMatchAction(new Dictionary<string, object>
+			{
+				{ "franchise", new [] { Franchise.MercenariesValue } },
+				{ "num_hover_opponent_merc_ability", 0 },
+				{ "num_hover_merc_task_overlay", 1 }
+			});
+			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
+
+			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.MercFriendlyTasks);
 			Assert.IsTrue(valueMoment.IsFree);
 		}
 
@@ -252,7 +296,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
 			{
-				{ "cur_daily_occurrences", 2 }
+				{ "cur_daily_occurrences", 12 }
 			});
 
 			Assert.IsFalse(ValueMomentManager.ShouldSendEventToMixPanel(action, new List<ValueMoment>()));
@@ -275,7 +319,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
 			{
-				{ "cur_daily_occurrences", 2 },
+				{ "cur_daily_occurrences", 12 },
 			});
 			var valueMoments = new List<ValueMoment> { new ValueMoment("Foo", ValueMoment.VMKind.Free, 1) };
 			DailyEventsCount.Instance.UpdateEventDailyCount("Foo");

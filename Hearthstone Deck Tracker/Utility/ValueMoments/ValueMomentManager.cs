@@ -30,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					}
 					break;
 				case VMActions.EndMatchAction.Name:
+				case VMActions.EndSpectateMatchAction.Name:
 					var franchise = action.Properties["franchise"] as string[];
 					if(franchise.Contains(Franchise.HSConstructedValue))
 					{
@@ -64,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 							yield return new ValueMoment(ValueMoment.VMName.MercOpponentAbilities, ValueMoment.VMKind.Free);
 
 						if((int)action.Properties[ValueMomentUtils.NUM_HOVER_MERC_TASK_OVERLAY] > 0)
-							yield return new ValueMoment(ValueMoment.VMName.MercMyTasks, ValueMoment.VMKind.Free);
+							yield return new ValueMoment(ValueMoment.VMName.MercFriendlyTasks, ValueMoment.VMKind.Free);
 					}
 					break;
 			};

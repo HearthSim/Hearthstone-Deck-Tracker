@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 
 			// Mercenaries
 			public const string MercOpponentAbilities = "Hover Opponent Merc Abilities";
-			public const string MercMyTasks = "Hover My Merc Tasks";
+			public const string MercFriendlyTasks = "Hover Friendly Merc Tasks";
 		}
 
 		public enum VMKind

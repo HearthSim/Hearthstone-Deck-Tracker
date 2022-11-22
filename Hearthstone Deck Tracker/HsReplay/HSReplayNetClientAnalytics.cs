@@ -117,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static void OnConstructedMatchEnds(GameStats gameStats, GameMode gameMode, GameType gameType)
+		public static void OnConstructedMatchEnds(GameStats gameStats, GameMode gameMode, GameType gameType, bool spectator)
 		{
 			var heroCard = Database.GetCardFromId(gameStats.PlayerHeroCardId);
 			if(heroCard == null)
@@ -131,7 +131,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				_ => null
 			};
 
-			OnMatchEnds(Franchise.HSConstructed, new Dictionary<string, object>
+			OnMatchEnds(Franchise.HSConstructed, spectator, new Dictionary<string, object>
 			{
 				{ "hero_dbf_id", heroCard.DbfId },
 				{ "hero_name", heroCard.Name ?? "" },
@@ -142,13 +142,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			});
 		}
 		
-		public static void OnBattlegroundsMatchEnds(string? heroCardId, int finalPlacement, GameStats gameStats, GameMetrics gameMetrics, GameType gameType)
+		public static void OnBattlegroundsMatchEnds(string? heroCardId, int finalPlacement, GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)
 		{
 			var bgHeroCard = Database.GetCardFromId(heroCardId);
 			if(bgHeroCard == null)
 				return;
 
-			OnMatchEnds(Franchise.Battlegrounds, new Dictionary<string, object>
+			OnMatchEnds(Franchise.Battlegrounds, spectator, new Dictionary<string, object>
 			{
 				{ "hero_dbf_id", bgHeroCard.DbfId },
 				{ "hero_name", bgHeroCard.Name ?? "" },
@@ -159,9 +159,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			});
 		}
 		
-		public static void OnMercenariesMatchEnds(GameStats gameStats, GameMetrics gameMetrics, GameType gameType)
+		public static void OnMercenariesMatchEnds(GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)
 		{
-			OnMatchEnds(Franchise.Mercenaries, new Dictionary<string, object>
+			OnMatchEnds(Franchise.Mercenaries, spectator, new Dictionary<string, object>
 			{
 				{ "match_result", gameStats.Result.ToString() },
 				{ "game_type", gameType.ToString() },
@@ -170,16 +170,25 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			});
 		}
 
-		private static void OnMatchEnds(Franchise franchise, Dictionary<string, object> properties)
+		private static void OnMatchEnds(Franchise franchise, bool spectator, Dictionary<string, object> properties)
 		{
-			var action = new VMActions.EndMatchAction(new Dictionary<string, object>(properties)
+			var action_properties = new Dictionary<string, object>(properties)
 			{
 				{ "franchise", new string[] { franchise.Value } },
 				{ "action_name", "end_match"},
-			});
-			action.AddProperties(ValueMomentUtils.GetFranchiseProperties(franchise));
-
-			TrackAction(action);
+			};
+			if(spectator)
+			{
+				var action = new VMActions.EndSpectateMatchAction(action_properties);
+				action.AddProperties(ValueMomentUtils.GetFranchiseProperties(franchise));
+				TrackAction(action);
+			}	
+			else
+			{
+				var action = new VMActions.EndMatchAction(action_properties);
+				action.AddProperties(ValueMomentUtils.GetFranchiseProperties(franchise));
+				TrackAction(action);
+			}
 		}
 
 		public static void OnCopyDeck(string target)
