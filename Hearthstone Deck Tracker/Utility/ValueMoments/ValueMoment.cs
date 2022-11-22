@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			Paid,
 		}
 
-		public ValueMoment(string name, VMKind kind, int maxValueMomentCount = 100)
+		public ValueMoment(string name, VMKind kind, int maxValueMomentCount = 1)
 		{
 			Name = name;
 			Kind = kind;

@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			};
 		}
 
-		internal static Dictionary<string, object> GetValueMomentsProperties(IEnumerable<ValueMoment> valueMoments)
+		internal static Dictionary<string, object> GetValueMomentsProperties(List<ValueMoment> valueMoments)
 		{
 			var freeValueMoments = new List<string>();
 			var paidValueMoments = new List<string>();
@@ -101,10 +101,16 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			};
 		}
 
-		internal static bool ShouldSendEventToMixPanel(VMAction action)
+		internal static bool ShouldSendEventToMixPanel(VMAction action, List<ValueMoment> valueMoments)
 		{
+			// Check action daily occurrences
 			if(action.MaxDailyOccurrences == null)
 				return true;
+
+			// Check action value moments daily occurrences
+			foreach(var vm in valueMoments)
+				if(DailyEventsCount.Instance.GetEventDailyCount(vm.Name) <= vm.MaxValueMomentCount)
+					return true;
 
 			action.Properties.TryGetValue(ValueMomentUtils.CURRENT_DAILY_OCCURRENCES, out var dailyCount);
 			if (dailyCount != null)

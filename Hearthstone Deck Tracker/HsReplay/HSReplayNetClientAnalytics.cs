@@ -49,10 +49,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			{
 				action.AddProperties(ValueMomentUtils.EnrichedEventProperties(action));
 
-				var valueMoments = ValueMomentManager.GetValueMoments(action);
+				var valueMoments = ValueMomentManager.GetValueMoments(action).ToList();
+				foreach(var valueMoment in valueMoments)
+					DailyEventsCount.Instance.UpdateEventDailyCount(valueMoment.Name);
 				action.AddProperties(ValueMomentManager.GetValueMomentsProperties(valueMoments));
 
-				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action))
+				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action, valueMoments))
 					Client.Value.TrackEvent(token, action.EventName, action.Properties).Forget();
 			}
 			catch(Exception e)

@@ -6,7 +6,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 	{
 		public class InstallAction : VMAction
 		{
-			public const string Name = "first_app_start";
+			public const string Name = "Install HDT";
 
 			public InstallAction(Dictionary<string, object> properties) : base(
 				Name, Source.App, "First App Start", null, properties
@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 
 		public class FirstCollectionUploadAction : VMAction
 		{
-			public const string Name = "first_collection_upload";
+			public const string Name = "Upload First Hearthstone Collection";
 
 			public FirstCollectionUploadAction(Dictionary<string, object> properties) : base(
 				Name, Source.App, "First Collection Upload", null, properties
@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		
 		public class ToastAction : VMAction
 		{
-			public const string Name = "toast_click";
+			public const string Name = "Click HDT Toast";
 
 			public ToastAction(Dictionary<string, object> properties) : base(
 				Name, Source.Overlay, "Toast Click", null, properties
@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			public const string Name = "Copy Deck HDT";
 
 			public CopyDeckAction(Dictionary<string, object> properties) : base(
-				Name, Source.MainWindow, "Copy Deck", 1, properties
+				Name, Source.MainWindow, "Copy Deck", 10, properties
 			)
 			{ }
 		}
@@ -69,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			public const string Name = "End Match Action HDT";
 
 			public EndMatchAction(Dictionary<string, object> properties) : base(
-				Name, Source.App, "End Match Action", 20, properties
+				Name, Source.App, "End Match Action", 1, properties
 			)
 			{ }
 		}

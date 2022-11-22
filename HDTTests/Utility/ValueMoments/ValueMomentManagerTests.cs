@@ -11,6 +11,12 @@ namespace HDTTests.Utility.ValueMoments
 	[TestClass]
 	public class ValueMomentManagerTests
 	{
+		[TestInitialize]
+		public void TestInitialize()
+		{
+			DailyEventsCount.Instance.Clear("Foo");
+		}
+
 		[TestMethod]
 		public void GetValueMoments_ReturnsCopyDeckValueMoment()
 		{
@@ -220,36 +226,62 @@ namespace HDTTests.Utility.ValueMoments
 		}
 
 		[TestMethod]
-		public void ShouldSendEventToMixPanel_ReturnsTrueForActionsWithMaxOccurences()
+		public void ShouldSendEventToMixPanel_ReturnsTrueForActionsWithoutMaxOccurrences()
 		{
-			var action = new VMActions.ToastAction(new Dictionary<string, object>()
+			var action = new VMActions.ToastAction(new Dictionary<string, object>
 			{
 				{ "cur_daily_occurrences", 10000 }
 			});
 
-			Assert.IsTrue(ValueMomentManager.ShouldSendEventToMixPanel(action));
+			Assert.IsTrue(ValueMomentManager.ShouldSendEventToMixPanel(action, new List<ValueMoment>()));
 		}
 
 		[TestMethod]
-		public void ShouldSendEventToMixPanel_ReturnsTrueForFewDailyOcurrences()
+		public void ShouldSendEventToMixPanel_ReturnsTrueForActionWithFewDailyOccurrences()
 		{
-			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>()
+			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
 			{
 				{ "cur_daily_occurrences", 1 }
 			});
 			
-			Assert.IsTrue(ValueMomentManager.ShouldSendEventToMixPanel(action));
+			Assert.IsTrue(ValueMomentManager.ShouldSendEventToMixPanel(action, new List<ValueMoment>()));
 		}
 
 		[TestMethod]
-		public void ShouldSendEventToMixPanel_ReturnsTrueForManyDailyOcurrences()
+		public void ShouldSendEventToMixPanel_ReturnsFalseForActionWithExceededDailyOccurrences()
 		{
-			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>()
+			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
 			{
 				{ "cur_daily_occurrences", 2 }
 			});
 
-			Assert.IsFalse(ValueMomentManager.ShouldSendEventToMixPanel(action));
+			Assert.IsFalse(ValueMomentManager.ShouldSendEventToMixPanel(action, new List<ValueMoment>()));
+		}
+
+		[TestMethod]
+		public void ShouldSendEventToMixPanel_ReturnsTrueForForValueMomentWithFewDailyOccurrences()
+		{
+			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
+			{
+				{ "cur_daily_occurrences", 2 },
+			});
+			var valueMoments = new List<ValueMoment> { new ValueMoment("Foo", ValueMoment.VMKind.Free, 1) };
+			
+			Assert.IsTrue(ValueMomentManager.ShouldSendEventToMixPanel(action, valueMoments));
+		}
+
+		[TestMethod]
+		public void ShouldSendEventToMixPanel_ReturnsFalseForForValueMomentWithExceededDailyOccurrences()
+		{
+			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
+			{
+				{ "cur_daily_occurrences", 2 },
+			});
+			var valueMoments = new List<ValueMoment> { new ValueMoment("Foo", ValueMoment.VMKind.Free, 1) };
+			DailyEventsCount.Instance.UpdateEventDailyCount("Foo");
+			DailyEventsCount.Instance.UpdateEventDailyCount("Foo");
+			
+			Assert.IsFalse(ValueMomentManager.ShouldSendEventToMixPanel(action, valueMoments));
 		}
 	}
 }

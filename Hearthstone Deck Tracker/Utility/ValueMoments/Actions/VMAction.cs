@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		protected VMAction(string eventName, string source, string actionType, int? maxDailyOccurrences, Dictionary<string, object> properties)
 		{
 			EventName = eventName;
-			MaxDailyOccurrences = maxDailyOccurrences;
+			MaxDailyOccurrences = maxDailyOccurrences; // if this is null, this action is not sent to the event counter and will always be sent to Mixpanel
 			Properties = new Dictionary<string, object>(properties){
 				{ "action_type", actionType },
 				{ "action_source", source },

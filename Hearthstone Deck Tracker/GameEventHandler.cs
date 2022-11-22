@@ -778,7 +778,7 @@ namespace Hearthstone_Deck_Tracker
 
 				await SaveReplays(_game.CurrentGameStats);
 
-				if(_game.IsConstructedMatch || _game.CurrentGameMode == GameMode.Duels)
+				if((_game.IsConstructedMatch || _game.CurrentGameMode == GameMode.Duels) && !_game.Spectator)
 					HSReplayNetClientAnalytics.OnConstructedMatchEnds(
 						_game.CurrentGameStats,
 						_game.CurrentGameMode,
@@ -795,19 +795,21 @@ namespace Hearthstone_Deck_Tracker
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 
-					var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
-					var finalPlacement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0;
-
-					HSReplayNetClientAnalytics.OnBattlegroundsMatchEnds(
-						hero?.CardId,
-						finalPlacement,
-						_game.CurrentGameStats,
-						_game.Metrics,
-						_game.CurrentGameType
-					);
+					if(!_game.Spectator)
+					{
+						var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
+						var finalPlacement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0;
+						HSReplayNetClientAnalytics.OnBattlegroundsMatchEnds(
+							hero?.CardId,
+							finalPlacement,
+							_game.CurrentGameStats,
+							_game.Metrics,
+							_game.CurrentGameType
+						);
+					}
 				}
 
-				if(_game.IsMercenariesMatch)
+				if(_game.IsMercenariesMatch && !_game.Spectator)
 					HSReplayNetClientAnalytics.OnMercenariesMatchEnds(
 						_game.CurrentGameStats,
 						_game.Metrics,
