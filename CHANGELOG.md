@@ -1,3 +1,6 @@
+## **Release v1.18.27 - 2022-11-22**
+**Updated how Khadgar interacts with Evil Twin in Bob's Buddy**
+
 ## **Release v1.18.26 - 2022-11-10**
 **Updated for Hearthstone 24.6.2**
 
