@@ -1,3 +1,7 @@
+## **Release v1.18.28 - 2022-11-29**
+**Fixes**:
+- Restorted general functionality for Hearthstone 25.0.0.
+
 ## **Release v1.18.27 - 2022-11-22**
 **Updated how Khadgar interacts with Evil Twin in Bob's Buddy**
 
