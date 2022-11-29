@@ -363,11 +363,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warrior.DirehornHatchling:
 								AddKnownCardId(gameState, NonCollectible.Warrior.DirehornHatchling_DirehornMatriarchToken);
 								break;
-							case Collectible.Mage.FrozenClone:
+							case Collectible.Mage.FrozenCloneICECROWN:
 								if(target != null)
 									AddKnownCardId(gameState, target, 2);
 								break;
-							case Collectible.Shaman.Moorabi:
+							case Collectible.Shaman.MoorabiICECROWN:
 							case Collectible.Rogue.SonyaShadowdancer:
 								if(target != null)
 									AddKnownCardId(gameState, target);
@@ -605,7 +605,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.EliseTheTrailblazer:
 								AddKnownCardId(gameState, NonCollectible.Neutral.ElisetheTrailblazer_UngoroPackToken);
 								break;
-							case Collectible.Mage.GhastlyConjurer:
+							case Collectible.Mage.GhastlyConjurerICECROWN:
 								AddKnownCardId(gameState, Collectible.Mage.MirrorImageLegacy);
 								break;
 							case Collectible.Druid.ThorngrowthSentries:
