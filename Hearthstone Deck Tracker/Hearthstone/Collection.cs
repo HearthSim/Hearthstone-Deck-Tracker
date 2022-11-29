@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 							x.FirstOrDefault(c => c.Card.PremiumType == 0)?.Card.Count ?? 0,
 							x.FirstOrDefault(c => c.Card.PremiumType == 1)?.Card.Count ?? 0,
 							x.FirstOrDefault(c => c.Card.PremiumType == 2)?.Card.Count ?? 0,
+							x.FirstOrDefault(c => c.Card.PremiumType == 3)?.Card.Count ?? 0,
 						}));
 			FavoriteHeroes = new SortedDictionary<int, int>(collection.FavoriteHeroes.ToDictionary(x => x.Key, x => GetDbfId(x.Value.Id)));
 			CardBacks = collection.CardBacks.OrderBy(x => x).ToList();
