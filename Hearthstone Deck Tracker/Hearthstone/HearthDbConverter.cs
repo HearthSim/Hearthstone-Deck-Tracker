@@ -60,6 +60,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1626, "Fractured in Alterac Valley"},
 			{1691, "Murder at Castle Nathria" },
 			{1776, "March of the Lich King" },
+			{1869, "Path of Arthas" },
 		};
 
 		public static string? ConvertClass(CardClass cardClass)
