@@ -76,6 +76,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static readonly Dictionary<string, string> HeroIdDict = new Dictionary<string, string>
 		{
+			{Collectible.Deathknight.TheLichKingHeroHeroSkins, "Deathknight"},
 			{Collectible.Demonhunter.IllidanStormrageHeroHeroSkins, "DemonHunter"},
 			{Collectible.Warrior.GarroshHellscreamHeroHeroSkins, "Warrior"},
 			{Collectible.Shaman.ThrallHeroHeroSkins, "Shaman"},
@@ -106,6 +107,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{"Mage", Collectible.Mage.JainaProudmooreHeroHeroSkins},
 			{"Priest", Collectible.Priest.AnduinWrynnHeroHeroSkins},
 			{"DemonHunter", Collectible.Demonhunter.IllidanStormrageHeroHeroSkins},
+			{"Deathknight", Collectible.Deathknight.TheLichKingHeroHeroSkins},
 		};
 
 		public static readonly Dictionary<CardClass, string> CardClassHero = new Dictionary<CardClass, string>
@@ -119,7 +121,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{CardClass.WARLOCK, Collectible.Warlock.GuldanHeroHeroSkins},
 			{CardClass.MAGE, Collectible.Mage.JainaProudmooreHeroHeroSkins},
 			{CardClass.PRIEST, Collectible.Priest.AnduinWrynnHeroHeroSkins},
-			{CardClass.DEMONHUNTER, Collectible.Demonhunter.IllidanStormrageHeroHeroSkins}
+			{CardClass.DEMONHUNTER, Collectible.Demonhunter.IllidanStormrageHeroHeroSkins},
+			{CardClass.DEATHKNIGHT, Collectible.Deathknight.TheLichKingHeroHeroSkins}
 		};
 
 		// cards that should have an entourage list but don't in the game data

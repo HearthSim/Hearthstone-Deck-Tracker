@@ -156,6 +156,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 
 		public string Total => _data != null ? Math.Round(_data.TotalWinrate).ToString(CultureInfo.InvariantCulture) : "-";
 
+		public string Deathknight => GetValue("DEATHKNIGHT");
 		public string DemonHunter => GetValue("DEMONHUNTER");
 		public string Druid => GetValue("DRUID");
 		public string Hunter => GetValue("HUNTER");

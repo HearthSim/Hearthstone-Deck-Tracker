@@ -150,10 +150,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			switch(klass?.ToLowerInvariant())
 			{
-				case "druid":
-					return Druid.MalfurionStormrageHeroHeroSkins;
+				case "deathknight":
+					return Deathknight.TheLichKingHeroHeroSkins;
 				case "demonhunter":
 					return Demonhunter.IllidanStormrageHeroHeroSkins;
+				case "druid":
+					return Druid.MalfurionStormrageHeroHeroSkins;
 				case "hunter":
 					return Hunter.RexxarHeroHeroSkins;
 				case "mage":

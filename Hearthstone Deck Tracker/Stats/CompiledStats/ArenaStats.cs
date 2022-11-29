@@ -97,6 +97,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		public ClassStats? ClassStatsMostPicked => !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.Runs).First();
 		public ClassStats? ClassStatsLeastPicked => !ClassStats.Any() ? null : ClassStats.OrderBy(x => x.Runs).First();
 
+		public ClassStats? ClassStatsDeathknight => GetClassStats("Deathknight");
 		public ClassStats? ClassStatsDemonHunter => GetClassStats("DemonHunter");
 		public ClassStats? ClassStatsDruid => GetClassStats("Druid");
 		public ClassStats? ClassStatsHunter => GetClassStats("Hunter");
@@ -331,6 +332,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		public void UpdateArenaStatsHighlights()
 		{
 			OnPropertyChanged(nameof(ClassStats));
+			OnPropertyChanged(nameof(ClassStatsDeathknight));
+			OnPropertyChanged(nameof(ClassStatsDemonHunter));
 			OnPropertyChanged(nameof(ClassStatsDruid));
 			OnPropertyChanged(nameof(ClassStatsHunter));
 			OnPropertyChanged(nameof(ClassStatsMage));

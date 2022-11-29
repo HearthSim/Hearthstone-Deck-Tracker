@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		public Visibility TextVisibility => _player != null ? Visibility.Collapsed : Visibility.Visible;
 		public string Text => Class.ToUpper();
 
+		public MatchupStats Deathknight => GetMatchupStats(HeroClassNeutral.Deathknight);
 		public MatchupStats DemonHunter => GetMatchupStats(HeroClassNeutral.DemonHunter);
 		public MatchupStats Druid => GetMatchupStats(HeroClassNeutral.Druid);
 		public MatchupStats Hunter => GetMatchupStats(HeroClassNeutral.Hunter);

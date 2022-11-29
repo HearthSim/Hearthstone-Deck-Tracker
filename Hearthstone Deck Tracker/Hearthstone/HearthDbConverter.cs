@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(cardClass == CardClass.DEMONHUNTER)
 				return "DemonHunter";
-			return (int)cardClass < 2 || (int)cardClass > 10
+			return (int)cardClass < 1 || (int)cardClass > 10
 				  ? null : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(cardClass.ToString().ToLowerInvariant());
 		}
 

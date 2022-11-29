@@ -26,6 +26,7 @@
                     <ImageSource x:Key="HsReplayIcon">Resources/hsreplay_logo_blue.png</ImageSource>
                     <ImageSource x:Key="HsReplayIconBlue">Resources/hsreplay_logo_blue.png</ImageSource>
                     <ImageSource x:Key="HsReplayIconWhite">Resources/hsreplay_logo_white.png</ImageSource>
+                    <ImageSource x:Key="ClassIconDeathknightRound">Resources/ClassIcons/Round/deathknight.png</ImageSource>
                     <ImageSource x:Key="ClassIconDemonHunterRound">Resources/ClassIcons/Round/demonhunter.png</ImageSource>
                     <ImageSource x:Key="ClassIconDruidRound">Resources/ClassIcons/Round/druid.png</ImageSource>
                     <ImageSource x:Key="ClassIconHunterRound">Resources/ClassIcons/Round/hunter.png</ImageSource>

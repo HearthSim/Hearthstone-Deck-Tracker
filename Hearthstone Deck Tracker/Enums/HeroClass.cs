@@ -2,6 +2,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum HeroClass
 	{
+		[LocDescription("Enum_HeroClass_Deathknight")]
+		Deathknight,
 		[LocDescription("Enum_HeroClass_DemonHunter")]
 		DemonHunter,
 		[LocDescription("Enum_HeroClass_Druid")]
@@ -28,6 +30,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 	{
 		[LocDescription("Enum_HeroClass_All")]
 		All,
+		[LocDescription("Enum_HeroClass_Deathknight")]
+		Deathknight,
 		[LocDescription("Enum_HeroClass_DemonHunter")]
 		DemonHunter,
 		[LocDescription("Enum_HeroClass_Druid")]
@@ -54,6 +58,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 	public enum HeroClassNeutral
 	{
+		[LocDescription("Enum_HeroClass_Deathknight")]
+		Deathknight,
 		[LocDescription("Enum_HeroClass_DemonHunter")]
 		DemonHunter,
 		[LocDescription("Enum_HeroClass_Druid")]
@@ -82,6 +88,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 	{
 		[LocDescription("Enum_HeroClass_All")]
 		All,
+		[LocDescription("Enum_HeroClass_Deathknight")]
+		Deathknight,
 		[LocDescription("Enum_HeroClass_DemonHunter")]
 		DemonHunter,
 		[LocDescription("Enum_HeroClass_Druid")]
