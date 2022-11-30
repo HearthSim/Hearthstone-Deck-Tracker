@@ -24,7 +24,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private readonly PowerHandler _powerLineHandler = new PowerHandler();
 		private readonly ArenaHandler _arenaHandler = new ArenaHandler();
 		private readonly LoadingScreenHandler _loadingScreenHandler = new LoadingScreenHandler();
-		private readonly FullScreenFxHandler _fullScreenFxHandler = new FullScreenFxHandler();
 		private HsGameState? _gameState;
 		private GameV2? _game;
 		private readonly LogWatcher _logWatcher;
@@ -40,7 +39,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public static LogWatcherInfo ArenaLogWatcherInfo => new LogWatcherInfo {Name = "Arena" };
 		public static LogWatcherInfo LoadingScreenLogWatcherInfo => new LogWatcherInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded", "Gameplay" } };
-		public static LogWatcherInfo FullScreenFxLogWatcherInfo => new LogWatcherInfo { Name = "FullScreenFX" };
 
 		public LogWatcherManager()
 		{
@@ -50,7 +48,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				PowerLogWatcherInfo,
 				ArenaLogWatcherInfo,
 				LoadingScreenLogWatcherInfo,
-				FullScreenFxLogWatcherInfo
 			});
 			_logWatcher.OnNewLines += OnNewLines;
 			_logWatcher.OnLogFileFound += OnLogFileFound;
@@ -144,9 +141,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						break;
 					case "LoadingScreen":
 						_loadingScreenHandler.Handle(line, _gameState, _game);
-						break;
-					case "FullScreenFX":
-						_fullScreenFxHandler.Handle(line, _game);
 						break;
 				}
 			}

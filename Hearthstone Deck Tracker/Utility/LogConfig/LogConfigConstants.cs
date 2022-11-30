@@ -24,6 +24,8 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 		{
 			new LogConfigItem("Achievements", Console),
 			new LogConfigItem("Arena", Console),
+			// FullScreenFX is no longer used as of Hearthstone 25.0.0,
+			// but leaving here to not require a log.config update.
 			new LogConfigItem("FullScreenFX", Console), 
 			new LogConfigItem("LoadingScreen", Console),
 			new LogConfigItem("Power", Console, true),

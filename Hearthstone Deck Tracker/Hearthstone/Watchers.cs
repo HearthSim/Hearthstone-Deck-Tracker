@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using HearthMirror;
+using HearthMirror.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
@@ -25,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PVPDungeonRunWatcher.PVPDungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo, true);
 			FriendlyChallengeWatcher.OnFriendlyChallenge += OnFriendlyChallenge;
 			ExperienceWatcher.NewExperienceHandler += (sender, args) => Core.Overlay.ExperienceChangedAsync(args.Experience, args.ExperienceNeeded, args.Level, args.LevelChange, args.Animate).Forget();
+			QueueWatcher.InQueueChanged += (sender, args) => Core.Game.QueueEvents.Handle(args);
 		}
 
 		internal static void Stop()
@@ -35,6 +37,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PVPDungeonRunWatcher.Stop();
 			FriendlyChallengeWatcher.Stop();
 			ExperienceWatcher.Stop();
+			QueueWatcher.Stop();
 		}
 
 		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.FriendlyChallengeEventArgs args)
@@ -59,6 +62,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static PVPDungeonRunWatcher PVPDungeonRunWatcher { get; } = new PVPDungeonRunWatcher(new GameDataProvider());
 		public static FriendlyChallengeWatcher FriendlyChallengeWatcher { get; } = new FriendlyChallengeWatcher(new HearthMirrorFriendlyChallengeProvider());
 		public static ExperienceWatcher ExperienceWatcher { get; } = new ExperienceWatcher(new HearthMirrorRewardTrackProvider());
+		public static QueueWatcher QueueWatcher { get; } = new QueueWatcher(new HearthMirrorQueueProvider());
 	}
 
 	public class GameDataProvider : IGameDataProvider
@@ -104,5 +108,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorRewardTrackProvider : IExperienceProvider
 	{
 		public RewardTrackData GetRewardTrackData() => Reflection.GetRewardTrackData();
+	}
+
+	public class HearthMirrorQueueProvider : IQueueProvider
+	{
+		public FindGameState? FindGameState => Reflection.GetFindGameState();
 	}
 }

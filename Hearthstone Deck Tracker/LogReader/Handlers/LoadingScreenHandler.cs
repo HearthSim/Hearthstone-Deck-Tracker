@@ -144,7 +144,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(game.PlayerChallengeable && Config.Instance.ChallengeAction != Enums.HsActionType.None)
 					Watchers.FriendlyChallengeWatcher.Run();
 				else
-					Watchers.FriendlyChallengeWatcher.Stop(); 
+					Watchers.FriendlyChallengeWatcher.Stop();
+
+				if(game.CurrentMode > Mode.LOGIN && game.CurrentMode != Mode.GAMEPLAY)
+					Watchers.QueueWatcher.Run();
+				else
+					Watchers.QueueWatcher.Stop();
 
 				API.GameEvents.OnModeChanged.Execute(game.CurrentMode);
 			}
