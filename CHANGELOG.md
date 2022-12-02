@@ -1,3 +1,6 @@
+## **Release v1.19.1 - 2022-12-02**
+**Added support for March of the Lich King**
+
 ## **Release v1.19.0 - 2022-11-29**
 **Fixes**:
 - Restored general functionality for Hearthstone 25.0.0.
