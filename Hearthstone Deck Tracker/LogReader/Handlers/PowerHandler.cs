@@ -832,6 +832,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Mage.FrozenTouch:
 								AddKnownCardId(gameState, NonCollectible.Mage.FrozenTouch_FrozenTouchToken); 
 								break;
+							case Collectible.Mage.ArcaneWyrm:
+								AddKnownCardId(gameState, Collectible.Mage.ArcaneBolt); 
+								break;
+							case Collectible.Priest.SisterSvalna:
+								AddKnownCardId(gameState, NonCollectible.Priest.SisterSvalna_VisionOfDarknessToken); 
+								break;
 
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
