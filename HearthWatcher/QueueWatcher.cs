@@ -16,7 +16,7 @@ namespace HearthWatcher
 		private bool _watch;
 		private FindGameState? _prev = null;
 
-		public QueueWatcher(IQueueProvider queueProvider, int delay = 500)
+		public QueueWatcher(IQueueProvider queueProvider, int delay = 200)
 		{
 			_provider = queueProvider ?? throw new ArgumentNullException(nameof(queueProvider));
 			_delay = delay;
@@ -28,12 +28,12 @@ namespace HearthWatcher
 		{
 			_watch = true;
 			if(!_running)
-				CheckForFriendlyChallenge();
+				CheckForQueue();
 		}
 
 		public void Stop() => _watch = false;
 
-		private async void CheckForFriendlyChallenge()
+		private async void CheckForQueue()
 		{
 			_running = true;
 			while(_watch)
