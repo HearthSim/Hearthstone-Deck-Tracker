@@ -778,7 +778,7 @@ namespace Hearthstone_Deck_Tracker
 
 				await SaveReplays(_game.CurrentGameStats);
 
-				if(_game.IsConstructedMatch || _game.CurrentGameMode == GameMode.Duels)
+				if(_game.IsConstructedMatch || _game.CurrentGameMode is GameMode.Arena or GameMode.Duels)
 					HSReplayNetClientAnalytics.OnConstructedMatchEnds(
 						_game.CurrentGameStats,
 						_game.CurrentGameMode,
