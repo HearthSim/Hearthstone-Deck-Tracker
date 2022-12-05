@@ -1,0 +1,56 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking.BattlegroundsSingleHeroStats"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:heroPicking="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking"
+             xmlns:comp="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="266">
+    <DockPanel Width="266">
+
+        <Grid Visibility="{Binding HeroPowerVisibility}" DockPanel.Dock="Top" >
+            <heroPicking:BattlegroundsHeroHeader DataContext="{Binding BgsHeroHeaderVM}" VerticalAlignment="Top"/>
+        </Grid>
+
+        <!-- Compositions -->
+        <Grid Width="236" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Height="72">
+            <comp:BattlegroundsCompositionPopularity DataContext="{Binding BgsCompsPopularityVM}" VerticalAlignment="Top"/>
+        </Grid>
+
+        <!-- Hero Portrait Container -->
+        <Grid Background="#00ff00ff" Margin="0 0 0 60" Visibility="{Binding HeroPowerVisibility}" 
+              MouseEnter="Hero_MouseEnter" MouseLeave="Hero_MouseLeave" extensions:OverlayExtensions.IsOverlayHoverVisible="True">
+
+            <!-- Armor Tier -->
+            <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right" ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True" Margin="38 35">
+                <!-- Armor Tooltip -->
+                <Grid.ToolTip>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Foreground="White" TextWrapping="Wrap">
+                            <Bold><Run Text="{lex:Loc BattlegroundsHeroPicking_Hero_ArmorTierTooltip_Title}"/></Bold>
+                            <LineBreak/>
+                            <Run Text="{lex:Loc BattlegroundsHeroPicking_Hero_ArmorTierTooltip_Desc}"/>
+                            <LineBreak/>
+                            <Run Text="{Binding ArmorTierTooltipRange, Mode=OneWay}"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid.ToolTip>
+                <Border Name="ArmorTierBorderMask" BorderBrush="{StaticResource Tier7Purple}" Background="{StaticResource Tier7Black}" BorderThickness="1" CornerRadius="5"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=ArmorTierBorderMask}" />
+                        </StackPanel.OpacityMask>
+                        <TextBlock Foreground="White" Text="{lex:Loc BattlegroundsHeroPicking_Hero_ArmorTier}" Margin="15 4 0 4"/>
+                        <TextBlock Foreground="White" FontWeight="Bold" VerticalAlignment="Center"
+                               Text="{Binding ArmorTier, TargetNullValue=&#8211;, FallbackValue=&#8211;}" Margin="4 0 15 0"/>
+                    </StackPanel>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</UserControl>

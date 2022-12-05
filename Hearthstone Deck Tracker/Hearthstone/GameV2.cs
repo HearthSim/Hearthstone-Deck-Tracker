@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -40,7 +42,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public BattlegroundsSessionViewModel BattlegroundsSessionViewModel { get; } = new();
 		public GameMetrics Metrics { get; private set; } = new();
-
 		public GameV2()
 		{
 			Player = new Player(this, true);

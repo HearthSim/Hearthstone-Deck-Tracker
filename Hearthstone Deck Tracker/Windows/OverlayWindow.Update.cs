@@ -44,6 +44,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Log.Info("Could not set overlay as topmost");
 		}
 
+		public void OnHearthstoneFocused()
+		{
+			Update(true);
+
+			if(_game.CurrentMode == Mode.BACON)
+			{
+				Tier7ViewModel.RefreshAccountVisibility = Visibility.Visible;
+			}
+		}
+
 		public void Update(bool refresh)
 		{
 			if (refresh)
@@ -169,7 +179,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				HideBgsTopBar();
 				if (!Config.Instance.ShowSessionRecapBetweenGames)
-					HideBattlegroundsSession();
+					ShowBattlegroundsSession(false);
 			}
 
 			UpdateIcons();
@@ -471,7 +481,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void ApplyAutoScaling()
 		{
-			AutoScaling = Math.Max(0.8, Math.Min(1.3, Height / 1080));
+			var scaling = Height / 1080;
+			AutoScaling = Math.Max(0.8, Math.Min(1.3, scaling));
 
 			_bgsTopBarBehavior.UpdatePosition();
 			_bgsTopBarBehavior.UpdateScaling();
@@ -493,6 +504,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			_mercenariesTaskListBehavior.UpdatePosition();
 			_mercenariesTaskListBehavior.UpdateScaling();
+
+			_tier7PreLobbyBehavior.UpdatePosition();
+			_tier7PreLobbyBehavior.UpdateScaling();
+
+			BattlegroundsHeroPickingViewModel.Scaling = scaling;
+			BattlegroundsHeroPicking.Width = Width / scaling;
+			BattlegroundsHeroPicking.Height = Height / scaling;
+
+			BattlegroundsQuestPickingViewModel.Scaling = scaling;
+			BattlegroundsQuestPicking.Width = Width / scaling;
+			BattlegroundsQuestPicking.Height = Height / scaling;
 		}
 
 		public void UpdateStackPanelAlignment()

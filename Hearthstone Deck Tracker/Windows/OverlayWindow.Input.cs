@@ -229,7 +229,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(BattlegroundsSession.Visibility != Visibility.Visible)
 					{
 						_battlegroundsSessionVisibleTemp = true;
-						ShowBattlegroundsSession();
+						ShowBattlegroundsSession(true);
 					}
 				}
 				else
@@ -318,7 +318,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(_battlegroundsSessionVisibleTemp)
 					{
 						_battlegroundsSessionVisibleTemp = false;
-						HideBattlegroundsSession();
+						ShowBattlegroundsSession(false);
 					}
 				}
 				if (!(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook))

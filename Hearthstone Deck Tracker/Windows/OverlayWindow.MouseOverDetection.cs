@@ -18,6 +18,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 
 #endregion
 
@@ -578,6 +579,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return BgsTopBar.RenderTransform as ScaleTransform;
 			if(element == BattlegroundsSession.BattlegroundsSessionPanelTopGroup || element is BattlegroundsGameView)
 				return BattlegroundsSession.RenderTransform as ScaleTransform;
+
+			// Todo: This is not great!
+			if(Helper.GetVisualParent<BattlegroundsHeroPicking>(element) != null || Helper.GetVisualParent<BattlegroundsQuestPicking>(element) != null)
+				return BattlegroundsHeroPicking.LayoutTransform as ScaleTransform;
 
 			return element.RenderTransform as ScaleTransform;
 		}

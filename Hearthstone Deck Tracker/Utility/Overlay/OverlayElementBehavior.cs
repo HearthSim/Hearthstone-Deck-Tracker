@@ -7,6 +7,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Utility;
 using System;
+using System.Collections;
 
 #endregion
 
@@ -16,6 +17,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		private bool _animating;
 		private double _currentScaling = 1;
+		private Style? _baseTooltipStyle = null;
 
 		public FrameworkElement Element { get; }
 
@@ -30,6 +32,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public AnimationType EntranceAnimation { get; set; }
 		public AnimationType ExitAnimation { get; set; }
+		public bool Fade { get; set; }
+		public double? Distance { get; set; }
 
 		public Action? HideCallback { get; set; }
 		public Action? ShowCallback { get; set; }
@@ -37,23 +41,47 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public OverlayElementBehavior(FrameworkElement element)
 		{
 			Element = element;
+			foreach(var res in Element.Resources)
+			{
+				if(res is not DictionaryEntry entry)
+					continue;
+				if(entry.Value is not Style style)
+					continue;
+				if(style.TargetType != typeof(ToolTip))
+					continue;
+				_baseTooltipStyle = style;
+				break;
+			}
 		}
 
-		private Storyboard? CreateStoryboard(AnimationType type, double to)
+		private Storyboard? CreateStoryboard(AnimationType type, double targetPos, double? targetOpacity)
 		{
-			var animation = OverlayAnimationUtils.GetAnimation(type, to);
+			var animation = OverlayAnimationUtils.GetAnimation(type, targetPos);
 			if(animation == null)
 				return null;
 			Storyboard.SetTargetProperty(animation, new PropertyPath($"(Canvas.{AnchorSide})"));
 			Storyboard.SetTarget(animation, Element);
 
 			var sb = new Storyboard();
+			sb.FillBehavior = FillBehavior.Stop;
 			sb.Children.Add(animation);
+
+			if(Fade && targetOpacity.HasValue)
+			{
+				var fade = OverlayAnimationUtils.GetAnimation(type, targetOpacity.Value);
+				Storyboard.SetTargetProperty(fade, new PropertyPath("Opacity"));
+				Storyboard.SetTarget(fade, Element);
+				sb.Children.Add(fade);
+			}
+
 			return sb;
 		}
 
 		private double GetHiddenOffset()
 		{
+			if(Distance.HasValue)
+				return GetAnchorSideOffset() - Distance.Value;
+
 			switch(AnchorSide)
 			{
 				case Side.Top:
@@ -108,7 +136,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (_currentScaling != scaling)
 			{
 				_currentScaling = scaling;
-				Element.RenderTransform = new ScaleTransform(scaling, scaling, centerX, centerY);
+				var transform = new ScaleTransform(scaling, scaling, centerX, centerY);
+				Element.RenderTransform = transform;
+
+				// To automatically scale tooltips, any tooltip styles need to
+				// be defined in the Elements ResourceDictionary. This will not
+				// work if any styled are defined in nested elements.
+				var tooltipStyle = new Style(typeof(ToolTip), _baseTooltipStyle);
+				tooltipStyle.Setters.Add(new Setter(FrameworkElement.LayoutTransformProperty, transform));
+				Element.Resources[typeof(ToolTip)] = tooltipStyle;
 			}
 		}
 
@@ -118,17 +154,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 
 			var finalPosition = GetAnchorSideOffset();
-			var sb = CreateStoryboard(EntranceAnimation, finalPosition);
+			var sb = CreateStoryboard(EntranceAnimation, finalPosition, Fade ? 1 : null);
 			if(sb == null)
 				return;
+
+			var opacity = Element.Opacity;
 
 			sb.Completed += (obj, args) =>
 			{
 				_animating = false;
 				ShowCallback?.Invoke();
+				if(Fade)
+					Element.Opacity = opacity;
+				UpdatePosition();
 			};
 
-			var opacity = Element.Opacity;
 			var hitTestVisible = Element.IsHitTestVisible;
 			Element.Opacity = 0;
 			Element.IsHitTestVisible = false;
@@ -140,7 +180,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			OverlayAnimationUtils.GetCanvasSetter(AnchorSide)?.Invoke(Element, GetHiddenOffset());
 
-			Element.Opacity = opacity;
+			if(!Fade)
+				Element.Opacity = opacity;
 			Element.IsHitTestVisible = hitTestVisible;
 
 			_animating = true;
@@ -152,7 +193,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(Element.Visibility == Collapsed)
 				return;
 
-			var sb = CreateStoryboard(ExitAnimation, GetHiddenOffset());
+			var sb = CreateStoryboard(ExitAnimation, GetHiddenOffset(), Fade ? 0 : null);
 			if(sb == null)
 				return;
 			sb.Completed += (obj, args) =>
@@ -160,6 +201,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				_animating = false;
 				Element.Visibility = Collapsed;
 				HideCallback?.Invoke();
+				UpdatePosition();
 			};
 			_animating = true;
 			sb.Begin();

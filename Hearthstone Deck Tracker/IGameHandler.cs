@@ -101,5 +101,8 @@ namespace Hearthstone_Deck_Tracker
 		void HandleBattlegroundsPlayerTriples(int id, int value);
 		void HandlePlayerAbyssalCurse(int value);
 		void HandleOpponentAbyssalCurse(int value);
+		void HandleQuestRewardDatabaseId(int id, int value);
+		void HandleBattlegroundsPlayerQuestPicked(Entity entity);
+		void HandleBattlegroundsPlayerQuestPickerRemoval(Entity entity);
 	}
 }

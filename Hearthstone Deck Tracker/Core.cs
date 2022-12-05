@@ -277,7 +277,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						if(hsForegroundChanged)
 						{
-							Overlay.Update(true);
+							Overlay.OnHearthstoneFocused();
 							if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
 							{
 								//if player topmost is set to true before opponent:
@@ -323,6 +323,9 @@ namespace Hearthstone_Deck_Tracker
 					Overlay.HideRestartRequiredWarning();
 					Helper.ClearCachedHearthstoneBuild();
 					TurnTimer.Instance.Stop();
+					Tier7Trial.Clear();
+					Overlay.BattlegroundsHeroPickingViewModel.Reset();
+					Overlay.BattlegroundsQuestPickingViewModel.Reset();
 
 					TrayIcon.MenuItemStartHearthstone.Visible = true;
 

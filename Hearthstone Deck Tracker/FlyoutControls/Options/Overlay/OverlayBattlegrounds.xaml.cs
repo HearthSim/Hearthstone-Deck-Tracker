@@ -62,6 +62,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		public void Load()
 		{
+			CheckboxShowBattlegroundsHeroPicking.IsChecked = Config.Instance.ShowBattlegroundsHeroPicking;
+			CheckboxShowBattlegroundsQuestPicking.IsChecked = Config.Instance.ShowBattlegroundsQuestPicking;
 			CheckboxShowBattlegroundsTiers.IsChecked = Config.Instance.ShowBattlegroundsTiers;
 			CheckboxShowBattlegroundsTurnCounter.IsChecked = Config.Instance.ShowBattlegroundsTurnCounter;
 
@@ -114,6 +116,46 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Save();
 			if(updateOverlay)
 				Core.Overlay.Update(true);
+		}
+
+		private void CheckboxShowBattlegroundsHeroPicking_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsHeroPicking = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.BattlegroundsHeroPickingViewModel.Visibility = Visibility.Visible;
+		}
+
+		private void CheckboxShowBattlegroundsHeroPicking_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsHeroPicking = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.BattlegroundsHeroPickingViewModel.Visibility = Visibility.Collapsed;
+		}
+
+		private void CheckboxShowBattlegroundsQuestPicking_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsQuestPicking = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.BattlegroundsQuestPickingViewModel.Visibility = Visibility.Visible;
+		}
+
+		private void CheckboxShowBattlegroundsQuestPicking_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsQuestPicking = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.BattlegroundsQuestPickingViewModel.Visibility = Visibility.Collapsed;
 		}
 
 		private void CheckboxShowBattlegroundsTiers_Checked(object sender, RoutedEventArgs e)
@@ -257,7 +299,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch || (Config.Instance.ShowSessionRecapBetweenGames && Core.Game.CurrentMode == Mode.BACON))
-				Core.Overlay.ShowBattlegroundsSession();
+				Core.Overlay.ShowBattlegroundsSession(true, true);
 			Influx.OnSessionRecapEnabledChanged(true);
 		}
 
@@ -268,7 +310,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowSessionRecap = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch || Core.Game.CurrentMode == Mode.BACON)
-				Core.Overlay.HideBattlegroundsSession();
+				Core.Overlay.ShowBattlegroundsSession(false, true);
 			Influx.OnSessionRecapEnabledChanged(false);
 		}
 
@@ -279,7 +321,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowSessionRecapBetweenGames = true;
 			SaveConfig(true);
 			if (Core.Game.CurrentMode == Mode.BACON)
-				Core.Overlay.ShowBattlegroundsSession();
+				Core.Overlay.ShowBattlegroundsSession(true, true);
 		}
 
 		private void CheckboxShowSessionRecapBetweenGames_Unchecked(object sender, RoutedEventArgs e)
@@ -289,7 +331,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowSessionRecapBetweenGames = false;
 			SaveConfig(true);
 			if (!Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.HideBattlegroundsSession();
+				Core.Overlay.ShowBattlegroundsSession(false, true);
 		}
 
 		private void CheckboxShowMinionsBanned_Checked(object sender, RoutedEventArgs e)

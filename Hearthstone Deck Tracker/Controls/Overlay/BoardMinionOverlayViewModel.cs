@@ -1,7 +1,7 @@
-﻿using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
-using Hearthstone_Deck_Tracker.Utility.MVVM;
+﻿using Hearthstone_Deck_Tracker.Utility.MVVM;
 using System.Collections.Generic;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {

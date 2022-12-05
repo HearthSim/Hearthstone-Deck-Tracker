@@ -54,8 +54,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					DailyEventsCount.Instance.UpdateEventDailyCount(valueMoment.Name);
 				action.AddProperties(ValueMomentManager.GetValueMomentsProperties(valueMoments));
 
+				// This should be generalized in the future into enum attributes.
+				action.Properties.Remove(ValueMomentUtils.TIER7_HERO_OVERLAY_DISPLAYED);
+				action.Properties.Remove(ValueMomentUtils.TIER7_QUEST_OVERLAY_DISPLAYED);
+
+#if !DEBUG
 				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action, valueMoments))
 					Client.Value.TrackEvent(token, action.EventName, action.Properties).Forget();
+#else
+				Log.Debug($"{action.EventName}: ${JsonConvert.SerializeObject(action.Properties)}");
+#endif
 			}
 			catch(Exception e)
 			{
@@ -148,7 +156,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(bgHeroCard == null)
 				return;
 
-			OnMatchEnds(Franchise.Battlegrounds, spectator, new Dictionary<string, object>
+			var props = new Dictionary<string, object>
 			{
 				{ "hero_dbf_id", bgHeroCard.DbfId },
 				{ "hero_name", bgHeroCard.Name ?? "" },
@@ -156,7 +164,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				{ "game_type", gameType.ToString() },
 				{ "battlegrounds_rating", gameStats.BattlegroundsRatingAfter },
 				{ ValueMomentUtils.NUM_CLICK_BATTLEGROUNDS_MINION_TAB, gameMetrics.BattlegroundsMinionsTabClicks },
-			});
+				{ ValueMomentUtils.TIER7_HERO_OVERLAY_DISPLAYED, gameMetrics.Tier7HeroOverlayDisplayed },
+				{ ValueMomentUtils.TIER7_QUEST_OVERLAY_DISPLAYED, gameMetrics.Tier7QuestOverlayDisplayed },
+			};
+
+			if(gameMetrics.Tier7TrialActivated)
+				props[ValueMomentUtils.TRIALS_ACTIVATED] = new[] { ValueMomentUtils.TIER7_OVERLAY_TRIAL };
+			if(gameMetrics.Tier7TrialsRemaining.HasValue)
+				props[ValueMomentUtils.TRIALS_REMAINING] = new[] { $"{ValueMomentUtils.TIER7_OVERLAY_TRIAL}:{gameMetrics.Tier7TrialsRemaining}" };
+
+			OnMatchEnds(Franchise.Battlegrounds, spectator, props);
 		}
 		
 		public static void OnMercenariesMatchEnds(GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)

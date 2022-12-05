@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Live.Data;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Twitch;
+using HSReplay;
 using HSReplay.OAuth;
 using HSReplay.OAuth.Data;
 using HSReplay.Responses;
@@ -441,6 +442,26 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					return null;
 				}
 				return await Client.Value.IdentifyClientAnalyticsToken(token);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<T?> MakeRequest<T>(Func<OAuthClient, Task<T>> request) where T : class
+		{
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return null;
+				}
+				var response = await request(Client.Value);
+				Log.Debug(response.ToString());
+				return response;
 			}
 			catch(Exception e)
 			{

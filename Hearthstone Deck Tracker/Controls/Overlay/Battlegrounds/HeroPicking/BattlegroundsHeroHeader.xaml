@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking.BattlegroundsHeroHeader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="243">
+    <UserControl.Resources>
+        <Style x:Key="DefaultTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style x:Key="BoldTextStyle" TargetType="TextBlock" BasedOn="{StaticResource DefaultTextStyle}">
+            <Setter Property="FontFamily" Value="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextStyle}"/>
+    </UserControl.Resources>
+    <Grid Height="60" Width="243">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="64"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image Grid.RowSpan="2" Grid.ColumnSpan="3">
+            <Image.Source>
+                <DrawingImage>
+                    <DrawingImage.Drawing>
+                        <DrawingGroup ClipGeometry="M0,0 V61 H243 V0 H0 Z">
+                            <!-- Tier -->
+                            <GeometryDrawing Brush="{Binding TierGradient}" Geometry="F1 M243,61z M0,0z M95,4C95,1.79086,96.7909,0,99,0L144,0C146.209,0,148,1.79086,148,4L148,49C148,51.2091,146.209,53,144,53L99,53C96.7909,53,95,51.2091,95,49L95,4z" />
+                            <GeometryDrawing Geometry="F1 M243,61z M0,0z M99,0.5L144,0.5C145.933,0.5,147.5,2.067,147.5,4L147.5,49C147.5,50.933,145.933,52.5,144,52.5L99,52.5C97.067,52.5,95.5,50.933,95.5,49L95.5,4C95.5,2.067,97.067,0.5,99,0.5z">
+                                <GeometryDrawing.Pen>
+                                    <Pen Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter">
+                                        <Pen.Brush>
+                                            <SolidColorBrush Color="#FF000000" Opacity="0.18" />
+                                        </Pen.Brush>
+                                    </Pen>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+
+                            <!-- Left -->
+                            <GeometryDrawing Brush="#FF141617" Geometry="F1 M243,61z M0,0z M58.0589,60.5L4,60.5C2.067,60.5,0.5,58.933,0.5,57L0.5,4C0.5,2.067,2.067,0.5,4,0.5L85,0.5C86.933,0.5,88.5,2.067,88.5,4L88.5,37.6269C88.5,40.181 87.1951,42.5617 85.0485,43.9512 73.4888,51.434 65.914,56.6721 62.4836,59.0877 61.1843,60.0026 59.6436,60.5 58.0589,60.5z"/>
+                            <GeometryDrawing Brush="{StaticResource Tier7Purple}" Geometry="F1 M243,61z M0,0z M0,4C0,1.79086,1.79086,0,4,0L85,0C87.2091,0,89,1.79086,89,4L89,22 0,22 0,4z" />
+                            <GeometryDrawing Geometry="F1 M243,61z M0,0z M58.0589,60.5L4,60.5C2.067,60.5,0.5,58.933,0.5,57L0.5,4C0.5,2.067,2.067,0.5,4,0.5L85,0.5C86.933,0.5,88.5,2.067,88.5,4L88.5,37.6269C88.5,40.181 87.1951,42.5617 85.0485,43.9512 73.4888,51.434 65.914,56.6721 62.4836,59.0877 61.1843,60.0026 59.6436,60.5 58.0589,60.5z">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{StaticResource Tier7Purple}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+
+                            <!-- Right -->
+                            <GeometryDrawing Brush="#FF141617" Geometry="F1 M243,61z M0,0z M187.075,60.5L239,60.5C240.933,60.5,242.5,58.933,242.5,57L242.5,4C242.5,2.067,240.933,0.5,239,0.5L158,0.5C156.067,0.5,154.5,2.067,154.5,4L154.5,35.6269C154.5,38.1807 155.805,40.5601 157.948,41.9578 169.997,49.817 178.643,56.1079 182.462,58.9542 183.799,59.9508 185.413,60.5 187.075,60.5z"/>
+                            <GeometryDrawing Brush="{StaticResource Tier7Purple}" Geometry="F1 M243,61z M0,0z M154,4C154,1.79086,155.791,0,158,0L239,0C241.209,0,243,1.79086,243,4L243,22 154,22 154,4z" />
+                            <GeometryDrawing Geometry="F1 M243,61z M0,0z M187.075,60.5L239,60.5C240.933,60.5,242.5,58.933,242.5,57L242.5,4C242.5,2.067,240.933,0.5,239,0.5L158,0.5C156.067,0.5,154.5,2.067,154.5,4L154.5,35.6269C154.5,38.1807 155.805,40.5601 157.948,41.9578 169.997,49.817 178.643,56.1079 182.462,58.9542 183.799,59.9508 185.413,60.5 187.075,60.5z">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{StaticResource Tier7Purple}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingImage.Drawing>
+                </DrawingImage>
+            </Image.Source>
+        </Image>
+
+
+        <!-- Avg Placement -->
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="{lex:Loc BattlegroundsHeroPicking_Header_AvgPlacement}" TextTrimming="CharacterEllipsis" />
+        <TextBlock Text="{Binding AvgPlacement, StringFormat=N2, TargetNullValue=&#8211;, FallbackValue=&#8211;}" Grid.Row="1"
+            Style="{StaticResource BoldTextStyle}" Foreground="{Binding AvgPlacementColor, FallbackValue=White}" />
+
+        <!-- Avg Placement Tooltip -->
+        <Grid Name="AvgPlacementTrigger" Grid.RowSpan="2" Grid.Column="0" ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True"
+              MouseEnter="AvgPlacementTrigger_MouseEnter" MouseLeave="AvgPlacementTrigger_MouseLeave">
+            <Border Name="AvgPlacementBorderMask" Background="#01000000" CornerRadius="0 0 35 0"/>
+            <Grid.OpacityMask>
+                <VisualBrush Visual="{Binding ElementName=AvgPlacementBorderMask}" />
+            </Grid.OpacityMask>
+            <Grid.ToolTip>
+                <TextBlock TextAlignment="Left" FontSize="12" TextWrapping="Wrap">
+                    <Bold><Run Text="{lex:Loc BattlegroundsHeroPicking_Header_AvgPlacementTooltip_Title}"/></Bold>
+                    <LineBreak/>
+                    <Run Text="{lex:Loc BattlegroundsHeroPicking_Header_AvgPlacementTooltip_Desc}"/>
+                </TextBlock>
+            </Grid.ToolTip>
+        </Grid>
+
+
+        <!-- Pick Rate -->
+        <TextBlock Grid.Column="2" Grid.Row="0" Text="{lex:Loc BattlegroundsHeroPicking_Header_PickRate}" TextTrimming="CharacterEllipsis" />
+        <TextBlock Text="{Binding PickRate, StringFormat={}{0:#,#.0}%, TargetNullValue=&#8211;, FallbackValue=&#8211;}" Grid.Row="1" Grid.Column="2"
+            Style="{StaticResource BoldTextStyle}"
+        />
+
+        <!-- Pick Rate Tooltip -->
+        <Grid Grid.RowSpan="2" Grid.Column="2" Height="62" Width="90" ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
+            <Border Name="PickRateBorderMask" Background="#01000000" CornerRadius="0 0 0 35"/>
+            <Grid.OpacityMask>
+                <VisualBrush Visual="{Binding ElementName=PickRateBorderMask}" />
+            </Grid.OpacityMask>
+            <Grid.ToolTip>
+                <TextBlock TextAlignment="Left" FontSize="12" TextWrapping="Wrap">
+                    <Bold><Run Text="{lex:Loc BattlegroundsHeroPicking_Header_PickRateTooltip_Title}"/></Bold>
+                    <LineBreak/>
+                    <Run Text="{lex:Loc BattlegroundsHeroPicking_Header_PickRateTooltip_Desc}"/>
+                </TextBlock>
+            </Grid.ToolTip>
+        </Grid>
+
+        <!-- Tier Tooltip -->
+        <Grid Grid.RowSpan="2" Grid.Column="1" Height="52" Width="52" VerticalAlignment="Top" Background="#01000000"
+              ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
+            <Grid.ToolTip>
+                <TextBlock TextAlignment="Left" FontSize="12" TextWrapping="Wrap">
+                    <Bold><Run Text="{Binding TierTooltipTitle, Mode=OneWay}"/></Bold>
+                    <LineBreak/>
+                    <Run Text="{Binding TierTooltipText, Mode=OneWay}"/>
+                </TextBlock>
+            </Grid.ToolTip>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="{lex:Loc BattlegroundsHeroPicking_Header_Tier}" FontSize="10" Margin="0 4 0 0" TextTrimming="CharacterEllipsis" />
+                <TextBlock Style="{StaticResource BoldTextStyle}" Text="{Binding Tier, TargetNullValue=&#8211;, FallbackValue=&#8211;}" FontSize="28" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Placement Distribution -->
+        <battlegrounds:BattlegroundsPlacementDistribution
+            Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="5 0 0 0" MaxValue="30" Values="{Binding PlacementDistribution}" 
+            Visibility="{Binding PlacementDistributionVisibility}"
+        />
+    </Grid>
+</UserControl>

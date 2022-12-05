@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.BattlegroundsSingleQuestView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:comp="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             d:Width="243"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="DefaultTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="StatTextStyle" TargetType="TextBlock" BasedOn="{StaticResource DefaultTextStyle}">
+            <Setter Property="FontFamily" Value="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="4 2 4 0"/>
+        </Style>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource DefaultTextStyle}"/>
+    </UserControl.Resources>
+    <StackPanel>
+        <Grid Height="60">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="68"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="{StaticResource Tier7Black}" BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="4" Grid.Column="0"
+					ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
+				<Border.ToolTip>
+					<TextBlock TextAlignment="Left" FontSize="12" TextWrapping="Wrap">
+						<Bold><Run Text="{lex:Loc BattlegroundsHeroPicking_Header_AvgPlacementTooltip_Title}"/></Bold>
+						<LineBreak/>
+						<Run Text="{lex:Loc BattlegroundsQuestPickingHeader_AvgPlacementTooltip_Desc}"/>
+					</TextBlock>
+				</Border.ToolTip>
+                <DockPanel>
+                    <Border Background="{StaticResource Tier7Purple}" CornerRadius="4 4 0 0" Margin="-1" Height="19" DockPanel.Dock="Top">
+                        <TextBlock Text="Avg Placement" VerticalAlignment="Center" Margin="4 0" TextTrimming="CharacterEllipsis" />
+                    </Border>
+                    <TextBlock
+                        Style="{StaticResource StatTextStyle}"
+                        Foreground="{Binding AvgPlacementColor, FallbackValue=White}"
+                        Text="{Binding AvgPlacement, StringFormat=N2, TargetNullValue=&#8211;, FallbackValue=&#8211;}"
+                    />
+                </DockPanel>
+            </Border>
+
+            <Border BorderBrush="{Binding TierGradient}" Background="{Binding TierGradient}" Grid.Column="1" BorderThickness="1" CornerRadius="4" Margin="4 0"
+					ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
+				<Border.ToolTip>
+					<TextBlock TextAlignment="Left" FontSize="12" TextWrapping="Wrap">
+						<Bold><Run Text="{Binding TierTooltipTitle, Mode=OneWay}"/></Bold>
+						<LineBreak/>
+						<Run Text="{Binding TierTooltipText, Mode=OneWay}"/>
+					</TextBlock>
+				</Border.ToolTip>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="TIER" VerticalAlignment="Center"  FontSize="10"/>
+                    <TextBlock
+                            Style="{StaticResource StatTextStyle}"
+                            Text="{Binding Tier, TargetNullValue=&#8211;, FallbackValue=&#8211;}"
+                            FontSize="28"
+                        />
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="#2E000000" Grid.Column="1" BorderThickness="1" CornerRadius="4" Margin="4 0" IsHitTestVisible="False"/>
+
+            <Border Background="{StaticResource Tier7Black}" BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="1" Grid.Column="2"
+					ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
+				<Border.ToolTip>
+					<TextBlock TextAlignment="Left" FontSize="12" TextWrapping="Wrap">
+						<Bold><Run Text="{lex:Loc BattlegroundsHeroPicking_Header_PickRateTooltip_Title}"/></Bold>
+						<LineBreak/>
+						<Run Text="{lex:Loc BattlegroundsQuestPickingHeader_PickRateTooltip_Desc}"/>
+					</TextBlock>
+				</Border.ToolTip>
+                <DockPanel>
+                    <Border Background="{StaticResource Tier7Purple}" CornerRadius="4 4 0 0" Margin="-1" Height="19" DockPanel.Dock="Top">
+                        <TextBlock Text="Pick Rate" VerticalAlignment="Center" Margin="4 0" TextTrimming="CharacterEllipsis" />
+                    </Border>
+                    <TextBlock
+                        Style="{StaticResource StatTextStyle}"
+                        Text="{Binding PickRate, StringFormat={}{0:#,#.0}%, TargetNullValue=&#8211;, FallbackValue=&#8211;}"
+                    />
+                </DockPanel>
+            </Border>
+        </Grid>
+
+        <comp:BattlegroundsCompositionPopularity DataContext="{Binding CompVM}" Margin="0 667 0 0"/>
+    </StackPanel>
+</UserControl>

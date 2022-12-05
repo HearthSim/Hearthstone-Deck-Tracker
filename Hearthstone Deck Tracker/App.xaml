@@ -70,6 +70,8 @@
                     <ImageSource x:Key="MercsFrame">Resources/merc_frame.png</ImageSource>
                     <ImageSource x:Key="MercsCheckmark">Resources/checkmark.png</ImageSource>
                     <ImageSource x:Key="NewUserOnboardingBackground">Resources/onboarding-background.jpg</ImageSource>
+                    <ImageSource x:Key="Tier7PreLobbySmall">Resources/Tier7/PreLobby-Small.png</ImageSource>
+                    <ImageSource x:Key="Tier7PreLobbyLarge">Resources/Tier7/PreLobby-Large.png</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
@@ -77,6 +79,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="Resources/Icons.xaml"/>
+                <ResourceDictionary Source="Controls/Overlay/Battlegrounds/BattlegroundsResources.xaml"/>
                 <ResourceDictionary>
                     <utility:ConfigWrapper x:Key="ConfigWrapper"/>
                     <utility:GlobalCommands x:Key="GlobalCommands"/>

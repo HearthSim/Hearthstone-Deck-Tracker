@@ -1,0 +1,47 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking.BattlegroundsHeroPicking"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:heroPicking="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking"
+             xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
+             xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d">
+    <UserControl.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding Scaling}" ScaleY="{Binding Scaling}" CenterX="0.5" CenterY="0.5"/>
+    </UserControl.LayoutTransform>
+    <UserControl.Resources>
+        <Style TargetType="ToolTip" BasedOn="{StaticResource BgsTooltipStyle}">
+            <Setter Property="LayoutTransform" Value="{Binding LayoutTransform, RelativeSource={RelativeSource AncestorType=heroPicking:BattlegroundsHeroPicking}}"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <!-- Centered over heroes -->
+        <Grid Margin="14,15,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+             anim:FadeAnimation.Visibility="{Binding Visibility}" Visibility="Collapsed"
+             anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2"
+        >
+            <ItemsControl ItemsSource="{Binding HeroStats}" Margin="-16,0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="480" Width="266" Margin="16,0">
+                            <heroPicking:BattlegroundsSingleHeroStats
+                                SetSelectedHeroDbfIdCommand="{Binding SetSelectedHeroDbfIdCommand, RelativeSource={RelativeSource AncestorType=heroPicking:BattlegroundsHeroPicking}}"
+                            />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Grid>
+        <tier7:OverlayMessage DataContext="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="738 0 0 13" />
+    </Grid>
+</UserControl>

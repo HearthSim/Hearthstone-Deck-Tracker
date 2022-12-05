@@ -82,19 +82,5 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		{
 			BtnOptions.Background = (Brush)_bc.ConvertFromString("#00FFFFFF");
 		}
-
-		public void Show()
-		{
-			if (Visibility == Visibility.Visible || !Config.Instance.ShowSessionRecap)
-				return;
-
-			Core.Game.BattlegroundsSessionViewModel.UpdateSectionsVisibilities();
-			Visibility = Visibility.Visible;
-		}
-
-		public void Hide()
-		{
-			Visibility = Visibility.Hidden;
-		}
 	}
 }

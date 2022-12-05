@@ -516,7 +516,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
 			{
 				Core.Overlay.ShowBgsTopBar();
-				Core.Overlay.ShowBattlegroundsSession();
+				Core.Overlay.ShowBattlegroundsSession(true);
 			}
 			if(_game.IsFriendlyMatch)
 				if(!Config.Instance.InteractedWithLinkOpponentDeck)
@@ -793,9 +793,11 @@ namespace Hearthstone_Deck_Tracker
 					else
 						Sentry.ClearBobsBuddyEvents();
 					RecordBattlegroundsGame();
+					Tier7Trial.Clear();
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
-				
+					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
+					Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
 					var finalPlacement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0;
 					HSReplayNetClientAnalytics.OnBattlegroundsMatchEnds(
@@ -1012,7 +1014,10 @@ namespace Hearthstone_Deck_Tracker
 		public void HandlePlayerMulliganDone()
 		{
 			if(_game.IsBattlegroundsMatch)
+			{
 				Core.Overlay.HideBattlegroundsHeroPanel();
+				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
+			}
 			else if(_game.IsConstructedMatch)
 				Core.Overlay.HideMulliganPanel(false);
 		}
@@ -1077,7 +1082,7 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					}
 
-					var heroIds = heroes.Select(x => x.Card.DbfId).ToArray();
+					var heroIds = heroes.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
 
 					// Wait for the game to fade in
 					await Task.Delay(3000);
@@ -1089,14 +1094,20 @@ namespace Hearthstone_Deck_Tracker
 						Core.Overlay.ShowBgsTopBar();
 					}
 					else
+					{
+						Core.Overlay.ShowBattlegroundsHeroPickingStats(heroIds);
 						Core.Overlay.ShowBattlegroundsHeroPanel(heroIds);
+						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
+						if(Tier7Trial.RemainingTrials.HasValue)
+							Core.Game.Metrics.Tier7TrialsRemaining = Math.Max(0, Tier7Trial.RemainingTrials.Value - 1);
+					}
 					break;
 				}
 			}
 			else
 				Core.Overlay.ShowBgsTopBar();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
-			Core.Overlay.ShowBattlegroundsSession();
+			Core.Overlay.ShowBattlegroundsSession(true);
 		}
 
 		#region Player
@@ -1287,6 +1298,18 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.UpdateBattlegroundsPlayerTriples(id, value);
 			}
+		}
+
+		public void HandleBattlegroundsPlayerQuestPicked(Entity entity)
+		{
+			if(_game.IsBattlegroundsMatch)
+				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
+		}
+
+		public void HandleBattlegroundsPlayerQuestPickerRemoval(Entity entity)
+		{
+			if(_game.IsBattlegroundsMatch)
+				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 		}
 
 		#endregion
@@ -1643,6 +1666,14 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentAbyssalCurse(int value) => _game.Opponent.UpdateAbyssalCurse(value);
 
 		#endregion
+
+		public void HandleQuestRewardDatabaseId(int id, int value)
+		{
+			if(_game.IsBattlegroundsMatch && _game.Entities.TryGetValue(id, out var entity))
+			{
+				Core.Overlay.BattlegroundsQuestPickingViewModel.OnBattlegroundsQuest(entity).Forget();
+			}
+		}
 
 		#region IGameHandlerImplementation
 

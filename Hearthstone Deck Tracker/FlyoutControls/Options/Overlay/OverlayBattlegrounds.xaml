@@ -12,6 +12,14 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
     <StackPanel>
+        <CheckBox x:Name="CheckboxShowBattlegroundsHeroPicking" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsHeroPicking}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsHeroPicking_Checked"
+                  Unchecked="CheckboxShowBattlegroundsHeroPicking_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowBattlegroundsQuestPicking" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsQuestPicking}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsQuestPicking_Checked"
+                  Unchecked="CheckboxShowBattlegroundsQuestPicking_Unchecked" Margin="10,5,0,0" />
         <CheckBox x:Name="CheckboxShowBattlegroundsTiers" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsTiers}"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTiers_Checked"

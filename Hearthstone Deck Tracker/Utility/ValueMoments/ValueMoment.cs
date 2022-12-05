@@ -17,6 +17,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			public const string BGBobsBuddy = "Overlay Bob's Buddy";
 			public const string BGSessionRecap = "Overlay Session Recap";
 			public const string BGMinionBrowser = "Explore Minion Browser Tabs";
+			public const string BGHeroPickOverlay = "Support Best Hero Choice";
+			public const string BGQuestStatsOverlay = "Support Best Quest/Reward Choice";
 
 			// Mercenaries
 			public const string MercOpponentAbilities = "Hover Opponent Merc Abilities";
@@ -27,6 +29,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 		{
 			Free,
 			Paid,
+		}
+
+
+		public ValueMoment(string name, bool isPaid, int maxValueMomentCount = 1) : this(name, isPaid ? VMKind.Paid : VMKind.Free, maxValueMomentCount)
+		{
 		}
 
 		public ValueMoment(string name, VMKind kind, int maxValueMomentCount = 1)

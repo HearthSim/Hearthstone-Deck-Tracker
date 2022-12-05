@@ -54,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public IEnumerable<Entity> SetAside => PlayerEntities.Where(x => x.IsInSetAside);
 		public static Deck? KnownOpponentDeck = null;
 		public List<PredictedCard> InDeckPrecitions { get; } = new List<PredictedCard>();
+		public HashSet<string> PastHeroPowers { get; } = new HashSet<string>();
 	
 		private DeckState GetDeckState()
 		{
@@ -312,6 +313,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LastDrawnCardId = null;
 			LibramReductionCount = 0;
 			AbyssalCurseCount = 0;
+			PastHeroPowers.Clear();
 		}
 
 		public void Draw(Entity entity, int turn)
@@ -406,6 +408,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Created = true;
 			entity.Info.Turn = turn;
 			Log(entity);
+			if(entity.IsHeroPower)
+				HeroPowerChanged(entity);
 		}
 
 		public void CreateInSecret(Entity entity, int turn)
@@ -566,6 +570,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			foreach(var card in Deck)
 				card.Info.DeckIndex = 0;
+		}
+
+		public void HeroPowerChanged(Entity entity)
+		{
+			if(!IsLocalPlayer)
+				return;
+			var id = entity.Info.LatestCardId;
+			if(string.IsNullOrEmpty(id))
+				return;
+			var added = PastHeroPowers.Add(id!);
+			if(added)
+				Log(entity);
 		}
 	}
 }

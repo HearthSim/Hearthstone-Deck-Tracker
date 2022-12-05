@@ -76,6 +76,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						Log.Info("Switching to no-deck mode for battlegrounds");
 						Core.MainWindow.SelectDeck(null, true);
 					}
+					Core.Overlay.ShowTier7PreLobby(false, false);
 				}
 				else if(LettuceModes.Contains(_game.CurrentMode))
 				{
@@ -89,6 +90,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			else
 			{
 				Log.Info($"No longer in queue");
+				if(_game.CurrentMode == BACON && e.Previous != FindGameState.SERVER_GAME_CONNECTING)
+					Core.Overlay.ShowTier7PreLobby(true, false, 0);
 			}
 		}
 

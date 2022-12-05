@@ -18,6 +18,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public static readonly Regex NewChoiceRegex = new Regex(@"Client chooses: .* \((?<id>(.+))\)");
 		public static readonly Regex GameModeRegex = new Regex(@"prevMode=(?<prev>(\w+)).*currMode=(?<curr>(\w+))");
+		public static readonly Regex NextGameModeRegex = new Regex(@"prevMode=(?<prev>(\w+)).*nextMode=(?<next>(\w+))");
 		public static readonly Regex ConnectionRegex = new Regex(@"ConnectAPI\.GotoGameServer -- address=(?<address>(.*)), game=(?<game>(.*)), client=(?<client>(.*)), spectateKey=(?<spectateKey>(.*)),? reconn");
 
 		public static class PowerTaskList

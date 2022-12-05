@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition.BattlegroundsCompositionPopularityRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel Background="#141617" Height="24" ClipToBounds="True">
+        <Canvas Height="24" Width="38" DockPanel.Dock="Left">
+            <Image
+                Opacity="{Binding Opacity}"
+                Source="{Binding CardImage.AssetPath}"
+                Height="24"
+                Width="110"
+                Margin="-55,0,0,0"
+                RenderOptions.BitmapScalingMode="Fant"
+            >
+                <Image.OpacityMask>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0.85,0">
+                        <GradientStop Color="#FF000000" Offset="0.5"/>
+                        <GradientStop Color="Transparent" Offset="1"/>
+                    </LinearGradientBrush>
+                </Image.OpacityMask>
+            </Image>
+            <Image
+                Width="20"
+                Canvas.Left="6"
+                Canvas.Top="2"
+                Source="/HearthstoneDeckTracker;component/Resources/tribes-x.png"
+                Visibility="{Binding CompositionUnavailableVisibility}"
+            />
+        </Canvas>
+        <DockPanel Opacity="{Binding Opacity}">
+            <TextBlock
+                Grid.Column="0"
+                Text="{Binding Name}"
+                FontSize="12"
+                Foreground="White"
+                VerticalAlignment="Center"
+                Width="65"
+                Margin="0 0 8 0"
+                DockPanel.Dock="Left"
+            />
+            <TextBlock
+                Foreground="White"
+                FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+                VerticalAlignment="Center"
+                Grid.Column="4"
+                Text="{Binding PopularityText}"
+                FontSize="12"
+                TextAlignment="Right"
+                Margin="8 1 8 0"
+                Width="30"
+                DockPanel.Dock="Right"
+            />
+            <local:BattlegroundsCompositionPopularityBar
+                Grid.Column="2"
+                Highlight="{Binding CompositionAvailable}"
+                Progress="{Binding PopularityBarValue}"
+            />
+        </DockPanel>
+    </DockPanel>
+</UserControl>

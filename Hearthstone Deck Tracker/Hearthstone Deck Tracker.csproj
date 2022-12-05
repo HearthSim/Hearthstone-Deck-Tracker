@@ -156,6 +156,16 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Controls\Overlay\Battlegrounds\HeroPicking\BattlegroundsSingleHeroStats.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Overlay\Battlegrounds\HeroPicking\BattlegroundsHeroPicking.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
   <Target Name="CopyImages" BeforeTargets="PreBuildEvent">
     <Copy SourceFiles="@(GeneratedTiles)" DestinationFolder="$(OutputPath)/Images/Tiles" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(Themes)" DestinationFolder="$(OutputPath)/Images/Themes/%(RecursiveDir)" SkipUnchangedFiles="true" />

@@ -122,6 +122,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsQuestlinePart => IsQuestline && GetTag(GameTag.QUESTLINE_PART) > 1;
 
 		[JsonIgnore]
+		public bool IsBattlegroundsQuest => HasTag(GameTag.QUEST_REWARD_DATABASE_ID);
+
+		[JsonIgnore]
 		public bool IsSideQuest => HasTag(GameTag.SIDEQUEST);
 
 		[JsonIgnore]

@@ -15,6 +15,15 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 		public const string NUM_CLICK_BATTLEGROUNDS_MINION_TAB = "num_click_battlegrounds_minion_tab";
 		public const string NUM_HOVER_OPPONENT_MERC_ABILITY = "num_hover_opponent_merc_ability";
 		public const string NUM_HOVER_MERC_TASK_OVERLAY = "num_hover_merc_task_overlay";
+		public const string TRIALS_ACTIVATED = "trials_activated";
+		public const string TRIALS_REMAINING = "trials_remaining";
+
+		// Trial names
+		public const string TIER7_OVERLAY_TRIAL = "Tier7Overlay";
+
+		// Tier7
+		public const string TIER7_HERO_OVERLAY_DISPLAYED = "tier7_hero_overlay_displayed";
+		public const string TIER7_QUEST_OVERLAY_DISPLAYED = "tier7_quest_overlay_displayed";
 
 		public const string CURRENT_DAILY_OCCURRENCES = "cur_daily_occurrences";
 		public const string MAXIMUM_DAILY_OCCURRENCES = "max_daily_occurrences";
@@ -50,6 +59,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 		public const string MINIONS_BANNED = "minions_banned";
 		public const string START_AND_CURRENT_MMR = "start_and_current_mmr";
 		public const string LATEST_10_GAME = "latest_10_game";
+		public const string TIER7_OVERLAY_HEROPICKING = "tier7_hero_overlay";
+		public const string TIER7_OVERLAY_QUESTPICKING = "tier7_quest_overlay";
 
 		// Mercenaries Settings
 		public const string MERC_GENERAL_SETTINGS_ENABLED = "hdt_mercenaries_settings_enabled";
@@ -156,6 +167,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					{ MINIONS_BANNED, Config.Instance.ShowSessionRecapMinionsBanned },
 					{ START_AND_CURRENT_MMR, Config.Instance.ShowSessionRecapStartCurrentMMR },
 					{ LATEST_10_GAME, Config.Instance.ShowSessionRecapLatestGames },
+					{ TIER7_OVERLAY_HEROPICKING, Config.Instance.ShowBattlegroundsHeroPicking },
+					{ TIER7_OVERLAY_QUESTPICKING, Config.Instance.ShowBattlegroundsQuestPicking },
 				};
 				return GetEnabledDisabledFranchiseSettings("battlegrounds", bgSettings);
 			}

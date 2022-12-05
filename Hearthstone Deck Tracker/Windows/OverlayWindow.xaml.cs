@@ -21,12 +21,16 @@ using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
-using Hearthstone_Deck_Tracker.Controls.Overlay;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
+using Hearthstone_Deck_Tracker.Utility.Animations;
 
 #endregion
 
@@ -75,13 +79,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _experienceCounterBehavior;
 		private OverlayElementBehavior _mercenariesTaskListBehavior;
 		private OverlayElementBehavior _mercenariesTaskListButtonBehavior;
+		private OverlayElementBehavior _tier7PreLobbyBehavior;
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
 
 		public BattlegroundsSessionViewModel BattlegroundsSessionViewModelVM => Core.Game.BattlegroundsSessionViewModel;
+		public BattlegroundsHeroPickingViewModel BattlegroundsHeroPickingViewModel { get; } = new();
+		public BattlegroundsQuestPickingViewModel BattlegroundsQuestPickingViewModel { get; } = new();
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
+		public Tier7PreLobbyViewModel Tier7ViewModel { get; } = new Tier7PreLobbyViewModel();
 
 		public List<BoardMinionOverlayViewModel> OppBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
 		public List<BoardMinionOverlayViewModel> PlayerBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
@@ -219,6 +227,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 				AnchorSide = Side.Right,
 				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
+			};
+
+			_tier7PreLobbyBehavior = new OverlayElementBehavior(Tier7PreLobby)
+			{
+				GetLeft = () => Helper.GetScaledXPos(0.079, (int)Width, ScreenRatio),
+				GetTop = () => Height * 0.103,
+				GetScaling = () => Height / 1080,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+				Fade = true,
+				Distance = 50,
+				HideCallback = () => Tier7ViewModel.Reset(),
 			};
 
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
@@ -444,17 +465,32 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HideBobsBuddyPanel();
 		}
 
-		internal void ShowBattlegroundsSession()
+		internal async void ShowBattlegroundsSession(bool show, bool force = false)
 		{
-			BattlegroundsSessionViewModelVM.Update();
-			BattlegroundsSession.Show();
+			if(await Debounce.WasCalledAgain(50))
+				return;
+			if(show)
+			{
+				if(!force)
+					await Task.Delay(500);
+				BattlegroundsSessionViewModelVM.Update();
+				if (BattlegroundsSessionStackPanel.Visibility == Visible || !Config.Instance.ShowSessionRecap)
+					return;
+
+				Core.Game.BattlegroundsSessionViewModel.UpdateSectionsVisibilities();
+				FadeAnimation.SetVisibility(BattlegroundsSessionStackPanel, Visible);
+			}
+			else
+			{
+				if (_battlegroundsSessionVisibleTemp && force)
+					return;
+				FadeAnimation.SetVisibility(BattlegroundsSessionStackPanel, Hidden);
+			}
 		}
 
-		internal void HideBattlegroundsSession()
+		internal void ShowBattlegroundsHeroPickingStats(int[] heroIds)
 		{
-			if (_battlegroundsSessionVisibleTemp)
-				return;
-			BattlegroundsSession.Hide();
+			BattlegroundsHeroPickingViewModel.SetHeroes(heroIds);
 		}
 
 		internal void ShowLinkOpponentDeckDisplay()
@@ -515,6 +551,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void HideMercenariesTasks()
 		{
 			_mercenariesTaskListBehavior.Hide();
+		}
+
+		internal async void ShowTier7PreLobby(bool show, bool checkAccountStatus, int delay = 500)
+		{
+			if(await Debounce.WasCalledAgain(50))
+				return;
+			if(show)
+			{
+				Tier7ViewModel.Update(checkAccountStatus).Forget();	
+
+				// Wait for lobby to be actually loaded
+				await Task.Delay(delay);
+
+				_tier7PreLobbyBehavior.Show();
+			}
+			else
+				_tier7PreLobbyBehavior.Hide();
 		}
 
 		public static bool AnimatingXPBar = false;

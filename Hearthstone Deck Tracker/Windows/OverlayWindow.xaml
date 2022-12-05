@@ -9,9 +9,12 @@
         xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
         xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone"
         xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
+        xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
         xmlns:mercenaries="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries"
         xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+        xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:heroPicking="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -201,11 +204,12 @@
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTileText7" Margin="-2.5 -11 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" TextAlignment="Center"/>
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTurnText7" Margin="-2 1 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" FontStretch="UltraCondensed" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
 
-                <StackPanel Name="BattlegroundsSessionStackPanel" Width="auto" Height="auto">
+                <StackPanel Name="BattlegroundsSessionStackPanel" Width="auto" Height="auto"
+                            Visibility="Collapsed" anim:FadeAnimation.Visibility="Collapsed"
+                            anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2">
                     <battlegrounds:BattlegroundsSession
                         x:Name="BattlegroundsSession"
                         DataContext="{Binding BattlegroundsSessionViewModelVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
-                        Visibility="Collapsed"
                         CornerRadius="5"
                         FinalBoardTooltip="true"
                     />
@@ -226,6 +230,17 @@
                     DataContext="{Binding MercenariesTaskListVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <mercenaries:MercenariesTaskListView x:Name="MercenariesTaskList" Visibility="Collapsed" Canvas.Bottom="58" Canvas.Right="8"
                     DataContext="{Binding MercenariesTaskListVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+
+                <heroPicking:BattlegroundsHeroPicking
+                    x:Name="BattlegroundsHeroPicking"
+                    DataContext="{Binding BattlegroundsHeroPickingViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
+                <battlegrounds:BattlegroundsQuestPicking
+                    x:Name="BattlegroundsQuestPicking"
+                    DataContext="{Binding BattlegroundsQuestPickingViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
+                <tier7:Tier7PreLobby x:Name="Tier7PreLobby" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                                     DataContext="{Binding Tier7ViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
 
                 <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
                 <controls:CardImage x:Name="ToolTipCardBlock" Visibility="Hidden" />

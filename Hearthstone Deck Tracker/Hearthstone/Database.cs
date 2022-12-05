@@ -87,6 +87,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return GetCardFromId(heroId);
 		}
 
+		public static Card? GetBattlegroundsHeroFromDbf(int dbfId)
+		{
+			var hero = GetCardFromDbfId(dbfId, false);
+			var parentSkinDbfId = hero?.BattlegroundsSkinParentId;
+			if(parentSkinDbfId > 0)
+				return GetCardFromDbfId(parentSkinDbfId.Value, false);
+			return hero;
+		}
+
 		private static string? GetBaseId(string? cardId)
 		{
 			if(string.IsNullOrEmpty(cardId))
