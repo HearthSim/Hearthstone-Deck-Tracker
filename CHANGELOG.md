@@ -1,3 +1,7 @@
+## **Release v1.19.2 - 2022-12-05**
+**New**:
+- Added Battlegrounds Hero and Quest Reward stats to the Overlay!
+
 ## **Release v1.19.1 - 2022-12-02**
 **Added support for March of the Lich King**
 
