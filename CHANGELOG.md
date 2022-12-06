@@ -1,3 +1,10 @@
+## **Release v1.19.3 - 2022-12-06**
+**Changes**:
+- Added an option to disable the Battlegrounds Quest Reward Composition stats.
+
+**Fixes**:
+- Fix an issue where the Tier7 Pre-Game overlay could cover parts of the in-game Shop, Season Rewards, Friendslist and Quest UIs.
+
 ## **Release v1.19.2 - 2022-12-05**
 **New**:
 - Added Battlegrounds Hero and Quest Reward stats to the Overlay!
