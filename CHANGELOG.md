@@ -1,4 +1,4 @@
-## **Release v1.19.3 - 2022-12-06**
+## **Release v1.19.4 - 2022-12-06**
 **Changes**:
 - Added an option to disable the Battlegrounds Quest Reward Composition stats.
 
