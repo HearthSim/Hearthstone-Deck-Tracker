@@ -126,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			_watchChoices = true;
 			while(_watchChoices)
 			{
-				await Task.Delay(200);
+				await Task.Delay(100);
 				var choices = Reflection.GetCardChoices();
 				if(choices == null)
 				{
