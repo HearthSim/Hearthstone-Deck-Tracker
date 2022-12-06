@@ -41,10 +41,10 @@ namespace HearthWatcher
 				if(!_watch)
 					break;
 				var curr = new BaconEventArgs(
-					_provider.IsShopOpen,
-					_provider.IsJournalOpen,
-					_provider.IsPopupShowing,
-					_provider.IsFriendslistOpen);
+					_provider.IsShopOpen ?? false,
+					_provider.IsJournalOpen ?? false,
+					_provider.IsPopupShowing ?? false,
+					_provider.IsFriendslistOpen ?? false);
 				if(curr.Equals(_prev))
 					continue;
 				Change?.Invoke(this, curr);

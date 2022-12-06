@@ -126,9 +126,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 	public class HearthMirrorBaconProvider : IBaconProvider
 	{
-		public bool IsShopOpen => Reflection.IsShopOpen();
-		public bool IsJournalOpen => Reflection.IsJournalOpen();
-		public bool IsPopupShowing => Reflection.IsPopupShowing();
-		public bool IsFriendslistOpen => Reflection.IsFriendsListVisible();
+		public bool? IsShopOpen => Reflection.IsShopOpen();
+		public bool? IsJournalOpen => Reflection.IsJournalOpen();
+		public bool? IsPopupShowing => Reflection.IsPopupShowing();
+		public bool? IsFriendslistOpen => Reflection.IsFriendsListVisible();
 	}
 }
