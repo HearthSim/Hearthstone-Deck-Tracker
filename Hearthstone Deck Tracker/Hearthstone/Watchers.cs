@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			FriendlyChallengeWatcher.OnFriendlyChallenge += OnFriendlyChallenge;
 			ExperienceWatcher.NewExperienceHandler += (sender, args) => Core.Overlay.ExperienceChangedAsync(args.Experience, args.ExperienceNeeded, args.Level, args.LevelChange, args.Animate).Forget();
 			QueueWatcher.InQueueChanged += (sender, args) => Core.Game.QueueEvents.Handle(args);
+			BaconWatcher.Change += OnBaconChange;
 		}
 
 		internal static void Stop()
@@ -38,6 +39,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			FriendlyChallengeWatcher.Stop();
 			ExperienceWatcher.Stop();
 			QueueWatcher.Stop();
+			BaconWatcher.Stop();
+		}
+
+		internal static void OnBaconChange(object sender, HearthWatcher.EventArgs.BaconEventArgs args)
+		{
+			Core.Overlay.ShowBattlegroundsSession(!args.IsAnyOpen);
+			Core.Overlay.ShowTier7PreLobby(!args.IsAnyOpen, false);
 		}
 
 		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.FriendlyChallengeEventArgs args)
@@ -63,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static FriendlyChallengeWatcher FriendlyChallengeWatcher { get; } = new FriendlyChallengeWatcher(new HearthMirrorFriendlyChallengeProvider());
 		public static ExperienceWatcher ExperienceWatcher { get; } = new ExperienceWatcher(new HearthMirrorRewardTrackProvider());
 		public static QueueWatcher QueueWatcher { get; } = new QueueWatcher(new HearthMirrorQueueProvider());
+		public static BaconWatcher BaconWatcher { get; } = new BaconWatcher(new HearthMirrorBaconProvider());
 	}
 
 	public class GameDataProvider : IGameDataProvider
@@ -113,5 +122,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorQueueProvider : IQueueProvider
 	{
 		public FindGameState? FindGameState => Reflection.GetFindGameState();
+	}
+
+	public class HearthMirrorBaconProvider : IBaconProvider
+	{
+		public bool IsShopOpen => Reflection.IsShopOpen();
+		public bool IsJournalOpen => Reflection.IsJournalOpen();
+		public bool IsPopupShowing => Reflection.IsPopupShowing();
+		public bool IsFriendslistOpen => Reflection.IsFriendsListVisible();
 	}
 }
