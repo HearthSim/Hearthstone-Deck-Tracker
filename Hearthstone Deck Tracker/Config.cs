@@ -380,8 +380,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool HideDrawChances = true;
 
-		[DefaultValue(false)]
-		public bool HideInBackground = false;
+		[DefaultValue(true)]
+		public bool HideInBackground = true;
 
 		[DefaultValue(true)]
 		public bool HideInMenu = true;
