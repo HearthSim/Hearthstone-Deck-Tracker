@@ -807,6 +807,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowBattlegroundsQuestPicking = true;
 
 		[DefaultValue(true)]
+		public bool ShowBattlegroundsQuestPickingComps = true;
+
+		[DefaultValue(true)]
 		public bool ShowBattlegroundsTiers = true;
 
 		[DefaultValue(true)]

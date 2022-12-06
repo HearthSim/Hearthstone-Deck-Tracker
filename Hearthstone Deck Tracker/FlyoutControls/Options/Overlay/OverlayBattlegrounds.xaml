@@ -20,6 +20,10 @@
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsQuestPicking_Checked"
                   Unchecked="CheckboxShowBattlegroundsQuestPicking_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowBattlegroundsQuestPickingComps" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsQuestPickingComps}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsQuestPickingComps_Checked"
+                  Unchecked="CheckboxShowBattlegroundsQuestPickingComps_Unchecked" Margin="30,5,0,0" />
         <CheckBox x:Name="CheckboxShowBattlegroundsTiers" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsTiers}"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTiers_Checked"
