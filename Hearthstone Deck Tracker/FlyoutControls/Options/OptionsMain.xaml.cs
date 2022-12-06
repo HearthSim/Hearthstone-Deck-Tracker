@@ -111,6 +111,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			ContentHeader = LocUtil.Get("Options_Overlay_General_Header");
 			OptionsContent = OptionsOverlayGeneral;
+			OptionsOverlayGeneral.Load();
 		}
 
 		private void TreeViewItemOverlayDeckWindows_OnSelected(object sender, RoutedEventArgs e)
@@ -245,6 +246,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ContentHeader = LocUtil.Get("Options_Overlay_Battlegrounds_Header");
 			OptionsContent = OptionsOverlayBattlegrounds;
 			OptionsOverlayBattlegrounds.UpdateDisabledState();
+			OptionsOverlayBattlegrounds.Load();
 		}
 
 		private void TreeViewItemMercenariesOverlay_OnSelected(object sender, RoutedEventArgs e)

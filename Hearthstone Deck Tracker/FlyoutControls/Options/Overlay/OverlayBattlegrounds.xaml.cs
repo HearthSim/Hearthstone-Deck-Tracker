@@ -62,6 +62,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		public void Load()
 		{
+			// Note: The wording on this setting is inverted!
+			CheckboxShowOverlayInBackground.IsChecked = !Config.Instance.HideInBackground;
+
 			CheckboxShowBattlegroundsHeroPicking.IsChecked = Config.Instance.ShowBattlegroundsHeroPicking;
 			CheckboxShowBattlegroundsQuestPicking.IsChecked = Config.Instance.ShowBattlegroundsQuestPicking;
 			CheckboxShowBattlegroundsQuestPickingComps.IsChecked = Config.Instance.ShowBattlegroundsQuestPickingComps;
@@ -117,6 +120,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Save();
 			if(updateOverlay)
 				Core.Overlay.Update(true);
+		}
+
+		private void CheckboxShowOverlayInBackground_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			// Note: The wording on this setting is inverted!
+			Config.Instance.HideInBackground = false;
+			SaveConfig(true);
+		}
+
+		private void CheckboxShowOverlayInBackground_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			// Note: The wording on this setting is inverted!
+			Config.Instance.HideInBackground = true;
+			SaveConfig(true);
 		}
 
 		private void CheckboxShowBattlegroundsHeroPicking_Checked(object sender, RoutedEventArgs e)
