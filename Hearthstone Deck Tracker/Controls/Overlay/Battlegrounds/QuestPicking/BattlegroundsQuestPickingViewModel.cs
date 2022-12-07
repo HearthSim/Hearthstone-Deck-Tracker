@@ -117,7 +117,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 
 			WatchChoices();
 
-			Core.Game.Metrics.Tier7QuestOverlayDisplayed = true;
+			if(Config.Instance.ShowBattlegroundsQuestPicking)
+				Core.Game.Metrics.Tier7QuestOverlayDisplayed = true;
 		}
 
 		private bool _watchChoices;

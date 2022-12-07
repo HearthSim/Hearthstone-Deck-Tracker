@@ -116,7 +116,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			}).ToList();
 			Message.Mmr(stats[0].MmrFilterValue, stats[0].MinMmr);
 			Visibility = Visible;
-			Core.Game.Metrics.Tier7HeroOverlayDisplayed = true;
+
+			if(Config.Instance.ShowBattlegroundsHeroPicking)
+				Core.Game.Metrics.Tier7HeroOverlayDisplayed = true;
 		}
 
 		public void SetPlacementVisible(bool isVisible)
