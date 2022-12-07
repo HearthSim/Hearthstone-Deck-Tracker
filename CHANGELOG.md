@@ -1,3 +1,8 @@
+## **Release v1.19.5 - 2022-12-07**
+**Fixes**:
+- Fix an issue where cards consumed by the players Souleater's Scythe were revealed before the mulligan.
+- Fix an issue where cards consumed by the opponents Souleater's Scythe were revealed at all.
+
 ## **Release v1.19.4 - 2022-12-06**
 **Changes**:
 - Added an option to disable the Battlegrounds Quest Reward Composition stats.
