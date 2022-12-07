@@ -321,6 +321,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public GuessedCardState GuessedCardState { get; set; } = GuessedCardState.None;
 		public List<string> StoredCardIds { get; set; } = new List<string>();
 		public int DeckIndex { get; set; }
+		public bool InGraveardAtStartOfGame { get; set; }
 
 		public string? LatestCardId
 		{

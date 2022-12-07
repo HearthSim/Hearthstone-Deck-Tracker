@@ -476,6 +476,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					ZoneChangeFromSecret(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
 				case Zone.INVALID:
+					if(!game.SetupDone && (Zone)value == GRAVEYARD)
+					{
+						// Souleater's Scythe causes entites to be created in the graveyard.
+						// We need to not reveal this card for the opponent and only reveal
+						// it for the player after mulligan.
+						entity.Info.InGraveardAtStartOfGame = true;
+					}
+
 					var maxId = GetMaxHeroPowerId(game);
 					if(!game.SetupDone && (id <= maxId || game.GameEntity?.GetTag(STEP) == (int)Step.INVALID && entity.GetTag(ZONE_POSITION) < 5))
 					{

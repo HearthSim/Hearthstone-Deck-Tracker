@@ -43,7 +43,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int DeckCount => Deck.Count();
 
 		public IEnumerable<Entity> PlayerEntities => _game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && x.IsControlledBy(Id));
-		public IEnumerable<Entity> RevealedEntities => _game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && (x.IsControlledBy(Id) || x.Info.OriginalController == Id)).Where(x => x.HasCardId);
+		public IEnumerable<Entity> RevealedEntities => _game.Entities.Values
+			.Where(x => !x.Info.HasOutstandingTagChanges && (x.IsControlledBy(Id) || x.Info.OriginalController == Id))
+			.Where(x => x.HasCardId)
+			.Where(x =>
+			{
+				// Souleater's Scythe causes entites to be created in the graveyard.
+				// We need to not reveal this card for the opponent and only reveal
+				// it for the player after mulligan.
+				if(x.Info.InGraveardAtStartOfGame && x.IsInGraveyard)
+				{
+					if(IsLocalPlayer)
+						return _game.IsMulliganDone;
+					return false;
+				}
+				return true;
+			});
 		public IEnumerable<Entity> Hand => PlayerEntities.Where(x => x.IsInHand);
 		public IEnumerable<Entity> Board => PlayerEntities.Where(x => x.IsInPlay);
 		public IEnumerable<Entity> Deck => PlayerEntities.Where(x => x.IsInDeck);
