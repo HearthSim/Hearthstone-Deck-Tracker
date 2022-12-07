@@ -61,6 +61,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 		public const string LATEST_10_GAME = "latest_10_game";
 		public const string TIER7_OVERLAY_HEROPICKING = "tier7_hero_overlay";
 		public const string TIER7_OVERLAY_QUESTPICKING = "tier7_quest_overlay";
+		public const string TIER7_OVERLAY_QUESTPICKING_COMPOSITIONS = "tier7_quest_overlay_compositions";
 
 		// Mercenaries Settings
 		public const string MERC_GENERAL_SETTINGS_ENABLED = "hdt_mercenaries_settings_enabled";
@@ -169,6 +170,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					{ LATEST_10_GAME, Config.Instance.ShowSessionRecapLatestGames },
 					{ TIER7_OVERLAY_HEROPICKING, Config.Instance.ShowBattlegroundsHeroPicking },
 					{ TIER7_OVERLAY_QUESTPICKING, Config.Instance.ShowBattlegroundsQuestPicking },
+					{ TIER7_OVERLAY_QUESTPICKING_COMPOSITIONS, Config.Instance.ShowBattlegroundsQuestPickingComps },
 				};
 				return GetEnabledDisabledFranchiseSettings("battlegrounds", bgSettings);
 			}
