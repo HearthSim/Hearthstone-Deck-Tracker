@@ -48,14 +48,32 @@
         </Border>
 
         <!-- Interactive Panel -->
-        <Border MinWidth="214" Background="{StaticResource Tier7Black}" BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Border Name="Tier7Panel" MinWidth="214" Background="{StaticResource Tier7Black}" BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel>
                 <!-- Header -->
                 <Border Background="{StaticResource Tier7Purple}" Padding="8 5" Margin="-1 -1 -1 0" CornerRadius="4">
-                    <StackPanel Orientation="Horizontal">
-                        <local:Tier7Logo Width="16" Height="16"/>
-                        <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Header}" Foreground="White" Margin="12 0 0 0" VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <DockPanel>
+                        <local:Tier7Logo Width="16" Height="16" DockPanel.Dock="Left"/>
+                        <Border DockPanel.Dock="Right" Padding="4 3" Margin="0 -3 -6 -3" CornerRadius="3"
+                                Cursor="Hand" MouseUp="Settings_MouseUp"
+                                Visibility="{Binding IsMouseOver, ElementName=Tier7Panel, Converter={StaticResource BoolToVisibility}, ConverterParameter=Hidden}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                                            <Setter Property="Background" Value="#22FFFFFF"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Rectangle Height="14" Width="14">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_settings}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Header}" Foreground="White" Margin="12 0" VerticalAlignment="Center" TextAlignment="Left" />
+                    </DockPanel>
                 </Border>
 
                 <!-- Loading -->
