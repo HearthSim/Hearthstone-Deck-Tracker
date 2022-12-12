@@ -36,6 +36,10 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top" Checked="CheckboxEnableTier7_Checked"
                           Unchecked="CheckboxEnableTier7_Unchecked" Margin="0,5,0,0" />
+                <CheckBox x:Name="CheckboxShowTier7PreLobby" Content="{lex:Loc Options_Overlay_Battlegrounds_ShowTier7PreLobby}"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top" Checked="CheckboxShowTier7PreLobby_Checked"
+                          Unchecked="CheckboxShowTier7PreLobby_Unchecked" Margin="0,5,0,0" />
                 <CheckBox x:Name="CheckboxShowBattlegroundsHeroPicking" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsHeroPicking}"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsHeroPicking_Checked"

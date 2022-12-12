@@ -807,6 +807,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowBatteryLifePercent = false;
 
 		[DefaultValue(true)]
+		public bool ShowBattlegroundsTier7PreLobby = true;
+
+		[DefaultValue(true)]
 		public bool ShowBattlegroundsHeroPicking = true;
 
 		[DefaultValue(true)]

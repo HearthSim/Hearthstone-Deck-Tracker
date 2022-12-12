@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
@@ -67,6 +68,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowMenuOverlayInBackground.IsChecked = !Config.Instance.HideMenuOverlayInBackground;
 
 			CheckboxEnableTier7.IsChecked = Config.Instance.EnableBattlegroundsTier7Overlay;
+			CheckboxShowTier7PreLobby.IsChecked = Config.Instance.ShowBattlegroundsTier7PreLobby;
+			CheckboxShowTier7PreLobby.Visibility = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) ? Visibility.Visible : Visibility.Collapsed;
 
 			CheckboxShowBattlegroundsHeroPicking.IsChecked = Config.Instance.ShowBattlegroundsHeroPicking;
 			CheckboxShowBattlegroundsQuestPicking.IsChecked = Config.Instance.ShowBattlegroundsQuestPicking;
@@ -568,6 +571,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.EnableBattlegroundsTier7Overlay = false;
+			SaveConfig(true);
+			if(Core.Game.CurrentMode == Mode.BACON)
+				Core.Overlay.ShowTier7PreLobby(false, false);
+		}
+
+		private void CheckboxShowTier7PreLobby_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsTier7PreLobby = true;
+			SaveConfig(true);
+			if(Core.Game.CurrentMode == Mode.BACON)
+				Core.Overlay.ShowTier7PreLobby(true, true, 0);
+		}
+
+		private void CheckboxShowTier7PreLobby_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsTier7PreLobby = false;
 			SaveConfig(true);
 			if(Core.Game.CurrentMode == Mode.BACON)
 				Core.Overlay.ShowTier7PreLobby(false, false);

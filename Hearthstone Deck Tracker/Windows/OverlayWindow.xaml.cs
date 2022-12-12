@@ -31,6 +31,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Utility.Animations;
+using Hearthstone_Deck_Tracker.HsReplay;
 
 #endregion
 
@@ -562,11 +563,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(!Config.Instance.EnableBattlegroundsTier7Overlay)
 					return;
 				Tier7ViewModel.Update(checkAccountStatus).Forget();	
+				if(Config.Instance.ShowBattlegroundsTier7PreLobby || !(HSReplayNetOAuth.AccountData?.IsTier7 ?? false))
+				{
+					Tier7ViewModel.Update(checkAccountStatus).Forget();	
 
-				// Wait for lobby to be actually loaded
-				await Task.Delay(delay);
+					// Wait for lobby to be actually loaded
+					await Task.Delay(delay);
 
-				_tier7PreLobbyBehavior.Show();
+					_tier7PreLobbyBehavior.Show();
+				}
 			}
 			else
 				_tier7PreLobbyBehavior.Hide();
