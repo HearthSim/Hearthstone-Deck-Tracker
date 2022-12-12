@@ -23,11 +23,16 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxHideOverlayInSpectator_Checked"
                   Unchecked="CheckboxHideOverlayInSpectator_Unchecked" />
-        <CheckBox x:Name="CheckboxHideOverlayInBackground"
-                  Content="{lex:Loc Options_Overlay_General_CheckBox_HideInBackground}" HorizontalAlignment="Left"
+        <CheckBox x:Name="CheckboxShowOverlayInBackground"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_ShowInBackground}" HorizontalAlignment="Left"
                   Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxHideOverlayInBackground_Checked"
-                  Unchecked="CheckboxHideOverlayInBackground_Unchecked" />
+                  Checked="CheckboxShowOverlayInBackground_Checked"
+                  Unchecked="CheckboxShowOverlayInBackground_Unchecked" />
+        <CheckBox x:Name="CheckboxShowMenuOverlayInBackground"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_ShowMenuOverlayInBackground}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxShowMenuOverlayInBackground_Checked"
+                  Unchecked="CheckboxShowMenuOverlayInBackground_Unchecked" />
         <CheckBox x:Name="CheckboxHideDecksInOverlay" Content="{lex:Loc Options_Overlay_General_CheckBox_HideDecks}"
                   HorizontalAlignment="Left" Margin="10,5,0,0"
                   VerticalAlignment="Top"

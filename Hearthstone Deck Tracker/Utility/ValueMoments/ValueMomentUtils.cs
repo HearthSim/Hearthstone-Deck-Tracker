@@ -37,6 +37,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 		public const string SHARE_NOTIFICATION = "share_notification";
 		public const string OVERLAY_HIDE_COMPLETELY = "overlay_hide_completely";
 		public const string OVERLAY_HIDE_IF_HS_IN_BACKGROUND = "overlay_hide_if_hs_in_background";
+		public const string OVERLAY_MENU_HIDE_IF_HS_IN_BACKGROUND = "overlay_menu_hide_if_hs_in_background";
 		public const string CARD_TOOLTIPS = "card_tooltips";
 		public const string ANALYTICS_SUBMIT_ANONYMOUS_DATA = "analytics_submit_anonymous_data";
 		public const string START_WITH_WINDOWS = "start_with_windows";
@@ -102,6 +103,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 				{ SHARE_NOTIFICATION, Config.Instance.ShowReplayShareToast },
 				{ OVERLAY_HIDE_COMPLETELY, Config.Instance.HideOverlay },
 				{ OVERLAY_HIDE_IF_HS_IN_BACKGROUND, Config.Instance.HideInBackground },
+				{ OVERLAY_MENU_HIDE_IF_HS_IN_BACKGROUND, Config.Instance.HideMenuOverlayInBackground },
 				{ CARD_TOOLTIPS, Config.Instance.OverlayCardToolTips },
 				{ ANALYTICS_SUBMIT_ANONYMOUS_DATA, Config.Instance.GoogleAnalytics },
 				{ START_WITH_WINDOWS, Config.Instance.StartWithWindows },

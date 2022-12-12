@@ -23,7 +23,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		public void Load()
 		{
-			CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
+			// Note: The wording on this setting is inverted!
+			CheckboxShowOverlayInBackground.IsChecked = !Config.Instance.HideInBackground;
+			CheckboxShowMenuOverlayInBackground.IsChecked = !Config.Instance.HideMenuOverlayInBackground;
+
 			CheckboxHideOverlayInMenu.IsChecked = Config.Instance.HideInMenu;
 			CheckboxHideOverlay.IsChecked = Config.Instance.HideOverlay;
 			CheckboxHideDecksInOverlay.IsChecked = Config.Instance.HideDecksInOverlay;
@@ -276,19 +279,39 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 		}
 
-		private void CheckboxHideOverlayInBackground_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxShowOverlayInBackground_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
+			// Note: The wording on this setting is inverted!
+			Config.Instance.HideInBackground = false;
+			SaveConfig(true);
+		}
+
+		private void CheckboxShowOverlayInBackground_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			// Note: The wording on this setting is inverted!
 			Config.Instance.HideInBackground = true;
 			SaveConfig(true);
 		}
 
-		private void CheckboxHideOverlayInBackground_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxShowMenuOverlayInBackground_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.HideInBackground = false;
+			// Note: The wording on this setting is inverted!
+			Config.Instance.HideMenuOverlayInBackground = false;
+			SaveConfig(true);
+		}
+
+		private void CheckboxShowMenuOverlayInBackground_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			// Note: The wording on this setting is inverted!
+			Config.Instance.HideMenuOverlayInBackground = true;
 			SaveConfig(true);
 		}
 

@@ -384,6 +384,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool HideInBackground = true;
 
 		[DefaultValue(true)]
+		public bool HideMenuOverlayInBackground = true;
+
+		[DefaultValue(true)]
 		public bool HideInMenu = true;
 
 		[DefaultValue(true)]

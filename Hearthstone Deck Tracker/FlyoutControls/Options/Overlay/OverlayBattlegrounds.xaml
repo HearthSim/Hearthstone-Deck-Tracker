@@ -9,7 +9,7 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d"
+             mc:Ignorable="d" d:Background="White"
              d:DesignHeight="600" d:DesignWidth="300">
     <StackPanel>
         <CheckBox x:Name="CheckboxShowOverlayInBackground"
@@ -17,6 +17,11 @@
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxShowOverlayInBackground_Checked"
                   Unchecked="CheckboxShowOverlayInBackground_Unchecked" />
+        <CheckBox x:Name="CheckboxShowMenuOverlayInBackground"
+                  Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowMenuOverlayInBackground}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxShowMenuOverlayInBackground_Checked"
+                  Unchecked="CheckboxShowMenuOverlayInBackground_Unchecked" />
         <CheckBox x:Name="CheckboxShowBattlegroundsHeroPicking" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsHeroPicking}"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsHeroPicking_Checked"
