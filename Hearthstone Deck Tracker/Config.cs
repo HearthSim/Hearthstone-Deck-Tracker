@@ -492,6 +492,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool EnableLinkOpponentDeckInNonFriendly = false;
 
 		[DefaultValue(true)]
+		public bool EnableBattlegroundsTier7Overlay = true;
+
+		[DefaultValue(true)]
 		public bool HighlightLastDrawn = true;
 
 		[DefaultValue(true)]

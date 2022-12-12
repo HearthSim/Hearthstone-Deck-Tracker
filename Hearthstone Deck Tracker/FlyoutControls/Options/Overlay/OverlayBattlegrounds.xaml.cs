@@ -66,6 +66,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowOverlayInBackground.IsChecked = !Config.Instance.HideInBackground;
 			CheckboxShowMenuOverlayInBackground.IsChecked = !Config.Instance.HideMenuOverlayInBackground;
 
+			CheckboxEnableTier7.IsChecked = Config.Instance.EnableBattlegroundsTier7Overlay;
+
 			CheckboxShowBattlegroundsHeroPicking.IsChecked = Config.Instance.ShowBattlegroundsHeroPicking;
 			CheckboxShowBattlegroundsQuestPicking.IsChecked = Config.Instance.ShowBattlegroundsQuestPicking;
 			CheckboxShowBattlegroundsQuestPickingComps.IsChecked = Config.Instance.ShowBattlegroundsQuestPickingComps;
@@ -549,6 +551,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.Reset(nameof(Config.SessionRecapTop));
 			Config.Instance.Reset(nameof(Config.SessionRecapLeft));
 			SaveConfig(true);
+		}
+
+		private void CheckboxEnableTier7_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.EnableBattlegroundsTier7Overlay = true;
+			SaveConfig(true);
+			if(Core.Game.CurrentMode == Mode.BACON)
+				Core.Overlay.ShowTier7PreLobby(true, true, 0);
+		}
+
+		private void CheckboxEnableTier7_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.EnableBattlegroundsTier7Overlay = false;
+			SaveConfig(true);
+			if(Core.Game.CurrentMode == Mode.BACON)
+				Core.Overlay.ShowTier7PreLobby(false, false);
 		}
 	}
 }

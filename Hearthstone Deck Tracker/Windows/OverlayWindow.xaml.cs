@@ -559,6 +559,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			if(show)
 			{
+				if(!Config.Instance.EnableBattlegroundsTier7Overlay)
+					return;
 				Tier7ViewModel.Update(checkAccountStatus).Forget();	
 
 				// Wait for lobby to be actually loaded

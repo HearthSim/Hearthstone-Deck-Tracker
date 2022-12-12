@@ -68,6 +68,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 
 		public async void SetHeroes(int[] heroIds)
 		{
+			if(!Config.Instance.EnableBattlegroundsTier7Overlay)
+				return;
 			// Trials not supported for now.
 			if(Core.Game.Spectator)
 				return;

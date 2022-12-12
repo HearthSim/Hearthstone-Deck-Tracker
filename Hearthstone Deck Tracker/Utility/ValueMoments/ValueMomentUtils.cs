@@ -60,6 +60,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 		public const string MINIONS_BANNED = "minions_banned";
 		public const string START_AND_CURRENT_MMR = "start_and_current_mmr";
 		public const string LATEST_10_GAME = "latest_10_game";
+		public const string TIER7_OVERLAY = "tier7_overlay";
 		public const string TIER7_OVERLAY_HEROPICKING = "tier7_hero_overlay";
 		public const string TIER7_OVERLAY_QUESTPICKING = "tier7_quest_overlay";
 		public const string TIER7_OVERLAY_QUESTPICKING_COMPOSITIONS = "tier7_quest_overlay_compositions";
@@ -170,6 +171,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					{ MINIONS_BANNED, Config.Instance.ShowSessionRecapMinionsBanned },
 					{ START_AND_CURRENT_MMR, Config.Instance.ShowSessionRecapStartCurrentMMR },
 					{ LATEST_10_GAME, Config.Instance.ShowSessionRecapLatestGames },
+					{ TIER7_OVERLAY, Config.Instance.EnableBattlegroundsTier7Overlay },
 					{ TIER7_OVERLAY_HEROPICKING, Config.Instance.ShowBattlegroundsHeroPicking },
 					{ TIER7_OVERLAY_QUESTPICKING, Config.Instance.ShowBattlegroundsQuestPicking },
 					{ TIER7_OVERLAY_QUESTPICKING_COMPOSITIONS, Config.Instance.ShowBattlegroundsQuestPickingComps },
