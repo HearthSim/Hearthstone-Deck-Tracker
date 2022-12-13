@@ -1,3 +1,9 @@
+## **Release v1.19.6 - 2022-12-12**
+**Changes**:
+- Added a setting to show/hide menu Overlays while Hearthstone is in the background. Defaults to hidden.
+- Added a setting to disable the Tier7 overlay functionality entirely.
+- Added a setting to disable the Tier7 MMR and "Go to my stats" panel.
+
 ## **Release v1.19.5 - 2022-12-07**
 **Fixes**:
 - Fix an issue where cards consumed by the players Souleater's Scythe were revealed before the mulligan.
