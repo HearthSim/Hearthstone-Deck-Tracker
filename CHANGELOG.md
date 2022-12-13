@@ -1,4 +1,4 @@
-## **Release v1.19.6 - 2022-12-12**
+## **Release v1.19.6 - 2022-12-13**
 **Changes**:
 - Added a setting to show/hide menu Overlays while Hearthstone is in the background. Defaults to hidden.
 - Added a setting to disable the Tier7 overlay functionality entirely.
