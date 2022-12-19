@@ -1,3 +1,6 @@
+## **Release v1.19.7 - 2022-12-19**
+**Updated for Hearthstone 25.0.4**
+
 ## **Release v1.19.6 - 2022-12-13**
 **Changes**:
 - Added a setting to show/hide menu Overlays while Hearthstone is in the background. Defaults to hidden.
