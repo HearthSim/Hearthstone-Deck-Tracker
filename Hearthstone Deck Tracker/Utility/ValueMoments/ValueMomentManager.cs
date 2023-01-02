@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					var franchise = action.Properties["franchise"] as Franchise[];
 					if(franchise.Contains(Franchise.HSConstructed))
 					{
-						var hdtGeneralSettings = action.EnrichedProperties.HDTGeneralSettingsEnabled;
+						var hdtGeneralSettings = action.ClientProperties.HDTGeneralSettingsEnabled;
 						if(!hdtGeneralSettings.Contains(HDTGeneralSettings.OverlayHideCompletely))
 							yield return new ValueMoment(VMName.DecklistVisible, ValueMoment.VMKind.Free);
 					}

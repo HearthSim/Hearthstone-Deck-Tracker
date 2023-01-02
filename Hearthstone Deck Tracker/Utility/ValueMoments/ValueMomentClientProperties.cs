@@ -6,12 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 {
-	public class ValueMomentEnrichedProperties
+	public class ValueMomentClientProperties
 	{
 		public enum BaseSettings
 		{
@@ -37,11 +35,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			HDTPlugins,
 		}
 
-		private readonly Dictionary<HDTGeneralSettings, bool> hdtGeneralSettings;
+		private readonly Dictionary<HDTGeneralSettings, bool> _hdtGeneralSettings;
 
-		public ValueMomentEnrichedProperties(string actionEventId, int? maxDailyOccurrences)
+		public ValueMomentClientProperties()
 		{
-			hdtGeneralSettings = new Dictionary<HDTGeneralSettings, bool> {
+			_hdtGeneralSettings = new Dictionary<HDTGeneralSettings, bool> {
 				{ HDTGeneralSettings.UploadMyCollectionAutomatically, Config.Instance.SyncCollection },
 				{ HDTGeneralSettings.UploadReplaysAutomatically, Config.Instance.HsReplayAutoUpload },
 				{ HDTGeneralSettings.ShareNotification, Config.Instance.ShowReplayShareToast },
@@ -56,23 +54,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 				{ HDTGeneralSettings.MinimizeToTray, Config.Instance.MinimizeToTray },
 				{ HDTGeneralSettings.ShowNewsBar, Config.Instance.IgnoreNewsId < (Remote.Config.Data?.News?.Id ?? 0) },
 			};
-
-			if(maxDailyOccurrences != null)
-			{
-				var curEventDailyCount = DailyEventsCount.Instance.GetEventDailyCount(actionEventId);
-				var newCurrentDailyCount = DailyEventsCount.Instance.UpdateEventDailyCount(actionEventId);
-				var eventCounterWasReset = curEventDailyCount > 0 && newCurrentDailyCount == 1;
-
-				CurrentDailyOccurrences = newCurrentDailyCount;
-				MaximumDailyOccurrences = maxDailyOccurrences;
-				if(eventCounterWasReset)
-					PreviousDailyOccurrences = curEventDailyCount;
-			}
 		}
-
-		public int? CurrentDailyOccurrences { get; private set; }
-		public int? MaximumDailyOccurrences { get; private set; }
-		public int? PreviousDailyOccurrences { get; private set; }
 
 		public Dictionary<BaseSettings, object> ClientSettings
 		{
@@ -93,14 +75,14 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 
 		public HDTGeneralSettings[] HDTGeneralSettingsEnabled
 		{
-			get => hdtGeneralSettings.Where(x => x.Value == true)
+			get => _hdtGeneralSettings.Where(x => x.Value == true)
 						.Select(x => x.Key)
 						.ToArray();
 		}
 
 		public HDTGeneralSettings[] HDTGeneralSettingsDisabled
 		{
-			get => hdtGeneralSettings.Where(x => x.Value == false)
+			get => _hdtGeneralSettings.Where(x => x.Value == false)
 						.Select(x => x.Key)
 						.ToArray();
 		}

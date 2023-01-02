@@ -81,24 +81,24 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				if(PreviousDailyOccurrences != null)
 					props.Add("prev_daily_occurrences", PreviousDailyOccurrences);
 
-				foreach(var property in EnrichedProperties.ClientSettings)
+				foreach(var property in ClientProperties.ClientSettings)
 					if (Helper.TryGetAttribute<MixpanelPropertyAttribute>(property.Key, out var cAttr) && cAttr?.Name != null)
 						props.Add(cAttr.Name, property.Value);
 
 				props.Add(
 					"hdt_general_settings_enabled",
-					EnrichedProperties.HDTGeneralSettingsEnabled.Select(x => GetMixpanelPropertyName(x))
+					ClientProperties.HDTGeneralSettingsEnabled.Select(x => GetMixpanelPropertyName(x))
 				);
 				props.Add(
 					"hdt_general_settings_disabled",
-					EnrichedProperties.HDTGeneralSettingsDisabled.Select(x => GetMixpanelPropertyName(x))
+					ClientProperties.HDTGeneralSettingsDisabled.Select(x => GetMixpanelPropertyName(x))
 				);
 
 				return props;
 			}
 		}
 
-		public ValueMomentEnrichedProperties EnrichedProperties { get; private set; }
+		public ValueMomentClientProperties ClientProperties { get; private set; }
 
 		public void AddProperties(Dictionary<string, object> newProperties)
 		{
