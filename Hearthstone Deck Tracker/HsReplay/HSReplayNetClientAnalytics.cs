@@ -48,8 +48,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 			try
 			{
-				action.AddProperties(ValueMomentUtils.EnrichedEventProperties(action));
-
 				var valueMoments = ValueMomentManager.GetValueMoments(action).ToList();
 				foreach(var valueMoment in valueMoments)
 					DailyEventsCount.Instance.UpdateEventDailyCount(valueMoment.Name);

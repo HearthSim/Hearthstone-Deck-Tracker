@@ -60,7 +60,7 @@ namespace HDTTests.Utility.ValueMoments
 			var action = new EndMatchAction(Franchise.HSConstructed, new Dictionary<string, object>
 			{
 				{ "hdt_general_settings_enabled", new string[] { } },
-				{ "hdt_general_settings_disabled", new [] { ValueMomentUtils.OVERLAY_HIDE_COMPLETELY } }
+				{ "hdt_general_settings_disabled", new [] { HDTGeneralSettings.OverlayHideCompletely } }
 			});
 			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
 			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.DecklistVisible);
@@ -73,7 +73,7 @@ namespace HDTTests.Utility.ValueMoments
 			var action = new EndSpectateMatchAction(Franchise.HSConstructed, new Dictionary<string, object>
 			{
 				{ "hdt_general_settings_enabled", new string[] { } },
-				{ "hdt_general_settings_disabled", new [] { ValueMomentUtils.OVERLAY_HIDE_COMPLETELY } }
+				{ "hdt_general_settings_disabled", new [] { HDTGeneralSettings.OverlayHideCompletely } }
 			});
 			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
 			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.DecklistVisible);

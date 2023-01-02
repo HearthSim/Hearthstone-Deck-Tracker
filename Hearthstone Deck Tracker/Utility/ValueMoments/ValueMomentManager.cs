@@ -35,8 +35,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					var franchise = action.Properties["franchise"] as Franchise[];
 					if(franchise.Contains(Franchise.HSConstructed))
 					{
-						var hdtGeneralSettings = action.Properties[ValueMomentUtils.HDT_GENERAL_SETTINGS_ENABLED] as string[];
-						if(!hdtGeneralSettings.Contains(ValueMomentUtils.OVERLAY_HIDE_COMPLETELY))
+						var hdtGeneralSettings = action.EnrichedProperties.HDTGeneralSettingsEnabled;
+						if(!hdtGeneralSettings.Contains(HDTGeneralSettings.OverlayHideCompletely))
 							yield return new ValueMoment(VMName.DecklistVisible, ValueMoment.VMKind.Free);
 					}
 					else if(franchise.Contains(Franchise.Battlegrounds))
@@ -116,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 		internal static bool ShouldSendEventToMixPanel(VMAction action, List<ValueMoment> valueMoments)
 		{
 			// Check action daily occurrences
-			if(action.MaxDailyOccurrences == null)
+			if(action.EnrichedProperties.MaximumDailyOccurrences == null)
 				return true;
 
 			// Always send match events when a trial was activated
@@ -135,9 +135,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					return true;
 			}
 
-			action.Properties.TryGetValue(ValueMomentUtils.CURRENT_DAILY_OCCURRENCES, out var dailyCount);
+			int? dailyCount = action.EnrichedProperties.CurrentDailyOccurrences;
 			if (dailyCount != null)
-				return (int) dailyCount <= action.MaxDailyOccurrences;
+				return (int) dailyCount <= action.EnrichedProperties.MaximumDailyOccurrences;
 
 			return false;
 		}
