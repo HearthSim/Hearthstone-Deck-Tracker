@@ -79,7 +79,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.HSConstructedValue } },
+				{ "franchise", new [] { Franchise.HSConstructed } },
 				{ "hdt_general_settings_enabled", new string[] { } },
 				{ "hdt_general_settings_disabled", new [] { ValueMomentUtils.OVERLAY_HIDE_COMPLETELY } }
 			});
@@ -93,7 +93,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.EndSpectateMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.HSConstructedValue } },
+				{ "franchise", new [] { Franchise.HSConstructed } },
 				{ "hdt_general_settings_enabled", new string[] { } },
 				{ "hdt_general_settings_disabled", new [] { ValueMomentUtils.OVERLAY_HIDE_COMPLETELY } }
 			});
@@ -107,7 +107,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.BattlegroundsValue } },
+				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new []
 					{
 						ValueMomentUtils.BB_COMBAT_SIMULATIONS,
@@ -121,7 +121,7 @@ namespace HDTTests.Utility.ValueMoments
 
 			action = new VMActions.EndMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.BattlegroundsValue } },
+				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new []
 					{
 						ValueMomentUtils.BB_COMBAT_SIMULATIONS,
@@ -139,7 +139,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.BattlegroundsValue } },
+				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new [] { ValueMomentUtils.SESSION_RECAP } }
 			});
 			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
@@ -148,7 +148,7 @@ namespace HDTTests.Utility.ValueMoments
 
 			action = new VMActions.EndMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.BattlegroundsValue } },
+				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new [] { ValueMomentUtils.SESSION_RECAP_BETWEEN_GAMES } }
 			});
 			valueMoment = ValueMomentManager.GetValueMoments(action).First();
@@ -161,7 +161,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.BattlegroundsValue } },
+				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new string[] {} },
 				{ "num_click_battlegrounds_minion_tab", 1 }
 			});
@@ -176,7 +176,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.EndSpectateMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.BattlegroundsValue } },
+				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new string[] {} },
 				{ "num_click_battlegrounds_minion_tab", 1 }
 			});
@@ -191,7 +191,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.MercenariesValue } },
+				{ "franchise", new [] { Franchise.Mercenaries } },
 				{ "num_hover_opponent_merc_ability", 1 }
 			});
 			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
@@ -205,7 +205,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.MercenariesValue } },
+				{ "franchise", new [] { Franchise.Mercenaries } },
 				{ "num_hover_opponent_merc_ability", 0 },
 				{ "num_hover_merc_task_overlay", 1 }
 			});
@@ -220,7 +220,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var action = new VMActions.EndSpectateMatchAction(new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.MercenariesValue } },
+				{ "franchise", new [] { Franchise.Mercenaries } },
 				{ "num_hover_opponent_merc_ability", 0 },
 				{ "num_hover_merc_task_overlay", 1 }
 			});

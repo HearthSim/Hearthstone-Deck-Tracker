@@ -60,9 +60,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 #if !DEBUG
 				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action, valueMoments))
-					Client.Value.TrackEvent(token, action.EventName, action.Properties).Forget();
+					Client.Value.TrackEvent(token, action.EventName, action.MixpanelProperties).Forget();
 #else
-				Log.Debug($"{action.EventName}: ${JsonConvert.SerializeObject(action.Properties)}");
+				Log.Debug($"{action.EventName}: ${JsonConvert.SerializeObject(action.MixpanelProperties)}");
 #endif
 			}
 			catch(Exception e)
@@ -119,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				var action = new VMActions.FirstCollectionUploadAction(new Dictionary<string, object>
 				{
 					{ "collection_size", collection.Size() },
-					{ "franchise", new string[] { Franchise.HSConstructed.Value } },
+					{ "franchise", new Franchise[] { Franchise.HSConstructed } },
 				});
 				TrackAction(action);
 			}
@@ -191,7 +191,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			var action_properties = new Dictionary<string, object>(properties)
 			{
-				{ "franchise", new string[] { franchise.Value } },
+				{ "franchise", new Franchise[] { franchise } },
 				{ "action_name", "end_match"},
 			};
 			if(spectator)
@@ -213,7 +213,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
 			{
 				{ "action_name", target },
-				{ "franchise", new string[] { Franchise.HSConstructed.Value } },
+				{ "franchise", new Franchise[] { Franchise.HSConstructed } },
 			});
 			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
 
@@ -224,7 +224,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			var action = new VMActions.ClickAction(new Dictionary<string, object>
 			{
-				{ "franchise", new string[] { Franchise.HSConstructed.Value } },
+				{ "franchise", new Franchise[] { Franchise.HSConstructed } },
 				{ "action_name", actionName},
 			});
 			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
@@ -236,7 +236,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			var action = new VMActions.ClickAction(new Dictionary<string, object>
 			{
-				{ "franchise", new string[] { Franchise.HSConstructed.Value } },
+				{ "franchise", new Franchise[] { Franchise.HSConstructed } },
 				{ "action_name", actionName },
 				{ "sub_franchise", subFranchise != null ? new string[] { subFranchise } : new string[] { } },
 			});
@@ -250,7 +250,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var action = new VMActions.ToastAction(new Dictionary<string, object>
 			{
 				{ "toast", toastId },
-				{ "franchise", new string[] { franchise.Value } },
+				{ "franchise", new Franchise[] { franchise } },
 			});
 			TrackAction(action);
 		}

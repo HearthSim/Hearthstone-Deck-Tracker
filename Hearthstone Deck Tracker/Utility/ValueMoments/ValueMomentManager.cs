@@ -32,14 +32,14 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					break;
 				case VMActions.EndMatchAction.Name:
 				case VMActions.EndSpectateMatchAction.Name:
-					var franchise = action.Properties["franchise"] as string[];
-					if(franchise.Contains(Franchise.HSConstructedValue))
+					var franchise = action.Properties["franchise"] as Franchise[];
+					if(franchise.Contains(Franchise.HSConstructed))
 					{
 						var hdtGeneralSettings = action.Properties[ValueMomentUtils.HDT_GENERAL_SETTINGS_ENABLED] as string[];
 						if(!hdtGeneralSettings.Contains(ValueMomentUtils.OVERLAY_HIDE_COMPLETELY))
 							yield return new ValueMoment(VMName.DecklistVisible, ValueMoment.VMKind.Free);
 					}
-					else if(franchise.Contains(Franchise.BattlegroundsValue))
+					else if(franchise.Contains(Franchise.Battlegrounds))
 					{
 						var hdtBgSettings = action.Properties[ValueMomentUtils.BG_GENERAL_SETTINGS_ENABLED] as string[];
 						if(
@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 						if((bool)action.Properties[ValueMomentUtils.TIER7_QUEST_OVERLAY_DISPLAYED])
 							yield return new ValueMoment(VMName.BGQuestStatsOverlay, !isTrialActivated);
 					}
-					else if(franchise.Contains(Franchise.MercenariesValue))
+					else if(franchise.Contains(Franchise.Mercenaries))
 					{
 						if((int)action.Properties[ValueMomentUtils.NUM_HOVER_OPPONENT_MERC_ABILITY] > 0)
 							yield return new ValueMoment(VMName.MercOpponentAbilities, ValueMoment.VMKind.Free);
@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					break;
 			};
 		}
-
+		
 		internal static Dictionary<string, object> GetValueMomentsProperties(List<ValueMoment> valueMoments)
 		{
 			var freeValueMoments = new List<string>();
