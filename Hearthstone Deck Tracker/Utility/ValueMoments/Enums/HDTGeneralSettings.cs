@@ -3,12 +3,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums
 {
 	public enum HDTGeneralSettings
 	{
-		[MixpanelProperty("hdt_general_settings_enabled")]
-		HdtGeneralSettingsEnabled,
-
-		[MixpanelProperty("hdt_general_settings_disabled")]
-		HdtGeneralSettingsDisabled,
-
 		[MixpanelProperty("upload_my_collection_automatically")]
 		UploadMyCollectionAutomatically,
 

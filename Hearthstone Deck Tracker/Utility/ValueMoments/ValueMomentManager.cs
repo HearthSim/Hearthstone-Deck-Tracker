@@ -116,14 +116,13 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 		internal static bool ShouldSendEventToMixPanel(VMAction action, List<ValueMoment> valueMoments)
 		{
 			// Check action daily occurrences
-			if(action.EnrichedProperties.MaximumDailyOccurrences == null)
+			if(action.MaximumDailyOccurrences == null)
 				return true;
 
 			// Always send match events when a trial was activated
 			if(action.EventName == VMActions.EndMatchAction.Name
-				&& action.Properties.TryGetValue(ValueMomentUtils.TRIALS_ACTIVATED, out var activated)
-				&& activated is string[] strArr
-				&& strArr.Length > 0)
+			   && action.Properties.TryGetValue(ValueMomentUtils.TRIALS_ACTIVATED, out var activated)
+			   && activated is string[] { Length: > 0 })
 			{
 				return true;
 			}
@@ -135,9 +134,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					return true;
 			}
 
-			int? dailyCount = action.EnrichedProperties.CurrentDailyOccurrences;
+			var dailyCount = action.CurrentDailyOccurrences;
 			if (dailyCount != null)
-				return (int) dailyCount <= action.EnrichedProperties.MaximumDailyOccurrences;
+				return (int) dailyCount <= action.MaximumDailyOccurrences;
 
 			return false;
 		}

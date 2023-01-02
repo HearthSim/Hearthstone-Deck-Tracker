@@ -2,6 +2,7 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
@@ -29,11 +30,27 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				{ "action_type", actionType },
 				{ "action_source", source },
 			};
-			EnrichedProperties = new ValueMomentEnrichedProperties(GetEventId(), maxDailyOccurrences);
+			ClientProperties = new ValueMomentClientProperties();
+
+			if(maxDailyOccurrences != null)
+			{
+				var curEventDailyCount = DailyEventsCount.Instance.GetEventDailyCount(GetEventId());
+				var newCurrentDailyCount = DailyEventsCount.Instance.UpdateEventDailyCount(GetEventId());
+				var eventCounterWasReset = curEventDailyCount > 0 && newCurrentDailyCount == 1;
+
+				CurrentDailyOccurrences = newCurrentDailyCount;
+				MaximumDailyOccurrences = maxDailyOccurrences;
+				if(eventCounterWasReset)
+					PreviousDailyOccurrences = curEventDailyCount;
+			}
 		}
 
 		public string EventId { get => GetEventId(); }
 		public string EventName { get; }
+		public int? CurrentDailyOccurrences { get; }
+		public int? MaximumDailyOccurrences { get; }
+		public int? PreviousDailyOccurrences { get; }
+
 		public Dictionary<string, object> Properties { get; }
 
 		public Dictionary<string, object> MixpanelProperties {
@@ -57,12 +74,12 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				if(Properties.TryGetValue("toast", out var toastName) && toastName is Enum)
 					props["toast"] = $"{GetMixpanelPropertyName(toastName)}";
 
-				if(EnrichedProperties.CurrentDailyOccurrences != null)
-					props.Add("cur_daily_occurrences", EnrichedProperties.CurrentDailyOccurrences);
-				if(EnrichedProperties.MaximumDailyOccurrences != null)
-					props.Add("max_daily_occurrences", EnrichedProperties.MaximumDailyOccurrences);
-				if(EnrichedProperties.PreviousDailyOccurrences != null)
-					props.Add("prev_daily_occurrences", EnrichedProperties.PreviousDailyOccurrences);
+				if(CurrentDailyOccurrences != null)
+					props.Add("cur_daily_occurrences", CurrentDailyOccurrences);
+				if(MaximumDailyOccurrences != null)
+					props.Add("max_daily_occurrences", MaximumDailyOccurrences);
+				if(PreviousDailyOccurrences != null)
+					props.Add("prev_daily_occurrences", PreviousDailyOccurrences);
 
 				foreach(var property in EnrichedProperties.ClientSettings)
 					if (Helper.TryGetAttribute<MixpanelPropertyAttribute>(property.Key, out var cAttr) && cAttr?.Name != null)
