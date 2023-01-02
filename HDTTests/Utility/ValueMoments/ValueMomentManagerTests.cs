@@ -1,26 +1,21 @@
 ﻿using Hearthstone_Deck_Tracker.Utility.ValueMoments;
-using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NuGet;
+using static Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.VMActions;
 
 namespace HDTTests.Utility.ValueMoments
 {
 	[TestClass]
 	public class ValueMomentManagerTests
 	{
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			DailyEventsCount.Instance.Clear("Foo");
-		}
-
 		[TestMethod]
 		public void GetValueMoments_ReturnsCopyDeckValueMoment()
 		{
-			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>());
+			var action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
 			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
 			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.CopyDeck);
 			Assert.IsTrue(valueMoment.IsFree);
@@ -29,26 +24,17 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsShareDeckValueMoment()
 		{
-			var action = new VMActions.ClickAction(new Dictionary<string, object>
-			{
-				{ "action_name", VMActions.ClickAction.ActionName.ScreenshotCopyToClipboard }
-			});
+			var action = new ClickAction(Franchise.HSConstructed, ClickAction.ActionName.ScreenshotCopyToClipboard);
 			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
 			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.ShareDeck);
 			Assert.IsTrue(valueMoment.IsFree);
 
-			action = new VMActions.ClickAction(new Dictionary<string, object>
-			{
-				{ "action_name", VMActions.ClickAction.ActionName.ScreenshotSaveToDisk }
-			});
+			action = new ClickAction(Franchise.HSConstructed, ClickAction.ActionName.ScreenshotSaveToDisk);
 			valueMoment = ValueMomentManager.GetValueMoments(action).First();
 			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.ShareDeck);
 			Assert.IsTrue(valueMoment.IsFree);
 
-			action = new VMActions.ClickAction(new Dictionary<string, object>
-			{
-				{ "action_name", VMActions.ClickAction.ActionName.ScreenshotUploadToImgur }
-			});
+			action = new ClickAction(Franchise.HSConstructed, ClickAction.ActionName.ScreenshotUploadToImgur);
 			valueMoment = ValueMomentManager.GetValueMoments(action).First();
 			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.ShareDeck);
 			Assert.IsTrue(valueMoment.IsFree);
@@ -57,18 +43,12 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsPersonalStatsValueMoment()
 		{
-			var action = new VMActions.ClickAction(new Dictionary<string, object>
-			{
-				{ "action_name", VMActions.ClickAction.ActionName.StatsArena }
-			});
+			var action = new ClickAction(Franchise.HSConstructed, ClickAction.ActionName.StatsArena);
 			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
 			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.PersonalStats);
 			Assert.IsTrue(valueMoment.IsFree);
 
-			action = new VMActions.ClickAction(new Dictionary<string, object>
-			{
-				{ "action_name", VMActions.ClickAction.ActionName.StatsConstructed }
-			});
+			action = new ClickAction(Franchise.HSConstructed, ClickAction.ActionName.StatsConstructed);
 			valueMoment = ValueMomentManager.GetValueMoments(action).First();
 			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.PersonalStats);
 			Assert.IsTrue(valueMoment.IsFree);
@@ -77,9 +57,8 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsDecklistVisibleValueMoment()
 		{
-			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
+			var action = new EndMatchAction(Franchise.HSConstructed, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.HSConstructed } },
 				{ "hdt_general_settings_enabled", new string[] { } },
 				{ "hdt_general_settings_disabled", new [] { ValueMomentUtils.OVERLAY_HIDE_COMPLETELY } }
 			});
@@ -91,9 +70,8 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsDecklistVisibleValueMomentSpectate()
 		{
-			var action = new VMActions.EndSpectateMatchAction(new Dictionary<string, object>
+			var action = new EndSpectateMatchAction(Franchise.HSConstructed, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.HSConstructed } },
 				{ "hdt_general_settings_enabled", new string[] { } },
 				{ "hdt_general_settings_disabled", new [] { ValueMomentUtils.OVERLAY_HIDE_COMPLETELY } }
 			});
@@ -105,9 +83,8 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsBGBobsBuddyValueMoment()
 		{
-			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
+			var action = new EndMatchAction(Franchise.Battlegrounds, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new []
 					{
 						ValueMomentUtils.BB_COMBAT_SIMULATIONS,
@@ -119,9 +96,8 @@ namespace HDTTests.Utility.ValueMoments
 			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.BGBobsBuddy);
 			Assert.IsTrue(valueMoment.IsFree);
 
-			action = new VMActions.EndMatchAction(new Dictionary<string, object>
+			action = new EndMatchAction(Franchise.Battlegrounds, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new []
 					{
 						ValueMomentUtils.BB_COMBAT_SIMULATIONS,
@@ -137,18 +113,16 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsBGSessionRecapValueMoment()
 		{
-			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
+			var action = new EndMatchAction(Franchise.Battlegrounds, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new [] { ValueMomentUtils.SESSION_RECAP } }
 			});
 			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
 			Assert.IsTrue(valueMoment.Name == ValueMoment.VMName.BGSessionRecap);
 			Assert.IsTrue(valueMoment.IsFree);
 
-			action = new VMActions.EndMatchAction(new Dictionary<string, object>
+			action = new EndMatchAction(Franchise.Battlegrounds, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new [] { ValueMomentUtils.SESSION_RECAP_BETWEEN_GAMES } }
 			});
 			valueMoment = ValueMomentManager.GetValueMoments(action).First();
@@ -159,9 +133,8 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsBGMinionBrowserValueMoment()
 		{
-			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
+			var action = new EndMatchAction(Franchise.Battlegrounds, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new string[] {} },
 				{ "num_click_battlegrounds_minion_tab", 1 }
 			});
@@ -174,9 +147,8 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsBGMinionBrowserValueMomentSpectate()
 		{
-			var action = new VMActions.EndSpectateMatchAction(new Dictionary<string, object>
+			var action = new EndSpectateMatchAction(Franchise.Battlegrounds, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.Battlegrounds } },
 				{ "hdt_battlegrounds_settings_enabled", new string[] {} },
 				{ "num_click_battlegrounds_minion_tab", 1 }
 			});
@@ -189,9 +161,8 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsMercOpponentAbilitiesValueMoment()
 		{
-			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
+			var action = new EndMatchAction(Franchise.Mercenaries, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.Mercenaries } },
 				{ "num_hover_opponent_merc_ability", 1 }
 			});
 			var valueMoment = ValueMomentManager.GetValueMoments(action).First();
@@ -203,9 +174,8 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsMercFriendlyTasksValueMoment()
 		{
-			var action = new VMActions.EndMatchAction(new Dictionary<string, object>
+			var action = new EndMatchAction(Franchise.Mercenaries, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.Mercenaries } },
 				{ "num_hover_opponent_merc_ability", 0 },
 				{ "num_hover_merc_task_overlay", 1 }
 			});
@@ -218,9 +188,8 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsMercFriendlyTasksValueMomentSpectate()
 		{
-			var action = new VMActions.EndSpectateMatchAction(new Dictionary<string, object>
+			var action = new EndSpectateMatchAction(Franchise.Mercenaries, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { Franchise.Mercenaries } },
 				{ "num_hover_opponent_merc_ability", 0 },
 				{ "num_hover_merc_task_overlay", 1 }
 			});
@@ -270,61 +239,63 @@ namespace HDTTests.Utility.ValueMoments
 		}
 
 		[TestMethod]
-		public void ShouldSendEventToMixPanel_ReturnsTrueForActionsWithoutMaxOccurrences()
+		public async void ShouldSendEventToMixPanel_ReturnsTrueForActionsWithoutMaxOccurrences()
 		{
-			var action = new VMActions.ToastAction(new Dictionary<string, object>
-			{
-				{ "cur_daily_occurrences", 10000 }
-			});
+			var action = new ToastAction(Franchise.HSConstructed, ToastAction.ToastName.Mulligan);
+			DailyEventsCount.Instance.SetEventDailyCount(action.EventId, 10000);
+			// Ensure events are updated
+			await Task.Delay(500);
 
 			Assert.IsTrue(ValueMomentManager.ShouldSendEventToMixPanel(action, new List<ValueMoment>()));
 		}
 
 		[TestMethod]
-		public void ShouldSendEventToMixPanel_ReturnsTrueForActionWithFewDailyOccurrences()
+		public async void ShouldSendEventToMixPanel_ReturnsTrueForActionWithFewDailyOccurrences()
 		{
-			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
-			{
-				{ "cur_daily_occurrences", 1 }
-			});
-			
+			var action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
+			DailyEventsCount.Instance.Clear(action.EventId);
+			// Ensure events are updated
+			await Task.Delay(500);
+
 			Assert.IsTrue(ValueMomentManager.ShouldSendEventToMixPanel(action, new List<ValueMoment>()));
 		}
 
 		[TestMethod]
-		public void ShouldSendEventToMixPanel_ReturnsFalseForActionWithExceededDailyOccurrences()
+		public async void ShouldSendEventToMixPanel_ReturnsFalseForActionWithExceededDailyOccurrences()
 		{
-			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
-			{
-				{ "cur_daily_occurrences", 12 }
-			});
+			var action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
+			DailyEventsCount.Instance.SetEventDailyCount(action.EventId, 11);
+			// Ensure events are updated
+			await Task.Delay(500);
 
 			Assert.IsFalse(ValueMomentManager.ShouldSendEventToMixPanel(action, new List<ValueMoment>()));
 		}
 
 		[TestMethod]
-		public void ShouldSendEventToMixPanel_ReturnsTrueForForValueMomentWithFewDailyOccurrences()
+		public async void ShouldSendEventToMixPanel_ReturnsTrueForForValueMomentWithFewDailyOccurrences()
 		{
-			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
-			{
-				{ "cur_daily_occurrences", 2 },
-			});
+			var action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
+			DailyEventsCount.Instance.SetEventDailyCount(action.EventId, 1);
+
 			var valueMoments = new List<ValueMoment> { new ValueMoment("Foo", ValueMoment.VMKind.Free, 1) };
-			
+			DailyEventsCount.Instance.Clear("Foo");
+			// Ensure events are updated
+			await Task.Delay(500);
+
 			Assert.IsTrue(ValueMomentManager.ShouldSendEventToMixPanel(action, valueMoments));
 		}
 
 		[TestMethod]
-		public void ShouldSendEventToMixPanel_ReturnsFalseForForValueMomentWithExceededDailyOccurrences()
+		public async void ShouldSendEventToMixPanel_ReturnsFalseForForValueMomentWithExceededDailyOccurrences()
 		{
-			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
-			{
-				{ "cur_daily_occurrences", 12 },
-			});
+			var action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
+			DailyEventsCount.Instance.SetEventDailyCount(action.EventId, 11);
+
 			var valueMoments = new List<ValueMoment> { new ValueMoment("Foo", ValueMoment.VMKind.Free, 1) };
-			DailyEventsCount.Instance.UpdateEventDailyCount("Foo");
-			DailyEventsCount.Instance.UpdateEventDailyCount("Foo");
-			
+			DailyEventsCount.Instance.SetEventDailyCount("Foo", 2);
+			// Ensure events are updated
+			await Task.Delay(500);
+
 			Assert.IsFalse(ValueMomentManager.ShouldSendEventToMixPanel(action, valueMoments));
 		}
 	}

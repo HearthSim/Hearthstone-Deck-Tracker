@@ -1,6 +1,7 @@
 using System;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+using static Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.VMActions.ToastAction;
 
 namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 {
@@ -15,7 +16,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 		{
 			ToastManager.ForceCloseToast(this);
 			HSReplayNetHelper.OpenDecksUrlWithCollection("collection_uploaded_toast");
-			HSReplayNetClientAnalytics.TryTrackToastClick("constructed_collection_uploaded", Franchise.HSConstructed);
+			HSReplayNetClientAnalytics.TryTrackToastClick(Franchise.HSConstructed, ToastName.ConstructedCollectionUploaded);
 		}
 	}
 }

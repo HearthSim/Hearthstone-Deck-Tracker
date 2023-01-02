@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			};
 		}
 
+		public string EventId { get => GetEventId(); }
 		public string EventName { get; }
 		public int? MaxDailyOccurrences { get; }
 		public Dictionary<string, object> Properties { get; }
@@ -43,12 +44,14 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				)
 					props["action_source"] = sAttr.Name;
 
-				if(Properties.Keys.Contains("franchise"))
-					props["franchise"] = ((Franchise[])Properties["franchise"]).Select(x =>
-					{
-						Helper.TryGetAttribute<MixpanelPropertyAttribute>(x, out var attr);
-						return attr?.Name;
-					});
+				if(Properties.TryGetValue("franchise", out var franchise))
+					props["franchise"] = ((Franchise[])franchise).Select(x => GetMixpanelPropertyName(x));
+
+				if(Properties.TryGetValue("action_name", out var action_name) && action_name is Enum)
+					props["action_name"] = $"{GetMixpanelPropertyName(action_name)}";
+
+				if(Properties.TryGetValue("toast", out var toastName) && toastName is Enum)
+					props["toast"] = $"{GetMixpanelPropertyName(toastName)}";
 
 				return props;
 			}

@@ -12,6 +12,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
+using static Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.VMActions;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
@@ -230,7 +231,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 			CopyAllButtonText = LocUtil.Get(LocCopied, true);
 			await Task.Delay(2000);
 			CopyAllButtonText = LocUtil.Get(LocCopyAll, true);
-			HSReplayNetClientAnalytics.OnCopyDeck("Copy All");
+			HSReplayNetClientAnalytics.OnCopyDeck(CopyDeckAction.ActionName.CopyAll);
 		}
 
 		public async void CopyCode()
@@ -248,7 +249,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 			CopyCodeButtonText = LocUtil.Get(LocCopied, true);
 			await Task.Delay(2000);
 			CopyCodeButtonText = LocUtil.Get(LocCopyCode, true);
-			HSReplayNetClientAnalytics.OnCopyDeck("Copy Code");
+			HSReplayNetClientAnalytics.OnCopyDeck(CopyDeckAction.ActionName.CopyCode);
 		}
 
 		public bool IncludeVersion

@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using HSReplay.ClientAnalytics;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using static Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.VMActions;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -75,18 +76,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			var isFirstStart = ConfigManager.PreviousVersion == null;
 			if(isFirstStart)
-			{
-				var action = new VMActions.InstallAction(new Dictionary<string, object>
-				{
-					{ "app_version", Helper.GetCurrentVersion().ToVersionString(true) },
-					{ "franchise", new [] {
-						Franchise.HSConstructed.Value,
-						Franchise.Battlegrounds.Value,
-						Franchise.Mercenaries.Value,
-					} },
-				});
-				TrackAction(action);
-			}
+				TrackAction(new InstallAction());
 		}
 
 		private static void OnAuthenticating(bool authenticating)
@@ -115,14 +105,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private static void CollectionUploaded(Collection collection, bool firstUpload)
 		{
 			if(firstUpload)
-			{
-				var action = new VMActions.FirstCollectionUploadAction(new Dictionary<string, object>
-				{
-					{ "collection_size", collection.Size() },
-					{ "franchise", new Franchise[] { Franchise.HSConstructed } },
-				});
-				TrackAction(action);
-			}
+				TrackAction(new FirstHSCollectionUploadAction(collection.Size()));
 		}
 
 		public static void OnConstructedMatchEnds(GameStats gameStats, GameMode gameMode, GameType gameType, bool spectator)
@@ -189,55 +172,40 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		private static void OnMatchEnds(Franchise franchise, bool spectator, Dictionary<string, object> properties)
 		{
-			var action_properties = new Dictionary<string, object>(properties)
-			{
-				{ "franchise", new Franchise[] { franchise } },
-				{ "action_name", "end_match"},
-			};
 			if(spectator)
 			{
-				var action = new VMActions.EndSpectateMatchAction(action_properties);
+				var action = new EndSpectateMatchAction(franchise, properties);
 				action.AddProperties(ValueMomentUtils.GetFranchiseProperties(franchise));
 				TrackAction(action);
 			}	
 			else
 			{
-				var action = new VMActions.EndMatchAction(action_properties);
+				var action = new EndMatchAction(franchise, properties);
 				action.AddProperties(ValueMomentUtils.GetFranchiseProperties(franchise));
 				TrackAction(action);
 			}
 		}
 
-		public static void OnCopyDeck(string target)
+		public static void OnCopyDeck(CopyDeckAction.ActionName actionName)
 		{
-			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
-			{
-				{ "action_name", target },
-				{ "franchise", new Franchise[] { Franchise.HSConstructed } },
-			});
+			var action = new CopyDeckAction(Franchise.HSConstructed, actionName);
 			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
 
 			TrackAction(action);
 		}
 
-		public static void OnScreenshotDeck(string actionName)
+		public static void OnScreenshotDeck(ClickAction.ActionName actionName)
 		{
-			var action = new VMActions.ClickAction(new Dictionary<string, object>
-			{
-				{ "franchise", new Franchise[] { Franchise.HSConstructed } },
-				{ "action_name", actionName},
-			});
+			var action = new ClickAction(Franchise.HSConstructed, actionName);
 			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
 
 			TrackAction(action);
 		}
 
-		public static void OnShowPersonalStats(string actionName, string? subFranchise)
+		public static void OnShowPersonalStats(ClickAction.ActionName actionName, string? subFranchise)
 		{
-			var action = new VMActions.ClickAction(new Dictionary<string, object>
+			var action = new ClickAction(Franchise.HSConstructed, actionName, new Dictionary<string, object>
 			{
-				{ "franchise", new Franchise[] { Franchise.HSConstructed } },
-				{ "action_name", actionName },
 				{ "sub_franchise", subFranchise != null ? new string[] { subFranchise } : new string[] { } },
 			});
 			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
@@ -245,14 +213,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			TrackAction(action);
 		}
 
-		public static void TryTrackToastClick(string toastId, Franchise franchise)
+		public static void TryTrackToastClick(Franchise franchise, ToastAction.ToastName toastName)
 		{
-			var action = new VMActions.ToastAction(new Dictionary<string, object>
-			{
-				{ "toast", toastId },
-				{ "franchise", new Franchise[] { franchise } },
-			});
-			TrackAction(action);
+			TrackAction(new ToastAction(franchise, toastName));
 		}
 
 		public static async Task<bool> EnsureOnboarded()

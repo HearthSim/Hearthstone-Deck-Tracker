@@ -10,6 +10,7 @@ using System.Web;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using static Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.VMActions.ToastAction;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
@@ -58,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 				var url = Helper.BuildHsReplayNetUrl($"/decks/{_shortId}", "mulligan_toast", null, new[] { ids, opponent, playerInitiative, playerStarLevel });
 				Helper.TryOpenUrl(url);
-				HSReplayNetClientAnalytics.TryTrackToastClick("mulligan", Franchise.HSConstructed);
+				HSReplayNetClientAnalytics.TryTrackToastClick(Franchise.HSConstructed, ToastName.Mulligan);
 			}
 		}
 

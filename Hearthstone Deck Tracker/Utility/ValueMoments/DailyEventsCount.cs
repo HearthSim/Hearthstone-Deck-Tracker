@@ -63,6 +63,19 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			return existing.Count;
 		}
 
+		public void SetEventDailyCount(string eventId, int count)
+		{
+			var existing = Events.FirstOrDefault(x => x.Id == eventId);
+			if(existing == null)
+			{
+				existing = new EventItem(eventId, DateTime.Now.ToString("o"), 0);
+				Events.Add(existing);
+			}
+
+			existing.Count = count;
+			Save();
+		}
+
 		public void Clear(string eventId)
 		{
 			var existing = Events.FirstOrDefault(x => x.Id == eventId);

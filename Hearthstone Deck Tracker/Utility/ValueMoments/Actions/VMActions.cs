@@ -1,3 +1,5 @@
+using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
@@ -8,18 +10,30 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 			public const string Name = "Install HDT";
 
-			public InstallAction(Dictionary<string, object> properties) : base(
-				Name, Source.App, "First App Start", null, properties
+			public InstallAction() : base(
+				Name, Source.App, "First App Start", null, new Dictionary<string, object>
+				{
+					{ "franchise", new[] {
+						Franchise.HSConstructed,
+						Franchise.Battlegrounds,
+						Franchise.Mercenaries,
+					}},
+					{ "app_version", Helper.GetCurrentVersion().ToVersionString(true) },
+				}					
 			)
 			{ }
 		}
 
-		public class FirstCollectionUploadAction : VMAction
+		public class FirstHSCollectionUploadAction : VMAction
 		{
 			public const string Name = "Upload First Hearthstone Collection";
 
-			public FirstCollectionUploadAction(Dictionary<string, object> properties) : base(
-				Name, Source.App, "First Collection Upload", null, properties
+			public FirstHSCollectionUploadAction(int collectionSize) : base(
+				Name, Source.App, "First Collection Upload", null, new Dictionary<string, object>
+				{
+					{ "franchise", new [] { Franchise.HSConstructed } },
+					{ "collection_size", collectionSize },
+				}
 			)
 			{ }
 		}
@@ -27,9 +41,24 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		public class ToastAction : VMAction
 		{
 			public const string Name = "Click HDT Toast";
+			public enum ToastName
+			{
+				[MixpanelProperty("mulligan")]
+				Mulligan,
+				[MixpanelProperty("constructed_collection_uploaded")]
+				ConstructedCollectionUploaded,
+				[MixpanelProperty("battlegrounds_hero_picker")]
+				BattlegroundsHeroPicker,
+				[MixpanelProperty("mercenaries_collection_uploaded")]
+				MercenariesCollectionUploaded,
+			}
 
-			public ToastAction(Dictionary<string, object> properties) : base(
-				Name, Source.Overlay, "Toast Click", null, properties
+			public ToastAction(Franchise franchise, ToastName toastName) : base(
+				Name, Source.Overlay, "Toast Click", null, new Dictionary<string, object>
+			{
+				{ "franchise", new [] { franchise } },
+				{ "toast", toastName },
+			}
 			)
 			{ }
 		}
@@ -38,28 +67,58 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 			public const string Name = "Click Action HDT";
 
-			public abstract class ActionName
+			public enum ActionName
 			{
-				public const string ScreenshotCopyToClipboard = "screenshot: Copy to Clipboard";
-				public const string ScreenshotSaveToDisk = "screenshot: Save To Disk";
-				public const string ScreenshotUploadToImgur = "screenshot: Upload to Imgur";
+				[MixpanelProperty("screenshot: Copy to Clipboard")]
+				ScreenshotCopyToClipboard,
+				[MixpanelProperty("screenshot: Save To Disk")]
+				ScreenshotSaveToDisk,
+				[MixpanelProperty("screenshot: Upload to Imgur")]
+				ScreenshotUploadToImgur,
 
-				public const string StatsArena = "stats: Constructed";
-				public const string StatsConstructed = "stats: Arena";
+				[MixpanelProperty("stats: Constructed")]
+				StatsArena,
+				[MixpanelProperty("stats: Arena")]
+				StatsConstructed,
 			}
 
-			public ClickAction(Dictionary<string, object> properties) : base(
-				Name, Source.MainWindow, "Click Action", 10, properties
-			)
+			public ClickAction(Franchise franchise, ActionName actionName) : this(
+				franchise, actionName, new Dictionary<string, object>{})
+			{ }
+
+			public ClickAction(Franchise franchise, ActionName actionName, Dictionary<string, object> properties) : base(
+				Name, Source.MainWindow, "Click Action", 10, new Dictionary<string, object>(properties)
+				{
+					{ "franchise", new [] { franchise } },
+					{ "action_name", actionName},
+				}
+				)
 			{ }
 		}
 
 		public class CopyDeckAction : VMAction
 		{
 			public const string Name = "Copy Deck HDT";
+			public enum ActionName
+			{
+				[MixpanelProperty("Copy All")]
+				CopyAll,
+				[MixpanelProperty("Copy Code")]
+				CopyCode,
+				[MixpanelProperty("Copy Ids to Clipboard")]
+				CopyIds,
+				[MixpanelProperty("Copy Names to Clipboard")]
+				CopyNames,
+				[MixpanelProperty("Save as XML")]
+				SaveAsXML,
+			}
 
-			public CopyDeckAction(Dictionary<string, object> properties) : base(
-				Name, Source.MainWindow, "Copy Deck", 10, properties
+			public CopyDeckAction(Franchise franchise, ActionName actionName) : base(
+				Name, Source.MainWindow, "Copy Deck", 10, new Dictionary<string, object>
+				{
+					{ "franchise", new [] { franchise } },
+					{ "action_name", actionName },
+				}
 			)
 			{ }
 		}
@@ -68,8 +127,12 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 			public const string Name = "End Match Action HDT";
 
-			public EndMatchAction(Dictionary<string, object> properties) : base(
-				Name, Source.App, "End Match Action", 1, properties
+			public EndMatchAction(Franchise franchise, Dictionary<string, object> properties) : base(
+				Name, Source.App, "End Match Action", 1, new Dictionary<string, object>(properties)
+				{
+					{ "franchise", new [] { franchise } },
+					{ "action_name", "end_match"},
+				}
 			)
 			{ }
 		}
@@ -78,8 +141,12 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 			public const string Name = "End Spectate Match Action HDT";
 
-			public EndSpectateMatchAction(Dictionary<string, object> properties) : base(
-				Name, Source.App, "End Spectate Match Action", 1, properties
+			public EndSpectateMatchAction(Franchise franchise, Dictionary<string, object> properties) : base(
+				Name, Source.App, "End Spectate Match Action", 1, new Dictionary<string, object>(properties)
+				{
+					{ "franchise", new [] { franchise } },
+					{ "action_name", "end_match"},
+				}
 			)
 			{ }
 		}
