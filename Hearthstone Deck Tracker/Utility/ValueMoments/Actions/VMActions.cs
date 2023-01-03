@@ -38,6 +38,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		public class ToastAction : VMAction
 		{
 			public const string Name = "Click HDT Toast";
+			public const string ToastProperty = "toast";
+
 			public enum ToastName
 			{
 				[MixpanelProperty("mulligan")]
@@ -53,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			public ToastAction(Franchise franchise, ToastName toastName) : base(
 				Name, ActionSource.Overlay, "Toast Click", franchise, null, new Dictionary<string, object>
 			{
-				{ "toast", toastName },
+				{ ToastProperty, toastName },
 			}
 			)
 			{ }

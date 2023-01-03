@@ -8,7 +8,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
 	public abstract class VMAction
 	{
-
 		/**
 		 * if maxDailyOccurrences is null, this action is not sent to the event counter and will always be sent to Mixpanel
 		 */
@@ -18,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			Franchise = franchise;
 			Properties = new Dictionary<string, object>(properties){
 				{ "action_type", actionType },
-				{ "action_source", source },
+				{ ValueMomentsConstants.ActionSourceProperty, source },
 			};
 			ClientProperties = new ClientProperties(withPersonalStatsSettings);
 			// Needs to be at bottom since it uses ActionName, Franchise and Properties
@@ -53,17 +52,12 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 			get
 			{
+				var actionSource = (ActionSource)Properties[ValueMomentsConstants.ActionSourceProperty];
 				var props = new Dictionary<string, object>(Properties)
 				{
-					{ "domain", "hsreplay.net" }
+					{ "domain", "hsreplay.net" },
 				};
-
-				if(
-					Properties.Keys.Contains("action_source") &&
-					Helper.TryGetAttribute<MixpanelPropertyAttribute>(Properties["action_source"], out var sAttr) &&
-					sAttr?.Name != null
-				)
-					props["action_source"] = sAttr.Name;
+				props[ValueMomentsConstants.ActionSourceProperty] = GetMixpanelPropertyName(actionSource)!;
 
 				var franchises = Franchise == Franchise.All
 					? new[] { Franchise.HSConstructed, Franchise.Battlegrounds, Franchise.Mercenaries }
@@ -74,11 +68,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				foreach(var property in vmProperties)
 					props[property.Key] = property.Value;
 
-				if(Properties.TryGetValue("action_name", out var actionName) && actionName is Enum)
-					props["action_name"] = $"{GetMixpanelPropertyName(actionName)}";
+				if(Properties.TryGetValue(ValueMomentsConstants.ActionNameProperty, out var actionName) && actionName is Enum)
+					props[ValueMomentsConstants.ActionNameProperty] = $"{GetMixpanelPropertyName(actionName)}";
 
-				if(Properties.TryGetValue("toast", out var toastName) && toastName is Enum)
-					props["toast"] = $"{GetMixpanelPropertyName(toastName)}";
+				if(Properties.TryGetValue(VMActions.ToastAction.ToastProperty, out var toastName) && toastName is Enum)
+					props[VMActions.ToastAction.ToastProperty] = $"{GetMixpanelPropertyName(toastName)}";
 
 				if(CurrentDailyOccurrences != null)
 					props.Add("cur_daily_occurrences", CurrentDailyOccurrences);

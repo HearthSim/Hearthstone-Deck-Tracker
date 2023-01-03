@@ -9,6 +9,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 	public class ValueMomentsConstants
 	{
 		public const string ActionNameProperty = "action_name";
+		public const string ActionSourceProperty = "action_source";
 		public const string SubFranchiseProperty = "sub_franchise";
 
 		// Trial names
