@@ -70,7 +70,6 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "has_paid_value_moment", false },
 				{ "cur_daily_occurrences", 1 },
 				{ "max_daily_occurrences", 1 },
-				{ "is_authenticated", true },
 				{ "card_language", "en" },
 				{ "appearance_language", "en" },
 				{ "hdt_plugins", new string[]{ } },
@@ -96,6 +95,8 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			};
 
 			var mixpanelPayload = action.MixpanelPayload;
+			// Remove some properties to avoid issues when running tests on CI
+			mixpanelPayload.Remove("is_authenticated");
 			mixpanelPayload.Remove("screen_height");
 			mixpanelPayload.Remove("screen_width");
 

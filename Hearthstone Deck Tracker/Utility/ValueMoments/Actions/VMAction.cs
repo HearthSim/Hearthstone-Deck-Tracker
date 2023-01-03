@@ -136,7 +136,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 							"hdt_battlegrounds_settings_disabled",
 							FranchiseProperties.BattlegroundsSettingsDisabled!.Select(x => GetMixpanelPropertyName(x)).ToArray()
 						);
-						// Dropping some properties, but why?
+						// Dropping properties that are not required on Mixpanel
 						props.Remove(GetMixpanelPropertyName(BattlegroundsSettings.Tier7HeroOverlay)!);
 						props.Remove(GetMixpanelPropertyName(BattlegroundsSettings.Tier7QuestOverlay)!);
 						break;
