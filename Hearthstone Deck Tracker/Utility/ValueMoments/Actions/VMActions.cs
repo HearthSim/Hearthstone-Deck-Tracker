@@ -14,13 +14,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			public const string Name = "Install HDT";
 
 			public InstallAction() : base(
-				Name, Source.App, "First App Start", null, new Dictionary<string, object>
+				Name, ActionSource.App, "First App Start", Franchise.All, null, new Dictionary<string, object>
 				{
-					{ "franchise", new[] {
-						Franchise.HSConstructed,
-						Franchise.Battlegrounds,
-						Franchise.Mercenaries,
-					}},
 					{ "app_version", Helper.GetCurrentVersion().ToVersionString(true) },
 				}					
 			)
@@ -32,9 +27,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			public const string Name = "Upload First Hearthstone Collection";
 
 			public FirstHSCollectionUploadAction(int collectionSize) : base(
-				Name, Source.App, "First Collection Upload", null, new Dictionary<string, object>
+				Name, ActionSource.App, "First Collection Upload", Franchise.HSConstructed, null, new Dictionary<string, object>
 				{
-					{ "franchise", new [] { Franchise.HSConstructed } },
 					{ "collection_size", collectionSize },
 				}
 			)
@@ -57,9 +51,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			}
 
 			public ToastAction(Franchise franchise, ToastName toastName) : base(
-				Name, Source.Overlay, "Toast Click", null, new Dictionary<string, object>
+				Name, ActionSource.Overlay, "Toast Click", franchise, null, new Dictionary<string, object>
 			{
-				{ "franchise", new [] { franchise } },
 				{ "toast", toastName },
 			}
 			)
@@ -91,9 +84,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 
 			public ClickAction(Franchise franchise, ActionName actionName,
 				Dictionary<string, object> properties) : base(
-				Name, Source.MainWindow, "Click Action", 10, new Dictionary<string, object>(properties)
+				Name, ActionSource.MainWindow, "Click Action", franchise, 10, new Dictionary<string, object>(properties)
 				{
-					{ "franchise", new[] { franchise } },
 					{ "action_name", actionName },
 				},
 				true
@@ -119,9 +111,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			}
 
 			public CopyDeckAction(Franchise franchise, ActionName actionName) : base(
-				Name, Source.MainWindow, "Copy Deck", 10, new Dictionary<string, object>
+				Name, ActionSource.MainWindow, "Copy Deck", franchise, 10, new Dictionary<string, object>
 				{
-					{ "franchise", new[] { franchise } },
 					{ "action_name", actionName },
 				},
 				true
@@ -149,9 +140,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			};
 
 			private EndMatchAction(Franchise franchise) : base(
-				Name, Source.App, "End Match Action", 1, new Dictionary<string, object>
+				Name, ActionSource.App, "End Match Action", franchise, 1, new Dictionary<string, object>
 				{
-					{ "franchise", new[] { franchise } },
 					{ "action_name", "end_match" },
 				}
 			)
@@ -178,9 +168,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			};
 
 			private EndSpectateMatchAction(Franchise franchise) : base(
-				Name, Source.App, "End Spectate Match Action", 1, new Dictionary<string, object>
+				Name, ActionSource.App, "End Spectate Match Action", franchise, 1, new Dictionary<string, object>
 				{
-					{ "franchise", new [] { franchise } },
 					{ "action_name", "end_match"},
 				}
 			)

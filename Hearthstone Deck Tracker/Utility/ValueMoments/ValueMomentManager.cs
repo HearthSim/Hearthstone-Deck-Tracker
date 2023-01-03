@@ -34,22 +34,28 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					break;
 				case VMActions.EndMatchAction.Name:
 				case VMActions.EndSpectateMatchAction.Name:
-					var franchise = action.Properties["franchise"] as Franchise[];
-					if(franchise == null)
-						yield break;
-
-					if(franchise.Contains(Franchise.HSConstructed))
+					switch (action.Franchise)
 					{
-						var hdtGeneralSettings = action.ClientProperties.HDTGeneralSettingsEnabled;
-						if(!hdtGeneralSettings.Contains(HDTGeneralSettings.OverlayHideCompletely))
-							yield return new ValueMoment(VMName.DecklistVisible, ValueMoment.VMKind.Free);
+						case Franchise.HSConstructed:
+						{
+							var hdtGeneralSettings = action.ClientProperties.HDTGeneralSettingsEnabled;
+							if(!hdtGeneralSettings.Contains(HDTGeneralSettings.OverlayHideCompletely))
+								yield return new ValueMoment(VMName.DecklistVisible, ValueMoment.VMKind.Free);
+							break;
+						}
+						case Franchise.Battlegrounds:
+						{
+							foreach (var vmBattlegrounds in GetEndMatchBattlegroundsValueMoments(action))
+								yield return vmBattlegrounds;
+							break;
+						}
+						case Franchise.Mercenaries:
+						{
+							foreach (var vmMercenaries in GetEndMatchMercenariesValueMoments(action))
+								yield return vmMercenaries;
+							break;
+						}
 					}
-					else if(franchise.Contains(Franchise.Battlegrounds))
-						foreach (var vmBattlegrounds in GetEndMatchBattlegroundsValueMoments(action))
-							yield return vmBattlegrounds;
-					else if(franchise.Contains(Franchise.Mercenaries))
-						foreach (var vmMercenaries in GetEndMatchMercenariesValueMoments(action))
-							yield return vmMercenaries;
 					break;
 			};
 		}

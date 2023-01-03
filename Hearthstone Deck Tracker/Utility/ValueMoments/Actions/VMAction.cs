@@ -1,8 +1,8 @@
-using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
@@ -23,9 +23,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		/**
 		 * if maxDailyOccurrences is null, this action is not sent to the event counter and will always be sent to Mixpanel
 		 */
-		protected VMAction(string eventName, Source source, string actionType, int? maxDailyOccurrences, Dictionary<string, object> properties, bool withPersonalStatsSettings = false)
+		protected VMAction(string actionName, ActionSource source, string actionType, Franchise franchise, int? maxDailyOccurrences, Dictionary<string, object> properties, bool withPersonalStatsSettings = false)
 		{
 			EventName = eventName;
+			Franchise = franchise;
 			Properties = new Dictionary<string, object>(properties){
 				{ "action_type", actionType },
 				{ "action_source", source },
@@ -47,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 
 		public string EventId { get => GetEventId(); }
 		public string EventName { get; }
+		public Franchise Franchise { get; }
 		public int? CurrentDailyOccurrences { get; }
 		public int? MaximumDailyOccurrences { get; }
 		public int? PreviousDailyOccurrences { get; }
@@ -56,7 +58,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		public ClientProperties ClientProperties { get; }
 		public FranchiseProperties? FranchiseProperties { get; protected set; }
 
-		public Dictionary<string, object> MixpanelPayload {
+		public Dictionary<string, object> MixpanelPayload
+		{
 			get
 			{
 				GenerateValueMoments();
@@ -73,8 +76,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				)
 					props["action_source"] = sAttr.Name;
 
-				if(Properties.TryGetValue("franchise", out var franchise))
-					props["franchise"] = ((Franchise[])franchise).Select(x => GetMixpanelPropertyName(x));
+				var franchises = Franchise == Franchise.All
+					? new[] { Franchise.HSConstructed, Franchise.Battlegrounds, Franchise.Mercenaries }
+					: new[] { Franchise };
+				props["franchise"] = franchises.Select(x => GetMixpanelPropertyName(x)).ToArray();
 
 				if(Properties.TryGetValue("action_name", out var action_name) && action_name is Enum)
 					props["action_name"] = $"{GetMixpanelPropertyName(action_name)}";
@@ -114,11 +119,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 					);
 				}
 
-				if(franchise == null || ((Franchise[])franchise).Length != 1 || FranchiseProperties == null)
+				if(Franchise == Franchise.All || FranchiseProperties == null)
 					return props;
 
-				var singleFranchise = ((Franchise[])franchise).First();
-				switch (singleFranchise)
+				switch(Franchise)
 				{
 					case Franchise.HSConstructed:
 						foreach(var property in FranchiseProperties.HearthstoneExtraData!)

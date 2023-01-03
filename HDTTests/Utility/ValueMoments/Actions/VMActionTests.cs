@@ -28,7 +28,6 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			action = EndMatchAction.Create(new Dictionary<HearthstoneExtraData, object>());
 
 			var expectedDict = new Dictionary<string, object> {
-				{ "franchise", new [] { "HS-Constructed" } },
 				{ "action_name", "end_match" },
 				{ "action_type", "End Match Action" },
 				{ "action_source", "app" },
@@ -37,11 +36,10 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "has_free_value_moment", true },
 				{ "has_paid_value_moment", false },
 				{ "domain", "hsreplay.net" },
+				{ "franchise", new [] { "HS-Constructed" } },
 				{ "cur_daily_occurrences", 1 },
 				{ "max_daily_occurrences", 1 },
 				{ "is_authenticated", true },
-				{ "screen_height", 1080 },
-				{ "screen_width", 1920 },
 				{ "card_language", "en" },
 				{ "appearance_language", "en" },
 				{ "hdt_plugins", new string[]{ } },
@@ -66,9 +64,13 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "hdt_hsconstructed_settings_disabled", new []{ "hide_decks" }}
 			};
 
+			var mixpanelPayload = action.MixpanelPayload;
+			mixpanelPayload.Remove("screen_height");
+			mixpanelPayload.Remove("screen_width");
+
 			Assert.AreEqual(
 				$"{JsonConvert.SerializeObject(expectedDict)}",
-				$"{JsonConvert.SerializeObject(action.MixpanelPayload)}"
+				$"{JsonConvert.SerializeObject(mixpanelPayload)}"
 			);
 		}
 
@@ -112,12 +114,24 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		}
 
 		[TestMethod]
+		public void InstallAction_IncludesExclusiveData()
+		{
+			var action = new InstallAction();
+
+			Assert.AreEqual("First App Start", action.MixpanelPayload["action_type"]);
+			Assert.AreEqual(
+				$"{JsonConvert.SerializeObject(new[] { "HS-Constructed", "Battlegrounds", "Mercenaries" })}",
+				$"{JsonConvert.SerializeObject(action.MixpanelPayload["franchise"])}"
+			);
+		}
+
+		[TestMethod]
 		public void FirstHSCollectionUploadAction_IncludesExclusiveData()
 		{
 			var action = new FirstHSCollectionUploadAction(999);
 
-			Assert.AreEqual(action.MixpanelPayload["action_type"], "First Collection Upload");
-			Assert.AreEqual(action.MixpanelPayload["collection_size"], 999);
+			Assert.AreEqual("First Collection Upload", action.MixpanelPayload["action_type"]);
+			Assert.AreEqual(999, action.MixpanelPayload["collection_size"]);
 		}
 
 		[TestMethod]
@@ -128,7 +142,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				ToastAction.ToastName.ConstructedCollectionUploaded
 			);
 
-			Assert.AreEqual(action.MixpanelPayload["toast"], "constructed_collection_uploaded");
+			Assert.AreEqual("constructed_collection_uploaded", action.MixpanelPayload["toast"]);
 		}
 
 		[TestMethod]
@@ -139,7 +153,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				ClickAction.ActionName.ScreenshotSaveToDisk
 			);
 
-			Assert.AreEqual(action.MixpanelPayload["action_name"], "screenshot: Save To Disk");
+			Assert.AreEqual("screenshot: Save To Disk", action.MixpanelPayload["action_name"]);
 			Assert.IsTrue(action.MixpanelPayload.ContainsKey("hdt_personal_stats_settings_enabled"));
 			Assert.IsTrue(action.MixpanelPayload.ContainsKey("hdt_personal_stats_settings_disabled"));
 		}
@@ -152,7 +166,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				CopyDeckAction.ActionName.CopyIds
 			);
 
-			Assert.AreEqual(action.MixpanelPayload["action_name"], "Copy Ids to Clipboard");
+			Assert.AreEqual("Copy Ids to Clipboard", action.MixpanelPayload["action_name"]);
 			Assert.IsTrue(action.MixpanelPayload.ContainsKey("hdt_personal_stats_settings_enabled"));
 			Assert.IsTrue(action.MixpanelPayload.ContainsKey("hdt_personal_stats_settings_disabled"));
 		}
