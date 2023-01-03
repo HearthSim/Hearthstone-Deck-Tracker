@@ -82,11 +82,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				franchise, actionName, new Dictionary<string, object>())
 			{ }
 
-			public ClickAction(Franchise franchise, ActionName actionName,
-				Dictionary<string, object> properties) : base(
+			public ClickAction(Franchise franchise, ActionName actionName, Dictionary<string, object> properties) : base(
 				Name, ActionSource.MainWindow, "Click Action", franchise, 10, new Dictionary<string, object>(properties)
 				{
-					{ "action_name", actionName },
+					{ ValueMomentsConstants.ActionNameProperty, actionName },
 				},
 				true
 			)
@@ -113,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			public CopyDeckAction(Franchise franchise, ActionName actionName) : base(
 				Name, ActionSource.MainWindow, "Copy Deck", franchise, 10, new Dictionary<string, object>
 				{
-					{ "action_name", actionName },
+					{ ValueMomentsConstants.ActionNameProperty, actionName },
 				},
 				true
 			)
@@ -124,25 +123,29 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 			public const string Name = "End Match Action HDT";
 			
-			public static EndMatchAction Create(Dictionary<HearthstoneExtraData, object> extraData) => new(Franchise.HSConstructed)
-			{
-				FranchiseProperties = new FranchiseProperties(extraData)
-			};
-
-			public static EndMatchAction Create(Dictionary<BattlegroundsExtraData, object> extraData) => new(Franchise.Battlegrounds)
-			{
-				FranchiseProperties = new FranchiseProperties(extraData)
-			};
-
-			public static EndMatchAction Create(Dictionary<MercenariesExtraData, object> extraData) => new(Franchise.Mercenaries)
-			{
-				FranchiseProperties = new FranchiseProperties(extraData)
-			};
-
-			private EndMatchAction(Franchise franchise) : base(
-				Name, ActionSource.App, "End Match Action", franchise, 1, new Dictionary<string, object>
+			public static EndMatchAction Create(Dictionary<HearthstoneExtraData, object> extraData, Dictionary<string, object>? properties = null) =>
+				new(Franchise.HSConstructed, properties ?? new Dictionary<string, object>())
 				{
-					{ "action_name", "end_match" },
+					FranchiseProperties = new FranchiseProperties(extraData)
+				};
+
+			public static EndMatchAction Create(Dictionary<BattlegroundsExtraData, object> extraData, Dictionary<string, object>? properties = null) =>
+				new(Franchise.Battlegrounds, properties ?? new Dictionary<string, object>())
+				{
+					FranchiseProperties = new FranchiseProperties(extraData)
+				};
+
+			public static EndMatchAction Create(Dictionary<MercenariesExtraData, object> extraData, Dictionary<string, object>? properties = null) =>
+				new(Franchise.Mercenaries, properties ?? new Dictionary<string, object>())
+				{
+					FranchiseProperties = new FranchiseProperties(extraData)
+				};
+
+			private EndMatchAction(Franchise franchise, Dictionary<string, object> properties) : base(
+				Name, ActionSource.App, "End Match Action", franchise, 1,
+				new Dictionary<string, object>(properties)
+				{
+					{ ValueMomentsConstants.ActionNameProperty, "end_match" },
 				}
 			)
 			{ }
@@ -152,25 +155,29 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 			public const string Name = "End Spectate Match Action HDT";
 
-			public static EndSpectateMatchAction Create(Dictionary<HearthstoneExtraData, object> extraData) => new(Franchise.HSConstructed)
-			{
-				FranchiseProperties = new FranchiseProperties(extraData)
-			};
-
-			public static EndSpectateMatchAction Create(Dictionary<BattlegroundsExtraData, object> extraData) => new(Franchise.Battlegrounds)
-			{
-				FranchiseProperties = new FranchiseProperties(extraData)
-			};
-
-			public static EndSpectateMatchAction Create(Dictionary<MercenariesExtraData, object> extraData) => new(Franchise.Mercenaries)
-			{
-				FranchiseProperties = new FranchiseProperties(extraData)
-			};
-
-			private EndSpectateMatchAction(Franchise franchise) : base(
-				Name, ActionSource.App, "End Spectate Match Action", franchise, 1, new Dictionary<string, object>
+			public static EndSpectateMatchAction Create(Dictionary<HearthstoneExtraData, object> extraData, Dictionary<string, object>? properties = null) =>
+				new(Franchise.HSConstructed, properties ?? new Dictionary<string, object>())
 				{
-					{ "action_name", "end_match"},
+					FranchiseProperties = new FranchiseProperties(extraData)
+				};
+
+			public static EndSpectateMatchAction Create(Dictionary<BattlegroundsExtraData, object> extraData, Dictionary<string, object>? properties = null) =>
+				new(Franchise.Battlegrounds, properties ?? new Dictionary<string, object>())
+				{
+					FranchiseProperties = new FranchiseProperties(extraData)
+				};
+
+			public static EndSpectateMatchAction Create(Dictionary<MercenariesExtraData, object> extraData, Dictionary<string, object>? properties = null) =>
+				new(Franchise.Mercenaries, properties ?? new Dictionary<string, object>())
+				{
+					FranchiseProperties = new FranchiseProperties(extraData)
+				};
+
+			private EndSpectateMatchAction(Franchise franchise, Dictionary<string, object> properties) : base(
+				Name, ActionSource.App, "End Spectate Match Action", franchise, 1,
+				new Dictionary<string, object>(properties)
+				{
+					{ ValueMomentsConstants.ActionNameProperty, "end_match"},
 				}
 			)
 			{ }

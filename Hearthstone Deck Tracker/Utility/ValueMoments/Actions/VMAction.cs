@@ -21,11 +21,13 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				{ "action_source", source },
 			};
 			ClientProperties = new ClientProperties(withPersonalStatsSettings);
+			// Needs to be at bottom since it uses ActionName, Franchise and Properties
+			ActionId = GetActionId();
 
 			if(maxDailyOccurrences != null)
 			{
-				var curEventDailyCount = DailyEventsCount.Instance.GetEventDailyCount(GetEventId());
-				var newCurrentDailyCount = DailyEventsCount.Instance.UpdateEventDailyCount(GetEventId());
+				var curEventDailyCount = DailyEventsCount.Instance.GetEventDailyCount(ActionId);
+				var newCurrentDailyCount = DailyEventsCount.Instance.UpdateEventDailyCount(ActionId);
 				var eventCounterWasReset = curEventDailyCount > 0 && newCurrentDailyCount == 1;
 
 				CurrentDailyOccurrences = newCurrentDailyCount;
@@ -35,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			}
 		}
 
-		public string ActionId { get => GetEventId(); }
+		public string ActionId { get; }
 		public string ActionName { get; }
 		public Franchise Franchise { get; }
 		public int? CurrentDailyOccurrences { get; }
@@ -172,17 +174,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			return valueMoments;
 		}
 
-		private string GetEventId()
+		private string GetActionId()
 		{
-			Properties.TryGetValue("franchise", out var franchise);
-			Properties.TryGetValue("sub_franchise", out var subFranchise);
-			var id = ActionName;
-
-			if(franchise != null)
-			{
-				var firstFranchise = ((Franchise[])franchise)[0];
-				id += $"_{GetMixpanelPropertyName(firstFranchise)?.ToLower()}";
-			}
+			var franchise = Franchise == Franchise.All ? Franchise.HSConstructed : Franchise;
+			Properties.TryGetValue(ValueMomentsConstants.SubFranchiseProperty, out var subFranchise);
+			var id = $"{ActionName}_{GetMixpanelPropertyName(franchise)?.ToLower()}";
 
 			if(subFranchise != null)
 			{

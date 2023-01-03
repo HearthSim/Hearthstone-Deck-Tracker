@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using HSReplay.ClientAnalytics;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using static Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.VMActions;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
@@ -25,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private static readonly Lazy<ClientAnalyticsClient> Client;
 		private static readonly int[] Ports = { 17881, 17882, 17883, 17884, 17885, 17886, 17887, 17888, 17889 };
 
-		private static event System.Action? OnboardingComplete;
+		private static event Action? OnboardingComplete;
 
 		static HSReplayNetClientAnalytics()
 		{
@@ -50,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			try
 			{
 #if !DEBUG
-				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action))
+				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action, action.GetValueMoments()))
 					Client.Value.TrackEvent(token, action.ActionName, action.MixpanelPayload).Forget();
 #else
 				Log.Debug($"{action.ActionName}: ${JsonConvert.SerializeObject(action.MixpanelPayload)}");
@@ -112,20 +113,23 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				_ => null
 			};
 
+			var properties = new Dictionary<string, object>
+			{
+				{ ValueMomentsConstants.SubFranchiseProperty, subFranchise != null ? new [] { subFranchise } : new string[] { } },
+			};
 			var extraData = new Dictionary<HearthstoneExtraData, object>
 			{
 				{ HearthstoneExtraData.HeroDbfId, heroCard.DbfId },
 				{ HearthstoneExtraData.HeroName, heroCard.Name ?? "" },
-				{ HearthstoneExtraData.SubFranchise, subFranchise != null ? new [] { subFranchise } : new string[] { } },
 				{ HearthstoneExtraData.MatchResult, gameStats.Result.ToString() },
 				{ HearthstoneExtraData.GameType, gameType.ToString() },
 				{ HearthstoneExtraData.StarLevel , gameMode == GameMode.Ranked ? gameStats.StarLevel : "" },
 			};
 
 			if(spectator)
-				TrackAction(EndSpectateMatchAction.Create(extraData));
+				TrackAction(EndSpectateMatchAction.Create(extraData, properties));
 			else
-				TrackAction(EndMatchAction.Create(extraData));
+				TrackAction(EndMatchAction.Create(extraData, properties));
 		}
 		
 		public static void OnBattlegroundsMatchEnds(string? heroCardId, int finalPlacement, GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)
@@ -147,9 +151,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			};
 
 			if(gameMetrics.Tier7TrialActivated)
-				extraData[BattlegroundsExtraData.TrialsActivated] = new[] { ValueMomentsConstants.TIER7_OVERLAY_TRIAL };
+				extraData[BattlegroundsExtraData.TrialsActivated] = new[] { ValueMomentsConstants.Tier7OverlayTrial };
 			if(gameMetrics.Tier7TrialsRemaining.HasValue)
-				extraData[BattlegroundsExtraData.TrialsRemaining] = new[] { $"{ValueMomentsConstants.TIER7_OVERLAY_TRIAL}:{gameMetrics.Tier7TrialsRemaining}" };
+				extraData[BattlegroundsExtraData.TrialsRemaining] = new[] { $"{ValueMomentsConstants.Tier7OverlayTrial}:{gameMetrics.Tier7TrialsRemaining}" };
 
 			if(spectator)
 				TrackAction(EndSpectateMatchAction.Create(extraData));
@@ -187,7 +191,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			var action = new ClickAction(Franchise.HSConstructed, actionName, new Dictionary<string, object>
 			{
-				{ "sub_franchise", subFranchise != null ? new [] { subFranchise } : new string[] { } },
+				{ ValueMomentsConstants.SubFranchiseProperty, subFranchise != null ? new [] { subFranchise } : new string[] { } },
 			});
 
 			TrackAction(action);

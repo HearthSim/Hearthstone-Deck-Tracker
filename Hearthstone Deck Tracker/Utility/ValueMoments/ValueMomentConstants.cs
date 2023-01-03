@@ -8,7 +8,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 {
 	public class ValueMomentsConstants
 	{
+		public const string ActionNameProperty = "action_name";
+		public const string SubFranchiseProperty = "sub_franchise";
+
 		// Trial names
-		public const string TIER7_OVERLAY_TRIAL = "Tier7Overlay";
+		public const string Tier7OverlayTrial = "Tier7Overlay";
 	}
 }

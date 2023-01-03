@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					yield return new ValueMoment(VMName.CopyDeck, ValueMoment.VMKind.Free);
 					break;
 				case VMActions.ClickAction.Name:
-					switch(action.Properties["action_name"])
+					switch(action.Properties[ValueMomentsConstants.ActionNameProperty])
 					{
 						case VMActions.ClickAction.ActionName.ScreenshotCopyToClipboard:
 						case VMActions.ClickAction.ActionName.ScreenshotSaveToDisk:
@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 
 			var isTrialActivated = bgsExtraData.TryGetValue(BattlegroundsExtraData.TrialsActivated, out var activatedTrials)
 			                       && activatedTrials is string[] trialsArr
-			                       && trialsArr.Contains(ValueMomentsConstants.TIER7_OVERLAY_TRIAL);
+			                       && trialsArr.Contains(ValueMomentsConstants.Tier7OverlayTrial);
 			if (
 				bgsExtraData.TryGetValue(BattlegroundsExtraData.Tier7HeroOverlayDisplayed, out var tier7HeroOverlayDisplayed) &&
 				(bool)tier7HeroOverlayDisplayed
@@ -155,10 +155,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			};
 		}
 
-		internal static bool ShouldSendEventToMixPanel(VMAction action)
+		internal static bool ShouldSendEventToMixPanel(VMAction action, List<ValueMoment> valueMoments)
 		{
-			var valueMoments = action.GetValueMoments();
-
 			// Check action daily occurrences
 			if(action.MaximumDailyOccurrences == null)
 				return true;

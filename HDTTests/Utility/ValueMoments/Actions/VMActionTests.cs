@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using Newtonsoft.Json;
 using static Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.VMActions;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments;
 
 namespace HDTTests.Utility.ValueMoments.Actions
 {
@@ -17,6 +18,36 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		public void TestInitialize()
 		{
 			Config.Instance.ResetAll();
+		}
+
+		[TestMethod]
+		public void VMAction_ActionId()
+		{
+			var action = EndMatchAction.Create(new Dictionary<HearthstoneExtraData, object>());
+
+			Assert.AreEqual("End Match Action HDT_hs-constructed", action.ActionId);
+		}
+
+		[TestMethod]
+		public void VMAction_ActionIdWithSubFranchise()
+		{
+			var action = EndMatchAction.Create(
+				new Dictionary<HearthstoneExtraData, object>(),
+				new Dictionary<string, object>
+				{
+					{ ValueMomentsConstants.SubFranchiseProperty, new [] { "Arena"  } }
+				}
+			);
+
+			Assert.AreEqual("End Match Action HDT_hs-constructed_arena", action.ActionId);
+		}
+
+		[TestMethod]
+		public void VMAction_ActionIdWithAllFranchise()
+		{
+			var action = new InstallAction();
+
+			Assert.AreEqual("Install HDT_hs-constructed", action.ActionId);
 		}
 
 		[TestMethod]
@@ -82,7 +113,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ HearthstoneExtraData.StarLevel, 5 }
 			});
 
-			Assert.AreEqual(action.MixpanelPayload["star_level"], 5);
+			Assert.AreEqual(5, action.MixpanelPayload["star_level"]);
 			Assert.IsTrue(action.MixpanelPayload.ContainsKey("hdt_hsconstructed_settings_enabled"));
 			Assert.IsTrue(action.MixpanelPayload.ContainsKey("hdt_hsconstructed_settings_disabled"));
 		}

@@ -14,10 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums
 
 		[MixpanelProperty("hero_name")]
 		HeroName,
-
-		[MixpanelProperty("sub_franchise")]
-		SubFranchise,
-
+		
 		[MixpanelProperty("match_result")]
 		MatchResult,
 
