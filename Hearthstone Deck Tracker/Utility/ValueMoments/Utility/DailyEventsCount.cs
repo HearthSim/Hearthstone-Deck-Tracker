@@ -36,13 +36,13 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 
 		public int GetEventDailyCount(string eventId)
 		{
-			var existing = Events.FirstOrDefault(x => x.Id == eventId);
+			var existing = Events.FirstOrDefault(x => x.Id?.ToLower() == eventId.ToLower());
 			return existing?.Count ?? 0;
 		}
 
 		public int UpdateEventDailyCount(string eventId)
 		{
-			var existing = Events.FirstOrDefault(x => x.Id == eventId);
+			var existing = Events.FirstOrDefault(x => x.Id?.ToLower() == eventId.ToLower());
 			if(existing == null)
 			{
 				existing = new EventItem(eventId, DateTime.Now.ToString("o"), 1);
@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 
 		public void SetEventDailyCount(string eventId, int count)
 		{
-			var existing = Events.FirstOrDefault(x => x.Id == eventId);
+			var existing = Events.FirstOrDefault(x => x.Id?.ToLower() == eventId.ToLower());
 			if(existing == null)
 			{
 				existing = new EventItem(eventId, DateTime.Now.ToString("o"), 0);
@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 
 		public void Clear(string eventId)
 		{
-			var existing = Events.FirstOrDefault(x => x.Id == eventId);
+			var existing = Events.FirstOrDefault(x => x.Id?.ToLower() == eventId.ToLower());
 			if(existing != null)
 			{
 				existing.Count = 0;
