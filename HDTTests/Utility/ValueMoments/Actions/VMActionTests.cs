@@ -25,7 +25,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		{
 			var action = EndMatchAction.Create(new Dictionary<HearthstoneExtraData, object>());
 
-			Assert.AreEqual("End Match Action HDT_hs-constructed", action.ActionId);
+			Assert.AreEqual("end match action hdt_hs-constructed", action.ActionId);
 		}
 
 		[TestMethod]
@@ -39,7 +39,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				}
 			);
 
-			Assert.AreEqual("End Match Action HDT_hs-constructed_arena", action.ActionId);
+			Assert.AreEqual("end match action hdt_hs-constructed_arena", action.ActionId);
 		}
 
 		[TestMethod]
@@ -47,7 +47,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		{
 			var action = new InstallAction();
 
-			Assert.AreEqual("Install HDT_hs-constructed", action.ActionId);
+			Assert.AreEqual("install hdt_hs-constructed", action.ActionId);
 		}
 
 		[TestMethod]

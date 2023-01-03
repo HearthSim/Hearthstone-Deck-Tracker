@@ -178,16 +178,16 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 			var franchise = Franchise == Franchise.All ? Franchise.HSConstructed : Franchise;
 			Properties.TryGetValue(ValueMomentsConstants.SubFranchiseProperty, out var subFranchise);
-			var id = $"{ActionName}_{GetMixpanelPropertyName(franchise)?.ToLower()}";
+			var id = $"{ActionName}_{GetMixpanelPropertyName(franchise)}";
 
 			if(subFranchise != null)
 			{
 				var subFranchiseArray = (string[])subFranchise;
 				if(subFranchiseArray.Length > 0)
-					id += $"_{((string[])subFranchise)[0].ToLower()}";
+					id += $"_{((string[])subFranchise)[0]}";
 			}
 
-			return id;
+			return id.ToLower();
 		}
 
 		private static string? GetMixpanelPropertyName(object obj)
