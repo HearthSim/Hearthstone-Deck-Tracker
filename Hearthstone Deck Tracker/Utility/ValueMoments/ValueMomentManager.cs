@@ -35,6 +35,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 				case VMActions.EndMatchAction.Name:
 				case VMActions.EndSpectateMatchAction.Name:
 					var franchise = action.Properties["franchise"] as Franchise[];
+					if(franchise == null)
+						yield break;
+
 					if(franchise.Contains(Franchise.HSConstructed))
 					{
 						var hdtGeneralSettings = action.ClientProperties.HDTGeneralSettingsEnabled;
@@ -42,71 +45,79 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 							yield return new ValueMoment(VMName.DecklistVisible, ValueMoment.VMKind.Free);
 					}
 					else if(franchise.Contains(Franchise.Battlegrounds))
-					{
-						var bgsSettings = action.FranchiseProperties?.BattlegroundsSettingsEnabled;
-						var bgsExtraData = action.FranchiseProperties?.BattlegroundsExtraData;
-						if (bgsSettings == null || bgsExtraData == null)
-							break;
-
-						if(
-							bgsSettings.Contains(BattlegroundsSettings.BobsBuddyCombatSimulations) &&
-							(
-								bgsSettings.Contains(BattlegroundsSettings.BobsBuddyCombatSimulations) ||
-								bgsSettings.Contains(BattlegroundsSettings.BobsBuddyResultsDuringShopping)
-							)
-						)
-							yield return new ValueMoment(VMName.BGBobsBuddy, ValueMoment.VMKind.Free);
-
-						if(
-							bgsSettings.Contains(BattlegroundsSettings.SessionRecap) ||
-							bgsSettings.Contains(BattlegroundsSettings.SessionRecapBetweenGames)
-						)
-							yield return new ValueMoment(VMName.BGSessionRecap, ValueMoment.VMKind.Free);
-
-						if(
-							bgsExtraData.TryGetValue(BattlegroundsExtraData.NumClickBattlegroundsMinionTab, out var numClickMinionTab) &&
-							(int)numClickMinionTab > 0
-						)
-							yield return new ValueMoment(VMName.BGMinionBrowser, ValueMoment.VMKind.Free);
-
-						var isTrialActivated = bgsExtraData.TryGetValue(BattlegroundsExtraData.TrialsActivated, out var activatedTrials)
-						                       && activatedTrials is string[] trialsArr
-						                       && trialsArr.Contains(ValueMomentsConstants.TIER7_OVERLAY_TRIAL);
-
-						if(
-							bgsExtraData.TryGetValue(BattlegroundsExtraData.Tier7HeroOverlayDisplayed, out var tier7HeroOverlayDisplayed) &&
-							(bool)tier7HeroOverlayDisplayed
-						)
-							yield return new ValueMoment(VMName.BGHeroPickOverlay, !isTrialActivated);
-
-						if(
-							bgsExtraData.TryGetValue(BattlegroundsExtraData.Tier7QuestOverlayDisplayed, out var tier7QuestOverlayDisplayed) &&
-							(bool)tier7QuestOverlayDisplayed
-						)
-							yield return new ValueMoment(VMName.BGQuestStatsOverlay, !isTrialActivated);
-					}
+						foreach (var vmBattlegrounds in GetEndMatchBattlegroundsValueMoments(action))
+							yield return vmBattlegrounds;
 					else if(franchise.Contains(Franchise.Mercenaries))
-					{
-						var mercsExtraData = action.FranchiseProperties?.MercenariesExtraData;
-						if(mercsExtraData == null)
-							break;
-
-						if(
-							mercsExtraData.TryGetValue(MercenariesExtraData.NumHoverOpponentMercAbility, out var numHoverOpponentMercAbility) &&
-							(int)numHoverOpponentMercAbility > 0
-						)
-							yield return new ValueMoment(VMName.MercOpponentAbilities, ValueMoment.VMKind.Free);
-
-						if(
-							mercsExtraData.TryGetValue(MercenariesExtraData.NumHoverMercTaskOverlay, out var numHoverMercTaskOverlay) &&
-							(int)numHoverMercTaskOverlay > 0
-						)
-							yield return new ValueMoment(VMName.MercFriendlyTasks, ValueMoment.VMKind.Free);
-					}
+						foreach (var vmMercenaries in GetEndMatchMercenariesValueMoments(action))
+							yield return vmMercenaries;
 					break;
 			};
 		}
-		
+
+		private static IEnumerable<ValueMoment> GetEndMatchBattlegroundsValueMoments(VMAction action)
+		{
+			var bgsSettings = action.FranchiseProperties?.BattlegroundsSettingsEnabled;
+			var bgsExtraData = action.FranchiseProperties?.BattlegroundsExtraData;
+			if (bgsSettings == null || bgsExtraData == null)
+				yield break;
+
+			if (
+				bgsSettings.Contains(BattlegroundsSettings.BobsBuddyCombatSimulations) &&
+				(
+					bgsSettings.Contains(BattlegroundsSettings.BobsBuddyCombatSimulations) ||
+					bgsSettings.Contains(BattlegroundsSettings.BobsBuddyResultsDuringShopping)
+				)
+			)
+				yield return new ValueMoment(VMName.BGBobsBuddy, ValueMoment.VMKind.Free);
+
+			if (
+				bgsSettings.Contains(BattlegroundsSettings.SessionRecap) ||
+				bgsSettings.Contains(BattlegroundsSettings.SessionRecapBetweenGames)
+			)
+				yield return new ValueMoment(VMName.BGSessionRecap, ValueMoment.VMKind.Free);
+
+			if (
+				bgsExtraData.TryGetValue(BattlegroundsExtraData.NumClickBattlegroundsMinionTab, out var numClickMinionTab) &&
+				(int)numClickMinionTab > 0
+			)
+				yield return new ValueMoment(VMName.BGMinionBrowser, ValueMoment.VMKind.Free);
+
+			var isTrialActivated = bgsExtraData.TryGetValue(BattlegroundsExtraData.TrialsActivated, out var activatedTrials)
+			                       && activatedTrials is string[] trialsArr
+			                       && trialsArr.Contains(ValueMomentsConstants.TIER7_OVERLAY_TRIAL);
+			if (
+				bgsExtraData.TryGetValue(BattlegroundsExtraData.Tier7HeroOverlayDisplayed, out var tier7HeroOverlayDisplayed) &&
+				(bool)tier7HeroOverlayDisplayed
+			)
+				yield return new ValueMoment(VMName.BGHeroPickOverlay, !isTrialActivated);
+
+			if (
+				bgsExtraData.TryGetValue(BattlegroundsExtraData.Tier7QuestOverlayDisplayed, out var tier7QuestOverlayDisplayed) &&
+				(bool)tier7QuestOverlayDisplayed
+			)
+				yield return new ValueMoment(VMName.BGQuestStatsOverlay, !isTrialActivated);
+		}
+
+		private static IEnumerable<ValueMoment> GetEndMatchMercenariesValueMoments(VMAction action)
+		{
+			var mercsExtraData = action.FranchiseProperties?.MercenariesExtraData;
+			if (mercsExtraData == null)
+				yield break;
+
+			if (
+				mercsExtraData.TryGetValue(MercenariesExtraData.NumHoverOpponentMercAbility,
+					out var numHoverOpponentMercAbility) &&
+				(int)numHoverOpponentMercAbility > 0
+			)
+				yield return new ValueMoment(VMName.MercOpponentAbilities, ValueMoment.VMKind.Free);
+
+			if (
+				mercsExtraData.TryGetValue(MercenariesExtraData.NumHoverMercTaskOverlay, out var numHoverMercTaskOverlay) &&
+				(int)numHoverMercTaskOverlay > 0
+			)
+				yield return new ValueMoment(VMName.MercFriendlyTasks, ValueMoment.VMKind.Free);
+		}
+
 		internal static Dictionary<string, object> GetValueMomentsProperties(List<ValueMoment> valueMoments)
 		{
 			var freeValueMoments = new List<string>();
