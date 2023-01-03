@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using VMName = Hearthstone_Deck_Tracker.Utility.ValueMoments.ValueMoment.VMName;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
@@ -41,41 +43,48 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					}
 					else if(franchise.Contains(Franchise.Battlegrounds))
 					{
-						var hdtBgSettings = action.Properties[ValueMomentUtils.BG_GENERAL_SETTINGS_ENABLED] as string[];
+						var bgsSettings = action.FranchiseProperties?.BattlegroundsSettingsEnabled;
+						var bgsExtraData = action.FranchiseProperties?.BattlegroundsExtraData;
+						if (bgsSettings == null || bgsExtraData == null)
+							break;
+
 						if(
-							hdtBgSettings.Contains(ValueMomentUtils.BB_COMBAT_SIMULATIONS) &&
+							bgsSettings.Contains(BattlegroundsSettings.BobsBuddyCombatSimulations) &&
 							(
-								hdtBgSettings.Contains(ValueMomentUtils.BB_RESULTS_DURING_COMBAT) ||
-								hdtBgSettings.Contains(ValueMomentUtils.BB_RESULTS_DURING_SHOPPING)
+								bgsSettings.Contains(BattlegroundsSettings.BobsBuddyCombatSimulations) ||
+								bgsSettings.Contains(BattlegroundsSettings.BobsBuddyResultsDuringShopping)
 							)
 						)
 							yield return new ValueMoment(VMName.BGBobsBuddy, ValueMoment.VMKind.Free);
 
 						if(
-							hdtBgSettings.Contains(ValueMomentUtils.SESSION_RECAP) ||
-							hdtBgSettings.Contains(ValueMomentUtils.SESSION_RECAP_BETWEEN_GAMES)
+							(bgsSettings.Contains(BattlegroundsSettings.SessionRecap) ||
+							bgsSettings.Contains(BattlegroundsSettings.SessionRecapBetweenGames))
 						)
 							yield return new ValueMoment(VMName.BGSessionRecap, ValueMoment.VMKind.Free);
 
-						if((int)action.Properties[ValueMomentUtils.NUM_CLICK_BATTLEGROUNDS_MINION_TAB] > 0)
+						if((int)bgsExtraData[BattlegroundsExtraData.NumClickBattlegroundsMinionTab] > 0)
 							yield return new ValueMoment(VMName.BGMinionBrowser, ValueMoment.VMKind.Free);
 
-						var isTrialActivated = action.Properties.TryGetValue(ValueMomentUtils.TRIALS_ACTIVATED, out var activatedTrials)
-							&& activatedTrials is string[] trialsArr
-							&& trialsArr.Contains(ValueMomentUtils.TIER7_OVERLAY_TRIAL);
+						var isTrialActivated = bgsExtraData.TryGetValue(BattlegroundsExtraData.TrialsActivated, out var activatedTrials)
+						                       && activatedTrials is string[] trialsArr
+						                       && trialsArr.Contains(ValueMomentsConstants.TIER7_OVERLAY_TRIAL);
 
-						if((bool)action.Properties[ValueMomentUtils.TIER7_HERO_OVERLAY_DISPLAYED])
+						if((bool)bgsExtraData[BattlegroundsExtraData.Tier7HeroOverlayDisplayed])
 							yield return new ValueMoment(VMName.BGHeroPickOverlay, !isTrialActivated);
 
-						if((bool)action.Properties[ValueMomentUtils.TIER7_QUEST_OVERLAY_DISPLAYED])
+						if((bool)bgsExtraData[BattlegroundsExtraData.Tier7QuestOverlayDisplayed])
 							yield return new ValueMoment(VMName.BGQuestStatsOverlay, !isTrialActivated);
 					}
 					else if(franchise.Contains(Franchise.Mercenaries))
 					{
-						if((int)action.Properties[ValueMomentUtils.NUM_HOVER_OPPONENT_MERC_ABILITY] > 0)
+						var mercsExtraData = action.FranchiseProperties?.MercenariesExtraData;
+						if(mercsExtraData == null)
+							break;
+						if((int)mercsExtraData[MercenariesExtraData.NumHoverOpponentMercAbility] > 0)
 							yield return new ValueMoment(VMName.MercOpponentAbilities, ValueMoment.VMKind.Free);
 
-						if((int)action.Properties[ValueMomentUtils.NUM_HOVER_MERC_TASK_OVERLAY] > 0)
+						if((int)mercsExtraData[MercenariesExtraData.NumHoverMercTaskOverlay] > 0)
 							yield return new ValueMoment(VMName.MercFriendlyTasks, ValueMoment.VMKind.Free);
 					}
 					break;
@@ -120,9 +129,16 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 				return true;
 
 			// Always send match events when a trial was activated
-			if(action.EventName == VMActions.EndMatchAction.Name
-			   && action.Properties.TryGetValue(ValueMomentUtils.TRIALS_ACTIVATED, out var activated)
-			   && activated is string[] { Length: > 0 })
+			if(
+				action is {
+					EventName: VMActions.EndMatchAction.Name,
+					FranchiseProperties:
+					{
+						BattlegroundsExtraData: { }
+					}
+				}
+				&& (int)action.FranchiseProperties.BattlegroundsExtraData[BattlegroundsExtraData.TrialsActivated] > 0
+			)
 			{
 				return true;
 			}

@@ -1,43 +1,20 @@
 ﻿using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
-using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+using ClientSettingsEnum = Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums.ClientSettings;
 
-namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
+namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 {
-	public class ValueMomentClientProperties
+	public class ClientProperties
 	{
-		public enum BaseSettings
-		{
-			[MixpanelProperty("domain")]
-			Domain,
-
-			[MixpanelProperty("is_authenticated")]
-			IsAuthenticated,
-
-			[MixpanelProperty("screen_height")]
-			ScreenHeight,
-
-			[MixpanelProperty("screen_width")]
-			ScreenWidth,
-
-			[MixpanelProperty("card_language")]
-			CardLanguage,
-
-			[MixpanelProperty("appearance_language")]
-			AppearanceLanguage,
-
-			[MixpanelProperty("hdt_plugins")]
-			HDTPlugins,
-		}
-
 		private readonly Dictionary<HDTGeneralSettings, bool> _hdtGeneralSettings;
 
-		public ValueMomentClientProperties()
+		public ClientProperties()
 		{
 			_hdtGeneralSettings = new Dictionary<HDTGeneralSettings, bool> {
 				{ HDTGeneralSettings.UploadMyCollectionAutomatically, Config.Instance.SyncCollection },
@@ -56,33 +33,32 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			};
 		}
 
-		public Dictionary<BaseSettings, object> ClientSettings
+		public Dictionary<ClientSettingsEnum, object> ClientSettings
 		{
 			get
 			{
-				Rectangle rect = Helper.GetHearthstoneMonitorRect();
-				return new Dictionary<BaseSettings, object> {
-					{ BaseSettings.Domain , "hsreplay.net" },
-					{ BaseSettings.IsAuthenticated , HSReplayNetOAuth.IsFullyAuthenticated },
-					{ BaseSettings.ScreenHeight , rect.Height },
-					{ BaseSettings.ScreenWidth , rect.Width },
-					{ BaseSettings.CardLanguage , Config.Instance.SelectedLanguage.Substring(0, 2) },
-					{ BaseSettings.AppearanceLanguage , Config.Instance.Localization.ToString().Substring(0, 2) },
-					{ BaseSettings.HDTPlugins , PluginManager.Instance.Plugins.Where(x => x.IsEnabled).Select(x => x.Name) }
+				var rect = Helper.GetHearthstoneMonitorRect();
+				return new Dictionary<ClientSettingsEnum, object> {
+					{ ClientSettingsEnum.IsAuthenticated , HSReplayNetOAuth.IsFullyAuthenticated },
+					{ ClientSettingsEnum.ScreenHeight , rect.Height },
+					{ ClientSettingsEnum.ScreenWidth , rect.Width },
+					{ ClientSettingsEnum.CardLanguage , Config.Instance.SelectedLanguage.Substring(0, 2) },
+					{ ClientSettingsEnum.AppearanceLanguage , Config.Instance.Localization.ToString().Substring(0, 2) },
+					{ ClientSettingsEnum.HDTPlugins , PluginManager.Instance.Plugins.Where(x => x.IsEnabled).Select(x => x.Name) }
 				};
 			}
 		}
 
 		public HDTGeneralSettings[] HDTGeneralSettingsEnabled
 		{
-			get => _hdtGeneralSettings.Where(x => x.Value == true)
+			get => _hdtGeneralSettings.Where(x => x.Value)
 						.Select(x => x.Key)
 						.ToArray();
 		}
 
 		public HDTGeneralSettings[] HDTGeneralSettingsDisabled
 		{
-			get => _hdtGeneralSettings.Where(x => x.Value == false)
+			get => _hdtGeneralSettings.Where(x => !x.Value)
 						.Select(x => x.Key)
 						.ToArray();
 		}

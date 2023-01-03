@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums
+namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 {
 
 	[AttributeUsage(AttributeTargets.Field)]

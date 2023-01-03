@@ -1,6 +1,9 @@
+using System;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
@@ -126,29 +129,61 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		public class EndMatchAction : VMAction
 		{
 			public const string Name = "End Match Action HDT";
+			
+			public static EndMatchAction Create( Dictionary<HearthstoneExtraData, object> extraData) => new(Franchise.HSConstructed)
+			{
+				FranchiseProperties = new FranchiseProperties(extraData)
+			};
 
-			public EndMatchAction(Franchise franchise, Dictionary<string, object> properties) : base(
-				Name, Source.App, "End Match Action", 1, new Dictionary<string, object>(properties)
+			public static EndMatchAction Create(Dictionary<BattlegroundsExtraData, object> extraData) => new(Franchise.Battlegrounds)
+			{
+				FranchiseProperties = new FranchiseProperties(extraData)
+			};
+
+			public static EndMatchAction Create(Dictionary<MercenariesExtraData, object> extraData) => new(Franchise.Mercenaries)
+			{
+				FranchiseProperties = new FranchiseProperties(extraData)
+			};
+
+			private EndMatchAction(Franchise franchise) : base(
+				Name, Source.App, "End Match Action", 1, new Dictionary<string, object>
 				{
-					{ "franchise", new [] { franchise } },
-					{ "action_name", "end_match"},
+					{ "franchise", new[] { franchise } },
+					{ "action_name", "end_match" },
 				}
 			)
-			{ }
+			{
+			}
 		}
 
 		public class EndSpectateMatchAction : VMAction
 		{
 			public const string Name = "End Spectate Match Action HDT";
 
-			public EndSpectateMatchAction(Franchise franchise, Dictionary<string, object> properties) : base(
-				Name, Source.App, "End Spectate Match Action", 1, new Dictionary<string, object>(properties)
+			public static EndSpectateMatchAction Create(Dictionary<HearthstoneExtraData, object> extraData) => new(Franchise.HSConstructed)
+			{
+				FranchiseProperties = new FranchiseProperties(extraData)
+			};
+
+			public static EndSpectateMatchAction Create(Dictionary<BattlegroundsExtraData, object> extraData) => new(Franchise.Battlegrounds)
+			{
+				FranchiseProperties = new FranchiseProperties(extraData)
+			};
+
+			public static EndSpectateMatchAction Create(Dictionary<MercenariesExtraData, object> extraData) => new(Franchise.Mercenaries)
+			{
+				FranchiseProperties = new FranchiseProperties(extraData)
+			};
+
+			private EndSpectateMatchAction(Franchise franchise) : base(
+				Name, Source.App, "End Spectate Match Action", 1, new Dictionary<string, object>
 				{
 					{ "franchise", new [] { franchise } },
 					{ "action_name", "end_match"},
 				}
 			)
-			{ }
+			{
+			}
 		}
 	}
 }

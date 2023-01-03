@@ -5,7 +5,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
-namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
+namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 {
 	[XmlRoot("DailyEventsCount")]
 	public sealed class DailyEventsCount
@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			else
 			{
 				var lastTimestamp = DateTime.Parse(existing.Timestamp);
-				if((DateTime.Now - lastTimestamp) < TimeSpan.FromDays(1))
+				if(DateTime.Now - lastTimestamp < TimeSpan.FromDays(1))
 					existing.Count += 1;
 				else
 				{

@@ -1,4 +1,6 @@
 
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
+
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums
 {
 	public enum HDTGeneralSettings

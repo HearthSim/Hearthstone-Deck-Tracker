@@ -1,8 +1,8 @@
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				{ "action_type", actionType },
 				{ "action_source", source },
 			};
-			ClientProperties = new ValueMomentClientProperties();
+			ClientProperties = new ClientProperties();
 
 			if(maxDailyOccurrences != null)
 			{
@@ -53,11 +53,17 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 
 		public Dictionary<string, object> Properties { get; }
 
-		public Dictionary<string, object> MixpanelProperties {
+		public ClientProperties ClientProperties { get; }
+		public FranchiseProperties? FranchiseProperties { get; protected set; }
+
+		public Dictionary<string, object> MixpanelPayload {
 			get
 			{
+				var props = new Dictionary<string, object>(Properties)
+				{
+					{ "domain", "hsreplay.net" }
+				};
 
-				var props = new Dictionary<string, object>(Properties);
 				if(
 					Properties.Keys.Contains("action_source") &&
 					Helper.TryGetAttribute<MixpanelPropertyAttribute>(Properties["action_source"], out var sAttr) &&
@@ -94,11 +100,63 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 					ClientProperties.HDTGeneralSettingsDisabled.Select(x => GetMixpanelPropertyName(x))
 				);
 
+				if(franchise == null || ((Franchise[])franchise).Length != 1 || FranchiseProperties == null)
+					return props;
+
+				var singleFranchise = ((Franchise[])franchise).First();
+				switch (singleFranchise)
+				{
+					case Franchise.HSConstructed:
+						foreach(var property in FranchiseProperties.HearthstoneExtraData!)
+							if(Helper.TryGetAttribute<MixpanelPropertyAttribute>(property.Key, out var cAttr) && cAttr?.Name != null)
+								props.Add(cAttr.Name, property.Value);
+						props.Add(
+							"hdt_hsconstructed_settings_enabled",
+							FranchiseProperties.HearthstoneSettingsEnabled!.Select(x => GetMixpanelPropertyName(x))
+						);
+						props.Add(
+							"hdt_hsconstructed_settings_disabled",
+							FranchiseProperties.HearthstoneSettingsDisabled!.Select(x => GetMixpanelPropertyName(x))
+						);
+						break;
+					case Franchise.Battlegrounds:
+						foreach(var property in FranchiseProperties.BattlegroundsExtraData!)
+							if(Helper.TryGetAttribute<MixpanelPropertyAttribute>(property.Key, out var cAttr) && cAttr?.Name != null)
+								props.Add(cAttr.Name, property.Value);
+						props.Add(
+							"hdt_battlegrounds_settings_enabled",
+							FranchiseProperties.BattlegroundsSettingsEnabled!.Select(x =>
+								GetMixpanelPropertyName(x))
+						);
+						props.Add(
+							"hdt_battlegrounds_settings_disabled",
+							FranchiseProperties.BattlegroundsSettingsDisabled!.Select(x =>
+								GetMixpanelPropertyName(x))
+						);
+						// Dropping some properties, but why?
+						props.Remove(GetMixpanelPropertyName(BattlegroundsSettings.Tier7HeroOverlay)!);
+						props.Remove(GetMixpanelPropertyName(BattlegroundsSettings.Tier7QuestOverlay)!);
+						break;
+					case Franchise.Mercenaries:
+						foreach(var property in FranchiseProperties.MercenariesExtraData!)
+							if(Helper.TryGetAttribute<MixpanelPropertyAttribute>(property.Key, out var cAttr) && cAttr?.Name != null)
+								props.Add(cAttr.Name, property.Value);
+						props.Add(
+							"hdt_mercenaries_settings_enabled",
+							FranchiseProperties.MercenariesSettingsEnabled!.Select(x =>
+								GetMixpanelPropertyName(x))
+						);
+						props.Add(
+							"hdt_mercenaries_settings_disabled",
+							FranchiseProperties.MercenariesSettingsDisabled!.Select(x =>
+								GetMixpanelPropertyName(x))
+						);
+						break;
+				}
+
 				return props;
 			}
 		}
-
-		public ValueMomentClientProperties ClientProperties { get; private set; }
 
 		public void AddProperties(Dictionary<string, object> newProperties)
 		{

@@ -1,5 +1,4 @@
-﻿
-namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
+﻿namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 {
 	public class GameMetrics
 	{
