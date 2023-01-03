@@ -13,8 +13,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 	public class ClientProperties
 	{
 		private readonly Dictionary<HDTGeneralSettings, bool> _hdtGeneralSettings;
+		private readonly Dictionary<PersonalStatsSettings, bool>? _personalStatsSettings;
 
-		public ClientProperties()
+		public ClientProperties(bool withPersonalStatsSettings)
 		{
 			_hdtGeneralSettings = new Dictionary<HDTGeneralSettings, bool> {
 				{ HDTGeneralSettings.UploadMyCollectionAutomatically, Config.Instance.SyncCollection },
@@ -31,6 +32,20 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 				{ HDTGeneralSettings.MinimizeToTray, Config.Instance.MinimizeToTray },
 				{ HDTGeneralSettings.ShowNewsBar, Config.Instance.IgnoreNewsId < (Remote.Config.Data?.News?.Id ?? 0) },
 			};
+
+			HasPersonalStatsSettings = withPersonalStatsSettings;
+			if (withPersonalStatsSettings)
+				_personalStatsSettings = new Dictionary<PersonalStatsSettings, bool> {
+					{ PersonalStatsSettings.StatsRecordRanked, Config.Instance.RecordRanked },
+					{ PersonalStatsSettings.StatsRecordArena, Config.Instance.RecordArena },
+					{ PersonalStatsSettings.StatsRecordBrawl, Config.Instance.RecordBrawl },
+					{ PersonalStatsSettings.StatsRecordCasual, Config.Instance.RecordCasual },
+					{ PersonalStatsSettings.StatsRecordFriendly, Config.Instance.RecordFriendly },
+					{ PersonalStatsSettings.StatsRecordAdventurePractice, Config.Instance.RecordPractice },
+					{ PersonalStatsSettings.StatsRecordSpectator, Config.Instance.RecordSpectator },
+					{ PersonalStatsSettings.StatsRecordDuels, Config.Instance.RecordDuels },
+					{ PersonalStatsSettings.StatsRecordOther, Config.Instance.RecordOther },
+				};
 		}
 
 		public Dictionary<ClientSettingsEnum, object> ClientSettings
@@ -61,6 +76,22 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 			get => _hdtGeneralSettings.Where(x => !x.Value)
 						.Select(x => x.Key)
 						.ToArray();
+		}
+
+		public bool HasPersonalStatsSettings { get; }
+
+		public PersonalStatsSettings[]? PersonalStatsSettingsEnabled
+		{
+			get => _personalStatsSettings?.Where(x => x.Value)
+				.Select(x => x.Key)
+				.ToArray();
+		}
+
+		public PersonalStatsSettings[]? PersonalStatsSettingsDisabled
+		{
+			get => _personalStatsSettings?.Where(x => !x.Value)
+				.Select(x => x.Key)
+				.ToArray();
 		}
 	}
 }

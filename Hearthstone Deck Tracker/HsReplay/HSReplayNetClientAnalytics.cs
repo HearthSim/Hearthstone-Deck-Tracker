@@ -180,27 +180,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		
 		public static void OnCopyDeck(CopyDeckAction.ActionName actionName)
 		{
-			var action = new CopyDeckAction(Franchise.HSConstructed, actionName);
-			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
-
-			TrackAction(action);
+			TrackAction(new CopyDeckAction(Franchise.HSConstructed, actionName));
 		}
 
 		public static void OnScreenshotDeck(ClickAction.ActionName actionName)
 		{
-			var action = new ClickAction(Franchise.HSConstructed, actionName);
-			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
-
-			TrackAction(action);
+			TrackAction(new ClickAction(Franchise.HSConstructed, actionName));
 		}
 
 		public static void OnShowPersonalStats(ClickAction.ActionName actionName, string? subFranchise)
 		{
 			var action = new ClickAction(Franchise.HSConstructed, actionName, new Dictionary<string, object>
 			{
-				{ "sub_franchise", subFranchise != null ? new string[] { subFranchise } : new string[] { } },
+				{ "sub_franchise", subFranchise != null ? new [] { subFranchise } : new string[] { } },
 			});
-			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
 
 			TrackAction(action);
 		}

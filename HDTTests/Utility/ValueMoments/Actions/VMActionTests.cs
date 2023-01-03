@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker;
 using NuGet;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
@@ -137,6 +136,8 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			);
 
 			Assert.AreEqual(action.MixpanelPayload["action_name"], "screenshot: Save To Disk");
+			Assert.IsTrue(action.MixpanelPayload.ContainsKey("hdt_personal_stats_settings_enabled"));
+			Assert.IsTrue(action.MixpanelPayload.ContainsKey("hdt_personal_stats_settings_disabled"));
 		}
 
 		[TestMethod]
@@ -148,6 +149,8 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			);
 
 			Assert.AreEqual(action.MixpanelPayload["action_name"], "Copy Ids to Clipboard");
+			Assert.IsTrue(action.MixpanelPayload.ContainsKey("hdt_personal_stats_settings_enabled"));
+			Assert.IsTrue(action.MixpanelPayload.ContainsKey("hdt_personal_stats_settings_disabled"));
 		}
 	}
 }

@@ -23,14 +23,14 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		/**
 		 * if maxDailyOccurrences is null, this action is not sent to the event counter and will always be sent to Mixpanel
 		 */
-		protected VMAction(string eventName, Source source, string actionType, int? maxDailyOccurrences, Dictionary<string, object> properties)
+		protected VMAction(string eventName, Source source, string actionType, int? maxDailyOccurrences, Dictionary<string, object> properties, bool withPersonalStatsSettings = false)
 		{
 			EventName = eventName;
 			Properties = new Dictionary<string, object>(properties){
 				{ "action_type", actionType },
 				{ "action_source", source },
 			};
-			ClientProperties = new ClientProperties();
+			ClientProperties = new ClientProperties(withPersonalStatsSettings);
 
 			if(maxDailyOccurrences != null)
 			{
@@ -99,6 +99,18 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 					"hdt_general_settings_disabled",
 					ClientProperties.HDTGeneralSettingsDisabled.Select(x => GetMixpanelPropertyName(x))
 				);
+
+				if(ClientProperties.HasPersonalStatsSettings)
+				{
+					props.Add(
+						"hdt_personal_stats_settings_enabled",
+						ClientProperties.PersonalStatsSettingsEnabled!.Select(x => GetMixpanelPropertyName(x))
+					);
+					props.Add(
+						"hdt_personal_stats_settings_disabled",
+						ClientProperties.PersonalStatsSettingsDisabled!.Select(x => GetMixpanelPropertyName(x))
+					);
+				}
 
 				if(franchise == null || ((Franchise[])franchise).Length != 1 || FranchiseProperties == null)
 					return props;

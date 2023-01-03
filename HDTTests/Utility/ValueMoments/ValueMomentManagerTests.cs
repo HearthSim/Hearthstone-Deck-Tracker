@@ -1,14 +1,13 @@
 ﻿using System;
+using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using NuGet;
 using static Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.VMActions;
-using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
-using Hearthstone_Deck_Tracker;
 
 namespace HDTTests.Utility.ValueMoments
 {

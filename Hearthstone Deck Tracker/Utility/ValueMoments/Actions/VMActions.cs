@@ -86,17 +86,19 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			}
 
 			public ClickAction(Franchise franchise, ActionName actionName) : this(
-				franchise, actionName, new Dictionary<string, object>{})
-			{ }
+				franchise, actionName, new Dictionary<string, object>())
+			{}
 
-			public ClickAction(Franchise franchise, ActionName actionName, Dictionary<string, object> properties) : base(
+			public ClickAction(Franchise franchise, ActionName actionName,
+				Dictionary<string, object> properties) : base(
 				Name, Source.MainWindow, "Click Action", 10, new Dictionary<string, object>(properties)
 				{
-					{ "franchise", new [] { franchise } },
-					{ "action_name", actionName},
-				}
-				)
-			{ }
+					{ "franchise", new[] { franchise } },
+					{ "action_name", actionName },
+				},
+				true
+			)
+			{}
 		}
 
 		public class CopyDeckAction : VMAction
@@ -119,11 +121,12 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			public CopyDeckAction(Franchise franchise, ActionName actionName) : base(
 				Name, Source.MainWindow, "Copy Deck", 10, new Dictionary<string, object>
 				{
-					{ "franchise", new [] { franchise } },
+					{ "franchise", new[] { franchise } },
 					{ "action_name", actionName },
-				}
+				},
+				true
 			)
-			{ }
+			{}
 		}
 
 		public class EndMatchAction : VMAction
