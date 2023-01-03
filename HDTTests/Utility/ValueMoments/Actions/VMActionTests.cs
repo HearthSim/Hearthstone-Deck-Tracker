@@ -23,7 +23,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		public void VMAction_MixpanelPayloadReturnsCorrect()
 		{
 			var action = EndMatchAction.Create(new Dictionary<HearthstoneExtraData, object>());
-			DailyEventsCount.Instance.Clear(action.EventId);
+			DailyEventsCount.Instance.Clear(action.ActionId);
 			// Recreate action to update daily occurrences
 			action = EndMatchAction.Create(new Dictionary<HearthstoneExtraData, object>());
 
@@ -31,12 +31,12 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "action_name", "end_match" },
 				{ "action_type", "End Match Action" },
 				{ "action_source", "app" },
+				{ "domain", "hsreplay.net" },
+				{ "franchise", new [] { "HS-Constructed" } },
 				{ "free_value_moments", new [] { "Overlay Decklist Visible" }},
 				{ "paid_value_moments", new string[]{} },
 				{ "has_free_value_moment", true },
 				{ "has_paid_value_moment", false },
-				{ "domain", "hsreplay.net" },
-				{ "franchise", new [] { "HS-Constructed" } },
 				{ "cur_daily_occurrences", 1 },
 				{ "max_daily_occurrences", 1 },
 				{ "is_authenticated", true },

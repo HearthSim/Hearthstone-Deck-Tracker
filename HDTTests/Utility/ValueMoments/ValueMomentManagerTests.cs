@@ -305,7 +305,7 @@ namespace HDTTests.Utility.ValueMoments
 		public void ShouldSendEventToMixPanel_ReturnsTrueForActionsWithoutMaxOccurrences()
 		{
 			var action = new ToastAction(Franchise.HSConstructed, ToastAction.ToastName.Mulligan);
-			DailyEventsCount.Instance.SetEventDailyCount(action.EventId, 10000);
+			DailyEventsCount.Instance.SetEventDailyCount(action.ActionId, 10000);
 			// Recreate action to update daily occurrences
 			action = new ToastAction(Franchise.HSConstructed, ToastAction.ToastName.Mulligan);
 
@@ -316,7 +316,7 @@ namespace HDTTests.Utility.ValueMoments
 		public void ShouldSendEventToMixPanel_ReturnsTrueForActionWithFewDailyOccurrences()
 		{
 			var action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
-			DailyEventsCount.Instance.Clear(action.EventId);
+			DailyEventsCount.Instance.Clear(action.ActionId);
 			// Recreate action to update daily occurrences
 			action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
 			
@@ -327,7 +327,7 @@ namespace HDTTests.Utility.ValueMoments
 		public void ShouldSendEventToMixPanel_ReturnsFalseForActionWithExceededDailyOccurrences()
 		{
 			var action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
-			DailyEventsCount.Instance.SetEventDailyCount(action.EventId, 10);
+			DailyEventsCount.Instance.SetEventDailyCount(action.ActionId, 10);
 			// Recreate action to update daily occurrences
 			action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
 
@@ -338,7 +338,7 @@ namespace HDTTests.Utility.ValueMoments
 		public void ShouldSendEventToMixPanel_ReturnsTrueForForValueMomentWithFewDailyOccurrences()
 		{
 			var action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
-			DailyEventsCount.Instance.SetEventDailyCount(action.EventId, 0);
+			DailyEventsCount.Instance.SetEventDailyCount(action.ActionId, 0);
 			// Recreate action to update daily occurrences
 			action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
 
@@ -352,7 +352,7 @@ namespace HDTTests.Utility.ValueMoments
 		public void ShouldSendEventToMixPanel_ReturnsFalseForForValueMomentWithExceededDailyOccurrences()
 		{
 			var action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
-			DailyEventsCount.Instance.SetEventDailyCount(action.EventId, 10);
+			DailyEventsCount.Instance.SetEventDailyCount(action.ActionId, 10);
 			// Recreate action to update daily occurrences
 			action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.ActionName.CopyAll);
 

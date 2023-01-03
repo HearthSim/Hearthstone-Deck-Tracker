@@ -50,10 +50,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			try
 			{
 #if !DEBUG
-				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action, valueMoments))
-					Client.Value.TrackEvent(token, action.EventName, action.MixpanelPayload).Forget();
+				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action))
+					Client.Value.TrackEvent(token, action.ActionName, action.MixpanelPayload).Forget();
 #else
-				Log.Debug($"{action.EventName}: ${JsonConvert.SerializeObject(action.MixpanelPayload)}");
+				Log.Debug($"{action.ActionName}: ${JsonConvert.SerializeObject(action.MixpanelPayload)}");
 #endif
 			}
 			catch(Exception e)

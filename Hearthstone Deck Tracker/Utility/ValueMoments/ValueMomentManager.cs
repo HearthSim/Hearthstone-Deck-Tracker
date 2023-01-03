@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 	{
 		internal static IEnumerable<ValueMoment> GetValueMoments(VMAction action)
 		{
-			switch(action.EventName)
+			switch(action.ActionName)
 			{
 				case VMActions.CopyDeckAction.Name:
 					yield return new ValueMoment(VMName.CopyDeck, ValueMoment.VMKind.Free);
@@ -155,8 +155,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			};
 		}
 
-		internal static bool ShouldSendEventToMixPanel(VMAction action, List<ValueMoment> valueMoments)
+		internal static bool ShouldSendEventToMixPanel(VMAction action)
 		{
+			var valueMoments = action.GetValueMoments();
+
 			// Check action daily occurrences
 			if(action.MaximumDailyOccurrences == null)
 				return true;
@@ -164,7 +166,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			// Always send match events when a trial was activated
 			if(
 				action is {
-					EventName: VMActions.EndMatchAction.Name,
+					ActionName: VMActions.EndMatchAction.Name,
 					FranchiseProperties:
 					{
 						BattlegroundsExtraData: { }

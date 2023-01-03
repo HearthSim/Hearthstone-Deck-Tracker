@@ -3,7 +3,7 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 {
-	internal class ValueMoment
+	public class ValueMoment
 	{
 		public abstract class VMName {
 			public const string CopyDeck = "Copy Deck";
