@@ -49,11 +49,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 			try
 			{
-				var valueMoments = ValueMomentManager.GetValueMoments(action).ToList();
-				foreach(var valueMoment in valueMoments)
-					DailyEventsCount.Instance.UpdateEventDailyCount(valueMoment.Name);
-				action.AddProperties(ValueMomentManager.GetValueMomentsProperties(valueMoments));
-
 #if !DEBUG
 				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action, valueMoments))
 					Client.Value.TrackEvent(token, action.EventName, action.MixpanelPayload).Forget();

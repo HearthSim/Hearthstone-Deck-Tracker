@@ -87,7 +87,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 
 			public ClickAction(Franchise franchise, ActionName actionName) : this(
 				franchise, actionName, new Dictionary<string, object>())
-			{}
+			{ }
 
 			public ClickAction(Franchise franchise, ActionName actionName,
 				Dictionary<string, object> properties) : base(
@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				},
 				true
 			)
-			{}
+			{ }
 		}
 
 		public class CopyDeckAction : VMAction
@@ -126,14 +126,14 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 				},
 				true
 			)
-			{}
+			{ }
 		}
 
 		public class EndMatchAction : VMAction
 		{
 			public const string Name = "End Match Action HDT";
 			
-			public static EndMatchAction Create( Dictionary<HearthstoneExtraData, object> extraData) => new(Franchise.HSConstructed)
+			public static EndMatchAction Create(Dictionary<HearthstoneExtraData, object> extraData) => new(Franchise.HSConstructed)
 			{
 				FranchiseProperties = new FranchiseProperties(extraData)
 			};
@@ -155,8 +155,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 					{ "action_name", "end_match" },
 				}
 			)
-			{
-			}
+			{ }
 		}
 
 		public class EndSpectateMatchAction : VMAction
@@ -185,8 +184,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 					{ "action_name", "end_match"},
 				}
 			)
-			{
-			}
+			{ }
 		}
 	}
 }

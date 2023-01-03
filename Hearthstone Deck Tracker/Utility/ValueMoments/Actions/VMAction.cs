@@ -59,6 +59,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		public Dictionary<string, object> MixpanelPayload {
 			get
 			{
+				GenerateValueMoments();
+
 				var props = new Dictionary<string, object>(Properties)
 				{
 					{ "domain", "hsreplay.net" }
@@ -170,10 +172,15 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			}
 		}
 
-		public void AddProperties(Dictionary<string, object> newProperties)
+		private void GenerateValueMoments()
 		{
-			foreach(var property in newProperties)
-				Properties.Add(property.Key, property.Value);
+			var valueMoments = ValueMomentManager.GetValueMoments(this).ToList();
+			foreach(var valueMoment in valueMoments)
+				DailyEventsCount.Instance.UpdateEventDailyCount(valueMoment.Name);
+
+			var vmProperties = ValueMomentManager.GetValueMomentsProperties(valueMoments);
+			foreach(var property in vmProperties)
+				Properties[property.Key] = property.Value;
 		}
 
 		private string GetEventId()
