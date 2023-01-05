@@ -38,8 +38,7 @@ using System.Security.Cryptography.X509Certificates;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using System.Windows.Forms;
-using Color = System.Drawing.Color;
-using static Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.VMActions.ToastAction;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 
 #endregion
 
@@ -814,7 +813,7 @@ namespace Hearthstone_Deck_Tracker
 
 			}
 			TryOpenUrl(url);
-			HSReplayNetClientAnalytics.TryTrackToastClick(Franchise.Battlegrounds, ToastName.BattlegroundsHeroPicker);
+			HSReplayNetClientAnalytics.TryTrackToastClick(Franchise.Battlegrounds, ToastAction.Toast.BattlegroundsHeroPicker);
 		}
 
 		public static async Task<T?> RetryWhileNull<T>(Func<T> func, int tries = 5, int delay = 150)

@@ -1,16 +1,16 @@
-using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
+using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums
 {
 	public enum ActionSource
 	{
-		[MixpanelProperty("app")]
+		[JsonProperty("app")]
 		App,
 
-		[MixpanelProperty("mainWindow")]
+		[JsonProperty("mainWindow")]
 		MainWindow,
 
-		[MixpanelProperty("overlay")]
+		[JsonProperty("overlay")]
 		Overlay,
 	}
 }

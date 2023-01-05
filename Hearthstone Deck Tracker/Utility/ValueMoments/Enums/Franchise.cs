@@ -1,19 +1,19 @@
-
-using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
+using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums
 {
 	public enum Franchise {
-		[MixpanelProperty("All")]
+
+		[JsonProperty("All")]
 		All,
 
-		[MixpanelProperty("HS-Constructed")]
+		[JsonProperty("HS-Constructed")]
 		HSConstructed,
 
-		[MixpanelProperty("Battlegrounds")]
+		[JsonProperty("Battlegrounds")]
 		Battlegrounds,
 
-		[MixpanelProperty("Mercenaries")]
+		[JsonProperty("Mercenaries")]
 		Mercenaries,
 	}
 }
