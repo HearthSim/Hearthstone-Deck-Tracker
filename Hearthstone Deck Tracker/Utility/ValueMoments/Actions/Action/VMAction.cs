@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public abstract string Type { get; }
 
 		[JsonProperty("domain")]
-		protected string Domain { get => "hsreplay.net"; }
+		protected string Domain => "hsreplay.net";
 
 		[JsonProperty("franchise")]
 		[JsonConverter(typeof(FranchiseJsonConverter))]
@@ -85,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public SubFranchise[]? SubFranchise { get; }
 
 		[JsonProperty("is_authenticated")]
-		public bool IsAuthenticated { get => HSReplayNetOAuth.IsFullyAuthenticated; }
+		public bool IsAuthenticated => HSReplayNetOAuth.IsFullyAuthenticated;
 
 		[JsonProperty("screen_height")]
 		public int ScreenHeight { get; }
@@ -94,22 +94,13 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public int ScreenWidth { get; }
 
 		[JsonProperty("card_language")]
-		public string CardLanguage
-		{
-			get => Config.Instance.SelectedLanguage.Substring(0, 2);
-		}
+		public string CardLanguage => Config.Instance.SelectedLanguage.Substring(0, 2);
 
 		[JsonProperty("appearance_language")]
-		public string AppearanceLanguage
-		{
-			get => Config.Instance.Localization.ToString().Substring(0, 2);
-		}
+		public string AppearanceLanguage => Config.Instance.Localization.ToString().Substring(0, 2);
 
 		[JsonProperty("hdt_plugins")]
-		public string?[] HDTPlugins
-		{
-			get => PluginManager.Instance.Plugins.Where(x => x.IsEnabled).Select(x => x.Name).ToArray();
-		}
+		public string?[] HDTPlugins => PluginManager.Instance.Plugins.Where(x => x.IsEnabled).Select(x => x.Name).ToArray();
 
 
 		[JsonIgnore]
@@ -117,11 +108,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("hdt_general_settings_enabled")]
 		[JsonConverter(typeof(VMEnabledSettingsJsonConverter))]
-		protected GeneralSettings GeneralSettingsEnabled { get => GeneralSettings; }
+		protected GeneralSettings GeneralSettingsEnabled => GeneralSettings;
 
 		[JsonProperty("hdt_general_settings_disabled")]
 		[JsonConverter(typeof(VMDisabledSettingsJsonConverter))]
-		protected GeneralSettings GeneralSettingsDisabled { get => GeneralSettings; }
+		protected GeneralSettings GeneralSettingsDisabled => GeneralSettings;
 
 
 		[JsonIgnore]
@@ -129,11 +120,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("hdt_personal_stats_settings_enabled", NullValueHandling = NullValueHandling.Ignore)]
 		[JsonConverter(typeof(VMEnabledSettingsJsonConverter))]
-		protected PersonalStatsSettings? PersonalStatsSettingsEnabled { get => PersonalStatsSettings; }
+		protected PersonalStatsSettings? PersonalStatsSettingsEnabled => PersonalStatsSettings;
 
 		[JsonProperty("hdt_personal_stats_settings_disabled", NullValueHandling = NullValueHandling.Ignore)]
 		[JsonConverter(typeof(VMDisabledSettingsJsonConverter))]
-		protected PersonalStatsSettings? PersonalStatsSettingsDisabled { get => PersonalStatsSettings; }
+		protected PersonalStatsSettings? PersonalStatsSettingsDisabled => PersonalStatsSettings;
 
 
 		[JsonProperty("cur_daily_occurrences", NullValueHandling = NullValueHandling.Ignore)]
@@ -163,21 +154,15 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		}
 
 		[JsonProperty("free_value_moments", NullValueHandling = NullValueHandling.Ignore)]
-		public string[] FreeValueMoments
-		{
-			get => ValueMoments.Where(vm => vm.IsFree).Select(vm => vm.Name).ToArray();
-		}
+		public string[] FreeValueMoments => ValueMoments.Where(vm => vm.IsFree).Select(vm => vm.Name).ToArray();
 
 		[JsonProperty("paid_value_moments", NullValueHandling = NullValueHandling.Ignore)]
-		public string[] PaidValueMoments
-		{
-			get => ValueMoments.Where(vm => vm.IsPaid).Select(vm => vm.Name).ToArray();
-		}
+		public string[] PaidValueMoments => ValueMoments.Where(vm => vm.IsPaid).Select(vm => vm.Name).ToArray();
 
 		[JsonProperty("has_free_value_moment", NullValueHandling = NullValueHandling.Ignore)]
-		public bool HasFreeValueMoment { get => ValueMoments.Exists(vm => vm.IsFree); }
+		public bool HasFreeValueMoment => ValueMoments.Exists(vm => vm.IsFree);
 
 		[JsonProperty("has_paid_value_moment", NullValueHandling = NullValueHandling.Ignore)]
-		public bool HasPaidValueMoment { get => ValueMoments.Exists(vm => vm.IsPaid); }
+		public bool HasPaidValueMoment => ValueMoments.Exists(vm => vm.IsPaid);
 	}
 }
