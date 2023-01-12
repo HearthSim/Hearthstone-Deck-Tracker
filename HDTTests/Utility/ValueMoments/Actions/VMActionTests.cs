@@ -54,6 +54,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 1);
 
 			var expectedDict = new Dictionary<string, object> {
+				{ "action_type", "End Match Action" },
 				{ "action_name", "end_match" },
 				{ "hero_dbf_id", 123 },
 				{ "hero_name", "foo" },
@@ -63,7 +64,6 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "hdt_hsconstructed_settings_enabled", new []{ "hide_timers" }},
 				{ "hdt_hsconstructed_settings_disabled", new []{ "hide_decks" }},
 				{ "action_source", "app" },
-				{ "action_type", "End Match Action" },
 				{ "domain", "hsreplay.net" },
 				{ "franchise", new [] { "HS-Constructed" } },
 				{ "card_language", "en" },

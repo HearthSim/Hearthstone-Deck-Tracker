@@ -10,12 +10,7 @@ namespace Mercenaries_Deck_Tracker.Utility.ValueMoments.Actions
 {
 	public class EndSpectateMatchMercenariesAction : VMMercenariesAction
 	{
-		public const string Name = ValueMomentsConstants.EndMatchSpectateName;
-
 		public EndSpectateMatchMercenariesAction(GameResult matchResult, GameType gameType, GameMetrics gameMetrics) : base(
-			Name,
-			ActionSource.App,
-			ValueMomentsConstants.EndMatchSpectateType,
 			Franchise.Mercenaries,
 			ValueMomentsConstants.EndMatchActionMaxDailyOccurrences,
 			matchResult, gameType, gameMetrics
@@ -23,7 +18,7 @@ namespace Mercenaries_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 		}
 
-		[JsonProperty(ValueMomentsConstants.ActionNameProperty)]
-		public string ActionName { get => ValueMomentsConstants.EndMatchActionNameValue; }
+		public override string Name => ValueMomentsConstants.EndMatchSpectateName;
+		public override string Type => ValueMomentsConstants.EndMatchSpectateType;
 	}
 }

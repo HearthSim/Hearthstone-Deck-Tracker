@@ -6,14 +6,12 @@ using Hearthstone_Deck_Tracker.Enums;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 {
-	public abstract class VMMercenariesAction : VMAction
+	public abstract class VMMercenariesAction : VMEndMatchAction
 	{
 		protected VMMercenariesAction(
-			string name, ActionSource source, string type, Franchise franchise, int? maxDailyOccurrences,
+			Franchise franchise, int? maxDailyOccurrences,
 			GameResult matchResult, GameType gameType, GameMetrics gameMetrics
-		) : base(
-			name, source, type, franchise, null, maxDailyOccurrences
-		)
+		) : base(franchise, null, maxDailyOccurrences)
 		{
 			MatchResult = matchResult;
 			GameType = gameType;

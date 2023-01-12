@@ -8,7 +8,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
 	public class ToastAction : VMAction
 	{
-		public const string Name = "Click HDT Toast";
 		public const string ToastProperty = "toast";
 
 		public enum Toast
@@ -24,11 +23,15 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		}
 
 		public ToastAction(Franchise franchise, Toast toastName) : base(
-			Name, ActionSource.Overlay, "Toast Click", franchise, null, null
+			franchise, null, null
 		)
 		{
 			ToastName = toastName;
 		}
+
+		public override string Name => "Click HDT Toast";
+		public override ActionSource Source => ActionSource.Overlay;
+		public override string Type => "Toast Click";
 
 		[JsonProperty(ToastProperty)]
 		[JsonConverter(typeof(EnumJsonConverter))]

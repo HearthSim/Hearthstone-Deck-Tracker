@@ -8,14 +8,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
 	public class EndMatchBattlegroundsAction : VMBattlegroundsAction
 	{
-		public const string Name = ValueMomentsConstants.EndMatchName;
-
 		public EndMatchBattlegroundsAction(
 			int heroDbfId, string heroName, int finalPlacement, GameType gameType, int rating, GameMetrics gameMetrics
 		) : base(
-			Name,
-			ActionSource.App,
-			ValueMomentsConstants.EndMatchType,
 			Franchise.Battlegrounds,
 			ValueMomentsConstants.EndMatchActionMaxDailyOccurrences,
 			heroDbfId, heroName, finalPlacement, gameType, rating, gameMetrics
@@ -23,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 		}
 
-		[JsonProperty(ValueMomentsConstants.ActionNameProperty)]
-		public string ActionName { get => ValueMomentsConstants.EndMatchActionNameValue; }
+		public override string Name => ValueMomentsConstants.EndMatchName;
+		public override string Type => ValueMomentsConstants.EndMatchType;
 	}
 }

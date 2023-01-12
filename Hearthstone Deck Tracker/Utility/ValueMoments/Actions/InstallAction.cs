@@ -8,14 +8,14 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
 	public class InstallAction : VMAction
 	{
-		public const string Name = "Install HDT";
-
-		public InstallAction() : base(
-			Name, ActionSource.App, "First App Start", Franchise.All, null, null
-		)
+		public InstallAction() : base(Franchise.All, null, null)
 		{ }
 
+		public override string Name => "Install HDT";
+		public override ActionSource Source { get => ActionSource.App; }
+		public override string Type => "First App Start";
+
 		[JsonProperty("app_version")]
-		public string AppVersion { get => Helper.GetCurrentVersion().ToVersionString(true); }
+		public string AppVersion => Helper.GetCurrentVersion().ToVersionString(true);
 	}
 }

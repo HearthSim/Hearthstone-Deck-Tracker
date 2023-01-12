@@ -7,8 +7,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
 	public class ClickAction : VMAction
 	{
-		public const string Name = "Click Action HDT";
-
 		public enum Action
 		{
 			[JsonProperty("screenshot: Copy to Clipboard")]
@@ -27,11 +25,15 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		public ClickAction(Franchise franchise, Action actionName) : this(franchise, actionName, null){ }
 
 		public ClickAction(Franchise franchise, Action actionName, SubFranchise[]? subFranchise) : base(
-			Name, ActionSource.MainWindow, "Click Action", franchise, subFranchise, 10, true
+			franchise, subFranchise, 10, true
 		)
 		{
 			ActionName = actionName;
 		}
+
+		public override string Name => "Click Action HDT";
+		public override ActionSource Source => ActionSource.MainWindow;
+		public override string Type => "Click Action";
 
 		[JsonProperty(ValueMomentsConstants.ActionNameProperty)]
 		[JsonConverter(typeof(EnumJsonConverter))]

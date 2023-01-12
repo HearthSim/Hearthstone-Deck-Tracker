@@ -6,14 +6,12 @@ using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 {
-	public abstract class VMBattlegroundsAction : VMAction
+	public abstract class VMBattlegroundsAction : VMEndMatchAction
 	{
 		protected VMBattlegroundsAction(
-			string name, ActionSource source, string type, Franchise franchise, int? maxDailyOccurrences,
+			Franchise franchise, int? maxDailyOccurrences,
 			int heroDbfId, string heroName, int finalPlacement, GameType gameType, int rating, GameMetrics gameMetrics
-		) : base(
-			name, source, type, franchise, null, maxDailyOccurrences
-		)
+		) : base(franchise, null, maxDailyOccurrences)
 		{
 			HeroDbfId = heroDbfId;
 			HeroName = heroName;

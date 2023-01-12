@@ -7,10 +7,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
 	public class FirstHSCollectionUploadAction : VMAction
 	{
-		public const string Name = "Upload First Hearthstone Collection";
-
 		public FirstHSCollectionUploadAction(int collectionSize) : base(
-			Name, ActionSource.App, "First Collection Upload", Franchise.HSConstructed, null, null
+			Franchise.HSConstructed, null, null
 		)
 		{
 			CollectionSize = collectionSize;
@@ -18,5 +16,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 
 		[JsonProperty("collection_size")]
 		public int CollectionSize { get; }
+
+		public override string Name => "Upload First Hearthstone Collection";
+		public override ActionSource Source => ActionSource.App;
+		public override string Type => "First Collection Upload";
 	}
 }

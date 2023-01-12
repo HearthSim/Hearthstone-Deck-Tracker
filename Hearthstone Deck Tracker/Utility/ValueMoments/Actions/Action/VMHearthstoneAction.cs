@@ -7,13 +7,13 @@ using SubFranchiseEnum = Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums.Sub
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 {
-	public abstract class VMHearthstoneAction : VMAction
+	public abstract class VMHearthstoneAction : VMEndMatchAction
 	{
 		protected VMHearthstoneAction(
-			string name, ActionSource source, string type, Franchise franchise, int? maxDailyOccurrences,
+			Franchise franchise, int? maxDailyOccurrences,
 			int heroDbfId, string heroName, GameResult matchResult, GameMode gameMode, GameType gameType, int starLevel
 		) : base(
-			name, source, type, franchise, gameMode switch
+			franchise, gameMode switch
 			{
 				GameMode.Arena => new[] { SubFranchiseEnum.Arena },
 				GameMode.Brawl => new[] { SubFranchiseEnum.Brawl },
@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			StarLevel = starLevel;
 			HearthstoneSettings = new HearthstoneSettings();
 		}
-
+		
 		[JsonProperty("hero_dbf_id")]
 		public int HeroDbfId { get; }
 

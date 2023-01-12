@@ -15,13 +15,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		 * if maxDailyOccurrences is null, this action is not sent to the event counter and will always be sent to Mixpanel
 		 */
 		protected VMAction(
-			string name, ActionSource source, string type, Franchise franchise, SubFranchise[]? subFranchise,
+			Franchise franchise, SubFranchise[]? subFranchise,
 			int? maxDailyOccurrences, bool withPersonalStatsSettings = false
 		)
 		{
-			Name = name;
-			Source = source;
-			Type = type;
 			Franchise = franchise;
 			SubFranchise = subFranchise;
 			GeneralSettings = new GeneralSettings();
@@ -67,14 +64,14 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		}
 
 		[JsonIgnore]
-		public string Name { get; }
+		public abstract string Name { get; }
 
 		[JsonProperty("action_source")]
 		[JsonConverter(typeof(EnumJsonConverter))]
-		public ActionSource Source { get; }
+		public abstract ActionSource Source { get; }
 
 		[JsonProperty("action_type")]
-		public string Type { get; }
+		public abstract string Type { get; }
 
 		[JsonProperty("domain")]
 		protected string Domain { get => "hsreplay.net"; }

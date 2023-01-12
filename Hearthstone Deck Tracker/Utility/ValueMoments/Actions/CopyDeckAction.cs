@@ -7,8 +7,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
 	public class CopyDeckAction : VMAction
 	{
-		public const string Name = "Copy Deck HDT";
-
 		public enum Action
 		{
 			[JsonProperty("Copy All")]
@@ -24,11 +22,15 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		}
 
 		public CopyDeckAction(Franchise franchise, Action actionName) : base(
-			Name, ActionSource.MainWindow, "Copy Deck", franchise, null, 10, true
+			franchise, null, 10, true
 		)
 		{
 			ActionName = actionName;
 		}
+
+		public override string Name => "Copy Deck HDT";
+		public override ActionSource Source => ActionSource.MainWindow;
+		public override string Type => "Copy Deck";
 
 		[JsonProperty(ValueMomentsConstants.ActionNameProperty)]
 		[JsonConverter(typeof(EnumJsonConverter))]

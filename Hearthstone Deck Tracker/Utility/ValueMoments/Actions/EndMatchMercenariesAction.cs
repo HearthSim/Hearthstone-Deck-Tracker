@@ -9,12 +9,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
 	public class EndMatchMercenariesAction : VMMercenariesAction
 	{
-		public const string Name = ValueMomentsConstants.EndMatchName;
-
 		public EndMatchMercenariesAction(GameResult matchResult, GameType gameType, GameMetrics gameMetrics) : base(
-			Name,
-			ActionSource.App,
-			ValueMomentsConstants.EndMatchType,
 			Franchise.Mercenaries,
 			ValueMomentsConstants.EndMatchActionMaxDailyOccurrences,
 			matchResult, gameType, gameMetrics
@@ -22,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		{
 		}
 
-		[JsonProperty(ValueMomentsConstants.ActionNameProperty)]
-		public string ActionName { get => ValueMomentsConstants.EndMatchActionNameValue; }
+		public override string Name => ValueMomentsConstants.EndMatchName;
+		public override string Type => ValueMomentsConstants.EndMatchType;
 	}
 }

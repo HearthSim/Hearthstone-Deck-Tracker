@@ -13,13 +13,12 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 	{
 		internal static IEnumerable<ValueMoment> GetValueMoments(VMAction action)
 		{
-			switch(action.Name)
+			switch(action)
 			{
-				case CopyDeckAction.Name:
+				case CopyDeckAction _:
 					yield return new ValueMoment(VMName.CopyDeck, ValueMoment.VMKind.Free);
 					break;
-				case ClickAction.Name:
-					var clickAction = (ClickAction)action;
+				case ClickAction clickAction:
 					switch(clickAction.ActionName)
 					{
 						case ClickAction.Action.ScreenshotCopyToClipboard:
@@ -33,8 +32,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 							break;
 					}
 					break;
-				case ValueMomentsConstants.EndMatchName:
-				case ValueMomentsConstants.EndMatchSpectateName:
+				case VMEndMatchAction _:
 					switch (action.Franchise)
 					{
 						case Franchise.HSConstructed:
