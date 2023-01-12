@@ -11,13 +11,13 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 	{
 		public EndMatchMercenariesAction(GameResult matchResult, GameType gameType, GameMetrics gameMetrics) : base(
 			Franchise.Mercenaries,
-			ValueMomentsConstants.EndMatchActionMaxDailyOccurrences,
+			EndMatchActionMaxDailyOccurrences,
 			matchResult, gameType, gameMetrics
 		)
 		{
 		}
 
-		public override string Name => ValueMomentsConstants.EndMatchName;
-		public override string Type => ValueMomentsConstants.EndMatchType;
+		public override string Name => EndMatchName;
+		public override string Type => EndMatchType;
 	}
 }

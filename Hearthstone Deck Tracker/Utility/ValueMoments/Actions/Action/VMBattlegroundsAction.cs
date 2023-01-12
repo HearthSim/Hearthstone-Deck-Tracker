@@ -8,6 +8,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 {
 	public abstract class VMBattlegroundsAction : VMEndMatchAction
 	{
+		public const string Tier7OverlayTrial = "Tier7Overlay";
+
 		protected VMBattlegroundsAction(
 			Franchise franchise, int? maxDailyOccurrences,
 			int heroDbfId, string heroName, int finalPlacement, GameType gameType, int rating, GameMetrics gameMetrics
@@ -22,9 +24,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			Tier7QuestOverlayDisplayed = gameMetrics.Tier7QuestOverlayDisplayed;
 			NumClickBattlegroundsMinionTab = gameMetrics.BattlegroundsMinionsTabClicks;
 			if (gameMetrics.Tier7TrialActivated)
-				TrialsActivated = new[] { ValueMomentsConstants.Tier7OverlayTrial };
+				TrialsActivated = new[] { Tier7OverlayTrial };
 			if (gameMetrics.Tier7TrialsRemaining.HasValue)
-				TrialsRemaining = new[] { $"{ValueMomentsConstants.Tier7OverlayTrial}:{gameMetrics.Tier7TrialsRemaining}" };
+				TrialsRemaining = new[] { $"{Tier7OverlayTrial}:{gameMetrics.Tier7TrialsRemaining}" };
 			BattlegroundsSettings = new BattlegroundsSettings();
 		}
 

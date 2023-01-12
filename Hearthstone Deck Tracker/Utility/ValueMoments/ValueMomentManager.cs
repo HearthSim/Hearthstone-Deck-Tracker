@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 				yield return new ValueMoment(VMName.BGMinionBrowser, ValueMoment.VMKind.Free);
 
 			var isTrialActivated = battlegroundsAction.TrialsActivated != null &&
-			                       battlegroundsAction.TrialsActivated.Contains(ValueMomentsConstants.Tier7OverlayTrial);
+			                       battlegroundsAction.TrialsActivated.Contains(VMBattlegroundsAction.Tier7OverlayTrial);
 			if (battlegroundsAction.Tier7HeroOverlayDisplayed)
 				yield return new ValueMoment(VMName.BGHeroPickOverlay, !isTrialActivated);
 
@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			// Always send match events when a trial was activated
 			if(
 				action is {
-					Name: ValueMomentsConstants.EndMatchName,
+					Name: VMEndMatchAction.EndMatchName,
 					Franchise: Franchise.Battlegrounds,
 				}
 				&& ((VMBattlegroundsAction)action).TrialsActivated?.Length > 0

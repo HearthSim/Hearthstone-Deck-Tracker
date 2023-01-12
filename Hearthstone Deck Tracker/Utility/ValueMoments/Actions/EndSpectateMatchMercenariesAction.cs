@@ -12,13 +12,13 @@ namespace Mercenaries_Deck_Tracker.Utility.ValueMoments.Actions
 	{
 		public EndSpectateMatchMercenariesAction(GameResult matchResult, GameType gameType, GameMetrics gameMetrics) : base(
 			Franchise.Mercenaries,
-			ValueMomentsConstants.EndMatchActionMaxDailyOccurrences,
+			EndMatchActionMaxDailyOccurrences,
 			matchResult, gameType, gameMetrics
 		)
 		{
 		}
 
-		public override string Name => ValueMomentsConstants.EndMatchSpectateName;
-		public override string Type => ValueMomentsConstants.EndMatchSpectateType;
+		public override string Name => EndMatchSpectateName;
+		public override string Type => EndMatchSpectateType;
 	}
 }

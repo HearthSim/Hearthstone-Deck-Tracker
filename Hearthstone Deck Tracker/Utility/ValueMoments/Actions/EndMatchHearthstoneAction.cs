@@ -12,13 +12,13 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			int heroDbfId, string heroName, GameResult matchResult, GameMode gameMode, GameType gameType, int starLevel
 		) : base(
 			Franchise.HSConstructed,
-			ValueMomentsConstants.EndMatchActionMaxDailyOccurrences,
+			EndMatchActionMaxDailyOccurrences,
 			heroDbfId, heroName, matchResult, gameMode, gameType, starLevel
 		)
 		{
 		}
 
-		public override string Name => ValueMomentsConstants.EndMatchName;
-		public override string Type => ValueMomentsConstants.EndMatchType;
+		public override string Name => EndMatchName;
+		public override string Type => EndMatchType;
 	}
 }

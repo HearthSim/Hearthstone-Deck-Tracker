@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 		public override ActionSource Source => ActionSource.MainWindow;
 		public override string Type => "Copy Deck";
 
-		[JsonProperty(ValueMomentsConstants.ActionNameProperty)]
+		[JsonProperty("action_name")]
 		[JsonConverter(typeof(EnumJsonConverter))]
 		public Action ActionName { get; }
 	}
