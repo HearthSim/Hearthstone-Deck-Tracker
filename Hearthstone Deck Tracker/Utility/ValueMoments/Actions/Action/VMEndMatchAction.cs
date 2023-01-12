@@ -15,6 +15,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public override ActionSource Source { get => ActionSource.App; }
 
 		[JsonProperty(ValueMomentsConstants.ActionNameProperty)]
-		public string ActionName => ValueMomentsConstants.EndMatchActionNameValue;
+		public string ActionName => "end_match";
 	}
 }

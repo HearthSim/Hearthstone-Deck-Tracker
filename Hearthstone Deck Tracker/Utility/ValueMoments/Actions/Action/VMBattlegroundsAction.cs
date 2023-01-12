@@ -21,8 +21,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			Tier7HeroOverlayDisplayed = gameMetrics.Tier7HeroOverlayDisplayed;
 			Tier7QuestOverlayDisplayed = gameMetrics.Tier7QuestOverlayDisplayed;
 			NumClickBattlegroundsMinionTab = gameMetrics.BattlegroundsMinionsTabClicks;
-			TrialsActivated = gameMetrics.Tier7TrialActivated ? new[] { ValueMomentsConstants.Tier7OverlayTrial } : null;
-			TrialsRemaining = gameMetrics.Tier7TrialsRemaining.HasValue ? new[] { $"{ValueMomentsConstants.Tier7OverlayTrial}:{gameMetrics.Tier7TrialsRemaining}" } : null;
+			if (gameMetrics.Tier7TrialActivated)
+				TrialsActivated = new[] { ValueMomentsConstants.Tier7OverlayTrial };
+			if (gameMetrics.Tier7TrialsRemaining.HasValue)
+				TrialsRemaining = new[] { $"{ValueMomentsConstants.Tier7OverlayTrial}:{gameMetrics.Tier7TrialsRemaining}" };
 			BattlegroundsSettings = new BattlegroundsSettings();
 		}
 

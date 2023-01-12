@@ -15,7 +15,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 		internal const string EndMatchType = "End Match Action";
 		internal const string EndMatchSpectateName = "End Spectate Match Action HDT";
 		internal const string EndMatchSpectateType = "End Spectate Match Action";
-		internal const string EndMatchActionNameValue = "end_match";
 		internal const int EndMatchActionMaxDailyOccurrences = 1;
 
 		// Trial names
