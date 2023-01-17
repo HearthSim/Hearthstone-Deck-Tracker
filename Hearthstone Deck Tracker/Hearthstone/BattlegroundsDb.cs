@@ -47,22 +47,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var tier = getTag(card, GameTag.TECH_LEVEL);
 				if(!_cardsByTier.ContainsKey(tier))
 					_cardsByTier[tier] = new Dictionary<Race, List<Card>>();
-				var race = GetRace(card);
-				if(!_cardsByTier[tier].ContainsKey(race))
-					_cardsByTier[tier][race] = new List<Card>();
-				_cardsByTier[tier][race].Add(new Card(card, true));
+
+				foreach(var race in new HashSet<Race>(GetRaces(card)))
+				{
+					if(!_cardsByTier[tier].ContainsKey(race))
+						_cardsByTier[tier][race] = new List<Card>();
+					_cardsByTier[tier][race].Add(new Card(card, true));
+				}
 			}
 		}
 
-		private Race GetRace(HearthDb.Card card)
+		private IEnumerable<Race> GetRaces(HearthDb.Card card)
 		{
 			var racesInText = Races
 				.Where(x => x != Race.ALL && x != Race.INVALID)
 				.Where(x => card.GetLocText(Locale.enUS)?.Contains(HearthDbConverter.RaceConverter(x)) ?? false)
 				.ToList();
 			if(racesInText.Count == 1)
-				return racesInText.Single();
-			return card.Race;
+				yield return racesInText.Single();
+			yield return card.Race;
+			if(card.SecondaryRace != Race.INVALID)
+				yield return card.SecondaryRace;
 		}
 
 		public List<Card> GetCards(int tier, Race race)
