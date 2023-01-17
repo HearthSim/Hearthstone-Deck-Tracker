@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             x:Name="Container"
              mc:Ignorable="d">
-    <StackPanel Name="BattlegroundsTierlistPanel" Canvas.Right="0" Canvas.Top="0">
+    <StackPanel Name="BattlegroundsTierlistPanel">
         <Border BorderBrush="#141617" BorderThickness="1" Background="#23272a">
             <StackPanel Name="BgTierIcons" Orientation="Horizontal">
                 <local:BattlegroundsTier x:Name="BgTier1" Tier="1" MouseUp="BgTier_MouseUp"/>
@@ -17,8 +19,14 @@
                 <local:BattlegroundsTier x:Name="BgTier6" Tier="6" MouseUp="BgTier_MouseUp"/>
             </StackPanel>
         </Border>
-        <ItemsControl HorizontalAlignment="Right" Margin="0,0,6,0"
-            ItemsSource="{Binding Groups, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"/>
-        <controls:UnavailableBattlegroundsTypes x:Name="UnavailableTypes" HorizontalAlignment="Right"/>
+        <ScrollViewer x:Name="MinionScrollViewer" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalScrollBarVisibility="Auto"
+                      ext:OverlayExtensions.IsOverlayHitTestVisible="True">
+            <StackPanel>
+                 <!-- Set HitTestVisible=False to prevent showing normal tooltips-->
+                <ItemsControl ItemsSource="{Binding Groups, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
+                              IsHitTestVisible="False" />
+                <controls:UnavailableBattlegroundsTypes x:Name="UnavailableTypes" HorizontalAlignment="Right"/>
+            </StackPanel>
+        </ScrollViewer>
     </StackPanel>
 </UserControl>
