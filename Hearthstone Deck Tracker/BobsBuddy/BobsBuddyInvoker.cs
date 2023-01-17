@@ -389,9 +389,25 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				.Where(e => e.IsControlledBy(_game.Opponent.Id))
 				.Select(e => GetMinionFromEntity(simulator.MinionFactory, false, e, GetAttachedEntities(e.Id)));
 			foreach(var m in opponentSide)
-			{
 				input.opponentSide.Add(m);
-			}
+
+			var playerAttached = GetAttachedEntities(_game.PlayerEntity.Id);
+			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchant);
+			if(pEternalLegion != null)
+				input.PlayerEternalKnightCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
+			if(pUndeadBonus != null)
+				input.PlayerUndeadAttackBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+
+			var opponentAttached = GetAttachedEntities(_game.OpponentEntity.Id);
+			var oEternalLegion = opponentAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchant);
+			if(oEternalLegion != null)
+				input.OpponentEternalKnightCounter = oEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			var oUndeadBonus = opponentAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
+			if(oUndeadBonus != null)
+				input.OpponentUndeadAttackBonus = oUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+
+			Log.Info($"pEternal=${input.PlayerEternalKnightCounter}, pUndead={input.PlayerUndeadAttackBonus} | oEternal={input.OpponentEternalKnightCounter}, oUndead={input.OpponentUndeadAttackBonus}");
 
 			_input = input;
 			_turn = turn;
