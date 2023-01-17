@@ -1,3 +1,9 @@
+## **Release v1.19.8 - 2022-01-17**
+**Updated for Hearthstone 25.2.0**
+
+**Notes**:
+- There are likely still issues with some new cards in Bob's Buddy. We will update these in the coming days.
+
 ## **Release v1.19.7 - 2022-12-19**
 **Updated for Hearthstone 25.0.4**
 
