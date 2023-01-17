@@ -25,6 +25,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			{Race.ELEMENTAL , "elemental"},
 			{Race.QUILBOAR , "quilboar"},
 			{Race.NAGA , "naga"},
+			{Race.UNDEAD , "undead"},
 		};
 
 		public string ImageSrc => $"/HearthstoneDeckTracker;component/Resources/TribeIcons/{TribeImages[Tribe]}.jpg";
