@@ -9,7 +9,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 		public double[]? PlacementDistribution { get; }
 		public Action<bool>? OnPlacementHover { get; }
 
-		public BattlegroundsHeroHeaderViewModel(int? tier, double avgPlacement, double pickRate, double[] placementDistribution, Action<bool> onPlacementHover) : base(tier, avgPlacement, pickRate)
+		public BattlegroundsHeroHeaderViewModel(int? tier, double? avgPlacement, double? pickRate, double[]? placementDistribution, Action<bool> onPlacementHover) : base(tier, avgPlacement, pickRate)
 		{
 			PlacementDistribution = placementDistribution;
 			OnPlacementHover = onPlacementHover;

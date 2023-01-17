@@ -31,12 +31,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			}
 		}
 
-		public BattlegroundsSingleHeroViewModel(BattlegroundsSingleHeroPickStats stats, Action<bool> onPlacementHover)
+		public BattlegroundsSingleHeroViewModel(BattlegroundsSingleHeroPickStats? stats, Action<bool> onPlacementHover)
 		{
-			HeroDbfId = stats.HeroDbfId;
-			ArmorTier = Database.GetBattlegroundsHeroFromDbf(stats.HeroDbfId)?.BattlegroundsArmorTier;
-			BgsHeroHeaderVM = new(stats.Tier, stats.AvgPlacement, stats.PickRate, stats.PlacementDistribution, onPlacementHover);
-			BgsCompsPopularityVM = new(stats.FirstPlaceCompPopularity);
+			HeroDbfId = stats?.HeroDbfId;
+			ArmorTier = stats != null ? Database.GetBattlegroundsHeroFromDbf(stats.HeroDbfId)?.BattlegroundsArmorTier : null;
+			BgsHeroHeaderVM = new(stats?.Tier, stats?.AvgPlacement ?? 0, stats?.PickRate ?? 0, stats?.PlacementDistribution, onPlacementHover);
+			BgsCompsPopularityVM = stats != null ? new(stats.FirstPlaceCompPopularity) : null;
 		}
 
 		/// <summary>
