@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -35,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 		{
 			HeroDbfId = stats?.HeroDbfId;
 			ArmorTier = stats != null ? Database.GetBattlegroundsHeroFromDbf(stats.HeroDbfId)?.BattlegroundsArmorTier : null;
-			BgsHeroHeaderVM = new(stats?.Tier, stats?.AvgPlacement ?? 0, stats?.PickRate ?? 0, stats?.PlacementDistribution, onPlacementHover);
+			BgsHeroHeaderVM = new(stats?.Tier, stats?.AvgPlacement ?? 0, stats?.PickRate ?? 0, stats?.PlacementDistribution ?? Enumerable.Repeat(0.0, 8).ToArray(), onPlacementHover);
 			BgsCompsPopularityVM = stats != null ? new(stats.FirstPlaceCompPopularity) : null;
 		}
 
