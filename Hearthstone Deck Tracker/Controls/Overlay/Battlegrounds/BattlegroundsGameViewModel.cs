@@ -64,7 +64,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			var battlegroundsSessionPanelLeft = Canvas.GetLeft(Core.Overlay.BattlegroundsSessionStackPanel);
 			var tooltipToRight = battlegroundsSessionPanelLeft < (Core.Overlay.Width / 2);
 
-			FinalBoardCanvasLeft = tooltipToRight ? 227 : (int)(finalBoardContainerActualWidth * -0.6) - 10;
+			FinalBoardCanvasLeft = tooltipToRight ? 247 : (int)(finalBoardContainerActualWidth * -0.6) - 10;
 			FinalBoardCanvasTop = FinalBoardMinions.Count > 0 ? -70 : -30;
 			FinalBoardArrowCanvasLeft = tooltipToRight ? 0 : (int)finalBoardContainerActualWidth + 2;
 			FinalBoardArrowCanvasTop = FinalBoardMinions.Count > 0 ? 135 : 70; 

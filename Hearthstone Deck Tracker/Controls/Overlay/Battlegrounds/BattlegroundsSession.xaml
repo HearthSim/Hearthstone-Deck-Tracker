@@ -10,13 +10,13 @@
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
-             Width="220"
+             Width="240"
     >
     <Border
         BorderBrush="#4A5256"
         BorderThickness="1"
         CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
-        Width="220"
+        Width="240"
     >
         <Grid
             Name="BattlegroundsSessionPanelTopGroup"
@@ -39,7 +39,7 @@
                         <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
                             <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Banned}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                         </Border>
-                        <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center" Height="64">
+                        <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center" Height="58">
                             <local:BattlegroundsTribe
                                 Tribe="{Binding BannedTribe1, FallbackValue=PET}"
                                 Visibility="{Binding BannedTribesVisibility}"
@@ -56,6 +56,11 @@
                             />
                             <local:BattlegroundsTribe
                                 Tribe="{Binding BannedTribe4, FallbackValue=PET}"
+                                Margin="8,0,0,0"
+                                Visibility="{Binding BannedTribesVisibility}"
+                            />
+                            <local:BattlegroundsTribe
+                                Tribe="{Binding BannedTribe5, FallbackValue=PET}"
                                 Margin="8,0,0,0"
                                 Visibility="{Binding BannedTribesVisibility}"
                             />

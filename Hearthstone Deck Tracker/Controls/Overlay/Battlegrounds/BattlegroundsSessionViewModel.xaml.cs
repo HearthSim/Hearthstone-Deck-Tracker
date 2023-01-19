@@ -72,13 +72,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				.OrderBy(t => HearthDbConverter.RaceConverter(t) ?? "")
 				.ToList();
 
-			var bannedTribesUpdated = unavailableRaces.Count() >= 4;
+			var bannedTribesUpdated = unavailableRaces.Count() >= 5;
 			if(bannedTribesUpdated)
 			{
 				BannedTribe1 = unavailableRaces[0];
 				BannedTribe2 = unavailableRaces[1];
 				BannedTribe3 = unavailableRaces[2];
 				BannedTribe4 = unavailableRaces[3];
+				BannedTribe5 = unavailableRaces[4];
 			}
 
 			if(Core.Game.CurrentMode == Mode.GAMEPLAY && bannedTribesUpdated)
@@ -257,6 +258,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			set
 			{
 				_bannedTribe4 = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Race _bannedTribe5;
+		public Race BannedTribe5
+		{
+			get => _bannedTribe5;
+			set
+			{
+				_bannedTribe5 = value;
 				OnPropertyChanged();
 			}
 		}

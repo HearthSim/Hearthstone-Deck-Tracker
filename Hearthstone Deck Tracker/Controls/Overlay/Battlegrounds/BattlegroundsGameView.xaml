@@ -19,13 +19,12 @@
 >
     <Canvas
         Height="34"
-        Width="217"
         Background="#AA000000"
     >
         <Border BorderBrush="#1C2022" BorderThickness="0,1,0,0">
             <Canvas
                 Height="34"
-                Width="217"
+                Width="238"
                 ClipToBounds="True"
             >
                 <Image
@@ -44,7 +43,7 @@
                         </LinearGradientBrush>
                     </Image.OpacityMask>
                 </Image>
-                <Grid Height="34" Width="217">
+                <Grid Height="34" Width="238">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.7*"/>
                         <ColumnDefinition Width="1*"/>

@@ -7,35 +7,35 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              mc:Ignorable="d" >
     <StackPanel Orientation="Vertical">
-        <Canvas Width="44" Height="44">
+        <Canvas Width="38" Height="38">
             <Border BorderBrush="#D44040" BorderThickness="2" CornerRadius="36">
-                <Ellipse Height="40" Width="40">
+                <Ellipse Height="34" Width="34">
                     <Ellipse.Fill>
                         <ImageBrush
                             x:Name="ImgBrush"
                             ImageSource="{Binding ImageSrc, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
                         >
                             <ImageBrush.Transform>
-                                <ScaleTransform ScaleX="1.1" ScaleY="1.1" CenterX="20" CenterY="35" />
+                                <ScaleTransform ScaleX="1.1" ScaleY="1.1" CenterX="17" CenterY="35" />
                             </ImageBrush.Transform>
                         </ImageBrush>
                     </Ellipse.Fill>
                 </Ellipse>
             </Border>
             <Image
-                Width="32"
+                Width="26"
                 Canvas.Left="16"
                 Canvas.Top="15"
                 Source="/HearthstoneDeckTracker;component/Resources/tribes-x.png"
             />
         </Canvas>
-        <StackPanel Height="16" Margin="0,4,0,0" Orientation="Vertical">
+        <StackPanel Height="16" Margin="0,2,0,0" Orientation="Vertical">
             <hearthstoneDeckTracker:HearthstoneTextBlock
                 Text="{Binding TribeName, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="10"
-                MaxWidth="44"
+                MaxWidth="38"
                 Height="16"
             />
         </StackPanel>
