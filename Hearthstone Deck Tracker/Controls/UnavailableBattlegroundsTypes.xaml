@@ -20,7 +20,11 @@
                     Text="{lex:Loc Unavailable}"
                  />
             </Border>
-                <TextBlock Text="{Binding UnavailableRacesText, RelativeSource={RelativeSource AncestorType=local:UnavailableBattlegroundsTypes}}" Margin="7,5" Foreground="White" Opacity="0.6" FontWeight="SemiBold" Visibility="{Binding UnavailableRacesVisibility, RelativeSource={RelativeSource AncestorType=local:UnavailableBattlegroundsTypes}}"/>
+                <TextBlock
+                    Text="{Binding UnavailableRacesText, RelativeSource={RelativeSource AncestorType=local:UnavailableBattlegroundsTypes}}"
+                    Margin="7,5" Foreground="White" Opacity="0.6" FontWeight="SemiBold" TextWrapping="Wrap"
+                    Visibility="{Binding UnavailableRacesVisibility, RelativeSource={RelativeSource AncestorType=local:UnavailableBattlegroundsTypes}}"
+                />
         </StackPanel>
     </Border>
 </UserControl>
