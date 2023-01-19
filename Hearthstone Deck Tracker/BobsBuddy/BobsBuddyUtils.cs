@@ -4,6 +4,7 @@ using BobsBuddy;
 using BobsBuddy.Factory;
 using BobsBuddy.Simulation;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.CardIds;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
@@ -37,6 +38,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.golden = entity.HasTag(GameTag.PREMIUM);
 			minion.tier = entity.GetTag(GameTag.TECH_LEVEL);
 			minion.reborn = entity.HasTag(GameTag.REBORN);
+
+			var dbfId = entity.Card.DbfId;
+			var m1 = entity.GetTag(GameTag.MODULAR_ENTITY_PART_1);
+			var m2 = entity.GetTag(GameTag.MODULAR_ENTITY_PART_2);
+			if(m1 > 0 && m2 > 0 && (m1 == dbfId || m2 == dbfId))
+			{
+				var modularCard = Database.GetCardFromDbfId(m1 == dbfId ? m2 : m1, false);
+				if(modularCard != null)
+					minion.AttachModularEntity(modularCard.Id);
+			}
 
 			//Vanilla health
 			if(minion.golden && MinionFactory.cardIdsWithoutPremiumImplementations.Contains(cardId))
