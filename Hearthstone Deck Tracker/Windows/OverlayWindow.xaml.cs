@@ -23,7 +23,6 @@ using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -32,6 +31,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Utility.Animations;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 
 #endregion
 

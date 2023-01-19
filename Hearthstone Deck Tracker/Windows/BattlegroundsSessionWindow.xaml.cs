@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {

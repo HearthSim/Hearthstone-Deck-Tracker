@@ -11,7 +11,7 @@ using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
-namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
+namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 {
 	public partial class BattlegroundsSessionViewModel : ViewModel
 	{
@@ -97,7 +97,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		private async Task<GameItem?> UpdateLatestGames()
 		{
 			SessionGames.Clear();
-			var sortedGames = (await BattlegroundsLastGames.Instance.PlayerGames())
+			var sortedGames = (await Instance.PlayerGames())
 				.OrderBy(g => g.StartTime)
 				.ToList();
 			DeleteOldGames(sortedGames);
@@ -130,14 +130,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		{
 			DateTime? sessionStartTime = null;
 			DateTime? previousGameEndTime = null;
-			int previousGameRatingAfter = 0;
+			var previousGameRatingAfter = 0;
 
 			foreach(var g in sortedGames)
 			{
 				if(previousGameEndTime != null)
 				{
 					var gStartTime = DateTime.Parse(g.StartTime);
-					TimeSpan ts = gStartTime - (DateTime)previousGameEndTime;
+					var ts = gStartTime - (DateTime)previousGameEndTime;
 
 					var diffMMR = g.Rating - previousGameRatingAfter;
 					// Check for MMR reset
@@ -167,7 +167,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 					ratingResetedAfterLastGame = currentMMR < 500 && currentMMR - sessionLastMMR < -500;
 				}
 
-				TimeSpan ts = DateTime.Now - DateTime.Parse(lastGame.EndTime);
+				var ts = DateTime.Now - DateTime.Parse(lastGame.EndTime);
 
 				if(ts.TotalHours >= 2 || ratingResetedAfterLastGame)
 					return new List<GameItem>();
@@ -180,9 +180,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		{
 			sortedGames.ForEach(g =>
 			{
-				TimeSpan ts = DateTime.Now - DateTime.Parse(g.StartTime);
+				var ts = DateTime.Now - DateTime.Parse(g.StartTime);
 				if(g.StartTime != null && ts.TotalDays >= 7)
-					BattlegroundsLastGames.Instance.RemoveGame(g.StartTime);
+					Instance.RemoveGame(g.StartTime);
 			});
 		}
 

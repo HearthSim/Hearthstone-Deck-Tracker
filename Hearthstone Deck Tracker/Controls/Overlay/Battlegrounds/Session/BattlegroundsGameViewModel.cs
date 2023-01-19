@@ -12,7 +12,7 @@ using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
-namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
+namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 {
 	public class BattlegroundsGameViewModel : ViewModel
 	{
@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			if(gameItem.FinalBoard != null && gameItem.FinalBoard.FinalBoard != null)
 				foreach(var fb in gameItem.FinalBoard.FinalBoard)
 				{
-					TagItem[] tags = fb.Tags?.ToArray() ?? Array.Empty<TagItem>();
+					var tags = fb.Tags?.ToArray() ?? Array.Empty<TagItem>();
 					FinalBoardMinions.Add(new Entity()
 					{
 						CardId = fb.CardId,
@@ -62,12 +62,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public void OnMouseEnter(double finalBoardContainerActualWidth)
 		{
 			var battlegroundsSessionPanelLeft = Canvas.GetLeft(Core.Overlay.BattlegroundsSessionStackPanel);
-			var tooltipToRight = battlegroundsSessionPanelLeft < (Core.Overlay.Width / 2);
+			var tooltipToRight = battlegroundsSessionPanelLeft < Core.Overlay.Width / 2;
 
 			FinalBoardCanvasLeft = tooltipToRight ? 247 : (int)(finalBoardContainerActualWidth * -0.6) - 10;
 			FinalBoardCanvasTop = FinalBoardMinions.Count > 0 ? -70 : -30;
 			FinalBoardArrowCanvasLeft = tooltipToRight ? 0 : (int)finalBoardContainerActualWidth + 2;
-			FinalBoardArrowCanvasTop = FinalBoardMinions.Count > 0 ? 135 : 70; 
+			FinalBoardArrowCanvasTop = FinalBoardMinions.Count > 0 ? 135 : 70;
 			FinalBoardArrowBorderThickness = tooltipToRight ? new Thickness(1, 0, 0, 1) : new Thickness(0, 1, 1, 0);
 			FinalBoardVisibility = Visibility.Visible;
 		}

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
