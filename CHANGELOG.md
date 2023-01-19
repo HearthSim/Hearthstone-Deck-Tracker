@@ -1,6 +1,13 @@
+## **Release v1.19.10 - 2022-01-19**
+**Bob's Buddy**:
+- Fixed an issue where dual-type minions were not working correctly.
+- Fixed an issue where Rot Hide Gnoll was not working correctly.
 
-## **Release v1.19.9 - 2022-01-17**
-**Bob's Buddy'**:
+**Fixes**:
+- Fixed an issue where the 5th banned Tribe was not appearing in the Session Recap panel.
+
+## **Release v1.19.9 - 2022-01-18**
+**Bob's Buddy**:
 - Added support for Putricide's Creations.
 - Fixed various issues related to Hearthstone 25.2.0.
 
