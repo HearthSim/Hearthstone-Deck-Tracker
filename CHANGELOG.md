@@ -1,3 +1,9 @@
+
+## **Release v1.19.9 - 2022-01-17**
+**Bob's Buddy'**:
+- Added support for Putricide's Creations.
+- Fixed various issues related to Hearthstone 25.2.0.
+
 ## **Release v1.19.8 - 2022-01-17**
 **Updated for Hearthstone 25.2.0**
 
