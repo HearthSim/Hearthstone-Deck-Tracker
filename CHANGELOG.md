@@ -1,3 +1,7 @@
+## **Release v1.19.11 - 2022-01-20**
+**Bob's Buddy**:
+- Fixed various issues related to cards and mechanics added with Hearthstone 25.2.0.
+
 ## **Release v1.19.10 - 2022-01-19**
 **Bob's Buddy**:
 - Fixed an issue where dual-type minions were not working correctly.
