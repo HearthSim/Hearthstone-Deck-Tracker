@@ -5,7 +5,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
-namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
+namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 {
 	[XmlRoot("DailyEventsCount")]
 	public sealed class DailyEventsCount
@@ -36,13 +36,13 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 
 		public int GetEventDailyCount(string eventId)
 		{
-			var existing = Events.FirstOrDefault(x => x.Id == eventId);
+			var existing = Events.FirstOrDefault(x => x.Id?.ToLower() == eventId.ToLower());
 			return existing?.Count ?? 0;
 		}
 
 		public int UpdateEventDailyCount(string eventId)
 		{
-			var existing = Events.FirstOrDefault(x => x.Id == eventId);
+			var existing = Events.FirstOrDefault(x => x.Id?.ToLower() == eventId.ToLower());
 			if(existing == null)
 			{
 				existing = new EventItem(eventId, DateTime.Now.ToString("o"), 1);
@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			else
 			{
 				var lastTimestamp = DateTime.Parse(existing.Timestamp);
-				if((DateTime.Now - lastTimestamp) < TimeSpan.FromDays(1))
+				if(DateTime.Now - lastTimestamp < TimeSpan.FromDays(1))
 					existing.Count += 1;
 				else
 				{
@@ -63,9 +63,22 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			return existing.Count;
 		}
 
+		public void SetEventDailyCount(string eventId, int count)
+		{
+			var existing = Events.FirstOrDefault(x => x.Id?.ToLower() == eventId.ToLower());
+			if(existing == null)
+			{
+				existing = new EventItem(eventId, DateTime.Now.ToString("o"), 0);
+				Events.Add(existing);
+			}
+
+			existing.Count = count;
+			Save();
+		}
+
 		public void Clear(string eventId)
 		{
-			var existing = Events.FirstOrDefault(x => x.Id == eventId);
+			var existing = Events.FirstOrDefault(x => x.Id?.ToLower() == eventId.ToLower());
 			if(existing != null)
 			{
 				existing.Count = 0;

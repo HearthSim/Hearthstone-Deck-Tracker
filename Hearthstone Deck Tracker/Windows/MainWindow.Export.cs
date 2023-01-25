@@ -18,7 +18,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.HsReplay;
-
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 
 #endregion
 
@@ -132,7 +132,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await this.ShowSavedFileMessage(fileName);
 				Log.Info($"Saved {deck.GetSelectedDeckVersion().GetDeckInfo()} to file: {fileName}");
 			}
-			HSReplayNetClientAnalytics.OnCopyDeck("Save as XML");
+			HSReplayNetClientAnalytics.OnCopyDeck(CopyDeckAction.Action.SaveAsXML);
 		}
 
 		internal void ExportIdsToClipboard(Deck deck)
@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Clipboard.SetDataObject(Helper.DeckToIdString(deck.GetSelectedDeckVersion()));
 			this.ShowMessage("", "copied ids to clipboard").Forget();
 			Log.Info("Copied " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to clipboard");
-			HSReplayNetClientAnalytics.OnCopyDeck("Copy Ids to Clipboard");
+			HSReplayNetClientAnalytics.OnCopyDeck(CopyDeckAction.Action.CopyIds);
 		}
 
 		internal async void ExportCardNamesToClipboard(Deck deck)
@@ -172,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Log.Error(ex);
 				ErrorManager.AddError("Error copying card names", LocUtil.Get("ShowMessage_CopyCardNames_Error"));
 			}
-			HSReplayNetClientAnalytics.OnCopyDeck("Copy Names to Clipboard");
+			HSReplayNetClientAnalytics.OnCopyDeck(CopyDeckAction.Action.CopyNames);
 		}
 
 		internal async void ExportDeckFromWeb()

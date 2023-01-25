@@ -17,7 +17,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using Hearthstone_Deck_Tracker.Utility.ValueMoments;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using HSReplay;
 using HSReplay.OAuth.Data;
 

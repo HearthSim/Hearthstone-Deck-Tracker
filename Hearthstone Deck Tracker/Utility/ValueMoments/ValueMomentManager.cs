@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using VMName = Hearthstone_Deck_Tracker.Utility.ValueMoments.ValueMoment.VMName;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
@@ -11,119 +13,107 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 	{
 		internal static IEnumerable<ValueMoment> GetValueMoments(VMAction action)
 		{
-			switch(action.EventName)
+			switch(action)
 			{
-				case VMActions.CopyDeckAction.Name:
+				case CopyDeckAction _:
 					yield return new ValueMoment(VMName.CopyDeck, ValueMoment.VMKind.Free);
 					break;
-				case VMActions.ClickAction.Name:
-					switch(action.Properties["action_name"])
+				case ClickAction clickAction:
+					switch(clickAction.ActionName)
 					{
-						case VMActions.ClickAction.ActionName.ScreenshotCopyToClipboard:
-						case VMActions.ClickAction.ActionName.ScreenshotSaveToDisk:
-						case VMActions.ClickAction.ActionName.ScreenshotUploadToImgur:
+						case ClickAction.Action.ScreenshotCopyToClipboard:
+						case ClickAction.Action.ScreenshotSaveToDisk:
+						case ClickAction.Action.ScreenshotUploadToImgur:
 							yield return new ValueMoment(VMName.ShareDeck, ValueMoment.VMKind.Free);
 							break;
-						case VMActions.ClickAction.ActionName.StatsArena:
-						case VMActions.ClickAction.ActionName.StatsConstructed:
+						case ClickAction.Action.StatsArena:
+						case ClickAction.Action.StatsConstructed:
 							yield return new ValueMoment(VMName.PersonalStats, ValueMoment.VMKind.Free);
 							break;
 					}
 					break;
-				case VMActions.EndMatchAction.Name:
-				case VMActions.EndSpectateMatchAction.Name:
-					var franchise = action.Properties["franchise"] as string[];
-					if(franchise.Contains(Franchise.HSConstructedValue))
+				case VMEndMatchAction _:
+					switch (action.Franchise)
 					{
-						var hdtGeneralSettings = action.Properties[ValueMomentUtils.HDT_GENERAL_SETTINGS_ENABLED] as string[];
-						if(!hdtGeneralSettings.Contains(ValueMomentUtils.OVERLAY_HIDE_COMPLETELY))
-							yield return new ValueMoment(VMName.DecklistVisible, ValueMoment.VMKind.Free);
-					}
-					else if(franchise.Contains(Franchise.BattlegroundsValue))
-					{
-						var hdtBgSettings = action.Properties[ValueMomentUtils.BG_GENERAL_SETTINGS_ENABLED] as string[];
-						if(
-							hdtBgSettings.Contains(ValueMomentUtils.BB_COMBAT_SIMULATIONS) &&
-							(
-								hdtBgSettings.Contains(ValueMomentUtils.BB_RESULTS_DURING_COMBAT) ||
-								hdtBgSettings.Contains(ValueMomentUtils.BB_RESULTS_DURING_SHOPPING)
-							)
-						)
-							yield return new ValueMoment(VMName.BGBobsBuddy, ValueMoment.VMKind.Free);
-
-						if(
-							hdtBgSettings.Contains(ValueMomentUtils.SESSION_RECAP) ||
-							hdtBgSettings.Contains(ValueMomentUtils.SESSION_RECAP_BETWEEN_GAMES)
-						)
-							yield return new ValueMoment(VMName.BGSessionRecap, ValueMoment.VMKind.Free);
-
-						if((int)action.Properties[ValueMomentUtils.NUM_CLICK_BATTLEGROUNDS_MINION_TAB] > 0)
-							yield return new ValueMoment(VMName.BGMinionBrowser, ValueMoment.VMKind.Free);
-
-						var isTrialActivated = action.Properties.TryGetValue(ValueMomentUtils.TRIALS_ACTIVATED, out var activatedTrials)
-							&& activatedTrials is string[] trialsArr
-							&& trialsArr.Contains(ValueMomentUtils.TIER7_OVERLAY_TRIAL);
-
-						if((bool)action.Properties[ValueMomentUtils.TIER7_HERO_OVERLAY_DISPLAYED])
-							yield return new ValueMoment(VMName.BGHeroPickOverlay, !isTrialActivated);
-
-						if((bool)action.Properties[ValueMomentUtils.TIER7_QUEST_OVERLAY_DISPLAYED])
-							yield return new ValueMoment(VMName.BGQuestStatsOverlay, !isTrialActivated);
-					}
-					else if(franchise.Contains(Franchise.MercenariesValue))
-					{
-						if((int)action.Properties[ValueMomentUtils.NUM_HOVER_OPPONENT_MERC_ABILITY] > 0)
-							yield return new ValueMoment(VMName.MercOpponentAbilities, ValueMoment.VMKind.Free);
-
-						if((int)action.Properties[ValueMomentUtils.NUM_HOVER_MERC_TASK_OVERLAY] > 0)
-							yield return new ValueMoment(VMName.MercFriendlyTasks, ValueMoment.VMKind.Free);
+						case Franchise.HSConstructed:
+						{
+							if(!action.GeneralSettings.OverlayHideCompletely)
+								yield return new ValueMoment(VMName.DecklistVisible, ValueMoment.VMKind.Free);
+							break;
+						}
+						case Franchise.Battlegrounds:
+						{
+							foreach (var vmBattlegrounds in GetEndMatchBattlegroundsValueMoments(action))
+								yield return vmBattlegrounds;
+							break;
+						}
+						case Franchise.Mercenaries:
+						{
+							foreach (var vmMercenaries in GetEndMatchMercenariesValueMoments(action))
+								yield return vmMercenaries;
+							break;
+						}
 					}
 					break;
 			};
 		}
 
-		internal static Dictionary<string, object> GetValueMomentsProperties(List<ValueMoment> valueMoments)
+		private static IEnumerable<ValueMoment> GetEndMatchBattlegroundsValueMoments(VMAction action)
 		{
-			var freeValueMoments = new List<string>();
-			var paidValueMoments = new List<string>();
-			var hasFreeValueMoment = false;
-			var hasPaidValueMoment = false;
+			var battlegroundsAction = (VMBattlegroundsAction)action;
 
-			foreach (var vm in valueMoments)
-			{
-				if (vm.IsFree)
-				{
-					freeValueMoments.Add(vm.Name);
-					hasFreeValueMoment = true;
-				}
-				else if(vm.IsPaid)
-				{
-					paidValueMoments.Add(vm.Name);
-					hasPaidValueMoment = true;
-				}
+			if (
+				battlegroundsAction.BattlegroundsSettings.BobsBuddyCombatSimulations &&
+				(
+					battlegroundsAction.BattlegroundsSettings.BobsBuddyResultsDuringCombat ||
+					battlegroundsAction.BattlegroundsSettings.BobsBuddyResultsDuringShopping
+				)
+			)
+				yield return new ValueMoment(VMName.BGBobsBuddy, ValueMoment.VMKind.Free);
 
-			}
+			if (
+				battlegroundsAction.BattlegroundsSettings.SessionRecap ||
+				battlegroundsAction.BattlegroundsSettings.SessionRecapBetweenGames
+			)
+				yield return new ValueMoment(VMName.BGSessionRecap, ValueMoment.VMKind.Free);
 
-			return new Dictionary<string, object>
-			{
-				{ "free_value_moments", freeValueMoments },
-				{ "paid_value_moments", paidValueMoments },
-				{ "has_free_value_moment", hasFreeValueMoment },
-				{ "has_paid_value_moment", hasPaidValueMoment },
-			};
+			if (battlegroundsAction.NumClickBattlegroundsMinionTab > 0)
+				yield return new ValueMoment(VMName.BGMinionBrowser, ValueMoment.VMKind.Free);
+
+			var isTrialActivated = battlegroundsAction.TrialsActivated != null &&
+			                       battlegroundsAction.TrialsActivated.Contains(VMBattlegroundsAction.Tier7OverlayTrial);
+			if (battlegroundsAction.Tier7HeroOverlayDisplayed)
+				yield return new ValueMoment(VMName.BGHeroPickOverlay, !isTrialActivated);
+
+			if (battlegroundsAction.Tier7QuestOverlayDisplayed)
+				yield return new ValueMoment(VMName.BGQuestStatsOverlay, !isTrialActivated);
 		}
 
+		private static IEnumerable<ValueMoment> GetEndMatchMercenariesValueMoments(VMAction action)
+		{
+			var mercenariesAction = (VMMercenariesAction)action;
+
+			if (mercenariesAction.NumHoverOpponentMercAbility > 0)
+				yield return new ValueMoment(VMName.MercOpponentAbilities, ValueMoment.VMKind.Free);
+
+			if (mercenariesAction.NumHoverMercTaskOverlay > 0)
+				yield return new ValueMoment(VMName.MercFriendlyTasks, ValueMoment.VMKind.Free);
+		}
+		
 		internal static bool ShouldSendEventToMixPanel(VMAction action, List<ValueMoment> valueMoments)
 		{
 			// Check action daily occurrences
-			if(action.MaxDailyOccurrences == null)
+			if(action.MaximumDailyOccurrences == null)
 				return true;
 
 			// Always send match events when a trial was activated
-			if(action.EventName == VMActions.EndMatchAction.Name
-				&& action.Properties.TryGetValue(ValueMomentUtils.TRIALS_ACTIVATED, out var activated)
-				&& activated is string[] strArr
-				&& strArr.Length > 0)
+			if(
+				action is {
+					Name: VMEndMatchAction.EndMatchName,
+					Franchise: Franchise.Battlegrounds,
+				}
+				&& ((VMBattlegroundsAction)action).TrialsActivated?.Length > 0
+			)
 			{
 				return true;
 			}
@@ -135,9 +125,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					return true;
 			}
 
-			action.Properties.TryGetValue(ValueMomentUtils.CURRENT_DAILY_OCCURRENCES, out var dailyCount);
+			var dailyCount = action.CurrentDailyOccurrences;
 			if (dailyCount != null)
-				return (int) dailyCount <= action.MaxDailyOccurrences;
+				return (int) dailyCount <= action.MaximumDailyOccurrences;
 
 			return false;
 		}

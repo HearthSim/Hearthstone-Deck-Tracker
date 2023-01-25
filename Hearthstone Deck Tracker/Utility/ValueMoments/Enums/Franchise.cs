@@ -1,22 +1,19 @@
-using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums
 {
-	public class Franchise
-	{
-		public const string HSConstructedValue = "HS-Constructed";
-		public const string BattlegroundsValue = "Battlegrounds";
-		public const string MercenariesValue = "Mercenaries";
+	public enum Franchise {
 
-		public Franchise(string value)
-		{
-			Value = value;
-		}
+		[JsonProperty("All")]
+		All,
 
-		public string Value { get; }
+		[JsonProperty("HS-Constructed")]
+		HSConstructed,
 
-		public static Franchise HSConstructed = new(HSConstructedValue);
-		public static Franchise Battlegrounds = new(BattlegroundsValue);
-		public static Franchise Mercenaries = new(MercenariesValue);
+		[JsonProperty("Battlegrounds")]
+		Battlegrounds,
+
+		[JsonProperty("Mercenaries")]
+		Mercenaries,
 	}
 }

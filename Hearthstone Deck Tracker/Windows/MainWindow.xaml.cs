@@ -447,7 +447,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				else
 				{
 					Core.StatsOverview.TreeViewItemArenaRunsSummary.IsSelected = true;
-					HSReplayNetClientAnalytics.OnShowPersonalStats(VMActions.ClickAction.ActionName.StatsArena, "Arena");
+					HSReplayNetClientAnalytics.OnShowPersonalStats(ClickAction.Action.StatsArena, SubFranchise.Arena);
 				}
 				Core.StatsOverview.ContentControlFilter.Content = Core.StatsOverview.ArenaFilters;
 			}
@@ -458,7 +458,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				else
 				{
 					Core.StatsOverview.TreeViewItemConstructedSummary.IsSelected = true;
-					HSReplayNetClientAnalytics.OnShowPersonalStats(VMActions.ClickAction.ActionName.StatsConstructed, null);
+					HSReplayNetClientAnalytics.OnShowPersonalStats(ClickAction.Action.StatsConstructed, null);
 				}
 				Core.StatsOverview.ContentControlFilter.Content = Core.StatsOverview.ConstructedFilters;
 			}

@@ -11,8 +11,11 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using HSReplay.ClientAnalytics;
+using Mercenaries_Deck_Tracker.Utility.ValueMoments.Actions;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -23,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private static readonly Lazy<ClientAnalyticsClient> Client;
 		private static readonly int[] Ports = { 17881, 17882, 17883, 17884, 17885, 17886, 17887, 17888, 17889 };
 
-		private static event System.Action? OnboardingComplete;
+		private static event Action? OnboardingComplete;
 
 		static HSReplayNetClientAnalytics()
 		{
@@ -47,22 +50,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 			try
 			{
-				action.AddProperties(ValueMomentUtils.EnrichedEventProperties(action));
-
-				var valueMoments = ValueMomentManager.GetValueMoments(action).ToList();
-				foreach(var valueMoment in valueMoments)
-					DailyEventsCount.Instance.UpdateEventDailyCount(valueMoment.Name);
-				action.AddProperties(ValueMomentManager.GetValueMomentsProperties(valueMoments));
-
-				// This should be generalized in the future into enum attributes.
-				action.Properties.Remove(ValueMomentUtils.TIER7_HERO_OVERLAY_DISPLAYED);
-				action.Properties.Remove(ValueMomentUtils.TIER7_QUEST_OVERLAY_DISPLAYED);
-
 #if !DEBUG
-				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action, valueMoments))
-					Client.Value.TrackEvent(token, action.EventName, action.Properties).Forget();
+				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action, action.ValueMoments))
+					Client.Value.TrackEvent(token, action.Name, action).Forget();
 #else
-				Log.Debug($"{action.EventName}: ${JsonConvert.SerializeObject(action.Properties)}");
+				Log.Debug($"{action.Name}: {JsonConvert.SerializeObject(action)}");
 #endif
 			}
 			catch(Exception e)
@@ -75,18 +67,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			var isFirstStart = ConfigManager.PreviousVersion == null;
 			if(isFirstStart)
-			{
-				var action = new VMActions.InstallAction(new Dictionary<string, object>
-				{
-					{ "app_version", Helper.GetCurrentVersion().ToVersionString(true) },
-					{ "franchise", new [] {
-						Franchise.HSConstructed.Value,
-						Franchise.Battlegrounds.Value,
-						Franchise.Mercenaries.Value,
-					} },
-				});
-				TrackAction(action);
-			}
+				TrackAction(new InstallAction());
 		}
 
 		private static void OnAuthenticating(bool authenticating)
@@ -115,14 +96,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private static void CollectionUploaded(Collection collection, bool firstUpload)
 		{
 			if(firstUpload)
-			{
-				var action = new VMActions.FirstCollectionUploadAction(new Dictionary<string, object>
-				{
-					{ "collection_size", collection.Size() },
-					{ "franchise", new string[] { Franchise.HSConstructed.Value } },
-				});
-				TrackAction(action);
-			}
+				TrackAction(new FirstHSCollectionUploadAction(collection.Size()));
 		}
 
 		public static void OnConstructedMatchEnds(GameStats gameStats, GameMode gameMode, GameType gameType, bool spectator)
@@ -131,23 +105,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(heroCard == null)
 				return;
 
-			string? subFranchise = gameMode switch
-			{
-				GameMode.Arena => "Arena",
-				GameMode.Brawl => "Brawl",
-				GameMode.Duels => "Duels",
-				_ => null
-			};
+			var heroDbfId = heroCard.DbfId;
+			var heroName = heroCard.Name ?? "";
+			var matchResult = gameStats.Result;
+			var starLevel = gameMode == GameMode.Ranked ? gameStats.StarLevel : 0;
 
-			OnMatchEnds(Franchise.HSConstructed, spectator, new Dictionary<string, object>
-			{
-				{ "hero_dbf_id", heroCard.DbfId },
-				{ "hero_name", heroCard.Name ?? "" },
-				{ "sub_franchise", subFranchise != null ? new [] { subFranchise } : new string[] { } },
-				{ "match_result", gameStats.Result.ToString() },
-				{ "game_type", gameType.ToString() },
-				{ "star_level ", gameMode == GameMode.Ranked ? gameStats.StarLevel : "" },
-			});
+			if(spectator)
+				TrackAction(new EndSpectateMatchHearthstoneAction(heroDbfId, heroName, matchResult, gameMode, gameType, starLevel));
+			else
+				TrackAction(new EndMatchHearthstoneAction(heroDbfId, heroName, matchResult, gameMode, gameType, starLevel));
 		}
 		
 		public static void OnBattlegroundsMatchEnds(string? heroCardId, int finalPlacement, GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)
@@ -155,104 +121,47 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var bgHeroCard = Database.GetCardFromId(heroCardId);
 			if(bgHeroCard == null)
 				return;
+			
+			var heroDbfId = bgHeroCard.DbfId;
+			var heroName = bgHeroCard.Name ?? "";
+			var bgsRating = gameStats.BattlegroundsRatingAfter;
 
-			var props = new Dictionary<string, object>
-			{
-				{ "hero_dbf_id", bgHeroCard.DbfId },
-				{ "hero_name", bgHeroCard.Name ?? "" },
-				{ "final_placement", finalPlacement },
-				{ "game_type", gameType.ToString() },
-				{ "battlegrounds_rating", gameStats.BattlegroundsRatingAfter },
-				{ ValueMomentUtils.NUM_CLICK_BATTLEGROUNDS_MINION_TAB, gameMetrics.BattlegroundsMinionsTabClicks },
-				{ ValueMomentUtils.TIER7_HERO_OVERLAY_DISPLAYED, gameMetrics.Tier7HeroOverlayDisplayed },
-				{ ValueMomentUtils.TIER7_QUEST_OVERLAY_DISPLAYED, gameMetrics.Tier7QuestOverlayDisplayed },
-			};
-
-			if(gameMetrics.Tier7TrialActivated)
-				props[ValueMomentUtils.TRIALS_ACTIVATED] = new[] { ValueMomentUtils.TIER7_OVERLAY_TRIAL };
-			if(gameMetrics.Tier7TrialsRemaining.HasValue)
-				props[ValueMomentUtils.TRIALS_REMAINING] = new[] { $"{ValueMomentUtils.TIER7_OVERLAY_TRIAL}:{gameMetrics.Tier7TrialsRemaining}" };
-
-			OnMatchEnds(Franchise.Battlegrounds, spectator, props);
+			if(spectator)
+				TrackAction(new EndSpectateMatchBattlegroundsAction(heroDbfId, heroName, finalPlacement, gameType, bgsRating, gameMetrics));
+			else
+				TrackAction(new EndMatchBattlegroundsAction(heroDbfId, heroName, finalPlacement, gameType, bgsRating, gameMetrics));
 		}
 		
 		public static void OnMercenariesMatchEnds(GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)
 		{
-			OnMatchEnds(Franchise.Mercenaries, spectator, new Dictionary<string, object>
-			{
-				{ "match_result", gameStats.Result.ToString() },
-				{ "game_type", gameType.ToString() },
-				{ ValueMomentUtils.NUM_HOVER_OPPONENT_MERC_ABILITY, gameMetrics.MercenariesHoversOpponentMercToShowAbility },
-				{ ValueMomentUtils.NUM_HOVER_MERC_TASK_OVERLAY, gameMetrics.MercenariesHoverTasksDuringMatch },
-			});
-		}
+			var matchResult = gameStats.Result;
 
-		private static void OnMatchEnds(Franchise franchise, bool spectator, Dictionary<string, object> properties)
-		{
-			var action_properties = new Dictionary<string, object>(properties)
-			{
-				{ "franchise", new string[] { franchise.Value } },
-				{ "action_name", "end_match"},
-			};
 			if(spectator)
-			{
-				var action = new VMActions.EndSpectateMatchAction(action_properties);
-				action.AddProperties(ValueMomentUtils.GetFranchiseProperties(franchise));
-				TrackAction(action);
-			}	
+				TrackAction(new EndSpectateMatchMercenariesAction(matchResult, gameType, gameMetrics));
 			else
-			{
-				var action = new VMActions.EndMatchAction(action_properties);
-				action.AddProperties(ValueMomentUtils.GetFranchiseProperties(franchise));
-				TrackAction(action);
-			}
+				TrackAction(new EndMatchMercenariesAction(matchResult, gameType, gameMetrics));
+		}
+		
+		public static void OnCopyDeck(CopyDeckAction.Action action)
+		{
+			TrackAction(new CopyDeckAction(Franchise.HSConstructed, action));
 		}
 
-		public static void OnCopyDeck(string target)
+		public static void OnScreenshotDeck(ClickAction.Action action)
 		{
-			var action = new VMActions.CopyDeckAction(new Dictionary<string, object>
-			{
-				{ "action_name", target },
-				{ "franchise", new string[] { Franchise.HSConstructed.Value } },
-			});
-			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
-
-			TrackAction(action);
+			TrackAction(new ClickAction(Franchise.HSConstructed, action));
 		}
 
-		public static void OnScreenshotDeck(string actionName)
+		public static void OnShowPersonalStats(ClickAction.Action action, SubFranchise? subFranchise)
 		{
-			var action = new VMActions.ClickAction(new Dictionary<string, object>
-			{
-				{ "franchise", new string[] { Franchise.HSConstructed.Value } },
-				{ "action_name", actionName},
-			});
-			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
+			var subFranchiseArray = subFranchise != null ? new[] { (SubFranchise)subFranchise } : new SubFranchise[] { };
 
-			TrackAction(action);
+			TrackAction(new ClickAction(Franchise.HSConstructed, action, subFranchiseArray));
 		}
 
-		public static void OnShowPersonalStats(string actionName, string? subFranchise)
+		public static void TryTrackToastClick(Franchise franchise, ToastAction.Toast toastNameEnum)
 		{
-			var action = new VMActions.ClickAction(new Dictionary<string, object>
-			{
-				{ "franchise", new string[] { Franchise.HSConstructed.Value } },
-				{ "action_name", actionName },
-				{ "sub_franchise", subFranchise != null ? new string[] { subFranchise } : new string[] { } },
-			});
-			action.AddProperties(ValueMomentUtils.GetPersonalStatsProperties());
-
-			TrackAction(action);
-		}
-
-		public static void TryTrackToastClick(string toastId, Franchise franchise)
-		{
-			var action = new VMActions.ToastAction(new Dictionary<string, object>
-			{
-				{ "toast", toastId },
-				{ "franchise", new string[] { franchise.Value } },
-			});
-			TrackAction(action);
+			TrackAction(new ToastAction(franchise, toastNameEnum));
 		}
 
 		public static async Task<bool> EnsureOnboarded()
