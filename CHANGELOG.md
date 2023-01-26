@@ -1,3 +1,6 @@
+## **Release v1.19.12 - 2022-01-26**
+**Updated for Hearthstone 25.2.2**
+
 ## **Release v1.19.11 - 2022-01-20**
 **Bob's Buddy**:
 - Fixed various issues related to cards and mechanics added with Hearthstone 25.2.0.
