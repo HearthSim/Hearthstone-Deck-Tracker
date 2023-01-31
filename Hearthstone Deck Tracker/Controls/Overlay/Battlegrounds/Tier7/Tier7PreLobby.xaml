@@ -48,13 +48,31 @@
         </Border>
 
         <!-- Interactive Panel -->
-        <Border Name="Tier7Panel" MinWidth="214" Background="{StaticResource Tier7Black}" BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Border Name="Tier7Panel" MinWidth="{Binding PanelMinWidth}" Background="{StaticResource Tier7Black}"
+                BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel>
                 <!-- Header -->
                 <Border Background="{StaticResource Tier7Purple}" Padding="8 5" Margin="-1 -1 -1 0" CornerRadius="4">
                     <DockPanel>
                         <local:Tier7Logo Width="16" Height="16" DockPanel.Dock="Left"/>
                         <Border DockPanel.Dock="Right" Padding="4 3" Margin="0 -3 -6 -3" CornerRadius="3"
+                                Cursor="Hand" MouseUp="Chevron_MouseUp">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                                            <Setter Property="Background" Value="#22FFFFFF"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Rectangle Height="8" Width="16">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{Binding ChevronIcon, FallbackValue={StaticResource chevron_up}}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <Border DockPanel.Dock="Right" Padding="4 3" Margin="0 -3 2 -3" CornerRadius="3"
                                 Cursor="Hand" MouseUp="Settings_MouseUp"
                                 Visibility="{Binding IsMouseOver, ElementName=Tier7Panel, Converter={StaticResource BoolToVisibility}, ConverterParameter=Hidden}">
                             <Border.Style>
@@ -75,71 +93,72 @@
                         <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Header}" Foreground="White" Margin="12 0" VerticalAlignment="Center" TextAlignment="Left" />
                     </DockPanel>
                 </Border>
-
-                <!-- Loading -->
-                <StackPanel Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Loading}}">
-                    <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Loading}" />
-                </StackPanel>
-
-                <!-- Anonymous -->
-                <StackPanel Width="182" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Anonymous}}">
-                    <StackPanel Name="HoverTrigger" >
-                        <Image Source="{StaticResource Tier7PreLobbySmall}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" Margin="0 -8 0 0" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="{StaticResource Tier7Black}">
-                            <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Anonymous_Hover}" Foreground="#07618B"/>
-                            <Rectangle Fill="#07618B" Width="17" Height="17" Margin="4 0 0 0">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Visual="{DynamicResource appbar_magnify}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </StackPanel>
+                <StackPanel Name="Tier7Content"  Visibility="{Binding IsCollapsed, Converter={StaticResource InverseBoolToVisibility}}">
+                    <!-- Loading -->
+                    <StackPanel Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Loading}}">
+                        <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Loading}" />
                     </StackPanel>
-                    <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Anonymous_Hover_Details}" Margin="0 8 0 0" />
-                    <Button Style="{StaticResource Tier7ButtonStyle}" Content="SIGN IN" Margin="0 8 0 0" Command="{Binding SignInCommand}"/>
-                </StackPanel>
 
-                <!-- Authenticated -->
-                <StackPanel Width="230" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Authenticated}}">
-                    <TextBlock  Foreground="{StaticResource Tier7Orange}" FontWeight="SemiBold">
+                    <!-- Anonymous -->
+                    <StackPanel Width="182" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Anonymous}}">
+                        <StackPanel Name="HoverTrigger" >
+                            <Image Source="{StaticResource Tier7PreLobbySmall}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" Margin="0 -8 0 0" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="{StaticResource Tier7Black}">
+                                <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Anonymous_Hover}" Foreground="#07618B"/>
+                                <Rectangle Fill="#07618B" Width="17" Height="17" Margin="4 0 0 0">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Visual="{DynamicResource appbar_magnify}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </StackPanel>
+                        </StackPanel>
+                        <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Anonymous_Hover_Details}" Margin="0 8 0 0" />
+                        <Button Style="{StaticResource Tier7ButtonStyle}" Content="SIGN IN" Margin="0 8 0 0" Command="{Binding SignInCommand}"/>
+                    </StackPanel>
+
+                    <!-- Authenticated -->
+                    <StackPanel Width="230" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Authenticated}}">
+                        <TextBlock  Foreground="{StaticResource Tier7Orange}" FontWeight="SemiBold">
                         <Run Text="{lex:Loc BattlegroundsPreLobby_Authenticated_Welcome}"/>
                         <Run Text="{Binding Username}"/>!
-                    </TextBlock>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 8 0 0">
-                        <TextBlock FontWeight="SemiBold" Margin="0 0 8 0">
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 8 0 0">
+                            <TextBlock FontWeight="SemiBold" Margin="0 0 8 0">
                             <Run Text="{lex:Loc BattlegroundsPreLobby_Authenticated_TrialsRemaining}"/>
                             <Run Text="{Binding TrialUsesRemaining}"/>
-                        </TextBlock>
-                        <Border Width="18" Height="18" BorderBrush="White" Background="{StaticResource Tier7Black}" BorderThickness="1" CornerRadius="18"
+                            </TextBlock>
+                            <Border Width="18" Height="18" BorderBrush="White" Background="{StaticResource Tier7Black}" BorderThickness="1" CornerRadius="18"
                                 ToolTipService.InitialShowDelay="0" ToolTip="You can use the Tier7 overlay for free twice each week.">
-                            <TextBlock Text="i" VerticalAlignment="Center" FontSize="12" FontWeight="SemiBold"/>
-                        </Border>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ResetTimeVisibility}">
-                        <TextBlock>
+                                <TextBlock Text="i" VerticalAlignment="Center" FontSize="12" FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ResetTimeVisibility}">
+                            <TextBlock>
                             <Run Text="{lex:Loc BattlegroundsPreLobby_Authenticated_TrialsResetsIn}" />
                             <Bold><Run Text="{Binding TrialTimeRemaining}" /></Bold>
-                        </TextBlock>
-                    </StackPanel>
-                    <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Authenticated_Join}" TextWrapping="Wrap" Margin="0 8 0 0" />
-                    <Button Style="{StaticResource Tier7ButtonStyle}" Content="SUBSCRIBE NOW" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}"/>
-                    <TextBlock Margin="0 8 0 0" Visibility="{Binding RefreshAccountVisibility}">
+                            </TextBlock>
+                        </StackPanel>
+                        <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Authenticated_Join}" TextWrapping="Wrap" Margin="0 8 0 0" />
+                        <Button Style="{StaticResource Tier7ButtonStyle}" Content="SUBSCRIBE NOW" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}"/>
+                        <TextBlock Margin="0 8 0 0" Visibility="{Binding RefreshAccountVisibility}">
                         <Run Text="Subscribed?"/>
                         <Hyperlink Command="{Binding RefreshAccountCommand}" IsEnabled="{Binding RefreshAccountEnabled}">
                             <Run Text="Refresh"/>
                         </Hyperlink>
-                    </TextBlock>
-                </StackPanel>
-
-                <!-- Subscribed -->
-                <StackPanel Width="230" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Subscribed}}">
-                    <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Subscribed_Tier7}" Foreground="{StaticResource Tier7Orange}" FontWeight="SemiBold"/>
-                    <StackPanel Margin="0 8 0 0" Visibility="{Binding AllTimeHighMMRVisibility}">
-                        <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Subscribed_AllTimeMMR}"/>
-                        <TextBlock FontSize="24" Text="{Binding AllTimeHighMMR, FallbackValue='N/A'}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                        </TextBlock>
                     </StackPanel>
-                    <Button Style="{StaticResource Tier7ButtonStyle}" Content="{lex:Loc BattlegroundsPreLobby_Subscribed_MyStats}" Margin="0 8 0 0" Command="{Binding MyStatsCommand}"/>
-                </StackPanel>
 
+                    <!-- Subscribed -->
+                    <StackPanel Width="230" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Subscribed}}">
+                        <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Subscribed_Tier7}" Foreground="{StaticResource Tier7Orange}" FontWeight="SemiBold"/>
+                        <StackPanel Margin="0 8 0 0" Visibility="{Binding AllTimeHighMMRVisibility}">
+                            <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Subscribed_AllTimeMMR}"/>
+                            <TextBlock FontSize="24" Text="{Binding AllTimeHighMMR, FallbackValue='N/A'}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                        </StackPanel>
+                        <Button Style="{StaticResource Tier7ButtonStyle}" Content="{lex:Loc BattlegroundsPreLobby_Subscribed_MyStats}" Margin="0 8 0 0" Command="{Binding MyStatsCommand}"/>
+                    </StackPanel>
+
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>

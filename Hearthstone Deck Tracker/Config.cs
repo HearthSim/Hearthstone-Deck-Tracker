@@ -870,6 +870,9 @@ namespace Hearthstone_Deck_Tracker
 		public double OverlaySessionRecapScaling = 100;
 
 		[DefaultValue(false)]
+		public bool Tier7OverlayCollapsed = false;
+
+		[DefaultValue(false)]
 		public bool SeenMulliganToast = false;
 
 		[DefaultValue(false)]

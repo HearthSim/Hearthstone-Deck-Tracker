@@ -15,5 +15,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
 			Core.MainWindow.FlyoutOptions.IsOpen = true;
 		}
+
+		private void Chevron_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			var viewModel = (Tier7PreLobbyViewModel)DataContext;
+			viewModel.IsCollapsed = !viewModel.IsCollapsed;
+		}
 	}
 }

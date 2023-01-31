@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -21,11 +22,32 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			HSReplayNetOAuth.LoggedOut += () => Update(false).Forget();
 		}
 
-		public UserState UserState { get => GetProp(UserState.Loading); set => SetProp(value); }
+		public UserState UserState
+		{
+			get => GetProp(UserState.Loading);
+			set
+			{
+				SetProp(value);
+				OnPropertyChanged(nameof(PanelMinWidth));
+			}
+		}
 
 		public int? TrialUsesRemaining { get => GetProp<int?>(null); set => SetProp(value); }
 		public string? AllTimeHighMMR { get => GetProp<string?>(null); set => SetProp(value); }
 		public Visibility AllTimeHighMMRVisibility { get => GetProp(Visibility.Collapsed); set => SetProp(value); }
+
+		public bool IsCollapsed
+		{
+			get => GetProp(Config.Instance.Tier7OverlayCollapsed);
+			set
+			{
+				SetProp(value);
+				Config.Instance.Tier7OverlayCollapsed = value;
+				OnPropertyChanged(nameof(ChevronIcon));
+			}
+		}
+		public Visual? ChevronIcon => Core.Overlay.Tier7PreLobby.TryFindResource("chevron_" + (IsCollapsed ? "down" : "up")) as Visual;
+		public int? PanelMinWidth => UserState is UserState.Authenticated or UserState.Subscribed ? 264 : 214;
 
 		public string? TrialTimeRemaining
 		{
