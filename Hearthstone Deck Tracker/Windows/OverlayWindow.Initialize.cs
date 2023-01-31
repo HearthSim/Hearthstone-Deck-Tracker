@@ -157,6 +157,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_clickableElements.Add(BattlegroundsSession.BtnOptions);
 			_clickableElements.Add(BattlegroundsSession.BattlegroundsSessionPanelTopGroup);
 			_clickableElements.Add(BattlegroundsSession.BgLatestGamesSectionHeader);
+			_clickableElements.Add(BattlegroundsHeroPicking.VisibilityToggle);
 		}
 	}
 }

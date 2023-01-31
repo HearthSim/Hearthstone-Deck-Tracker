@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -14,15 +16,31 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 	{
 		public Visibility Visibility
 		{
-			get
+			get => GetProp(Collapsed);
+			set
 			{
-				if(!Config.Instance.ShowBattlegroundsHeroPicking)
-					return Collapsed;
-				return GetProp(Collapsed);
+				SetProp(value);
+				if (value == Visible)
+					StatsVisibility = Config.Instance.ShowBattlegroundsHeroPicking ? Visible : Collapsed;
 			}
-
-			set => SetProp(value);
 		}
+
+		public Visibility StatsVisibility
+		{
+			get => GetProp(Collapsed);
+			set
+			{
+				SetProp(value);
+				OnPropertyChanged(nameof(VisibilityToggleIcon));
+				OnPropertyChanged(nameof(VisibilityToggleText));
+				Config.Instance.ShowBattlegroundsHeroPicking = value == Visible;
+				Config.Save();
+			}
+		}
+
+		public Visual? VisibilityToggleIcon =>
+			Core.Overlay.BattlegroundsHeroPicking.TryFindResource(StatsVisibility == Visible ? "eye_slash" : "eye") as Visual;
+		public string VisibilityToggleText => StatsVisibility == Visible ? "HIDE HERO OVERLAY" : "SHOW HERO OVERLAY";
 
 		public List<BattlegroundsSingleHeroViewModel>? HeroStats
 		{
