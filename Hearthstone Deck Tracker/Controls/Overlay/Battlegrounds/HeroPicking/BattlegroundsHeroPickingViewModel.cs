@@ -34,8 +34,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 				SetProp(value);
 				OnPropertyChanged(nameof(VisibilityToggleIcon));
 				OnPropertyChanged(nameof(VisibilityToggleText));
-				Config.Instance.ShowBattlegroundsHeroPicking = value == Visible;
-				Config.Save();
+				ConfigWrapper.ShowBattlegroundsHeroPicking = value == Visible;
 			}
 		}
 

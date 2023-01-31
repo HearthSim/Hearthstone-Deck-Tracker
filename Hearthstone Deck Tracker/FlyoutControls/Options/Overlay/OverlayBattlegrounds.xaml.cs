@@ -95,12 +95,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowSessionRecapBetweenGames.IsChecked = Config.Instance.ShowSessionRecapBetweenGames;
 			CheckboxShowExternalWindow.IsChecked = Config.Instance.BattlegroundsSessionRecapWindowOnStart;
 
-			_initialized = true;
-			Config.Instance.OnConfigSaved += () =>
-			{
+			ConfigWrapper.ShowBattlegroundsHeroPickingChanged += () =>
 				CheckboxShowBattlegroundsHeroPicking.IsChecked = Config.Instance.ShowBattlegroundsHeroPicking;
-			};
+			_initialized = true;
 		}
+
+		public bool ShowBattlegroundsHeroPicking => ConfigWrapper.ShowBattlegroundsHeroPicking;
 
 		internal void UpdateDisabledState()
 		{

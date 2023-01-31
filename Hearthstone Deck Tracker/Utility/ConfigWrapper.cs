@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		public static event Action? ReplayAutoUploadChanged;
 		public static event Action? CollectionSyncingChanged;
+		public static event Action? ShowBattlegroundsHeroPickingChanged;
 		public static event Action? IgnoreNewsIdChanged;
 
 		public static bool CardDbIncludeWildOnlyCards
@@ -426,6 +427,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Instance.IgnoreNewsId = value;
 				Config.Save();
 				IgnoreNewsIdChanged?.Invoke();
+			}
+		}
+
+		public static bool ShowBattlegroundsHeroPicking
+		{
+			get => Config.Instance.ShowBattlegroundsHeroPicking;
+			set
+			{
+				Config.Instance.ShowBattlegroundsHeroPicking = value;
+				Config.Save();
+				ShowBattlegroundsHeroPickingChanged?.Invoke();
 			}
 		}
 
