@@ -44,6 +44,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("tier7_prelobby_overlay")]
 		public bool Tier7PrelobbyOverlay { get => Config.Instance.ShowBattlegroundsTier7PreLobby; }
 
+		[JsonProperty("tier7_prelobby_overlay_collapsed")]
+		public bool Tier7PrelobbyOverlayCollapsed { get => Config.Instance.Tier7OverlayCollapsed; }
+
 		[JsonProperty("tier7_hero_overlay")]
 		public bool Tier7HeroOverlay { get => Config.Instance.ShowBattlegroundsHeroPicking; }
 
