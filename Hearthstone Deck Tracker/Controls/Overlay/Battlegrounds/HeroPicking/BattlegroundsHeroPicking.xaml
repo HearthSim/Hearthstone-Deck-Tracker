@@ -7,6 +7,7 @@
              xmlns:heroPicking="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking"
              xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
              xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -44,8 +45,9 @@
             <tier7:OverlayMessage DataContext="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="738 0 0 13" />
         </Grid>
         <!-- Visibility Toggle -->
-        <Border Name="VisibilityToggle" MinWidth="180" Background="{StaticResource Tier7Purple}" Padding="8 5" CornerRadius="4"
-                Cursor="Hand" MouseUp="OverlayVisibilityToggle_MouseUp" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 936 213">
+        <Border MinWidth="180" Background="{StaticResource Tier7Purple}" Padding="8 5" CornerRadius="4" Cursor="Hand"
+                MouseUp="OverlayVisibilityToggle_MouseUp" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 936 213"
+                extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
             <DockPanel>
                 <TextBlock Text="{Binding VisibilityToggleText}" Foreground="White" VerticalAlignment="Center" TextAlignment="Left" />
                 <Border HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="0 -3 0 -3">
