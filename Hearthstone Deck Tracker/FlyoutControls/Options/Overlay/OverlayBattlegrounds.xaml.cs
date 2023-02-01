@@ -100,8 +100,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			_initialized = true;
 		}
 
-		public bool ShowBattlegroundsHeroPicking => ConfigWrapper.ShowBattlegroundsHeroPicking;
-
 		internal void UpdateDisabledState()
 		{
 			var enabled = true;
