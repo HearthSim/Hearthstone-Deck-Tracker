@@ -14,9 +14,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 		private void OverlayVisibilityToggle_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			var viewModel = (BattlegroundsHeroPickingViewModel)DataContext;
-			viewModel.StatsVisibility = viewModel.StatsVisibility == Visibility.Visible
+			var newVisibility = viewModel.StatsVisibility == Visibility.Visible
 				? Visibility.Collapsed
 				: Visibility.Visible;
+			viewModel.StatsVisibility = newVisibility;
+			ConfigWrapper.ShowBattlegroundsHeroPicking = newVisibility == Visibility.Visible;
 		}
 
 		public ICommand SetSelectedHeroDbfIdCommand => new Command<int>(value => ((BattlegroundsHeroPickingViewModel)DataContext).SelectedHeroDbfId = value);

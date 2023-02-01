@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using HearthDb.Enums;
@@ -21,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			set
 			{
 				SetProp(value);
-				if (value == Visible)
+				if(value == Visible)
 					StatsVisibility = Config.Instance.ShowBattlegroundsHeroPicking ? Visible : Collapsed;
 			}
 		}
@@ -34,7 +35,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 				SetProp(value);
 				OnPropertyChanged(nameof(VisibilityToggleIcon));
 				OnPropertyChanged(nameof(VisibilityToggleText));
-				ConfigWrapper.ShowBattlegroundsHeroPicking = value == Visible;
 			}
 		}
 
@@ -56,6 +56,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 		{
 			HeroStats = null;
 			Visibility = Collapsed;
+			StatsVisibility = Collapsed;
 			Message.Clear();
 		}
 

@@ -20,7 +20,7 @@
             <Setter Property="LayoutTransform" Value="{Binding LayoutTransform, RelativeSource={RelativeSource AncestorType=heroPicking:BattlegroundsHeroPicking}}"/>
         </Style>
     </UserControl.Resources>
-    <Grid Visibility="{Binding Visibility}">
+    <Grid>
         <Grid anim:FadeAnimation.Visibility="{Binding StatsVisibility}" Visibility="Collapsed"
               anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2">
             <!-- Centered over heroes -->
@@ -47,7 +47,7 @@
         <!-- Visibility Toggle -->
         <Border MinWidth="180" Background="{StaticResource Tier7Purple}" Padding="8 5" CornerRadius="4" Cursor="Hand"
                 MouseUp="OverlayVisibilityToggle_MouseUp" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 936 213"
-                extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
+                extensions:OverlayExtensions.IsOverlayHitTestVisible="True" Visibility="{Binding Visibility}">
             <DockPanel>
                 <TextBlock Text="{Binding VisibilityToggleText}" Foreground="White" VerticalAlignment="Center" TextAlignment="Left" />
                 <Border HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="0 -3 0 -3">
