@@ -95,6 +95,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowSessionRecapBetweenGames.IsChecked = Config.Instance.ShowSessionRecapBetweenGames;
 			CheckboxShowExternalWindow.IsChecked = Config.Instance.BattlegroundsSessionRecapWindowOnStart;
 
+			ConfigWrapper.ShowBattlegroundsHeroPickingChanged += () =>
+				CheckboxShowBattlegroundsHeroPicking.IsChecked = Config.Instance.ShowBattlegroundsHeroPicking;
 			_initialized = true;
 		}
 
@@ -171,7 +173,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsHeroPicking = true;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.BattlegroundsHeroPickingViewModel.Visibility = Visibility.Visible;
+				Core.Overlay.BattlegroundsHeroPickingViewModel.StatsVisibility = Visibility.Visible;
 		}
 
 		private void CheckboxShowBattlegroundsHeroPicking_Unchecked(object sender, RoutedEventArgs e)
@@ -181,7 +183,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsHeroPicking = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.BattlegroundsHeroPickingViewModel.Visibility = Visibility.Collapsed;
+				Core.Overlay.BattlegroundsHeroPickingViewModel.StatsVisibility = Visibility.Collapsed;
 		}
 
 		private void CheckboxShowBattlegroundsQuestPicking_Checked(object sender, RoutedEventArgs e)

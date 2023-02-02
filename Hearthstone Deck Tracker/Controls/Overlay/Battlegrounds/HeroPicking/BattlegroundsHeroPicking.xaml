@@ -7,6 +7,7 @@
              xmlns:heroPicking="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking"
              xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
              xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -20,28 +21,43 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <!-- Centered over heroes -->
-        <Grid Margin="14,15,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
-             anim:FadeAnimation.Visibility="{Binding Visibility}" Visibility="Collapsed"
-             anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2"
-        >
-            <ItemsControl ItemsSource="{Binding HeroStats}" Margin="-16,0">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Height="480" Width="266" Margin="16,0">
-                            <heroPicking:BattlegroundsSingleHeroStats
-                                SetSelectedHeroDbfIdCommand="{Binding SetSelectedHeroDbfIdCommand, RelativeSource={RelativeSource AncestorType=heroPicking:BattlegroundsHeroPicking}}"
-                            />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Rows="1"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+        <Grid anim:FadeAnimation.Visibility="{Binding StatsVisibility}" Visibility="Collapsed"
+              anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2">
+            <!-- Centered over heroes -->
+            <Grid Margin="14,15,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ItemsControl ItemsSource="{Binding HeroStats}" Margin="-16,0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="480" Width="266" Margin="16,0">
+                                <heroPicking:BattlegroundsSingleHeroStats
+                                    SetSelectedHeroDbfIdCommand="{Binding SetSelectedHeroDbfIdCommand, RelativeSource={RelativeSource AncestorType=heroPicking:BattlegroundsHeroPicking}}"
+                                />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+            <tier7:OverlayMessage DataContext="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="738 0 0 13" />
         </Grid>
-        <tier7:OverlayMessage DataContext="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="738 0 0 13" />
+        <!-- Visibility Toggle -->
+        <Border MinWidth="180" Background="{StaticResource Tier7Purple}" Padding="8 5" CornerRadius="4" Cursor="Hand"
+                MouseUp="OverlayVisibilityToggle_MouseUp" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 936 213"
+                extensions:OverlayExtensions.IsOverlayHitTestVisible="True" Visibility="{Binding Visibility}">
+            <DockPanel>
+                <TextBlock Text="{Binding VisibilityToggleText}" Foreground="White" VerticalAlignment="Center" TextAlignment="Left" />
+                <Border HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="0 -3 0 -3">
+                    <Rectangle Height="12" Width="16">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{Binding VisibilityToggleIcon}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Border>
+            </DockPanel>
+        </Border>
     </Grid>
 </UserControl>

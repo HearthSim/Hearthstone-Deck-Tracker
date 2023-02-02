@@ -1220,7 +1220,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 		}
-
+		
 		public static void Save() => XmlManager<Config>.Save(Instance.ConfigPath, Instance);
 
 		public static void SaveBackup(bool deleteOriginal = false)
