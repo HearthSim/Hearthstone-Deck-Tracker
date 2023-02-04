@@ -858,6 +858,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowSessionRecapMinionsBanned = true;
 
 		[DefaultValue(true)]
+		public bool ShowSessionRecapMinionsAvailable = true;
+
+		[DefaultValue(true)]
 		public bool ShowSessionRecapStartCurrentMMR = true;
 
 		[DefaultValue(true)]

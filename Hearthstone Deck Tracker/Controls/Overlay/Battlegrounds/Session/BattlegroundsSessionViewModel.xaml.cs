@@ -18,6 +18,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 		private readonly Lazy<BattlegroundsDb> _db = new();
 
 		public ObservableCollection<BattlegroundsGameViewModel> SessionGames { get; set; } = new();
+		public ObservableCollection<Rase> AvailableRaces { get; set; } = new();
+		public ObservableCollection<Race> UnavailableRaces { get; set; } = new();
 
 		public void OnGameEnd()
 		{
@@ -49,6 +51,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 
 		public void UpdateSectionsVisibilities()
 		{
+			BgAvailableTribesSectionVisibility = Config.Instance.ShowSessionRecapMinionsAvailable
+				? Visibility.Visible
+				: Visibility.Collapsed;
+
 			BgBannedTribesSectionVisibility = Config.Instance.ShowSessionRecapMinionsBanned
 				? Visibility.Visible
 				: Visibility.Collapsed;
@@ -68,29 +74,31 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 		{
 			var allRaces = _db.Value.Races;
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId) ?? allRaces;
-			var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL)
-				.OrderBy(t => HearthDbConverter.RaceConverter(t) ?? "")
-				.ToList();
+			var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL);
+
+			AvailableRaces.Clear();
+			foreach (var item in availableRaces.OrderBy(t => HearthDbConverter.RaceConverter(t) ?? "").ToList()) {
+				AvailableRaces.Add(item);
+			}
+
+			UnavailableRaces.Clear();
+			foreach (var item in unavailableRaces.OrderBy(t => HearthDbConverter.RaceConverter(t) ?? "").ToList()) {
+				UnavailableRaces.Add(item);
+			}
 
 			var bannedTribesUpdated = unavailableRaces.Count() >= 5;
-			if(bannedTribesUpdated)
-			{
-				BannedTribe1 = unavailableRaces[0];
-				BannedTribe2 = unavailableRaces[1];
-				BannedTribe3 = unavailableRaces[2];
-				BannedTribe4 = unavailableRaces[3];
-				BannedTribe5 = unavailableRaces[4];
-			}
 
 			if(Core.Game.CurrentMode == Mode.GAMEPLAY && bannedTribesUpdated)
 			{
 				BannedTribesVisibility = Visibility.Visible;
-				BannedTribesMsgVisibility = Visibility.Collapsed;
+				AvailableTribesVisibility = Visibility.Visible;
+				TribesMsgVisibility = Visibility.Collapsed;
 			}
 			else
 			{
 				BannedTribesVisibility = Visibility.Collapsed;
-				BannedTribesMsgVisibility = Visibility.Visible;
+				AvailableTribesVisibility = Visibility.Collapsed;
+				TribesMsgVisibility = Visibility.Visible;
 			}
 		}
 
@@ -218,61 +226,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 			}
 		}
 
-		private Race _bannedTribe1;
-		public Race BannedTribe1
-		{
-			get => _bannedTribe1;
-			set
-			{
-				_bannedTribe1 = value;
-				OnPropertyChanged();
-			}
-		}
-
-		private Race _bannedTribe2;
-		public Race BannedTribe2
-		{
-			get => _bannedTribe2;
-			set
-			{
-				_bannedTribe2 = value;
-				OnPropertyChanged();
-			}
-		}
-
-		private Race _bannedTribe3;
-		public Race BannedTribe3
-		{
-			get => _bannedTribe3;
-			set
-			{
-				_bannedTribe3 = value;
-				OnPropertyChanged();
-			}
-		}
-
-		private Race _bannedTribe4;
-		public Race BannedTribe4
-		{
-			get => _bannedTribe4;
-			set
-			{
-				_bannedTribe4 = value;
-				OnPropertyChanged();
-			}
-		}
-
-		private Race _bannedTribe5;
-		public Race BannedTribe5
-		{
-			get => _bannedTribe5;
-			set
-			{
-				_bannedTribe5 = value;
-				OnPropertyChanged();
-			}
-		}
-
 		private Visibility _bannedTribesVisibility;
 		public Visibility BannedTribesVisibility
 		{
@@ -284,13 +237,24 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 			}
 		}
 
-		private Visibility _bannedTribesMsgVisibility;
-		public Visibility BannedTribesMsgVisibility
+		private Visibility _availableTribesVisibility;
+		public Visibility AvailableTribesVisibility
 		{
-			get => _bannedTribesMsgVisibility;
+			get => _availableTribesVisibility;
 			set
 			{
-				_bannedTribesMsgVisibility = value;
+				_availableTribesVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _TribesMsgVisibility;
+		public Visibility TribesMsgVisibility
+		{
+			get => _TribesMsgVisibility;
+			set
+			{
+				_TribesMsgVisibility = value;
 				OnPropertyChanged();
 			}
 		}
@@ -324,6 +288,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 			set
 			{
 				_bgBannedTribesSectionVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _bgAvailableTribesSectionVisibility;
+		public Visibility BgAvailableTribesSectionVisibility
+		{
+			get => _bgAvailableTribesSectionVisibility;
+			set
+			{
+				_bgAvailableTribesSectionVisibility = value;
 				OnPropertyChanged();
 			}
 		}
