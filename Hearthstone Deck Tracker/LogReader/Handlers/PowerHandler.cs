@@ -529,6 +529,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Paladin.SinfulSousChef:
 								AddKnownCardId(gameState, NonCollectible.Paladin.SilverHandRecruitLegacyToken, 2); 
 								break;
+							case Collectible.Neutral.RivendareWarrider:
+								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_BlaumeauxFamineriderToken); 
+								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_KorthazzDeathriderToken); 
+								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_ZeliekConquestriderToken); 
+								break;
 						}
 					}
 					else //POWER
