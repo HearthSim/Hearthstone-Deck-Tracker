@@ -372,6 +372,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			input.SetPlayerHandSize(_game.Player.HandCount);
+			input.SetOpponentHandSize(_game.Opponent.HandCount);
 
 			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfId).ToList(), true);
 
