@@ -185,6 +185,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				exclude.Add(Mage.MirrorEntity);
 				SaveSecret(Rogue.Ambush);
 				exclude.Add(Rogue.Ambush);
+				SaveSecret(Hunter.Zombeeees);
+				exclude.Add(Hunter.Zombeeees);
 			}
 
 			if(FreeSpaceInHand)

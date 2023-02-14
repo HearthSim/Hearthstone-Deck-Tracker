@@ -264,7 +264,7 @@ namespace HDTTests.Hearthstone.Secrets
 		public void SingleSecret_MinionPlayed()
 		{
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
@@ -275,7 +275,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_playerMinion1.SetTag(GameTag.DORMANT, 1);
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
-			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Zombeeees);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.MirrorEntity, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
@@ -463,7 +463,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_opponentCardInHand1.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
 			_game.SecretsManager.OnEntityRevealedAsMinion(_opponentCardInHand1);
 
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.HiddenCache, HunterSecrets.Snipe);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.HiddenCache, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
 		}
 
 		[TestMethod]
@@ -633,7 +633,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
 			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion2);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
