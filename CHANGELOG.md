@@ -1,3 +1,7 @@
+## **Release v1.19.14 - 2023-02-15**
+**Bob's Buddy**:
+- Fixed an issue where Teron Gorefiends Hero Power was not working correctly.
+
 ## **Release v1.19.13 - 2023-02-14**
 **Updated for Hearthstone 25.4.0**
 
