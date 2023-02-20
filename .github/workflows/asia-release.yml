@@ -7,6 +7,10 @@ on:
         description: "Tag Name"
         required: true
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,13 +25,11 @@ jobs:
       - name: Download Assets
         run: node ./build-scripts/download-release-assets.js ${{ github.event.inputs.tag_name }}
 
-      - name: Publish
-        uses: jakejarvis/s3-sync-action@master
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          args: --acl public-read
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "ap-northeast-2"
-          SOURCE_DIR: "tmp_asset_downloads"
+          role-to-assume: ${{ secrets.AWS_ASIA_DEPLOY_ROLE_ARN }}
+          aws-region: ap-northeast-2
+
+      - name: Publish
+        run: aws s3 sync tmp_asset_downloads "s3://${{ secrets.AWS_S3_BUCKET }}" --acl public-read
