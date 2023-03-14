@@ -530,7 +530,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Paladin.SilverHandRecruitLegacyToken, 2); 
 								break;
 							case Collectible.Neutral.RivendareWarrider:
-								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_BlaumeauxFamineriderToken); 
+								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_BlaumeuxFamineriderToken); 
 								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_KorthazzDeathriderToken); 
 								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_ZeliekConquestriderToken); 
 								break;
