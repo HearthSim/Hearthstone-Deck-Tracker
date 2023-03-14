@@ -125,6 +125,18 @@ namespace Hearthstone_Deck_Tracker.Live
 			return player.QuestRewards.FirstOrDefault(x => x.HasTag(GameTag.BACON_IS_HEROPOWER_QUESTREWARD) == heroPower)?.Card.DbfId;
 		}
 
+		// Return the dbf id for an entity, but blacklisted against common hero cards we don't want want to show in the overlay.
+		private int HeroDbfId(Entity? entity)
+		{
+			if(entity == null)
+				return 0;
+
+			if(entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.BaconphheroTavernBrawl)
+				return 0;
+
+			return DbfId(entity);
+		}
+
 		private BoardState? GetBoardState()
 		{
 			if(Core.Game.PlayerEntity == null || Core.Game.OpponentEntity == null)
@@ -173,7 +185,7 @@ namespace Hearthstone_Deck_Tracker.Live
 						Size = player.DeckCount
 					},
 					Secrets = SortedDbfIds(player.PlayerEntities.Where(x => x.IsInSecret)),
-					Hero = DbfId(Find(player, HeroId(Core.Game.PlayerEntity))),
+					Hero = HeroDbfId(Find(player, HeroId(Core.Game.PlayerEntity))),
 					Hand = new BoardStateHand
 					{
 						Cards = SortedDbfIds(player.Hand),
@@ -195,7 +207,7 @@ namespace Hearthstone_Deck_Tracker.Live
 						Size = opponent.HandCount
 					},
 					Secrets = SortedDbfIds(opponent.PlayerEntities.Where(x => x.IsInSecret)),
-					Hero = DbfId(Find(opponent, HeroId(Core.Game.OpponentEntity))),
+					Hero = HeroDbfId(Find(opponent, HeroId(Core.Game.OpponentEntity))),
 					HeroPower = BgsQuestReward(opponent, true) ?? DbfId(FindHeroPower(opponent)),
 					Weapon = opponentWeapon != 0 ? opponentWeapon : (BgsQuestReward(opponent, false) ?? BuddyDbfId(opponent) ?? 0),
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
