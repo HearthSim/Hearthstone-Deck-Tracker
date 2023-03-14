@@ -16,26 +16,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 		public BattlegroundsCompositionPopularityViewModel? BgsCompsPopularityVM { get; }
 
 		public int? HeroDbfId { get; }
-		public int? ArmorTier { get; }
-		public string? ArmorTierTooltipRange
-		{
-			get
-			{
-				if(ArmorTier == null)
-					return null;
-				var (min, max) = ArmorTier switch
-				{
-					(>= 2) and (<= 7) => (ArmorTier.Value, ArmorTier.Value + 3),
-					_ => (0, 0),
-				};
-				return string.Format(LocUtil.Get("BattlegroundsHeroPicking_Hero_ArmorTierTooltip_Range"), min, max);
-			}
-		}
 
 		public BattlegroundsSingleHeroViewModel(BattlegroundsSingleHeroPickStats? stats, Action<bool> onPlacementHover)
 		{
 			HeroDbfId = stats?.HeroDbfId;
-			ArmorTier = stats != null ? Database.GetBattlegroundsHeroFromDbf(stats.HeroDbfId)?.BattlegroundsArmorTier : null;
 			BgsHeroHeaderVM = new(stats?.Tier, stats?.AvgPlacement ?? 0, stats?.PickRate ?? 0, stats?.PlacementDistribution ?? Enumerable.Repeat(0.0, 8).ToArray(), onPlacementHover);
 			BgsCompsPopularityVM = stats != null ? new(stats.FirstPlaceCompPopularity) : null;
 		}

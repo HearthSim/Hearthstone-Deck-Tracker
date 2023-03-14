@@ -26,31 +26,6 @@
         <!-- Hero Portrait Container -->
         <Grid Background="#00ff00ff" Margin="0 0 0 60" Visibility="{Binding HeroPowerVisibility}" 
               MouseEnter="Hero_MouseEnter" MouseLeave="Hero_MouseLeave" extensions:OverlayExtensions.IsOverlayHoverVisible="True">
-
-            <!-- Armor Tier -->
-            <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right" ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True" Margin="38 35">
-                <!-- Armor Tooltip -->
-                <Grid.ToolTip>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Foreground="White" TextWrapping="Wrap">
-                            <Bold><Run Text="{lex:Loc BattlegroundsHeroPicking_Hero_ArmorTierTooltip_Title}"/></Bold>
-                            <LineBreak/>
-                            <Run Text="{lex:Loc BattlegroundsHeroPicking_Hero_ArmorTierTooltip_Desc}"/>
-                            <LineBreak/>
-                            <Run Text="{Binding ArmorTierTooltipRange, Mode=OneWay}"/>
-                        </TextBlock>
-                    </StackPanel>
-                </Grid.ToolTip>
-                <Border Name="ArmorTierBorderMask" BorderBrush="{StaticResource Tier7Purple}" Background="{StaticResource Tier7Black}" BorderThickness="1" CornerRadius="5"/>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel.OpacityMask>
-                            <VisualBrush Visual="{Binding ElementName=ArmorTierBorderMask}" />
-                        </StackPanel.OpacityMask>
-                        <TextBlock Foreground="White" Text="{lex:Loc BattlegroundsHeroPicking_Hero_ArmorTier}" Margin="15 4 0 4"/>
-                        <TextBlock Foreground="White" FontWeight="Bold" VerticalAlignment="Center"
-                               Text="{Binding ArmorTier, TargetNullValue=&#8211;, FallbackValue=&#8211;}" Margin="4 0 15 0"/>
-                    </StackPanel>
-            </Grid>
         </Grid>
     </DockPanel>
 </UserControl>
