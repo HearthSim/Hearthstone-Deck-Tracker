@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
+using HearthDb;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
@@ -273,6 +274,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private bool IsUnknownCard(Entity e) => e?.Card.Id == Database.UnknownCardId;
 
+		private bool IsUnsupportedCard(Entity e) => e.Card.Id == NonCollectible.Invalid.ProfessorPutricide_Festergut1 || e.Card.Id == NonCollectible.Invalid.ProfessorPutricide_Festergut2;
+
 
 		internal void UpdateAttackingEntities(Entity attacker, Entity defender)
 		{
@@ -294,6 +297,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				ErrorState = BobsBuddyErrorState.UnkownCards;
 				DebugLog("Board has unknown cards. Exiting.");
+				return;
+			}
+
+			if(_game.Player.Board.Any(IsUnsupportedCard) || _game.Opponent.Board.Any(IsUnsupportedCard))
+			{
+				ErrorState = BobsBuddyErrorState.UnsupportedCards;
+				DebugLog("Board has unsupported cards. Exiting.");
 				return;
 			}
 

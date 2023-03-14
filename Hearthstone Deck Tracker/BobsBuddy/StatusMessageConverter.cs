@@ -18,6 +18,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						return LocUtil.Get("BobsBuddyStatusMessage_NotEnoughData");
 					case BobsBuddyErrorState.UnkownCards:
 						return LocUtil.Get("BobsBuddyStatusMessage_UnknownCards");
+					case BobsBuddyErrorState.UnsupportedCards:
+						return LocUtil.Get("BobsBuddyStatusMessage_UnsupportedCards");
 				}
 			}
 			switch(state)
