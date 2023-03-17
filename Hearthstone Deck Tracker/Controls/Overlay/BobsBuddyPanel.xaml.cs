@@ -330,8 +330,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var opponentSortedDamageDealtPossibilites = possibleResults.Where(x => x < 0).Select(y => y * -1).ToList();
 			opponentSortedDamageDealtPossibilites.Sort((x, y) => x.CompareTo(y));
 
-			_playerDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(playerDamageDealtPossibilities);
-			_opponentDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(opponentSortedDamageDealtPossibilites);
+			_playerDamageDealtBounds = GetMiddleEightiethPercentile(playerDamageDealtPossibilities);
+			_opponentDamageDealtBounds = GetMiddleEightiethPercentile(opponentSortedDamageDealtPossibilites);
 
 			PlayerAverageDamageOpacity = 1;
 			OpponentAverageDamageOpacity = 1;
@@ -340,15 +340,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			AverageDamageTakenDisplay = FormatDamageBoundsFrom(_opponentDamageDealtBounds);
 		}
 
-		private List<int> GetTwentiethAndEightiethPercentileFor(List<int> possibleResults)
+		private List<int> GetMiddleEightiethPercentile(List<int> possibleResults)
 		{
 			var count = possibleResults.Count;
 			if(count == 0)
 				return new List<int>() { 0 };
 			return new List<int>()
 			{
-				possibleResults[(int)Math.Floor(.2 * count)],
-				possibleResults[(int)Math.Floor(.8 * count)]
+				possibleResults[(int)Math.Floor(.1 * count)],
+				possibleResults[(int)Math.Floor(.9 * count)]
 			};
 		}
 
