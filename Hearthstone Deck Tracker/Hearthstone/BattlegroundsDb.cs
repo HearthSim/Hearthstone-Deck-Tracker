@@ -59,12 +59,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private IEnumerable<Race> GetRaces(HearthDb.Card card)
 		{
-			var racesInText = Races
-				.Where(x => x != Race.ALL && x != Race.INVALID)
-				.Where(x => card.GetLocText(Locale.enUS)?.Contains(HearthDbConverter.RaceConverter(x)) ?? false)
-				.ToList();
-			if(racesInText.Count == 1)
-				yield return racesInText.Single();
+			if(card.Race == Race.INVALID)
+			{
+				var racesInText = Races
+					.Where(x => x != Race.ALL && x != Race.INVALID)
+					.Where(x => card.GetLocText(Locale.enUS)?.Contains(HearthDbConverter.RaceConverter(x)) ?? false)
+					.ToList();
+				if(racesInText.Count == 1)
+				{
+					yield return racesInText.Single();
+					yield break;
+				}
+			}
 			yield return card.Race;
 			if(card.SecondaryRace != Race.INVALID)
 				yield return card.SecondaryRace;
