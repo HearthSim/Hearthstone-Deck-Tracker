@@ -1,3 +1,10 @@
+## **Release v1.19.17 - 2023-03-23**
+**Updated for Hearthstone 25.6.2**
+
+**Fixes**:
+- Fixed an issue where the expected damage range displayed by Bob's Buddy did not quite match the explanation in the tooltip.
+- Fixed an issue where Tribe-less supporting minions in Battlegrounds would be displayed when their Tribe was not available in the current lobby.
+
 ## **Release v1.19.16 - 2023-03-14**
 **Updated for Hearthstone 25.6.0**
 
