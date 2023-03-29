@@ -135,7 +135,6 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
-            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Web}" Command="{Binding ImportFromWebCommand}" />
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_DeckString}" Command="{Binding ImportFromDeckString}" />
             <Separator/>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Constructed}" Command="{Binding ImportFromConstructedCommand}" />
@@ -145,6 +144,7 @@
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other}">
                 <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_Clipboard}" Command="{Binding ImportFromClipboardCommand}" />
                 <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_LastGame}" Command="{Binding ImportFromLastGameCommand}" />
+                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Web}" Command="{Binding ImportFromWebCommand}" />
             </MenuItem>
         </MenuItem>
         <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export}" IsEnabled="{Binding HasSelectedDeck}">

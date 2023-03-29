@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -10,9 +9,7 @@ using HearthMirror;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing.Game;
-using Hearthstone_Deck_Tracker.Importing.Websites;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using CardIds = HearthDb.CardIds;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 using Hearthstone_Deck_Tracker.Utility;
@@ -25,23 +22,6 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public static class DeckImporter
 	{
-		internal static readonly Dictionary<string, Func<string, Task<Deck?>>> Websites = new Dictionary<string, Func<string, Task<Deck?>>>
-		{
-			{"hearthpwn", Hearthpwn.Import},
-			{"marduktv", Marduktv.Import},
-			{"hearthstoneplayers", Hearthstoneplayers.Import},
-			{"tempostorm", Tempostorm.Import},
-			{"hearthstonetopdecks", Hearthstonetopdecks.Import},
-			{"hearthstonetopdeck.", Hearthstonetopdeck.Import},
-			{"arenavalue", Arenavalue.Import},
-			{"hearthstone-decks", Hearthstonedecks.Import},
-			{"heartharena", Heartharena.Import},
-			{"hearthstoneheroes", Hearthstoneheroes.Import},
-			{"icy-veins", Icyveins.Import},
-			{"hearthbuilder", Hearthbuilder.Import},
-			{"manacrystals", Manacrystals.Import},
-			{"powned", Powned.Import}
-		};
 
 		private const int BrawlDeckType = 6;
 		private static List<HearthMirror.Objects.Deck>? _constructedDecksCache;
@@ -68,21 +48,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 
 		public static async Task<Deck?> Import(string url)
 		{
-			Log.Info("Importing deck from " + url);
-			var website = Websites.FirstOrDefault(x => url.Contains(x.Key));
-			if(website.Value != null)
-			{
-				Log.Info("Using custom importer...");
-				var deck = await website.Value.Invoke(url);
-				if(deck == null)
-				{
-					Log.Info("Custom importer failed. Checking for meta tags...");
-					return await MetaTagImporter.TryFindDeck(url);
-				}
-				deck.Cards = new ObservableCollection<Card>(deck.Cards.Where(x => x.Id != Database.UnknownCardId));
-				return deck;
-			}
-			Log.Info("Using meta tags importer...");
+			Log.Info("Importing deck from " + url + " using meta tags importer");
 			return await MetaTagImporter.TryFindDeck(url);
 		}
 
