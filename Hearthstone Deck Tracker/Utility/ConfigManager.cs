@@ -208,7 +208,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				}
 				if(configVersion == new Version(0, 15, 9, 0))
 					DataIssueResolver.RunDeckStatsFix = true;
-				if(configVersion <= new Version(1, 19, 17, 0))
+				if(configVersion <= new Version(1, 19, 18, 0))
 				{
 					if(Config.Instance.DeckPanelOrderLocalPlayer.Contains(DeckPanel.Sideboards))
 						return;
