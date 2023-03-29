@@ -156,7 +156,6 @@
                 </Rectangle>
             </MenuItem.Icon>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Hearthstone}" Command="{Binding ExportDeckCommand}" />
-            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Hearthstone_FromWeb}" Command="{Binding ExportFromWebCommand}" />
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Clpiboard}" Command="{Binding NamesToClipboardCommand}" />
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Screenshot}" Command="{Binding ScreenshotCommand}" />
         </MenuItem>

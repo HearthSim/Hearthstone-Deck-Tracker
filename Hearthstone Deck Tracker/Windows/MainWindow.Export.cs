@@ -125,16 +125,5 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			HSReplayNetClientAnalytics.OnCopyDeck(CopyDeckAction.Action.CopyNames);
 		}
-
-		internal async void ExportDeckFromWeb()
-		{
-			var result = await ImportDeckFromUrl();
-			if(result.WasCancelled)
-				return;
-			if(result.Deck != null)
-				ShowExportFlyout(result.Deck);
-			else
-				await this.ShowMessageAsync("No deck found", "Could not find a deck on" + Environment.NewLine + result.Url);
-		}
 	}
 }
