@@ -40,6 +40,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					case DeckPanel.CardsBottom:
 						StackPanelPlayer.Children.Add(PlayerBottomDeckLens);
 						break;
+					case DeckPanel.Sideboards:
+						StackPanelPlayer.Children.Add(PlayerSideboards);
+						break;
 				}
 			}
 		}
@@ -140,11 +143,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
 		}
 
-		public void UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom)
+		public void UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom, List<Sideboard> sideboards)
 		{
 			ListViewPlayer.Update(cards, reset);
 			PlayerTopDeckLens.Update(top, reset);
 			PlayerBottomDeckLens.Update(bottom, reset);
+			PlayerSideboards.Update(sideboards, reset);
 		}
 
 		public void UpdateOpponentCards(List<Card> cards, bool reset) => ListViewOpponent.Update(cards, reset);

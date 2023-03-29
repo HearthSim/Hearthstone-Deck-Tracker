@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private bool _archived;
 
-		private ArenaReward _arenaReward = new ArenaReward();
+		private ArenaReward _arenaReward = new();
 		private List<GameStats>? _cachedGames;
 		private SerializableVersion? _cachedVersion;
 		private Guid _deckId;
@@ -60,12 +60,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private DateTime _lastCacheUpdate = DateTime.MinValue;
 		private string _name = string.Empty;
 		private string? _note;
-		private SerializableVersion _selectedVersion = new SerializableVersion(1, 0);
-		private List<string> _tags = new List<string>();
+		private SerializableVersion _selectedVersion = new(1, 0);
+		private List<string> _tags = new();
 
 		[XmlArray(ElementName = "Cards")]
 		[XmlArrayItem(ElementName = "Card", IsNullable = false)]
 		public ObservableCollection<Card> Cards;
+		
+		[XmlArray(ElementName = "Sideboards")]
+		[XmlArrayItem(ElementName = "Sideboard", IsNullable = false)]
+		public List<Sideboard> Sideboards;
 
 		public string? Class;
 		public DateTime LastEdited;
@@ -75,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Card> MissingCards;
 
 		public string? Url;
-		public SerializableVersion Version = new SerializableVersion(1, 0);
+		public SerializableVersion Version = new(1, 0);
 
 		[XmlArray(ElementName = "DeckHistory")]
 		[XmlArrayItem(ElementName = "Deck")]
@@ -86,6 +90,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Deck()
 		{
 			Cards = new ObservableCollection<Card>();
+			Sideboards = new List<Sideboard>();
 			MissingCards = new List<Card>();
 			Tags = new List<string>();
 			Note = string.Empty;
@@ -97,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DeckId = Guid.NewGuid();
 		}
 
-		public Deck(string name, string? className, IEnumerable<Card> cards, IEnumerable<string>? tags, string? note, string? url,
+		public Deck(string name, string? className, IEnumerable<Card> cards, List<Sideboard> sideboards, IEnumerable<string>? tags, string? note, string? url,
 		            DateTime lastEdited, bool archived, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
 		            Guid deckId, long hsId = 0, SerializableVersion? selectedVersion = null, bool? isArenaDeck = null,
 		            ArenaReward? reward = null)
@@ -106,9 +111,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Name = name;
 			Class = className;
 			Cards = new ObservableCollection<Card>();
-			MissingCards = missingCards;
 			foreach(var card in cards.ToSortedCardList())
 				Cards.Add((Card)card.Clone());
+			Sideboards = sideboards;
+			MissingCards = missingCards;
 			Tags = new List<string>(tags);
 			Note = note;
 			Url = url;
@@ -396,9 +402,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public List<Mechanic> Mechanics => _relevantMechanics.Select(x => new Mechanic(x, this)).Where(m => m.Count > 0).ToList();
 
-		public object Clone() => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions,
+		public object Clone() => new Deck(Name, Class, Cards, Sideboards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions,
 										  DeckId, HsId, SelectedVersion, _isArenaDeck, ArenaReward);
-
+		
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public FormatType GuessFormatType()
@@ -478,7 +484,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool HasVersion(SerializableVersion version) => Version == version || Versions.Any(v => v.Version == version);
 
-		public object CloneWithNewId(bool isVersion) => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions,
+		public object CloneWithNewId(bool isVersion) => new Deck(Name, Class, Cards, Sideboards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions,
 																 Guid.NewGuid(), HsId, SelectedVersion, _isArenaDeck);
 
 		public void ResetVersions()
@@ -537,35 +543,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(first == null || second == null)
 				return new List<Card>();
-			var diff = new List<Card>();
-			//removed
-			foreach(var c in second.Cards.Where(c => !first.Cards.Contains(c)))
-			{
-				var cd = c.Clone() as Card;
-				if(cd == null)
-					continue;
-				cd.Count = -cd.Count; //merk as negative for visual
-				diff.Add(cd);
-			}
-			//added
-			diff.AddRange(first.Cards.Where(c => !second.Cards.Contains(c)));
 
-			//diff count
-			var diffCount =
-				first.Cards.Where(c => second.Cards.Any(c2 => c2.Id == c.Id) && second.Cards.First(c2 => c2.Id == c.Id).Count != c.Count);
-			foreach(var card in diffCount)
-			{
-				var cardclone = card.Clone() as Card;
-				if(cardclone == null)
-					continue;
-				cardclone.Count = cardclone.Count - second.Cards.First(c => c.Id == cardclone.Id).Count;
-				diff.Add(cardclone);
-			}
-
-			return diff;
+			return second.Cards.ToDiffCardList(first.Cards.ToList());
 		}
 
-		public SerializableVersion GetMaxVerion() => VersionsIncludingSelf.OrderByDescending(x => x).First();
+		public List<Card> GetSideboardDiff(Deck newDeck)
+		{
+			var curDeckSideboardCards = Sideboards.SelectMany(s => s.Cards).ToList();
+			var newDeckSideboardCards = newDeck.Sideboards.SelectMany(s => s.Cards).ToList();
+
+			return curDeckSideboardCards.ToDiffCardList(newDeckSideboardCards);
+		}
+
+		public SerializableVersion GetMaxVersion() => VersionsIncludingSelf.OrderByDescending(x => x).First();
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -590,5 +580,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public void UpdateWildIndicatorVisibility() => OnPropertyChanged(nameof(WildIndicatorVisibility));
+	}
+
+	public class Sideboard
+	{
+
+		public Sideboard()
+		{
+			OwnerCardId = "";
+			Cards = new List<Card>();
+		}
+
+		public Sideboard(string ownerCardId, List<Card> cards)
+		{
+			OwnerCardId = ownerCardId;
+			Cards = cards;
+		}
+
+		[XmlAttribute("Owner")]
+		public string OwnerCardId { get; set; }
+
+		[XmlArray(ElementName = "Cards")]
+		[XmlArrayItem(ElementName = "Card", IsNullable = false)]
+		public List<Card> Cards { get; set; }
 	}
 }

@@ -50,8 +50,7 @@ namespace Hearthstone_Deck_Tracker
 				Top = 100;
 				Left = 100;
 			}
-
-
+			
 			if(forScreenshot != null)
 			{
 				CanvasPlayerChance.Visibility = Visibility.Collapsed;
@@ -67,7 +66,7 @@ namespace Hearthstone_Deck_Tracker
 		public double PlayerDeckMaxHeight => ActualHeight - PlayerLabelsHeight;
 
 		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
-			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + 42 + PlayerTopDeckLens.ActualHeight + PlayerBottomDeckLens.ActualHeight;
+			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + 42 + PlayerTopDeckLens.ActualHeight + PlayerBottomDeckLens.ActualHeight + PlayerSideboards.ActualHeight;
 
 		public List<Card> PlayerDeck => _game.Player.PlayerCardList;
 
@@ -82,6 +81,7 @@ namespace Hearthstone_Deck_Tracker
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
 			PlayerTopDeckLens.Visibility = Config.Instance.HidePlayerCardsTop ? Visibility.Collapsed : Visibility.Visible;
 			PlayerBottomDeckLens.Visibility = Config.Instance.HidePlayerCardsBottom ? Visibility.Collapsed : Visibility.Visible;
+			PlayerSideboards.Visibility = Config.Instance.HidePlayerSideboards ? Visibility.Collapsed : Visibility.Visible;
 
 			LblWins.Visibility = Config.Instance.ShowDeckWins && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
@@ -115,6 +115,9 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					case DeckPanel.CardsBottom:
 						StackPanelMain.Children.Add(PlayerBottomDeckLens);
+						break;
+					case DeckPanel.Sideboards:
+						StackPanelMain.Children.Add(PlayerSideboards);
 						break;
 					case DeckPanel.CardCounter:
 						StackPanelMain.Children.Add(CanvasPlayerCount);
@@ -178,11 +181,12 @@ namespace Hearthstone_Deck_Tracker
 				Topmost = false;
 		}
 
-		public void UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom)
+		public void UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom, List<Sideboard> sideboards)
 		{
 			ListViewPlayer.Update(cards, reset);
 			PlayerTopDeckLens.Update(top, reset);
 			PlayerBottomDeckLens.Update(bottom, reset);
+			PlayerSideboards.Update(sideboards, reset);
 		}
 
 		[NotifyPropertyChangedInvocator]

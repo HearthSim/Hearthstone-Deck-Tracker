@@ -64,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(selected == null)
 				return;
 			ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
+			PlayerSideboards.Update(selected.GetSelectedDeckVersion().Sideboards, true);
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 		}
 
@@ -108,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Log.Error(ex);
 			}
 		}
-
+		
 		private void ComboBoxDeckVersion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized || DeckPickerList.ChangedSelection)

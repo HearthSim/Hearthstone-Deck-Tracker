@@ -208,6 +208,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 				}
 				if(configVersion == new Version(0, 15, 9, 0))
 					DataIssueResolver.RunDeckStatsFix = true;
+				if(configVersion <= new Version(1, 19, 17, 0))
+				{
+					if(Config.Instance.DeckPanelOrderLocalPlayer.Contains(DeckPanel.Sideboards))
+						return;
+					Config.Instance.DeckPanelOrderLocalPlayer = Config.Instance.DeckPanelOrderLocalPlayer.SelectMany(x =>
+					{
+						if(x == DeckPanel.CardsBottom)
+							return new[] { DeckPanel.CardsBottom, DeckPanel.Sideboards };
+						return new[] { x };
+					}).ToArray();
+					converted = true;
+				}
 			}
 
 			if(converted)

@@ -19,6 +19,7 @@ using Hearthstone_Deck_Tracker.Windows;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using CardIds = HearthDb.CardIds;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
+using Sideboard = Hearthstone_Deck_Tracker.Hearthstone.Sideboard;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -57,7 +58,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					//if autoimport finds a new version of the selected deck, the new version will be set as selected, but not active.
 					//We are still using the old one for these checks AND exclude the selected version from possible targets to switch to,
-					//so if the newly imported version matches all existing entites, use that one.
+					//so if the newly imported version matches all existing entities, use that one.
 					Core.MainWindow.SelectDeck(deck, true);
 					return;
 				}	
@@ -164,11 +165,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private static void ShowDeckSelectionDialog(List<Deck> decks)
 		{
-			decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false, new List<Card>(),
+			decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<Sideboard>(), new List<string>(), "", "", DateTime.Now, false, new List<Card>(),
 								   SerializableVersion.Default, new List<Deck>(), Guid.Empty));
 			if(decks.Count == 1 && DeckList.Instance.ActiveDeck != null)
 			{
-				decks.Add(new Deck("No match - Keep using active deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false,
+				decks.Add(new Deck("No match - Keep using active deck", "", new List<Card>(), new List<Sideboard>(), new List<string>(), "", "", DateTime.Now, false,
 								   new List<Card>(), SerializableVersion.Default, new List<Deck>(), Guid.Empty));
 			}
 			_waitingForUserInput = true;
@@ -246,6 +247,16 @@ namespace Hearthstone_Deck_Tracker
 							card.Count = x.Count;
 							return card;
 						}).WhereNotNull()),
+						Sideboards = deck.Deck.Sideboards?.Select(x =>
+							new Sideboard(x.Key, x.Value.Select(c =>
+							{
+								var card = Database.GetCardFromId(c.Id);
+								if(card == null)
+									return null;
+								card.Count = c.Count;
+								return card;
+							}).WhereNotNull().ToList()
+						)).WhereNotNull().ToList() ?? new List<Sideboard>(),
 						LastEdited = DateTime.Now,
 						IsArenaDeck = false
 					};
@@ -281,7 +292,7 @@ namespace Hearthstone_Deck_Tracker
 						Log.Info($"Unarchiving deck: {deck.Deck.Name}.");
 					}
 					if(existing.NewVersion.Major == 0)
-						Log.Info($"Assinging id to existing deck: {deck.Deck.Name}.");
+						Log.Info($"Assigning id to existing deck: {deck.Deck.Name}.");
 					else
 					{
 						Log.Info(
@@ -306,6 +317,21 @@ namespace Hearthstone_Deck_Tracker
 						}).WhereNotNull();
 						foreach(var card in cards)
 							target.Cards.Add(card);
+						target.Sideboards.Clear();
+						if (deck.Deck.Sideboards != null)
+							foreach(var sideboard in deck.Deck.Sideboards)
+							{
+								var sideboardCards = sideboard.Value.Select(x =>
+								{
+									var card = Database.GetCardFromId(x.Id);
+									if(card == null)
+										return null;
+									card.Count = x.Count;
+									return card;
+								}).WhereNotNull().ToList();
+
+								target.Sideboards.Add(new Sideboard(sideboard.Key, sideboardCards));
+							}
 						var clone = (Deck) target.Clone();
 						targetList.Add(clone);
 						importedDecks.Add(clone);

@@ -500,6 +500,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 		[XmlArray(ElementName = "PlayerCards")]
 		[XmlArrayItem(ElementName = "Card")]
 		public List<TrackedCard> PlayerCards { get; set; } = new List<TrackedCard>();
+
+		[XmlArray(ElementName = "PlayerSideboards")]
+		[XmlArrayItem(ElementName = "Sideboard")]
+		public List<Sideboard> PlayerSideboards { get; set; } = new List<Sideboard>();
+
 		[XmlArray(ElementName = "OpponentCards")]
 		[XmlArrayItem(ElementName = "Card")]
 		public List<TrackedCard> OpponentCards { get; set; } = new List<TrackedCard>();
@@ -515,8 +520,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public void SetPlayerCards(HearthMirror.Objects.Deck deck, List<Card> revealedCards)
 		{
-			var cards = deck?.Cards.Select(c => new Card { Id = c.Id, Count = c.Count });
+			var cards = deck.Cards.Select(c => new Card { Id = c.Id, Count = c.Count });
 			SetPlayerCards(cards, revealedCards);
+			SetPlayerSideboards(deck.Sideboards);
 		}
 
 		public void SetPlayerCards(IEnumerable<Card>? deck, List<Card> revealedCards)
@@ -544,6 +550,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 					}
 				}
 			}
+		}
+
+		public void SetPlayerSideboards(Dictionary<string, List<HearthMirror.Objects.Card>> sideboardsDict)
+		{
+			PlayerSideboards = sideboardsDict.Select(s =>
+				new Sideboard(s.Key, s.Value.Select(c => new Card { Id = c.Id, Count = c.Count }).ToList())
+			).ToList();
 		}
 
 		public void SetOpponentCards(List<Card> revealedCards)

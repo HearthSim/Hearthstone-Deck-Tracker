@@ -474,6 +474,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool HidePlayerCardsBottom = false;
 
 		[DefaultValue(false)]
+		public bool HidePlayerSideboards = false;
+
+		[DefaultValue(false)]
 		public bool HidePlayerFatigueCount = false;
 
 		[DefaultValue(false)]
@@ -654,8 +657,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(new[] { DeckPanel.Winrate, DeckPanel.Cards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue })]
 		public DeckPanel[] DeckPanelOrderOpponent = { DeckPanel.Winrate, DeckPanel.Cards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue };
 
-		[DefaultValue(new[] { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue })]
-		public DeckPanel[] DeckPanelOrderLocalPlayer = { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue };
+		[DefaultValue(new[] { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.Sideboards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue })]
+		public DeckPanel[] DeckPanelOrderLocalPlayer = { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.Sideboards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue };
 
 		[DefaultValue(88)]
 		public double PlayerDeckHeight = 88;

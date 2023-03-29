@@ -184,13 +184,21 @@ namespace Hearthstone_Deck_Tracker.Importing
 
 				var otherDecks = hsDecks.Except(new[] {deck});
 				var existing = localDecks.Where(x => otherDecks.All(d => d.Id != x.HsId)).Select(x =>
-					new
+				{
+					var mainDeckMatch = x.VersionsIncludingSelf.Select(x.GetVersion)
+						.Where(v => v.Cards.Sum(c => c.Count) == 30)
+						.Any(v => deck.Cards.All(c => v.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)));
+					var sideboardMatch = x.VersionsIncludingSelf.Select(x.GetVersion).Where(v =>
+							v.Sideboards.Select(s => s.OwnerCardId).SequenceEqual(deck.Sideboards.Keys))
+						.Any(v => deck.Sideboards.SelectMany(s => s.Value).All(c =>
+							v.Sideboards.SelectMany(s => s.Cards).Any(c2 => c.Id == c2.Id && c.Count == c2.Count)));
+					return new
 					{
 						Deck = x,
 						IdMatch = x.HsId == deck.Id,
-						CardMatch = x.VersionsIncludingSelf.Select(x.GetVersion).Where(v => v.Cards.Sum(c => c.Count) == 30)
-														 .Any(v => deck.Cards.All(c => v.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
-					}).Where(x => x.IdMatch || x.CardMatch).ToList();
+						CardMatch = mainDeckMatch && sideboardMatch
+					};
+				}).Where(x => x.IdMatch || x.CardMatch).ToList();
 				if(!existing.Any())
 				{
 					var iDeck = new ImportedDeck(deck, null, localDecks);

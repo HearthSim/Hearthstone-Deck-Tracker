@@ -377,9 +377,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 			var top = dredged.Where(x => x.Info.DeckIndex > 0).Select(toCard).ToList();
 			var bottom = dredged.Where(x => x.Info.DeckIndex < 0).Select(toCard).ToList();
-			Overlay.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset, top, bottom);
+			Overlay.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset, top, bottom, new List<Sideboard>(Game.Player.PlayerSideboardsDict));
 			if(Windows.PlayerWindow.IsVisible)
-				Windows.PlayerWindow.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset, top, bottom);
+				Windows.PlayerWindow.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset, top, bottom, new List<Sideboard>(Game.Player.PlayerSideboardsDict));
 		}
 
 		internal static async void UpdateOpponentCards(bool reset = false)

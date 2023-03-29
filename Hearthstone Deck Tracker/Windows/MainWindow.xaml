@@ -232,31 +232,46 @@
                         </DockPanel>
                     </Border>
                     <local:ManaCurve x:Name="ManaCurveMyDecks" Height="150" Margin="0,5,0,0" DockPanel.Dock="Bottom"/>
-                    <ListView x:Name="ListViewDeck" Background="#696969"
-                                        Foreground="White" FontWeight="Bold" BorderThickness="1"
-                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                        ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                        ScrollViewer.CanContentScroll="False" FontFamily="Arial"
-                                        HorizontalAlignment="Center" Width="236" Height="auto">
-                        <ListView.Resources>
-                            <Style TargetType="GridViewColumnHeader">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </Style>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="Margin" Value="-4,-3,-3,0"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter Property="BorderBrush" Value="Blue" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListView.Resources>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <controls1:Card/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    <ScrollViewer
+                        Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}, Path=ActualHeight}"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Visible"
+                        CanContentScroll="False"
+                    >
+                        <StackPanel
+                            Orientation="Vertical"
+                            HorizontalAlignment="Center"
+                        >
+                            <ListView x:Name="ListViewDeck" Background="#696969"
+                                    Foreground="White" FontWeight="Bold" BorderThickness="1" FontFamily="Arial"
+                                    HorizontalAlignment="Center">
+                                <ListView.Resources>
+                                    <Style TargetType="GridViewColumnHeader">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </Style>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Margin" Value="-4,-3,-3,0"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="BorderBrush" Value="Blue" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.Resources>
+                                <ListView.Template>
+                                    <ControlTemplate>
+                                        <ItemsPresenter />
+                                    </ControlTemplate>
+                                </ListView.Template>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <controls1:Card/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <controls1:DeckSideboards x:Name="PlayerSideboards" />
+                        </StackPanel>
+                    </ScrollViewer>
                 </DockPanel>
                 <DockPanel Name="MyGamesPanel" Width="380" DockPanel.Dock="Right" Margin="5,0,0,0">
                     <GroupBox x:Name="GroupBoxHsReplayDeckInfo" Header="{lex:LocTextUpper MainWindow_Header_GlobalDeckStatistics}" DockPanel.Dock="Top" Margin="0,0,0,5">

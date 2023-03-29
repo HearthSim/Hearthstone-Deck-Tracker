@@ -19,6 +19,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[LocDescription("Enum_DeckPanel_CardsTop")]
 		CardsTop,
 		[LocDescription("Enum_DeckPanel_CardsBottom")]
-		CardsBottom
+		CardsBottom,
+		[LocDescription("Enum_DeckPanel_ETCBand")]
+		Sideboards
 	}
 }

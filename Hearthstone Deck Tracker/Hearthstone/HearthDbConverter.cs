@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.Enums.BnetGameType;
 
+
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
@@ -243,7 +244,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Format = deck.GuessFormatType(),
 					ZodiacYear = (ZodiacYear)Enum.GetValues(typeof(ZodiacYear)).Cast<int>().OrderByDescending(x => x).First(),
 					HeroDbfId = card.DbfId,
-					CardDbfIds = deck.Cards.ToDictionary(c => c.DbfId, c => c.Count)
+					CardDbfIds = deck.Cards.ToDictionary(c => c.DbfId, c => c.Count),
+					Sideboards = deck.Sideboards.Select(s =>
+						new { owner = Database.GetCardFromId(s.OwnerCardId), sideboard = s.Cards.ToDictionary(c => c.DbfId, c => c.Count) }
+					).Where(s => s.owner != null).ToDictionary(s => s.owner!.DbfId, s => s.sideboard)
 				};
 			}
 			return null;
@@ -265,9 +269,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}).WhereNotNull();
 
 			Dictionary<int, int> dbfIds;
+			Dictionary<int, Dictionary<int, int>> sideboards;
 			try
 			{
 				dbfIds = cards.ToDictionary(c => c.DbfId, c => c.Count);
+				sideboards = deck.Sideboards.Select(s =>
+					new { owner = Database.GetCardFromId(s.Key), sideboard = s.Value.ToDictionary(c => c.DbfId, c => c.Count) }
+				).Where(s => s.owner != null).ToDictionary(s => s.owner!.DbfId, s => s.sideboard);
 			}
 			catch
 			{
@@ -280,6 +288,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Format = format,
 				HeroDbfId = heroCard.DbfId,
 				CardDbfIds = dbfIds,
+				Sideboards = sideboards,
 			};
 		}
 
@@ -292,6 +301,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			};
 			foreach(var c in hDbDeck.GetCards())
 				deck.Cards.Add(new Card(c.Key) { Count = c.Value });
+			foreach(var s in hDbDeck.GetSideboards())
+				deck.Sideboards.Add(new Sideboard(
+					s.Key.Id,
+					s.Value.Select(c =>
+					{
+						var card = Database.GetCardFromId(c.Key.Id);
+						if(card == null)
+							return null;
+						card.Count = c.Value;
+						return card;
+					}).WhereNotNull().ToList()
+				));
 			return deck;
 		}
 	}

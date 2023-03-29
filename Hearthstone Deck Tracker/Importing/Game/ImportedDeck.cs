@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 			var importOptions = matchesOptions.Concat(localOptions)
 				.GroupBy(x => new {x.Deck.DeckId, x.Deck.Version}).Select(g => g.First())
 				.OrderByDescending(x => x.Deck.HsId == deck.Id)
-				.ThenByDescending(x => x.MatchingCards)
+				.ThenBy(x => x.MismatchingCards)
 				.ThenByDescending(x => x.Deck.LastPlayed);
 
 			ImportOptions = New.Concat(importOptions);
