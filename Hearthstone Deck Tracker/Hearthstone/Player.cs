@@ -129,7 +129,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return card;
 			}
 
-			var remainingInDeck = createdCardsInDeck.Concat(originalCardsInDeckIds.GroupBy(x => x).Select(ToRemainingCard).WhereNotNull());
+			var remainingInDeck = createdCardsInDeck.Concat(originalCardsInDeckIds?.GroupBy(x => x).Select(ToRemainingCard).WhereNotNull() ?? new List<Card>());
 			var removedFromDeck = removedFromDeckIds.GroupBy(x => x).Select(ToRemovedCard).WhereNotNull();
 
 			var originalSideboards = DeckList.Instance.ActiveDeckVersion?.Sideboards;
@@ -313,6 +313,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal List<Sideboard> GetPlayerSideboards(bool removeNotInSideboard)
 		{
+			if(DeckList.Instance.ActiveDeck == null)
+				return new List<Sideboard>();
 			var deckState = GetDeckState();
 			var sideboardsDict = new Dictionary<string, List<Card>>();
 			if (deckState.RemainingInSideboards != null)
