@@ -73,21 +73,6 @@
                     <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo_2}"/>
                 </TextBlock>
             </StackPanel>
-            <CheckBox Content="{lex:Loc Options_HSReplay_Collection_UploadSetting}" HorizontalAlignment="Center"
-                      IsChecked="{Binding CollectionSyncingEnabled}">
-                <CheckBox.Visibility>
-                    <MultiBinding Converter="{StaticResource BoolToVisibility}">
-                        <MultiBinding.ConverterParameter>
-                            <x:Array Type="{x:Type s:Boolean}">
-                                <s:Boolean>True</s:Boolean>
-                                <s:Boolean>True</s:Boolean>
-                            </x:Array>
-                        </MultiBinding.ConverterParameter>
-                        <Binding Path="CollectionSyncingEnabled"/>
-                        <Binding Path="CollectionSynced"/>
-                    </MultiBinding>
-                </CheckBox.Visibility>
-            </CheckBox>
         </StackPanel>
     </StackPanel>
 </UserControl>
