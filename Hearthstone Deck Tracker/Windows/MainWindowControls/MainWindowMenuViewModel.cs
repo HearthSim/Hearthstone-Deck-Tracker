@@ -67,8 +67,6 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public ICommand ImportFromConstructedCommand => new Command(() => MainWindow.ShowImportDialog(false));
 		public ICommand ImportFromArenaCommand => new Command(() => MainWindow.StartArenaImporting().Forget());
 		public ICommand ImportFromBrawlCommand => new Command(() => MainWindow.ShowImportDialog(true));
-		public ICommand ImportFromFileCommand => new Command(() => MainWindow.ImportFromFile());
-		public ICommand ImportFromIdStringCommand => new Command(() => MainWindow.ImportFromIdString());
 		public ICommand ImportFromClipboardCommand => new Command(() => MainWindow.ImportFromClipboard());
 		public ICommand ImportFromLastGameCommand => new Command(() => MainWindow.ImportFromLastGame());
 		public ICommand ExportDeckCommand => new Command(() => MainWindow.ShowExportFlyout(Decks.FirstOrDefault()));

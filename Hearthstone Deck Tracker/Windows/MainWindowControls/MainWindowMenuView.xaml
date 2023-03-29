@@ -143,8 +143,6 @@
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Brawl}" Command="{Binding ImportFromBrawlCommand}" />
             <Separator/>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other}">
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_File}" Command="{Binding ImportFromFileCommand}" />
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_Ids}" Command="{Binding ImportFromIdStringCommand}" />
                 <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_Clipboard}" Command="{Binding ImportFromClipboardCommand}" />
                 <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_LastGame}" Command="{Binding ImportFromLastGameCommand}" />
             </MenuItem>
