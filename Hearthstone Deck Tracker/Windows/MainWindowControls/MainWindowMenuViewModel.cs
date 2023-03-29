@@ -73,8 +73,6 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public ICommand ImportFromLastGameCommand => new Command(() => MainWindow.ImportFromLastGame());
 		public ICommand ExportDeckCommand => new Command(() => MainWindow.ShowExportFlyout(Decks.FirstOrDefault()));
 		public ICommand ExportFromWebCommand => new Command(() => MainWindow.ExportDeckFromWeb());
-		public ICommand SaveToDiskCommand => new Command(() => MainWindow.SaveDecksToDisk(Decks));
-		public ICommand IdsToClipboardCommand => new Command(() => MainWindow.ExportIdsToClipboard(Decks.FirstOrDefault()));
 		public ICommand NamesToClipboardCommand => new Command(() => MainWindow.ExportCardNamesToClipboard(Decks.FirstOrDefault()));
 		public ICommand ScreenshotCommand => new Command(() => MainWindow.ShowScreenshotFlyout());
 		public ICommand ArenaStatsCommand => new Command(() => MainWindow.ShowStats(true, false));

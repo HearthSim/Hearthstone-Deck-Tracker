@@ -238,11 +238,7 @@ namespace Hearthstone_Deck_Tracker
 			view1.SortDescriptions.Add(new SortDescription(nameof(Card.Cost), ListSortDirection.Ascending));
 			view1.SortDescriptions.Add(new SortDescription(nameof(Card.LocalizedName), ListSortDirection.Ascending));
 		}
-
-
-		public static string DeckToIdString(Deck deck)
-			=> deck.GetSelectedDeckVersion().Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
-
+		
 		public static void UpdateEverything(GameV2 game)
 		{
 			if(Core.Overlay.IsVisible || Core.Windows.CapturableOverlay != null)

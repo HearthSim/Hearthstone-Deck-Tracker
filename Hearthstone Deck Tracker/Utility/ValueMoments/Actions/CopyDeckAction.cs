@@ -13,12 +13,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			CopyAll,
 			[JsonProperty("Copy Code")]
 			CopyCode,
-			[JsonProperty("Copy Ids to Clipboard")]
-			CopyIds,
 			[JsonProperty("Copy Names to Clipboard")]
 			CopyNames,
-			[JsonProperty("Save as XML")]
-			SaveAsXML,
 		}
 
 		public CopyDeckAction(Franchise franchise, Action actionName) : base(

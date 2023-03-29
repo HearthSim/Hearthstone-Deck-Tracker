@@ -95,56 +95,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 		}
-
-		internal async void SaveDecksToDisk(IEnumerable<Deck> decks)
-		{
-			var selectedDecks = DeckPickerList.SelectedDecks;
-			if (selectedDecks.Count > 1)
-			{
-				if(selectedDecks.Count > 10)
-				{
-					var result = await
-						this.ShowMessageAsync("Exporting multiple decks!", $"You are about to export {selectedDecks.Count} decks. Are you sure?",
-											  AffirmativeAndNegative);
-					if(result != MessageDialogResult.Affirmative)
-						return;
-				}
-				var dialog = new FolderBrowserDialog();
-				if(dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
-					return;
-				foreach(var deck in DeckPickerList.SelectedDecks)
-				{
-					//Helper.GetValidFilePath avoids overwriting files and properly handles duplicate deck names
-					var saveLocation = Path.Combine(dialog.SelectedPath, Helper.GetValidFilePath(dialog.SelectedPath, deck.Name, "xml"));
-					XmlManager<Deck>.Save(saveLocation, deck.GetSelectedDeckVersion());
-					Log.Info($"Saved {deck.GetSelectedDeckVersion().GetDeckInfo()} to file: {saveLocation}");
-				}
-				await this.ShowSavedFileMessage(dialog.SelectedPath);
-
-			}
-			else if(selectedDecks.Count > 0)
-			{
-				var deck = selectedDecks.First();
-				var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "xml");
-				if(fileName == null)
-					return;
-				XmlManager<Deck>.Save(fileName, deck.GetSelectedDeckVersion());
-				await this.ShowSavedFileMessage(fileName);
-				Log.Info($"Saved {deck.GetSelectedDeckVersion().GetDeckInfo()} to file: {fileName}");
-			}
-			HSReplayNetClientAnalytics.OnCopyDeck(CopyDeckAction.Action.SaveAsXML);
-		}
-
-		internal void ExportIdsToClipboard(Deck deck)
-		{
-			if(deck == null)
-				return;
-			Clipboard.SetDataObject(Helper.DeckToIdString(deck.GetSelectedDeckVersion()));
-			this.ShowMessage("", "copied ids to clipboard").Forget();
-			Log.Info("Copied " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to clipboard");
-			HSReplayNetClientAnalytics.OnCopyDeck(CopyDeckAction.Action.CopyIds);
-		}
-
+		
 		internal async void ExportCardNamesToClipboard(Deck deck)
 		{
 			if(deck == null || !deck.GetSelectedDeckVersion().Cards.Any())

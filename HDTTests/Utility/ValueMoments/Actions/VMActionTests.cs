@@ -201,11 +201,11 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		{
 			var action = new CopyDeckAction(
 				Franchise.HSConstructed,
-				CopyDeckAction.Action.CopyIds
+				CopyDeckAction.Action.CopyCode
 			);
 
 			var mixpanelPayload = JObject.Parse(JsonConvert.SerializeObject(action));
-			Assert.AreEqual("Copy Ids to Clipboard", mixpanelPayload["action_name"]);
+			Assert.AreEqual("Copy Code", mixpanelPayload["action_name"]);
 			Assert.IsTrue(mixpanelPayload.ContainsKey("hdt_personal_stats_settings_enabled"));
 			Assert.IsTrue(mixpanelPayload.ContainsKey("hdt_personal_stats_settings_disabled"));
 		}
