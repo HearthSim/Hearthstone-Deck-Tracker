@@ -30,13 +30,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		private readonly string[] _demoCards =
 		{
 			CardIds.Collectible.Neutral.GilblinStalker,
-			CardIds.Collectible.Priest.NorthshireCleric,
+			CardIds.Collectible.Priest.NorthshireClericREWARD,
 			CardIds.Collectible.Neutral.GilblinStalker,
 			CardIds.Collectible.Priest.UpgradedRepairBot,
 			CardIds.Collectible.Neutral.GarrisonCommander,
 			CardIds.Collectible.Neutral.YouthfulBrewmaster,
 			CardIds.Collectible.Priest.UpgradedRepairBot,
-			CardIds.Collectible.Priest.NorthshireCleric
+			CardIds.Collectible.Priest.NorthshireClericREWARD
 		};
 
 		public CardThemesInfo()
@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 			UpdateAnimatedCardListAsync();
 		}
 
-		public Hearthstone.Card? Card => Database.GetCardFromId(CardIds.Collectible.Neutral.RagnarosTheFirelord);
+		public Hearthstone.Card? Card => Database.GetCardFromId(CardIds.Collectible.Neutral.RagnarosTheFirelordExpert1);
 		public DrawingBrush ClassicCard => GetCardImage("classic");
 		public DrawingBrush MinimalCard => GetCardImage("minimal");
 		public DrawingBrush DarkCard => GetCardImage("dark");

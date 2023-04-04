@@ -457,7 +457,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.SmugSenior:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SmugSenior_SpectralSeniorToken);
 								break;
-							case Collectible.Rogue.Plagiarize:
+							case Collectible.Rogue.PlagiarizeSCHOLOMANCE:
 								if (actionStartingEntity != null)
 								{
 									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Opponent : game.Player;
@@ -540,7 +540,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						switch(actionStartingCardId)
 						{
-							case Collectible.Demonhunter.SightlessWatcherCore:
+							case Collectible.Demonhunter.SightlessWatcher:
 							case Collectible.Demonhunter.SightlessWatcherLegacy:
 							case Collectible.Neutral.SirFinleySeaGuide:
 							case Collectible.Neutral.AmbassadorFaelin:
@@ -552,7 +552,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 
 							case Collectible.Rogue.GangUp:
-							case Collectible.Hunter.DireFrenzy:
+							case Collectible.Hunter.DireFrenzyGILNEAS:
 							case Collectible.Rogue.LabRecruiter:
 								if(target != null)
 									AddKnownCardId(gameState, target, 3);
@@ -591,8 +591,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Priest.ExcavatedEvil:
 								AddKnownCardId(gameState, Collectible.Priest.ExcavatedEvil);
 								break;
-							case Collectible.Neutral.EliseStarseeker:
-							case Collectible.Neutral.EliseStarseekerCore:
+							case Collectible.Neutral.EliseStarseekerLOE:
+							case Collectible.Neutral.EliseStarseekerInvalid:
 								AddKnownCardId(gameState, NonCollectible.Neutral.EliseStarseeker_MapToTheGoldenMonkeyToken);
 								break;
 							case NonCollectible.Neutral.EliseStarseeker_MapToTheGoldenMonkeyToken:
@@ -725,9 +725,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Mage.ConfectionCyclone:
 								AddKnownCardId(gameState, NonCollectible.Mage.ConfectionCyclone_SugarElementalToken, 2);
 								break;
-							case Collectible.Druid.KiriChosenOfElune:
-								AddKnownCardId(gameState, Collectible.Druid.LunarEclipse);
-								AddKnownCardId(gameState, Collectible.Druid.SolarEclipse);
+							case Collectible.Druid.KiriChosenOfEluneDARKMOON_FAIRE:
+								AddKnownCardId(gameState, Collectible.Druid.LunarEclipseDARKMOON_FAIRE);
+								AddKnownCardId(gameState, Collectible.Druid.SolarEclipseDARKMOON_FAIRE);
 								break;
 							case NonCollectible.Neutral.CThuntheShattered_EyeOfCthunToken:
 							case NonCollectible.Neutral.CThuntheShattered_HeartOfCthunToken:

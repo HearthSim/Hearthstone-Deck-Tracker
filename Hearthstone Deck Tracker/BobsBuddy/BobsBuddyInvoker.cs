@@ -275,7 +275,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private bool IsUnknownCard(Entity e) => e?.Card.Id == Database.UnknownCardId;
 
 		private bool IsUnsupportedCard(Entity e) =>
-			e.Card.Id == NonCollectible.Invalid.ProfessorPutricide_Festergut1 || e.Card.Id == NonCollectible.Invalid.ProfessorPutricide_Festergut2
+			e.Card.Id == NonCollectible.Neutral.ProfessorPutricide_Festergut1 || e.Card.Id == NonCollectible.Neutral.ProfessorPutricide_Festergut2
 			|| e.Card.Id == NonCollectible.Neutral.Sneed_PilotedWhirlOTron1 || e.Card.Id == NonCollectible.Neutral.Sneed_PilotedWhirlOTron2;
 
 
