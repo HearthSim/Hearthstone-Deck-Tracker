@@ -1,3 +1,6 @@
+## **Release v1.19.20 - 2023-04-04**
+**Updated for Hearthstone 26.0.0**
+
 ## **Release v1.19.19 - 2023-03-29**
 - Added support for E.T.C Band Manager in overlay.
 
