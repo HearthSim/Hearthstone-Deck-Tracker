@@ -76,5 +76,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		RETURN_OF_THE_LICH_KING = 1776,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_PathOfArthas")]
 		PATH_OF_ARTHAS = 1869,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_FestivalOfLegends")]
+		BATTLE_OF_THE_BANDS = 1809,
 	}
 }
