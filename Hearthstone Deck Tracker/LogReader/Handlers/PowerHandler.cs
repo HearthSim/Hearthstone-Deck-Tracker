@@ -665,9 +665,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warrior.ClockworkGoblin:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SeaforiumBomber_BombToken);
 								break;
-							//case Collectible.Rogue.Wanted: -- TODO
-							//	AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin);
-							//	break;
+							case Collectible.Rogue.Wanted:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
 							//TODO: Hex Lord Malacrass
 							//TODO: Krag'wa, the Frog
 							case Collectible.Hunter.HalazziTheLynx:
@@ -859,6 +859,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Shaman.SaxophoneSoloist:
 								AddKnownCardId(gameState, Collectible.Shaman.SaxophoneSoloist);
+								break;
+							case Collectible.Paladin.TheCountess:
+								AddKnownCardId(gameState, NonCollectible.Paladin.TheCountess_LegendaryInvitationToken);
+								break;
+							case Collectible.Neutral.LicensedAdventurer:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
 
 							default:
