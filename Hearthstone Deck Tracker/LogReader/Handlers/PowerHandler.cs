@@ -843,6 +843,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Priest.SisterSvalna:
 								AddKnownCardId(gameState, NonCollectible.Priest.SisterSvalna_VisionOfDarknessToken); 
 								break;
+							case Collectible.Shaman.ColdStorage:
+								if(target != null)
+									AddKnownCardId(gameState, target);
+								break;
 							case Collectible.Priest.PowerChordSynchronize:
 								if(target != null)
 									AddKnownCardId(gameState, target);
