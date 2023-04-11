@@ -175,7 +175,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			public class Hunter : EnumerateMultiId<Hunter>
 			{
 				public static readonly MultiIdCard BearTrap = new MultiIdCard(Collectible.Hunter.BearTrap);
-				public static readonly MultiIdCard CatTrick = new MultiIdCard(Collectible.Hunter.CatTrickKARA);
+				public static readonly MultiIdCard CatTrick = new MultiIdCard(Collectible.Hunter.CatTrickKARA, Collectible.Hunter.CatTrickInvalid);
 				public static readonly MultiIdCard DartTrap = new MultiIdCard(Collectible.Hunter.DartTrap);
 				public static readonly MultiIdCard ExplosiveTrap = new MultiIdCard(Collectible.Hunter.ExplosiveTrap, Collectible.Hunter.ExplosiveTrapCore, Collectible.Hunter.ExplosiveTrapVanilla);
 				public static readonly MultiIdCard EmergencyManeuvers = new MultiIdCard(Collectible.Hunter.EmergencyManeuvers);
@@ -191,7 +191,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard Snipe = new MultiIdCard(Collectible.Hunter.Snipe, Collectible.Hunter.SnipeVanilla);
 				public static readonly MultiIdCard SnakeTrap = new MultiIdCard(Collectible.Hunter.SnakeTrapExpert1, Collectible.Hunter.SnakeTrapInvalid, Collectible.Hunter.SnakeTrapVanilla);
 				public static readonly MultiIdCard VenomstrikeTrap = new MultiIdCard(Collectible.Hunter.VenomstrikeTrapICECROWN, Collectible.Hunter.VenomstrikeTrapInvalid);
-				public static readonly MultiIdCard WanderingMonster = new MultiIdCard(Collectible.Hunter.WanderingMonsterLOOTAPALOOZA);
+				public static readonly MultiIdCard WanderingMonster = new MultiIdCard(Collectible.Hunter.WanderingMonsterLOOTAPALOOZA, Collectible.Hunter.WanderingMonsterInvalid);
 				public static readonly MultiIdCard Zombeeees = new MultiIdCard(Collectible.Hunter.Zombeeees);
 			}
 
@@ -240,15 +240,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public class Rogue : EnumerateMultiId<Rogue>
 			{
-				public static readonly MultiIdCard Ambush = new MultiIdCard(Collectible.Rogue.AmbushBLACK_TEMPLE);
+				public static readonly MultiIdCard Ambush = new MultiIdCard(Collectible.Rogue.AmbushBLACK_TEMPLE, Collectible.Rogue.AmbushInvalid);
 				public static readonly MultiIdCard Bamboozle = new MultiIdCard(Collectible.Rogue.Bamboozle);
-				public static readonly MultiIdCard CheatDeath = new MultiIdCard(Collectible.Rogue.CheatDeathLOOTAPALOOZA);
+				public static readonly MultiIdCard CheatDeath = new MultiIdCard(Collectible.Rogue.CheatDeathLOOTAPALOOZA, Collectible.Rogue.CheatDeathInvalid);
 				public static readonly MultiIdCard DirtyTricks = new MultiIdCard(Collectible.Rogue.DirtyTricks);
 				public static readonly MultiIdCard DoubleCross = new MultiIdCard(Collectible.Rogue.DoubleCross);
 				public static readonly MultiIdCard Evasion = new MultiIdCard(Collectible.Rogue.Evasion);
 				public static readonly MultiIdCard Kidnap = new MultiIdCard(Collectible.Rogue.Kidnap);
 				public static readonly MultiIdCard Perjury = new MultiIdCard(Collectible.Rogue.Perjury);
-				public static readonly MultiIdCard Plagiarize = new MultiIdCard(Collectible.Rogue.PlagiarizeSCHOLOMANCE);
+				public static readonly MultiIdCard Plagiarize = new MultiIdCard(Collectible.Rogue.PlagiarizeSCHOLOMANCE, Collectible.Rogue.PlagiarizeInvalid);
 				public static readonly MultiIdCard ShadowClone = new MultiIdCard(Collectible.Rogue.ShadowClone);
 				public static readonly MultiIdCard Shenanigans = new MultiIdCard(Collectible.Rogue.Shenanigans);
 				public static readonly MultiIdCard StickySituation = new MultiIdCard(Collectible.Rogue.StickySituation);
