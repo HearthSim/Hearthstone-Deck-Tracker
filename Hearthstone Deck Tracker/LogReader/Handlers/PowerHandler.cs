@@ -866,6 +866,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.LicensedAdventurer:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
+							case Collectible.Mage.SteamSurger:
+								AddKnownCardId(gameState, Collectible.Mage.FlameGeyserUNGORO);
+								break;
 
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
