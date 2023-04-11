@@ -1,3 +1,10 @@
+## **Release v1.19.21 - 2023-04-11**
+**Updated for Year of the Wolf**
+
+**Changes**:
+- Added support for the majority of new cards.
+
+
 ## **Release v1.19.20 - 2023-04-04**
 **Updated for Hearthstone 26.0.0**
 
