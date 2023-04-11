@@ -384,9 +384,9 @@ namespace HDTTests.Hearthstone.Secrets
 			{
 				var entity = new Entity(id);
 				entity.SetTag(GameTag.SECRET, 1);
-				entity.SetTag(GameTag.CLASS, (int)CardClass.PALADIN);
+				entity.SetTag(GameTag.CLASS, (int)CardClass.ROGUE);
 				entity.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
-				entity.CardId = Paladin.Reckoning.Ids[0];
+				entity.CardId = Rogue.Plagiarize.Ids[0];
 				return entity;
 			}
 			
@@ -397,40 +397,40 @@ namespace HDTTests.Hearthstone.Secrets
 
 			var secretsManager = new SecretsManager(game, new MockArenaSettings());
 
-			var paladinEntity = new Entity(2);
-			paladinEntity.SetTag(GameTag.SECRET, 1);
-			paladinEntity.SetTag(GameTag.CLASS, (int)CardClass.PALADIN);
-			secretsManager.NewSecret(paladinEntity);
+			var coreSecret = new Entity(2);
+			coreSecret.SetTag(GameTag.SECRET, 1);
+			coreSecret.SetTag(GameTag.CLASS, (int)CardClass.ROGUE);
+			secretsManager.NewSecret(coreSecret);
 			Assert.AreEqual(1, secretsManager.Secrets.Count);
 
 			var cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
 
 			game.Entities.Add(3, RevealedSecret(3));
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 0));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 0));
 
 			game.CurrentFormat = Format.Standard;
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 0));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 0));
 
 			game.CurrentGameType = GameType.GT_ARENA;
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
 
-			paladinEntity.Info.Created = true;
+			coreSecret.Info.Created = true;
 
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
 
 			game.CurrentGameType = GameType.GT_RANKED;
 
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
 
 			game.CurrentFormat = Format.Wild;
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
 		}
 	}
 }
