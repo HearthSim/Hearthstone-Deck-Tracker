@@ -843,6 +843,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Priest.SisterSvalna:
 								AddKnownCardId(gameState, NonCollectible.Priest.SisterSvalna_VisionOfDarknessToken); 
 								break;
+							case Collectible.Priest.PowerChordSynchronize:
+								if(target != null)
+									AddKnownCardId(gameState, target);
+								break;
+							case Collectible.Neutral.PozzikAudioEngineer:
+								AddKnownCardId(gameState, NonCollectible.Neutral.PozzikAudioEngineer_AudioBotToken, 2);
+								break;
+							case Collectible.Hunter.MisterMukla:
+								AddKnownCardId(gameState, NonCollectible.Neutral.KingMukla_BananasToken, 10);
+								break;
+							case Collectible.Shaman.SaxophoneSoloist:
+								if (game.Player.Board.Count(e => e.IsMinion && e.CardId != Collectible.Shaman.SaxophoneSoloist) == 0)
+									AddKnownCardId(gameState, Collectible.Shaman.SaxophoneSoloist);
+								break;
 
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
