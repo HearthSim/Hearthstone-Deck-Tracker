@@ -858,8 +858,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.KingMukla_BananasToken, 10);
 								break;
 							case Collectible.Shaman.SaxophoneSoloist:
-								if (game.Player.Board.Count(e => e.IsMinion && e.CardId != Collectible.Shaman.SaxophoneSoloist) == 0)
-									AddKnownCardId(gameState, Collectible.Shaman.SaxophoneSoloist);
+								AddKnownCardId(gameState, Collectible.Shaman.SaxophoneSoloist);
 								break;
 
 							default:
