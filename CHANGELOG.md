@@ -1,3 +1,8 @@
+## **Release v1.19.22 - 2023-04-12**
+**Fixes**:
+- Fixed an issue where decks with Festival of Legends cards were marked as Wild.
+- Fixed an issue where ETC sideboard overlay was not showing correctly.
+
 ## **Release v1.19.21 - 2023-04-11**
 **Updated for Year of the Wolf**
 
