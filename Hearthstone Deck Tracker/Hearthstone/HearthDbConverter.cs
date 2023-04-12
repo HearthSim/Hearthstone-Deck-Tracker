@@ -59,9 +59,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1646, "Vanilla"},
 			{1578, "United in Stormwind"},
 			{1626, "Fractured in Alterac Valley"},
+			{1658, "Voyage to the Sunken City"},
 			{1691, "Murder at Castle Nathria" },
 			{1776, "March of the Lich King" },
 			{1869, "Path of Arthas" },
+			{(int)CardSet.BATTLE_OF_THE_BANDS, "Festival of Legends" },
 		};
 
 		public static string? ConvertClass(CardClass cardClass)
