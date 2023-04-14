@@ -1,3 +1,6 @@
+## **Release v1.19.23 - 2023-04-14**
+**Updated for Hearthstone 26.0.2**
+
 ## **Release v1.19.22 - 2023-04-12**
 **Fixes**:
 - Fixed an issue where decks with Festival of Legends cards were marked as Wild.
@@ -8,7 +11,6 @@
 
 **Changes**:
 - Added support for the majority of new cards.
-
 
 ## **Release v1.19.20 - 2023-04-04**
 **Updated for Hearthstone 26.0.0**
