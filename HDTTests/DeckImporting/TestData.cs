@@ -39,7 +39,7 @@ namespace HDTTests.DeckImporting
 			Hunter.CallOfTheWild,
 			Hunter.CallPet,
 			Hunter.CarrionGrub,
-			Hunter.CatTrickKARA,
+			Hunter.CatTrick,
 			Hunter.CloakedHuntressKARA,
 			Hunter.CobraShot,
 			Hunter.CoreRager,

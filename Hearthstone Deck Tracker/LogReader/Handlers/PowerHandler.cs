@@ -457,7 +457,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.SmugSenior:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SmugSenior_SpectralSeniorToken);
 								break;
-							case Collectible.Rogue.PlagiarizeSCHOLOMANCE:
+							case Collectible.Rogue.Plagiarize:
 								if (actionStartingEntity != null)
 								{
 									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Opponent : game.Player;
@@ -592,7 +592,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, Collectible.Priest.ExcavatedEvil);
 								break;
 							case Collectible.Neutral.EliseStarseekerLOE:
-							case Collectible.Neutral.EliseStarseekerInvalid:
+							case Collectible.Neutral.EliseStarseekerPLACEHOLDER_202204:
 								AddKnownCardId(gameState, NonCollectible.Neutral.EliseStarseeker_MapToTheGoldenMonkeyToken);
 								break;
 							case NonCollectible.Neutral.EliseStarseeker_MapToTheGoldenMonkeyToken:
@@ -725,9 +725,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Mage.ConfectionCyclone:
 								AddKnownCardId(gameState, NonCollectible.Mage.ConfectionCyclone_SugarElementalToken, 2);
 								break;
-							case Collectible.Druid.KiriChosenOfEluneDARKMOON_FAIRE:
-								AddKnownCardId(gameState, Collectible.Druid.LunarEclipseDARKMOON_FAIRE);
-								AddKnownCardId(gameState, Collectible.Druid.SolarEclipseDARKMOON_FAIRE);
+							case Collectible.Druid.KiriChosenOfElune:
+								AddKnownCardId(gameState, Collectible.Druid.LunarEclipse);
+								AddKnownCardId(gameState, Collectible.Druid.SolarEclipse);
 								break;
 							case NonCollectible.Neutral.CThuntheShattered_EyeOfCthunToken:
 							case NonCollectible.Neutral.CThuntheShattered_HeartOfCthunToken:
@@ -867,7 +867,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
 							case Collectible.Mage.SteamSurger:
-								AddKnownCardId(gameState, Collectible.Mage.FlameGeyserUNGORO);
+								AddKnownCardId(gameState, Collectible.Mage.FlameGeyser);
 								break;
 
 							default:

@@ -247,7 +247,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Collectible.Warrior.FieryWarAxeLegacy,
 				Collectible.Neutral.HiredGun,
 				Collectible.Neutral.RagingWorgen,
-				Collectible.Neutral.DreadCorsairExpert1,
+				Collectible.Neutral.DreadCorsair,
 				Collectible.Warrior.Brawl,
 			};
 
@@ -366,7 +366,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Neutral.CaptainsParrotLegacy,
 					Collectible.Neutral.SharkfinFan,
 					Collectible.Neutral.ShipsCannon,
-					Collectible.Neutral.HenchClanThugGILNEAS,
+					Collectible.Neutral.HenchClanThug,
 				},
 				new List<string>
 				{
@@ -498,7 +498,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					NonCollectible.Paladin.ShirvallahsProtection,
 					Collectible.Paladin.DivineStrength,
 					Collectible.Paladin.MeanstreetMarshal,
-					Collectible.Paladin.GrimestreetOutfitterGANGS,
+					Collectible.Paladin.GrimestreetOutfitter,
 					Collectible.Paladin.ParagonOfLight,
 					Collectible.Paladin.FarrakiBattleaxe,
 					Collectible.Neutral.ElvenArcherLegacy,
@@ -570,7 +570,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				new List<string>
 				{
 					NonCollectible.Hunter.HalazzisGuise,
-					Collectible.Hunter.JeweledMacawUNGORO,
+					Collectible.Hunter.JeweledMacaw,
 					Collectible.Hunter.SpringpawTROLL,
 					Collectible.Hunter.WebspinnerNAXX,
 					Collectible.Hunter.KillCommandLegacy,
@@ -604,7 +604,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					NonCollectible.Druid.GonksMark,
 					Collectible.Druid.EnchantedRavenKARA,
 					Collectible.Druid.PowerOfTheWild,
-					Collectible.Druid.WitchwoodAppleGILNEAS,
+					Collectible.Druid.WitchwoodApple,
 					Collectible.Druid.MountedRaptorLOE,
 					Collectible.Druid.SwipeLegacy,
 					Collectible.Neutral.WaxElemental,
@@ -664,7 +664,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					NonCollectible.Warlock.HireeksHunger,
 					Collectible.Warlock.FlameImp,
 					Collectible.Warlock.CallOfTheVoidLegacy,
-					Collectible.Warlock.SpiritBombBOOMSDAY,
+					Collectible.Warlock.SpiritBomb,
 					Collectible.Warlock.UnlicensedApothecary,
 					Collectible.Warlock.BloodWitch,
 					Collectible.Warlock.HellfireLegacy,

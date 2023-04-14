@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 			UpdateAnimatedCardListAsync();
 		}
 
-		public Hearthstone.Card? Card => Database.GetCardFromId(CardIds.Collectible.Neutral.RagnarosTheFirelordExpert1);
+		public Hearthstone.Card? Card => Database.GetCardFromId(CardIds.Collectible.Neutral.RagnarosTheFirelord);
 		public DrawingBrush ClassicCard => GetCardImage("classic");
 		public DrawingBrush MinimalCard => GetCardImage("minimal");
 		public DrawingBrush DarkCard => GetCardImage("dark");
