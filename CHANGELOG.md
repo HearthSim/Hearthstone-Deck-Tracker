@@ -1,3 +1,6 @@
+## **Release v1.19.24 - 2023-04-27**
+**Updated for Hearthstone 26.0.4**
+
 ## **Release v1.19.23 - 2023-04-14**
 **Updated for Hearthstone 26.0.2**
 
