@@ -1,3 +1,11 @@
+## **Release v1.20.0 - 2023-05-10**
+**Updated for Hearthstone 26.2.0**
+
+**Bob's Buddy**:
+- There are likely still issues with some new cards in Bob's Buddy. We will update these in the coming days.
+- Interactions with Battlecries (Rylak Metalhead) are currently unsupported.
+- Interactions with unknown cards in the opponents hand (e.g. Bassgill or Scourfin) are currently unsupported.
+
 ## **Release v1.19.24 - 2023-04-27**
 **Updated for Hearthstone 26.0.4**
 
