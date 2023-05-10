@@ -130,6 +130,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private string? _errorMessage = null;
+		public string? ErrorMessage
+		{
+			get => _errorMessage;
+			private set
+			{
+				if(_errorMessage == value)
+					return;
+				_errorMessage = value;
+				OnPropertyChanged();
+			}
+		}
+
 		private BobsBuddyWarningState _warningState = BobsBuddyWarningState.None;
 		public BobsBuddyWarningState WarningState
 		{
@@ -152,7 +165,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		const float SoftLabelOpacity = 0.3f;
 
-		public string StatusMessage => StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults);
+		public string StatusMessage => StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults, ErrorMessage);
 
 		public Visibility WarningIconVisibility => ErrorState == BobsBuddyErrorState.None && WarningState == BobsBuddyWarningState.None ? Visibility.Collapsed : Visibility.Visible;
 
@@ -457,9 +470,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		///	until the error is cleared.
 		/// </summary>
 		/// <param name="error">The new error state</param>
-		internal void SetErrorState(BobsBuddyErrorState error)
+		internal void SetErrorState(BobsBuddyErrorState error, string? message = null)
 		{
 			ErrorState = error;
+			ErrorMessage = message;
 			ShowResults(false);
 		}
 

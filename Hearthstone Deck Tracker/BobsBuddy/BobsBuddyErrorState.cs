@@ -7,5 +7,6 @@
 		NotEnoughData,
 		UnkownCards,
 		UnsupportedCards,
+		UnsupportedInteraction,
 	}
 }

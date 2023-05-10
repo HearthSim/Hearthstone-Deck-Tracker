@@ -5,10 +5,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
 	internal static class StatusMessageConverter
 	{
-		public static string GetStatusMessage(BobsBuddyState state, BobsBuddyErrorState errorState, bool statsShown)
+		public static string GetStatusMessage(BobsBuddyState state, BobsBuddyErrorState errorState, bool statsShown, string? errorMessage)
 		{
 			if(errorState != BobsBuddyErrorState.None)
 			{
+				if(errorMessage != null)
+					return errorMessage;
+
 				switch(errorState)
 				{
 					case BobsBuddyErrorState.UpdateRequired:
@@ -20,6 +23,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						return LocUtil.Get("BobsBuddyStatusMessage_UnknownCards");
 					case BobsBuddyErrorState.UnsupportedCards:
 						return LocUtil.Get("BobsBuddyStatusMessage_UnsupportedCards");
+					case BobsBuddyErrorState.UnsupportedInteraction:
+						return LocUtil.Get("BobsBuddyStatusMessage_UnsupportedInteraction");
 				}
 			}
 			switch(state)
