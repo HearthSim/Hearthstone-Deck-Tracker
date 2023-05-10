@@ -458,6 +458,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.SmugSenior_SpectralSeniorToken);
 								break;
 							case Collectible.Rogue.Plagiarize:
+							case Collectible.Rogue.PlagiarizeCore:
 								if (actionStartingEntity != null)
 								{
 									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Opponent : game.Player;
@@ -728,6 +729,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Druid.KiriChosenOfElune:
 								AddKnownCardId(gameState, Collectible.Druid.LunarEclipse);
 								AddKnownCardId(gameState, Collectible.Druid.SolarEclipse);
+								break;
+							case Collectible.Druid.KiriChosenOfEluneCore:
+								AddKnownCardId(gameState, Collectible.Druid.LunarEclipseCore);
+								AddKnownCardId(gameState, Collectible.Druid.SolarEclipseCore);
 								break;
 							case NonCollectible.Neutral.CThuntheShattered_EyeOfCthunToken:
 							case NonCollectible.Neutral.CThuntheShattered_HeartOfCthunToken:
