@@ -350,7 +350,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var oHpData = opponentHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
 			if(opponentHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
 			{
-				var ench = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (x.IsInPlay || x.IsInSetAside));
+				// It appear this enchantment may be in the graveyard now in the opponents case
+				var ench = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (x.IsInPlay || x.IsInSetAside))
+						?? _game.Opponent.Graveyard.LastOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath);
 				var target = ench?.GetTag(GameTag.ATTACHED) ?? 0;
 				if(target > 0)
 					oHpData = target;
