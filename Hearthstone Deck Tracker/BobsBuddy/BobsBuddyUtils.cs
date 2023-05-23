@@ -2,6 +2,8 @@
 using System.Linq;
 using BobsBuddy;
 using BobsBuddy.Factory;
+using BobsBuddy.HeroPowers;
+using BobsBuddy.Minions.Mech;
 using BobsBuddy.Simulation;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
