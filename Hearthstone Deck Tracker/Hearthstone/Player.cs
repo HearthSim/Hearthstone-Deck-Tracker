@@ -420,7 +420,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			entity.Info.Turn = turn;
 			LastDrawnCardId = entity.CardId;
-			Log(entity);
+			//Log(entity);
 		}
 
 
@@ -454,7 +454,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.CostReduction = 0;
 			if(entity.CardId != null)
 				CardsPlayedThisTurn.Add(entity.CardId);
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void OnTurnStart()
@@ -467,14 +467,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(entity.CardId != null)
 				UpdateKnownEntitiesInDeck(entity.CardId);
 			entity.Info.Turn = turn;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void CreateInHand(Entity entity, int turn)
 		{
 			entity.Info.Created = true;
 			entity.Info.Turn = turn;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void CreateInDeck(Entity entity, int turn)
@@ -488,14 +488,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			else
 				entity.Info.Created |= turn > 1;
 			entity.Info.Turn = turn;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void CreateInPlay(Entity entity, int turn)
 		{
 			entity.Info.Created = true;
 			entity.Info.Turn = turn;
-			Log(entity);
+			//Log(entity);
 			if(entity.IsHeroPower)
 				HeroPowerChanged(entity);
 		}
@@ -504,7 +504,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			entity.Info.Created = true;
 			entity.Info.Turn = turn;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void RemoveFromDeck(Entity entity, int turn)
@@ -512,10 +512,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			//Do not check for KnownCardIds here, this is how jousted cards get removed from the deck
 			entity.Info.Turn = turn;
 			entity.Info.Discarded = true;
-			Log(entity);
+			//Log(entity);
 		}
 
-		public void Mulligan(Entity entity) => Log(entity);
+		public void Mulligan(Entity entity)
+		{
+			//Log(entity);
+		}
 
 		public void HandDiscard(Entity entity, int turn)
 		{
@@ -523,7 +526,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				UpdateKnownEntitiesInDeck(entity.CardId, entity.Info.Turn);
 			entity.Info.Turn = turn;
 			entity.Info.Discarded = true;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void DeckDiscard(Entity entity, int turn)
@@ -532,28 +535,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				UpdateKnownEntitiesInDeck(entity.CardId);
 			entity.Info.Turn = turn;
 			entity.Info.Discarded = true;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void HandToDeck(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
 			entity.Info.Returned = true;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void BoardToDeck(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
 			entity.Info.Returned = true;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void BoardToHand(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
 			entity.Info.Returned = true;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void PredictUniqueCardInDeck(string cardId, bool isCreated)
@@ -570,7 +573,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				card.Turn = turn;
 			else if(entity.CardId != null)
 				InDeckPredictions.Add(new PredictedCard(entity.CardId, turn));
-			Log(entity);
+			//Log(entity);
 		}
 
 		private void UpdateKnownEntitiesInDeck(string cardId, int turn = int.MaxValue)
@@ -584,7 +587,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			entity.Info.Turn = turn;
 			_game.SecretsManager.SecretTriggered(entity);
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void SecretPlayedFromDeck(Entity entity, int turn)
@@ -592,21 +595,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(entity.CardId != null)
 				UpdateKnownEntitiesInDeck(entity.CardId);
 			entity.Info.Turn = turn;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void SecretPlayedFromHand(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
 			SpellsPlayedCount++;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void QuestPlayedFromHand(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
 			SpellsPlayedCount++;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void PlayToGraveyard(Entity entity, string cardId, int turn)
@@ -614,13 +617,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Turn = turn;
 			if(entity.IsMinion)
 				LastDiedMinionCardId = cardId;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void RemoveFromPlay(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
-			Log(entity);
+			//Log(entity);
 		}
 
 		[NotifyPropertyChangedInvocator]
@@ -632,19 +635,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void StolenByOpponent(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void StolenFromOpponent(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void CreateInSetAside(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
-			Log(entity);
+			//Log(entity);
 		}
 
 		public void UpdateLibramReduction(int change) => LibramReductionCount += change;
@@ -669,7 +672,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return;
 			var added = PastHeroPowers.Add(id!);
 			if(added)
-				Log(entity);
+			{
+				//Log(entity);
+			}
 		}
 	}
 }
