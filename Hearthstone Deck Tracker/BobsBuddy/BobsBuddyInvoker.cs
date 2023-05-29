@@ -339,7 +339,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var pHpData = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
 			if(playerHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
 			{
-				var ench = _game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (x.IsInPlay || x.IsInSetAside));
+				var ench = _game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (x.IsInPlay || x.IsInSetAside))
+						?? _game.Player.Graveyard.LastOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath);
 				var target = ench?.GetTag(GameTag.ATTACHED) ?? 0;
 				if(target > 0)
 					pHpData = target;
