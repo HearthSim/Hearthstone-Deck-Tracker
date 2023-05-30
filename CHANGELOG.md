@@ -1,3 +1,8 @@
+## **Release v1.20.3 - 2023-05-30**
+**Bob's Buddy**:
+- Added support for many Battlecry interactions with Rylak Metalhead
+- Fixed various issues related to cards and mechanics added with Hearthstone 26.2.0.
+
 ## **Release v1.20.2 - 2023-05-19**
 **Updated for Hearthstone 26.2.2**
 
