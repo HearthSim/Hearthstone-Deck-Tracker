@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		bootstrap.bat = bootstrap.bat
+		CHANGELOG.md = CHANGELOG.md
 		lib\De.TorstenMandelkow.MetroChart.dll = lib\De.TorstenMandelkow.MetroChart.dll
 		generate_resources.bat = generate_resources.bat
 		lib\HearthDb.dll = lib\HearthDb.dll
