@@ -767,6 +767,34 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		internal static bool EnsureClientLogConfig()
+		{
+			const string targetContent = "[Log]\nFileSizeLimit.Int=-1";
+			try
+			{
+				var path = Path.Combine(Config.Instance.HearthstoneDirectory, "client.config");
+				if(File.Exists(path))
+				{
+					var content = File.ReadAllText(path);
+					if(content == targetContent)
+					{
+						Log.Info("client.config is up-to-date");
+						return true;
+					}
+				}
+
+				// This probably need to be more lenient in the future and allow other file content
+				Log.Info("Updating client.config");
+				File.WriteAllText(path, targetContent);
+				return false;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return true;
+			}
+		}
+
 		public static bool TryGetAttribute<T>(object obj, out T? attribute) where T : Attribute
 		{
 			var members = obj?.GetType().GetMember(obj.ToString());

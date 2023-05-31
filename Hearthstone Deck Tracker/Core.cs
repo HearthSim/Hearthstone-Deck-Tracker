@@ -97,6 +97,7 @@ namespace Hearthstone_Deck_Tracker
 			var newUser = ConfigManager.PreviousVersion == null;
 			LogConfigUpdater.Run().Forget();
 			LogConfigWatcher.Start();
+
 			UITheme.InitializeTheme().Forget();
 			ThemeManager.Run();
 			ResourceMonitor.Run();
@@ -173,6 +174,8 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.BattlegroundsSessionRecapWindowOnStart)
 				Windows.BattlegroundsSessionWindow.Show();
 
+			Helper.EnsureClientLogConfig();
+
 			Initialized = true;
 
 			Influx.OnAppStart(
@@ -248,6 +251,12 @@ namespace Hearthstone_Deck_Tracker
 					{
 						//game started
 						Helper.VerifyHearthstonePath();
+						var ok = Helper.EnsureClientLogConfig();
+						if(!ok)
+						{
+							ShowRestartRequiredMessageAsync().Forget();
+							Overlay.ShowRestartRequiredWarning();
+						}
 						Game.CurrentRegion = await Helper.GetCurrentRegion();
 						if(Game.CurrentRegion != Region.UNKNOWN)
 						{
