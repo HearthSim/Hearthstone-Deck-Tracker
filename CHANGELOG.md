@@ -1,3 +1,11 @@
+## **Release v1.20.4 - 2023-05-31**
+**Restores functionality for Hearthstone 26.4.0**
+- Another update for the new card data will follow.
+
+**Bob's Buddy**:
+- Fixed an issue where Scourfin was unnecessarily preventing simulations.
+- Fixed an issue where Mantid Queen was not working correctly.
+
 ## **Release v1.20.3 - 2023-05-30**
 **Bob's Buddy**:
 - Added support for many Battlecry interactions with Rylak Metalhead
