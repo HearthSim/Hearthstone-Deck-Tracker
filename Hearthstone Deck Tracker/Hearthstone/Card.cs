@@ -382,8 +382,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var classGroup = _dbCard?.Entity.GetTag(GameTag.MULTI_CLASS_GROUP) ?? 0;
 			if(classGroup == 0)
 				return false;
-			return Helper.MultiClassGroups[(MultiClassGroup)classGroup]
-				.Any(x => string.Equals(x.ToString(), playerClass, StringComparison.CurrentCultureIgnoreCase));
+			if(Helper.MultiClassGroups.TryGetValue((MultiClassGroup)classGroup, out var classes))
+				return classes.Any(x => string.Equals(x.ToString(), playerClass, StringComparison.CurrentCultureIgnoreCase));
+			return false;
 		}
 
 		public List<string> GetClasses()
