@@ -1,3 +1,6 @@
+## **Release v1.20.6 - 2023-05-31**
+**Updated for Hearthstone 26.4.0**
+
 ## **Release v1.20.5 - 2023-05-31**
 **Restores functionality for Hearthstone 26.4.0**
 - Another update for the new card data will follow.
