@@ -75,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 				{
 					var direction = (selectedHeroIndex >= HeroStats.Count / 2) ? -1 : 1;
 					for(var i = 0; i < HeroStats.Count; i++)
-						HeroStats[i].SetHiddenByHeroPower(i == selectedHeroIndex + direction || i == selectedHeroIndex + 2 * direction);
+						HeroStats[i].SetHiddenByHeroPower(i == selectedHeroIndex + direction);
 				}
 				else
 				{
