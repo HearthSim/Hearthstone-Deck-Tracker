@@ -41,13 +41,21 @@ namespace HearthWatcher.LogReader
 				return _latestActiveDir;
 			_lastCheck = now;
 
-			var subDirs = new DirectoryInfo(_logDir).GetDirectories();
-			if(subDirs.Length == 0)
-				return null;
+			DirectoryInfo latest;
+			try
+			{
+				var subDirs = new DirectoryInfo(_logDir).GetDirectories();
+				if(subDirs.Length == 0)
+					return null;
 
-			var latest = subDirs.OrderByDescending(x => x.CreationTime).First();
-			if(latest.FullName == _latestInactiveDir?.FullName)
+				latest = subDirs.OrderByDescending(x => x.CreationTime).First();
+				if(latest.FullName == _latestInactiveDir?.FullName)
+					return null;
+				}
+			catch
+			{
 				return null;
+			}
 
 			try
 			{
