@@ -16,7 +16,7 @@ namespace HearthWatcher.LogReader
 	public class LogFileWatcher
 	{
 		internal readonly LogWatcherInfo Info;
-		private string _filePath;
+		private string _logDir;
 		private ConcurrentQueue<LogLine> _lines = new ConcurrentQueue<LogLine>();
 		private bool _logFileExists;
 		private long _offset;
@@ -29,6 +29,58 @@ namespace HearthWatcher.LogReader
 		 * This causes the parser to get stuck on this broken line and stop reading new power information.
 		 */
 		 const int KoreanMillhouseBugHack = 54253;
+
+		private DirectoryInfo _latestActiveDir;
+		private DirectoryInfo _latestInactiveDir;
+		private DateTime _lastCheck;
+
+		private DirectoryInfo GetActualLogDir()
+		{
+			var now = DateTime.Now;
+			if((now - _lastCheck).TotalSeconds < 5)
+				return _latestActiveDir;
+			_lastCheck = now;
+
+			var subDirs = new DirectoryInfo(_logDir).GetDirectories();
+			if(subDirs.Length == 0)
+				return null;
+
+			var latest = subDirs.OrderByDescending(x => x.CreationTime).First();
+			if(latest.FullName == _latestInactiveDir?.FullName)
+				return null;
+
+			try
+			{
+				var file = latest.GetFiles().FirstOrDefault();
+				if(file == null)
+					return null;
+
+				file.MoveTo(file.FullName);
+			}
+			catch(IOException)
+			{
+				// We're not able te move the file. This is the active directory.
+				_latestActiveDir = latest;
+				return latest;
+			}
+			catch(Exception)
+			{
+			}
+
+			_latestInactiveDir = latest;
+			return null;
+		}
+		 
+		private string GetFilePath()
+		{
+			var dir = GetActualLogDir();
+			if(dir == null)
+			{
+				// Does not actually exist. We're using this as a fallback
+				return Path.Combine(_logDir, Info.Name + ".log");
+			}
+			return Path.Combine(dir.FullName, Info.Name + ".log");
+		}
 		
 
 		public LogFileWatcher(LogWatcherInfo info)
@@ -43,7 +95,7 @@ namespace HearthWatcher.LogReader
 		{
 			if(_running)
 				return;
-			_filePath = Path.Combine(logDirectory, Info.Name + ".log");
+			_logDir = logDirectory;
 			MoveOrDeleteLogFile();
 			_startingPoint = startingPoint;
 			_stop = false;
@@ -55,13 +107,14 @@ namespace HearthWatcher.LogReader
 
 		private void MoveOrDeleteLogFile()
 		{
-			if(File.Exists(_filePath))
+			var filePath = GetFilePath();
+			if(File.Exists(filePath))
 			{
 				try
 				{
 					//check if we can move it
-					File.Move(_filePath, _filePath);
-					var old = _filePath.Replace(".log", "_old.log");
+					File.Move(filePath, filePath);
+					var old = filePath.Replace(".log", "_old.log");
 					if(File.Exists(old))
 					{
 						try
@@ -73,13 +126,13 @@ namespace HearthWatcher.LogReader
 						}
 					}
 
-					File.Move(_filePath, old);
+					File.Move(filePath, old);
 				}
 				catch
 				{
 					try
 					{
-						File.Delete(_filePath);
+						File.Delete(filePath);
 					}
 					catch
 					{
@@ -90,7 +143,7 @@ namespace HearthWatcher.LogReader
 							 * Hearthstone is not running. Since only Hearthstone creates a write lock on the file
 							 * we can reset the content instead of moving or deleting it.
 							 */
-							File.WriteAllText(_filePath, string.Empty);
+							File.WriteAllText(filePath, string.Empty);
 						}
 						catch
 						{
@@ -126,7 +179,8 @@ namespace HearthWatcher.LogReader
 			FindInitialOffset();
 			while(!_stop)
 			{
-				var fileInfo = new FileInfo(_filePath);
+				var filePath = GetFilePath();
+				var fileInfo = new FileInfo(filePath);
 				if(fileInfo.Exists)
 				{
 					if(!_logFileExists)
@@ -134,7 +188,7 @@ namespace HearthWatcher.LogReader
 						_logFileExists = true;
 						OnLogFileFound?.Invoke(Info.Name);
 					}
-					using(var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+					using(var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 					{
 						fs.Seek(_offset, SeekOrigin.Begin);
 						if(fs.Length == _offset)
@@ -172,10 +226,11 @@ namespace HearthWatcher.LogReader
 
 		private void FindInitialOffset()
 		{
-			var fileInfo = new FileInfo(_filePath);
+			var filePath = GetFilePath();
+			var fileInfo = new FileInfo(filePath);
 			if(fileInfo.Exists)
 			{
-				using(var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+				using(var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				using(var sr = new StreamReader(fs, Encoding.ASCII))
 				{
 					var offset = 0;
