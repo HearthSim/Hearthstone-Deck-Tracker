@@ -281,7 +281,9 @@ namespace HearthWatcher.LogReader
 
 		public DateTime FindEntryPoint(string logDirectory, string[] str)
 		{
-			var fileInfo = new FileInfo(Path.Combine(logDirectory, Info.Name + ".log"));
+			_logDir = logDirectory;
+			var filePath = GetFilePath();
+			var fileInfo = new FileInfo(filePath);
 			if(fileInfo.Exists)
 			{
 				var targets = str.Select(x => new string(x.Reverse().ToArray())).ToList();
