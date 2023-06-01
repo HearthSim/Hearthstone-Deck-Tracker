@@ -125,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Hunter.SnakeTrap);
 					exclude.Add(Hunter.VenomstrikeTrap);
 					//I think most of the secrets here could (and maybe should) check for this, but this one definitley does because of Hysteria.
-					if(Game.PlayerEntity.IsCurrentPlayer)
+					if(Game.PlayerEntity?.IsCurrentPlayer ?? false)
 						exclude.Add(Mage.OasisAlly);
 				}
 
@@ -220,7 +220,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				exclude.Add(Rogue.CheatDeath);
 			}
 
-			if(Game.OpponentEntity.GetTag(GameTag.NUM_FRIENDLY_MINIONS_THAT_DIED_THIS_TURN) >= 1)
+			if(Game.OpponentEntity?.GetTag(GameTag.NUM_FRIENDLY_MINIONS_THAT_DIED_THIS_TURN) >= 1)
 				exclude.Add(Paladin.HandOfSalvation);
 
 			var numDeathrattleMinions = 0;
@@ -348,7 +348,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		public void HandleTurnsInPlayChange(Entity entity, int turn)
 		{
-			if(!HandleAction)
+			if(!HandleAction || Game.OpponentEntity == null)
 				return;
 			if(Game.OpponentEntity.IsCurrentPlayer && turn > _lastStartOfTurnCheck)
 			{
