@@ -80,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		{
 			foreach(var secret in Secrets)
 				secret.Exclude(cardId);
-			Log.Info("Excluded Secret " + cardId);
+			//Log.Info("Excluded Secret " + cardId);
 			if(invokeCallback)
 				Refresh();
 			return true;
