@@ -1,3 +1,7 @@
+## **Release v1.20.8 - 2023-06-01**
+**Fixes**:
+- Fixed an issue where old games were potentially parsed when starting HDT.
+
 ## **Release v1.20.7 - 2023-05-31**
 **Updated for Hearthstone 26.4.0**
 
