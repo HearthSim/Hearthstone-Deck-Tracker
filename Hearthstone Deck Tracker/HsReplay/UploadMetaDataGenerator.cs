@@ -60,7 +60,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(game?.LeagueId > 0)
 				metaData.LeagueId = game.LeagueId;
 			if(game?.GameMode == GameMode.Battlegrounds)
-				metaData.BattlegroundsRaces = game.BattlegroundsRaces?.Cast<int>().OrderBy(x => x).ToArray();
+			{
+				var races = game.BattlegroundsRaces?.Cast<int>().OrderBy(x => x).ToArray();
+				if(races?.Length > 1) // can be [0] (invalid)
+					metaData.BattlegroundsRaces = races;
+			}
 			if(game?.GameMode == GameMode.Mercenaries)
 			{
 				if(game?.MercenariesBountyRunRewards?.Count > 0)
