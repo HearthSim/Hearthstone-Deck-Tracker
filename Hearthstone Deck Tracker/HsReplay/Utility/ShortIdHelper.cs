@@ -21,8 +21,14 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 				return string.Empty;
 			try
 			{
-				var ids = deck.Cards.SelectMany(c => Enumerable.Repeat(c.Id.ToString(), c.Count));
+				var ids = deck.Cards.SelectMany(c => Enumerable.Repeat(c.Id, c.Count));
 				var idString = string.Join(",", ids.OrderBy(x => x, new Utf8StringComperer()));
+				foreach (var sideboard in deck.Sideboards.OrderBy(c => c.OwnerCardId))
+				{
+					var sideboardIds = sideboard.Cards.SelectMany(c => Enumerable.Repeat(c.Id, c.Count));
+					var sideboardCardsIdString = string.Join(",", sideboardIds.OrderBy(x => x, new Utf8StringComperer()));
+					idString += $"/{sideboard.OwnerCardId}:{sideboardCardsIdString}";
+				}
 				var bytes = Encoding.UTF8.GetBytes(idString);
 				var hash = MD5.Create().ComputeHash(bytes);
 				var hex = BitConverter.ToString(hash).Replace("-", string.Empty);
