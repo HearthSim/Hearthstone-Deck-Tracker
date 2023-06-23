@@ -288,8 +288,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(!game.SetupDone || game.PlayerEntity == null)
 				return;
-			var activePlayer = game.PlayerEntity.HasTag(CURRENT_PLAYER) ? ActivePlayer.Player : ActivePlayer.Opponent;
-			if(activePlayer == ActivePlayer.Player)
+			if(game.PlayerEntity.HasTag(CURRENT_PLAYER))
 				gameState.PlayerUsedHeroPower = false;
 			else
 				gameState.OpponentUsedHeroPower = false;
@@ -300,8 +299,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if((Step)value == Step.BEGIN_MULLIGAN)
 				gameState.GameHandler?.HandleBeginMulligan();
 			gameState.GameHandler?.HandleMercenariesStateChange();
-			var activePlayer = game.PlayerEntity.HasTag(CURRENT_PLAYER) ? ActivePlayer.Player : ActivePlayer.Opponent;
-			if (activePlayer == ActivePlayer.Player && (Step)value == Step.MAIN_CLEANUP) {
+			if (game.PlayerEntity.HasTag(CURRENT_PLAYER) && (Step)value == Step.MAIN_CLEANUP) {
 				var remainingMana = game.PlayerEntity.GetTag(RESOURCES) + game.PlayerEntity.GetTag(TEMP_RESOURCES) - game.PlayerEntity.GetTag(RESOURCES_USED);
 				game.SecretsManager.HandlePlayerTurnEnd(remainingMana);
 			}
