@@ -19,8 +19,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		Player Player { get; set; }
 		Player Opponent { get; set; }
 		Entity GameEntity { get; }
-		Entity PlayerEntity { get; }
-		Entity OpponentEntity { get; }
+		Entity? PlayerEntity { get; }
+		Entity? OpponentEntity { get; }
 		bool IsMulliganDone { get; }
 		bool IsInMenu { get; set; }
 		bool IsUsingPremade { get; set; }

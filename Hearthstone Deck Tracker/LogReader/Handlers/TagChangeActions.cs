@@ -299,7 +299,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if((Step)value == Step.BEGIN_MULLIGAN)
 				gameState.GameHandler?.HandleBeginMulligan();
 			gameState.GameHandler?.HandleMercenariesStateChange();
-			if (game.PlayerEntity.HasTag(CURRENT_PLAYER) && (Step)value == Step.MAIN_CLEANUP) {
+			if (game.PlayerEntity != null && game.PlayerEntity.HasTag(CURRENT_PLAYER) && (Step)value == Step.MAIN_CLEANUP) {
 				var remainingMana = game.PlayerEntity.GetTag(RESOURCES) + game.PlayerEntity.GetTag(TEMP_RESOURCES) - game.PlayerEntity.GetTag(RESOURCES_USED);
 				game.SecretsManager.HandlePlayerTurnEnd(remainingMana);
 			}
