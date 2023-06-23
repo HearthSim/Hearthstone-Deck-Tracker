@@ -509,7 +509,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				Exclude(Rogue.Plagiarize);
 		}
 
-		public void HandleManaRemaining(int mana)
+		public void HandlePlayerTurnEnd(int remainingMana)
+		{
+			if(remainingMana == 0)
+				Exclude(Hunter.HiddenMeaning);
+		}
+
+		public void HandlePlayerManaRemaining(int mana)
 		{
 			if(mana == 0 && FreeSpaceInHand)
 				Exclude(Rogue.DoubleCross);
