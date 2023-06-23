@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(id != game.PlayerEntity.Id)
 				return;
 			var available = game.PlayerEntity.GetTag(RESOURCES) + game.PlayerEntity.GetTag(TEMP_RESOURCES);
-			game.SecretsManager.HandleManaRemaining(Math.Max(0, available - value));
+			game.SecretsManager.HandlePlayerManaRemaining(Math.Max(0, available - value));
 		}
 
 		private void OnRebornChange(int id, int value, IGame game)
@@ -292,7 +292,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(activePlayer == ActivePlayer.Player)
 				gameState.PlayerUsedHeroPower = false;
 			else
+			{
 				gameState.OpponentUsedHeroPower = false;
+				var remainingMana = game.PlayerEntity.GetTag(RESOURCES) + game.PlayerEntity.GetTag(TEMP_RESOURCES) - game.PlayerEntity.GetTag(RESOURCES_USED);
+				game.SecretsManager.HandlePlayerTurnEnd(remainingMana);
+			}
 		}
 
 		private void StepChange(int value, int prevValue, IHsGameState gameState, IGame game)
