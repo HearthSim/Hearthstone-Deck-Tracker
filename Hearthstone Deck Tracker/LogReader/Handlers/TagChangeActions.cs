@@ -292,11 +292,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(activePlayer == ActivePlayer.Player)
 				gameState.PlayerUsedHeroPower = false;
 			else
-			{
 				gameState.OpponentUsedHeroPower = false;
-				var remainingMana = game.PlayerEntity.GetTag(RESOURCES) + game.PlayerEntity.GetTag(TEMP_RESOURCES) - game.PlayerEntity.GetTag(RESOURCES_USED);
-				game.SecretsManager.HandlePlayerTurnEnd(remainingMana);
-			}
 		}
 
 		private void StepChange(int value, int prevValue, IHsGameState gameState, IGame game)
@@ -304,6 +300,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if((Step)value == Step.BEGIN_MULLIGAN)
 				gameState.GameHandler?.HandleBeginMulligan();
 			gameState.GameHandler?.HandleMercenariesStateChange();
+			var activePlayer = game.PlayerEntity.HasTag(CURRENT_PLAYER) ? ActivePlayer.Player : ActivePlayer.Opponent;
+			if (activePlayer == ActivePlayer.Player && (Step)value == Step.MAIN_CLEANUP) {
+				var remainingMana = game.PlayerEntity.GetTag(RESOURCES) + game.PlayerEntity.GetTag(TEMP_RESOURCES) - game.PlayerEntity.GetTag(RESOURCES_USED);
+				game.SecretsManager.HandlePlayerTurnEnd(remainingMana);
+			}
 			if(game.SetupDone || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
 				return;
 			Log.Info("Game was already in progress.");
