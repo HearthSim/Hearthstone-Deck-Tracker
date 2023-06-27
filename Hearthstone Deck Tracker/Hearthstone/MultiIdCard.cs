@@ -22,6 +22,7 @@ public class MultiIdCard
 
 	public bool IsWild => Cards.Any(x => !Helper.ClassicOnlySets.Contains(x.Set));
 	public bool IsClassic => Cards.Any(x => Helper.ClassicOnlySets.Contains(x.Set));
+	public bool IsTwist => Cards.Any(x => Helper.TwistSets.Contains(x.Set));
 	public bool IsStandard => Cards.Any(x => !Helper.WildOnlySets.Contains(x.Set) && !Helper.ClassicOnlySets.Contains(x.Set));
 	public bool HasSet(CardSet set) => Cards.Any(x => x.CardSet == set);
 
@@ -34,6 +35,8 @@ public class MultiIdCard
 				return (Cards.FirstOrDefault(x => !Helper.ClassicOnlySets.Contains(x.Set)) ?? Cards[0])?.Clone() as Card;
 			case FormatType.FT_CLASSIC:
 				return (Cards.FirstOrDefault(x => Helper.ClassicOnlySets.Contains(x.Set)) ?? Cards[0])?.Clone() as Card;
+			case FormatType.FT_TWIST:
+				return (Cards.FirstOrDefault(x => Helper.TwistSets.Contains(x.Set)) ?? Cards[0])?.Clone() as Card;
 			case FormatType.FT_STANDARD:
 				return (Cards.FirstOrDefault(x => !Helper.WildOnlySets.Contains(x.Set) && !Helper.ClassicOnlySets.Contains(x.Set)) ?? Cards[0])?.Clone() as Card;
 			default:

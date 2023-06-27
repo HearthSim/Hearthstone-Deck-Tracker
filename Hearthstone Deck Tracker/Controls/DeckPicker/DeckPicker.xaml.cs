@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Visibility VisibilitySearchBar => SearchBarVisibile ? Visible : Collapsed;
 
-		public ObservableCollection<DeckType> DeckTypeItems => _deckTypeItems ?? (_deckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>()));
+		public ObservableCollection<DeckType> DeckTypeItems => _deckTypeItems ?? (_deckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Where(x => x != DeckType.Classic)));
 
 		public Deck? ActiveDeck => DeckList.Instance.ActiveDeck;
 
@@ -423,6 +423,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					return IsConstructedDeck(deck) && !deck.IsClassicDeck && (Config.Instance.DeckPickerWildIncludesStandard || !deck.StandardViable);
 				case DeckType.Classic:
 					return IsConstructedDeck(deck) && deck.IsClassicDeck;
+				case DeckType.Twist:
+					return IsConstructedDeck(deck) && deck.IsTwistDeck;
 				default:
 					return false;
 			}
@@ -495,7 +497,16 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				else if(deck.IsBrawlDeck)
 					SelectDeckType(DeckType.Brawl);
 				else if(IsConstructedDeck(deck))
-					SelectDeckType(deck.StandardViable ? DeckType.Standard : deck.IsClassicDeck ? DeckType.Classic : DeckType.Wild);
+				{
+					if(deck.StandardViable)
+						SelectDeckType(DeckType.Standard);
+					else if (deck.IsClassicDeck)
+						SelectDeckType(DeckType.Classic);
+					else if (deck.IsTwistDeck)
+						SelectDeckType(DeckType.Twist);
+					else
+						SelectDeckType(DeckType.Wild);
+				}
 			}
 			if(deck.Archived && !SelectedClasses.Contains(HeroClassAll.Archived))
 				SelectClass(HeroClassAll.Archived);

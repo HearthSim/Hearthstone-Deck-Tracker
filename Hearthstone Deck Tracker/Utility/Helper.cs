@@ -115,6 +115,23 @@ namespace Hearthstone_Deck_Tracker
 			CardSet.VANILLA,
 		}.Select(HearthDbConverter.SetConverter).ToArray();
 
+		public static string[] TwistSets = new[]
+		{
+			CardSet.BATTLE_OF_THE_BANDS,
+			CardSet.RETURN_OF_THE_LICH_KING,
+			CardSet.PATH_OF_ARTHAS,
+			CardSet.REVENDRETH,
+			CardSet.THE_SUNKEN_CITY,
+			CardSet.CORE,
+			CardSet.ALTERAC_VALLEY,
+			CardSet.STORMWIND,
+			CardSet.THE_BARRENS,
+			CardSet.DARKMOON_FAIRE,
+			CardSet.SCHOLOMANCE,
+			CardSet.DEMON_HUNTER_INITIATE,
+			CardSet.BLACK_TEMPLE,
+		}.Select(HearthDbConverter.SetConverter).ToArray();
+
 		private static bool? _hearthstoneDirExists;
 
 		public static Dictionary<string, MediaColor> ClassicClassColors = new Dictionary<string, MediaColor>

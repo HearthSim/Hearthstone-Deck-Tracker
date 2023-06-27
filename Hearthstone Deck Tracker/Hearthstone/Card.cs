@@ -387,6 +387,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return false;
 		}
 
+		public bool IsNeutral => GetPlayerClass == "Neutral" && (_dbCard?.Entity.GetTag(GameTag.MULTI_CLASS_GROUP) ?? 0) == 0;
+
 		public List<string> GetClasses()
 		{
 			List<string> classes = new List<string>();

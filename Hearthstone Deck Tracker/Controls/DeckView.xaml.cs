@@ -97,6 +97,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 				return "Standard";
 			if(deck.IsClassicDeck)
 				return "Classic";
+			if(deck.IsTwistDeck)
+				return "Twist";
 			return "Wild";
 		}
 
@@ -109,6 +111,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			RectIconAdventure.Visibility = Collapsed;
 			RectIconDuels.Visibility = Collapsed;
 			RectIconClassic.Visibility = Collapsed;
+			RectIconTwist.Visibility = Collapsed;
 
 			if(deck.IsArenaDeck)
 				RectIconArena.Visibility = Visible;
@@ -122,6 +125,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 				RectIconStandard.Visibility = Visible;
 			else if (deck.IsClassicDeck)
 				RectIconClassic.Visibility = Visible;
+			else if (deck.IsTwistDeck)
+				RectIconTwist.Visibility = Visible;
 			else
 				RectIconWild.Visibility = Visible;
 		}

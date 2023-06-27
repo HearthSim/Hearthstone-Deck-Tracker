@@ -157,6 +157,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return Format.Standard;
 				case FormatType.FT_CLASSIC:
 					return Format.Classic;
+				case FormatType.FT_TWIST:
+					return Format.Twist;
 				default:
 					return null;
 			}
@@ -174,6 +176,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return FormatType.FT_WILD;
 				case Format.Classic:
 					return FormatType.FT_CLASSIC;
+				case Format.Twist:
+					return FormatType.FT_TWIST;
 			}
 			return FormatType.FT_UNKNOWN;
 		}
@@ -195,9 +199,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				case GameType.GT_TEST:
 					return BGT_TEST1;
 				case GameType.GT_RANKED:
-					return format == Format.Standard ? BGT_RANKED_STANDARD : format == Format.Classic ? BGT_RANKED_CLASSIC : BGT_RANKED_WILD;
+					return format switch
+					{
+						Format.Standard => BGT_RANKED_STANDARD,
+						Format.Classic => BGT_RANKED_CLASSIC,
+						Format.Twist => BGT_RANKED_TWIST,
+						_ => BGT_RANKED_WILD,
+					};
 				case GameType.GT_CASUAL:
-					return format == Format.Standard ? BGT_CASUAL_STANDARD : format == Format.Classic ? BGT_RANKED_CLASSIC : BGT_CASUAL_WILD;
+					return format switch
+					{
+						Format.Standard => BGT_CASUAL_STANDARD,
+						Format.Classic => BGT_CASUAL_CLASSIC,
+						Format.Twist => BGT_CASUAL_TWIST,
+						_ => BGT_CASUAL_WILD,
+					};
 				case GameType.GT_TAVERNBRAWL:
 					return BGT_TAVERNBRAWL_PVP;
 				case GameType.GT_TB_1P_VS_AI:

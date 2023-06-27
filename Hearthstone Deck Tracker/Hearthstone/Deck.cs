@@ -393,6 +393,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool IsClassicDeck => GetSelectedDeckVersion().Cards.All(x => Helper.ClassicOnlySets.Contains(x.Set));
 
+		// TODO: This should be more dynamic
+		public bool IsTwistDeck => GetSelectedDeckVersion().Cards.All(x => Helper.TwistSets.Contains(x.Set) && !x.IsNeutral);
+
 		public Visibility ArchivedVisibility => Archived ? Visibility.Visible : Visibility.Collapsed;
 
 		private TimeSpan ValidCacheDuration => new TimeSpan(0, 0, 1);
@@ -411,6 +414,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if (IsClassicDeck)
 				return FormatType.FT_CLASSIC;
+			if (IsTwistDeck)
+				return FormatType.FT_TWIST;
 			if (IsWildDeck) 
 				return FormatType.FT_WILD;
 			return FormatType.FT_STANDARD;

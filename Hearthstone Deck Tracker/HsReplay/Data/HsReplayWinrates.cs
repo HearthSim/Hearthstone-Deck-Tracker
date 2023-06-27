@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Data
 
 		public async Task<DeckWinrateData> Get(string shortId, FormatType format)
 		{
-			if(format == FormatType.FT_CLASSIC)
+			if(format == FormatType.FT_CLASSIC || format == FormatType.FT_TWIST)
 				return NoDataFallback;
 			var data = await GetData();
 			if(data.TryGetValue(shortId, out var deck) && !deck.IsStale)

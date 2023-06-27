@@ -218,7 +218,13 @@ namespace Hearthstone_Deck_Tracker
 				Log.Warn("Could not get MedalInfo");
 				return;
 			}
-			var data = gs.Format == Format.Wild ? medalInfo.Wild : gs.Format == Format.Classic ? medalInfo.Classic : medalInfo.Standard;
+			var data = gs.Format switch
+			{
+				Format.Wild => medalInfo.Wild,
+				Format.Classic => medalInfo.Classic,
+				Format.Twist => medalInfo.Twist,
+				_ => medalInfo.Standard,
+			};
 			gs.StarsAfter = data.Stars;
 			gs.StarLevelAfter = data.StarLevel;
 			gs.LegendRankAfter = data.LegendRank;
@@ -601,18 +607,19 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var isWild = _game.CurrentFormat == Format.Wild;
 					var isClassic = _game.CurrentFormat == Format.Classic;
+					var isTwist = _game.CurrentFormat == Format.Twist;
 
 					var localPlayer = _game.MatchInfo.LocalPlayer;
 					var opposingPlayer = _game.MatchInfo.OpposingPlayer;
 
-					var playerInfo =  isClassic ? localPlayer.Classic : isWild ? localPlayer.Wild : localPlayer.Standard;
-					var opponentInfo = isClassic ? opposingPlayer.Classic : isWild ? opposingPlayer.Wild : opposingPlayer.Standard;
+					var playerInfo =  isClassic ? localPlayer.Classic : isWild ? localPlayer.Wild : isTwist ? localPlayer.Twist : localPlayer.Standard;
+					var opponentInfo = isClassic ? opposingPlayer.Classic : isWild ? opposingPlayer.Wild : isTwist ? opposingPlayer.Twist : opposingPlayer.Standard;
 
 					_game.CurrentGameStats.LeagueId = playerInfo?.LeagueId ?? 0;
 					if (playerInfo?.LeagueId < 5)
 					{
-						_game.CurrentGameStats.Rank = isClassic ? localPlayer.ClassicRank : isWild ? localPlayer.WildRank : localPlayer.StandardRank;
-						_game.CurrentGameStats.OpponentRank = isClassic ? opposingPlayer.ClassicRank : isWild ? opposingPlayer.WildRank : opposingPlayer.StandardRank;
+						_game.CurrentGameStats.Rank = isClassic ? localPlayer.ClassicRank : isWild ? localPlayer.WildRank : isTwist ? localPlayer.TwistRank : localPlayer.StandardRank;
+						_game.CurrentGameStats.OpponentRank = isClassic ? opposingPlayer.ClassicRank : isWild ? opposingPlayer.WildRank : isTwist ? localPlayer.TwistRank : opposingPlayer.StandardRank;
 					}
 					_game.CurrentGameStats.StarLevel = playerInfo?.StarLevel ?? 0;
 					_game.CurrentGameStats.StarMultiplier = playerInfo?.StarMultipier ?? 0;
@@ -1048,12 +1055,13 @@ namespace Hearthstone_Deck_Tracker
 
 						var isWild = _game.CurrentFormat == Format.Wild;
 						var isClassic = _game.CurrentFormat == Format.Classic;
+						var isTwist = _game.CurrentFormat == Format.Twist;
 
 						var playerStarLevel = 0;
 						if (_game.MatchInfo != null)
 						{
 							var localPlayer = _game.MatchInfo.LocalPlayer;
-							var playerInfo = isClassic ? localPlayer.Classic : isWild ? localPlayer.Wild : localPlayer.Standard;
+							var playerInfo = isClassic ? localPlayer.Classic : isWild ? localPlayer.Wild : isTwist ? localPlayer.Twist : localPlayer.Standard;
 							playerStarLevel = playerInfo?.StarLevel ?? 0;
 						}
 

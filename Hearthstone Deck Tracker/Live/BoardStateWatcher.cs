@@ -62,12 +62,13 @@ namespace Hearthstone_Deck_Tracker.Live
 			var format = Core.Game.CurrentFormat ?? Format.Wild;
 			var gameType = HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, format);
 			var player = Core.Game.MatchInfo?.LocalPlayer;
-			var rank = format == Format.Standard ? player?.StandardRank
-				: format == Format.Classic ? player?.ClassicRank
-				: player?.WildRank;
-			var legendRank = format == Format.Standard ? player?.Standard?.LegendRank
-				: format == Format.Classic ? player?.Classic?.LegendRank
-				: player?.Wild?.LegendRank;
+			var (rank, legendRank) = format switch
+			{
+				Format.Standard => (player?.StandardRank, player?.Standard?.LegendRank),
+				Format.Classic => (player?.ClassicRank, player?.Classic?.LegendRank),
+				Format.Twist => (player?.TwistRank, player?.Twist?.LegendRank),
+				_ => (player?.WildRank, player?.Wild?.LegendRank),
+			};
 			return new GameStart
 			{
 				Deck = boardState?.Player?.Deck,

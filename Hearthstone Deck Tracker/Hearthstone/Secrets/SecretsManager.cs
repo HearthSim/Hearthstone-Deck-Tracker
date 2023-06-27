@@ -137,12 +137,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			{
 				if(_settings.ExclusiveSecrets.Count > 0)
 					cards = cards.Where(c => _settings.ExclusiveSecrets.All(s => c != s));
-				if(format == Format.Standard)
-					cards = cards.Where(c => c.IsStandard);
-				else if(format == Format.Classic)
-					cards = cards.Where(c => c.IsClassic);
-				else if(format == Format.Wild)
-					cards = cards.Where(c => c.IsWild);
+				cards = format switch
+				{
+					Format.Standard => cards.Where(c => c.IsStandard),
+					Format.Classic => cards.Where(c => c.IsClassic),
+					Format.Twist => cards.Where(c => c.IsTwist),
+					_ => cards.Where(c => c.IsWild),
+				};
 			}
 
 			return cards.Select(x =>
