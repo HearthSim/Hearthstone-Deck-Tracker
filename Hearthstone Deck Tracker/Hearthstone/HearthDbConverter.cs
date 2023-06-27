@@ -64,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1776, "March of the Lich King" },
 			{1869, "Path of Arthas" },
 			{(int)CardSet.BATTLE_OF_THE_BANDS, "Festival of Legends" },
+			{(int)CardSet.TITANS, "TITANS" },
 		};
 
 		public static string? ConvertClass(CardClass cardClass)
