@@ -337,6 +337,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			var playerHeroPower = _game.Player.Board.FirstOrDefault(x => x.IsHeroPower);
 			var pHpData = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
+			var pHpData2 = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
 			if(playerHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
 			{
 				var ench = _game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (x.IsInPlay || x.IsInSetAside))
@@ -345,10 +346,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(target > 0)
 					pHpData = target;
 			}
-			input.SetPlayerHeroPower(playerHeroPower?.CardId ?? "", WasHeroPowerActivated(playerHeroPower), pHpData);
+			input.SetPlayerHeroPower(playerHeroPower?.CardId ?? "", WasHeroPowerActivated(playerHeroPower), pHpData, pHpData2);
 
 			var opponentHeroPower = _game.Opponent.Board.FirstOrDefault(x => x.IsHeroPower);
 			var oHpData = opponentHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
+			var oHpData2 = opponentHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
 			if(opponentHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
 			{
 				// It appear this enchantment may be in the graveyard now in the opponents case
@@ -358,7 +360,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(target > 0)
 					oHpData = target;
 			}
-			input.SetOpponentHeroPower(opponentHeroPower?.CardId ?? "", WasHeroPowerActivated(opponentHeroPower), oHpData);
+			input.SetOpponentHeroPower(opponentHeroPower?.CardId ?? "", WasHeroPowerActivated(opponentHeroPower), oHpData, oHpData2);
 
 			foreach(var quest in _game.Player.Quests)
 			{
