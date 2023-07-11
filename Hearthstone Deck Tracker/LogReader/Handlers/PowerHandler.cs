@@ -935,19 +935,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				gameState.ChameleosReveal = null;
 
-				if(gameState.CurrentBlock?.Type == "TRIGGER"
-					&& gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Baconshop8playerenchantTavernBrawl
-					&& gameState.CurrentBlock?.HasFullEntityHeroPackets == true
-					&& gameState.Turn % 2 == 0)
-				{
-					game.SnapshotBattlegroundsBoardState();
-					if(game.CurrentGameStats != null)
-					{
-						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
-							.StartCombat();
-					}
-				}
-
 				var abyssalCurseCreators = new string[] {
 					Collectible.Warlock.DraggedBelow,
 					Collectible.Warlock.SirakessCultist,

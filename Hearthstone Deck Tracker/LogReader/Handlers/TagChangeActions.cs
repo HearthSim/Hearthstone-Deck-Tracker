@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -88,8 +89,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => OnResourcesUsedChange(id, value, game);
 				case QUEST_REWARD_DATABASE_ID:
 					return () => gameState.GameHandler?.HandleQuestRewardDatabaseId(id, value);
+				case (GameTag)2022:
+					return () => OnBattlegroundsSetupChange(value, prevValue, game, gameState);
 			}
 			return null;
+		}
+
+		private void OnBattlegroundsSetupChange(int value, int prevValue, IGame game, IHsGameState gameState)
+		{
+			if(prevValue == 1 && value == 0)
+			{
+				game.SnapshotBattlegroundsBoardState();
+				if(game.CurrentGameStats != null)
+				{
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
+						.StartCombat();
+				}
+			}
 		}
 
 		private void OnResourcesUsedChange(int id, int value, IGame game)
