@@ -1,3 +1,9 @@
+## **Release v1.20.12 - 2023-07-11**
+**Bob's Buddy**:
+- Updated with support for the new Quests and Quest Rewards.
+- Fixed an issue where the initial board state used for simulations could be slightly incorrect in some cases.
+- We are actively investigating simulation issues and should have more improvements soon!
+
 ## **Release v1.20.11 - 2023-07-06**
 **Updated for Hearthstone 26.6.2**
 
