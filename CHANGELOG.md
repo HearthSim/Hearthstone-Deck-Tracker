@@ -1,3 +1,9 @@
+## **Release v1.20.13 - 2023-07-12**
+**Bob's Buddy**:
+- Fixed an issue where Tavish Stormpike's Hero Power was dealing an incorrect amount of damage.
+- Fixed an issue where Teron Gorefiend's Hero Power was sometimes resummoning the minion in the wrong position.
+- Fixed an issue where Ghoul of the Feast was triggering too often.
+
 ## **Release v1.20.12 - 2023-07-11**
 **Bob's Buddy**:
 - Updated with support for the new Quests and Quest Rewards.
