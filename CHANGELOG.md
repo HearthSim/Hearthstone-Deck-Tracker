@@ -1,3 +1,7 @@
+## **Release v1.20.14 - 2023-07-13**
+**Fixes**:
+- Fixed an issue where the Tier7 Quest overlay was not working correctly.
+
 ## **Release v1.20.13 - 2023-07-12**
 **Bob's Buddy**:
 - Fixed an issue where Tavish Stormpike's Hero Power was dealing an incorrect amount of damage.
