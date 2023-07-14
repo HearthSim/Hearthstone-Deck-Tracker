@@ -116,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					{
 						if(HearthDb.Cards.All.TryGetValue(cardId, out var card))
 						{
-							if(card.Entity.GetTag(GameTag.TECH_LEVEL) == tier)
+							if(card.Entity.GetTag(GameTag.TECH_LEVEL) == tier && card.Entity.GetTag(GameTag.IS_BACON_POOL_MINION) > 0)
 								cards.Add(new Hearthstone.Card(card, true));
 						}
 					}
