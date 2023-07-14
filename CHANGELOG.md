@@ -1,3 +1,7 @@
+## **Release v1.20.15 - 2023-07-14**
+**Bob's Buddy**:
+- Fixed an issue where some Hero Power Start of Combat effects could be resolved in an incorrect order.
+
 ## **Release v1.20.14 - 2023-07-13**
 **Fixes**:
 - Fixed an issue where the Tier7 Quest overlay was not working correctly.
