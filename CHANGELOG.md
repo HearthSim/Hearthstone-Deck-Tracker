@@ -1,3 +1,7 @@
+## **Release v1.20.16 - 2023-07-16**
+**Bob's Buddy**:
+- Fixed an issue where buffs to cards in hand were not working correctly. This was leading to various incorrect 99% predictions.
+
 ## **Release v1.20.15 - 2023-07-14**
 **Bob's Buddy**:
 - Fixed an issue where some Hero Power Start of Combat effects could be resolved in an incorrect order.
