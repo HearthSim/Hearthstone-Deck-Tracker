@@ -567,6 +567,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.UnsupportedInteraction, message);
 				if(ReportErrors)
 					Sentry.CaptureBobsBuddyException(ex, _input, _turn, _recentHDTLog);
+				Output = null;
 				return null;
 			}
 			catch(Exception e)
@@ -575,6 +576,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				Log.Error(e);
 				if(ReportErrors)
 					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog);
+				Output = null;
 				return null;
 			}
 		}
