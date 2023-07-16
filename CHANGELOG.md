@@ -1,4 +1,4 @@
-## **Release v1.20.16 - 2023-07-16**
+## **Release v1.20.17 - 2023-07-16**
 **Bob's Buddy**:
 - Fixed an issue where buffs to cards in hand were not working correctly. This was leading to various incorrect 99% predictions.
 
