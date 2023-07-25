@@ -1,3 +1,6 @@
+## **Release v1.20.18 - 2023-07-25**
+**Updated for Hearthstone 27.0.0**
+
 ## **Release v1.20.17 - 2023-07-16**
 **Bob's Buddy**:
 - Fixed an issue where buffs to cards in hand were not working correctly. This was leading to various incorrect 99% predictions.
