@@ -69,7 +69,10 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		public int PacksCountNathria => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.Nathria));
 
 		public int PacksCountLichKing => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.LichKing));
+
 		public int PacksCountFestivalOfLegends => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.FestivalOfLegends));
+
+		public int PacksCountTitans => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.Titans));
 
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 

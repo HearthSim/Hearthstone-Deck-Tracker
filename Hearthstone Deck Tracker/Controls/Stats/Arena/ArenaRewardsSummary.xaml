@@ -159,6 +159,10 @@
                     <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_FestivalOfLegends, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountFestivalOfLegends, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Titans, Suffix=' '}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountTitans, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>

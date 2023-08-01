@@ -78,5 +78,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_FestivalOfLegends")]
 		FestivalOfLegends = CardSet.BATTLE_OF_THE_BANDS,
+
+		[LocDescription("Enum_ArenaRewardPacks_Titans")]
+		Titans = CardSet.TITANS,
 	}
 }
