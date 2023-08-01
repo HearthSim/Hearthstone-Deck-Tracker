@@ -207,7 +207,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_game.PlayerEntity.SetTag(GameTag.CURRENT_PLAYER, 1);
 			_game.SecretsManager.HandleAttack(_heroPlayer, _opponentMinion1);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.SnakeTrap, HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.SnakeTrap, HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics, HunterSecrets.BaitAndSwitch);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.SplittingImage, MageSecrets.OasisAlly);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.AutodefenseMatrix);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Bamboozle);
@@ -219,7 +219,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.PlayerEntity.SetTag(GameTag.CURRENT_PLAYER, 1);
 			_game.SecretsManager.HandleAttack(_playerMinion1, _opponentMinion1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap,
-				HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics);
+				HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics, HunterSecrets.BaitAndSwitch);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.SplittingImage, MageSecrets.OasisAlly);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.AutodefenseMatrix, PaladinSecrets.JudgmentOfJustice);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Bamboozle);
@@ -231,7 +231,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.PlayerEntity.SetTag(GameTag.CURRENT_PLAYER, 1);
 			_game.SecretsManager.HandleAttack(_playerMinion1, _opponentDivineShieldMinion);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap,
-				HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics);
+				HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics, HunterSecrets.BaitAndSwitch);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.SplittingImage, MageSecrets.OasisAlly);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.JudgmentOfJustice);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Bamboozle);

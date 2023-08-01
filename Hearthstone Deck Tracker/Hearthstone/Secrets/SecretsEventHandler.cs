@@ -115,6 +115,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			else
 			{
 				exclude.Add(Rogue.Bamboozle);
+				exclude.Add(Hunter.BaitAndSwitch);
+
 				if (!defender.HasTag(GameTag.DIVINE_SHIELD))
 					exclude.Add(Paladin.AutodefenseMatrix);
 
