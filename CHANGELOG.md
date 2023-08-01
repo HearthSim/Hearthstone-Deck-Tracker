@@ -1,3 +1,9 @@
+## **Release v1.21.0 - 2023-08-01**
+**Updated for the release of TITANS**
+
+**Fixes**
+- Fixed an issue where Buddy tooltips where still shown to viewers on Twitch
+
 ## **Release v1.20.18 - 2023-07-25**
 **Updated for Hearthstone 27.0.0**
 
