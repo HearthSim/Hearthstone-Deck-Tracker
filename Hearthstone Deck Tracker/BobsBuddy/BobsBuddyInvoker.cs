@@ -331,6 +331,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				input.opponentHealth = 1000;
 			}
+
+			input.PlayerDamageTaken = playerHero.GetTag(GameTag.DAMAGE);
+			input.OpponentDamageTaken = opponentHero.GetTag(GameTag.DAMAGE);
+
 			var playerTechLevel = playerHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
 			var opponentTechLevel = opponentHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
 			input.SetTiers(playerTechLevel, opponentTechLevel);
