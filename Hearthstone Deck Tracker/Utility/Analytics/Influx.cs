@@ -264,12 +264,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
-			var point = new InfluxPointBuilder("hdt_bb_combat_result_v2")
+			var point = new InfluxPointBuilder("hdt_bb_combat_result_v3")
 				.Tag("result", result.ToString())
 				.Tag("terminal_case", terminalCase.ToString())
 				.Tag("turn", turn)
-				.Tag("exit_condition", output.myExitCondition.ToString())
-				.Tag("thread_count", BobsBuddyInvoker.ThreadCount)
+				.Tag("bb_version", BobsBuddyUtils.VersionString)
 				.Field("iterations", output.simulationCount)
 				.Field("result_win", result == CombatResult.Win ? 1 : 0)
 				.Field("result_tie", result == CombatResult.Tie ? 1 : 0)
