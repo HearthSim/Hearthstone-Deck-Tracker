@@ -44,6 +44,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CardBacks = collection.CardBacks.OrderBy(x => x).ToList();
 			FavoriteCardBack = collection.FavoriteCardBack;
 			Dust = collection.Dust;
+
+			PlayerRecords = new SortedDictionary<int, SortedDictionary<int, int[]>> (
+				collection.PlayerRecords.GroupBy(x => x.Type)
+					.ToDictionary(x =>
+						x.Key,
+						x => new SortedDictionary<int, int[]>(
+							x.GroupBy(y => y.Data)
+								.ToDictionary(y =>
+									y.Key,
+									y => y.Select(pr => new[] { pr.Wins, pr.Losses, pr.Ties }).FirstOrDefault()
+								)
+						)
+					)
+			);
 		}
 
 		public int Size()
@@ -67,6 +81,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[JsonProperty("dust")]
 		public int Dust { get; }
+
+		[JsonProperty("player_records")]
+		public SortedDictionary<int, SortedDictionary<int, int[]>> PlayerRecords { get; }
 	}
 
 	public class MercenariesCollection : CollectionBase
