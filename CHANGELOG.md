@@ -1,3 +1,9 @@
+## **Release v1.21.1 - 2023-08-09**
+- Added support for an upcoming HSReplay.net feature
+
+**Bob's Buddy**:
+- Added support for Annihilan Battlemaster
+
 ## **Release v1.21.0 - 2023-08-01**
 **Updated for the release of TITANS**
 
