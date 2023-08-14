@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 						{
 							//can access log file => no other instance of same installation running
 						}
-						File.Move(logFile, logFile.Replace(".txt", "_" + DateTime.Now.ToUnixTime() + ".txt"));
+						File.Move(logFile, logFile.Replace(".txt", "_" + DateTime.Now.ToUnixTimeSeconds() + ".txt"));
 						//keep logs from the last 2 days plus 25 before that
 						foreach(var file in
 							new DirectoryInfo(logDir).GetFiles("hdt_log*")

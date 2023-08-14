@@ -11,18 +11,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 	{
 		private readonly Regex _escape = new Regex("[,= ]");
 
-		public InfluxPoint(string name, Dictionary<string, object> tags, Dictionary<string, object> fields, DateTime utcNow)
+		public InfluxPoint(string name, Dictionary<string, object> tags, Dictionary<string, object> fields, DateTime utcNow, bool highPrecision = false)
 		{
 			Name = name;
 			Tags = tags ?? new Dictionary<string, object>();
 			Fields = fields ?? new Dictionary<string, object>();
 			Timestamp = utcNow;
+			HighPrecision = highPrecision;
 		}
 
 		public string Name { get; }
 		public Dictionary<string, object> Tags { get; }
 		public Dictionary<string, object> Fields { get; }
 		public DateTime Timestamp { get; }
+		public bool HighPrecision { get; }
 
 		private string Escape(string str)
 		{
@@ -33,7 +35,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			var tags = string.Join(",", Tags.Select(x => $"{x.Key}={Escape(x.Value.ToString())}"));
 			var fields = string.Join(",", Fields.Select(x => $"{x.Key}={GetValueString(x.Value)}"));
-			return $"{Name}{(tags.Any() ? $",{tags}" : "")} {fields} {Timestamp.ToUnixTime()}";
+			var timestamp = HighPrecision ? Timestamp.ToUnixTimeMicroSeconds() : Timestamp.ToUnixTimeSeconds();
+			return $"{Name}{(tags.Any() ? $",{tags}" : "")} {fields} {timestamp}";
 		}
 
 		public string GetValueString(object value)

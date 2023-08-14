@@ -10,6 +10,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private readonly Dictionary<string, object> _tags = new Dictionary<string, object>();
 		private readonly string _name;
 		private DateTime? _timestamp;
+		private bool _highPrecision;
 
 		public InfluxPointBuilder(string name, bool defaultField = true)
 		{
@@ -39,11 +40,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			return this;
 		}
 
+		public InfluxPointBuilder HighPrecision(bool highPrecision = true)
+		{
+			_highPrecision = highPrecision;
+			return this;
+		}
+
 		public InfluxPoint Build()
 		{
 			if(!_fields.Any())
 				throw new Exception("Missing field");
-			return new InfluxPoint(_name, _tags, _fields, _timestamp ?? DateTime.UtcNow);
+			return new InfluxPoint(_name, _tags, _fields, _timestamp ?? DateTime.UtcNow, _highPrecision);
 		}
 	}
 }

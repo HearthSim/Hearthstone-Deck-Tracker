@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
-using BobsBuddy;
 using BobsBuddy.Simulation;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -265,6 +264,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			var point = new InfluxPointBuilder("hdt_bb_combat_result_v3")
+				.HighPrecision()
 				.Tag("result", result.ToString())
 				.Tag("terminal_case", terminalCase.ToString())
 				.Tag("turn", turn)
@@ -311,18 +311,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(new InfluxPointBuilder("hdt_mulligan_toast_enabled_changed").Tag("new_state", newState).Build());
 		}
 
-		private static List<InfluxPoint> _queue = new List<InfluxPoint>();
+		private static readonly List<InfluxPoint> _queue = new();
 		public static void SendQueuedMetrics()
 		{
 			if(!_queue.Any())
 				return;
-			WritePoints(_queue);
+			var points = _queue.ToList();
 			_queue.Clear();
+			foreach(var group in points.GroupBy(x => x.HighPrecision))
+				WritePoints(group, highPrecision: group.Key);
 		}
 
-		private static void WritePoint(InfluxPoint point) => WritePoints(new[] { point });
+		private static void WritePoint(InfluxPoint point) => WritePoints(new[] { point }, point.HighPrecision);
 
-		private static async void WritePoints(IEnumerable<InfluxPoint> points)
+		private static async void WritePoints(IEnumerable<InfluxPoint> points, bool highPrecision)
 		{
 			if(!points.Any())
 				return;
@@ -332,7 +334,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				{
 					var line = string.Join("\n", points.Select(x => x.ToLineProtocol()));
 					var data = Encoding.UTF8.GetBytes(line);
-					var length = await client.SendAsync(data, data.Length, "metrics.hearthsim.net", 8091);
+					var length = await client.SendAsync(data, data.Length, "metrics.hearthsim.net", highPrecision ? 8099 : 8091);
 					Log.Debug(line + " - " +  length);
 				}
 			}
