@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				races = AvailableRaces;
 				// Before initialized this contains only contains Race.INVALID
-				if (races != null && races.Count > 1)
+				if (races != null && (races.Count > 1 || races.SingleOrDefault() != Race.INVALID))
 					_availableRacesCache[gameId.Value] = races;
 			}
 			return races;

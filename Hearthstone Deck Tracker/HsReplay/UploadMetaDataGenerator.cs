@@ -6,6 +6,7 @@ using Hearthstone_Deck_Tracker.HsReplay.Utility;
 using Hearthstone_Deck_Tracker.Stats;
 using HSReplay;
 using System.Collections.Generic;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -62,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(game?.GameMode == GameMode.Battlegrounds)
 			{
 				var races = game.BattlegroundsRaces?.Cast<int>().OrderBy(x => x).ToArray();
-				if(races?.Length > 1) // can be [0] (invalid)
+				if(races != null && (races.Length > 1 || races.SingleOrDefault() != 0)) 
 					metaData.BattlegroundsRaces = races;
 			}
 			if(game?.GameMode == GameMode.Mercenaries)
