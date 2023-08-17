@@ -29,6 +29,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("bobs_buddy")]
 			public BobsBuddyData? BobsBuddy { get; set; }
 
+			[JsonProperty("tier7")]
+			public Tier7Data? Tier7 { get; set; }
+
 			[JsonProperty("update_info")]
 			public UpdateData? UpdateInfo { get; set; }
 		}
@@ -137,6 +140,12 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 
 			[JsonProperty("data_quality_warning")]
 			public bool DataQualityWarning { get; set; }
+		}
+
+		internal class Tier7Data
+		{
+			[JsonProperty("disabled")]
+			public bool Disabled { get; set; }
 		}
 
 		internal class UpdateData

@@ -36,6 +36,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 
 		public void Loading() => Text = LocUtil.Get("BattlegroundsOverlayMessage_Loading");
 
+		public void Disabled() => Text = LocUtil.Get("BattlegroundsOverlayMessage_Disabled");
+
 		private static readonly Dictionary<string, int> MmrPercentValues = new()
 		{
 			{ "TOP_1_PERCENT", 1 },

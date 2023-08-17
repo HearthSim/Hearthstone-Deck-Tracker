@@ -158,6 +158,15 @@
                         <Button Style="{StaticResource Tier7ButtonStyle}" Content="{lex:Loc BattlegroundsPreLobby_Subscribed_MyStats}" Margin="0 8 0 0" Command="{Binding MyStatsCommand}"/>
                     </StackPanel>
 
+                    <!-- Disabled -->
+                    <DockPanel Width="182" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Disabled}}">
+                        <Rectangle Fill="{StaticResource Tier7Orange}" Width="17" Height="15" Margin="4 0 0 0" DockPanel.Dock="Right">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Visual="{DynamicResource appbar_warning}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Disabled}" TextWrapping="Wrap" />
+                    </DockPanel>
                 </StackPanel>
             </StackPanel>
         </Border>

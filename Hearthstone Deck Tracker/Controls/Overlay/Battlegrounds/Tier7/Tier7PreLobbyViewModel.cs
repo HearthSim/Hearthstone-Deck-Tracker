@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 {
@@ -20,11 +21,22 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		{
 			HSReplayNetOAuth.AccountDataUpdated += () => Update(false).Forget();
 			HSReplayNetOAuth.LoggedOut += () => Update(false).Forget();
+			Remote.Config.Loaded += (_) =>
+			{
+				OnPropertyChanged(nameof(UserState));
+				OnPropertyChanged(nameof(PanelMinWidth));
+			};
 		}
 
 		public UserState UserState
 		{
-			get => GetProp(UserState.Loading);
+			get
+			{
+				if(Remote.Config.Data?.Tier7?.Disabled ?? false)
+					return UserState.Disabled;
+				return GetProp(UserState.Loading);
+			}
+
 			set
 			{
 				SetProp(value);
@@ -69,6 +81,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		private bool _isUpdatingAccount;
 		public async Task Update(bool checkAccountStatus)
 		{
+			if(UserState == UserState.Disabled)
+				return;
+
 			if(_isUpdatingAccount)
 			{
 				// AccountDataUpdated event was likely triggered by the
@@ -197,7 +212,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		Loading,
 		Anonymous,
 		Authenticated,
-		Subscribed
+		Subscribed,
+		Disabled
 	}
 
 	public class UserStateToVisibilityConverter : IValueConverter

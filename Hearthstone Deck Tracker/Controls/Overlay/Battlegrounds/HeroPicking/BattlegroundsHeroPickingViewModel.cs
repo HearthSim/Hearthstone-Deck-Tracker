@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using HSReplay.Requests;
 using static System.Windows.Visibility;
 
@@ -98,6 +99,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			// No Trials for anonymous users
 			if(!HSReplayNetOAuth.IsFullyAuthenticated)
 				return;
+
+			if(Remote.Config.Data?.Tier7?.Disabled ?? false)
+			{
+				Message.Disabled();
+				Visibility = Visible;
+				return;
+			}
 
 			var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
 
