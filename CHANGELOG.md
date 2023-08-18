@@ -1,3 +1,6 @@
+## **Release v1.21.2 - 2023-08-18**
+- Preparations for the upcoming Hearthstone patch 27.2.
+
 ## **Release v1.21.1 - 2023-08-09**
 - Added support for an upcoming HSReplay.net feature
 
