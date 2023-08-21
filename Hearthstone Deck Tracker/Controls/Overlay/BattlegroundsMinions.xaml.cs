@@ -34,8 +34,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Core.Game.Metrics.IncrementBattlegroundsMinionsTabClick();
 		}
 
+		private HashSet<int> _availableTiers = BattlegroundsUtils.GetAvailableTiers(null);
+		public void SetAvailableTiers(HashSet<int> tiers)
+		{
+			_availableTiers = tiers;	
+			for(var i = 0; i < 7; i++)
+				_tierIcons[i].SetAvailable(_availableTiers.Contains(i + 1));
+		}
+
 		public void Reset()
 		{
+			_availableTiers = BattlegroundsUtils.GetAvailableTiers(null);
+			for(var i = 0; i < 7; i++)
+				_tierIcons[i].SetAvailable(_availableTiers.Contains(i + 1));
 			Update(0, _db.Value.Races);
 		}
 
@@ -74,15 +85,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			ActiveTier = tier;
 			foreach(var item in _tierIcons)
 				item.Active = tier == item.Tier;
-			if(tier < 1 || tier > 6)
+
+			if(tier < 1 || tier > 7)
 			{
-				for(var i = 0; i < 6; i++)
+				for(var i = 0; i < 7; i++)
 					_tierIcons[i].SetFaded(false);
 				Groups.Clear();
 				UnavailableTypes.UnavailableTypesVisibility = System.Windows.Visibility.Collapsed;
 				return;
 			}
-			for(var i = 0; i < 6; i++)
+			for(var i = 0; i < 7; i++)
 				_tierIcons[i].SetFaded(i != tier - 1);
 
 			var resort = false;

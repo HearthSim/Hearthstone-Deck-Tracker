@@ -452,6 +452,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void ShowBgsTopBar()
 		{
 			TurnCounter.Visibility = Config.Instance.ShowBattlegroundsTurnCounter ? Visible : Collapsed;
+
+			var anomalyDbfId = _game.GameEntity?.GetTag(GameTag.BACON_GLOBAL_ANOMALY_DBID); 
+			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
+			BattlegroundsMinionsPanel.SetAvailableTiers(BattlegroundsUtils.GetAvailableTiers(anomalyCardId));
+
 			BattlegroundsMinionsPanel.Visibility = Config.Instance.ShowBattlegroundsTiers ? Visible : Collapsed;
 
 			_bgsTopBarBehavior.Show();

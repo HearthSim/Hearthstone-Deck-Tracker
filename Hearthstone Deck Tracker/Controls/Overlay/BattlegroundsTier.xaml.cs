@@ -57,12 +57,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		}
 
 		private bool _faded;
-
 		public void SetFaded(bool faded)
 		{
 			if(faded == _faded || Active)
 				return;
 			_faded = faded;
+			Update(true);
+		}
+
+		private bool _available = true;
+		public void SetAvailable(bool available)
+		{
+			if(available == _available)
+				return;
+			_available = available;
 			Update(true);
 		}
 
@@ -77,7 +85,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private double GetOpacity()
 		{
-			if(Active || _hovering || !_faded)
+			if(Active)
+				return 1;
+			if(!_available)
+				return _hovering ? 0.6 : 0.3;
+			if(_hovering || !_faded)
 				return 1;
 			return 0.3;
 		}

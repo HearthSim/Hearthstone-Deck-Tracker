@@ -3,6 +3,7 @@ using HearthMirror;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static HearthDb.CardIds;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
@@ -10,11 +11,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		private static readonly Dictionary<Guid, HashSet<Race>> _availableRacesCache = new Dictionary<Guid, HashSet<Race>>();
 
-		const string UntransformedArannaCardid = HearthDb.CardIds.NonCollectible.Neutral.ArannaStarseekerTavernBrawl1;
-		const string TransformedArannaCardid = HearthDb.CardIds.NonCollectible.Neutral.ArannaStarseeker_ArannaUnleashedTokenTavernBrawl;
+		const string UntransformedArannaCardid = NonCollectible.Neutral.ArannaStarseekerTavernBrawl1;
+		const string TransformedArannaCardid = NonCollectible.Neutral.ArannaStarseeker_ArannaUnleashedTokenTavernBrawl;
 
-		const string UntransformedQueenAzshara = HearthDb.CardIds.NonCollectible.Neutral.QueenAzsharaBATTLEGROUNDS;
-		const string TransformedQueenAzshara = HearthDb.CardIds.NonCollectible.Neutral.QueenAzshara_NagaQueenAzsharaToken;
+		const string UntransformedQueenAzshara = NonCollectible.Neutral.QueenAzsharaBATTLEGROUNDS;
+		const string TransformedQueenAzshara = NonCollectible.Neutral.QueenAzshara_NagaQueenAzsharaToken;
 
 		private static readonly Dictionary<string, string> TransformableHeroCardidTable = new Dictionary<string, string>()
 		{
@@ -48,5 +49,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public static string GetOriginalHeroId(string heroId) => TransformableHeroCardidTable.TryGetValue(heroId, out var mapped) ? mapped : heroId;
+
+		public static HashSet<int> GetAvailableTiers(string? anomalyCardId) => anomalyCardId switch
+		{
+			NonCollectible.Neutral.BigLeague => new HashSet<int> { 3, 4, 5, 6 },
+			NonCollectible.Neutral.LittleLeague => new HashSet<int> { 1, 2, 3, 4 },
+			NonCollectible.Invalid.SecretsOfNorgannon => new HashSet<int> { 1, 2, 3, 4, 5, 6, 7 },
+			_ => new HashSet<int> { 1, 2, 3, 4, 5, 6 },
+		};
 	}
 }
