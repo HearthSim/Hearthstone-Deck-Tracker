@@ -76,6 +76,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					case SneedsEnchantment:
 						minion.AdditionalDeathrattles.Add(GenericDeathrattles.SneedHeroPower);
 						break;
+					case NonCollectible.Neutral.SurfnSurf_CrabRidingEnchantment:
+						minion.AdditionalDeathrattles.Add(GenericDeathrattles.SurfNSurfSpellDeathrattle);
+						break;
+					case NonCollectible.Neutral.SurfnSurf_CrabRiding:
+						minion.AdditionalDeathrattles.Add(GenericDeathrattles.SurfNSurfSpellDeathrattleGolden);
+						break;
 					case NonCollectible.Neutral.Brukan_ElementEarth:
 						minion.AdditionalDeathrattles.Add(GenericDeathrattles.EarthInvocationDeathrattle);
 						break;
