@@ -128,6 +128,16 @@ namespace Hearthstone_Deck_Tracker.Live
 			return player.QuestRewards.FirstOrDefault(x => x.HasTag(GameTag.BACON_IS_HEROPOWER_QUESTREWARD) == heroPower)?.Card.DbfId;
 		}
 
+		private int? BgsAnomaly(Entity game)
+		{
+			var anomaly = game.GetTag(GameTag.BACON_GLOBAL_ANOMALY_DBID);
+			if (anomaly != 0)
+			{
+				return anomaly;
+			}
+			return null;
+		}
+
 		// Return the dbf id for an entity, but blacklisted against common hero cards we don't want want to show in the overlay.
 		private int HeroDbfId(Entity? entity)
 		{
@@ -242,6 +252,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},
 				GameType = gameType,
+				BattlegroundsAnomaly = BgsAnomaly(Core.Game.GameEntity),
 				BobsBuddyOutput = gameType == BnetGameType.BGT_BATTLEGROUNDS ? GetBobsBuddyState() : null
 			};
 		}

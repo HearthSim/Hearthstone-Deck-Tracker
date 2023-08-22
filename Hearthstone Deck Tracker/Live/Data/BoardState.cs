@@ -35,6 +35,9 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("game_type")]
 		public BnetGameType GameType { get; set; }
 
+		[JsonProperty("battlegrounds_anomaly", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public int? BattlegroundsAnomaly { get; set; }
+
 		[JsonProperty("bobs_buddy_state", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public BobsBuddyState? BobsBuddyOutput { get; set; }
 
