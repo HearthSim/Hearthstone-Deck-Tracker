@@ -52,12 +52,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{Collectible.Hunter.KindlyGrandmother, 1},
 			{Collectible.Hunter.RatPack, 2},
 			{Collectible.Hunter.SavannahHighmane, 2},
-			{Collectible.Rogue.Anubarak, 1},
-			{Collectible.Rogue.JadeSwarmer, 1},
+			{Collectible.Rogue.AnubarakTGT, 1},
+			{Collectible.Rogue.JadeSwarmerGANGS, 1},
 			{Collectible.Warlock.Dreadsteed, 1},
 			{Collectible.Warlock.PossessedVillagerOG, 1},
 			{Collectible.Warlock.Voidcaller, 1}, //false negative better than false positive
-			{Collectible.Neutral.AyaBlackpaw, 1},
+			{Collectible.Neutral.AyaBlackpawGANGS, 1},
 			{Collectible.Neutral.CairneBloodhoof, 1},
 			{Collectible.Neutral.DevilsaurEgg, 1},
 			{Collectible.Neutral.Eggnapper, 2},
@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{Collectible.Neutral.PilotedShredder, 1},
 			{Collectible.Neutral.PilotedSkyGolem, 1},
 			{Collectible.Neutral.SatedThreshadon, 3},
-			{Collectible.Neutral.SludgeBelcher, 1},
+			{Collectible.Neutral.SludgeBelcherNAXX, 1},
 			{Collectible.Neutral.SneedsOldShredder, 1},
 			{Collectible.Neutral.TwilightSummoner, 1},
 			{Collectible.Neutral.WobblingRunts, 3},
@@ -190,7 +190,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard PackTactics = new MultiIdCard(Collectible.Hunter.PackTactics);
 				public static readonly MultiIdCard PressurePlate = new MultiIdCard(Collectible.Hunter.PressurePlate);
 				public static readonly MultiIdCard RatTrap = new MultiIdCard(Collectible.Hunter.RatTrap);
-				public static readonly MultiIdCard Snipe = new MultiIdCard(Collectible.Hunter.Snipe, Collectible.Hunter.SnipeVanilla);
+				public static readonly MultiIdCard Snipe = new MultiIdCard(Collectible.Hunter.SnipeExpert1, Collectible.Hunter.SnipeVanilla);
 				public static readonly MultiIdCard SnakeTrap = new MultiIdCard(Collectible.Hunter.SnakeTrapExpert1, Collectible.Hunter.SnakeTrapPLACEHOLDER_202204, Collectible.Hunter.SnakeTrapVanilla);
 				public static readonly MultiIdCard VenomstrikeTrap = new MultiIdCard(Collectible.Hunter.VenomstrikeTrapICECROWN, Collectible.Hunter.VenomstrikeTrapInvalid);
 				public static readonly MultiIdCard WanderingMonster = new MultiIdCard(Collectible.Hunter.WanderingMonster, Collectible.Hunter.WanderingMonsterCore);

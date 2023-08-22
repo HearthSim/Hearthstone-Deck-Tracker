@@ -9,17 +9,17 @@ namespace HDTTests.DeckImporting
 	{
 		public static readonly string[] Deck1Cards =
 		{
-			Druid.AddledGrizzly,
+			Druid.AddledGrizzlyOG,
 			Druid.AncientOfLore,
 			Druid.AncientOfWarExpert1,
 			Druid.AnodizedRoboCub,
 			Druid.AstralCommunion,
-			Druid.Aviana,
+			Druid.AvianaTGT,
 			Druid.Bite,
 			Druid.CelestialDreamer,
 			Druid.Cenarius,
 			Druid.ClawLegacy,
-			Druid.DarkArakkoa,
+			Druid.DarkArakkoaOG,
 			Druid.DarkWispers,
 			Druid.DarnassusAspirant,
 			Druid.DruidOfTheClaw,
@@ -28,11 +28,11 @@ namespace HDTTests.DeckImporting
 
 		public static readonly string[] Deck2Cards =
 		{
-			Hunter.Acidmaw,
+			Hunter.AcidmawTGT,
 			Hunter.Alleycat,
 			Hunter.AnimalCompanionLegacy,
 			Hunter.ArcaneShotLegacy,
-			Hunter.BallOfSpiders,
+			Hunter.BallOfSpidersTGT,
 			Hunter.BearTrap,
 			Hunter.BestialWrath,
 			Hunter.BraveArcher,
@@ -41,7 +41,7 @@ namespace HDTTests.DeckImporting
 			Hunter.CarrionGrub,
 			Hunter.CatTrick,
 			Hunter.CloakedHuntressKARA,
-			Hunter.CobraShot,
+			Hunter.CobraShotGVG,
 			Hunter.CoreRager,
 		};
 
@@ -68,7 +68,7 @@ namespace HDTTests.DeckImporting
 		public static readonly string[] Deck1Cards_MajorChanges = Deck1Cards.Take(12).Concat(new[]
 		{
 			Druid.VerdantLongneck,
-			Druid.VirmenSensei,
+			Druid.VirmenSenseiGANGS,
 			Druid.VolcanicLumberer
 		}).ToArray();
 

@@ -561,7 +561,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Rogue.BeneathTheGrounds:
 								AddKnownCardId(gameState, NonCollectible.Rogue.BeneaththeGrounds_NerubianAmbushToken, 3);
 								break;
-							case Collectible.Warrior.IronJuggernaut:
+							case Collectible.Warrior.IronJuggernautGVG:
 								AddKnownCardId(gameState, NonCollectible.Warrior.IronJuggernaut_BurrowingMineToken);
 								break;
 							case Collectible.Druid.Recycle:
