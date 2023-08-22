@@ -340,6 +340,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var opponentTechLevel = opponentHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
 			input.SetTiers(playerTechLevel, opponentTechLevel);
 
+			var anomalyDbfId = _game.GameEntity?.GetTag(GameTag.BACON_GLOBAL_ANOMALY_DBID);
+			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
+			if(anomalyCardId != null)
+				input.Anomaly = simulator.AnomalyFactory.Create(anomalyCardId);
+
 			var playerHeroPower = _game.Player.Board.FirstOrDefault(x => x.IsHeroPower);
 			var pHpData = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
 			var pHpData2 = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
