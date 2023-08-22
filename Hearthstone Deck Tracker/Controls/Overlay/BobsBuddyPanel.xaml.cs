@@ -470,11 +470,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		///	until the error is cleared.
 		/// </summary>
 		/// <param name="error">The new error state</param>
-		internal void SetErrorState(BobsBuddyErrorState error, string? message = null)
+		internal void SetErrorState(BobsBuddyErrorState error, string? message = null, bool show = false)
 		{
 			ErrorState = error;
 			ErrorMessage = message;
-			ShowResults(false);
+
+			ShowResults(show);
 		}
 
 		private void ClearErrorState()

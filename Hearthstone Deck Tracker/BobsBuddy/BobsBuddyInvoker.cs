@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
+using HearthDb;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
@@ -47,6 +48,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
 		private static List<Entity> _currentOpponentSecrets = new List<Entity>();
+
+		private List<Entity> _opponentHand = new();
+		private readonly Dictionary<Entity, Entity> _opponentHandMap = new();
 
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
@@ -180,7 +184,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					await Task.Delay(LichKingDelay);
 
 				if(!RunSimulationAfterCombat)
-					RunAndDisplaySimulationAsync().Forget();
+					await RunAndDisplaySimulationAsync();
 			}
 			catch(Exception e)
 			{
@@ -320,7 +324,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 		
-
 			//We set OpponentCardId and PlayerCardId here so that later we can do lookups for these entites without using _game.Opponent/Player, which might be innacurate or null depending on when they're accessed.
 			OpponentCardId = opponentHero.CardId ?? "";
 			PlayerCardId = playerHero.CardId ?? "";
@@ -428,7 +431,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			foreach(var e in _game.Player.Hand)
 			{
 				if(e.IsMinion)
-					input.PlayerHand.Add(new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)), null, simulator));
+				{
+					var minionEntity = new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)), null, simulator)
+					{
+						CanSummon = !e.HasTag(GameTag.LITERALLY_UNPLAYABLE),
+					};
+					input.PlayerHand.Add(minionEntity);
+				}
 				else if(e.CardId == NonCollectible.Neutral.BloodGem1)
 					input.PlayerHand.Add(new BloodGem(null, simulator));
 				else if(e.IsSpell)
@@ -443,19 +452,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			foreach(var m in opponentSide)
 				input.opponentSide.Add(m);
 
-			foreach(var e in _game.Opponent.Hand)
-			{
-				if(e.IsMinion)
-					input.OpponentHand.Add(new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, false, e, GetAttachedEntities(e.Id)), null, simulator));
-				else if(e.CardId == NonCollectible.Neutral.BloodGem1)
-					input.OpponentHand.Add(new BloodGem(null, simulator));
-				else if(e.IsSpell)
-					input.OpponentHand.Add(new SpellCardEntity(null, simulator));
-				else if(!string.IsNullOrEmpty(e.CardId))
-					input.OpponentHand.Add(new CardEntity(e.CardId ?? "", null, simulator)); // Not Unknown
-				else
-					input.OpponentHand.Add(new UnknownCardEntity(null, simulator));
-			}
+			_opponentHand = _game.Opponent.Hand.ToList();
+			input.OpponentHand.Clear();
+			input.OpponentHand.AddRange(GetOpponentHandEntities(simulator));
 
 			var playerAttached = GetAttachedEntities(_game.PlayerEntity.Id);
 			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchant);
@@ -486,6 +485,66 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_turn = turn;
 
 			DebugLog("Successfully snapshotted board state");
+		}
+
+		private int _reRunCount;
+		internal async void UpdateOpponentHand(Entity entity, Entity copy)
+		{
+			if(_input == null || State != BobsBuddyState.Combat)
+				return;
+
+			// Only allow feathermane for now. 
+			if(copy.CardId != NonCollectible.Neutral.FreeFlyingFeathermane && copy.CardId != NonCollectible.Neutral.FreeFlyingFeathermane_FreeFlyingFeathermane)
+				return;
+
+			_opponentHandMap[entity] = copy;
+
+			// Wait for attached entities to be logged. This should happen at the exact same timestamp.
+			//await _game.GameTime.WaitForDuration(1);
+
+			var entities = GetOpponentHandEntities(new Simulator()).ToList();
+			if(entities.Count(x => x is MinionCardEntity) <= _input.OpponentHand.Count(x => x is MinionCardEntity))
+				return;
+
+			_input.OpponentHand.Clear();
+			_input.OpponentHand.AddRange(entities);
+
+			if(_reRunCount++ <= 2)
+			{
+				DebugLog($"Opponent hand changed, re-running simulation! (#{_reRunCount})");
+				if(ShouldRun() && !RunSimulationAfterCombat)
+				{
+					ErrorState = BobsBuddyErrorState.None;
+					BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.None, null, true);
+					await RunAndDisplaySimulationAsync();
+				}
+			}
+			else
+				DebugLog("Opponent hand changed, but the simulation already re-ran twice");
+		}
+
+		private IEnumerable<CardEntity> GetOpponentHandEntities(Simulator simulator)
+		{
+			foreach(var _e in _opponentHand)
+			{
+				var e = _opponentHandMap.TryGetValue(_e, out var copy) ? copy : _e;
+				if(e.IsMinion)
+				{
+					var attached = GetAttachedEntities(e.Id);
+					yield return new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, false, e, attached), null, simulator)
+					{
+						CanSummon = !e.HasTag(GameTag.LITERALLY_UNPLAYABLE)
+					};
+				}
+				else if(e.CardId == NonCollectible.Neutral.BloodGem1)
+					yield return new BloodGem(null, simulator);
+				else if(e.IsSpell)
+					yield return new SpellCardEntity(null, simulator);
+				else if(!string.IsNullOrEmpty(e.CardId))
+					yield return new CardEntity(e.CardId ?? "", null, simulator); // Not Unknown
+				else
+					yield return new UnknownCardEntity(null, simulator);
+			}
 		}
 
 		private IEnumerable<Entity> GetAttachedEntities(int entityId)

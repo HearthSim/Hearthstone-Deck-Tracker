@@ -512,8 +512,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					else
 						ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
-				case GRAVEYARD:
 				case SETASIDE:
+					if((Zone)value == PLAY && controller == game.Opponent.Id && game.CurrentGameMode == GameMode.Battlegrounds)
+					{
+						var copiedFrom = entity.GetTag(COPIED_FROM_ENTITY_ID);
+						if(copiedFrom > 0 && game.Entities.TryGetValue(copiedFrom, out var source) && source.IsInHand && !source.HasCardId)
+						{
+							if(game.CurrentGameStats != null)
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateOpponentHand(source, entity);
+						}
+					}
+					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
+					break;
+				case GRAVEYARD:
 				case REMOVEDFROMGAME:
 					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
