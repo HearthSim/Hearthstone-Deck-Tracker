@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 {
 	public class GameStart
 	{
-		[JsonProperty("deck")]
+		[JsonProperty("deck", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public BoardStateDeck? Deck { get; set; }
 
 		[JsonProperty("rank")]
@@ -26,16 +26,16 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 
 	public class BoardState
 	{
-		[JsonProperty("player")]
+		[JsonProperty("player", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public BoardStatePlayer? Player { get; set; }
 
-		[JsonProperty("opponent")]
+		[JsonProperty("opponent", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public BoardStatePlayer? Opponent { get; set; }
 
 		[JsonProperty("game_type")]
 		public BnetGameType GameType { get; set; }
 
-		[JsonProperty("bobs_buddy_state")]
+		[JsonProperty("bobs_buddy_state", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public BobsBuddyState? BobsBuddyOutput { get; set; }
 
 		public bool Equals(BoardState? boardState)
