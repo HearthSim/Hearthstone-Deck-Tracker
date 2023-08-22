@@ -424,13 +424,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			foreach(var e in _game.Player.Hand)
 			{
 				if(e.IsMinion)
-					input.PlayerHand.Add(new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)), null));
+					input.PlayerHand.Add(new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)), null, simulator));
 				else if(e.CardId == NonCollectible.Neutral.BloodGem1)
-					input.PlayerHand.Add(new BloodGem(null));
+					input.PlayerHand.Add(new BloodGem(null, simulator));
 				else if(e.IsSpell)
-					input.PlayerHand.Add(new SpellCardEntity(null));
+					input.PlayerHand.Add(new SpellCardEntity(null, simulator));
 				else
-					input.PlayerHand.Add(new CardEntity(e.CardId ?? "", null)); // Not Unknown
+					input.PlayerHand.Add(new CardEntity(e.CardId ?? "", null, simulator)); // Not Unknown
 			}
 
 			var opponentSide = GetOrderedMinions(_game.Opponent.Board)
@@ -442,15 +442,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			foreach(var e in _game.Opponent.Hand)
 			{
 				if(e.IsMinion)
-					input.OpponentHand.Add(new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, false, e, GetAttachedEntities(e.Id)), null));
+					input.OpponentHand.Add(new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, false, e, GetAttachedEntities(e.Id)), null, simulator));
 				else if(e.CardId == NonCollectible.Neutral.BloodGem1)
-					input.OpponentHand.Add(new BloodGem(null));
+					input.OpponentHand.Add(new BloodGem(null, simulator));
 				else if(e.IsSpell)
-					input.OpponentHand.Add(new SpellCardEntity(null));
+					input.OpponentHand.Add(new SpellCardEntity(null, simulator));
 				else if(!string.IsNullOrEmpty(e.CardId))
-					input.OpponentHand.Add(new CardEntity(e.CardId ?? "", null)); // Not Unknown
+					input.OpponentHand.Add(new CardEntity(e.CardId ?? "", null, simulator)); // Not Unknown
 				else
-					input.OpponentHand.Add(new UnknownCardEntity(null));
+					input.OpponentHand.Add(new UnknownCardEntity(null, simulator));
 			}
 
 			var playerAttached = GetAttachedEntities(_game.PlayerEntity.Id);
