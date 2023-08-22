@@ -187,6 +187,9 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("cards", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public List<int[]>? Cards { get; set; }
 
+		[JsonProperty("sideboards", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public List<int[]>? Sideboards { get; set; }
+
 		[JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public string? Name { get; set; }
 
@@ -226,6 +229,15 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 				if(Cards.Count != other.Cards?.Count)
 					return false;
 				if(Cards.Any(card => !other.Cards.Any(card.SequenceEqual)))
+					return false;
+			}
+			if((Sideboards == null) != (other.Sideboards == null))
+				return false;
+			if(Sideboards != null)
+			{
+				if(Sideboards.Count != other.Sideboards?.Count)
+					return false;
+				if(Sideboards.Any(card => !other.Sideboards.Any(card.SequenceEqual)))
 					return false;
 			}
 			return true;

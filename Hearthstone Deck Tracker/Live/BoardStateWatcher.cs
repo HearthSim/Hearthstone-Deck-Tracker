@@ -151,21 +151,46 @@ namespace Hearthstone_Deck_Tracker.Live
 			var deck = DeckList.Instance.ActiveDeck;
 			var games = deck?.GetRelevantGames();
 			var fullDeckList = new Dictionary<int, int>();
+			var initialSideboards = new Dictionary<int, Dictionary<int, int>>();
 			if(DeckList.Instance.ActiveDeckVersion != null)
 			{
 				foreach(var card in DeckList.Instance.ActiveDeckVersion.Cards)
 					fullDeckList[card.DbfId] = card.Count;
+				foreach(var sideboard in DeckList.Instance.ActiveDeckVersion.Sideboards)
+				{
+					var owner = Database.GetCardFromId(sideboard.OwnerCardId);
+					if(owner != null) {
+						initialSideboards[owner.DbfId] = sideboard.Cards.ToDictionary(card => card.DbfId, card => card.Count);
+					}
+				}
 			}
 			int FullCount(int dbfId) => fullDeckList == null ? 0 : fullDeckList.TryGetValue(dbfId, out var count) ? count : 0;
 
-			var playerCardsDict = new List<int[]>();
+			var playerCardsList = new List<int[]>();
+			var playerSideboardsList = new List<int[]>();
 			if(deck != null)
 			{
 				foreach(var card in player.GetPlayerCardList(false, false, false).Where(x => !x.Jousted))
 				{
 					var inDeck = card.IsCreated ? 0 : FullCount(card.DbfId);
-					playerCardsDict.Add(new[] { card.DbfId, card.Count, inDeck });
+					playerCardsList.Add(new[] { card.DbfId, card.Count, inDeck });
 				}
+				var currentSideboards = player.GetPlayerSideboards(false);
+				foreach(var sideboard in currentSideboards)
+				{
+					var owner = Database.GetCardFromId(sideboard.OwnerCardId);
+					if(owner != null)
+					{
+						Dictionary<int, int>? initialSideboard = null;
+						initialSideboards.TryGetValue(owner.DbfId, out initialSideboard);
+						foreach(var card in sideboard.Cards)
+						{
+							var initialCount = initialSideboard.TryGetValue(card.DbfId, out var count) ? count : 0;
+							playerSideboardsList.Add(new[] { owner.DbfId, card.DbfId, card.Count, initialCount });
+						}
+					}
+				}
+
 			}
 			var format = Core.Game.CurrentFormat ?? Format.Wild;
 			var gameType = HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, format);
@@ -179,7 +204,8 @@ namespace Hearthstone_Deck_Tracker.Live
 					Board = SortedDbfIds(player.Board.Where(x => x.IsMinionOrLocation)),
 					Deck = new BoardStateDeck
 					{
-						Cards = playerCardsDict,
+						Cards = playerCardsList,
+						Sideboards = playerSideboardsList,
 						Name = deck?.Name,
 						Format = deck?.GuessFormatType() ?? FormatType.FT_UNKNOWN,
 						Hero = Database.GetHeroCardFromClass(deck?.Class)?.DbfId ?? 0,
