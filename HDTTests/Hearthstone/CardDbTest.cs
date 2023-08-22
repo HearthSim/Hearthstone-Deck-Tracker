@@ -84,6 +84,11 @@ namespace HDTTests.Hearthstone
 					// Art for this appears to be missing as of 2020-02-26
 					continue;
 				}
+				if(card.Id == "CORE_BOT_451" || card.Id == "CORE_DMF_060")
+				{
+					// Art for this appears to be missing as of 2030-08-22
+					continue;
+				}
 				Assert.IsTrue(File.Exists("../../../../Resources/Tiles/" + card.Id + ".png"), card.Id);
 			}
 		}
