@@ -1,3 +1,8 @@
+## **Release v1.21.3 - 2023-08-22**
+**Partially updated for Hearthstone 27.2.0**
+- The new minions are now available in the Battlegrounds overlay
+- An initial update for Bob's Buddy will follow soon!
+
 ## **Release v1.21.2 - 2023-08-18**
 - Preparations for the upcoming Hearthstone patch 27.2.
 
