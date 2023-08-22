@@ -295,8 +295,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var simulator = new Simulator();
 			var input = new Input(simulator);
 
-			const bool FORCE_UNKNOWN = true;
-			if(_game.Player.Board.Any(IsUnknownCard) || _game.Opponent.Board.Any(IsUnknownCard) || FORCE_UNKNOWN)
+			if(_game.Player.Board.Any(IsUnknownCard) || _game.Opponent.Board.Any(IsUnknownCard))
 			{
 				ErrorState = BobsBuddyErrorState.UnkownCards;
 				DebugLog("Board has unknown cards. Exiting.");
