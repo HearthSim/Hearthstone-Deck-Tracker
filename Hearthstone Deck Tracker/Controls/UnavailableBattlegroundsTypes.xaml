@@ -12,7 +12,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800">
 
-    <Border BorderBrush="#141617" BorderThickness="1" Background="#23272a" Margin="0,5,0,0" Width="202" Visibility="{Binding UnavailableTypesVisibility, RelativeSource={RelativeSource AncestorType=local:UnavailableBattlegroundsTypes}}">
+    <Border BorderBrush="#141617" BorderThickness="1" Background="#23272a" Margin="0,5,0,0" Width="196" Visibility="{Binding UnavailableTypesVisibility, RelativeSource={RelativeSource AncestorType=local:UnavailableBattlegroundsTypes}}">
         <StackPanel>
             <Border Background="#1d3657" BorderBrush="#141617" BorderThickness="0,0,0,1">
                 <hearthstone_deck_tracker:HearthstoneTextBlock FontSize="14"
