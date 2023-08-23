@@ -1,3 +1,15 @@
+## **Release v1.21.5 - 2023-08-23**
+- Added Anomaly support to the Twitch Extension.
+
+**Fixes**
+- Fixed an issue where the label for E.T.C.'s band would be visible on launch.
+- Fixed missing sideboards when copying a deck from the Twitch Extension.
+
+**Bob's Buddy**
+- Added support for Murky.
+- Fixed various issues related to cards and mechanics added with Hearthstone 27.2.0.
+- Fixed an issue where Menagerie Mug, Menagerie Jug and Tide Oracle Morgl could crash the simulation.
+
 ## **Release v1.21.4 - 2023-08-22**
 **Bob's Buddy**
 - Added support for the new Minions and Anomalies.
