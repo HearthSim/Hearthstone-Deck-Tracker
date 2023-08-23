@@ -1,11 +1,8 @@
 name: Asia Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag_name:
-        description: "Tag Name"
-        required: true
+  release:
+    types: [released]
 
 permissions:
   id-token: write
@@ -23,7 +20,7 @@ jobs:
         uses: actions/setup-node@v1
 
       - name: Download Assets
-        run: node ./build-scripts/download-release-assets.js ${{ github.event.inputs.tag_name }}
+        run: node ./build-scripts/download-release-assets.js ${{ github.event.release.tag_name }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
