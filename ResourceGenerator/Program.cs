@@ -36,7 +36,7 @@ namespace ResourceGenerator
 			Console.ReadKey();
 			Console.WriteLine("Reading decks from memory...");
 			Console.WriteLine("(this make take a while)");
-			var templateDecks = Reflection.GetTemplateDecks();
+			var templateDecks = Reflection.GetTemplateDecks(10000315);
 			Console.WriteLine("...");
 			var validDecks = templateDecks.Where(d => d.SortOrder > 1).ToList();
 			Console.WriteLine($"Found {validDecks.Count} decks");
