@@ -316,6 +316,18 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			input.availableRaces = BattlegroundsUtils.GetAvailableRaces(_currentGameId).ToList();
 			input.DamageCap = _game.GameEntity.GetTag(GameTag.BACON_COMBAT_DAMAGE_CAP);
 
+			var friendlyMurky = _game.Player.Board.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.Murky);
+			var friendlyMurkyBuff = friendlyMurky?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
+			input.PlayerBattlecriesPlayed = friendlyMurky != null && friendlyMurkyBuff > 0
+				? friendlyMurkyBuff / (friendlyMurky.HasTag(GameTag.PREMIUM) ? 2 : 1) - 1
+				: 0;
+
+			var opponentMurky = _game.Opponent.Board.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.Murky);
+			var opponentMurkyBuff = opponentMurky?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
+			input.OpponentBattlecriesPlayed = opponentMurky != null && opponentMurkyBuff > 0
+				? opponentMurkyBuff / (opponentMurky.HasTag(GameTag.PREMIUM) ? 2 : 1) - 1
+				: 0;
+
 			var opponentHero = _game.Opponent.Board.FirstOrDefault(x => x.IsHero);
 			var playerHero = _game.Player.Board.FirstOrDefault(x => x.IsHero);
 			if(opponentHero == null || playerHero == null)
