@@ -568,7 +568,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if(!Config.Instance.EnableBattlegroundsTier7Overlay)
 					return;
-				Tier7ViewModel.Update(checkAccountStatus).Forget();	
+				Tier7ViewModel.Update(checkAccountStatus).Forget();
+				Remote.Config.Load();
 				if(Config.Instance.ShowBattlegroundsTier7PreLobby || !(HSReplayNetOAuth.AccountData?.IsTier7 ?? false))
 				{
 					Tier7ViewModel.Update(checkAccountStatus).Forget();	
