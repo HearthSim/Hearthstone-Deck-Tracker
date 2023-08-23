@@ -145,7 +145,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 				var heroStats = stats.FirstOrDefault(heroData => heroData.HeroDbfId == x);
 				return new BattlegroundsSingleHeroViewModel(heroStats, SetPlacementVisible);
 			}).ToList();
-			Message.Mmr(stats[0].MmrFilterValue, stats[0].MinMmr);
+
+			var anomalyAdjusted = stats.Where(heroData => heroData.AnomalyAdjusted == true).Any();
+
+			Message.Mmr(stats[0].MmrFilterValue, stats[0].MinMmr, anomalyAdjusted);
 			Visibility = Visible;
 
 			if(Config.Instance.ShowBattlegroundsHeroPicking)

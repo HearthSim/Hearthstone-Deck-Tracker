@@ -114,7 +114,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				var data = questData.FirstOrDefault(x => x.RewardDbfId == reward);
 				return new BattlegroundsSingleQuestViewModel(data);
 			});
-			Message.Mmr(questData[0].MmrFilterValue, questData[0].MinMMR);
+
+			var anomalyAdjusted = questData.Where(quest => quest.AnomalyAdjusted == true).Any();
+
+			Message.Mmr(questData[0].MmrFilterValue, questData[0].MinMMR, anomalyAdjusted);
 			if(choices.IsVisible)
 				Visibility = Visible;
 

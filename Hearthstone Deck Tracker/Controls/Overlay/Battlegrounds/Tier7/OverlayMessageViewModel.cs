@@ -47,12 +47,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			{ "TOP_50_PERCENT", 50 },
 		};
 
-		public void Mmr(string filterValue, int? minMMR)
+		public void Mmr(string filterValue, int? minMMR, bool anomalyAdjusted)
 		{
 			if(MmrPercentValues.TryGetValue(filterValue, out var percent))
 			{
 				var mmr = Helper.ToPrettyNumber(minMMR ?? 0);
-				Text = string.Format(LocUtil.Get("BattlegroundsOverlayMessage_MMR"), percent, mmr);
+				if(anomalyAdjusted)
+				{
+					Text = string.Format(LocUtil.Get("BattlegroundsOverlayMessage_MMR_AnomalyAdjusted"), percent, mmr);
+				}
+				else
+				{
+					Text = string.Format(LocUtil.Get("BattlegroundsOverlayMessage_MMR"), percent, mmr);
+				}
 			}
 			else
 				Clear();
