@@ -59,8 +59,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_ => new HashSet<int> { 1, 2, 3, 4, 5, 6 },
 		};
 
-		public static int? GetBattlegroundsAnomalyDbfId(Entity game)
+		public static int? GetBattlegroundsAnomalyDbfId(Entity? game)
 		{
+			if(game == null) return null; // defensive to protect against wrong type of Core.Game.GameEntity
 			var anomalyDbfId = game.GetTag(GameTag.BACON_GLOBAL_ANOMALY_DBID);
 			if (anomalyDbfId > 0)
 				return anomalyDbfId;
