@@ -40,8 +40,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private Input? _input;
 		private int _turn;
 		static int LogLinesKept = Remote.Config.Data?.BobsBuddy?.LogLinesKept ?? 100;
-		public string OpponentCardId = "";
-		public string PlayerCardId = "";
 		private Entity? _attackingHero;
 		private Entity? _defendingHero;
 		public Entity? LastAttackingHero = null;
@@ -353,10 +351,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog("Hero(es) could not be found. Exiting.");
 				return;
 			}
-		
-			//We set OpponentCardId and PlayerCardId here so that later we can do lookups for these entites without using _game.Opponent/Player, which might be innacurate or null depending on when they're accessed.
-			OpponentCardId = opponentHero.CardId ?? "";
-			PlayerCardId = playerHero.CardId ?? "";
 
 			input.SetHealths(playerHero.Health + playerHero.GetTag(GameTag.ARMOR), opponentHero.Health + opponentHero.GetTag(GameTag.ARMOR));
 
@@ -699,16 +693,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			if(LastAttackingHero == null)
 				return CombatResult.Tie;
-			var playerHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == PlayerCardId);
-			var opponentHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == OpponentCardId);
-			if(playerHero != null && opponentHero != null)
-			{
-				if(LastAttackingHero.CardId == playerHero.CardId)
-					return CombatResult.Win;
-				if(LastAttackingHero.CardId == opponentHero.CardId)
-					return CombatResult.Loss;
-			}
-			return CombatResult.Invalid;
+			if(LastAttackingHero.IsControlledBy(_game.Player.Id))
+				return CombatResult.Win;
+			else
+				return CombatResult.Loss;
 		}
 
 		private LethalResult GetLastLethalResult()
