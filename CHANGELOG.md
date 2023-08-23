@@ -1,3 +1,8 @@
+## **Release v1.21.4 - 2023-08-22**
+**Bob's Buddy**
+- Added support for the new Minions and Anomalies.
+- There are likely still issues with some new cards. We will update these in the coming days.
+
 ## **Release v1.21.3 - 2023-08-22**
 **Partially updated for Hearthstone 27.2.0**
 - The new minions are now available in the Battlegrounds overlay
