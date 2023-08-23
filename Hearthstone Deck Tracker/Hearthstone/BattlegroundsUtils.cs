@@ -1,5 +1,6 @@
 ﻿using HearthDb.Enums;
 using HearthMirror;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,5 +58,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			NonCollectible.Invalid.SecretsOfNorgannon => new HashSet<int> { 1, 2, 3, 4, 5, 6, 7 },
 			_ => new HashSet<int> { 1, 2, 3, 4, 5, 6 },
 		};
+
+		public static int? GetBattlegroundsAnomalyDbfId(Entity game)
+		{
+			var anomalyDbfId = game.GetTag(GameTag.BACON_GLOBAL_ANOMALY_DBID);
+			if (anomalyDbfId > 0)
+				return anomalyDbfId;
+			return null;
+		}
 	}
 }

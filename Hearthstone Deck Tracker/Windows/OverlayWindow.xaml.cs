@@ -453,7 +453,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			TurnCounter.Visibility = Config.Instance.ShowBattlegroundsTurnCounter ? Visible : Collapsed;
 
-			var anomalyDbfId = _game.GameEntity?.GetTag(GameTag.BACON_GLOBAL_ANOMALY_DBID); 
+			var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
 			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
 			BattlegroundsMinionsPanel.SetAvailableTiers(BattlegroundsUtils.GetAvailableTiers(anomalyCardId));
 
