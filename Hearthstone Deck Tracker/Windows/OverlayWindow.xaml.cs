@@ -441,6 +441,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			HeroNotificationPanel.HeroIds = heroIds;
 			HeroNotificationPanel.MMR = _game.BattlegroundsRatingInfo?.Rating;
+			HeroNotificationPanel.AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
 			_heroNotificationBehavior.Show();
 		}
 

@@ -160,6 +160,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				HeroPowerDbfIds = Core.Game.Player.PastHeroPowers.Select(x => Database.GetCardFromId(x)?.DbfId).Where(x => x.HasValue).Cast<int>().ToArray(),
 				Turn = Core.Game.GetTurnNumber(),
 				MinionTypes = availableRaces.Cast<int>().ToArray(),
+				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
 				OfferedRewards = GetOffererdRewards().ToArray(),
 				LanguageCode = Config.Instance.SelectedLanguage
 			};

@@ -838,7 +838,7 @@ namespace Hearthstone_Deck_Tracker
 			return name + "/" + GetCurrentVersion();
 		}
 
-		internal static void OpenBattlegroundsHeroPicker(int[] heroIds, int? mmr)
+		internal static void OpenBattlegroundsHeroPicker(int[] heroIds, int? mmr, int? anomalyDbfId)
 		{
 			var encodedHeroIds = HttpUtility.UrlEncode(string.Join(",", heroIds));
 			var url = $"{BuildHsReplayNetUrl("battlegrounds/heroes", "bgs_toast")}#heroes={encodedHeroIds}";
@@ -854,6 +854,10 @@ namespace Hearthstone_Deck_Tracker
 				url += $"&minionTypes={HttpUtility.UrlEncode(string.Join(",", availableRacesAsList.Select(type => type.ToString())))}";
 
 			}
+
+			if(anomalyDbfId.HasValue && anomalyDbfId.Value > 0)
+				url += $"&anomalyDbfId={anomalyDbfId.Value}";
+
 			TryOpenUrl(url);
 			HSReplayNetClientAnalytics.TryTrackToastClick(Franchise.Battlegrounds, ToastAction.Toast.BattlegroundsHeroPicker);
 		}

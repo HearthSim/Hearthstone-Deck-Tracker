@@ -171,6 +171,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			{
 				HeroDbfIds = heroIds,
 				BattlegroundsRaces = availableRaces.Cast<int>().ToArray(),
+				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
 				LanguageCode = Config.Instance.SelectedLanguage
 			};
 		}

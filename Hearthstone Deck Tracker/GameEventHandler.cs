@@ -1098,7 +1098,8 @@ namespace Hearthstone_Deck_Tracker
 					if(Config.Instance.HideOverlay)
 					{
 						var mmr = Core.Game.BattlegroundsRatingInfo?.Rating;
-						ToastManager.ShowBattlegroundsToast(heroIds, mmr);
+						var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity);
+						ToastManager.ShowBattlegroundsToast(heroIds, mmr, anomalyDbfId);
 						Core.Overlay.ShowBgsTopBar();
 					}
 					else

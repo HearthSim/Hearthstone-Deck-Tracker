@@ -19,9 +19,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 		private static readonly List<ToastHelper> Toasts = new List<ToastHelper>();
 		private static readonly Dictionary<ToastHelper, ToastHelper> GameResultToasts = new Dictionary<ToastHelper, ToastHelper>();
 
-		internal static void ShowBattlegroundsToast(int[] heroDbfIds, int? mmr)
+		internal static void ShowBattlegroundsToast(int[] heroDbfIds, int? mmr, int? anomalyDbfId)
 		{
-			var th = new ToastHelper(new BattlegroundsToast(heroDbfIds, mmr));
+			var th = new ToastHelper(new BattlegroundsToast(heroDbfIds, mmr, anomalyDbfId));
 			ShowToast(th, 6);
 		}
 
