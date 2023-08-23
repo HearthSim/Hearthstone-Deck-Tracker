@@ -153,11 +153,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool SavedReplay { get; set; }
 
-		public Entity PlayerEntity => Entities.FirstOrDefault(x => x.Value?.IsPlayer ?? false).Value;
+		public Entity? PlayerEntity => Entities.Values.FirstOrDefault(x => x.IsPlayer);
 
-		public Entity OpponentEntity => Entities.FirstOrDefault(x => x.Value != null && x.Value.HasTag(GameTag.PLAYER_ID) && !x.Value.IsPlayer).Value;
+		public Entity? OpponentEntity => Entities.Values.FirstOrDefault(x => x.HasTag(GameTag.PLAYER_ID) && !x.IsPlayer);
 
-		public Entity GameEntity => Entities.FirstOrDefault(x => x.Value?.Name == "GameEntity").Value;
+		public Entity? GameEntity => Entities.Values.FirstOrDefault(x => x.Name == "GameEntity");
 
 		public bool IsMulliganDone
 		{

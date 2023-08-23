@@ -28,10 +28,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static bool? GraveHorrorInDeck => DeckContains(CardIds.Collectible.Priest.GraveHorror);
 		
 		public static bool PlayerSeenJade => Core.Game.PlayerEntity?.HasTag(JADE_GOLEM) ?? false;
-		public static int PlayerNextJadeGolem => PlayerSeenJade ? Math.Min(Core.Game.PlayerEntity.GetTag(JADE_GOLEM) + 1, 30) : 1;
+		public static int PlayerNextJadeGolem => PlayerSeenJade ? Math.Min(Core.Game.PlayerEntity!.GetTag(JADE_GOLEM) + 1, 30) : 1;
 
 		public static bool OpponentSeenJade => Core.Game.OpponentEntity?.HasTag(JADE_GOLEM) ?? false;
-		public static int OpponentNextJadeGolem => OpponentSeenJade ? Math.Min(Core.Game.OpponentEntity.GetTag(JADE_GOLEM) + 1, 30) : 1;
+		public static int OpponentNextJadeGolem => OpponentSeenJade ? Math.Min(Core.Game.OpponentEntity!.GetTag(JADE_GOLEM) + 1, 30) : 1;
 		public static int PlayerGalakrondInvokeCounter => Core.Game.PlayerEntity?.GetTag(INVOKE_COUNTER) ?? 0;
 		public static int OpponentGalakrondInvokeCounter => Core.Game.OpponentEntity?.GetTag(INVOKE_COUNTER) ?? 0;
 

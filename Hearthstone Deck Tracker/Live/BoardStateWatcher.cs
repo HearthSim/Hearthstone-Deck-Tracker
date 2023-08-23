@@ -128,7 +128,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			return player.QuestRewards.FirstOrDefault(x => x.HasTag(GameTag.BACON_IS_HEROPOWER_QUESTREWARD) == heroPower)?.Card.DbfId;
 		}
 
-		private int? BgsAnomaly(Entity game) => BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(game);
+		private int? BgsAnomaly(Entity? game) => BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(game);
 
 		// Return the dbf id for an entity, but blacklisted against common hero cards we don't want want to show in the overlay.
 		private int HeroDbfId(Entity? entity)

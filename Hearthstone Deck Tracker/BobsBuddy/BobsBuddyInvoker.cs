@@ -313,6 +313,24 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 
+			if(_game.GameEntity == null)
+			{
+				DebugLog("GameEntity could not be found. Exiting.");
+				return;
+			}
+
+			if(_game.PlayerEntity == null)
+			{
+				DebugLog("PlayerEntity could not be found. Exiting.");
+				return;
+			}
+
+			if(_game.OpponentEntity == null)
+			{
+				DebugLog("OpponentEntity could not be found. Exiting.");
+				return;
+			}
+
 			input.availableRaces = BattlegroundsUtils.GetAvailableRaces(_currentGameId).ToList();
 			input.DamageCap = _game.GameEntity.GetTag(GameTag.BACON_COMBAT_DAMAGE_CAP);
 
