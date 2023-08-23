@@ -14,9 +14,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 			InitializeComponent();
 		}
 
-		public async void Update(List<Sideboard> sideboards, bool reset)
+		public async void Update(List<Sideboard>? sideboards, bool reset)
 		{
-			if(sideboards.Count == 0 || sideboards.All(s => s.Cards.Count == 0))
+			if(sideboards == null || sideboards.Count == 0 || sideboards.All(s => s.Cards.Count == 0))
 			{
 				Container.Visibility = Visibility.Collapsed;
 				return;

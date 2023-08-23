@@ -61,10 +61,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void UpdateDeckList(Deck? selected)
 		{
 			ListViewDeck.ItemsSource = null;
+			// always update the sideboard to ensure we hide the header if empty
+			PlayerSideboards.Update(selected?.GetSelectedDeckVersion().Sideboards, true);
 			if(selected == null)
 				return;
 			ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
-			PlayerSideboards.Update(selected.GetSelectedDeckVersion().Sideboards, true);
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 		}
 
