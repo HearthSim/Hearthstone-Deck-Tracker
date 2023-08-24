@@ -1,3 +1,9 @@
+## **Release v1.21.6 - 2023-08-24**
+- Restored the Tier7 hero picking overlay with Anomaly support.
+
+**Bob's Buddy**
+- Fixed further issues related to cards and mechanics added with Hearthstone 27.2.0.
+
 ## **Release v1.21.5 - 2023-08-23**
 - Added Anomaly support to the Twitch Extension.
 
