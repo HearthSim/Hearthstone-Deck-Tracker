@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Log.Error("Invalid card count: " + cards.Length);
 				return null;
 			}
-			var accId = HearthMirror.Reflection.GetAccountId();
+			var accId = HearthMirror.Reflection.Client.GetAccountId();
 			if(accId == null || accId.Hi == 0 || accId.Lo == 0)
 			{
 				Log.Error("Could not get account id");

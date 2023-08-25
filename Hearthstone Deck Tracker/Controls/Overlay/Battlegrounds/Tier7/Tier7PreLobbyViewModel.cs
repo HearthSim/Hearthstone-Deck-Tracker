@@ -133,7 +133,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				await Tier7Trial.Update();
 				TrialTimeRemaining = Tier7Trial.TimeRemaining;
 				TrialUsesRemaining = Tier7Trial.RemainingTrials ?? 0;
-				Username = Reflection.GetBattleTag()?.Name ?? HSReplayNetOAuth.AccountData.Username;
+				Username = Reflection.Client.GetBattleTag()?.Name ?? HSReplayNetOAuth.AccountData.Username;
 				UserState = UserState.Authenticated;
 				return;
 			}
@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				UserState = UserState.Loading;
 			TrialTimeRemaining = null;
 			int? allTimeFromApi = null;
-			var acc = Reflection.GetAccountId();
+			var acc = Reflection.Client.GetAccountId();
 			if(acc != null)
 			{
 				var response = await HSReplayNetOAuth.MakeRequest(c => c.GetAllTimeBGsMMR(acc.Hi, acc.Lo));
@@ -187,7 +187,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 
 		public ICommand MyStatsCommand => new Command(() =>
 		{
-			var acc = Reflection.GetAccountId();
+			var acc = Reflection.Client.GetAccountId();
 			var queryParams = acc != null ? new[] { $"hearthstone_account={acc.Hi}-{acc.Lo}" } : null;
 			var url = Helper.BuildHsReplayNetUrl("battlegrounds/mine/", "bgs_lobby_my_stats", queryParams);
 			Helper.TryOpenUrl(url);

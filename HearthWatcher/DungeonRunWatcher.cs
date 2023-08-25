@@ -97,7 +97,7 @@ namespace HearthWatcher
 
 		public bool UpdateDungeonInfo()
 		{
-			var dungeonInfo = Reflection.GetDungeonInfo();
+			var dungeonInfo = Reflection.Client.GetDungeonInfo();
 			if(dungeonInfo != null)
 			{
 				for(var i = 0; i < dungeonInfo.Length; i++)

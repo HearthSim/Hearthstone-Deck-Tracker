@@ -99,36 +99,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 	public class HearthMirrorPackProvider : IPackProvider
 	{
-		public List<HearthMirror.Objects.Card> GetCards() => Reflection.GetPackCards();
-		public int GetPackId() => Reflection.GetLastOpenedBoosterId();
+		public List<HearthMirror.Objects.Card> GetCards() => Reflection.Client.GetPackCards();
+		public int GetPackId() => Reflection.Client.GetLastOpenedBoosterId();
 	}
 
 	public class HearthMirrorArenaProvider : IArenaProvider
 	{
 		public ArenaInfo? GetArenaInfo() => DeckImporter.FromArena(false);
-		public HearthMirror.Objects.Card[]? GetDraftChoices() => Reflection.GetArenaDraftChoices()?.ToArray();
+		public HearthMirror.Objects.Card[]? GetDraftChoices() => Reflection.Client.GetArenaDraftChoices()?.ToArray();
 	}
 
 	public class HearthMirrorFriendlyChallengeProvider : IFriendlyChallengeProvider
 	{
-		public bool DialogVisible => Reflection.IsFriendlyChallengeDialogVisible();
+		public bool DialogVisible => Reflection.Client.IsFriendlyChallengeDialogVisible();
 	}
 
 	public class HearthMirrorRewardTrackProvider : IExperienceProvider
 	{
-		public RewardTrackData GetRewardTrackData() => Reflection.GetRewardTrackData();
+		public RewardTrackData GetRewardTrackData() => Reflection.Client.GetRewardTrackData();
 	}
 
 	public class HearthMirrorQueueProvider : IQueueProvider
 	{
-		public FindGameState? FindGameState => Reflection.GetFindGameState();
+		public FindGameState? FindGameState => Reflection.Client.GetFindGameState();
 	}
 
 	public class HearthMirrorBaconProvider : IBaconProvider
 	{
-		public bool? IsShopOpen => Reflection.IsShopOpen();
-		public bool? IsJournalOpen => Reflection.IsJournalOpen();
-		public bool? IsPopupShowing => Reflection.IsPopupShowing();
-		public bool? IsFriendslistOpen => Reflection.IsFriendsListVisible();
+		public bool? IsShopOpen => Reflection.Client.IsShopOpen();
+		public bool? IsJournalOpen => Reflection.Client.IsJournalOpen();
+		public bool? IsPopupShowing => Reflection.Client.IsPopupShowing();
+		public bool? IsFriendslistOpen => Reflection.Client.IsFriendsListVisible();
 	}
 }

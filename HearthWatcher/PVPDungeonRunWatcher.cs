@@ -72,7 +72,7 @@ namespace HearthWatcher
 
 		public bool UpdatePVPDungeonInfo()
 		{
-			var pvpDungeonInfo = Reflection.GetPVPDungeonInfo();
+			var pvpDungeonInfo = Reflection.Client.GetPVPDungeonInfo();
 			if(pvpDungeonInfo != null)
 			{
 				if(pvpDungeonInfo.RunActive)
@@ -87,7 +87,7 @@ namespace HearthWatcher
 				}
 				else if(pvpDungeonInfo.SelectedLoadoutTreasureDbId > 0)
 				{
-					var deck = Reflection.GetPVPDungeonSeedDeck();
+					var deck = Reflection.Client.GetPVPDungeonSeedDeck();
 					if(deck == null)
 						return false;
 					var dbfids = deck.Cards.Select(x => HearthDb.Cards.All.TryGetValue(x.Id, out var card) ? card.DbfId : -1).ToList();

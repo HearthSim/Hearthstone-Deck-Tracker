@@ -418,7 +418,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(_isFriendsListOpen == null)
 				{
 					await Task.Delay(500);
-					_isFriendsListOpen = Reflection.IsFriendsListVisible();
+					_isFriendsListOpen = Reflection.Client.IsFriendsListVisible();
 				}
 				if (_isFriendsListOpen.Value)
 				{

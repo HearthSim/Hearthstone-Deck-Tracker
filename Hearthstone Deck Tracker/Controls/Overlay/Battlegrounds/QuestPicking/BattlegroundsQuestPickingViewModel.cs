@@ -101,7 +101,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				return;
 			}
 
-			var choices = Reflection.GetCardChoices();
+			var choices = Reflection.Client.GetCardChoices();
 			if(choices == null)
 			{
 				Message.Error();
@@ -134,7 +134,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			while(_watchChoices)
 			{
 				await Task.Delay(100);
-				var choices = Reflection.GetCardChoices();
+				var choices = Reflection.Client.GetCardChoices();
 				if(choices == null)
 				{
 					_watchChoices = false;

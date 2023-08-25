@@ -17,8 +17,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var data = await Task.Run(() => new
 			{
-				Collection = Reflection.GetFullCollection(), 
-				BattleTag = Reflection.GetBattleTag()
+				Collection = Reflection.Client.GetFullCollection(), 
+				BattleTag = Reflection.Client.GetBattleTag()
 			});
 			if(data.Collection?.Cards.Any() ?? false)
 			{
@@ -31,8 +31,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var data = await Task.Run(() => new
 			{
-				Collection = Reflection.GetMercenariesCollection(), 
-				BattleTag = Reflection.GetBattleTag()
+				Collection = Reflection.Client.GetMercenariesCollection(), 
+				BattleTag = Reflection.Client.GetBattleTag()
 			});
 			if(data.Collection?.Any() ?? false)
 			{
@@ -110,7 +110,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(!Core.Game.IsRunning)
 				return _lastUsedKey;
-			var user = Reflection.GetAccountId();
+			var user = Reflection.Client.GetAccountId();
 			if(user == null)
 			{
 				if(_lastUsedKey == null && retry)

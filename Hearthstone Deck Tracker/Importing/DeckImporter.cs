@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 
 		public static ArenaInfo ArenaInfoCache
 		{
-			get { return _arenaInfoCache ??= Reflection.GetArenaDeck(); }
+			get { return _arenaInfoCache ??= Reflection.Client.GetArenaDeck(); }
 			set { _arenaInfoCache = value; }
 		}
 
@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 		}
 
 		private static List<HearthMirror.Objects.Deck> GetConstructedDecks()
-			=> Reflection.GetDecks()?.Where(IsValidDeck).ToList() ?? new List<HearthMirror.Objects.Deck>();
+			=> Reflection.Client.GetDecks()?.Where(IsValidDeck).ToList() ?? new List<HearthMirror.Objects.Deck>();
 
 		private static bool IsValidDeck(HearthMirror.Objects.Deck deck)
 		{
@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 		}
 
 		private static List<HearthMirror.Objects.Deck> GetBrawlDecks()
-			=> Reflection.GetDecks()?.Where(x => x.Type == BrawlDeckType).ToList() ?? new List<HearthMirror.Objects.Deck>();
+			=> Reflection.Client.GetDecks()?.Where(x => x.Type == BrawlDeckType).ToList() ?? new List<HearthMirror.Objects.Deck>();
 
 		public static List<ImportedDeck> GetImportedDecks(IEnumerable<HearthMirror.Objects.Deck> decks, IList<Deck> localDecks)
 		{
@@ -185,7 +185,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 		{
 			try
 			{
-				ArenaInfoCache = Reflection.GetArenaDeck();
+				ArenaInfoCache = Reflection.Client.GetArenaDeck();
 				if(ArenaInfoCache != null && log)
 					Log.Info($"Found new {ArenaInfoCache.Wins}-{ArenaInfoCache.Losses} arena deck: hero={ArenaInfoCache.Deck.Hero}, cards={ArenaInfoCache.Deck.Cards.Sum(x => x.Count)}");
 				else if(log)
