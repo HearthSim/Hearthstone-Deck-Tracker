@@ -1,3 +1,10 @@
+## **Release v1.21.7 - 2023-08-25**
+- Minions that are banned in a given anomaly are now marked as such in the Battlegrounds minion list.
+
+**Bob's Buddy**
+- Fixed Bob's Buddy reappearing when Free-Flying Feathermane is summoned by the opponent.
+- Fixed further issues related to cards and mechanics added with Hearthstone 27.2.0.
+
 ## **Release v1.21.6 - 2023-08-24**
 - Restored the Tier7 hero picking overlay with Anomaly support.
 
