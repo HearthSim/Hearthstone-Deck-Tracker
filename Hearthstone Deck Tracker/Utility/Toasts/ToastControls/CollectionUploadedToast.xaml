@@ -4,6 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              MouseUp="CollectionUploadedToast_OnClicked" Height="40" Width="250"
              Background="{DynamicResource AccentColorBrush}"
              mc:Ignorable="d">
@@ -13,9 +17,9 @@
             <StackPanel VerticalAlignment="Center" Margin="5,0">
                 <TextBlock Foreground="White" TextAlignment="Center"
                            LineHeight="15" LineStackingStrategy="BlockLineHeight">
-                    <Run Text="Collection uploaded!" FontWeight="SemiBold" FontSize="15"/>
+                    <Run Text="{lex:Loc Toast_Collection_Uploaded}" FontWeight="SemiBold" FontSize="15"/>
                     <LineBreak/>
-                    <Run Text="Find decks on HSReplay.net" FontSize="12"/>
+                    <Run Text="{lex:Loc Toast_Collection_HSReplaynet}" FontSize="12"/>
                 </TextBlock>
             </StackPanel>
             <controls:StatusIndicator Success="True" SuccessColor="Lime" FontSize="16"
