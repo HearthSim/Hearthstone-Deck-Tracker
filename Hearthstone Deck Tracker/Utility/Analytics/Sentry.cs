@@ -80,13 +80,18 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			};
 
+			var tags = new Dictionary<string, string>() {
+				{"bobs_buddy_version", BobsBuddyUtils.VersionString},
+				{"turn", turn.ToString()},
+				{"region", data.Region.ToString()},
+			};
+
 			var bbEvent = new SentryEvent(msg)
 			{
 				Level = ErrorLevel.Warning,
+				Tags = tags,
 				Extra = data,
 			};
-
-			bbEvent.Tags.Add("region", data.Region.ToString());
 
 			bbEvent.Fingerprint.Add(result);
 			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
