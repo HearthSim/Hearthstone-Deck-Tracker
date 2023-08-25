@@ -540,8 +540,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog($"Opponent hand changed, re-running simulation! (#{_reRunCount})");
 				if(ShouldRun() && !RunSimulationAfterCombat)
 				{
+					var expandAfterError = ErrorState == BobsBuddyErrorState.None && Config.Instance.ShowBobsBuddyDuringCombat;
 					ErrorState = BobsBuddyErrorState.None;
-					BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.None, null, true);
+					BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.None, null, BobsBuddyDisplay.ResultsPanelExpanded || expandAfterError);
 					await RunAndDisplaySimulationAsync();
 				}
 			}

@@ -285,6 +285,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private bool _resultsPanelExpanded = false;
+		public bool ResultsPanelExpanded
+		{
+			get => _resultsPanelExpanded;
+		}
 
 		private static List<int>? _playerDamageDealtBounds;
 		private static List<int>? _opponentDamageDealtBounds;
