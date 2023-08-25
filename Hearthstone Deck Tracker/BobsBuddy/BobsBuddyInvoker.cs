@@ -487,6 +487,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
 			if(pUndeadBonus != null)
 				input.PlayerUndeadAttackBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			input.PlayerElementalPlayCounter = _game.PlayerEntity.GetTag((GameTag)2878);
 
 			var opponentAttached = GetAttachedEntities(_game.OpponentEntity.Id);
 			var oEternalLegion = opponentAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchant);
@@ -495,8 +496,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var oUndeadBonus = opponentAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
 			if(oUndeadBonus != null)
 				input.OpponentUndeadAttackBonus = oUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			input.OpponentElementalPlayCounter = _game.OpponentEntity.GetTag((GameTag)2878);
 
-			Log.Info($"pEternal={input.PlayerEternalKnightCounter}, pUndead={input.PlayerUndeadAttackBonus} | oEternal={input.OpponentEternalKnightCounter}, oUndead={input.OpponentUndeadAttackBonus}");
+			Log.Info($"pEternal={input.PlayerEternalKnightCounter}, pUndead={input.PlayerUndeadAttackBonus}, pElemental={input.PlayerElementalPlayCounter} | oEternal={input.OpponentEternalKnightCounter}, oUndead={input.OpponentUndeadAttackBonus}, oElemental={input.OpponentElementalPlayCounter}");
 
 			input.PlayerBloodGemAtkBuff = _game.PlayerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFATKVALUE);
 			input.PlayerBloodGemHealthBuff = _game.PlayerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);
