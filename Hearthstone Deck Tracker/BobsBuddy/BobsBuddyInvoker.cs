@@ -535,7 +535,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_input.OpponentHand.Clear();
 			_input.OpponentHand.AddRange(entities);
 
-			if(_reRunCount++ <= 2)
+			if(_reRunCount++ <= 10)
 			{
 				DebugLog($"Opponent hand changed, re-running simulation! (#{_reRunCount})");
 				if(ShouldRun() && !RunSimulationAfterCombat)
