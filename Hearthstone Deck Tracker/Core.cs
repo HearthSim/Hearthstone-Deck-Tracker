@@ -266,6 +266,7 @@ namespace Hearthstone_Deck_Tracker
 						//Watchers.ExperienceWatcher.Run();
 
 						Remote.Config.Load();
+						Remote.BattlegroundsBans.Load();
 						Remote.Mercenaries.Load();
 					}
 					Overlay.UpdatePosition();

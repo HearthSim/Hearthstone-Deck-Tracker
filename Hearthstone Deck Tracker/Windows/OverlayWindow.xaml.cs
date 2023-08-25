@@ -457,6 +457,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
 			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
 			BattlegroundsMinionsPanel.SetAvailableTiers(BattlegroundsUtils.GetAvailableTiers(anomalyCardId));
+			BattlegroundsMinionsPanel.SetBannedMinions(BattlegroundsUtils.GetMinionsBannedByAnomaly(anomalyDbfId) ?? new List<string>());
 
 			BattlegroundsMinionsPanel.Visibility = Config.Instance.ShowBattlegroundsTiers ? Visible : Collapsed;
 
@@ -570,6 +571,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 				Tier7ViewModel.Update(checkAccountStatus).Forget();
 				Remote.Config.Load();
+				Remote.BattlegroundsBans.Load();
 				if(Config.Instance.ShowBattlegroundsTier7PreLobby || !(HSReplayNetOAuth.AccountData?.IsTier7 ?? false))
 				{
 					Tier7ViewModel.Update(checkAccountStatus).Forget();	

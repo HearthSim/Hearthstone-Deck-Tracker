@@ -42,6 +42,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				_tierIcons[i].SetAvailable(_availableTiers.Contains(i + 1));
 		}
 
+		private List<string> _bannedMinionCardIds = new List<string>();
+		public void SetBannedMinions(IEnumerable<string> bannedCardIds)
+		{
+			_bannedMinionCardIds = bannedCardIds.ToList();
+		}
+
 		public void Reset()
 		{
 			_availableTiers = BattlegroundsUtils.GetAvailableTiers(null);
@@ -123,6 +129,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 								cards.Add(new Hearthstone.Card(card, true));
 						}
 					}
+				}
+
+				if(_bannedMinionCardIds.Count > 0)
+				{
+					cards = cards.Select(x =>
+					{
+						if(_bannedMinionCardIds.Contains(x.Id))
+						{
+							var ret = (Hearthstone.Card)x.Clone();
+							ret.Count = 0;
+							return ret;
+						}
+						return x;
+					}).ToList();
 				}
 
 				if(cards.Count == 0)

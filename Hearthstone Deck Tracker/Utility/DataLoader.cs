@@ -63,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static DataLoader<T?> JsonFromDisk(string path) 
 			=> FromDisk(path, JsonConvert.DeserializeObject<T>);
 
-		public static DataLoader<T?> FromWeb(string url, Func<string, T> deserializer)
+		public static DataLoader<T?> FromWeb(string url, Func<string, T> deserializer, string? contentType)
 		{
 			return new DataLoader<T?>(async () =>
 			{
@@ -71,6 +71,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 				{
 					using(var client = new WebClient())
 					{
+						if(contentType != null)
+							client.Headers.Add("accept", contentType);
 						var data = await client.DownloadStringTaskAsync(url);
 						return deserializer(data);
 					}
@@ -84,6 +86,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 
 		public static DataLoader<T?> JsonFromWeb(string url) 
-			=> FromWeb(url, JsonConvert.DeserializeObject<T>);
+			=> FromWeb(url, JsonConvert.DeserializeObject<T>, "application/json");
 	}
 }
