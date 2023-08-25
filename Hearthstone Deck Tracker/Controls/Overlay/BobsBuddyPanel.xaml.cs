@@ -456,6 +456,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			if(State == state)
 				return;
+			var lastState = State;
 			State = state;
 
 			if(state == BobsBuddyState.Combat)
@@ -464,7 +465,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				ShowResults(Config.Instance.ShowBobsBuddyDuringCombat);
 			}
 			else if(state == BobsBuddyState.Shopping)
-				ShowResults(Config.Instance.ShowBobsBuddyDuringShopping);
+			{
+				if(!Config.Instance.ShowBobsBuddyDuringShopping) {
+					// If the user has disabled the "Show During Shopping" setting we would usually hide Bob's Buddy here.
+					// However if simulation was delayed (e.g. due to a secret) AND the user left the panel expanded during combat, keep it expanded.
+					ShowResults(lastState == BobsBuddyState.CombatWithoutSimulation && _resultsPanelExpanded);
+				}
+				else
+				{
+					ShowResults(true);
+				}
+			}
 			else if(state == BobsBuddyState.CombatWithoutSimulation)
 				ShowResults(false);
 		}
