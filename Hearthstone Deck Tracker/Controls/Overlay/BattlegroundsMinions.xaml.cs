@@ -67,15 +67,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			return addedNew;
 		}
 
-		private static readonly List<Hearthstone.Card> NeutralClassifiedRaceCards = new List<Hearthstone.Card>()
-		{
-		};
-
-		private IEnumerable<Hearthstone.Card> GetUnavailableRaceCards(IEnumerable<Race> availableRaces)
-		{
-			return NeutralClassifiedRaceCards.Where(x => x.RaceEnum != null && !availableRaces.Contains(x.RaceEnum.Value)).ToList();
-		}
-
 		private Dictionary<Race, List<string>> DifferentTribeClassifiedCards = new Dictionary<Race, List<string>>() { { Race.QUILBOAR, new List<string>() { HearthDb.CardIds.NonCollectible.Neutral.AgamagganTheGreatBoar } } };
 
 		private void Update(int tier, IEnumerable<Race> availableRaces)
@@ -134,8 +125,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					}
 				}
 
-				if(race == Race.INVALID)
-					cards.AddRange(GetUnavailableRaceCards(availableRaces).Where(x => x.TechLevel == tier));
 				if(cards.Count == 0)
 					Groups.FirstOrDefault(x => x.Title == title)?.Hide();
 				else
