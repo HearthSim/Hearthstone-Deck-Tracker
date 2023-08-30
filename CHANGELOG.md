@@ -1,3 +1,6 @@
+## **Release v1.21.8 - 2023-08-30**
+**Updated for Hearthstone 27.2.2**
+
 ## **Release v1.21.7 - 2023-08-25**
 - Minions that are banned in a given anomaly are now marked as such in the Battlegrounds minion list.
 
