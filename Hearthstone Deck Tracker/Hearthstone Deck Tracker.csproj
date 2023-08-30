@@ -11,7 +11,7 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Hearthstone Deck Tracker</Description>
     <Copyright>Copyright © HearthSim 2023</Copyright>
-    <AssemblyVersion>1.21.7</AssemblyVersion>
+    <AssemblyVersion>1.21.8</AssemblyVersion>
     <FileVersion>1.21.7</FileVersion>
     <UseWPF>true</UseWPF>
     <PlatformTarget>x86</PlatformTarget>
