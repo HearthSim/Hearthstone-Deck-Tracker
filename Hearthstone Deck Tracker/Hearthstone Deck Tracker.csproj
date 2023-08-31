@@ -82,7 +82,7 @@
       <HintPath>..\lib\HearthDb.dll</HintPath>
     </Reference>
     <Reference Include="HearthMirror">
-      <HintPath>..\lib\HearthMirror.dll</HintPath>
+      <HintPath>..\lib\HearthMirror.exe</HintPath>
     </Reference>
     <Reference Include="HSReplay">
       <HintPath>..\lib\HSReplay.dll</HintPath>

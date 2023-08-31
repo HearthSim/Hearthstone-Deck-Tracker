@@ -17,7 +17,7 @@
     <HDTDirectory>$(SlnDirectory)/Hearthstone Deck Tracker</HDTDirectory>
 
     <HearthDbUrl>https://libs.hearthsim.net/hdt/HearthDb.dll</HearthDbUrl>
-    <HearthMirrorUrl>https://libs.hearthsim.net/hdt/HearthMirror.dll</HearthMirrorUrl>
+    <HearthMirrorUrl>https://libs.hearthsim.net/hdt/HearthMirror.zip</HearthMirrorUrl>
     <HSReplayUrl>https://libs.hearthsim.net/hdt/HSReplay.dll</HSReplayUrl>
     <BobsBuddyUrl>https://libs.hearthsim.net/hdt/BobsBuddy.dll</BobsBuddyUrl>
   </PropertyGroup>
@@ -40,6 +40,11 @@
     <DownloadFile SourceUrl="$(BobsBuddyUrl)" DestinationFolder="$(SlnDirectory)/lib" SkipUnchangedFiles="true">
       <Output TaskParameter="DownloadedFile" ItemName="Content" />
     </DownloadFile>
+  </Target>
+
+  <Target Name="UnpackHearthMirrorDeps" BeforeTargets="Bootstrap" DependsOnTargets="DownloadDeps">
+    <Unzip SourceFiles="$(SlnDirectory)/lib/HearthMirror.zip" DestinationFolder="$(SlnDirectory)/lib" />
+    <Delete Files="$(SlnDirectory)/lib/HearthMirror.zip" />
   </Target>
 
   <Target Name="CloneHDTLocalization" Condition="!Exists('$(SlnDirectory)/HDT-Localization')" BeforeTargets="Bootstrap">
