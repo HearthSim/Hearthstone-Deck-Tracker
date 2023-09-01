@@ -15,10 +15,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private static async Task<Collection?> LoadCollection(Key key)
 		{
-			var data = await Task.Run(() => new
-			{
-				Collection = Reflection.Client.GetFullCollection(), 
-				BattleTag = Reflection.Client.GetBattleTag()
+			var data = await Task.Run(() => {
+				using(_ = Reflection.ClientReadTimeout(10000))
+				{
+					return new
+					{
+						Collection = Reflection.Client.GetFullCollection(),
+						BattleTag = Reflection.Client.GetBattleTag()
+					};
+				}
 			});
 			if(data.Collection?.Cards.Any() ?? false)
 			{

@@ -72,7 +72,12 @@ namespace HearthWatcher
 
 		public bool UpdatePVPDungeonInfo()
 		{
-			var pvpDungeonInfo = Reflection.Client.GetPVPDungeonInfo();
+			DungeonInfo pvpDungeonInfo = null;
+			using(_ = Reflection.ClientReadTimeout(10000))
+			{
+				pvpDungeonInfo = Reflection.Client.GetPVPDungeonInfo();
+			}
+
 			if(pvpDungeonInfo != null)
 			{
 				if(pvpDungeonInfo.RunActive)
