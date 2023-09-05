@@ -131,8 +131,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					}
 				}
 
-				if(_bannedMinionCardIds.Count > 0)
+				if(!_availableTiers.Contains(tier))
 				{
+					// Fade out all minions from unavailable tiers
+					cards = cards.Select(x =>
+					{
+						var ret = (Hearthstone.Card)x.Clone();
+						ret.Count = 0;
+						return ret;
+					}).ToList();
+				}
+				else if(_bannedMinionCardIds.Count > 0) {
+					// Fade out banned minions
 					cards = cards.Select(x =>
 					{
 						if(_bannedMinionCardIds.Contains(x.Id))
