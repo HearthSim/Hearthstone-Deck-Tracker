@@ -80,5 +80,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		BATTLE_OF_THE_BANDS = 1809,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Titans")]
 		TITANS = 1858,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Wonders")]
+		WONDERS = 1898,
 	}
 }
