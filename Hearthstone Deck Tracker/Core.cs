@@ -91,6 +91,8 @@ namespace Hearthstone_Deck_Tracker
 #endif
 			splashScreenWindow.ShowConditional();
 			Log.Initialize();
+			Reflection.StdErr += (sender, args) => Log.Info("HearthMirror RPC [stderr]: " + args.Data);
+			Reflection.StdOut += (sender, args) => Log.Info("HearthMirror RPC [stdout]: " + args.Data); 
 			Reflection.Exception += e => Log.Warn("HearthMirror Exception: " + e);
 			ConfigManager.Run();
 			LocUtil.UpdateCultureInfo();
