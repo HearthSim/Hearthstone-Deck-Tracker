@@ -1,3 +1,10 @@
+## **Release v1.21.9 - 2023-09-05**
+- Added Caverns of Time filter to deck editor.
+
+**Bob's Buddy**
+- Fixed an issue with a player having multiple Recurring Nightmares.
+- Fixed various card issues related to cards updated in Hearthstone 27.2.2.
+
 ## **Release v1.21.8 - 2023-08-30**
 **Updated for Hearthstone 27.2.2**
 
