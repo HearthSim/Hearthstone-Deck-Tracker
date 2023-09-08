@@ -1,3 +1,10 @@
+## **Release v1.21.10 - 2023-09-08**
+- Added missing Caverns of Time icon.
+
+**Bob's Buddy**
+- Fixed some rare interactions crashing the simulation.
+- Fixed various card issues related to cards updated in Hearthstone 27.2.2.
+
 ## **Release v1.21.9 - 2023-09-05**
 - Added Caverns of Time filter to deck editor.
 
