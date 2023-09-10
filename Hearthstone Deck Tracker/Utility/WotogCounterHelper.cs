@@ -5,6 +5,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using System;
 using static HearthDb.Enums.GameTag;
 using System.Collections.Generic;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Utility
 {
@@ -19,8 +20,35 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static Entity OpponentCthunProxy => Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
 		public static Entity PlayerPogoHopper => Core.Game.Player.RevealedEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Rogue.PogoHopper && x.Info.OriginalZone != null);
 		public static Entity OpponentPogoHopper => Core.Game.Opponent.RevealedEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Rogue.PogoHopper && x.Info.OriginalZone != null);
-		public static bool PlayerSeenCthun => Core.Game.PlayerEntity?.HasTag(SEEN_CTHUN) ?? false;
-		public static bool OpponentSeenCthun => Core.Game.OpponentEntity?.HasTag(SEEN_CTHUN) ?? false;
+
+		public static bool PlayerSeenCthun
+		{
+			get
+			{
+				var cthun = PlayerCthun;
+				//Log.Debug($"Player C'Thun {cthun?.Attack}/{cthun?.Health}");
+				//Log.Debug($"Player C'Thun Proxy {PlayerCthunProxy?.Attack}/{PlayerCthunProxy?.Health}");
+				//var player = Core.Game.PlayerEntity;
+				//var seenCThun = player?.HasTag(SEEN_CTHUN) ?? false;
+				//Log.Debug($"Player C'Thun Seen: {seenCThun}");
+				return cthun != null;
+			}
+		}
+
+		public static bool OpponentSeenCthun
+		{
+			get
+			{
+				var cthun = OpponentCthun;
+				//Log.Debug($"Opponent C'Thun {cthun?.Attack}/{cthun?.Health}");
+				//Log.Debug($"Opponent C'Thun Proxy {OpponentCthunProxy?.Attack}/{OpponentCthunProxy?.Health}");
+				//var player = Core.Game.OpponentEntity;
+				//var seenCThun = player?.HasTag(SEEN_CTHUN) ?? false;
+				//Log.Debug($"Opponent C'Thun Seen: {seenCThun}");
+				return cthun != null;
+			}
+		}
+
 		public static bool? CthunInDeck => DeckContains(CardIds.Collectible.Neutral.CthunOG);
 		public static bool? YoggInDeck => DeckContains(CardIds.Collectible.Neutral.YoggSaronHopesEnd);
 		public static bool? ArcaneGiantInDeck => DeckContains(CardIds.Collectible.Neutral.ArcaneGiant);
