@@ -26,11 +26,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get
 			{
 				var cthun = PlayerCthun;
-				//Log.Debug($"Player C'Thun {cthun?.Attack}/{cthun?.Health}");
-				//Log.Debug($"Player C'Thun Proxy {PlayerCthunProxy?.Attack}/{PlayerCthunProxy?.Health}");
-				//var player = Core.Game.PlayerEntity;
-				//var seenCThun = player?.HasTag(SEEN_CTHUN) ?? false;
-				//Log.Debug($"Player C'Thun Seen: {seenCThun}");
 				return cthun != null;
 			}
 		}
@@ -40,11 +35,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get
 			{
 				var cthun = OpponentCthun;
-				//Log.Debug($"Opponent C'Thun {cthun?.Attack}/{cthun?.Health}");
-				//Log.Debug($"Opponent C'Thun Proxy {OpponentCthunProxy?.Attack}/{OpponentCthunProxy?.Health}");
-				//var player = Core.Game.OpponentEntity;
-				//var seenCThun = player?.HasTag(SEEN_CTHUN) ?? false;
-				//Log.Debug($"Opponent C'Thun Seen: {seenCThun}");
 				return cthun != null;
 			}
 		}
