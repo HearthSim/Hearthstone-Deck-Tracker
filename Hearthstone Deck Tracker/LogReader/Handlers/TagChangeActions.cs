@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HearthDb.Enums;
@@ -185,6 +186,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			OnDredge(entity, targetEntity, game, gameState);
 		}
 
+		private readonly HashSet<string> _canCastDredge = new()
+		{
+			Collectible.Druid.ConvokeTheSpirits,
+			Collectible.Mage.PuzzleBoxOfYoggSaron,
+		};
+
 		private void OnDredge(Entity entity, Entity target, IGame game, IHsGameState gameState)
 		{
 			if(entity.GetTag(LINKED_ENTITY) != target.Id)
@@ -202,6 +209,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 			if(gameState.CurrentBlock == null)
 				return;
+
+			if(_canCastDredge.Contains(gameState.CurrentBlock.Parent?.CardId ?? ""))
+			{
+				// Dredge effect was automatically cast by another card. Not revealed to the player.
+				return;
+			}
 
 			if (gameState.CurrentBlock.DredgeCounter == 0)
 			{
