@@ -272,6 +272,8 @@ namespace Hearthstone_Deck_Tracker
 						Remote.Config.Load();
 						Remote.BattlegroundsBans.Load();
 						Remote.Mercenaries.Load();
+
+						Reflection.StartIpcClient();
 					}
 					Overlay.UpdatePosition();
 
@@ -343,6 +345,8 @@ namespace Hearthstone_Deck_Tracker
 					Overlay.BattlegroundsQuestPickingViewModel.Reset();
 
 					TrayIcon.MenuItemStartHearthstone.Visible = true;
+
+					Reflection.StopIpcClient();
 
 					if(Config.Instance.CloseWithHearthstone)
 						MainWindow.Close();
