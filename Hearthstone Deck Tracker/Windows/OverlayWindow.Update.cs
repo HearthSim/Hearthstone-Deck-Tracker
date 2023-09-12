@@ -223,9 +223,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var showPlayerAbyssalCurseCounter = WotogCounterHelper.ShowPlayerAbyssalCurseCounter;
 			if(showPlayerCthunCounter)
 			{
-				var proxy = WotogCounterHelper.PlayerCthunProxy;
-				WotogIconsPlayer.Attack = (proxy?.Attack ?? 6).ToString();
-				WotogIconsPlayer.Health = (proxy?.Health ?? 6).ToString();
+				var player = Core.Game.PlayerEntity;
+				WotogIconsPlayer.Attack = (player?.HasTag(CTHUN_ATTACK_BUFF) ?? false ? player.GetTag(CTHUN_ATTACK_BUFF) + 6 : 6).ToString();
+				WotogIconsPlayer.Health = (player?.HasTag(CTHUN_HEALTH_BUFF) ?? false ? player.GetTag(CTHUN_HEALTH_BUFF) + 6 : 6).ToString();
 			}
 			if(showPlayerSpellsCounter)
 				WotogIconsPlayer.Spells = _game.Player.SpellsPlayedCount.ToString();
@@ -255,9 +255,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var showOpponentAbyssalCurseCounter = WotogCounterHelper.ShowOpponentAbyssalCurseCounter;
 			if(showOpponentCthunCounter)
 			{
-				var proxy = WotogCounterHelper.OpponentCthunProxy;
-				WotogIconsOpponent.Attack = (proxy?.Attack ?? 6).ToString();
-				WotogIconsOpponent.Health = (proxy?.Health ?? 6).ToString();
+				var player = Core.Game.OpponentEntity;
+				WotogIconsOpponent.Attack = (player?.HasTag(CTHUN_ATTACK_BUFF) ?? false ? player.GetTag(CTHUN_ATTACK_BUFF) + 6 : 6).ToString();
+				WotogIconsOpponent.Health = (player?.HasTag(CTHUN_HEALTH_BUFF) ?? false ? player.GetTag(CTHUN_HEALTH_BUFF) + 6 : 6).ToString();
 			}
 			if(showOpponentSpellsCounter)
 				WotogIconsOpponent.Spells = _game.Opponent.SpellsPlayedCount.ToString();
