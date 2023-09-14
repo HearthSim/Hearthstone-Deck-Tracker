@@ -93,8 +93,20 @@ namespace Hearthstone_Deck_Tracker
 			Log.Initialize();
 			Reflection.LogMessage += msg => Log.Info("HearthMirror RPC [client]: " + msg);
 			Reflection.OnIpcServerExit += Influx.OnHearthMirrorExit;
-			Reflection.StdErr += (sender, args) => Log.Info("HearthMirror RPC [stderr]: " + args.Data);
-			Reflection.StdOut += (sender, args) => Log.Info("HearthMirror RPC [stdout]: " + args.Data); 
+			Reflection.StdErr += (sender, args) => {
+				if(args.Data.Trim() != "")
+				{
+					Log.Info("HearthMirror RPC [stderr]: " + args.Data);
+				}
+			};
+
+			Reflection.StdOut += (sender, args) =>
+			{
+				if(args.Data.Trim() != "")
+				{
+					Log.Info("HearthMirror RPC [stdout]: " + args.Data);
+				}
+			};
 			Reflection.Exception += e => Log.Warn("HearthMirror Exception: " + e);
 			ConfigManager.Run();
 			LocUtil.UpdateCultureInfo();
