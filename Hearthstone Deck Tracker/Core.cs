@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
 			Reflection.LogMessage += msg => Log.Info("HearthMirror RPC [client]: " + msg);
 			Reflection.OnIpcServerExit += Influx.OnHearthMirrorExit;
 			Reflection.StdErr += (sender, args) => {
-				if(args.Data.Trim() != "")
+				if(args.Data != null && args.Data.Trim() != "")
 				{
 					Log.Info("HearthMirror RPC [stderr]: " + args.Data);
 				}
@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker
 
 			Reflection.StdOut += (sender, args) =>
 			{
-				if(args.Data.Trim() != "")
+				if(args.Data != null && args.Data.Trim() != "")
 				{
 					Log.Info("HearthMirror RPC [stdout]: " + args.Data);
 				}
