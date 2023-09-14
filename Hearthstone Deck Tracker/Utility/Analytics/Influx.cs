@@ -81,11 +81,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(point.Build());
 		}
 
-		public static void OnHearthMirrorExit(int exitCode)
+		public static void OnHearthMirrorExit(int exitCode, string mode)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
-			WritePoint(new InfluxPointBuilder("hdt_hearthmirror_exit").Build());
+			WritePoint(new InfluxPointBuilder("hdt_hearthmirror_exit").Tag("mode", mode).Build());
 		}
 
 		public static void OnHsReplayAutoUploadChanged(bool newState)

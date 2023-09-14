@@ -93,7 +93,14 @@ namespace Hearthstone_Deck_Tracker
 			Log.Initialize();
 			Reflection.LogDebugMessage += msg => Log.Debug("HearthMirror RPC[client]: " + msg);
 			Reflection.LogMessage += msg => Log.Info("HearthMirror RPC [client]: " + msg);
-			Reflection.OnIpcServerExit += Influx.OnHearthMirrorExit;
+			Reflection.OnIpcServerExit += exitCode => {
+				string mode = "NULL";
+				if (_game?.CurrentMode != null)
+				{
+					mode = _game.CurrentMode.ToString();
+				}
+				Influx.OnHearthMirrorExit(exitCode, mode);
+			};
 			Reflection.StdErr += (sender, args) => {
 				if(args.Data != null && args.Data.Trim() != "")
 				{
