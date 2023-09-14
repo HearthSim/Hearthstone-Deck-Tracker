@@ -62,9 +62,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				metaData.LeagueId = game.LeagueId;
 			if(game?.GameMode == GameMode.Battlegrounds)
 			{
-				var races = game.BattlegroundsRaces?.Cast<int>().OrderBy(x => x).ToArray();
-				if(races != null && (races.Length > 1 || races.SingleOrDefault() != 0)) 
-					metaData.BattlegroundsRaces = races;
+				metaData.BattlegroundsRaces = BattlegroundsUtils.GetAvailableRaces(game.GameId).Cast<int>().OrderBy(x => x).ToArray();
 			}
 			if(game?.GameMode == GameMode.Mercenaries)
 			{

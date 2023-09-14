@@ -1010,9 +1010,6 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsBattlegroundsMatch)
 			{
 				HandleBattlegroundsStart();
-
-				if(_game.CurrentGameStats != null)
-					_game.CurrentGameStats.BattlegroundsRaces = BattlegroundsUtils.GetAvailableRaces(_game.CurrentGameStats.GameId);
 			}
 			else if(_game.IsConstructedMatch)
 				HandleConstructedStart();
