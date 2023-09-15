@@ -40,7 +40,7 @@ namespace ResourceGenerator
 			List<HearthMirror.Objects.TemplateDeck> templateDecks = null;
 			using(Reflection.ClientReadTimeout(0))
 			{
-				templateDecks = Reflection.Client.GetTemplateDecks(10000315);
+				templateDecks = Reflection.Client.GetTemplateDecks(10000317);
 			}
 
 			Console.WriteLine("...");
