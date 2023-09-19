@@ -181,7 +181,15 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			{
 				var plugins = GetModule(file.FullName, typeof(IPlugin));
 				foreach(var p in plugins)
+				{
+					// Blizzard has kindly asked us to stop supporting this plugin
+					if(p.Name == "Reconnector")
+					{
+						Log.Info($"Refusing to load plugin: {p.Name}");
+						continue;
+					}
 					Plugins.Add(p);
+				}
 			}
 		}
 
