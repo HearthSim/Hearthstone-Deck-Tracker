@@ -1,3 +1,14 @@
+## **Release v1.21.11 - 2023-09-19**
+**Updated for Hearthstone 27.4.0**
+
+**Fixes**
+- Fixed an issue where randomly cast cards with Dredge could unintentionally reveal the affected cards.
+- Fixed the C'Thun counter.
+
+**Bob's Buddy**
+- Fixed an issue where Mannoroth and Murcules were not simulated correctly after being attacked.
+- Fixed an issue where Frostwolf Lieutenant was simulated according to outdated card text.
+
 ## **Release v1.21.10 - 2023-09-08**
 - Added missing Caverns of Time icon.
 
