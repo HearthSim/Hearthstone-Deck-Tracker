@@ -18,7 +18,8 @@ namespace HDTTests.Hearthstone
 			CardSet.BATTLEGROUNDS,
 			CardSet.LETTUCE,
 			CardSet.MERCENARIES_DEV,
-			CardSet.PLACEHOLDER_202204
+			CardSet.PLACEHOLDER_202204,
+			CardSet.WILD_WEST
 		};
 
 		[TestMethod]
