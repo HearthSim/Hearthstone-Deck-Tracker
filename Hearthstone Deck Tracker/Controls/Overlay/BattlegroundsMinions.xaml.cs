@@ -96,14 +96,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 			var resort = false;
 
-			var unavailableRaces = string.Join(
-				", ",
-				_db.Value.Races.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL)
-					.Select(x => HearthDbConverter.RaceConverter(x))
-					.OrderBy(x => x)
-			);
-			UnavailableTypes.UnavailableTypesVisibility = System.Windows.Visibility.Visible;
-			UnavailableTypes.UnavailableRacesText = unavailableRaces;
+			var unavailableRaces = _db.Value.Races.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL)
+				.Select(x => HearthDbConverter.RaceConverter(x))
+				.OrderBy(x => x)
+				.ToList();
+			if(unavailableRaces.Count > 0)
+			{
+				UnavailableTypes.UnavailableTypesVisibility = System.Windows.Visibility.Visible;
+				UnavailableTypes.UnavailableRacesText = string.Join(", ", unavailableRaces);
+			}
+			else
+			{
+				UnavailableTypes.UnavailableTypesVisibility = System.Windows.Visibility.Collapsed;
+				UnavailableTypes.UnavailableRacesText = "";
+			}
 
 			foreach(var race in _db.Value.Races)
 			{
