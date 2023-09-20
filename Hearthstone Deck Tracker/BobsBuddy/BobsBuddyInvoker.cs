@@ -295,7 +295,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			DebugLog("Snapshotting board state...");
 			LastAttackingHero = null;
 			var simulator = new Simulator();
-			var input = new Input(simulator);
+			var input = new Input();
 
 			if(_game.Player.Board.Any(IsUnknownCard) || _game.Opponent.Board.Any(IsUnknownCard))
 			{
