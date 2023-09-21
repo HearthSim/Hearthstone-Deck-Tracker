@@ -94,14 +94,9 @@ namespace Hearthstone_Deck_Tracker
 			Reflection.LogDebugMessage += msg => Log.Debug("HearthMirror RPC[client]: " + msg);
 			Reflection.LogMessage += msg => Log.Info("HearthMirror RPC [client]: " + msg);
 
-			Reflection.FailedRead += (methodName, count) =>
+			Reflection.OnMemoryReading += (methodName, successCount, failureCount) =>
 			{
-				Influx.OnFailedMemoryReading(methodName, count);
-			};
-
-			Reflection.SuccessfulRead += (methodName, count) =>
-			{
-				Influx.OnSuccessfulMemoryReading(methodName, count);
+				Influx.OnMemoryReading(methodName, successCount, failureCount);
 			};
 
 			Reflection.OnIpcServerExit += exitCode => {
