@@ -318,6 +318,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(new InfluxPointBuilder("hdt_mulligan_toast_enabled_changed").Tag("new_state", newState).Build());
 		}
 
+		public static void OnSuccessfulMemoryReading(string methodName, int count)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_hearthmirror_read_successful", false).Field("count", count).Tag("method", methodName).Build());
+		}
+
+		public static void OnFailedMemoryReading(string methodName, int count)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_hearthmirror_read_failed", false).Field("count", count).Tag("method", methodName).Build());
+		}
+
 		private static readonly List<InfluxPoint> _queue = new();
 		public static void SendQueuedMetrics()
 		{

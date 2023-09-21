@@ -93,6 +93,17 @@ namespace Hearthstone_Deck_Tracker
 			Log.Initialize();
 			Reflection.LogDebugMessage += msg => Log.Debug("HearthMirror RPC[client]: " + msg);
 			Reflection.LogMessage += msg => Log.Info("HearthMirror RPC [client]: " + msg);
+
+			Reflection.FailedRead += (methodName, count) =>
+			{
+				Influx.OnFailedMemoryReading(methodName, count);
+			};
+
+			Reflection.SuccessfulRead += (methodName, count) =>
+			{
+				Influx.OnSuccessfulMemoryReading(methodName, count);
+			};
+
 			Reflection.OnIpcServerExit += exitCode => {
 				string mode = "NULL";
 				if (_game?.CurrentMode != null)
@@ -101,6 +112,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				Influx.OnHearthMirrorExit(exitCode, mode);
 			};
+
 			Reflection.StdErr += (sender, args) => {
 				if(args.Data != null && args.Data.Trim() != "")
 				{
@@ -115,7 +127,9 @@ namespace Hearthstone_Deck_Tracker
 					Log.Info("HearthMirror RPC [stdout]: " + args.Data);
 				}
 			};
+
 			Reflection.Exception += e => Log.Warn("HearthMirror Exception: " + e);
+
 			ConfigManager.Run();
 			LocUtil.UpdateCultureInfo();
 			var newUser = ConfigManager.PreviousVersion == null;
