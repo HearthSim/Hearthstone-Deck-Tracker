@@ -1,3 +1,6 @@
+## **Release v1.22.0 - 2023-09-25
+- Improved stability.
+
 ## **Release v1.21.12 - 2023-09-20**
 **Bob's Buddy**
 - Fixed an issue where the Blessed or Blighted anomaly was not simulated correctly.
