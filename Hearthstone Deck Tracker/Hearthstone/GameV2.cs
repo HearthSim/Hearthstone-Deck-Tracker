@@ -144,7 +144,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				if(_currentFormat == FormatType.FT_UNKNOWN)
-					_currentFormat = (FormatType)HearthMirror.Reflection.GetFormat();
+					_currentFormat = (FormatType)HearthMirror.Reflection.Client.GetFormat();
 				return HearthDbConverter.GetFormat(_currentFormat);
 			}
 		}
@@ -174,7 +174,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public bool Spectator => _spectator ?? (bool)(_spectator = HearthMirror.Reflection.IsSpectating());
+		public bool Spectator => _spectator ?? (bool)(_spectator = HearthMirror.Reflection.Client.IsSpectating());
 
 		public GameMode CurrentGameMode
 		{
@@ -197,23 +197,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return _currentGameType;
 				if(_currentMode == Mode.GAMEPLAY)
 				{
-					_currentGameType = (GameType)HearthMirror.Reflection.GetGameType();
+					_currentGameType = (GameType)HearthMirror.Reflection.Client.GetGameType();
 					return _currentGameType;
 				}
 				return GameType.GT_UNKNOWN;
 			}
 		}
 
-		public MatchInfo MatchInfo => _matchInfo ?? (_matchInfo = HearthMirror.Reflection.GetMatchInfo());
+		public MatchInfo MatchInfo => _matchInfo ?? (_matchInfo = HearthMirror.Reflection.Client.GetMatchInfo());
 		private bool _matchInfoCacheInvalid = true;
 
-		public BrawlInfo BrawlInfo => _brawlInfo ?? (_brawlInfo = HearthMirror.Reflection.GetBrawlInfo());
+		public BrawlInfo BrawlInfo => _brawlInfo ?? (_brawlInfo = HearthMirror.Reflection.Client.GetBrawlInfo());
 
-		public BattlegroundRatingInfo BattlegroundsRatingInfo => _battlegroundsRatingInfo ?? (_battlegroundsRatingInfo = HearthMirror.Reflection.GetBattlegroundRatingInfo());
+		public BattlegroundRatingInfo BattlegroundsRatingInfo => _battlegroundsRatingInfo ?? (_battlegroundsRatingInfo = HearthMirror.Reflection.Client.GetBattlegroundRatingInfo());
 
-		public MercenariesRatingInfo MercenariesRatingInfo => _mercenariesRatingInfo ?? (_mercenariesRatingInfo = HearthMirror.Reflection.GetMercenariesRatingInfo());
+		public MercenariesRatingInfo MercenariesRatingInfo => _mercenariesRatingInfo ?? (_mercenariesRatingInfo = HearthMirror.Reflection.Client.GetMercenariesRatingInfo());
 
-		public MercenariesMapInfo MercenariesMapInfo => HearthMirror.Reflection.GetMercenariesMapInfo();
+		public MercenariesMapInfo MercenariesMapInfo => HearthMirror.Reflection.Client.GetMercenariesMapInfo();
 
 		private bool IsValidPlayerInfo(MatchInfo.Player playerInfo, bool allowMissing = true)
 		{
@@ -228,7 +228,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(!_matchInfoCacheInvalid)
 				return;
 			MatchInfo matchInfo;
-			while((matchInfo = HearthMirror.Reflection.GetMatchInfo()) == null || !IsValidPlayerInfo(matchInfo.LocalPlayer) || !IsValidPlayerInfo(matchInfo.OpposingPlayer, IsMercenariesMatch))
+			while((matchInfo = HearthMirror.Reflection.Client.GetMatchInfo()) == null || !IsValidPlayerInfo(matchInfo.LocalPlayer) || !IsValidPlayerInfo(matchInfo.OpposingPlayer, IsMercenariesMatch))
 			{
 				Log.Info($"Waiting for matchInfo... (matchInfo={matchInfo}, localPlayer={matchInfo?.LocalPlayer?.Name}, opposingPlayer={matchInfo?.OpposingPlayer?.Name})");
 				await Task.Delay(1000);
@@ -255,17 +255,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal async void CacheGameType()
 		{
-			while((_currentGameType = (GameType)HearthMirror.Reflection.GetGameType()) == GameType.GT_UNKNOWN)
+			while((_currentGameType = (GameType)HearthMirror.Reflection.Client.GetGameType()) == GameType.GT_UNKNOWN)
 				await Task.Delay(1000);
 		}
 
-		internal void CacheSpectator() => _spectator = HearthMirror.Reflection.IsSpectating();
+		internal void CacheSpectator() => _spectator = HearthMirror.Reflection.Client.IsSpectating();
 
-		internal void CacheBrawlInfo() => _brawlInfo = HearthMirror.Reflection.GetBrawlInfo();
+		internal void CacheBrawlInfo() => _brawlInfo = HearthMirror.Reflection.Client.GetBrawlInfo();
 
-		internal void CacheBattlegroundRatingInfo() => _battlegroundsRatingInfo = HearthMirror.Reflection.GetBattlegroundRatingInfo();
+		internal void CacheBattlegroundRatingInfo() => _battlegroundsRatingInfo = HearthMirror.Reflection.Client.GetBattlegroundRatingInfo();
 
-		internal void CacheMercenariesRatingInfo() => _mercenariesRatingInfo = HearthMirror.Reflection.GetMercenariesRatingInfo();
+		internal void CacheMercenariesRatingInfo() => _mercenariesRatingInfo = HearthMirror.Reflection.Client.GetMercenariesRatingInfo();
 
 		internal void InvalidateMatchInfoCache() => _matchInfoCacheInvalid = true;
 

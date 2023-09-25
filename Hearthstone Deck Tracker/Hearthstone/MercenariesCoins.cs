@@ -10,7 +10,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static List<MercenariesCoinsEntry> Update()
 		{
 			var deltas = new List<MercenariesCoinsEntry>();
-			var data = Reflection.GetMercenariesInCollection();
+			var data = Reflection.Client.GetMercenariesInCollection();
 			if(data == null)
 				return deltas;
 			foreach(var merc in data)

@@ -176,9 +176,12 @@ HDT-Localization/
 Resources/Generated/
 Resources/Tiles/
 /lib/HSReplay.dll
-/lib/HearthMirror.dll
+/lib/HearthMirror.exe
 /lib/HearthDb.dll
 /lib/BobsBuddy.dll
+/lib/Newtonsoft.Json.dll
+/lib/System.Reflection.DispatchProxy.dll
+/lib/untapped-scry-dotnet.dll
 
 # Rider config files
 .idea/

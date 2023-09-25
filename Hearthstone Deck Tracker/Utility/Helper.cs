@@ -362,7 +362,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			for(var i = 0; i < 10; i++)
 			{
-				var accId = HearthMirror.Reflection.GetAccountId();
+				var accId = HearthMirror.Reflection.Client.GetAccountId();
 				if(accId != null)
 				{
 					var region = GetRegion(accId.Hi);

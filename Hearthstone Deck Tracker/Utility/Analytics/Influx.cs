@@ -81,6 +81,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(point.Build());
 		}
 
+		public static void OnHearthMirrorExit(int exitCode, string mode)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_hearthmirror_exit").Tag("mode", mode).Build());
+		}
+
 		public static void OnHsReplayAutoUploadChanged(bool newState)
 		{
 			if(!Config.Instance.GoogleAnalytics)
@@ -309,6 +316,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_mulligan_toast_enabled_changed").Tag("new_state", newState).Build());
+		}
+
+		public static void OnMemoryReading(string methodName, int successCount, int failureCount)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_hearthmirror_read_report", false)
+				.Field("success_count", successCount)
+				.Field("failure_count", failureCount)
+				.Tag("method", methodName).Build()
+			);
 		}
 
 		private static readonly List<InfluxPoint> _queue = new();

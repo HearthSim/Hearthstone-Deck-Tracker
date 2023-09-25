@@ -212,7 +212,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async Task UpdatePostGameRanks(GameStats gs)
 		{
-			var medalInfo = await Helper.RetryWhileNull(Reflection.GetMedalInfo);
+			var medalInfo = await Helper.RetryWhileNull(Reflection.Client.GetMedalInfo);
 			if(medalInfo == null)
 			{
 				Log.Warn("Could not get MedalInfo");
@@ -232,7 +232,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async Task UpdatePostGameBattlegroundsRating(GameStats gs)
 		{
-			var data = await Helper.RetryWhileNull(Reflection.GetBaconRatingChangeData);
+			var data = await Helper.RetryWhileNull(Reflection.Client.GetBaconRatingChangeData);
 			if(data == null)
 			{
 				Log.Warn("Could not get battlegrounds rating");
@@ -243,7 +243,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async Task UpdatePostGameMercenariesRating(GameStats gs)
 		{
-			var data = await Helper.RetryWhileNull(Reflection.GetMercenariesRatingChangeData);
+			var data = await Helper.RetryWhileNull(Reflection.Client.GetMercenariesRatingChangeData);
 			if(data == null)
 			{
 				Log.Warn("Could not get mercenaries rating");
@@ -506,7 +506,7 @@ namespace Hearthstone_Deck_Tracker
 			_game.CacheGameType();
 			_game.CacheSpectator();
 
-			_game.MetaData.ServerInfo = Reflection.GetServerInfo();
+			_game.MetaData.ServerInfo = Reflection.Client.GetServerInfo();
 			TurnTimer.Instance.Start(_game).Forget();
 
 			var selectedDeck = DeckList.Instance.ActiveDeckVersion;

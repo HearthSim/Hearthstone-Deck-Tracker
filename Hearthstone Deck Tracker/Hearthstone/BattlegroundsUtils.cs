@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				var races = Reflection.GetAvailableBattlegroundsRaces();
+				var races = Reflection.Client.GetAvailableBattlegroundsRaces();
 				if(races == null)
 					return null;
 				return new HashSet<Race>(races.Cast<Race>());

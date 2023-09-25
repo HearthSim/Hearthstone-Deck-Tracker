@@ -288,7 +288,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						if(_mouseInput == null)
 							HookMouse();
 					}
-					else if(_mouseInput != null && !((_isFriendsListOpen.HasValue && _isFriendsListOpen.Value) || Reflection.IsFriendsListVisible()))
+					else if(_mouseInput != null && !((_isFriendsListOpen.HasValue && _isFriendsListOpen.Value) || Reflection.Client.IsFriendsListVisible()))
 						UnHookMouse();
 				}
 				else if(_mouseInput != null)

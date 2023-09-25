@@ -30,11 +30,11 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="HearthMirror">
-      <HintPath>..\lib\HearthMirror.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\HearthWatcher\HearthWatcher.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HearthWatcher\HearthWatcher.csproj" />
+    <Reference Include="HearthMirror">
+      <HintPath>..\lib\HearthMirror.exe</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

@@ -45,12 +45,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries
 		public bool Update()
 		{
 			if(_taskData == null)
-				_taskData = Reflection.GetMercenariesTasksData();
+				_taskData = Reflection.Client.GetMercenariesTasksData();
 
 			if(_taskData == null)
 				return false;
 
-			var tasks = Reflection.GetMercenariesVisitorTasks();
+			var tasks = Reflection.Client.GetMercenariesVisitorTasks();
 			if(tasks == null || tasks.Count == 0)
 				return false;
 			Tasks = tasks.Select(task =>

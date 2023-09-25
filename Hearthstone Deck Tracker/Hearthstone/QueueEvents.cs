@@ -61,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				else
 				{
 					var selectedId = GetSelectedDeckId(_game.CurrentMode);
-					_game.CurrentSelectedDeck = selectedId > 0 ? Reflection.GetDecks()?.FirstOrDefault(deck => deck.Id == selectedId) : null;
+					_game.CurrentSelectedDeck = selectedId > 0 ? Reflection.Client.GetDecks()?.FirstOrDefault(deck => deck.Id == selectedId) : null;
 				}
 				if(!Config.Instance.AutoDeckDetection)
 					return;
@@ -112,12 +112,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private static long GetSelectedDeckId(Mode mode)
 		{
-			var selectedDeckId = Reflection.GetSelectedDeckInMenu();
+			var selectedDeckId = Reflection.Client.GetSelectedDeckInMenu();
 			if(selectedDeckId > 0)
 				return selectedDeckId;
 			if(mode != TAVERN_BRAWL)
 				return 0;
-			return Reflection.GetEditedDeck()?.Id ?? 0;
+			return Reflection.Client.GetEditedDeck()?.Id ?? 0;
 		}
 	}
 }

@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 
 		private async Task<string?> GetPlayerId()
 		{
-			var accountId = await Helper.RetryWhileNull(Reflection.GetAccountId, 2, 3000);
+			var accountId = await Helper.RetryWhileNull(Reflection.Client.GetAccountId, 2, 3000);
 			return accountId != null ? $"{accountId.Hi}_{accountId.Lo}" : null;
 		}
 
