@@ -1,4 +1,4 @@
-## **Release v1.22.1 - 2023-09-25**
+## **Release v1.22.2 - 2023-09-25**
 - Improved stability.
 
 ## **Release v1.21.12 - 2023-09-20**
