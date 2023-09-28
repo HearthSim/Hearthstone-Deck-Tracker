@@ -1,3 +1,6 @@
+## **Release v1.22.4 - 2023-09-28**
+**Updated for Hearthstone 27.4.2**
+
 ## **Release v1.22.3 - 2023-09-25**
 - Improved stability.
 
