@@ -43,7 +43,7 @@
       <HintPath>..\lib\HearthDb.dll</HintPath>
     </Reference>
     <Reference Include="HearthMirror">
-      <HintPath>..\lib\HearthMirror.exe</HintPath>
+      <HintPath>..\lib\HearthMirror.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

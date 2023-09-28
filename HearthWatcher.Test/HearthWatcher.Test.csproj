@@ -34,7 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HearthMirror">
-      <HintPath>..\lib\HearthMirror.exe</HintPath>
+      <HintPath>..\lib\HearthMirror.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

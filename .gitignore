@@ -177,6 +177,7 @@ Resources/Generated/
 Resources/Tiles/
 /lib/HSReplay.dll
 /lib/HearthMirror.exe
+/lib/HearthMirror.dll
 /lib/HearthDb.dll
 /lib/BobsBuddy.dll
 /lib/Newtonsoft.Json.dll

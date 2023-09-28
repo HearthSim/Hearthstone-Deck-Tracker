@@ -31,7 +31,7 @@
       <HintPath>..\lib\HearthDb.dll</HintPath>
     </Reference>
     <Reference Include="HearthMirror">
-      <HintPath>..\lib\HearthMirror.exe</HintPath>
+      <HintPath>..\lib\HearthMirror.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />

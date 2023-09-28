@@ -16,6 +16,6 @@ xcopy /Y "..\..\..\..\HDTUninstaller\bin\x86\Release\HDTUninstaller.exe" "..\Hea
 xcopy /Y "HearthstoneDeckTracker.pdb" "..\Hearthstone Deck Tracker"
 xcopy /Y "HearthDb.pdb" "..\Hearthstone Deck Tracker"
 xcopy /Y "HearthMirror.pdb" "..\Hearthstone Deck Tracker"
-xcopy /Y "HearthMirror.exe" "..\Hearthstone Deck Tracker"
+xcopy /Y "HearthMirror.dll" "..\Hearthstone Deck Tracker"
 xcopy /Y "HearthWatcher.pdb" "..\Hearthstone Deck Tracker"
 xcopy /Y "HSReplay.pdb" "..\Hearthstone Deck Tracker"

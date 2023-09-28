@@ -10,6 +10,6 @@ for /D %%a in (*-*) do (
 xcopy /Y "HearthstoneDeckTracker.exe" "..\Squirrel-Clean"
 xcopy /Y "HearthstoneDeckTracker.exe.config" "..\Squirrel-Clean"
 xcopy /Y "*.dll" "..\Squirrel-Clean"
-xcopy /Y "HearthMirror.exe" "..\Squirrel-Clean"
+xcopy /Y "HearthMirror.dll" "..\Squirrel-Clean"
 xcopy /Y "HearthstoneDeckTracker.pdb" "..\Squirrel-Clean"
 xcopy /Y "HearthWatcher.pdb" "..\Squirrel-Clean"
