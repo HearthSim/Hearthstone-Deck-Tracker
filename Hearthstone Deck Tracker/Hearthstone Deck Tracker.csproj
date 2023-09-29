@@ -170,4 +170,9 @@
     <Copy SourceFiles="@(GeneratedTiles)" DestinationFolder="$(OutputPath)/Images/Tiles" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(Themes)" DestinationFolder="$(OutputPath)/Images/Themes/%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
+
+  <Target Name="CopyVCRuntimeLibs" BeforeTargets="PreBuildEvent">
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/../lib/msvcp140.dll" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/../lib/vcruntime140.dll" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+  </Target>
 </Project>
