@@ -1,3 +1,6 @@
+## **Release v1.22.6 - 2023-09-29**
+- Fix occasional crash on Hearthstone startup
+
 ## **Release v1.22.5 - 2023-09-28**
 **Updated for Hearthstone 27.4.2**
 
