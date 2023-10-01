@@ -172,7 +172,13 @@
   </Target>
 
   <Target Name="CopyVCRuntimeLibs" BeforeTargets="PreBuildEvent">
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/../lib/api-ms-win-crt-convert-l1-1-0.dll" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/../lib/api-ms-win-crt-heap-l1-1-0.dll" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/../lib/api-ms-win-crt-runtime-l1-1-0.dll" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/../lib/api-ms-win-crt-stdio-l1-1-0.dll" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/../lib/api-ms-win-crt-string-l1-1-0.dll" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)/../lib/msvcp140.dll" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/../lib/ucrtbase.dll" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)/../lib/vcruntime140.dll" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
   </Target>
 </Project>
