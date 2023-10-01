@@ -1,3 +1,7 @@
+## **Release v1.22.7 - 2023-10-01**
+**Fixes**
+- Fixed an issue where Battlegrounds games were sometimes not recorded in the Session Recap
+
 ## **Release v1.22.6 - 2023-09-29**
 - Fix occasional crash on Hearthstone startup
 
