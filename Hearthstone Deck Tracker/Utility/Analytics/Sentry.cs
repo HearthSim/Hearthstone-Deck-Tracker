@@ -86,6 +86,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				{"region", data.Region.ToString()},
 			};
 
+			if(testInput.Anomaly != null)
+			{
+				tags["anomaly_card_id"] = testInput.Anomaly.cardID;
+			}
+
 			var bbEvent = new SentryEvent(msg)
 			{
 				Level = ErrorLevel.Warning,

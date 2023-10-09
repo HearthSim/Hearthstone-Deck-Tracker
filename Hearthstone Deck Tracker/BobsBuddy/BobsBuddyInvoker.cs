@@ -789,7 +789,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
-				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, terminalCase);
+				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, _input?.Anomaly, terminalCase);
 		}
 
 		private bool IsIncorrectCombatResult(CombatResult result)

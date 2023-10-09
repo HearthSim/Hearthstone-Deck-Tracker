@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
+using BobsBuddy.Anomalies;
 using BobsBuddy.Simulation;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -266,7 +267,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			_lastMainWindowActivation = null;
 		}
 
-		public static void OnBobsBuddySimulationCompleted(CombatResult result, Output output, int turn, bool terminalCase)
+		public static void OnBobsBuddySimulationCompleted(CombatResult result, Output output, int turn, Anomaly? anomaly, bool terminalCase)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
@@ -283,7 +284,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Field("win_rate", output.winRate * 100)
 				.Field("tie_rate", output.tieRate * 100)
 				.Field("loss_rate", output.lossRate * 100);
-				
+
+			if(anomaly != null)
+				point.Tag("anomaly", anomaly.cardID);
+
 			_queue.Add(point.Build());
 		}
 
@@ -301,7 +305,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(new InfluxPointBuilder("hdt_session_recap_enabled_changed").Tag("new_state", newState).Build());
 		}
 
-		public static void OnMulliganToastClose(bool wasClicked, bool hasData) 
+		public static void OnMulliganToastClose(bool wasClicked, bool hasData)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
