@@ -1,3 +1,7 @@
+## **Release v1.22.7 - 2023-10-10**
+**Bob's Buddy**
+- Fixed an issue where Choral Mrrrglr was not simulated correctly.
+
 ## **Release v1.22.7 - 2023-10-01**
 **Fixes**
 - Fixed an issue where Battlegrounds games were sometimes not recorded in the Session Recap.
