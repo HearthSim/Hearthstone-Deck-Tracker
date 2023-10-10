@@ -836,7 +836,10 @@ namespace Hearthstone_Deck_Tracker
 #else
 			const string name = "HDTPortable";
 #endif
-			return name + "/" + GetCurrentVersion();
+			var hdtPart = name + "/" + GetCurrentVersion();
+			var signedPart = IsSigned ? "Signed" : "Unsigned";
+			var windowsPart = GetWindowsVersion();
+			return string.Format("{0} ({1}; {2})", hdtPart, signedPart, windowsPart);
 		}
 
 		internal static void OpenBattlegroundsHeroPicker(int[] heroIds, int? mmr, int? anomalyDbfId)
