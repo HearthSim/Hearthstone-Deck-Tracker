@@ -71,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				{
 					using(var client = new WebClient())
 					{
+						client.Headers.Add("User-Agent", Helper.GetUserAgent());
 						if(contentType != null)
 							client.Headers.Add("accept", contentType);
 						var data = await client.DownloadStringTaskAsync(url);
