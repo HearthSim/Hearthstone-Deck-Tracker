@@ -8,7 +8,7 @@
              mc:Ignorable="d" >
     <StackPanel Orientation="Vertical">
         <Canvas Width="38" Height="38">
-            <Border BorderBrush="#D44040" BorderThickness="2" CornerRadius="36">
+            <Border BorderBrush="{Binding Color}" BorderThickness="2" CornerRadius="36">
                 <Ellipse Height="34" Width="34">
                     <Ellipse.Fill>
                         <ImageBrush
@@ -27,6 +27,7 @@
                 Canvas.Left="16"
                 Canvas.Top="15"
                 Source="/HearthstoneDeckTracker;component/Resources/tribes-x.png"
+                Visibility="!{Binding Available}"
             />
         </Canvas>
         <StackPanel Height="16" Margin="0,2,0,0" Orientation="Vertical">

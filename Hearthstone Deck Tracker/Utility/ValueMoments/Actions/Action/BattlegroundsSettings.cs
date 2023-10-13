@@ -29,6 +29,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("session_recap_between_games")]
 		public bool SessionRecapBetweenGames { get => Config.Instance.ShowSessionRecapBetweenGames; }
 
+		[JsonProperty("minions_available")]
+		public bool MinionsBanned { get => Config.Instance.ShowSessionRecapMinionsAvailable; }
+		
 		[JsonProperty("minions_banned")]
 		public bool MinionsBanned { get => Config.Instance.ShowSessionRecapMinionsBanned; }
 

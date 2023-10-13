@@ -35,36 +35,27 @@
                 <StackPanel
                     Orientation="Vertical"
                 >
-                    <StackPanel Background="#2E3235" Visibility="{Binding BgBannedTribesSectionVisibility}">
+                    <StackPanel Background="#2E3235" Visibility="{Binding BgAvailableTribesSectionVisibility}">
                         <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Banned}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Available}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                         </Border>
-                        <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center" Height="58">
-                            <local:BattlegroundsTribe
-                                Tribe="{Binding BannedTribe1, FallbackValue=PET}"
-                                Visibility="{Binding BannedTribesVisibility}"
-                            />
-                            <local:BattlegroundsTribe
-                                Tribe="{Binding BannedTribe2, FallbackValue=PET}"
-                                Margin="8,0,0,0"
-                                Visibility="{Binding BannedTribesVisibility}"
-                            />
-                            <local:BattlegroundsTribe
-                                Tribe="{Binding BannedTribe3, FallbackValue=PET}"
-                                Margin="8,0,0,0"
-                                Visibility="{Binding BannedTribesVisibility}"
-                            />
-                            <local:BattlegroundsTribe
-                                Tribe="{Binding BannedTribe4, FallbackValue=PET}"
-                                Margin="8,0,0,0"
-                                Visibility="{Binding BannedTribesVisibility}"
-                            />
-                            <local:BattlegroundsTribe
-                                Tribe="{Binding BannedTribe5, FallbackValue=PET}"
-                                Margin="8,0,0,0"
-                                Visibility="{Binding BannedTribesVisibility}"
-                            />
-                            <TextBlock
+                        <ItemsControl Name="BgAvailableTribes" ItemsSource="{Binding AvailableRaces}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:BattlegroundsTribe
+                                        Tribe="{Binding, FallbackValue=PET}"
+                                        Visibility="{Binding AvailableTribesVisibility}"
+                                        Available="true"
+                                    />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center" Height="58"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                         <TextBlock
                                 x:Name="BgTribeWaiting"
                                 Text="{lex:Loc Battlegrounds_Session_Text_WaitingNextGame}"
                                 Foreground="#FFFFFF"
@@ -73,10 +64,42 @@
                                 TextAlignment="Center"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Visibility="{Binding BannedTribesMsgVisibility, FallbackValue=Collapsed}"
+                                Visibility="{Binding TribesMsgVisibility, FallbackValue=Collapsed}"
                                 Margin="0 0 0 5"
                             />
-                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Background="#2E3235" Visibility="{Binding BgBannedTribesSectionVisibility}">
+                        <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Banned}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
+                        </Border>
+                        <ItemsControl Name="BgBannedTribes" ItemsSource="{Binding UnavailableRaces}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:BattlegroundsTribe
+                                        Tribe="{Binding, FallbackValue=PET}"
+                                        Visibility="{Binding BannedTribesVisibility}"
+                                        Available="false"
+                                    />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center" Height="58"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                         <TextBlock
+                                x:Name="BgTribeWaiting"
+                                Text="{lex:Loc Battlegrounds_Session_Text_WaitingNextGame}"
+                                Foreground="#FFFFFF"
+                                Opacity=".5"
+                                TextWrapping="WrapWithOverflow"
+                                TextAlignment="Center"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Visibility="{Binding TribesMsgVisibility, FallbackValue=Collapsed}"
+                                Margin="0 0 0 5"
+                            />
                     </StackPanel>
                     <StackPanel Background="#2E3235" Visibility="{Binding BgStartCurrentMMRSectionVisibility}">
                         <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgBannedTribesSection, Path=Visibility}"/>

@@ -71,6 +71,36 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			}
 		}
 
+		private string _color = "#D44040";
+		public string Color =
+		{
+			get => _color;
+			set
+			{
+				_color = value;
+				OnPropertyChanged;
+			}
+		}
+
+		private bool _available = false;
+		public bool Available
+		{
+			get => _available;
+			set
+			{
+				_available = value;
+				if (_available)
+				{
+					_color = "#00A806";
+				}
+				else
+				{
+					_color = "#D44040";
+				}
+				OnPropertyChanged();
+			}
+		}
+
 		private void OnTribeChanged()
 		{
 			TribeName = HearthDbConverter.RaceConverter(Tribe) ?? "";
