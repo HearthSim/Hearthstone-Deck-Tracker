@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Support on Discord
+    url: https://hsreplay.net/discord
+    about: Get help from other community members and our staff in the HSReplay.net Discord
+  - name: Support via Email
+    url: https://hsreplay.net/email
+    about: Contact our support team directly
