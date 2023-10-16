@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.Enums.BnetGameType;
 
@@ -89,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-
+		[Obsolete("Use GetLocalizedRace instead unless you specifically want the English version")]
 		public static string? RaceConverter(Race race)
 		{
 			switch(race)
@@ -106,6 +107,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(race.ToString().ToLowerInvariant());
 			}
 		}
+
+		public static string? GetLocalizedRace(Race race) => race switch
+			{
+				Race.DEMON => LocUtil.Get("Race_Demon"),
+				Race.MECHANICAL => LocUtil.Get("Race_Mechanical"),
+				Race.BEAST => LocUtil.Get("Race_Beast"),
+				Race.DRAGON => LocUtil.Get("Race_Dragon"),
+				Race.MURLOC => LocUtil.Get("Race_Murloc"),
+				Race.PIRATE => LocUtil.Get("Race_Pirate"),
+				Race.ELEMENTAL => LocUtil.Get("Race_Elemental"),
+				Race.QUILBOAR => LocUtil.Get("Race_Quilboar"),
+				Race.NAGA => LocUtil.Get("Race_Naga"),
+				Race.UNDEAD => LocUtil.Get("Race_Undead"),
+				Race.TOTEM => LocUtil.Get("Race_Totem"),
+				Race.ALL => LocUtil.Get("Race_All"),
+				Race.INVALID => LocUtil.Get("Race_Other"),
+				_ => RaceConverter(race),
+			};
 
 		public static string SetConverter(CardSet set) => SetDict.TryGetValue((int)set, out var str) ? str ?? string.Empty : string.Empty;
 

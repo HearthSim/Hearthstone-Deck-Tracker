@@ -69,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 			var allRaces = _db.Value.Races;
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId) ?? allRaces;
 			var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL)
-				.OrderBy(t => HearthDbConverter.RaceConverter(t) ?? "")
+				.OrderBy(t => HearthDbConverter.GetLocalizedRace(t) ?? "")
 				.ToList();
 
 			var bannedTribesUpdated = unavailableRaces.Count() >= 5;

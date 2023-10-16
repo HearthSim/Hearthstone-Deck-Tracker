@@ -1,5 +1,6 @@
 ﻿using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -56,13 +57,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Update(0, _db.Value.Races);
 		}
 
-		private bool AddOrUpdateBgCardGroup(string title, List<Hearthstone.Card> cards)
+		private bool AddOrUpdateBgCardGroup(Race race, List<Hearthstone.Card> cards)
 		{
 			var addedNew = false;
-			var existing = Groups.FirstOrDefault(x => x.Title == title);
+			var existing = Groups.FirstOrDefault(x => x.Race == race);
 			if(existing == null)
 			{
-				existing = new BattlegroundsCardsGroup() { Title = title };
+				existing = new BattlegroundsCardsGroup() { Race = race };
 				Groups.Add(existing);
 				addedNew = true;
 			}
@@ -97,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var resort = false;
 
 			var unavailableRaces = _db.Value.Races.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL)
-				.Select(x => HearthDbConverter.RaceConverter(x))
+				.Select(x => HearthDbConverter.GetLocalizedRace(x))
 				.OrderBy(x => x)
 				.ToList();
 			if(unavailableRaces.Count > 0)
@@ -113,10 +114,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 			foreach(var race in _db.Value.Races)
 			{
-				var title = race == Race.INVALID ? "Other" : HearthDbConverter.RaceConverter(race);
-				if(title == null)
-					continue;
-
 				var cards = _db.Value.GetCards(tier, race).ToList();
 
 				if(race == Race.MURLOC)
@@ -162,18 +159,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				}
 
 				if(cards.Count == 0)
-					Groups.FirstOrDefault(x => x.Title == title)?.Hide();
+					Groups.FirstOrDefault(x => x.Race == race)?.Hide();
 				else
 				{
 					if(race == Race.ALL || race == Race.INVALID || availableRaces.Contains(race))
-						resort |= AddOrUpdateBgCardGroup(title, cards);
+						resort |= AddOrUpdateBgCardGroup(race, cards);
 				}
 			}
 
 			if (resort)
 			{
 				var items = Groups.ToList()
-					.OrderBy(x => string.IsNullOrEmpty(x.Title) || x.Title == "Other")
+					.OrderBy(x => x.Race == Race.INVALID)
 					.ThenBy(x => x.Title);
 				foreach(var item in items)
 				{
