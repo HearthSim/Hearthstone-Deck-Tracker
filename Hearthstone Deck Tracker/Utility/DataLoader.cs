@@ -9,6 +9,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public class DataLoader<T>
 	{
+		private readonly RateLimiter _rateLimit = new RateLimiter(1, TimeSpan.FromMinutes(1));
 		private readonly Func<Task<T>> _load;
 		private T? _data;
 		private bool _loading;
@@ -30,8 +31,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(_loading)
 				return;
 			_loading = true;
-			_data = await _load();
-			Loaded?.Invoke(_data);
+
+			await _rateLimit.Run(async () => {
+				_data = await _load();
+				Loaded?.Invoke(_data);
+			});
+
 			_loading = false;
 		}
 
