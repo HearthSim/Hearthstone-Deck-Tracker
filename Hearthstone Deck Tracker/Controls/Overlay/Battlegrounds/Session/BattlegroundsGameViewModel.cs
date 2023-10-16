@@ -19,6 +19,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 		public List<Entity> FinalBoardMinions { get; set; } = new List<Entity>();
 		private readonly GameItem _gameItem;
 
+		// These are the languages where we'd prefer we show the localized hero name rather than our English-only short version
+		private bool PreferTranslatedCardName =>
+			Config.Instance.SelectedLanguage switch { "jaJP" => true, "koKR" => true, "thTH" => true, "zhCN" => true, "zhTW" => true, _ => false };
+
 		public BattlegroundsGameViewModel(GameItem gameItem)
 		{
 			_gameItem = gameItem;
@@ -32,9 +36,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 
 			CardImage = new CardAssetViewModel(heroCard, Utility.Assets.CardAssetType.Tile);
 
-			var heroShortNameMap = Remote.Config.Data?.BattlegroundsShortNames
-				?.Find(sn => sn.DbfId == heroCard?.DbfId);
-			HeroName = heroShortNameMap?.ShortName ?? heroCard?.Name ?? "-";
+			if(PreferTranslatedCardName)
+			{
+				// Some languages have short card names, so we'd rather use the language from the game than our English-only short version.
+				HeroName = heroCard?.LocalizedName ?? "-";
+			}
+			else
+			{
+				var heroShortNameMap = Remote.Config.Data?.BattlegroundsShortNames
+					?.Find(sn => sn.DbfId == heroCard?.DbfId);
+				HeroName = heroShortNameMap?.ShortName ?? heroCard?.LocalizedName ?? "-";
+
+			}
 
 			PlacementText = LocUtil.GetPlacement(gameItem.Placement);
 
