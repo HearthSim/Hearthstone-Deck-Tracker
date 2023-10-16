@@ -1,9 +1,9 @@
-## **Release v1.22.8 - 2023-10-16**
+## **Release v1.22.9 - 2023-10-16**
 **Fixes**
 - Fixed Battlegrounds minion types not appearing in the correct language.
 - Fixed a state in which HDT would excessively try to fetch remote data.
 
-## **Release v1.22.7 - 2023-10-10**
+## **Release v1.22.8 - 2023-10-10**
 **Bob's Buddy**
 - Fixed an issue where Choral Mrrrglr was not simulated correctly.
 
