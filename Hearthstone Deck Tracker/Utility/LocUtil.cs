@@ -24,18 +24,23 @@ namespace Hearthstone_Deck_Tracker.Utility
 		private const string LocOrdinalEight = "Battlegrounds_Game_Ordinal_8";
 
 		private static readonly Dictionary<string, string?> Cache = new Dictionary<string, string?>();
+		private static readonly Dictionary<string, string?> CardCache = new Dictionary<string, string?>();
+
+		private static CultureInfo GetCultureInfoFromLocale(string locale)
+		{
+			if(locale.Length > 2)
+				locale = locale.Insert(2, "-");
+			return CultureInfo.GetCultureInfo(locale);
+		}
 
 		public static void UpdateCultureInfo()
 		{
-			var locStr = Config.Instance.Localization.ToString();
-			if(locStr.Length > 2)
-				locStr = locStr.Insert(2, "-");
-			LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(locStr);
+			LocalizeDictionary.Instance.Culture = GetCultureInfoFromLocale(Config.Instance.Localization.ToString());
 		}
 
-		public static string Get(string key, bool upper = false)
+		public static string Get(string key, bool upper = false, bool useCardLanguage = false)
 		{
-			var culture = LocalizeDictionary.Instance.Culture;
+			var culture = useCardLanguage ? GetCultureInfoFromLocale(Config.Instance.SelectedLanguage) : LocalizeDictionary.Instance.Culture;
 			var cacheKey = culture + key;
 			if(!Cache.TryGetValue(cacheKey, out var str))
 			{
