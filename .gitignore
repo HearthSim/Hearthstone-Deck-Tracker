@@ -183,6 +183,10 @@ Resources/Tiles/
 /lib/Newtonsoft.Json.dll
 /lib/System.Reflection.DispatchProxy.dll
 /lib/untapped-scry-dotnet.dll
+/lib/api-ms-win-crt-*.dll
+/lib/msvcp140.dll
+/lib/ucrtbase.dll
+/lib/vcruntime140.dll
 
 # Rider config files
 .idea/
