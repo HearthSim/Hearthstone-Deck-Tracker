@@ -2,10 +2,7 @@
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HDTTests.Hearthstone
 {
@@ -19,7 +16,8 @@ namespace HDTTests.Hearthstone
 			CardSet.LETTUCE,
 			CardSet.MERCENARIES_DEV,
 			CardSet.PLACEHOLDER_202204,
-			CardSet.WILD_WEST
+			CardSet.WILD_WEST,
+			CardSet.TUTORIAL
 		};
 
 		[TestMethod]
