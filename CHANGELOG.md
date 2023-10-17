@@ -1,3 +1,9 @@
+## **Release v1.22.10 - 2023-10-17**
+**Updated for Hearthstone 27.6**
+
+**Bob's Buddy**:
+- There are likely still issues with some new cards in Bob's Buddy. We will update these in the coming days.
+
 ## **Release v1.22.9 - 2023-10-16**
 **Fixes**
 - Fixed Battlegrounds minion types not appearing in the correct language.
