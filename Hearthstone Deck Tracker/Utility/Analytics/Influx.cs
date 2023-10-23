@@ -269,6 +269,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void OnBobsBuddySimulationCompleted(CombatResult result, Output output, int turn, Anomaly? anomaly, bool terminalCase)
 		{
+#if(SQUIRREL)
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			var point = new InfluxPointBuilder("hdt_bb_combat_result_v3")
@@ -289,6 +290,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				point.Tag("anomaly", anomaly.cardID);
 
 			_queue.Add(point.Build());
+#endif
 		}
 
 		public static void OnBobsBuddyEnabledChanged(bool newState)

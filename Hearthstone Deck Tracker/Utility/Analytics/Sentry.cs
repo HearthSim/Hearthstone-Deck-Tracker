@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using BobsBuddy;
 using BobsBuddy.Simulation;
-using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -15,6 +14,9 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using SharpRaven;
 using SharpRaven.Data;
 
+#if(SQUIRREL)
+using Hearthstone_Deck_Tracker.BobsBuddy;
+#endif
 #endregion
 
 
@@ -46,14 +48,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			return Client.Capture(exception);
 		}
 
+#if(SQUIRREL)
 		private const int MaxBobsBuddyEvents = 10;
 		private const int MaxBobsBuddyExceptions = 1;
 		private static int BobsBuddyEventsSent;
 		private static int BobsBuddyExceptionsSent;
+#endif
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
 
 		public static void QueueBobsBuddyTerminalCase(Input testInput, Output output, string result, int turn, List<string> debugLog, Region region)
 		{
+#if(SQUIRREL)
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
 				return;
 
@@ -102,10 +107,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
 
 			BobsBuddyEvents.Enqueue(bbEvent);
+#endif
 		}
 
 		public static void SendQueuedBobsBuddyEvents(string? shortId)
 		{
+#if(SQUIRREL)
 			while(BobsBuddyEvents.Count > 0)
 			{
 				if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
@@ -118,10 +125,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				Client.Capture(e);
 				BobsBuddyEventsSent++;
 			}
+#endif
 		}
 
 		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, List<string> debugLog)
 		{
+#if(SQUIRREL)
 			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptions)
 				return;
 			if(input == null)
@@ -154,14 +163,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
 
 			BobsBuddyEvents.Enqueue(bbEvent);
+#endif
 		}
 
+#if(SQUIRREL)
 		private static List<string> ReverseAndClone(List<string> toReverseAndClone)
 		{
 			var toReturn = toReverseAndClone.ToList();
 			toReturn.Reverse();
 			return toReturn;
 		}
+#endif
 
 		public static void ClearBobsBuddyEvents() => BobsBuddyEvents.Clear();
 
