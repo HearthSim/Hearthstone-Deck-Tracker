@@ -80,6 +80,7 @@ namespace HDTTests.Hearthstone.Secrets
 		public int PlayerMinionCount { get; set; }
 		public int PlayerBoardCount { get; set; }
 		public GameType CurrentGameType { get; set; }
+		public FormatType CurrentFormatType { get; set; }
 		public Format? CurrentFormat { get; set; }
 		public int ProposedAttacker { get; set; }
 		public int ProposedDefender { get; set; }

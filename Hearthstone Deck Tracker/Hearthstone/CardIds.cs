@@ -172,6 +172,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Mage.Vaporize
 			};
 
+			public static IReadOnlyList<MultiIdCard> All { get; } = Hunter.All.Concat(Mage.All).Concat(Paladin.All).Concat(Rogue.All).ToList();
+
 			public class Hunter : EnumerateMultiId<Hunter>
 			{
 				public static readonly MultiIdCard BaitAndSwitch = new MultiIdCard(Collectible.Hunter.BaitAndSwitch);
@@ -190,8 +192,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard PackTactics = new MultiIdCard(Collectible.Hunter.PackTactics);
 				public static readonly MultiIdCard PressurePlate = new MultiIdCard(Collectible.Hunter.PressurePlate);
 				public static readonly MultiIdCard RatTrap = new MultiIdCard(Collectible.Hunter.RatTrap);
-				public static readonly MultiIdCard Snipe = new MultiIdCard(Collectible.Hunter.SnipeExpert1, Collectible.Hunter.SnipeVanilla);
 				public static readonly MultiIdCard SnakeTrap = new MultiIdCard(Collectible.Hunter.SnakeTrapExpert1, Collectible.Hunter.SnakeTrapPLACEHOLDER_202204, Collectible.Hunter.SnakeTrapVanilla);
+				public static readonly MultiIdCard Snipe = new MultiIdCard(Collectible.Hunter.SnipeExpert1, Collectible.Hunter.SnipeVanilla);
 				public static readonly MultiIdCard VenomstrikeTrap = new MultiIdCard(Collectible.Hunter.VenomstrikeTrapICECROWN, Collectible.Hunter.VenomstrikeTrapInvalid);
 				public static readonly MultiIdCard WanderingMonster = new MultiIdCard(Collectible.Hunter.WanderingMonster, Collectible.Hunter.WanderingMonsterCore);
 				public static readonly MultiIdCard Zombeeees = new MultiIdCard(Collectible.Hunter.Zombeeees);

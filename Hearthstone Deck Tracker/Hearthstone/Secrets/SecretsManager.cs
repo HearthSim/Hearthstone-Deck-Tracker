@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+
+using static HearthDb.Enums.GameType;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 {
 	public class SecretsManager : SecretsEventHandler
 	{
-		public SecretsManager(IGame game, ArenaSettingsProvider settings)
+		public SecretsManager(IGame game, AvailableSecretsProvider availableSecrets)
 		{
 			Game = game;
-			_settings = settings;
+			_availableSecrets = availableSecrets;
 		}
 
-		private readonly ArenaSettingsProvider _settings;
+		private readonly AvailableSecretsProvider _availableSecrets;
 		protected override IGame Game { get; }
 		protected override bool HasActiveSecrets => Secrets.Count > 0;
 
@@ -99,14 +100,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			Refresh();
 		}
 
+		public HashSet<string> GetAvailableSecrets(GameType gameMode, FormatType format)
+		{
+			if(_availableSecrets.ByType != null)
+			{
+				if(_availableSecrets.ByType.TryGetValue(gameMode.ToString(), out var gameModeSecrets))
+					return gameModeSecrets;
+
+				if(_availableSecrets.ByType.TryGetValue(format.ToString(), out var formatSecrets))
+					return formatSecrets;
+			}
+
+			// Fallback in case query isn't available.
+			return format switch
+			{
+				FormatType.FT_STANDARD => CardIds.Secrets.All.Where(x => x.IsStandard).Select(x => x.Ids[0]).ToHashSet(),
+				_ => CardIds.Secrets.All.Where(x => x.IsWild).Select(x => x.Ids[0]).ToHashSet(),
+			};
+		}
+
 		public List<Card> GetSecretList()
 		{
 			var gameMode = Game.CurrentGameType;
-			var format = Game.CurrentFormat;
+			var format = Game.CurrentFormatType;
+
+
+			var gameModeHasCardLimit = gameMode switch
+			{
+				GT_CASUAL or GT_RANKED or GT_VS_FRIEND or GT_VS_AI => true,
+				_ => false
+			};
 
 			var opponentEntities = Game.Opponent.RevealedEntities.Where(e => e.Id < 68 && e.IsSecret && e.HasCardId).ToList();
-			var gameModeHasCardLimit = new[] { GameType.GT_CASUAL, GameType.GT_RANKED, GameType.GT_VS_FRIEND, GameType.GT_VS_AI }
-				.Contains(gameMode);
 
 			//List of all non-excluded cardIds for created secrets
 			var createdSecrets = Secrets
@@ -125,26 +150,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				.SelectMany(secret => secret.Excluded)
 				.GroupBy(id => id.Key)
 				.Select(group => new QuantifiedMultiIdCard(group.Key, AdjustCount(group.Key.Ids[0], group.Count(x => !x.Value))));
-			var foo = cards.ToList();
 
-			if(gameMode == GameType.GT_ARENA)
-			{
-				cards = cards.Where(c => _settings.CurrentSets.Any(c.HasSet));
-				if (_settings.BannedSecrets.Count > 0)
-					cards = cards.Where(c => _settings.BannedSecrets.All(s => c != s));
-			}
-			else
-			{
-				if(_settings.ExclusiveSecrets.Count > 0)
-					cards = cards.Where(c => _settings.ExclusiveSecrets.All(s => c != s));
-				cards = format switch
-				{
-					Format.Standard => cards.Where(c => c.IsStandard),
-					Format.Classic => cards.Where(c => c.IsClassic),
-					Format.Twist => cards.Where(c => c.IsTwist),
-					_ => cards.Where(c => c.IsWild),
-				};
-			}
+			var availableSecrets = GetAvailableSecrets(gameMode, format);
+			cards = cards.Where(x => x.Ids.Any(availableSecrets.Contains));
 
 			return cards.Select(x =>
 			{

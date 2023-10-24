@@ -12,5 +12,8 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 
 		public static DataLoader<RemoteData.BattlegroundsBans?> BattlegroundsBans { get; }
 			= DataLoader<RemoteData.BattlegroundsBans>.JsonFromWeb("https://hsreplay.net/api/v1/battlegrounds/banned_minions/");
+
+		public static DataLoader<RemoteData.LiveSecrets?> LiveSecrets { get; }
+			= DataLoader<RemoteData.LiveSecrets>.JsonFromWeb("https://hsreplay.net/api/v1/live_secrets/");
 	}
 }

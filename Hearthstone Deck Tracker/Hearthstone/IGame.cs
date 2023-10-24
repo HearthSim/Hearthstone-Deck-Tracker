@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		int PlayerMinionCount { get; }
 		int PlayerBoardCount { get; }
 		GameType CurrentGameType { get; }
+		FormatType CurrentFormatType { get; }
 		Format? CurrentFormat { get; }
 		int ProposedAttacker { get; set; }
 		int ProposedDefender { get; set; }

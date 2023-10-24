@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using HearthDb.Enums;
+﻿using HearthDb.Enums;
+using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 {
-	public interface ArenaSettingsProvider
+	public interface AvailableSecretsProvider
 	{
-		List<CardSet> CurrentSets { get; }
-		List<string> ExclusiveSecrets { get;  }
-		List<string> BannedSecrets { get; }
+		public Dictionary<string, HashSet<string>>? ByType { get; }
 	}
 }

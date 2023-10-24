@@ -301,6 +301,7 @@ namespace Hearthstone_Deck_Tracker
 						Remote.Config.Load();
 						Remote.BattlegroundsBans.Load();
 						Remote.Mercenaries.Load();
+						Remote.LiveSecrets.Load();
 
 						Reflection.StartIpcClient();
 					}

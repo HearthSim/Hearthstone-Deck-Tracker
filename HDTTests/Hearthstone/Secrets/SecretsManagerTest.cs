@@ -1,13 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Hearthstone_Deck_Tracker.Hearthstone.CardIds;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
 
 namespace HDTTests.Hearthstone.Secrets
@@ -21,10 +17,10 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockArenaSettings());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
 			Assert.AreEqual(0, secretsManager.GetSecretList().Count);
 
 			var added = secretsManager.NewSecret(null);
@@ -55,10 +51,10 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockArenaSettings());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
 			Assert.AreEqual(0, secretsManager.GetSecretList().Count);
 
 			var validEntity = new Entity(0);
@@ -90,10 +86,10 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockArenaSettings());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
 
 			var removed = secretsManager.RemoveSecret(null);
 			Assert.IsFalse(removed);
@@ -119,10 +115,10 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockArenaSettings());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
 
 			var entity = new Entity(0);
 			entity.SetTag(GameTag.SECRET, 1);
@@ -151,10 +147,10 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockArenaSettings());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
 			var entity = new Entity(0);
 			entity.SetTag(GameTag.SECRET, 1);
 			entity.SetTag(GameTag.CLASS, (int)CardClass.PRIEST);
@@ -172,10 +168,10 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockArenaSettings());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
 
 			var entity = new Entity(0);
 			entity.SetTag(GameTag.SECRET, 1);
@@ -215,10 +211,10 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockArenaSettings());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
 
 			var paladinEntity = new Entity(0);
 			paladinEntity.SetTag(GameTag.SECRET, 1);
@@ -265,10 +261,10 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockArenaSettings());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
 
 			var entity = new Entity(0);
 			entity.SetTag(GameTag.SECRET, 1);
@@ -286,11 +282,11 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
 			var callbackCount = 0;
-			var secretsManager = new SecretsManager(game, new MockArenaSettings());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
 			secretsManager.OnSecretsChanged += secrets => callbackCount += 1;
 
 			var entity = new Entity(0);
@@ -321,10 +317,10 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var settings = new MockArenaSettings();
+			var settings = new MockAvailableSecrets();
 			var secretsManager = new SecretsManager(game, settings);
 
 			var paladinEntity = new Entity(0);
@@ -345,14 +341,19 @@ namespace HDTTests.Hearthstone.Secrets
 			secretsManager.NewSecret(hunterEntity);
 			Assert.AreEqual(3, secretsManager.Secrets.Count);
 
-			var allSecrets = Paladin.All.Where(x => x != Paladin.HandOfSalvation)
-				.Concat(Mage.All).Concat(Hunter.All).ToList();
+			var rogueEntity = new Entity(3);
+			rogueEntity.SetTag(GameTag.SECRET, 1);
+			rogueEntity.SetTag(GameTag.CLASS, (int)CardClass.ROGUE);
+			secretsManager.NewSecret(rogueEntity);
+			Assert.AreEqual(4, secretsManager.Secrets.Count);
+
+			var allSecrets = Paladin.All.Concat(Mage.All).Concat(Hunter.All).Concat(Rogue.All).ToList();
 			var cards = secretsManager.GetSecretList();
 			Assert.AreEqual(allSecrets.Count, cards.Count);
 			foreach(var secret in allSecrets)
 				Assert.IsNotNull(cards.SingleOrDefault(c => secret == c.Id));
 
-			game.CurrentFormat = Format.Standard;
+			game.CurrentFormatType = FormatType.FT_STANDARD;
 			cards = secretsManager.GetSecretList();
 			var standardSecrets = allSecrets.Where(x => x.IsStandard).ToList();
 			Assert.AreEqual(standardSecrets.Count(), cards.Count);
@@ -360,15 +361,9 @@ namespace HDTTests.Hearthstone.Secrets
 				Assert.IsNotNull(cards.SingleOrDefault(c => secret == c.Id));
 
 			game.CurrentGameType = GameType.GT_ARENA;
-			game.CurrentFormat = Format.Wild; // Arena format is Wild
+			game.CurrentFormatType = FormatType.FT_WILD; // Arena format is Wild
 			cards = secretsManager.GetSecretList();
-			var bannedSecrets = settings.BannedSecrets.Select(x => new MultiIdCard(x));
-			var arenaSecrets = allSecrets.Concat(settings.ExclusiveSecrets.Select(x => new MultiIdCard(x))).Where(x =>
-					settings.CurrentSets.Any(x.HasSet) && !bannedSecrets.Contains(x)
-				).ToList();
-			Assert.AreEqual(arenaSecrets.Count, cards.Count);
-			foreach(var secret in arenaSecrets)
-				Assert.IsNotNull(cards.SingleOrDefault(c => secret == c.Id));
+			Assert.AreEqual(settings.ByType["GT_ARENA"].Count, cards.Count);
 		}
 
 		[TestMethod]
@@ -377,7 +372,7 @@ namespace HDTTests.Hearthstone.Secrets
 			var game = new MockGame
 			{
 				CurrentGameType = GameType.GT_RANKED,
-				CurrentFormat = Format.Wild
+				CurrentFormatType = FormatType.FT_WILD
 			};
 
 			Entity RevealedSecret(int id)
@@ -389,13 +384,27 @@ namespace HDTTests.Hearthstone.Secrets
 				entity.CardId = Rogue.Plagiarize.Ids[0];
 				return entity;
 			}
+
+			// SETUP:
+			// - One copy of the secret has been revealed
+			// - A second copy of the secret has been revealed but was created.
+			//   It should not count towards the maximum number of instances of this secret
+			//   (In a constructed game only two copies of a secret can be in the deck)
+			// - An unknown secret is added
+			// - We will create and then reveal a second copy that was NOT created.
+			// - In constructed game modes we expect the unknown secret to not be the 2x revealed one
 			
 			game.Entities.Add(0, RevealedSecret(0));
 			var createdSecret = RevealedSecret(1);
 			createdSecret.Info.Created = true;
 			game.Entities.Add(1, createdSecret);
 
-			var secretsManager = new SecretsManager(game, new MockArenaSettings());
+			var availableSecrets = new MockAvailableSecrets();
+			availableSecrets.ByType["FT_WILD"].Add(Rogue.Plagiarize.Ids[0]);
+			availableSecrets.ByType["FT_STANDARD"].Add(Rogue.Plagiarize.Ids[0]);
+			availableSecrets.ByType["GT_ARENA"].Add(Rogue.Plagiarize.Ids[0]);
+
+			var secretsManager = new SecretsManager(game, availableSecrets);
 
 			var coreSecret = new Entity(2);
 			coreSecret.SetTag(GameTag.SECRET, 1);
@@ -404,32 +413,39 @@ namespace HDTTests.Hearthstone.Secrets
 			Assert.AreEqual(1, secretsManager.Secrets.Count);
 
 			var cards = secretsManager.GetSecretList();
+			// unknown secret can be anything
 			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
 
 			game.Entities.Add(3, RevealedSecret(3));
 			cards = secretsManager.GetSecretList();
+			// unknown secret can not be plagiarize
 			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 0));
 
-			game.CurrentFormat = Format.Standard;
+			game.CurrentFormatType = FormatType.FT_STANDARD;
 			cards = secretsManager.GetSecretList();
+			// unknown secret can not be plagiarize
 			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 0));
 
 			game.CurrentGameType = GameType.GT_ARENA;
+			game.CurrentFormatType = FormatType.FT_WILD;
 			cards = secretsManager.GetSecretList();
+			// unknown secret can be plagiarize, no limit in arena
 			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
 
 			coreSecret.Info.Created = true;
 
 			cards = secretsManager.GetSecretList();
+			// unknown secret can be plagiarize, no limit in arena
 			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
 
 			game.CurrentGameType = GameType.GT_RANKED;
-
 			cards = secretsManager.GetSecretList();
+			// unknown secret is created, can be plagiarize
 			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
 
-			game.CurrentFormat = Format.Wild;
+			game.CurrentFormatType = FormatType.FT_WILD;
 			cards = secretsManager.GetSecretList();
+			// unknown secret is created, can be plagiarize
 			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
 		}
 	}

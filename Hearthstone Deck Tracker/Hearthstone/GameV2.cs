@@ -139,6 +139,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		private FormatType _currentFormat = FormatType.FT_UNKNOWN;
+		public FormatType CurrentFormatType => _currentFormat;
 		public Format? CurrentFormat
 		{
 			get
