@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int JoustReveals { get; set; }
 		public Dictionary<int, IList<(string, DeckLocation)>> KnownCardIds { get; set; }
 		public int LastCardPlayed { get; set; }
+		public string? LastPlagueDrawn { get; set; }
 		public bool WasInProgress { get; set; }
 		public int GameTriggerCount { get; set; }
 		public Zone CurrentEntityZone { get; set; }
