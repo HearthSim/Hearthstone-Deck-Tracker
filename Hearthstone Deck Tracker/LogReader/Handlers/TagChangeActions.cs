@@ -796,7 +796,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			switch((Zone)value)
 			{
 				case HAND:
-					if (cardId == NonCollectible.Deathknight.DistressedKvaldir_FrostPlagueToken ||
+					if(cardId == NonCollectible.Deathknight.DistressedKvaldir_FrostPlagueToken ||
 						cardId == NonCollectible.Deathknight.DistressedKvaldir_BloodPlagueToken ||
 						cardId == NonCollectible.Deathknight.DistressedKvaldir_UnholyPlagueToken)
 					{
