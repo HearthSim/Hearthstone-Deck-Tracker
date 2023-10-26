@@ -1,3 +1,11 @@
+## **Release v1.22.11 - 2023-10-26**
+**Updated for Hearthstone 27.6.2**
+
+**Fixes**:
+- Improved reliability of the available secrets for specific game modes.
+- Fixed an issue where the attack counters were not correctly handling Titans.
+- Fixed an issue where Plagues were not correctly added back to the deck when Helya is in play.
+
 ## **Release v1.22.10 - 2023-10-17**
 **Updated for Hearthstone 27.6**
 
