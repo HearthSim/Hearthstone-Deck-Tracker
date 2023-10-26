@@ -166,7 +166,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				GetScaling = () => AutoScaling,
 				AnchorSide = Side.Bottom,
 				HideCallback = () => {
-					ShowBgsTopBar();
+					ShowBgsTopBarAndBobsBuddyPanel();
 				},
 				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
@@ -462,6 +462,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsMinionsPanel.Visibility = Config.Instance.ShowBattlegroundsTiers ? Visible : Collapsed;
 
 			_bgsTopBarBehavior.Show();
+		}
+
+		internal void ShowBgsTopBarAndBobsBuddyPanel()
+		{
+			ShowBgsTopBar();
 			ShowBobsBuddyPanel();
 		}
 
