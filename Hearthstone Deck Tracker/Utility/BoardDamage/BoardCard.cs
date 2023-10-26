@@ -20,6 +20,8 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		private readonly int _health;
 		private readonly int _stdAttack;
 		private readonly bool _dormant;
+		private readonly bool _isTitan;
+		private readonly int _titanAbilitiesUsed;
 
 		public BoardCard(Entity e, bool active = true)
 		{
@@ -39,6 +41,13 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			Windfury = e.GetTag(WINDFURY) == 1;
 			AttacksThisTurn = e.GetTag(NUM_ATTACKS_THIS_TURN);
 			_dormant = e.GetTag(DORMANT) == 1;
+			_isTitan = e.GetTag(TITAN) == 1;
+			if(_isTitan)
+			{
+				if(e.GetTag(TITAN_ABILITY_USED_1) == 1) _titanAbilitiesUsed += 1;
+				if(e.GetTag(TITAN_ABILITY_USED_2) == 1) _titanAbilitiesUsed += 1;
+				if(e.GetTag(TITAN_ABILITY_USED_3) == 1) _titanAbilitiesUsed += 1;
+			}
 
 			Name = name;
 			CardId = e.CardId;
@@ -96,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		{
 			// TODO: if frozen on turn, may be able to attack next turn
 			// don't include weapons if an active turn, count Hero instead
-			if(_cantAttack || _frozen || (isWeapon && active) || _dormant)
+			if(_cantAttack || _frozen || (isWeapon && active) || _dormant || (_isTitan && _titanAbilitiesUsed < 3))
 				return false;
 			if(!active)
 			{
