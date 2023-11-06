@@ -815,7 +815,7 @@ namespace Hearthstone_Deck_Tracker
 						_game.CurrentGameType,
 						_game.Spectator
 					);
-					
+
 				}
 
 				if(_game.IsMercenariesMatch)
@@ -1072,7 +1072,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void HandleBattlegroundsStart()
 		{
-			Core.Overlay.ShowBgsTopBar();
 			if(Config.Instance.ShowBattlegroundsToast)
 			{
 				for(var i = 0; i < 10; i++)
@@ -1102,6 +1101,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else
 					{
+						Core.Overlay.ShowBgsTopBar();
 						Core.Overlay.ShowBattlegroundsHeroPickingStats(heroIds);
 						Core.Overlay.ShowBattlegroundsHeroPanel(heroIds);
 						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
