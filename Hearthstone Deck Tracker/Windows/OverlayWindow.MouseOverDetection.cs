@@ -421,10 +421,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private async void ShowBobsBuddyPanelDelayed()
 		{
 			await Task.Delay(300);
-			if(!_mouseIsOverLeaderboardIcon)
+			if(!_mouseIsOverLeaderboardIcon &&
+				_game.IsBattlegroundsMatch &&
+				_game.GetTurnNumber() != 0 &&
+				!_game.IsInMenu)
 			{
-				if(_game.IsBattlegroundsMatch && !_game.IsInMenu && _game.GetTurnNumber() != 0)
-					ShowBobsBuddyPanel();
+				ShowBobsBuddyPanel();
 			}
 		}
 
