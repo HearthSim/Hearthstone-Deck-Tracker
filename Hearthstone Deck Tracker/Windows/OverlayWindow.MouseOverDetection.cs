@@ -423,7 +423,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			await Task.Delay(300);
 			if(!_mouseIsOverLeaderboardIcon)
 			{
-				if(_game.IsBattlegroundsMatch && !_game.IsInMenu)
+				if(_game.IsBattlegroundsMatch && !_game.IsInMenu && _game.GetTurnNumber() != 0)
 					ShowBobsBuddyPanel();
 			}
 		}
