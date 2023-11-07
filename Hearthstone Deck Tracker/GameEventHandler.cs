@@ -521,7 +521,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
 			{
-				Core.Overlay.ShowBgsTopBar();
+				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 				Core.Overlay.ShowBattlegroundsSession(true);
 			}
 			if(_game.IsFriendlyMatch)
@@ -815,7 +815,7 @@ namespace Hearthstone_Deck_Tracker
 						_game.CurrentGameType,
 						_game.Spectator
 					);
-					
+
 				}
 
 				if(_game.IsMercenariesMatch)
@@ -1083,7 +1083,7 @@ namespace Hearthstone_Deck_Tracker
 					await Task.Delay(500);
 					if(_game.GameEntity?.GetTag(STEP) != (int)Step.BEGIN_MULLIGAN)
 					{
-						Core.Overlay.ShowBgsTopBar();
+						Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 						break;
 					}
 
@@ -1097,10 +1097,11 @@ namespace Hearthstone_Deck_Tracker
 						var mmr = Core.Game.BattlegroundsRatingInfo?.Rating;
 						var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity);
 						ToastManager.ShowBattlegroundsToast(heroIds, mmr, anomalyDbfId);
-						Core.Overlay.ShowBgsTopBar();
+						Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 					}
 					else
 					{
+						Core.Overlay.ShowBgsTopBar();
 						Core.Overlay.ShowBattlegroundsHeroPickingStats(heroIds);
 						Core.Overlay.ShowBattlegroundsHeroPanel(heroIds);
 						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
@@ -1111,7 +1112,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			else
-				Core.Overlay.ShowBgsTopBar();
+				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
 			Core.Overlay.ShowBattlegroundsSession(true);
 		}
