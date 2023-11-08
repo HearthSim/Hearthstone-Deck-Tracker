@@ -528,7 +528,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, Collectible.Neutral.PiranhaSwarmer); 
 								break;
 							case Collectible.Paladin.SinfulSousChef:
-								AddKnownCardId(gameState, NonCollectible.Paladin.SilverHandRecruitLegacyToken, 2); 
+								AddKnownCardId(gameState, NonCollectible.Paladin.SilverHandRecruitLegacyToken1, 2);
 								break;
 							case Collectible.Neutral.RivendareWarrider:
 								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_BlaumeuxFamineriderToken); 
