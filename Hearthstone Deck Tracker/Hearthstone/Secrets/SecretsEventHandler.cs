@@ -402,6 +402,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Paladin.HiddenWisdom);
 			}
 
+			if(entity.GetTag(GameTag.NUM_TURNS_IN_HAND) == 1)
+			{
+				if(FreeSpaceInHand)
+					exclude.Add(Mage.AzeriteVein);
+			}
+
 			if(entity.IsSpell)
 			{
 				if(parentBlockCardId == HearthDb.CardIds.Collectible.Rogue.SparkjoyCheat)

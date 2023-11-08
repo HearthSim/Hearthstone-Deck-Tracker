@@ -261,9 +261,23 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void SingleSecret_MinionPlayed()
+		public void SingleSecret_MinionPlayed_DrawnSameTurn()
 		{
+			_playerMinion1.SetTag(GameTag.NUM_TURNS_IN_HAND, 1);
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
+			_gameEventHandler.HandlePlayerPlay(_playerMinion1, HearthDb.CardIds.Collectible.Neutral.Wisp, 1, "");
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection, MageSecrets.AzeriteVein);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
+		}
+
+		[TestMethod]
+		public void SingleSecret_MinionPlayed_DrawnEarlierTurn()
+		{
+			_playerMinion1.SetTag(GameTag.NUM_TURNS_IN_HAND, 3);
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
+			_gameEventHandler.HandlePlayerPlay(_playerMinion1, "", 1, "");
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);

@@ -201,6 +201,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public class Mage : EnumerateMultiId<Mage>
 			{
+				public static readonly MultiIdCard AzeriteVein = new MultiIdCard(Collectible.Mage.AzeriteVein);
 				public static readonly MultiIdCard Counterspell = new MultiIdCard(Collectible.Mage.Counterspell, Collectible.Mage.CounterspellCore, Collectible.Mage.CounterspellVanilla);
 				public static readonly MultiIdCard Duplicate = new MultiIdCard(Collectible.Mage.Duplicate);
 				public static readonly MultiIdCard Effigy = new MultiIdCard(Collectible.Mage.Effigy);
