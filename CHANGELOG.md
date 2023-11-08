@@ -1,3 +1,9 @@
+## **Release v1.22.12 - 2023-11-08**
+**Updated for Hearthstone 28.0**
+
+**Changes**:
+- The Battlegrounds minion overlay is now available during hero picking.
+
 ## **Release v1.22.11 - 2023-10-26**
 **Updated for Hearthstone 27.6.2**
 
