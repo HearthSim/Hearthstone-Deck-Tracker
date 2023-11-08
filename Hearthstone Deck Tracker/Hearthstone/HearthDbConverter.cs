@@ -67,6 +67,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{(int)CardSet.BATTLE_OF_THE_BANDS, "Festival of Legends" },
 			{(int)CardSet.TITANS, "TITANS" },
 			{(int)CardSet.WONDERS, "Caverns of Time" },
+			{(int)CardSet.WILD_WEST, "Showdown in the Badlands" },
 		};
 
 		public static string? ConvertClass(CardClass cardClass)

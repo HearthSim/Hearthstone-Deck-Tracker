@@ -81,5 +81,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_Titans")]
 		Titans = CardSet.TITANS,
+
+		[LocDescription("Enum_ArenaRewardPacks_Badlands")]
+		Badlands = CardSet.WILD_WEST,
 	}
 }

@@ -82,5 +82,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		TITANS = 1858,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Wonders")]
 		WONDERS = 1898,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Badlands")]
+		WILD_WEST = 1892,
 	}
 }
