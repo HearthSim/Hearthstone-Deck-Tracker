@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static bool ShowOpponentPogoHopperCounter => !Core.Game.IsInMenu && (Config.Instance.OpponentPogoHopperCounter == DisplayMode.Always
 					|| Config.Instance.OpponentPogoHopperCounter == DisplayMode.Auto && OpponentPogoHopper != null);
 
-		public static bool ShowOpponentSpellsCounter => !Core.Game.IsInMenu && Config.Instance.OpponentSpellsCounter == DisplayMode.Always;
+		public static bool ShowOpponentSpellCounter => !Core.Game.IsInMenu && Config.Instance.OpponentSpellsCounter == DisplayMode.Always;
 
 		public static bool ShowOpponentJadeCounter => !Core.Game.IsInMenu && (Config.Instance.OpponentJadeCounter == DisplayMode.Always
 					|| Config.Instance.OpponentJadeCounter == DisplayMode.Auto && OpponentSeenJade);

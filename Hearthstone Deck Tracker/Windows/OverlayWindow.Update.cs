@@ -239,7 +239,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsPlayer.Libram = WotogCounterHelper.PlayerLibramCounter.ToString();
 			if(showPlayerAbyssalCurseCounter)
 				WotogIconsPlayer.AbyssalCurse = WotogCounterHelper.PlayerAbyssalCurseCounter.ToString();
-			WotogIconsPlayer.WotogCounterStyle = showPlayerCthunCounter && showPlayerSpellsCounter ? Full : (showPlayerCthunCounter ? Cthun : (showPlayerSpellsCounter ? Spells : None));
+			WotogIconsPlayer.CthunCounterStyle = showPlayerCthunCounter ? Full : None;
+			WotogIconsPlayer.SpellCounterStyle = showPlayerSpellsCounter ? Full : None;
 			WotogIconsPlayer.JadeCounterStyle = showPlayerJadeCounter ? Full : None;
 			WotogIconsPlayer.PogoHopperCounterStyle = showPlayerPogoHopperCounter ? Full : None;
 			WotogIconsPlayer.GalakrondCounterStyle = showPlayerGalakrondCounter ? Full : None;
@@ -247,7 +248,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			WotogIconsPlayer.AbyssalCounterStyle = showPlayerAbyssalCurseCounter ? Full : None;
 
 			var showOpponentCthunCounter = WotogCounterHelper.ShowOpponentCthunCounter;
-			var showOpponentSpellsCounter = WotogCounterHelper.ShowOpponentSpellsCounter;
+			var showOpponentSpellCounter = WotogCounterHelper.ShowOpponentSpellCounter;
 			var showOpponentJadeCounter = WotogCounterHelper.ShowOpponentJadeCounter;
 			var showOpponentPogoHopperCounter = WotogCounterHelper.ShowOpponentPogoHopperCounter;
 			var showOpponentGalakrondCounter = WotogCounterHelper.ShowOpponentGalakrondCounter;
@@ -259,7 +260,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsOpponent.Attack = (player?.HasTag(CTHUN_ATTACK_BUFF) ?? false ? player.GetTag(CTHUN_ATTACK_BUFF) + 6 : 6).ToString();
 				WotogIconsOpponent.Health = (player?.HasTag(CTHUN_HEALTH_BUFF) ?? false ? player.GetTag(CTHUN_HEALTH_BUFF) + 6 : 6).ToString();
 			}
-			if(showOpponentSpellsCounter)
+			if(showOpponentSpellCounter)
 				WotogIconsOpponent.Spells = _game.Opponent.SpellsPlayedCount.ToString();
 			if(showOpponentJadeCounter)
 				WotogIconsOpponent.Jade = WotogCounterHelper.OpponentNextJadeGolem.ToString();
@@ -271,7 +272,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsOpponent.Libram = WotogCounterHelper.OpponentLibramCounter.ToString();
 			if(showOpponentAbyssalCurseCounter)
 				WotogIconsOpponent.AbyssalCurse = WotogCounterHelper.OpponentAbyssalCurseCounter.ToString();
-			WotogIconsOpponent.WotogCounterStyle = showOpponentCthunCounter && showOpponentSpellsCounter ? Full : (showOpponentCthunCounter ? Cthun : (showOpponentSpellsCounter ? Spells : None));
+			WotogIconsOpponent.CthunCounterStyle = showOpponentCthunCounter ? Full : None;
+			WotogIconsOpponent.SpellCounterStyle = showOpponentSpellCounter ? Full : None;
 			WotogIconsOpponent.JadeCounterStyle = showOpponentJadeCounter ? Full : None;
 			WotogIconsOpponent.PogoHopperCounterStyle = showOpponentPogoHopperCounter ? Full : None;
 			WotogIconsOpponent.GalakrondCounterStyle = showOpponentGalakrondCounter ? Full : None;
