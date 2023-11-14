@@ -541,7 +541,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									AddKnownCardId(gameState, gameState.LastPlagueDrawn);
 								}
 								break;
-
+							case Collectible.Rogue.TombPillagerLOE:
+							case Collectible.Rogue.TombPillagerPLACEHOLDER_202204:
+							case Collectible.Rogue.TombPillagerWONDERS:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore, 2);
+								break;
+							case Collectible.Rogue.LoanShark:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore, 2);
+								break;
+							case Collectible.Rogue.CoppertailSnoop:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+							case Collectible.Warlock.DisposalAssistant:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TramMechanic_BarrelOfSludgeToken, 1, DeckLocation.Bottom);
+								break;
+							case Collectible.Warlock.SludgeOnWheels:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TramMechanic_BarrelOfSludgeToken, 1, DeckLocation.Bottom);
+								break;
 						}
 					}
 					else //POWER
@@ -580,10 +596,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.BalefulBanker:
 							case Collectible.Neutral.DollmasterDorian:
 							case Collectible.Priest.Seance:
-								if(target != null)
-									AddKnownCardId(gameState, target);
-								break;
 							case Collectible.Druid.MarkOfTheSpikeshell:
+							case Collectible.Neutral.DragonBreeder:
+							case Collectible.Shaman.ColdStorage:
+							case Collectible.Priest.PowerChordSynchronize:
+							case Collectible.Rogue.Shadowcaster:
 								if(target != null)
 									AddKnownCardId(gameState, target);
 								break;
@@ -720,10 +737,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								if(target != null)
 									AddKnownCardId(gameState, target, 3);
 								break;
-							case Collectible.Neutral.DragonBreeder:
-								if(target != null)
-									AddKnownCardId(gameState, target);
-								break;
 							case Collectible.Warlock.SchoolSpirits:
 							case Collectible.Warlock.SoulShear:
 							case Collectible.Warlock.SpiritJailer:
@@ -855,14 +868,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Priest.SisterSvalna:
 								AddKnownCardId(gameState, NonCollectible.Priest.SisterSvalna_VisionOfDarknessToken); 
 								break;
-							case Collectible.Shaman.ColdStorage:
-								if(target != null)
-									AddKnownCardId(gameState, target);
-								break;
-							case Collectible.Priest.PowerChordSynchronize:
-								if(target != null)
-									AddKnownCardId(gameState, target);
-								break;
 							case Collectible.Neutral.PozzikAudioEngineer:
 								AddKnownCardId(gameState, NonCollectible.Neutral.PozzikAudioEngineer_AudioBotToken, 2);
 								break;
@@ -880,6 +885,24 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Mage.SteamSurger:
 								AddKnownCardId(gameState, Collectible.Mage.FlameGeyser);
+								break;
+							case Collectible.Warrior.BoombossThogrun:
+								AddKnownCardId(gameState, NonCollectible.Warrior.BoombossThogrun_TNTToken, 3);
+								break;
+							case Collectible.Rogue.DartThrow:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+							case Collectible.Rogue.BountyWrangler:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+							case Collectible.Neutral.GreedyPartner:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+							case Collectible.Neutral.SnakeOilSeller:
+								AddKnownCardId(gameState, NonCollectible.Neutral.MiracleSalesman_SnakeOilToken, 2);
+								break;
+							case Collectible.Warlock.DisposalAssistant:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TramMechanic_BarrelOfSludgeToken, 1, DeckLocation.Bottom);
 								break;
 
 							default:
