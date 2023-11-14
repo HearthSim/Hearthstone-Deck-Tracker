@@ -13,9 +13,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		public static Entity PlayerCthun => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Neutral.CthunOG && x.Info.OriginalZone != null);
 		public static Entity PlayerCthunProxy => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
-		public static Entity PlayerYogg => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Neutral.YoggSaronHopesEnd && x.Info.OriginalZone != null);
-		public static Entity PlayerArcaneGiant => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Neutral.ArcaneGiant && x.Info.OriginalZone != null);
-		public static Entity PlayerGraveHorror => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Priest.GraveHorror && x.Info.OriginalZone != null);
 		public static Entity OpponentCthun => Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Neutral.CthunOG );
 		public static Entity OpponentCthunProxy => Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
 		public static Entity PlayerPogoHopper => Core.Game.Player.RevealedEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Rogue.PogoHopper && x.Info.OriginalZone != null);
@@ -40,10 +37,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 
 		public static bool? CthunInDeck => DeckContains(CardIds.Collectible.Neutral.CthunOG);
-		public static bool? YoggInDeck => DeckContains(CardIds.Collectible.Neutral.YoggSaronHopesEnd);
-		public static bool? ArcaneGiantInDeck => DeckContains(CardIds.Collectible.Neutral.ArcaneGiant);
 		public static bool? PogoHopperInDeck => DeckContains(CardIds.Collectible.Rogue.PogoHopper);
-		public static bool? GraveHorrorInDeck => DeckContains(CardIds.Collectible.Priest.GraveHorror);
 		
 		public static bool PlayerSeenJade => Core.Game.PlayerEntity?.HasTag(JADE_GOLEM) ?? false;
 		public static int PlayerNextJadeGolem => PlayerSeenJade ? Math.Min(Core.Game.PlayerEntity!.GetTag(JADE_GOLEM) + 1, 30) : 1;
@@ -80,12 +74,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 			Config.Instance.OpponentLibramCounter == DisplayMode.Always
 				|| (Config.Instance.OpponentLibramCounter == DisplayMode.Auto && Core.Game.Opponent.LibramReductionCount > 0));
 
-
 		public static bool ShowPlayerSpellsCounter => !Core.Game.IsInMenu && (
 			Config.Instance.PlayerSpellsCounter == DisplayMode.Always
-				|| (Config.Instance.PlayerSpellsCounter == DisplayMode.Auto && YoggInDeck.HasValue && (PlayerYogg != null || YoggInDeck.Value))
-				|| (Config.Instance.PlayerSpellsCounter == DisplayMode.Auto && ArcaneGiantInDeck.HasValue && (PlayerArcaneGiant != null || ArcaneGiantInDeck.Value))
-				|| (Config.Instance.PlayerSpellsCounter == DisplayMode.Auto && GraveHorrorInDeck.HasValue && (PlayerGraveHorror != null || GraveHorrorInDeck.Value))
+				|| (Config.Instance.PlayerSpellsCounter == DisplayMode.Auto && InDeckAndHand(new[] {
+					CardIds.Collectible.Neutral.YoggSaronHopesEnd,
+					CardIds.Collectible.Neutral.ArcaneGiant,
+					CardIds.Collectible.Priest.GraveHorror,
+					CardIds.Collectible.Druid.UmbralOwlDARKMOON_FAIRE,
+					CardIds.Collectible.Druid.UmbralOwlPLACEHOLDER_202204,
+				}))
 			);
 
 		public static bool ShowPlayerJadeCounter => !Core.Game.IsInMenu && (Config.Instance.PlayerJadeCounter == DisplayMode.Always
@@ -109,7 +106,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 			Config.Instance.OpponentAbyssalCurseCounter == DisplayMode.Always
 				|| (Config.Instance.OpponentAbyssalCurseCounter == DisplayMode.Auto && Core.Game.Opponent.AbyssalCurseCount > 0));
 
-		private static bool? DeckContains(string cardId) => DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId);
+		private static bool InDeckOrKnown(string cardId)
+		{
+			var contains = DeckContains(cardId);
+			if(!contains.HasValue) return false;
+			return contains.Value || Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == cardId && x.Info.OriginalZone != null) != null;
+		}
+		private static bool InDeckAndHand(string[] cardIds) => cardIds.Any(cardId => InDeckOrKnown(cardId));
 
+		private static bool? DeckContains(string cardId) => DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId);
+		private static bool? DeckContains(string[] cardIds) => DeckList.Instance.ActiveDeck?.Cards.Any(x => cardIds.Contains(x.Id));
 	}
 }
