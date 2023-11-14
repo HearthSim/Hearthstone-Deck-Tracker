@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using HearthDb.Enums;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -96,10 +97,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			if(Core.Game.Spectator)
 				return;
 
-			// No Trials for anonymous users
-			if(!HSReplayNetOAuth.IsFullyAuthenticated)
-				return;
-
 			if(Remote.Config.Data?.Tier7?.Disabled ?? false)
 			{
 				Message.Disabled();
@@ -122,10 +119,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 				return;
 			}
 
+			string? token = null;
 			if(!userOwnsTier7)
 			{
-				var trialActive = await Tier7Trial.Activate();
-				if(!trialActive)
+				var acc = Reflection.Client.GetAccountId();
+				token = acc != null ? await Tier7Trial.Activate(acc.Hi, acc.Lo) : null;
+				if(token == null)
 				{
 					Message.Error();
 					return;
@@ -134,7 +133,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 
 			// At this point the user either owns tier7 or has an active trial!
 
-			var stats = await HSReplayNetOAuth.MakeRequest(c => c.GetTier7HeroPickStats(requestParams));
+			var stats = token != null && !userOwnsTier7
+				? await ApiWrapper.GetTier7HeroPickStats(token, requestParams)
+				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7HeroPickStats(requestParams));
 			if(stats == null)
 			{
 				Message.Error();

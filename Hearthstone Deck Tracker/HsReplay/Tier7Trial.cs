@@ -6,37 +6,36 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 {
 	public static class Tier7Trial
 	{
-		private static Tier7TrialStatus? _status;
-		public static bool IsActive { get; private set; }
+		private static PlayerTrialStatus? _status;
+		public static string? Token { get; private set; }
 		public static int? RemainingTrials => _status?.TrialsRemaining;
 
 		public static string? TimeRemaining => _status?.HoursUntilReset == null ? null
 			: string.Format(LocUtil.Get("BattlegroundsPreLobby_Trial_ResetTimeRemaining_DaysHours"), _status.HoursUntilReset / 24, _status.HoursUntilReset % 24);
 
-		public static async Task<bool> Activate()
+		public static async Task<string?> Activate(ulong accountHi, ulong accountLo)
 		{
-			if(IsActive)
-				return true;
+			if(Token != null)
+				return null;
 			if(_status == null || _status.TrialsRemaining == 0)
-				return false;
-			var response = await HSReplayNetOAuth.MakeRequest(client => client.ActivateTier7Trial());
-			IsActive = response != null;
-			if(IsActive)
+				return null;
+			Token = await ApiWrapper.ActivatePlayerTrial("tier7-overlay", accountHi, accountLo);
+			if(Token != null)
 				Core.Game.Metrics.Tier7TrialActivated = true;
-			return IsActive;
+			return Token;
 		}
 
-		public static async Task Update()
+		public static async Task Update(ulong accountHi, ulong accountLo)
 		{
 			if(_status?.HoursUntilReset < 2)
 				_status = null;
-			_status ??= await HSReplayNetOAuth.MakeRequest(c => c.GetTier7TrialStatus());
+			_status ??= await ApiWrapper.GetPlayerTrialStatus("tier7-overlay", accountHi, accountLo);
 		}
 
 		public static void Clear()
 		{
 			_status = null;
-			IsActive = false;
+			Token = null;
 		}
 	}
 }

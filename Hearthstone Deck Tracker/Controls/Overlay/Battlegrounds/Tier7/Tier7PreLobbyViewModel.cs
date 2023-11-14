@@ -44,6 +44,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			}
 		}
 
+		public RefreshSubscriptionState RefreshSubscriptionState
+		{
+			get => GetProp(RefreshSubscriptionState.Hidden);
+			set
+			{
+				SetProp(value);
+				OnPropertyChanged(nameof(RefreshSubscriptionState));
+			}
+		}
+
 		public int? TrialUsesRemaining { get => GetProp<int?>(null); set => SetProp(value); }
 		public string? AllTimeHighMMR { get => GetProp<string?>(null); set => SetProp(value); }
 		public Visibility AllTimeHighMMRVisibility { get => GetProp(Visibility.Collapsed); set => SetProp(value); }
@@ -59,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			}
 		}
 		public Visual? ChevronIcon => Core.Overlay.Tier7PreLobby.TryFindResource("chevron_" + (IsCollapsed ? "down" : "up")) as Visual;
-		public int? PanelMinWidth => UserState is UserState.Authenticated or UserState.Subscribed ? 264 : 214;
+		public int? PanelMinWidth => UserState is UserState.ValidPlayer or UserState.Subscribed ? 264 : 214;
 
 		public string? TrialTimeRemaining
 		{
@@ -102,39 +112,62 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				return;
 			}
 
-			if(!HSReplayNetOAuth.IsFullyAuthenticated || HSReplayNetOAuth.AccountData == null)
+			var ownsTier7 = false;
+			if(HSReplayNetOAuth.IsFullyAuthenticated && HSReplayNetOAuth.AccountData != null)
 			{
-				UserState = UserState.Anonymous;
-				AllTimeHighMMR = null;
-				TrialTimeRemaining = null;
-				Username = null;
-				return;
+				if(checkAccountStatus)
+				{
+					// This will fire a HSReplayNetOAuth.AccountDataUpdated event. We
+					// set a flag for the duration of the update check to avoid
+					// infinite recursion here.
+					_isUpdatingAccount = true;
+					// (Unrelativ to the event) If we want to cut down the request
+					// volume here in the future we can only make this request for
+					// tier7 subscribers (still need to happen right here, not below to
+					// handle the case where tier7 ran out).
+					await HSReplayNetOAuth.UpdateAccountData();
+					_isUpdatingAccount = false;
+				}
+
+				IsAuthenticated = true;
+				ownsTier7 = HSReplayNetOAuth.AccountData.IsTier7;
+
+				// Update the Refresh button, as it's otherwise only updated after a click on GET PREMIUM
+				if(ownsTier7)
+				{
+					RefreshSubscriptionState = RefreshSubscriptionState.Hidden;
+				}
+				else if(RefreshSubscriptionState == RefreshSubscriptionState.SignIn)
+				{
+					RefreshSubscriptionState = RefreshSubscriptionState.Refresh;
+				}
+			}
+			else
+			{
+				IsAuthenticated = false;
+				if(RefreshSubscriptionState == RefreshSubscriptionState.Refresh)
+				{
+					RefreshSubscriptionState = RefreshSubscriptionState.SignIn;
+				}
 			}
 
-			if(checkAccountStatus)
-			{
-				// This will fire a HSReplayNetOAuth.AccountDataUpdated event. We
-				// set a flag for the duration of the update check to avoid
-				// infinite recursion here.
-				_isUpdatingAccount = true;
-				// (Unrelativ to the event) If we want to cut down the request
-				// volume here in the future we can only make this request for
-				// tier7 subscribers (still need to happen right here, not below to
-				// handle the case where tier7 ran out).
-				await HSReplayNetOAuth.UpdateAccountData();
-				_isUpdatingAccount = false;
-			}
+			var acc = Reflection.Client.GetAccountId();
 
-			if(!HSReplayNetOAuth.AccountData.IsTier7)
+			Username = Reflection.Client.GetBattleTag()?.Name ?? HSReplayNetOAuth.AccountData?.Username ?? null;
+
+			if(!ownsTier7)
 			{
-				if(UserState != UserState.Authenticated)
-					UserState = UserState.Loading;
 				AllTimeHighMMR = null;
-				await Tier7Trial.Update();
+				if (acc == null)
+				{
+					// unable to get AccountHi/AccountLo, not eligible for trials
+					UserState = UserState.UnknownPlayer;
+					return;
+				}
+				await Tier7Trial.Update(acc.Hi, acc.Lo);
 				TrialTimeRemaining = Tier7Trial.TimeRemaining;
 				TrialUsesRemaining = Tier7Trial.RemainingTrials ?? 0;
-				Username = Reflection.Client.GetBattleTag()?.Name ?? HSReplayNetOAuth.AccountData.Username;
-				UserState = UserState.Authenticated;
+				UserState = UserState.ValidPlayer;
 				return;
 			}
 
@@ -142,7 +175,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				UserState = UserState.Loading;
 			TrialTimeRemaining = null;
 			int? allTimeFromApi = null;
-			var acc = Reflection.Client.GetAccountId();
 			if(acc != null)
 			{
 				var response = await HSReplayNetOAuth.MakeRequest(c => c.GetAllTimeBGsMMR(acc.Hi, acc.Lo));
@@ -168,6 +200,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			Username = null;
 		}
 
+		public bool? IsAuthenticated { get; set; }
 		public ICommand SignInCommand => new Command(() => {
 			HSReplayNetHelper.TryAuthenticate().Forget();
 
@@ -182,7 +215,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		{
 			var url = Helper.BuildHsReplayNetUrl("battlegrounds/tier7/", "bgs_lobby_subscribe");
 			Helper.TryOpenUrl(url);
-			RefreshAccountVisibility = Visibility.Visible;
+			RefreshSubscriptionState = IsAuthenticated == true ? RefreshSubscriptionState.Refresh : RefreshSubscriptionState.SignIn;
 		});
 
 		public ICommand MyStatsCommand => new Command(() =>
@@ -210,9 +243,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 	public enum UserState
 	{
 		Loading,
-		Anonymous,
-		Authenticated,
+		UnknownPlayer,
+		ValidPlayer,
 		Subscribed,
 		Disabled
+	}
+
+	public enum RefreshSubscriptionState
+	{
+		Hidden,
+		SignIn,
+		Refresh,
 	}
 }

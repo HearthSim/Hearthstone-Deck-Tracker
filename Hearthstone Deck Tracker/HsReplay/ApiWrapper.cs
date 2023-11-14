@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.HsReplay.Data;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using HSReplay;
+using HSReplay.Requests;
 using HSReplay.Responses;
 using Newtonsoft.Json.Linq;
 
@@ -148,6 +149,59 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					TotalWinrate = totalWinrate ?? 0.0,
 					ClassWinrates = dict
 				};
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<PlayerTrialStatus?> GetPlayerTrialStatus(string name, ulong accountHi, ulong accountLo)
+		{
+			try
+			{
+				return await Client.GetPlayerTrialStatus(name, accountHi, accountLo);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<string?> ActivatePlayerTrial(string name, ulong accountHi, ulong accountLo)
+		{
+			try
+			{
+				var response = await Client.ActivatePlayerTrial(name, accountHi, accountLo);
+				return response?.Token;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<BattlegroundsQuestStats[]?> GetTier7QuestStats(string token, BattlegroundsQuestStatsParams parameters)
+		{
+			try
+			{
+				return await Client.GetTier7QuestStats(token, parameters);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<BattlegroundsSingleHeroPickStats[]?> GetTier7HeroPickStats(string token, BattlegroundsHeroPickStatsParams parameters)
+		{
+			try
+			{
+				return await Client.GetTier7HeroPickStats(token, parameters);
 			}
 			catch(Exception e)
 			{

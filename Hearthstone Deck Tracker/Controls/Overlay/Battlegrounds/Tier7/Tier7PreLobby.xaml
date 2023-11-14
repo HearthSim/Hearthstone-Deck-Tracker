@@ -98,8 +98,8 @@
                         <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Loading}" />
                     </StackPanel>
 
-                    <!-- Anonymous -->
-                    <StackPanel Width="182" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Anonymous}}">
+                    <!-- UnknownPlayer -->
+                    <StackPanel Width="182" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.UnknownPlayer}}">
                         <StackPanel Name="HoverTrigger" >
                             <Image Source="{StaticResource Tier7PreLobbySmall}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" Margin="0 -8 0 0" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="{StaticResource Tier7Black}">
@@ -112,11 +112,10 @@
                             </StackPanel>
                         </StackPanel>
                         <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Anonymous_Hover_Details}" Margin="0 8 0 0" />
-                        <Button Style="{StaticResource Tier7ButtonStyle}" Content="SIGN IN" Margin="0 8 0 0" Command="{Binding SignInCommand}"/>
                     </StackPanel>
 
-                    <!-- Authenticated -->
-                    <StackPanel Width="230" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Authenticated}}">
+                    <!-- ValidPlayer -->
+                    <StackPanel Width="230" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.ValidPlayer}}">
                         <TextBlock  Foreground="{StaticResource Tier7Orange}" FontWeight="SemiBold">
                         <Run Text="{lex:Loc BattlegroundsPreLobby_Welcome}"/>
                         <Run Text="{Binding Username}"/>!
@@ -139,7 +138,17 @@
                         </StackPanel>
                         <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Join}" TextWrapping="Wrap" Margin="0 8 0 0" />
                         <Button Style="{StaticResource Tier7ButtonStyle}" Content="SUBSCRIBE NOW" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}"/>
-                        <TextBlock Margin="0 8 0 0" Visibility="{Binding RefreshAccountVisibility}">
+
+                        <!-- Subscribed? Sign In -->
+                        <TextBlock Margin="0 8 0 0" Visibility="{Binding RefreshSubscriptionState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:RefreshSubscriptionState.SignIn}}">
+                        <Run Text="{lex:Loc BattlegroundsPreLobby_AlreadySubscribed}"/>
+                        <Hyperlink Command="{Binding SignInCommand}">
+                            <Run Text="{lex:Loc BattlegroundsPreLobby_SignInToSubscription}"/>
+                        </Hyperlink>
+                        </TextBlock>
+
+                        <!-- Subscribed? Refresh -->
+                        <TextBlock Margin="0 8 0 0" Visibility="{Binding RefreshSubscriptionState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:RefreshSubscriptionState.Refresh}}">
                         <Run Text="{lex:Loc BattlegroundsPreLobby_AlreadySubscribed}"/>
                         <Hyperlink Command="{Binding RefreshAccountCommand}" IsEnabled="{Binding RefreshAccountEnabled}">
                             <Run Text="{lex:Loc BattlegroundsPreLobby_RefreshSubscription}"/>

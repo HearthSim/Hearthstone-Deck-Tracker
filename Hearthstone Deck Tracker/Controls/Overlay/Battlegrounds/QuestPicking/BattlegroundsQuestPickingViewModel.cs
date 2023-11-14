@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 
 			// The trial would have been activated at hero picking. If it is
 			// not active we do not try to activate it here.
-			if(!userOwnsTier7 && !Tier7Trial.IsActive)
+			if(!userOwnsTier7 && Tier7Trial.Token == null)
 				return;
 
 			if(_entities.Count != ExpectedQuestCount())
@@ -94,7 +94,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				return;
 			}
 
-			var questData = await HSReplayNetOAuth.MakeRequest(c => c.GetTier7QuestStats(requestParams));;
+			var questData = Tier7Trial.Token != null
+				? await ApiWrapper.GetTier7QuestStats(Tier7Trial.Token, requestParams)
+				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7QuestStats(requestParams));
 			if(questData == null)
 			{
 				Message.Error();
