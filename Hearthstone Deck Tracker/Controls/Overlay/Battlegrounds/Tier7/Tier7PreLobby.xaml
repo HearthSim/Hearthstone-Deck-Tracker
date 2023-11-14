@@ -17,7 +17,6 @@
     </d:UserControl.DataContext>
 
     <UserControl.Resources>
-        <local:UserStateToVisibilityConverter x:Key="EnumToVisibility"/>
         <Style TargetType="TextBlock">
             <Style.Setters>
                 <Setter Property="Foreground" Value="White"/>

@@ -215,14 +215,4 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		Subscribed,
 		Disabled
 	}
-
-	public class UserStateToVisibilityConverter : IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			return (value as UserState?)== (parameter as UserState?) ? Visibility.Visible : Visibility.Collapsed;
-		}
-
-		public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
-	}
 }
