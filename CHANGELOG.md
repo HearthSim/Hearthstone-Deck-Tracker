@@ -1,3 +1,8 @@
+## **Release v1.23.1 - 2023-11-15**
+**Fixes**:
+- Fixed an issue causing the secret tracker to show Wild secrets in Standard.
+- Fixed the HSReplay.net settings not showing Tier7 subscriptions.
+
 ## **Release v1.23.0 - 2023-11-14**
 **Updated for the release of Showdown in the Badlands**
 
