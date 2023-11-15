@@ -119,12 +119,12 @@
                     <!-- Authenticated -->
                     <StackPanel Width="230" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Authenticated}}">
                         <TextBlock  Foreground="{StaticResource Tier7Orange}" FontWeight="SemiBold">
-                        <Run Text="{lex:Loc BattlegroundsPreLobby_Authenticated_Welcome}"/>
+                        <Run Text="{lex:Loc BattlegroundsPreLobby_Welcome}"/>
                         <Run Text="{Binding Username}"/>!
                         </TextBlock>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 8 0 0">
                             <TextBlock FontWeight="SemiBold" Margin="0 0 8 0">
-                            <Run Text="{lex:Loc BattlegroundsPreLobby_Authenticated_TrialsRemaining}"/>
+                            <Run Text="{lex:Loc BattlegroundsPreLobby_TrialsRemaining}"/>
                             <Run Text="{Binding TrialUsesRemaining}"/>
                             </TextBlock>
                             <Border Width="18" Height="18" BorderBrush="White" Background="{StaticResource Tier7Black}" BorderThickness="1" CornerRadius="18"
@@ -134,16 +134,16 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ResetTimeVisibility}">
                             <TextBlock>
-                            <Run Text="{lex:Loc BattlegroundsPreLobby_Authenticated_TrialsResetsIn}" />
+                            <Run Text="{lex:Loc BattlegroundsPreLobby_TrialsResetsIn}" />
                             <Bold><Run Text="{Binding TrialTimeRemaining}" /></Bold>
                             </TextBlock>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Authenticated_Join}" TextWrapping="Wrap" Margin="0 8 0 0" />
+                        <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Join}" TextWrapping="Wrap" Margin="0 8 0 0" />
                         <Button Style="{StaticResource Tier7ButtonStyle}" Content="SUBSCRIBE NOW" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}"/>
                         <TextBlock Margin="0 8 0 0" Visibility="{Binding RefreshAccountVisibility}">
-                        <Run Text="Subscribed?"/>
+                        <Run Text="{lex:Loc BattlegroundsPreLobby_AlreadySubscribed}"/>
                         <Hyperlink Command="{Binding RefreshAccountCommand}" IsEnabled="{Binding RefreshAccountEnabled}">
-                            <Run Text="Refresh"/>
+                            <Run Text="{lex:Loc BattlegroundsPreLobby_RefreshSubscription}"/>
                         </Hyperlink>
                         </TextBlock>
                     </StackPanel>
