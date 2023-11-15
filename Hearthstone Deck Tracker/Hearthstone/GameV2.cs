@@ -138,17 +138,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		private FormatType _currentFormat = FormatType.FT_UNKNOWN;
-		public FormatType CurrentFormatType => _currentFormat;
-		public Format? CurrentFormat
+		private FormatType _currentFormatType = FormatType.FT_UNKNOWN;
+		public FormatType CurrentFormatType
 		{
 			get
 			{
-				if(_currentFormat == FormatType.FT_UNKNOWN)
-					_currentFormat = (FormatType)HearthMirror.Reflection.Client.GetFormat();
-				return HearthDbConverter.GetFormat(_currentFormat);
+				if(_currentFormatType == FormatType.FT_UNKNOWN)
+					_currentFormatType = (FormatType)HearthMirror.Reflection.Client.GetFormat();
+				return _currentFormatType;
 			}
 		}
+
+		public Format? CurrentFormat => HearthDbConverter.GetFormat(CurrentFormatType);
 
 		public Mode PreviousMode { get; set; }
 
@@ -287,7 +288,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_spectator = null;
 			_currentGameMode = GameMode.None;
 			_currentGameType = GameType.GT_UNKNOWN;
-			_currentFormat = FormatType.FT_UNKNOWN;
+			_currentFormatType = FormatType.FT_UNKNOWN;
 			if(!IsInMenu && resetStats)
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 			PowerLog.Clear();
