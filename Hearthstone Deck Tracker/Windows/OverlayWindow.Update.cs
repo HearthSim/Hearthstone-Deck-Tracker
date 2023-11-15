@@ -221,6 +221,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var showPlayerGalakrondCounter = WotogCounterHelper.ShowPlayerGalakrondCounter;
 			var showPlayerLibramCounter = WotogCounterHelper.ShowPlayerLibramCounter;
 			var showPlayerAbyssalCurseCounter = WotogCounterHelper.ShowPlayerAbyssalCurseCounter;
+			var showPlayerExcavateTier = WotogCounterHelper.ShowPlayerExcavateTier;
 			if(showPlayerCthunCounter)
 			{
 				var player = Core.Game.PlayerEntity;
@@ -239,6 +240,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsPlayer.Libram = WotogCounterHelper.PlayerLibramCounter.ToString();
 			if(showPlayerAbyssalCurseCounter)
 				WotogIconsPlayer.AbyssalCurse = WotogCounterHelper.PlayerAbyssalCurseCounter.ToString();
+			if(showPlayerExcavateTier)
+				WotogIconsPlayer.ExcavateTier = _game.PlayerEntity?.GetTag(GameTag.CURRENT_EXCAVATE_TIER) ?? 0;
 			WotogIconsPlayer.CthunCounterStyle = showPlayerCthunCounter ? Full : None;
 			WotogIconsPlayer.SpellCounterStyle = showPlayerSpellsCounter ? Full : None;
 			WotogIconsPlayer.JadeCounterStyle = showPlayerJadeCounter ? Full : None;
@@ -246,6 +249,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			WotogIconsPlayer.GalakrondCounterStyle = showPlayerGalakrondCounter ? Full : None;
 			WotogIconsPlayer.LibramCounterStyle = showPlayerLibramCounter ? Full : None;
 			WotogIconsPlayer.AbyssalCounterStyle = showPlayerAbyssalCurseCounter ? Full : None;
+			WotogIconsPlayer.ExcavateTierStyle = showPlayerExcavateTier ? Full : None;
 
 			var showOpponentCthunCounter = WotogCounterHelper.ShowOpponentCthunCounter;
 			var showOpponentSpellCounter = WotogCounterHelper.ShowOpponentSpellCounter;
@@ -254,6 +258,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var showOpponentGalakrondCounter = WotogCounterHelper.ShowOpponentGalakrondCounter;
 			var showOpponentLibramCounter = WotogCounterHelper.ShowOpponentLibramCounter;
 			var showOpponentAbyssalCurseCounter = WotogCounterHelper.ShowOpponentAbyssalCurseCounter;
+			var showOpponentExcavateCounter = WotogCounterHelper.ShowOpponentExcavateCounter;
 			if(showOpponentCthunCounter)
 			{
 				var player = Core.Game.OpponentEntity;
@@ -272,6 +277,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsOpponent.Libram = WotogCounterHelper.OpponentLibramCounter.ToString();
 			if(showOpponentAbyssalCurseCounter)
 				WotogIconsOpponent.AbyssalCurse = WotogCounterHelper.OpponentAbyssalCurseCounter.ToString();
+			if(showOpponentExcavateCounter)
+				WotogIconsOpponent.Excavate = (_game.OpponentEntity?.GetTag((GameTag)2822) ?? 0).ToString();
 			WotogIconsOpponent.CthunCounterStyle = showOpponentCthunCounter ? Full : None;
 			WotogIconsOpponent.SpellCounterStyle = showOpponentSpellCounter ? Full : None;
 			WotogIconsOpponent.JadeCounterStyle = showOpponentJadeCounter ? Full : None;
@@ -279,6 +286,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			WotogIconsOpponent.GalakrondCounterStyle = showOpponentGalakrondCounter ? Full : None;
 			WotogIconsOpponent.LibramCounterStyle = showOpponentLibramCounter ? Full : None;
 			WotogIconsOpponent.AbyssalCounterStyle = showOpponentAbyssalCurseCounter ? Full : None;
+			WotogIconsOpponent.ExcavateCounterStyle = showOpponentExcavateCounter ? Full : None;
 		}
 
 		public void UpdatePosition()

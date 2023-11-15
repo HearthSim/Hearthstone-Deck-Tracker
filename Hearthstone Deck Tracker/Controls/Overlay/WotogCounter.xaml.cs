@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -20,6 +21,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private string _galakrond = "0";
 		private string _libram = "0";
 		private string _abyssalCurse = "0";
+		private string _excavate = "0";
+		private int _excavateTier = 0;
 
 		private WotogCounterStyle _cthunCounterStyle;
 		private WotogCounterStyle _spellCounterStyle;
@@ -28,6 +31,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private WotogCounterStyle _galakrondCounterStyle;
 		private WotogCounterStyle _libramCounterStyle;
 		private WotogCounterStyle _abyssalCounterStyle;
+		private WotogCounterStyle _excavateTierStyle;
+		private WotogCounterStyle _excavateCounterStyle;
 
 		public WotogCounter()
 		{
@@ -129,6 +134,43 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		public string Excavate
+		{
+			get { return _excavate; }
+			set
+			{
+				if(value == _excavate)
+					return;
+				_excavate = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int ExcavateTier
+		{
+			get { return _excavateTier; }
+			set
+			{
+				if(value == _excavateTier)
+					return;
+				_excavateTier = value;
+				OnPropertyChanged();
+				OnPropertyChanged("ExcavateTierLabel");
+			}
+		}
+
+		public string ExcavateTierLabel
+		{
+			get => ExcavateTier switch
+				{
+					0 => LocUtil.Get("Counter_Excavate_Tier0", useCardLanguage: true),
+					1 => LocUtil.Get("Counter_Excavate_Tier1", useCardLanguage: true),
+					2 => LocUtil.Get("Counter_Excavate_Tier2", useCardLanguage: true),
+					3 => LocUtil.Get("Counter_Excavate_Tier3", useCardLanguage: true),
+					_ => (ExcavateTier + 1).ToString()
+				};
+		}
+
 		public WotogCounterStyle CthunCounterStyle
 		{
 			get { return _cthunCounterStyle; }
@@ -212,7 +254,31 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public int IconWidth => 145;
+		public WotogCounterStyle ExcavateTierStyle
+		{
+			get { return _excavateTierStyle; }
+			set
+			{
+				if(value == _excavateTierStyle)
+					return;
+				_excavateTierStyle = value;
+				OnPropertyChanged(nameof(ExcavateTierVisibility));
+			}
+		}
+
+		public WotogCounterStyle ExcavateCounterStyle
+		{
+			get { return _excavateCounterStyle; }
+			set
+			{
+				if(value == _excavateCounterStyle)
+					return;
+				_excavateCounterStyle = value;
+				OnPropertyChanged(nameof(ExcavateVisibility));
+			}
+		}
+
+		public int IconWidth => ExcavateCounterStyle == WotogCounterStyle.Full ? 226 : 145;
 		public Visibility CthunVisibility => _forceShow || CthunCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility SpellsVisibility => !_forceShow && SpellCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility JadeVisibility => !_forceShow && JadeCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
@@ -220,6 +286,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public Visibility GalakrondVisibility => !_forceShow && GalakrondCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility LibramVisibility => !_forceShow && LibramCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility AbyssalVisibility => !_forceShow && AbyssalCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility ExcavateVisibility => !_forceShow && ExcavateCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility ExcavateTierVisibility => !_forceShow && ExcavateTierStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -239,6 +307,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			OnPropertyChanged(nameof(GalakrondVisibility));
 			OnPropertyChanged(nameof(LibramVisibility));
 			OnPropertyChanged(nameof(AbyssalVisibility));
+			OnPropertyChanged(nameof(ExcavateVisibility));
+			OnPropertyChanged(nameof(ExcavateTierVisibility));
 		}
 	}
 

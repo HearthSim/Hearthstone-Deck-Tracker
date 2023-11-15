@@ -6,6 +6,7 @@ using System;
 using static HearthDb.Enums.GameTag;
 using System.Collections.Generic;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Utility
 {
@@ -85,6 +86,24 @@ namespace Hearthstone_Deck_Tracker.Utility
 				}))
 			);
 
+		public static bool ShowPlayerExcavateTier => !Core.Game.IsInMenu && (
+			Config.Instance.PlayerExcavateTierCounter == DisplayMode.Always
+				|| (Config.Instance.PlayerExcavateTierCounter == DisplayMode.Auto && InDeckAndHand(new[] {
+					CardIds.Collectible.Rogue.BloodrockCoShovel,
+					CardIds.Collectible.Warlock.Smokestack,
+					CardIds.Collectible.Mage.Cryopreservation,
+					CardIds.Collectible.Neutral.KoboldMiner,
+					CardIds.Collectible.Warrior.BlastCharge,
+					CardIds.Collectible.Deathknight.ReapWhatYouSow,
+					CardIds.Collectible.Warrior.ReinforcedPlating,
+					CardIds.Collectible.Rogue.DrillyTheKid,
+					CardIds.Collectible.Warlock.MoargDrillfist,
+					CardIds.Collectible.Deathknight.SkeletonCrew,
+					CardIds.Collectible.Neutral.BurrowBuster,
+					CardIds.Collectible.Mage.BlastmageMiner
+				}))
+			);
+
 		public static bool ShowPlayerJadeCounter => !Core.Game.IsInMenu && (Config.Instance.PlayerJadeCounter == DisplayMode.Always
 					|| Config.Instance.PlayerJadeCounter == DisplayMode.Auto && PlayerSeenJade);
 
@@ -105,6 +124,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static bool ShowOpponentAbyssalCurseCounter => !Core.Game.IsInMenu && (
 			Config.Instance.OpponentAbyssalCurseCounter == DisplayMode.Always
 				|| (Config.Instance.OpponentAbyssalCurseCounter == DisplayMode.Auto && Core.Game.Opponent.AbyssalCurseCount > 0));
+		public static bool ShowOpponentExcavateCounter => !Core.Game.IsInMenu && (
+			Config.Instance.OpponentExcavateCounter == DisplayMode.Always
+				|| (Config.Instance.OpponentExcavateCounter == DisplayMode.Auto && (Core.Game.OpponentEntity?.GetTag((GameTag)2822) ?? 0) > 0));
 
 		private static bool InDeckOrKnown(string cardId)
 		{

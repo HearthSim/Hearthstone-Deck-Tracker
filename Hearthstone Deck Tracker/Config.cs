@@ -413,6 +413,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode OpponentAbyssalCurseCounter = DisplayMode.Auto;
 
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode OpponentExcavateCounter = DisplayMode.Auto;
+
 		[DefaultValue(false)]
 		public bool HideOpponentCardAge = false;
 
@@ -463,6 +466,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode PlayerAbyssalCurseCounter = DisplayMode.Auto;
+
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode PlayerExcavateTierCounter = DisplayMode.Auto;
 
 		[DefaultValue(false)]
 		public bool HidePlayerCards = false;

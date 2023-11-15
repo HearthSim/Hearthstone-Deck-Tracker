@@ -79,6 +79,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			ComboBoxLibram.SelectedItem = Config.Instance.PlayerLibramCounter;
 			ComboBoxAbyssal.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxAbyssal.SelectedItem = Config.Instance.PlayerAbyssalCurseCounter;
+			ComboBoxExcavateTier.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
+			ComboBoxExcavateTier.SelectedItem = Config.Instance.PlayerExcavateTierCounter;
 
 			ElementSorterPlayer.IsPlayer = true;
 			SetPanel();
@@ -349,6 +351,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.PlayerAbyssalCurseCounter = (DisplayMode)ComboBoxAbyssal.SelectedItem;
+			Config.Save();
+		}
+
+		private void ComboBoxExcavateTier_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.PlayerExcavateTierCounter = (DisplayMode)ComboBoxExcavateTier.SelectedItem;
 			Config.Save();
 		}
 	}
