@@ -1,3 +1,10 @@
+## **Release v1.23.0 - 2023-11-14**
+**Updated for the release of Showdown in the Badlands**
+
+**New**:
+- Added Excavate counters.
+- Added support for a number of older cards.
+
 ## **Release v1.22.12 - 2023-11-08**
 **Updated for Hearthstone 28.0**
 
