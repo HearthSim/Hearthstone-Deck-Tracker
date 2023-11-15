@@ -88,14 +88,14 @@
                     </TextBlock>
                 </StackPanel>
                 <controls:StatusIndicator Grid.Row="4" Grid.Column="0"
-                                          Success="{Binding IsPremiumUser, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                          Success="{Binding HasSubscription, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 <StackPanel Grid.Row="4" Grid.Column="1">
-                    <TextBlock Text="{lex:Loc Options_HSReplay_Account_Premium}"/>
-                    <TextBlock Text="{lex:Loc Options_HSReplay_Account_Premium_Subscribed}" FontSize="12" Foreground="#FFB00D"
-                               Visibility="{Binding IsPremiumUser, Converter={StaticResource BoolToVisibility}}"/>
-                    <TextBlock FontSize="12" Visibility="{Binding IsPremiumUser, Converter={StaticResource InverseBoolToVisibility}}">
+                    <TextBlock Text="{Binding SubscriptionStatusText}"/>
+                    <TextBlock Text="{lex:Loc Options_HSReplay_Account_Subscription_Thanks}" FontSize="12" Foreground="#FFB00D"
+                               Visibility="{Binding HasSubscription, Converter={StaticResource BoolToVisibility}}"/>
+                    <TextBlock FontSize="12" Visibility="{Binding HasSubscription, Converter={StaticResource InverseBoolToVisibility}}">
                         <Hyperlink Command="{Binding PremiumInfoCommand}">
-                            <Run Text="{lex:Loc Options_HSReplay_Account_Premium_NotSubscribed}"/>
+                            <Run Text="{lex:Loc Options_HSReplay_Account_Subscription_LearnMore}"/>
                         </Hyperlink>
                     </TextBlock>
                 </StackPanel>

@@ -44,7 +44,35 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 		public Visibility LoginInfoVisibility =>
 			Account.Instance.Status == Anonymous && !HSReplayNetOAuth.IsFullyAuthenticated ? Visible : Collapsed;
 
-		public bool IsPremiumUser => HSReplayNetOAuth.AccountData?.IsPremium ?? false;
+		public bool HasSubscription => Subscriptions != SubscriptionStatus.None;
+
+		public string SubscriptionStatusText => Subscriptions switch
+		{
+			SubscriptionStatus.Premium => LocUtil.Get("Options_HSReplay_Account_Subscription_Premium"),
+			SubscriptionStatus.Tier7 => LocUtil.Get("Options_HSReplay_Account_Subscription_Tier7"),
+			SubscriptionStatus.Bundle => LocUtil.Get("Options_HSReplay_Account_Subscription_Bundle"),
+			_ => LocUtil.Get("Options_HSReplay_Account_Subscription_Generic"),
+		};
+
+		public SubscriptionStatus Subscriptions
+		{
+			get
+			{
+				var isPremium = HSReplayNetOAuth.AccountData?.IsPremium == true;
+				var isTier7 = HSReplayNetOAuth.AccountData?.IsTier7 == true;
+
+				if(isPremium && isTier7)
+					return SubscriptionStatus.Bundle;
+
+				if(isPremium)
+					return SubscriptionStatus.Premium;
+
+				if(isTier7)
+					return SubscriptionStatus.Tier7;
+
+				return SubscriptionStatus.None;
+			}
+		}
 
 		public Visibility LogoutWarningVisibility => LogoutTriggered ? Visible : Collapsed;
 
@@ -131,7 +159,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			OnPropertyChanged(nameof(IsAuthenticated));
 			OnPropertyChanged(nameof(ReplaysClaimedVisibility));
 			OnPropertyChanged(nameof(LoginInfoVisibility));
-			OnPropertyChanged(nameof(IsPremiumUser));
+			OnPropertyChanged(nameof(Subscriptions));
+			OnPropertyChanged(nameof(HasSubscription));
+			OnPropertyChanged(nameof(SubscriptionStatusText));
 			OnPropertyChanged(nameof(UploadTokenUnclaimed));
 		}
 
@@ -141,6 +171,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public enum SubscriptionStatus
+		{
+			None,
+			Premium,
+			Tier7,
+			Bundle
 		}
 	}
 }
