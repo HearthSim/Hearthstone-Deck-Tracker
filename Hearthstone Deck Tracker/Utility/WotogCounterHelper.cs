@@ -83,6 +83,11 @@ namespace Hearthstone_Deck_Tracker.Utility
 					CardIds.Collectible.Priest.GraveHorror,
 					CardIds.Collectible.Druid.UmbralOwlDARKMOON_FAIRE,
 					CardIds.Collectible.Druid.UmbralOwlPLACEHOLDER_202204,
+					CardIds.Collectible.Neutral.YoggSaronMasterOfFate,
+					CardIds.Collectible.Demonhunter.SaroniteShambler,
+					CardIds.Collectible.Druid.ContaminatedLasher,
+					CardIds.Collectible.Mage.MeddlesomeServant,
+					CardIds.Collectible.Neutral.PrisonBreaker,
 				}))
 			);
 
