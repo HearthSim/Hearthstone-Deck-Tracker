@@ -1639,6 +1639,9 @@ namespace Hearthstone_Deck_Tracker
 			var card = Database.GetCardFromId(cardId);
 			if(card != null)
 				GameEvents.OnOpponentSecretTriggered.Execute(card);
+			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
+				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())
+					?.UpdateSecret(entity);
 		}
 
 		public void HandleOpponentDeckDiscard(Entity entity, string? cardId, int turn)

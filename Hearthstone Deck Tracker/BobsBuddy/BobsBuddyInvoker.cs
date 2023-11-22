@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
 		private static List<Entity> _currentOpponentSecrets = new List<Entity>();
+		private static Dictionary<Entity, Entity> _opponentSecretMap = new ();
 
 		private List<Entity> _opponentHand = new();
 		private readonly Dictionary<Entity, Entity> _opponentHandMap = new();
@@ -53,7 +54,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
 		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
-		private bool RunSimulationAfterCombat => _currentOpponentSecrets.Any();
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
 		{
@@ -169,20 +169,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 
 				DebugLog("Setting UI state to combat...");
-				if(RunSimulationAfterCombat)
-				{
-					State = BobsBuddyState.CombatWithoutSimulation;
-					BobsBuddyDisplay.SetState(BobsBuddyState.CombatWithoutSimulation);
-				}
-				else
-					BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
+				BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
 				BobsBuddyDisplay.ResetText();
 
 				if(_input != null && ((_input.PlayerHeroPower.CardId == RebornRite && _input.PlayerHeroPower.IsActivated) || (_input.OpponentHeroPower.CardId == RebornRite && _input.OpponentHeroPower.IsActivated)))
 					await Task.Delay(LichKingDelay);
 
-				if(!RunSimulationAfterCombat)
-					await RunAndDisplaySimulationAsync();
+				await RunAndDisplaySimulationAsync();
 			}
 			catch(Exception e)
 			{
@@ -244,14 +237,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				BobsBuddyDisplay.SetLastOutcome(GetLastCombatDamageDealt());
 				BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
-				if(!RunSimulationAfterCombat)
-				{
-					DebugLog("Setting UI state to shopping");
-				}
-				else
-				{
-					await RunAndDisplaySimulationAsync();
-				}
+				DebugLog("Setting UI state to shopping");
 
 				ValidateSimulationResultAsync().Forget();
 			}
@@ -440,7 +426,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				});
 			}
 
-			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfId).ToList(), true);
+			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => (int?)x.Card.DbfId).ToList(), true);
 
 			input.SetTurn(turn);
 
@@ -514,6 +500,24 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		}
 
 		private int _reRunCount;
+
+		private async Task TryRerun()
+		{
+			if(_reRunCount++ <= 10)
+			{
+				DebugLog($"Input changed, re-running simulation! (#{_reRunCount})");
+				if(ShouldRun())
+				{
+					var expandAfterError = ErrorState == BobsBuddyErrorState.None && Config.Instance.ShowBobsBuddyDuringCombat;
+					ErrorState = BobsBuddyErrorState.None;
+					BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.None, null, BobsBuddyDisplay.ResultsPanelExpanded || expandAfterError);
+					await RunAndDisplaySimulationAsync();
+				}
+			}
+			else
+				DebugLog("Input changed, but the simulation already re-ran ten times");
+		}
+
 		internal async void UpdateOpponentHand(Entity entity, Entity copy)
 		{
 			if(_input == null || State != BobsBuddyState.Combat)
@@ -535,19 +539,20 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_input.OpponentHand.Clear();
 			_input.OpponentHand.AddRange(entities);
 
-			if(_reRunCount++ <= 10)
-			{
-				DebugLog($"Opponent hand changed, re-running simulation! (#{_reRunCount})");
-				if(ShouldRun() && !RunSimulationAfterCombat)
+			await TryRerun();
+		}
+
+		internal async void UpdateSecret(Entity entity)
+		{
+			_currentOpponentSecrets = _currentOpponentSecrets.Select(x => {
+				if(_opponentSecretMap.TryGetValue(x, out var retval))
 				{
-					var expandAfterError = ErrorState == BobsBuddyErrorState.None && Config.Instance.ShowBobsBuddyDuringCombat;
-					ErrorState = BobsBuddyErrorState.None;
-					BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.None, null, BobsBuddyDisplay.ResultsPanelExpanded || expandAfterError);
-					await RunAndDisplaySimulationAsync();
+					return retval;
 				}
-			}
-			else
-				DebugLog("Opponent hand changed, but the simulation already re-ran twice");
+				return entity;
+			}).ToList();
+
+			await TryRerun();
 		}
 
 		private IEnumerable<CardEntity> GetOpponentHandEntities(Simulator simulator)
@@ -590,11 +595,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			try
 			{
-				if(RunSimulationAfterCombat)
-				{
-					_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Where(x => x != null && !string.IsNullOrEmpty(x.CardId)).Select(x => x.Card.DbfId).ToList(), false);
-					DebugLog($"Set opponent to Akazamarak with {_input.OpponentSecrets.Count} S.");
-				}
+				_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Select(x => x != null && !string.IsNullOrEmpty(x.CardId) ? (int?)x.Card.DbfId : null).ToList(), false);
+				DebugLog($"Set opponent S. with {_input.OpponentSecrets.Count} S.");
 
 				DebugLog("----- Simulation Input -----");
 				DebugLog($"Player: heroPower={_input.PlayerHeroPower.CardId}, used={_input.PlayerHeroPower.IsActivated}, data={_input.PlayerHeroPower.Data}");
