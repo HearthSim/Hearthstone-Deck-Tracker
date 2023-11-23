@@ -202,7 +202,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			try
 			{
 				var assembly = Assembly.LoadFrom(pFileName);
-				var hasProhibitedImport = assembly.GetTypes().Any(t => t.GetMethods()
+				var hasProhibitedImport = assembly.GetTypes().Any(t => t.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
 					.Any(m => m.GetCustomAttributes<DllImportAttribute>()
 					.Any(a => _prohibitedImports.Contains(a.Value))));
 				if(hasProhibitedImport)
