@@ -1,3 +1,14 @@
+## **Release v1.23.2 - 2023-11-22**
+**New**:
+- Added a spell school counter!
+
+**Fixes**
+- Fixed an issue where Sigils were not treated as spells.
+
+**Bob's Buddy**:
+- Improved secret handling by showing the odds immediately and recalculating whenever secrets are revealed (similar to Free-Flying Feathermane).
+- Fixed an issue where Admiral Eliza Goreblade was not simulated correctly.
+
 ## **Release v1.23.1 - 2023-11-15**
 **Fixes**:
 - Fixed an issue causing the secret tracker to show Wild secrets in Standard.
