@@ -1193,6 +1193,12 @@ namespace Hearthstone_Deck_Tracker
 					if(card != null)
 						GameEvents.OnPlayerPlay.Execute(card);
 				}
+				else if(entity.IsSigil)
+				{
+					_game.Player.SigilPlayedFromHand(entity, turn);
+					if(card != null)
+						GameEvents.OnPlayerPlay.Execute(card);
+				}
 				return;
 			}
 
@@ -1548,6 +1554,12 @@ namespace Hearthstone_Deck_Tracker
 				if(entity.IsQuest && !entity.IsQuestlinePart || entity.IsSideQuest)
 				{
 					_game.Opponent.QuestPlayedFromHand(entity, turn);
+					if(card != null)
+						GameEvents.OnOpponentPlay.Execute(card);
+				}
+				else if(entity.IsSigil)
+				{
+					_game.Opponent.SigilPlayedFromHand(entity, turn);
 					if(card != null)
 						GameEvents.OnOpponentPlay.Execute(card);
 				}
