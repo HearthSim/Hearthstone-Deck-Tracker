@@ -1,4 +1,4 @@
-## **Release v1.23.2 - 2023-11-23**
+## **Release v1.23.3 - 2023-11-23**
 **New**:
 - Added a spell school counter!
 
