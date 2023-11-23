@@ -92,6 +92,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			ComboBoxGalakrond.SelectedItem = Config.Instance.OpponentGalakrondCounter;
 			ComboBoxLibram.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxLibram.SelectedItem = Config.Instance.OpponentLibramCounter;
+			ComboBoxSpellSchools.ItemsSource = new[] { DisplayMode.Always, DisplayMode.Never };
+			ComboBoxSpellSchools.SelectedItem = Config.Instance.OpponentSpellsCounter;
 			ComboBoxAbyssal.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxAbyssal.SelectedItem = Config.Instance.OpponentAbyssalCurseCounter;
 			ComboBoxExcavate.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
@@ -378,6 +380,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.OpponentLibramCounter = (DisplayMode)ComboBoxLibram.SelectedItem;
+			Config.Save();
+		}
+
+		private void ComboBoxSpellSchools_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OpponentSpellSchoolsCounter = (DisplayMode)ComboBoxSpellSchools.SelectedItem;
 			Config.Save();
 		}
 

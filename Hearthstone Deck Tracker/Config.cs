@@ -410,6 +410,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode OpponentLibramCounter = DisplayMode.Auto;
 
+		[DefaultValue(DisplayMode.Never)]
+		public DisplayMode OpponentSpellSchoolsCounter = DisplayMode.Never;
+
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode OpponentAbyssalCurseCounter = DisplayMode.Auto;
 
