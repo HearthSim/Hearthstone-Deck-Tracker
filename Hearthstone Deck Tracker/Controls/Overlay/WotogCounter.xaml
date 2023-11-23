@@ -55,5 +55,9 @@
             <Image Source="/HearthstoneDeckTracker;component/Images/icon-excavate-tier.png" RenderOptions.BitmapScalingMode="Fant"/>
             <hearthstoneDeckTracker:CounterTextBlock Text="{Binding ExcavateTierLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="120" TextAlignment="Center" Margin="83,28,28,27"/>
         </Grid>
+        <Grid Visibility="{Binding SpellSchoolsVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="2,0,2,0">
+            <Image Source="/HearthstoneDeckTracker;component/Images/icon-spell-schools.png" RenderOptions.BitmapScalingMode="Fant"/>
+            <hearthstoneDeckTracker:CounterTextBlock Text="{Binding SpellSchoolsLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="166" TextAlignment="Center" Margin="92,19,36,17"/>
+        </Grid>
     </StackPanel>
 </UserControl>

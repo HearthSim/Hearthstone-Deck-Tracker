@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string? LastDiedMinionCardId { get; set; }
 		public string? LastDrawnCardId { get; set; }
 		public int LibramReductionCount { get; private set; }
+		public HashSet<SpellSchool> PlayedSpellSchools { get; private set; } = new HashSet<SpellSchool>();
 		public int AbyssalCurseCount { get; private set; }
 
 		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinCore);
@@ -400,6 +401,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CardsPlayedThisTurn.Clear();
 			LastDrawnCardId = null;
 			LibramReductionCount = 0;
+			PlayedSpellSchools.Clear();
 			AbyssalCurseCount = 0;
 			PastHeroPowers.Clear();
 		}
@@ -447,6 +449,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					break;
 				case (int)CardType.SPELL:
 					SpellsPlayedCount++;
+					if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var spellSchoolTag))
+						PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
 					break;
 			}
 			entity.Info.Hidden = false;
@@ -602,6 +606,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			entity.Info.Turn = turn;
 			SpellsPlayedCount++;
+			if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var spellSchoolTag))
+				PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
 			//Log(entity);
 		}
 
@@ -616,6 +622,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			entity.Info.Turn = turn;
 			SpellsPlayedCount++;
+			if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var spellSchoolTag))
+				PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
 			//Log(entity);
 		}
 

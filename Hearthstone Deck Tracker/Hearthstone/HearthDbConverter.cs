@@ -110,22 +110,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public static string? GetLocalizedRace(Race race) => race switch
-			{
-				Race.DEMON => LocUtil.Get("Race_Demon", useCardLanguage: true),
-				Race.MECHANICAL => LocUtil.Get("Race_Mechanical", useCardLanguage: true),
-				Race.BEAST => LocUtil.Get("Race_Beast", useCardLanguage: true),
-				Race.DRAGON => LocUtil.Get("Race_Dragon", useCardLanguage: true),
-				Race.MURLOC => LocUtil.Get("Race_Murloc", useCardLanguage: true),
-				Race.PIRATE => LocUtil.Get("Race_Pirate", useCardLanguage: true),
-				Race.ELEMENTAL => LocUtil.Get("Race_Elemental", useCardLanguage: true),
-				Race.QUILBOAR => LocUtil.Get("Race_Quilboar", useCardLanguage: true),
-				Race.NAGA => LocUtil.Get("Race_Naga", useCardLanguage: true),
-				Race.UNDEAD => LocUtil.Get("Race_Undead", useCardLanguage: true),
-				Race.TOTEM => LocUtil.Get("Race_Totem", useCardLanguage: true),
-				Race.ALL => LocUtil.Get("Race_All", useCardLanguage: true),
-				Race.INVALID => LocUtil.Get("Race_Other", useCardLanguage: true),
-				_ => RaceConverter(race),
-			};
+		{
+			Race.DEMON => LocUtil.Get("Race_Demon", useCardLanguage: true),
+			Race.MECHANICAL => LocUtil.Get("Race_Mechanical", useCardLanguage: true),
+			Race.BEAST => LocUtil.Get("Race_Beast", useCardLanguage: true),
+			Race.DRAGON => LocUtil.Get("Race_Dragon", useCardLanguage: true),
+			Race.MURLOC => LocUtil.Get("Race_Murloc", useCardLanguage: true),
+			Race.PIRATE => LocUtil.Get("Race_Pirate", useCardLanguage: true),
+			Race.ELEMENTAL => LocUtil.Get("Race_Elemental", useCardLanguage: true),
+			Race.QUILBOAR => LocUtil.Get("Race_Quilboar", useCardLanguage: true),
+			Race.NAGA => LocUtil.Get("Race_Naga", useCardLanguage: true),
+			Race.UNDEAD => LocUtil.Get("Race_Undead", useCardLanguage: true),
+			Race.TOTEM => LocUtil.Get("Race_Totem", useCardLanguage: true),
+			Race.ALL => LocUtil.Get("Race_All", useCardLanguage: true),
+			Race.INVALID => LocUtil.Get("Race_Other", useCardLanguage: true),
+			_ => RaceConverter(race),
+		};
+
+		public static string? GetLocalizedSpellSchool(SpellSchool spellSchool) => spellSchool switch
+		{
+			SpellSchool.NONE => null,
+			SpellSchool.ARCANE => LocUtil.Get("Spell_School_Arcane", useCardLanguage: true),
+			SpellSchool.FIRE => LocUtil.Get("Spell_School_Fire", useCardLanguage: true),
+			SpellSchool.FROST => LocUtil.Get("Spell_School_Frost", useCardLanguage: true),
+			SpellSchool.HOLY => LocUtil.Get("Spell_School_Holy", useCardLanguage: true),
+			SpellSchool.NATURE => LocUtil.Get("Spell_School_Nature", useCardLanguage: true),
+			SpellSchool.SHADOW => LocUtil.Get("Spell_School_Shadow", useCardLanguage: true),
+			SpellSchool.FEL => LocUtil.Get("Spell_School_Fel", useCardLanguage: true),
+			SpellSchool.PHYSICAL_COMBAT => LocUtil.Get("Spell_School_Physical_Combat", useCardLanguage: true),
+			_ => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(spellSchool.ToString().ToLowerInvariant())
+		};
 
 		public static string SetConverter(CardSet set) => SetDict.TryGetValue((int)set, out var str) ? str ?? string.Empty : string.Empty;
 

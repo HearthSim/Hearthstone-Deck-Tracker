@@ -1,10 +1,15 @@
 ﻿#region
 
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -23,6 +28,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private string _abyssalCurse = "0";
 		private string _excavate = "0";
 		private int _excavateTier = 0;
+		private List<SpellSchool> _spellSchools = new ();
 
 		private WotogCounterStyle _cthunCounterStyle;
 		private WotogCounterStyle _spellCounterStyle;
@@ -30,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private WotogCounterStyle _pogoHopperCounterStyle;
 		private WotogCounterStyle _galakrondCounterStyle;
 		private WotogCounterStyle _libramCounterStyle;
+		private WotogCounterStyle _spellSchoolsStyle;
 		private WotogCounterStyle _abyssalCounterStyle;
 		private WotogCounterStyle _excavateTierStyle;
 		private WotogCounterStyle _excavateCounterStyle;
@@ -122,6 +129,29 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		public List<SpellSchool> SpellSchools
+		{
+			get { return _spellSchools; }
+			set
+			{
+				if(value.SequenceEqual(_spellSchools))
+					return;
+				_spellSchools = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(SpellSchoolsLabel));
+			}
+		}
+
+		public string SpellSchoolsLabel
+		{
+			get
+			{
+				if(_spellSchools.Count == 0)
+					return LocUtil.Get("Counter_Spell_School_None", useCardLanguage: true);
+				return string.Join(", ", _spellSchools.Select(HearthDbConverter.GetLocalizedSpellSchool).WhereNotNull().OrderBy(x => x));
+			}
+		}
+
 		public string AbyssalCurse
 		{
 			get { return _abyssalCurse; }
@@ -155,19 +185,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					return;
 				_excavateTier = value;
 				OnPropertyChanged();
-				OnPropertyChanged("ExcavateTierLabel");
+				OnPropertyChanged(nameof(ExcavateTierLabel));
 			}
 		}
 
 		public string ExcavateTierLabel
 		{
-			get => ExcavateTier switch
+			get => _excavateTier switch
 				{
 					0 => LocUtil.Get("Counter_Excavate_Tier0", useCardLanguage: true),
 					1 => LocUtil.Get("Counter_Excavate_Tier1", useCardLanguage: true),
 					2 => LocUtil.Get("Counter_Excavate_Tier2", useCardLanguage: true),
 					3 => LocUtil.Get("Counter_Excavate_Tier3", useCardLanguage: true),
-					_ => (ExcavateTier + 1).ToString()
+					_ => (_excavateTier + 1).ToString()
 				};
 		}
 
@@ -242,6 +272,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		public WotogCounterStyle SpellSchoolsStyle
+		{
+			get { return _spellSchoolsStyle; }
+			set
+			{
+				if(value == _spellSchoolsStyle)
+					return;
+				_spellSchoolsStyle = value;
+				OnPropertyChanged(nameof(SpellSchoolsVisibility));
+			}
+		}
+
 		public WotogCounterStyle AbyssalCounterStyle
 		{
 			get { return _abyssalCounterStyle; }
@@ -285,6 +327,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public Visibility PogoHopperVisibility => !_forceShow && PogoHopperCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility GalakrondVisibility => !_forceShow && GalakrondCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility LibramVisibility => !_forceShow && LibramCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility SpellSchoolsVisibility => !_forceShow && SpellSchoolsStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility AbyssalVisibility => !_forceShow && AbyssalCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility ExcavateVisibility => !_forceShow && ExcavateCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility ExcavateTierVisibility => !_forceShow && ExcavateTierStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
@@ -306,6 +349,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			OnPropertyChanged(nameof(PogoHopperVisibility));
 			OnPropertyChanged(nameof(GalakrondVisibility));
 			OnPropertyChanged(nameof(LibramVisibility));
+			OnPropertyChanged(nameof(SpellSchoolsVisibility));
 			OnPropertyChanged(nameof(AbyssalVisibility));
 			OnPropertyChanged(nameof(ExcavateVisibility));
 			OnPropertyChanged(nameof(ExcavateTierVisibility));

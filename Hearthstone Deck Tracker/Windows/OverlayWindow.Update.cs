@@ -220,6 +220,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var showPlayerPogoHopperCounter = WotogCounterHelper.ShowPlayerPogoHopperCounter;
 			var showPlayerGalakrondCounter = WotogCounterHelper.ShowPlayerGalakrondCounter;
 			var showPlayerLibramCounter = WotogCounterHelper.ShowPlayerLibramCounter;
+			var showPlayerSpellSchoolsCounter = WotogCounterHelper.ShowPlayerSpellSchoolsCounter;
 			var showPlayerAbyssalCurseCounter = WotogCounterHelper.ShowPlayerAbyssalCurseCounter;
 			var showPlayerExcavateTier = WotogCounterHelper.ShowPlayerExcavateTier;
 			if(showPlayerCthunCounter)
@@ -238,6 +239,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsPlayer.Galakrond = WotogCounterHelper.PlayerGalakrondInvokeCounter.ToString();
 			if(showPlayerLibramCounter)
 				WotogIconsPlayer.Libram = WotogCounterHelper.PlayerLibramCounter.ToString();
+			if(showPlayerSpellSchoolsCounter)
+				WotogIconsPlayer.SpellSchools = _game.Player.PlayedSpellSchools.ToList();
 			if(showPlayerAbyssalCurseCounter)
 				WotogIconsPlayer.AbyssalCurse = WotogCounterHelper.PlayerAbyssalCurseCounter.ToString();
 			if(showPlayerExcavateTier)
@@ -248,6 +251,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			WotogIconsPlayer.PogoHopperCounterStyle = showPlayerPogoHopperCounter ? Full : None;
 			WotogIconsPlayer.GalakrondCounterStyle = showPlayerGalakrondCounter ? Full : None;
 			WotogIconsPlayer.LibramCounterStyle = showPlayerLibramCounter ? Full : None;
+			WotogIconsPlayer.SpellSchoolsStyle = showPlayerSpellSchoolsCounter ? Full : None;
 			WotogIconsPlayer.AbyssalCounterStyle = showPlayerAbyssalCurseCounter ? Full : None;
 			WotogIconsPlayer.ExcavateTierStyle = showPlayerExcavateTier ? Full : None;
 

@@ -91,6 +91,20 @@ namespace Hearthstone_Deck_Tracker.Utility
 				}))
 			);
 
+		public static bool ShowPlayerSpellSchoolsCounter => !Core.Game.IsInMenu && (
+			Config.Instance.PlayerSpellsCounter == DisplayMode.Always
+			|| (Config.Instance.PlayerSpellsCounter == DisplayMode.Auto && InDeckAndHand(new[] {
+				CardIds.Collectible.Mage.DiscoveryOfMagic,
+				CardIds.Collectible.Mage.InquisitiveCreation,
+				CardIds.Collectible.Neutral.Multicaster,
+				CardIds.Collectible.Shaman.CoralKeeper,
+				CardIds.Collectible.Mage.WisdomOfNorgannon,
+				CardIds.Collectible.Mage.Sif,
+				CardIds.Collectible.Mage.ElementalInspiration,
+				CardIds.Collectible.Mage.MagisterDawngrasp,
+			}))
+		);
+
 		public static bool ShowPlayerExcavateTier => !Core.Game.IsInMenu && (
 			Config.Instance.PlayerExcavateTierCounter == DisplayMode.Always
 				|| (Config.Instance.PlayerExcavateTierCounter == DisplayMode.Auto && InDeckAndHand(new[] {
