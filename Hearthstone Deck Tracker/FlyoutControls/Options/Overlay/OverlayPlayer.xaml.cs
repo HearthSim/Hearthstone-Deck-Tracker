@@ -352,7 +352,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.PlayerSpellSchoolsCounter = (DisplayMode)ComboBoxAbyssal.SelectedItem;
+			Config.Instance.PlayerSpellSchoolsCounter = (DisplayMode)ComboBoxSpellSchools.SelectedItem;
 			Config.Save();
 		}
 

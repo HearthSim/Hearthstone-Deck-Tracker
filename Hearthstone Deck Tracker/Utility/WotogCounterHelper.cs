@@ -92,8 +92,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 			);
 
 		public static bool ShowPlayerSpellSchoolsCounter => !Core.Game.IsInMenu && (
-			Config.Instance.PlayerSpellsCounter == DisplayMode.Always
-			|| (Config.Instance.PlayerSpellsCounter == DisplayMode.Auto && InDeckAndHand(new[] {
+			Config.Instance.PlayerSpellSchoolsCounter == DisplayMode.Always
+			|| (Config.Instance.PlayerSpellSchoolsCounter == DisplayMode.Auto && InDeckAndHand(new[] {
 				CardIds.Collectible.Mage.DiscoveryOfMagic,
 				CardIds.Collectible.Mage.InquisitiveCreation,
 				CardIds.Collectible.Neutral.Multicaster,
