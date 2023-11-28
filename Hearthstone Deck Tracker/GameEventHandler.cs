@@ -1199,6 +1199,12 @@ namespace Hearthstone_Deck_Tracker
 					if(card != null)
 						GameEvents.OnPlayerPlay.Execute(card);
 				}
+				else if(entity.IsObjective)
+				{
+					_game.Player.ObjectivePlayedFromHand(entity, turn);
+					if(card != null)
+						GameEvents.OnPlayerPlay.Execute(card);
+				}
 				return;
 			}
 
@@ -1560,6 +1566,12 @@ namespace Hearthstone_Deck_Tracker
 				else if(entity.IsSigil)
 				{
 					_game.Opponent.SigilPlayedFromHand(entity, turn);
+					if(card != null)
+						GameEvents.OnOpponentPlay.Execute(card);
+				}
+				else if(entity.IsObjective)
+				{
+					_game.Opponent.ObjectivePlayedFromHand(entity, turn);
 					if(card != null)
 						GameEvents.OnOpponentPlay.Execute(card);
 				}
