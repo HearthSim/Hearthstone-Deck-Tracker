@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HearthDb.Deckstrings;
 using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
@@ -20,6 +21,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using HSReplay;
 using HSReplay.OAuth.Data;
+using HSReplay.Requests;
 
 #endregion
 
@@ -36,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BattlegroundRatingInfo? _battlegroundsRatingInfo;
 		private MercenariesRatingInfo? _mercenariesRatingInfo;
 		private BattlegroundsBoardState? _battlegroundsBoardState;
+		private MulliganState? _mulliganState;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 		internal QueueEvents QueueEvents { get; }
@@ -51,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
+			_mulliganState = new MulliganState(this);
 			QueueEvents = new(this);
 			Reset();
 			LiveDataManager.OnStreamingChecked += async streaming =>
@@ -208,6 +212,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public MatchInfo MatchInfo => _matchInfo ?? (_matchInfo = HearthMirror.Reflection.Client.GetMatchInfo());
 		private bool _matchInfoCacheInvalid = true;
+
+		public MatchInfo.MedalInfo? PlayerMedalInfo
+		{
+			get
+			{
+				var localPlayer = MatchInfo?.LocalPlayer;
+				if(localPlayer is null || CurrentGameType != GameType.GT_RANKED)
+					return null;
+
+				return CurrentFormat switch
+				{
+					Format.Wild => localPlayer.Wild,
+					Format.Classic => localPlayer.Classic,
+					Format.Twist => localPlayer.Twist,
+					Format.Standard => localPlayer.Standard,
+					_ => null,
+				};
+			}
+		}
 
 		public BrawlInfo BrawlInfo => _brawlInfo ?? (_brawlInfo = HearthMirror.Reflection.Client.GetBrawlInfo());
 
@@ -375,6 +398,33 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Dictionary<int, int>? GetBattlegroundsHeroTriplesByTier(int id)
 		{
 			return _battlegroundsHeroTriplesByTier.TryGetValue(id, out var data) ? data : null;
+		}
+
+		public void SnapshotOpeningHand() => _mulliganState?.SnapshotOpeningHand();
+		public void SnapshotMulliganChoices(Choice choice) => _mulliganState?.SnapshotMulliganChoices(choice);
+		public void SnapshotMulligan() => _mulliganState?.SnapshotMulligan();
+
+		public MulliganGuideFeedbackParams? GetMulliganStatsParams()
+		{
+			var activeDeck = DeckList.Instance.ActiveDeck;
+			if(activeDeck == null)
+				return null;
+
+			var opponentClass = Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+			var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
+
+			return new MulliganGuideFeedbackParams
+			{
+				Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck), false),
+				OpponentClass = opponentClass.ToString(),
+				PlayerInitiative = Player.HasCoin ? "COIN" : "FIRST",
+				PlayerRegion = CurrentRegion != Region.UNKNOWN ? "REGION_" + CurrentRegion : null,
+				PlayerStarLevel = starLevel > 0 ? starLevel : null,
+				GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
+				OfferedCards = _mulliganState?.OfferedCards.Select(x => x.Card.DbfId).ToArray(),
+				KeptCards = _mulliganState?.KeptCards.Select(x => x.Card.DbfId).ToArray(),
+				FinalCardsInHand = _mulliganState?.FinalCardsInHand.Select(x => x.Card.DbfId).ToArray(),
+			};
 		}
 	}
 }

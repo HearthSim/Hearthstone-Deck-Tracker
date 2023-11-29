@@ -209,5 +209,19 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				return null;
 			}
 		}
+
+		public static async Task PostMulliganGuideFeedback(MulliganGuideFeedbackParams parameters)
+		{
+			try
+			{
+				await Client.PostMulliganGuideFeedback(parameters);
+			}
+			catch(Exception e)
+			{
+#if(DEBUG)
+				Log.Error(e);
+#endif
+			}
+		}
 	}
 }

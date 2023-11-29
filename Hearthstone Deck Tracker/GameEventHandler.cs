@@ -1023,7 +1023,19 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 			}
 			else if(_game.IsConstructedMatch)
+			{
 				Core.Overlay.HideMulliganPanel(false);
+				_game.SnapshotOpeningHand();
+				CaptureMulliganGuideFeedback();
+			}
+		}
+
+		public void HandlePlayerSendChoices(Choice choice)
+		{
+			if(choice.ChoiceType == ChoiceType.MULLIGAN)
+			{
+				_game.SnapshotMulliganChoices(choice);
+			}
 		}
 
 		private async void HandleConstructedStart()
@@ -1042,25 +1054,15 @@ namespace Hearthstone_Deck_Tracker
 					// Wait for the game to fade in
 					await Task.Delay(3000);
 
+					_game.SnapshotMulligan();
 
 					var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
 					if(!string.IsNullOrEmpty(shortId))
 					{
-						var cards = Core.Game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).Select(x => x.Card.DbfId);
-						var opponentClass = Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
-						var hasCoin = Core.Game.Player.HasCoin;
-
-						var isWild = _game.CurrentFormat == Format.Wild;
-						var isClassic = _game.CurrentFormat == Format.Classic;
-						var isTwist = _game.CurrentFormat == Format.Twist;
-
-						var playerStarLevel = 0;
-						if (_game.MatchInfo != null)
-						{
-							var localPlayer = _game.MatchInfo.LocalPlayer;
-							var playerInfo = isClassic ? localPlayer.Classic : isWild ? localPlayer.Wild : isTwist ? localPlayer.Twist : localPlayer.Standard;
-							playerStarLevel = playerInfo?.StarLevel ?? 0;
-						}
+						var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).Select(x => x.Card.DbfId);
+						var opponentClass = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+						var hasCoin = _game.Player.HasCoin;
+						var playerStarLevel = _game.PlayerMedalInfo?.StarLevel ?? 0;
 
 						Core.Overlay.ShowMulliganPanel(shortId!, cards.ToArray(), opponentClass, hasCoin, playerStarLevel);
 					}
@@ -1068,6 +1070,18 @@ namespace Hearthstone_Deck_Tracker
 					break;
 				}
 			}
+		}
+
+		private async Task CaptureMulliganGuideFeedback()
+		{
+			if(!Config.Instance.GoogleAnalytics || _game.Spectator)
+				return;
+
+			var parameters = _game.GetMulliganStatsParams();
+			if (parameters is null)
+				return;
+
+			await ApiWrapper.PostMulliganGuideFeedback(parameters);
 		}
 
 		private async void HandleBattlegroundsStart()
@@ -1732,7 +1746,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.SetOpponentHero(string? cardId) => SetOpponentHero(cardId);
 		void IGameHandler.SetPlayerHero(string? cardId) => SetPlayerHero(cardId);
 		void IGameHandler.HandleOpponentHeroPower(string cardId, int turn) => HandleOpponentHeroPower(cardId, turn);
-		void IGameHandler.HandlePlayerSendChoices(Choice choice) {}
+		void IGameHandler.HandlePlayerSendChoices(Choice choice) => HandlePlayerSendChoices(choice);
 		void IGameHandler.TurnStart(ActivePlayer player, int turnNumber) => TurnStart(player, turnNumber);
 		void IGameHandler.HandleGameStart(DateTime timestamp) => HandleGameStart(timestamp);
 		void IGameHandler.HandleGameEnd(bool stateComplete) => HandleGameEnd(stateComplete);
