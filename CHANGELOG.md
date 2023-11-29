@@ -1,3 +1,11 @@
+## **Release v1.23.4 - 2023-11-29**
+**Updated for Hearthstone 28.0.3**
+
+**Fixes**
+- Fixed an issue where Snipe occasionally did not appear as a valid secret.
+- Fixed an issue where the Spell School counter overlay settings did not persist properly.
+- Fixed an issue where Love Everlasting and similar cards were not treated as spells.
+
 ## **Release v1.23.3 - 2023-11-23**
 **New**:
 - Added a spell school counter!
