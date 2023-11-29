@@ -22,6 +22,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 	public class LogWatcherManager
 	{
 		private readonly PowerHandler _powerLineHandler = new PowerHandler();
+		private readonly ChoicesHandler _choicesHandler = new ChoicesHandler();
 		private readonly ArenaHandler _arenaHandler = new ArenaHandler();
 		private readonly LoadingScreenHandler _loadingScreenHandler = new LoadingScreenHandler();
 		private HsGameState? _gameState;
@@ -128,7 +129,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						break;
 					case "Power":
 						if(line.LineContent.StartsWith("GameState."))
+						{
 							_game.PowerLog.Add(line.Line);
+							if(line.LineContent.StartsWith("GameState.SendChoices") || line.LineContent.StartsWith("GameState.DebugPrintEntitiesChosen"))
+								_choicesHandler.Handle(line.Line, _gameState, _game);
+						}
 						else
 						{
 							_powerLineHandler.Handle(line.Line, _gameState, _game);

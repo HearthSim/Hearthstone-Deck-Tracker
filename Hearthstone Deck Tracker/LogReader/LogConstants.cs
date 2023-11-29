@@ -49,5 +49,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 			public static readonly Regex ShuffleRegex = new Regex(@"SHUFFLE_DECK\ PlayerID=(?<id>(\d+))");
 		}
+
+		public static class Choices
+		{
+			public static readonly Regex SendChoicesHeaderRegex = new Regex(@"id=(?<id>(\d+)) ChoiceType=(?<choiceType>(\w+))");
+			public static readonly Regex SendChoicesBodyRegex = new Regex(@"m_chosenEntities\[(?<index>(\d+))]=.* id=(?<id>(\d+))");
+		}
 	}
 }

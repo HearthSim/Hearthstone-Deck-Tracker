@@ -1732,6 +1732,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.SetOpponentHero(string? cardId) => SetOpponentHero(cardId);
 		void IGameHandler.SetPlayerHero(string? cardId) => SetPlayerHero(cardId);
 		void IGameHandler.HandleOpponentHeroPower(string cardId, int turn) => HandleOpponentHeroPower(cardId, turn);
+		void IGameHandler.HandlePlayerSendChoices(Choice choice) {}
 		void IGameHandler.TurnStart(ActivePlayer player, int turnNumber) => TurnStart(player, turnNumber);
 		void IGameHandler.HandleGameStart(DateTime timestamp) => HandleGameStart(timestamp);
 		void IGameHandler.HandleGameEnd(bool stateComplete) => HandleGameEnd(stateComplete);
