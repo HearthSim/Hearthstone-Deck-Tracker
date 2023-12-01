@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
@@ -53,7 +54,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			_availableTiers = BattlegroundsUtils.GetAvailableTiers(null);
 			for(var i = 0; i < 7; i++)
-				_tierIcons[i].SetAvailable(_availableTiers.Contains(i + 1));
+			{
+				var isAvailable = _availableTiers.Contains(i + 1);
+				_tierIcons[i].SetAvailable(isAvailable);
+				if(i == 6)
+					_tierIcons[i].Visibility = IsVisible ? Visibility.Visible : Visibility.Collapsed;
+			}
+
 			Update(0, _db.Value.Races);
 		}
 
