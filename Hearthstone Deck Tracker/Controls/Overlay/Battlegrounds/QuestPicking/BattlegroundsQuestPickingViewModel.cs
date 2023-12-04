@@ -57,7 +57,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			_entities.Clear();
 			Quests = null;
 			Visibility = Collapsed;
-			_watchChoices = false;
 			Message.Clear();
 		}
 
@@ -123,28 +122,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			if(choices.IsVisible)
 				Visibility = Visible;
 
-			WatchChoices();
-
 			if(Config.Instance.ShowBattlegroundsQuestPicking)
 				Core.Game.Metrics.Tier7QuestOverlayDisplayed = true;
-		}
-
-		private bool _watchChoices;
-		private async void WatchChoices()
-		{
-			_watchChoices = true;
-			while(_watchChoices)
-			{
-				await Task.Delay(100);
-				var choices = Reflection.Client.GetCardChoices();
-				if(choices == null)
-				{
-					_watchChoices = false;
-					Visibility = Collapsed;
-					break;
-				}
-				Visibility = choices.IsVisible ? Visible : Collapsed;
-			}
 		}
 
 		private BattlegroundsQuestStatsParams? GetApiParams()

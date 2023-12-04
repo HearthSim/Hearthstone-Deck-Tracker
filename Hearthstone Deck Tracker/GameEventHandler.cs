@@ -1034,7 +1034,18 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(choice.ChoiceType == ChoiceType.MULLIGAN)
 			{
-				_game.SnapshotMulliganChoices(choice);
+				if(_game.IsBattlegroundsMatch)
+				{
+					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
+				}
+				else if(_game.IsConstructedMatch)
+				{
+					_game.SnapshotMulliganChoices(choice);
+				}
+			}
+			else if(_game.IsBattlegroundsMatch)
+			{
+				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 			}
 		}
 
