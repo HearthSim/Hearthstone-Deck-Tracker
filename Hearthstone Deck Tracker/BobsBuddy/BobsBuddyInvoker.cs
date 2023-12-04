@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
 		private static List<Entity> _currentOpponentSecrets = new List<Entity>();
-		private static Dictionary<Entity, Entity> _opponentSecretMap = new ();
+		private static Dictionary<Entity, Entity> _opponentSecretMap = new();
 
 		private List<Entity> _opponentHand = new();
 		private readonly Dictionary<Entity, Entity> _opponentHandMap = new();
@@ -544,6 +544,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateSecret(Entity entity)
 		{
+			var oldSecret = _currentOpponentSecrets.Find(x => x.Id == entity.Id);
+			if(oldSecret != null)
+				_opponentSecretMap[oldSecret] = entity;
+
 			_currentOpponentSecrets = _currentOpponentSecrets.Select(x => {
 				if(_opponentSecretMap.TryGetValue(x, out var retval))
 				{
