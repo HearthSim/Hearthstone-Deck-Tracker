@@ -1,3 +1,13 @@
+## **Release v1.23.5 - 2023-12-04**
+**Changes**:
+- The Battlegrounds minion overlay no longer shows minions from tavern tier 7 unless Secrets of Norgannon is active.
+
+**Fixes**
+- Fixed an issue that caused the deck builder to not show appropriate multi-class cards.
+
+**Bob's Buddy**
+- Added support for Fairy Tale Caroler's Battlecry (with Rylak Metalhead).
+
 ## **Release v1.23.4 - 2023-11-29**
 **Updated for Hearthstone 28.0.3**
 
