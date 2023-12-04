@@ -377,17 +377,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(playerClass == null)
 				return false;
-			if(GetPlayerClass == playerClass)
-				return true;
-			var classGroup = _dbCard?.Entity.GetTag(GameTag.MULTI_CLASS_GROUP) ?? 0;
-			if(classGroup == 0)
-				return false;
-			if(Helper.MultiClassGroups.TryGetValue((MultiClassGroup)classGroup, out var classes))
-				return classes.Any(x => string.Equals(x.ToString(), playerClass, StringComparison.CurrentCultureIgnoreCase));
-			return false;
+			return GetClasses().Contains(playerClass);
 		}
 
-		public bool IsNeutral => GetPlayerClass == "Neutral" && (_dbCard?.Entity.GetTag(GameTag.MULTI_CLASS_GROUP) ?? 0) == 0;
+		public bool IsNeutral => GetPlayerClass == "Neutral" && (_dbCard?.Entity.GetTag(GameTag.MULTIPLE_CLASSES) ?? 0) == 0;
 
 		public List<string> GetClasses()
 		{
