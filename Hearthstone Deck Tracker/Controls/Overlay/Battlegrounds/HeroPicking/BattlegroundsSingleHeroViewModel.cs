@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 		public BattlegroundsSingleHeroViewModel(BattlegroundsSingleHeroPickStats? stats, Action<bool> onPlacementHover)
 		{
 			HeroDbfId = stats?.HeroDbfId;
-			BgsHeroHeaderVM = new(stats?.Tier, stats?.AvgPlacement ?? 0, stats?.PickRate ?? 0, stats?.PlacementDistribution ?? Enumerable.Repeat(0.0, 8).ToArray(), onPlacementHover);
+			BgsHeroHeaderVM = new(stats?.Tier, stats?.AvgPlacement, stats?.PickRate, stats?.PlacementDistribution ?? Enumerable.Repeat(0.0, 8).ToArray(), onPlacementHover);
 			BgsCompsPopularityVM = stats != null ? new(stats.FirstPlaceCompPopularity) : null;
 		}
 
