@@ -1,3 +1,9 @@
+## **Release v1.23.6 - 2023-12-05**
+**Updated for Hearthstone 28.2**
+
+**Bob's Buddy**:
+- There are likely still issues with some new cards in Bob's Buddy. We will update these in the coming days.
+
 ## **Release v1.23.5 - 2023-12-04**
 **Changes**:
 - The Battlegrounds minion overlay no longer shows minions from tavern tier 7 unless Secrets of Norgannon is active.
