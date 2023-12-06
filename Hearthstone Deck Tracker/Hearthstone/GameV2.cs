@@ -88,9 +88,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool IsMinionInPlay => Entities.Values.FirstOrDefault(x => x.IsInPlay && x.IsMinion) != null;
 		public bool IsOpponentMinionInPlay => Entities.Values.FirstOrDefault(x => x.IsInPlay && x.IsMinion && x.IsControlledBy(Opponent.Id)) != null;
 		public int OpponentMinionCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinion && x.IsControlledBy(Opponent.Id));
-		public int OpponentBoardCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinionOrLocation && x.IsControlledBy(Opponent.Id));
+		public int OpponentBoardCount => Entities.Values.Count(x => x.IsInPlay && x.TakesBoardSlot && x.IsControlledBy(Opponent.Id));
 		public int PlayerMinionCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinion && x.IsControlledBy(Player.Id));
-		public int PlayerBoardCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinionOrLocation && x.IsControlledBy(Player.Id));
+		public int PlayerBoardCount => Entities.Values.Count(x => x.IsInPlay && x.TakesBoardSlot && x.IsControlledBy(Player.Id));
 		public int OpponentHandCount => Entities.Values.Count(x => x.IsInHand && x.IsControlledBy(Opponent.Id));
 		public int OpponentSecretCount => Entities.Values.Count(x => x.IsInSecret && x.IsSecret && x.IsControlledBy(Opponent.Id));
 		public int PlayerHandCount => Entities.Values.Count(x => x.IsInHand && x.IsControlledBy(Player.Id));

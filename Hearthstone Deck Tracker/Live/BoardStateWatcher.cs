@@ -203,7 +203,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			{
 				Player = new BoardStatePlayer
 				{
-					Board = SortedDbfIds(player.Board.Where(x => x.IsMinionOrLocation)),
+					Board = SortedDbfIds(player.Board.Where(x => x.TakesBoardSlot)),
 					Deck = new BoardStateDeck
 					{
 						Cards = playerCardsList,
@@ -228,7 +228,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				},
 				Opponent = new BoardStatePlayer
 				{
-					Board = SortedDbfIds(opponent.Board.Where(x => x.IsMinionOrLocation)),
+					Board = SortedDbfIds(opponent.Board.Where(x => x.TakesBoardSlot)),
 					Deck = new BoardStateDeck
 					{
 						Size = opponent.DeckCount

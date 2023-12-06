@@ -80,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsOpponent => !IsPlayer && HasTag(GameTag.PLAYER_ID);
 
 		[JsonIgnore]
-		public bool IsMinionOrLocation => IsMinion || IsLocation;
+		public bool TakesBoardSlot => IsMinion || IsLocation || IsBattlegroundsSpell;
 
 		[JsonIgnore]
 		public bool IsMinion => GetTag(GameTag.CARDTYPE) == (int)CardType.MINION;
@@ -89,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsLocation => GetTag(GameTag.CARDTYPE) == (int)CardType.LOCATION;
 
 		[JsonIgnore]
-		public bool IsPlayableCard => IsMinionOrLocation || IsSpell || IsWeapon || IsPlayableHero;
+		public bool IsPlayableCard => IsMinion || IsLocation || IsSpell || IsWeapon || IsPlayableHero;
 
 		[JsonIgnore]
 		public bool IsWeapon => GetTag(GameTag.CARDTYPE) == (int)CardType.WEAPON;
@@ -123,6 +123,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		[JsonIgnore]
 		public bool IsBattlegroundsQuest => HasTag(GameTag.QUEST_REWARD_DATABASE_ID);
+
+		[JsonIgnore]
+		public bool IsBattlegroundsSpell => GetTag(GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_SPELL;
 
 		[JsonIgnore]
 		public bool IsSideQuest => HasTag(GameTag.SIDEQUEST);
