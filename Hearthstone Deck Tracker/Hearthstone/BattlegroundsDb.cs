@@ -10,6 +10,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class BattlegroundsDb
 	{
 		private Dictionary<int, Dictionary<Race, List<Card>>> _cardsByTier = new Dictionary<int, Dictionary<Race, List<Card>>>();
+		private Dictionary<int, List<Card>> _spellsByTier = new Dictionary<int, List<Card>>();
 
 		public HashSet<Race> Races { get; } = new HashSet<Race>();
 
@@ -55,6 +56,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					_cardsByTier[tier][race].Add(new Card(card, true));
 				}
 			}
+
+			_spellsByTier.Clear();
+
+			var baconSpells = Cards.All.Values
+				.Where(x => getTag(x, GameTag.TECH_LEVEL) > 0 && x.Type == CardType.BATTLEGROUND_SPELL);
+			foreach(var card in baconSpells)
+			{
+				var tier = getTag(card, GameTag.TECH_LEVEL);
+				if(!_spellsByTier.ContainsKey(tier))
+					_spellsByTier[tier] = new List<Card>() { new Card(card, true) };
+				else
+					_spellsByTier[tier].Add(new Card(card, true));
+			}
 		}
 
 		private IEnumerable<Race> GetRaces(HearthDb.Card card)
@@ -81,6 +95,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(!_cardsByTier.TryGetValue(tier, out var cardsByRace))
 				return new List<Card>();
 			if(!cardsByRace.TryGetValue(race, out var cards))
+				return new List<Card>();
+			return cards;
+		}
+
+		public List<Card> GetSpells(int tier)
+		{
+			if(!_spellsByTier.TryGetValue(tier, out var cards))
 				return new List<Card>();
 			return cards;
 		}

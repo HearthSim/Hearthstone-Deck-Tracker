@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Animation;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
@@ -13,6 +15,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			InitializeComponent();
 			DataContext = card;
+			CoinCost.Visibility = Card.TypeEnum == CardType.BATTLEGROUND_SPELL ? Visibility.Visible : Visibility.Collapsed;
+			Cost.Text = Card.Cost.ToString();
 		}
 
 		public Hearthstone.Card Card => (Hearthstone.Card)DataContext;

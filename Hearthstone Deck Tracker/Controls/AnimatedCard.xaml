@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -28,6 +29,10 @@
     </UserControl.Resources>
     <Grid Name="Grid">
         <local:Card HasTooltip="{Binding Path=WindowCardToolTips, Source={StaticResource ConfigWrapper}}"/>
+        <Grid Name="CoinCost" HorizontalAlignment="Right" Visibility="Collapsed">
+            <Image Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/HearthstoneDeckTracker;component/Images/coin-cost.png" />
+            <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="Cost" Width="34" Height="34" FontSize="17" TextAlignment="Center" FontWeight="Bold" />
+        </Grid>
         <Rectangle Name="RectHighlight" Fill="{Binding Highlight}" Height="34" Width="217" RenderOptions.BitmapScalingMode="Fant"
                    Opacity="0" VerticalAlignment="Center" IsHitTestVisible="False" />
     </Grid>

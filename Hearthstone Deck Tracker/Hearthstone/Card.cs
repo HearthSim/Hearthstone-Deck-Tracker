@@ -263,6 +263,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string? Type { get; set; }
 
+		public CardType? TypeEnum => _dbCard?.Type;
+
 		[XmlIgnore]
 		public string? Name { get; set; }
 

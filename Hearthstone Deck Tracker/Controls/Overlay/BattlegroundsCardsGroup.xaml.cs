@@ -13,9 +13,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			InitializeComponent();
 		}
 
-		public Race Race { get; set; }
-
-		public string Title => HearthDbConverter.GetLocalizedRace(Race) ?? Race.ToString();
+		public string Title { get; set; } = "";
 
 		public Visibility TitleVisibility => string.IsNullOrEmpty(Title) ? Visibility.Collapsed : Visibility.Visible;
 

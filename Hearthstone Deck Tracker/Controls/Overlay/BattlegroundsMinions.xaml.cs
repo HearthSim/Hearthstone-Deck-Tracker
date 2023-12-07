@@ -12,14 +12,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public partial class BattlegroundsMinions : UserControl
 	{
-		private Lazy<BattlegroundsDb> _db = new Lazy<BattlegroundsDb>();
-		private readonly List<BattlegroundsTier> _tierIcons = new List<BattlegroundsTier>();
+		private Lazy<BattlegroundsDb> _db = new();
+		private readonly List<BattlegroundsTier> _tierIcons = new();
 		//We remove the below cardid from the bg tier list, it appears to have been incorrectly classified as a bg minion by blizzard in patch 20.0.0.
 		//Hopefully it will be fixed soon and can be removed.
 		private const string NonBgMurlocTidehunterCardId = HearthDb.CardIds.Collectible.Neutral.MurlocTidecallerVanilla;
 
 		public int ActiveTier { get; set; }
-		public ObservableCollection<BattlegroundsCardsGroup> Groups { get; set; } = new ObservableCollection<BattlegroundsCardsGroup>();
+		public ObservableCollection<BattlegroundsCardsGroup> Groups { get; set; } = new();
+		private BattlegroundsCardsGroup? _spellGroup;
+		private Dictionary<Race, BattlegroundsCardsGroup> _groupsByRace = new();
 
 		public BattlegroundsMinions()
 		{
@@ -67,17 +69,34 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private bool AddOrUpdateBgCardGroup(Race race, List<Hearthstone.Card> cards)
 		{
 			var addedNew = false;
-			var existing = Groups.FirstOrDefault(x => x.Race == race);
-			if(existing == null)
+			if(!_groupsByRace.TryGetValue(race, out var existing))
 			{
-				existing = new BattlegroundsCardsGroup() { Race = race };
+				existing = new BattlegroundsCardsGroup() { Title = HearthDbConverter.GetLocalizedRace(race) ?? race.ToString()};
 				Groups.Add(existing);
+				_groupsByRace.Add(race, existing);
 				addedNew = true;
 			}
 			var sortedCards = cards
 				.OrderBy(x => x.LocalizedName)
 				.ToList();
 			existing.UpdateCards(sortedCards);
+			return addedNew;
+		}
+
+		private bool AddOrUpdateSpellGroup(List<Hearthstone.Card> cards)
+		{
+			var addedNew = false;
+			if(_spellGroup is null)
+			{
+				_spellGroup = new BattlegroundsCardsGroup() { Title = LocUtil.Get("Battlegrounds_Spells", useCardLanguage: true) };
+				Groups.Add(_spellGroup);
+				addedNew = true;
+			}
+			var sortedCards = cards
+				.OrderBy(x => x.Cost)
+				.ThenBy(x => x.LocalizedName)
+				.ToList();
+			_spellGroup.UpdateCards(sortedCards);
 			return addedNew;
 		}
 
@@ -96,6 +115,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				for(var i = 0; i < 7; i++)
 					_tierIcons[i].SetFaded(false);
 				Groups.Clear();
+				_groupsByRace.Clear();
+				_spellGroup = null;
 				UnavailableTypes.UnavailableTypesVisibility = System.Windows.Visibility.Collapsed;
 				return;
 			}
@@ -118,6 +139,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				UnavailableTypes.UnavailableTypesVisibility = System.Windows.Visibility.Collapsed;
 				UnavailableTypes.UnavailableRacesText = "";
 			}
+
+			var spells = _db.Value.GetSpells(tier);
+			if(spells.Any())
+				resort |= AddOrUpdateSpellGroup(spells);
+			else
+				_spellGroup?.Hide();
 
 			foreach(var race in _db.Value.Races)
 			{
@@ -166,7 +193,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				}
 
 				if(cards.Count == 0)
-					Groups.FirstOrDefault(x => x.Race == race)?.Hide();
+				{
+					if(_groupsByRace.TryGetValue(race, out var group))
+					{
+						group.Hide();
+					}
+				}
 				else
 				{
 					if(race == Race.ALL || race == Race.INVALID || availableRaces.Contains(race))
@@ -176,8 +208,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 			if (resort)
 			{
+				_groupsByRace.TryGetValue(Race.INVALID, out var invalidGroup);
 				var items = Groups.ToList()
-					.OrderBy(x => x.Race == Race.INVALID)
+					.OrderBy(x => x == _spellGroup)
+					.ThenBy(x => x == invalidGroup)
 					.ThenBy(x => x.Title);
 				foreach(var item in items)
 				{
