@@ -8,16 +8,16 @@
 **Changes**:
 - The Battlegrounds minion overlay no longer shows minions from tavern tier 7 unless Secrets of Norgannon is active.
 
-**Fixes**
+**Fixes**:
 - Fixed an issue that caused the deck builder to not show appropriate multi-class cards.
 
-**Bob's Buddy**
+**Bob's Buddy**:
 - Added support for Fairy Tale Caroler's Battlecry (with Rylak Metalhead).
 
 ## **Release v1.23.4 - 2023-11-29**
 **Updated for Hearthstone 28.0.3**
 
-**Fixes**
+**Fixes**:
 - Fixed an issue where Snipe occasionally did not appear as a valid secret.
 - Fixed an issue where the Spell School counter overlay settings did not persist properly.
 - Fixed an issue where Love Everlasting and similar cards were not treated as spells.
@@ -26,7 +26,7 @@
 **New**:
 - Added a spell school counter!
 
-**Fixes**
+**Fixes**:
 - Fixed an issue where Sigils were not treated as spells.
 
 **Bob's Buddy**:
