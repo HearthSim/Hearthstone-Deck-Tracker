@@ -1,3 +1,12 @@
+## **Release v1.23.7 - 2023-12-07**
+**New**:
+- Added Battlegrounds spells to the Battlegrounds minion list overlay!
+
+**Fixes**:
+- Fixed an issue where the deck builder did not show neutral cards.
+- Fixed an issue where some cards in the Battlegrounds minion list were missing their card art.
+- Fixed an issue where the Twitch Extension would not work properly with boards containing Battlegrounds spells.
+
 ## **Release v1.23.6 - 2023-12-05**
 **Updated for Hearthstone 28.2**
 
