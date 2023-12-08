@@ -1,3 +1,10 @@
+## **Release v1.23.8 - 2023-12-08**
+**Updated for Hearthstone 28.2.1**
+
+**Bob's Buddy**:
+- Added support for spell triggers during combat (such as extra battlecries/deathrattles and start of combat effects).
+- Fixed an issue where Audacious Anchor could crash the simulation.
+
 ## **Release v1.23.7 - 2023-12-07**
 **New**:
 - Added Battlegrounds spells to the Battlegrounds minion list overlay!
