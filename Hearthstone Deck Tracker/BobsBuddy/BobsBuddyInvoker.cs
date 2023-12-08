@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
+using BobsBuddy.Spells;
 using HearthDb;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
@@ -424,6 +425,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				{
 					RewardCardId = reward.Info.LatestCardId ?? ""
 				});
+			}
+
+			foreach(var objective in _game.Player.Objectives)
+			{
+				input.PlayerObjectives.Add(simulator.ObjectiveFactory.Create(objective.CardId ?? "", true));
+			}
+
+			foreach(var objective in _game.Opponent.Objectives)
+			{
+				input.OpponentObjectives.Add(simulator.ObjectiveFactory.Create(objective.CardId ?? "", false));
 			}
 
 			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => (int?)x.Card.DbfId).ToList(), true);
