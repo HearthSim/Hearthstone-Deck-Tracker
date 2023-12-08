@@ -41,9 +41,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private HashSet<int> _availableTiers = BattlegroundsUtils.GetAvailableTiers(null);
 		public void SetAvailableTiers(HashSet<int> tiers)
 		{
-			_availableTiers = tiers;	
+			_availableTiers = tiers;
 			for(var i = 0; i < 7; i++)
-				_tierIcons[i].SetAvailable(_availableTiers.Contains(i + 1));
+			{
+				var isAvailable = _availableTiers.Contains(i + 1);
+				_tierIcons[i].SetAvailable(isAvailable);
+				if(i == 6)
+					_tierIcons[i].Visibility = isAvailable ? Visibility.Visible : Visibility.Collapsed;
+			}
 		}
 
 		private List<string> _bannedMinionCardIds = new List<string>();
@@ -54,15 +59,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public void Reset()
 		{
-			_availableTiers = BattlegroundsUtils.GetAvailableTiers(null);
-			for(var i = 0; i < 7; i++)
-			{
-				var isAvailable = _availableTiers.Contains(i + 1);
-				_tierIcons[i].SetAvailable(isAvailable);
-				if(i == 6)
-					_tierIcons[i].Visibility = IsVisible ? Visibility.Visible : Visibility.Collapsed;
-			}
-
+			SetAvailableTiers(BattlegroundsUtils.GetAvailableTiers(null));
 			Update(0, _db.Value.Races);
 		}
 
