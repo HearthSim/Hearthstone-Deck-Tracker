@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ToolTipCardBlock.Visibility = visibility;
 			}
 			//player top card tooltips
-			else if(PlayerTopDeckLens.Visibility == Visible
+			else if(PlayerTopDeckLens.Visibility == Visible && StackPanelPlayer.Visibility == Visible
 					&& PointInsideControl(relativePlayerTopDeckPos, PlayerTopDeckLens.CardList.ActualWidth, PlayerTopDeckLens.CardList.ActualHeight))
 			{
 				//card size = card list height / amount of cards
@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ToolTipCardBlock.Visibility = visibility;
 			}
 			//player bottom card tooltips
-			else if(PlayerBottomDeckLens.Visibility == Visible
+			else if(PlayerBottomDeckLens.Visibility == Visible && StackPanelPlayer.Visibility == Visible
 					&& PointInsideControl(relativePlayerBottomDeckPos, PlayerBottomDeckLens.CardList.ActualWidth, PlayerBottomDeckLens.CardList.ActualHeight))
 			{
 				//card size = card list height / amount of cards
@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ToolTipCardBlock.Visibility = visibility;
 			}
 			//player sideboard card tooltips
-			else if(PlayerSideboards.Visibility == Visible
+			else if(PlayerSideboards.Visibility == Visible && StackPanelPlayer.Visibility == Visible
 					&& PointInsideControl(relativePlayerSideboardsDeckPos, PlayerSideboards.CardList.ActualWidth, PlayerSideboards.CardList.ActualHeight))
 			{
 				//card size = card list height / amount of cards
