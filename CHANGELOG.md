@@ -1,3 +1,12 @@
+## **Release v1.23.9 - 2023-12-10**
+**Fixes:**
+- Fixed an issue where tooltips from the sideboard would appear even if the deck list is hidden.
+- Fixed an issue where the attack counters would not correctly handle Mega Mountain.
+
+**Bob's Buddy**:
+- Fixed an issue where Battlecries from Rylak Metalhead were not simulated correctly after being triggered by Hawkstrider Herald.
+- Fixed various simulation issues related to recently introduced and updated cards.
+
 ## **Release v1.23.8 - 2023-12-08**
 **Updated for Hearthstone 28.2.1**
 
