@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			_frozen = e.GetTag(FROZEN) == 1;
 			Charge = e.GetTag(CHARGE) == 1;
 			Windfury = e.GetTag(WINDFURY) == 1;
+			MegaWindfury = (e.CardId == HearthDb.CardIds.NonCollectible.Neutral.MimironsHead_V07Tr0NToken || e.CardId == HearthDb.CardIds.Collectible.Shaman.WalkingMountain);
 			AttacksThisTurn = e.GetTag(NUM_ATTACKS_THIS_TURN);
 			_dormant = e.GetTag(DORMANT) == 1;
 			_isTitan = e.GetTag(TITAN) == 1;
@@ -64,6 +65,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		public bool Taunt { get; private set; }
 		public bool Charge { get; }
 		public bool Windfury { get; }
+		public bool MegaWindfury { get; }
 		public string CardType { get; private set; }
 
 		public string Name { get; }
@@ -72,6 +74,18 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		public bool Include { get; }
 
 		public int AttacksThisTurn { get; }
+		public int AttacksPerTurn
+		{
+			get
+			{
+				if(MegaWindfury)
+					return 4;
+				if(Windfury)
+					return 2;
+				return 1;
+			}
+		}
+
 		public bool Exhausted { get; }
 
 		public string Zone { get; }
@@ -86,19 +100,13 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 
 		private int CalculateAttack(bool active, bool isWeapon)
 		{
-			// V-07-TR-0N is a special case Mega-Windfury
-			if(!string.IsNullOrEmpty(CardId) && CardId == "GVG_111t")
-				return V07TRONAttack(active);
-			// for weapons check for windfury and number of hits left
+			var remainingAttacks = Math.Max(AttacksPerTurn - (active ? AttacksThisTurn : 0), 0);
+
 			if(isWeapon)
-			{
-				if(Windfury && Health >= 2 && AttacksThisTurn == 0)
-					return _stdAttack * 2;
-			}
-			// for minions with windfury that haven't already attacked, double attack
-			else if(Windfury && (!active || AttacksThisTurn == 0))
-				return _stdAttack * 2;
-			return _stdAttack;
+				// for weapons, clamp remaining attacks to health
+				remainingAttacks = Math.Min(remainingAttacks, Health);
+
+			return remainingAttacks * _stdAttack;
 		}
 
 		private bool IsAbleToAttack(bool active, bool isWeapon)

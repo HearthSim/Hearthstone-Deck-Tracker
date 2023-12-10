@@ -176,17 +176,20 @@ namespace HDTTests.BoardDamage
 			Assert.AreEqual(5, card.Attack);
 		}
 
-		[TestMethod]
-		public void Attack_MegaWindfury_V07TR0N()
+		[DataTestMethod]
+		[DataRow(CardIds.NonCollectible.Neutral.MimironsHead_V07Tr0NToken, DisplayName = "V-07-TR-0N")]
+		[DataRow(CardIds.Collectible.Shaman.WalkingMountain, DisplayName = "Walking Mountain")]
+		public void Attack_MegaWindfury(string cardId)
 		{
-			var eb = new EntityBuilder("GVG_111t", 4, 8).Windfury().Charge().InPlay();
+			var eb = new EntityBuilder(cardId, 4, 8).Windfury().Charge().InPlay();
 
 			Assert.AreEqual(16, eb.ToBoardCard().Attack);
 			Assert.AreEqual(16, eb.Exhausted().ToBoardCard(false).Attack);
+			Assert.AreEqual(16, eb.AttacksThisTurn(4).ToBoardCard(false).Attack);
 			Assert.AreEqual(12, eb.AttacksThisTurn(1).ToBoardCard().Attack);
 			Assert.AreEqual(8, eb.AttacksThisTurn(2).ToBoardCard().Attack);
 			Assert.AreEqual(4, eb.AttacksThisTurn(3).ToBoardCard().Attack);
-			Assert.AreEqual(4, eb.AttacksThisTurn(4).ToBoardCard().Attack);
+			Assert.AreEqual(0, eb.AttacksThisTurn(4).ToBoardCard().Attack);
 		}
 
 		[TestMethod]
