@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public HashSet<SpellSchool> PlayedSpellSchools { get; private set; } = new HashSet<SpellSchool>();
 		public int AbyssalCurseCount { get; private set; }
 
-		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinCore);
+		public bool HasCoin => Hand.Any(e => e.IsTheCoin);
 		public int HandCount => Hand.Count();
 		public int DeckCount => Deck.Count();
 

@@ -162,6 +162,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public bool IsCurrentPlayer => HasTag(GameTag.CURRENT_PLAYER);
 
+		public bool IsTheCoin => CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinCore || (IsSpell && GetTag((GameTag)2088) == 1);
+
 		public bool HasCardId => !string.IsNullOrEmpty(CardId);
 
 		public int ZonePosition
@@ -267,8 +269,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			{
 				if(Hidden)
 					return CardMark.None;
-				if(_entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinCore
-					   || _entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.TradePrinceGallywix_GallywixsCoinToken)
+				if(_entity.IsTheCoin)
 					return CardMark.Coin;
 				if(Returned)
 					return CardMark.Returned;
