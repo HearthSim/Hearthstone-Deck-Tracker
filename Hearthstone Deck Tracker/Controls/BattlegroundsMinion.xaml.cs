@@ -23,6 +23,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public Visibility PoisonousVisibility { get; set; }
 
+		public Visibility VenomousVisibility { get; set; }
+
 		public Visibility DivineShieldVisibility { get; set; }
 
 		public Visibility TauntVisibility { get; set; }
@@ -74,6 +76,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private void SetEffectVisibilites()
 		{
 			PoisonousVisibility = _entity.HasTag(GameTag.POISONOUS) ? Visibility.Visible : Visibility.Hidden;
+			VenomousVisibility = _entity.HasTag(GameTag.VENOMOUS) ? Visibility.Visible : Visibility.Hidden;
 			DivineShieldVisibility = _entity.HasTag(GameTag.DIVINE_SHIELD) ? Visibility.Visible : Visibility.Hidden;
 			DeathrattleVisibility = _entity.HasTag(GameTag.DEATHRATTLE) ? Visibility.Visible : Visibility.Hidden;
 

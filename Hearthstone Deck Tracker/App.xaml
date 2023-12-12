@@ -53,6 +53,7 @@
                     <ImageSource x:Key="Legendary">Resources/legendary.png</ImageSource>
                     <ImageSource x:Key="PremiumLegendary">Resources/legendary_premium.png</ImageSource>
                     <ImageSource x:Key="Poisonous">Resources/poisonous.png</ImageSource>
+                    <ImageSource x:Key="Venomous">Resources/venomous.png</ImageSource>
                     <ImageSource x:Key="Taunt">Resources/taunt.png</ImageSource>
                     <ImageSource x:Key="PremiumTaunt">Resources/taunt_premium.png</ImageSource>
                     <ImageSource x:Key="FacelessManipulator">Resources/faceless_manipulator.png</ImageSource>
