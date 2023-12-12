@@ -5,7 +5,8 @@
 		Initial,
 		Combat,
 		Shopping,
-		CombatWithoutSimulation
+		CombatWithoutSimulation,
+		GameOver,
 	};
 
 	/// <summary>

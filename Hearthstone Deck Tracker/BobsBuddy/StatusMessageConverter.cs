@@ -34,6 +34,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				case BobsBuddyState.Combat:
 					return LocUtil.Get(statsShown ? "BobsBuddyStatusMessage_CurrentCombat" : "BobsBuddyStatusMessage_ShowCurrentCombat");
 				case BobsBuddyState.Shopping:
+				case BobsBuddyState.GameOver:
 					return LocUtil.Get(statsShown ? "BobsBuddyStatusMessage_PreviousCombat" : "BobsBuddyStatusMessage_PreviousCurrentCombat");
 				case BobsBuddyState.CombatWithoutSimulation:
 					return LocUtil.Get("BobsBuddyStatusMessage_AwaitingShopping");

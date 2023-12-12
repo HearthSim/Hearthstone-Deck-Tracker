@@ -464,16 +464,22 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				ClearErrorState();
 				ShowResults(Config.Instance.ShowBobsBuddyDuringCombat);
 			}
-			else if(state == BobsBuddyState.Shopping)
+			else if(state is BobsBuddyState.Shopping or BobsBuddyState.GameOver)
 			{
-				if(!Config.Instance.ShowBobsBuddyDuringShopping) {
+				if(Config.Instance.ShowBobsBuddyDuringShopping)
+				{
+					ShowResults(true);
+				}
+				else if (_resultsPanelExpanded) {
 					// If the user has disabled the "Show During Shopping" setting we would usually hide Bob's Buddy here.
-					// However if simulation was delayed (e.g. due to a secret) AND the user left the panel expanded during combat, keep it expanded.
-					ShowResults(lastState == BobsBuddyState.CombatWithoutSimulation && _resultsPanelExpanded);
+					// However we want to keep the panel expanded if the user left it expanded during combat and either:
+					// - the game has ended (so we don't hide it again on the results screen), or
+					// - the previous simulation was deferred (so that the user can see the result).
+					ShowResults(state == BobsBuddyState.GameOver  || lastState == BobsBuddyState.CombatWithoutSimulation);
 				}
 				else
 				{
-					ShowResults(true);
+					ShowResults(false);
 				}
 			}
 			else if(state == BobsBuddyState.CombatWithoutSimulation)
@@ -513,8 +519,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Core.MainWindow.ActivateWindow();
 		}
 
-		private bool InCombatPhase => State == BobsBuddyState.Combat || State == BobsBuddyState.CombatWithoutSimulation;
-		private bool InShoppingPhase => State == BobsBuddyState.Shopping;
+		private bool InCombatPhase => State is BobsBuddyState.Combat or BobsBuddyState.CombatWithoutSimulation;
+		private bool InShoppingPhase => State is BobsBuddyState.Shopping or BobsBuddyState.GameOver;
 		private bool CanMinimize
 			=> InCombatPhase && !Config.Instance.ShowBobsBuddyDuringCombat
 			|| InShoppingPhase && !Config.Instance.ShowBobsBuddyDuringShopping;

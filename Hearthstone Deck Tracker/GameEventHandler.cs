@@ -563,7 +563,7 @@ namespace Hearthstone_Deck_Tracker
 				LiveDataManager.Stop();
 				if(_game.IsBattlegroundsMatch && stateComplete)
 				{
-					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?.StartShoppingAsync();
+					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?.StartShoppingAsync(true);
 					OpponentDeadForTracker.ResetOpponentDeadForTracker();
 				}
 				if(_game.IsConstructedMatch)

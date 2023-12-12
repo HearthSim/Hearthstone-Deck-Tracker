@@ -219,7 +219,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 		}
 
-		public async Task StartShoppingAsync()
+		public async Task StartShoppingAsync(bool isGameOver = false)
 		{
 			try
 			{
@@ -237,8 +237,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 
 				BobsBuddyDisplay.SetLastOutcome(GetLastCombatDamageDealt());
-				BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
-				DebugLog("Setting UI state to shopping");
+				if(isGameOver)
+				{
+					BobsBuddyDisplay.SetState(BobsBuddyState.GameOver);
+					DebugLog("Setting UI state to GameOver");
+				}
+				else
+				{
+					BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
+					DebugLog("Setting UI state to shopping");
+				}
 
 				ValidateSimulationResultAsync().Forget();
 			}
