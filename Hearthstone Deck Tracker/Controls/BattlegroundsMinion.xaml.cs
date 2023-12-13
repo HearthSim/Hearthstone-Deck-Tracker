@@ -33,13 +33,17 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public Visibility DeathrattleVisibility { get; set; }
 
+		public Visibility TriggerVisibility { get; set; }
+
+		public Visibility RebornVisibility { get; set; }
+
 		public Visibility LegendaryBorderVisibility { get; set; }
 
 		public Visibility PremiumLegendaryBorderVisibility { get; set; }
 
-		public Visibility PremiumBorderVisibility { get; set; }
+		public Visibility PremiumBorderAndStatsVisibility { get; set; }
 
-		public Visibility BorderVisibility { get; set; }
+		public Visibility BorderAndStatsVisibility { get; set; }
 
 		public string? AttackDisplay { get; set; }
 
@@ -76,15 +80,17 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private void SetEffectVisibilites()
 		{
 			PoisonousVisibility = _entity.HasTag(GameTag.POISONOUS) ? Visibility.Visible : Visibility.Hidden;
-			VenomousVisibility = _entity.HasTag(GameTag.VENOMOUS) ? Visibility.Visible : Visibility.Hidden;
+			VenomousVisibility = !_entity.HasTag(GameTag.POISONOUS) && _entity.HasTag(GameTag.VENOMOUS) ? Visibility.Visible : Visibility.Hidden;
+			TriggerVisibility = Visibility.Hidden; // always hide for now, seems like TRIGGER_VISUAL is a bit too common to be useful
 			DivineShieldVisibility = _entity.HasTag(GameTag.DIVINE_SHIELD) ? Visibility.Visible : Visibility.Hidden;
 			DeathrattleVisibility = _entity.HasTag(GameTag.DEATHRATTLE) ? Visibility.Visible : Visibility.Hidden;
+			RebornVisibility = _entity.HasTag(GameTag.REBORN) ? Visibility.Visible : Visibility.Hidden;
 
 			if(_entity.HasTag(GameTag.PREMIUM))
 			{
 				PremiumLegendaryBorderVisibility = _entity.Card.Rarity == Rarity.LEGENDARY ? Visibility.Visible : Visibility.Hidden;
-				PremiumBorderVisibility = Visibility.Visible;
-				BorderVisibility = Visibility.Hidden;
+				PremiumBorderAndStatsVisibility = Visibility.Visible;
+				BorderAndStatsVisibility = Visibility.Hidden;
 				LegendaryBorderVisibility = Visibility.Hidden;
 				TauntVisibility = Visibility.Hidden;
 				PremiumTauntVisibility = _entity.HasTag(GameTag.TAUNT) ? Visibility.Visible : Visibility.Hidden;
@@ -92,8 +98,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			else
 			{
 				PremiumLegendaryBorderVisibility = Visibility.Hidden;
-				PremiumBorderVisibility = Visibility.Hidden;
-				BorderVisibility = Visibility.Visible;
+				PremiumBorderAndStatsVisibility = Visibility.Hidden;
+				BorderAndStatsVisibility = Visibility.Visible;
 				LegendaryBorderVisibility = _entity.Card.Rarity == Rarity.LEGENDARY ? Visibility.Visible : Visibility.Hidden;
 				TauntVisibility = _entity.HasTag(GameTag.TAUNT) ? Visibility.Visible : Visibility.Hidden;
 				PremiumTauntVisibility = Visibility.Hidden;
