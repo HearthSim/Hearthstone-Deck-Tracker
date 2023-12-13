@@ -444,6 +444,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(_game.IsBattlegroundsMatch)
 				{
+					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
+					Core.Overlay.HideBattlegroundsHeroPanel();
 					OpponentDeadForTracker.ShoppingStarted(_game);
 					if(_game.CurrentGameStats != null && turn.Item2 > 1)
 						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShoppingAsync();
