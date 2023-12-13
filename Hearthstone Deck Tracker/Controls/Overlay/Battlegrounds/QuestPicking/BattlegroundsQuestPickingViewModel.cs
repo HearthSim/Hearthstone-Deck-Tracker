@@ -47,6 +47,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 
 		public async Task OnBattlegroundsQuest(Entity questEntity)
 		{
+			if(!questEntity.HasCardId)
+				return;
 			_entities.Add(questEntity);
 			if(_entities.Count == ExpectedQuestCount())
 				await Update();
