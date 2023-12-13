@@ -131,23 +131,5 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 				return (!Windfury || AttacksThisTurn < 2) && (Windfury || AttacksThisTurn < 1);
 			return true;
 		}
-
-		private int V07TRONAttack(bool active)
-		{
-			if(!active)
-				return _stdAttack * 4;
-
-			switch(AttacksThisTurn)
-			{
-				case 0:
-					return _stdAttack * 4;
-				case 1:
-					return _stdAttack * 3;
-				case 2:
-					return _stdAttack * 2;
-				default:
-					return _stdAttack;
-			}
-		}
 	}
 }
