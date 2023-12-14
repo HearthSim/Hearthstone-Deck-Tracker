@@ -1,4 +1,5 @@
-﻿using Hearthstone_Deck_Tracker.Utility;
+﻿using System;
+using Hearthstone_Deck_Tracker.Utility;
 using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
@@ -12,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		internal void UpdateTurn(int turn)
 		{
-			TurnText.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turn_Counter"), turn);
+			TurnText.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turn_Counter"), Math.Max(turn, 1));
 		}
 	}
 }
