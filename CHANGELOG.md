@@ -1,3 +1,14 @@
+## **Release v1.23.10 - 2023-12-13**
+**New**:
+- Battlegrounds: Added support for Venomous and Reborn to the Last Known Board and Final Board features.
+
+**Changes**:
+- Battlegrounds: Improved the behaviour of the Bob's Buddy panel at the end of a match.
+
+**Fixes:**
+- Constructed: Fixed an issue causing the popup with a link to the Mulligan guide sometimes incorrectly identifying the First/Coin state.
+- Battlegrounds: Fixed an issue causing the hero picking overlay and popup not disappearing when HDT was started during the hero picking phase.
+
 ## **Release v1.23.9 - 2023-12-10**
 **Fixes:**
 - Fixed an issue where tooltips from the sideboard would appear even if the deck list is hidden.
