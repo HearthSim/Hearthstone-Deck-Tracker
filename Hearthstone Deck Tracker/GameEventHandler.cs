@@ -28,6 +28,7 @@ using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using ControlzEx.Standard;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 
 
@@ -534,6 +535,32 @@ namespace Hearthstone_Deck_Tracker
 			{
 				// Called here so that UpdatePostGameMercenariesRewards can generate an accurate delta.
 				MercenariesCoins.Update();
+			}
+		}
+
+		private DateTime _lastReconnectStartTimestamp = DateTime.MinValue;
+		public async void HandleGameReconnect(DateTime timestamp)
+		{
+			Log.Info("Joined after mulligan, assuming reconnect.");
+
+			if(DateTime.Now - _lastReconnectStartTimestamp < new TimeSpan(0, 0, 0, 5)) // game already started
+				return;
+			_lastReconnectStartTimestamp = timestamp;
+
+			for(var i = 0; i < 20 && (_game.GameEntity is null || _game.CurrentMode != Mode.GAMEPLAY); i++)
+				await Task.Delay(500);
+
+			if(_game.GameEntity is null || _game.CurrentMode != Mode.GAMEPLAY)
+				return;
+
+			if(_game.IsBattlegroundsMatch)
+			{
+				if(_game.GameEntity?.GetTag(STEP) > (int)Step.BEGIN_MULLIGAN)
+				{
+					Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
+					Core.Overlay.BattlegroundsSessionViewModelVM.Update();
+					Core.Overlay.ShowBattlegroundsSession(true);
+				}
 			}
 		}
 

@@ -459,6 +459,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsMinionsPanel.SetAvailableTiers(BattlegroundsUtils.GetAvailableTiers(anomalyCardId));
 			BattlegroundsMinionsPanel.SetBannedMinions(BattlegroundsUtils.GetMinionsBannedByAnomaly(anomalyDbfId) ?? new List<string>());
 
+			if(_game.GameEntity?.GetTag(GameTag.TURN) is int turn and > 0)
+				Core.Overlay.TurnCounter.UpdateTurn(turn);
 			BattlegroundsMinionsPanel.Visibility = Config.Instance.ShowBattlegroundsTiers ? Visible : Collapsed;
 
 			_bgsTopBarBehavior.Show();

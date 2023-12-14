@@ -178,6 +178,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.Reset();
 				gameState.GameHandler?.HandleGameStart(logLine.Time);
 			}
+			else if(logLine.Line.Contains("MulliganManager.HandleGameStart") && logLine.Line.Contains("IsPastBeginPhase()=True"))
+			{
+				gameState.GameHandler?.HandleGameReconnect(logLine.Time);
+			}
 		}
 
 		private async void CheckMirrorStatus()
