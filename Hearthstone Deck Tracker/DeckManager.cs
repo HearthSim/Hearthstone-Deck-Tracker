@@ -399,6 +399,18 @@ namespace Hearthstone_Deck_Tracker
 			return false;
 		}
 
+		public static void AutoSelectTemplateDeckById(IGame game, int deckId)
+		{
+			if(DeckList.Instance.Decks.All(x => x.HsId != deckId))
+			{
+				var selectedDeck2 = DeckImporter.FromTemplateDeck(deckId);
+				if(selectedDeck2 is null)
+					return;
+				ImportDecks(new List<ImportedDeck>() { selectedDeck2 }, false);
+			}
+			AutoSelectDeckById(game, deckId);
+		}
+
 		internal static async void AutoSelectDeckById(IGame game, long id)
 		{
 			Log.Info($"Trying to select deck for id={id}");

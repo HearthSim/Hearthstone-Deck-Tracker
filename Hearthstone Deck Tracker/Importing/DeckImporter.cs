@@ -15,6 +15,7 @@ using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using HearthDb.Enums;
 
 #endregion
 
@@ -121,32 +122,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			foreach (var deck in hsDecks)
 			{
 				if(deck.Cards.Count == 1 && deck.Cards.Single().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful)
-				{
-					var data = Remote.Config.Data;
-					if (data != null)
-					{
-						var whizbangDecks = data.WhizbangDecks.Select(x =>
-						{
-							if(!Hearthstone.CardIds.CardClassHero.TryGetValue(x.Class, out var hero))
-								return null;
-							return new HearthMirror.Objects.Deck
-							{
-								Id = x.DeckId,
-								Name = x.Title,
-								Cards = x.Cards.Select(c => {
-									var card = Database.GetCardFromDbfId(c.DbfId);
-									if(card == null)
-										return null;
-									return new HearthMirror.Objects.Card(card.Id, c.Count, 0);
-								}).Where(x => x != null).ToList(),
-								Hero = hero,
-							};
-						}).WhereNotNull();
-
-						importedDecks.AddRange(GetImportedDecks(whizbangDecks, localDecks));
-						continue;
-					}
-				}
+					continue; // Cannot be imported here (will need to happen in the context of a game with a deck id)
 
 				var otherDecks = hsDecks.Except(new[] {deck});
 				var existing = localDecks.Where(x => otherDecks.All(d => d.Id != x.HsId)).Select(x =>
@@ -191,6 +167,46 @@ namespace Hearthstone_Deck_Tracker.Importing
 				else if(log)
 					Log.Info("Found no arena deck");
 				return ArenaInfoCache;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+			}
+			return null;
+		}
+
+		public static ImportedDeck? FromTemplateDeck(int id)
+		{
+			var deck = GetTemplateDeck(id);
+			if(deck is null)
+				return null;
+			return new ImportedDeck(deck, null, DeckList.Instance.Decks);
+		}
+
+		private static HearthMirror.Objects.Deck? GetTemplateDeck(int id)
+		{
+			try
+			{
+				var deck = Reflection.Client.GetTemplateDeckById(id);
+				if(deck is null)
+					return null;
+
+				if(!Hearthstone.CardIds.CardClassHero.TryGetValue((CardClass)deck.Class, out var hero))
+					return null;
+
+				return new HearthMirror.Objects.Deck
+				{
+					Id = deck.DeckId,
+					Name = deck.Title,
+					Cards = deck.Cards.GroupBy(dbfId => dbfId, (dbfId, dbfIds) =>
+					{
+						var card = Database.GetCardFromDbfId(dbfId);
+						if(card == null)
+							return null;
+						return new HearthMirror.Objects.Card(card.Id, dbfIds.Count(), 0);
+					}).WhereNotNull().ToList(),
+					Hero = hero,
+				};
 			}
 			catch(Exception e)
 			{

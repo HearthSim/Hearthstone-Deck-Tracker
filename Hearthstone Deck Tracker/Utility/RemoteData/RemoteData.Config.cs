@@ -17,9 +17,6 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("arena")]
 			public ArenaData? Arena { get; set; }
 
-			[JsonProperty("whizbang_decks")]
-			public List<WhizbangDeck>? WhizbangDecks { get; set; }
-
 			[JsonProperty("battlegrounds_short_names")]
 			public List<CardShortName>? BattlegroundsShortNames { get; set; }
 
