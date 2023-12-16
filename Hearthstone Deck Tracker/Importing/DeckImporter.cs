@@ -214,5 +214,16 @@ namespace Hearthstone_Deck_Tracker.Importing
 			}
 			return null;
 		}
+
+		public static bool IsExactlyWhizbang(long deckId, bool refreshCache = true)
+		{
+			if(refreshCache)
+				ConstructedDecksCache = GetConstructedDecks();
+			ConstructedDecksCache = GetConstructedDecks();
+			var deck = ConstructedDecksCache.FirstOrDefault(d => d.Id == deckId);
+			if(deck == null)
+				return false;
+			return deck.Cards.Count == 1 && deck.Cards.Single().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful;
+		}
 	}
 }

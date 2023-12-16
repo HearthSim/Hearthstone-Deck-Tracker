@@ -427,7 +427,15 @@ namespace Hearthstone_Deck_Tracker
 				Core.MainWindow.SelectDeck(null, true);
 				return;
 			}
+
 			AutoImportConstructed(false, game.CurrentMode == Mode.TAVERN_BRAWL);
+			if(DeckImporter.IsExactlyWhizbang(id, refreshCache: false))
+			{
+				Log.Info("Selected a Whizbang deck, using no-deck mode");
+				Core.MainWindow.SelectDeck(null, true);
+				return;
+			}
+
 			var selectedDeck = DeckList.Instance.Decks.FirstOrDefault(x => x.HsId == id);
 			if(selectedDeck == null)
 			{
