@@ -4,6 +4,7 @@ using BobsBuddy;
 using BobsBuddy.Factory;
 using BobsBuddy.HeroPowers;
 using BobsBuddy.Minions.Mech;
+using BobsBuddy.Minions.Undead;
 using BobsBuddy.Simulation;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -99,6 +100,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						break;
 					case NonCollectible.Demonhunter.Wingmen_WingmenEnchantmentTavernBrawl:
 						minion.HasWingmen = true;
+						break;
+					case NonCollectible.Neutral.RecurringNightmare_NightmareInsideEnchantment:
+						minion.AdditionalDeathrattles.Add(RecurringNightmare.SummonDeathrattle(false));
+						break;
+					case NonCollectible.Neutral.RecurringNightmare_NightmareInside:
+						minion.AdditionalDeathrattles.Add(RecurringNightmare.SummonDeathrattle(true));
 						break;
 				}
 			}
