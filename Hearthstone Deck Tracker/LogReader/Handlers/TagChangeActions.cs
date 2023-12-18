@@ -251,7 +251,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				game.Opponent.IsPlayingWhizbang = true;
 			if(!entity.IsPlayer)
 				return;
-			DeckManager.AutoSelectTemplateDeckById(game, value);
+			if(Config.Instance.AutoDeckDetection)
+				DeckManager.AutoSelectTemplateDeckById(game, value);
 		}
 
 		private void CreatorChanged(int id, int value, IGame game)
