@@ -30,7 +30,7 @@ using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using ControlzEx.Standard;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
-
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 
 #endregion
 
@@ -450,6 +450,7 @@ namespace Hearthstone_Deck_Tracker
 					OpponentDeadForTracker.ShoppingStarted(_game);
 					if(_game.CurrentGameStats != null && turn.Item2 > 1)
 						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShoppingAsync();
+					Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id));
 				}
 				switch(Config.Instance.TurnStartAction)
 				{
@@ -1065,6 +1066,11 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(_game.IsBattlegroundsMatch)
 				{
+					var hero = choice.ChosenEntities.Single();
+					var heroPower = Database.GetCardFromDbfId(hero.GetTag(GameTag.HERO_POWER), collectible: false)?.Id;
+					if(heroPower is string hp)
+						Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(new List<string>() { hp });
+
 					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 				}
 				else if(_game.IsConstructedMatch)
@@ -1135,6 +1141,7 @@ namespace Hearthstone_Deck_Tracker
 					if(heroes.Count() < 2)
 						continue;
 					await Task.Delay(500);
+
 					if(_game.GameEntity?.GetTag(STEP) != (int)Step.BEGIN_MULLIGAN)
 					{
 						Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();

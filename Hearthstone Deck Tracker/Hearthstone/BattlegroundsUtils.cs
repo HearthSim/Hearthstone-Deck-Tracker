@@ -52,16 +52,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static string GetOriginalHeroId(string heroId) => TransformableHeroCardidTable.TryGetValue(heroId, out var mapped) ? mapped : heroId;
 
-		public static HashSet<int> GetAvailableTiers(string? anomalyCardId) => anomalyCardId switch
+		public static HashSet<int> GetAvailableTiers(string? anomalyCardId)
 		{
-			NonCollectible.Neutral.BigLeague => new HashSet<int> { 3, 4, 5, 6 },
-			NonCollectible.Neutral.HowToEven => new HashSet<int> { 2, 4, 6 },
-			NonCollectible.Neutral.LittleLeague => new HashSet<int> { 1, 2, 3, 4 },
-			NonCollectible.Invalid.SecretsOfNorgannon => new HashSet<int> { 1, 2, 3, 4, 5, 6, 7 },
-			NonCollectible.Neutral.ValuationInflation => new HashSet<int> { 2, 3, 4, 5, 6 },
-			NonCollectible.Neutral.WhatAreTheOdds => new HashSet<int> { 1, 3, 5 },
-			_ => new HashSet<int> { 1, 2, 3, 4, 5, 6 },
-		};
+			return anomalyCardId switch
+			{
+				NonCollectible.Neutral.BigLeague => new HashSet<int> { 3, 4, 5, 6 },
+				NonCollectible.Neutral.HowToEven => new HashSet<int> { 2, 4, 6 },
+				NonCollectible.Neutral.LittleLeague => new HashSet<int> { 1, 2, 3, 4 },
+				NonCollectible.Invalid.SecretsOfNorgannon => new HashSet<int> { 1, 2, 3, 4, 5, 6, 7 },
+				NonCollectible.Neutral.ValuationInflation => new HashSet<int> { 2, 3, 4, 5, 6 },
+				NonCollectible.Neutral.WhatAreTheOdds => new HashSet<int> { 1, 3, 5 },
+				_ => new HashSet<int> { 1, 2, 3, 4, 5, 6 },
+			};
+		}
 
 		public static int? GetBattlegroundsAnomalyDbfId(Entity? game)
 		{

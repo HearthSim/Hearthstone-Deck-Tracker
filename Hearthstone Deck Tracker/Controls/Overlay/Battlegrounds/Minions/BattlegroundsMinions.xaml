@@ -1,0 +1,60 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions.BattlegroundsMinions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
+             xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             x:Name="Container"
+             mc:Ignorable="d">
+    <StackPanel>
+        <Border BorderBrush="#141617" BorderThickness="1" Background="#23272a">
+            <ItemsControl Name="TierIcons" ItemsSource="{Binding TierButtons}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:BattlegroundsTierButton
+                            Tier="{Binding Tier}"
+                            Active="{Binding Active}"
+                            Available="{Binding Available}"
+                            Faded="{Binding Faded}"
+                            ClickTierCommand="{Binding SetActiveTierCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
+                        />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+        <ScrollViewer x:Name="MinionScrollViewer" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalScrollBarVisibility="Auto"
+                      ext:OverlayExtensions.IsOverlayHitTestVisible="True">
+            <StackPanel>
+                <!-- Set HitTestVisible=False to prevent showing normal tooltips-->
+                <ItemsControl
+                    x:Name="GroupsControl"
+                    ItemsSource="{Binding Groups}"
+                    IsHitTestVisible="False"
+                >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:BattlegroundsCardsGroup
+                                Title="{Binding Title}"
+                                Cards="{Binding Cards}"
+                                Visibility="{Binding Visibility}"
+                            />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <local:BattlegroundsMinionTypesBox
+                    HorizontalAlignment="Right"
+                    Visibility="{Binding UnavailableMinionTypesVisibility}"
+                    Title="{lex:Loc Unavailable}"
+                    MinionTypes="{Binding UnavailableRaces}"
+                />
+            </StackPanel>
+        </ScrollViewer>
+    </StackPanel>
+</UserControl>

@@ -4,9 +4,11 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using HearthDb.Enums;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -226,12 +228,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				ToolTipCardBlock.Visibility = Config.Instance.OverlaySecretToolTipsOnly ? Visible : visibility;
 			}
-			else if(BgsTopBar.Visibility == Visible && BattlegroundsMinionsPanel.Visibility == Visible && BattlegroundsMinionsPanel.ActiveTier > 0)
+			else if(BgsTopBar.Visibility == Visible && BattlegroundsMinionsPanel.Visibility == Visible && BattlegroundsMinionsVM.ActiveTier != null)
 			{
 				var found = false;
-				foreach(var group in BattlegroundsMinionsPanel.Groups)
+				for(var i = 0; i < BattlegroundsMinionsPanel.GroupsControl.Items.Count; i++)
 				{
-					var cardList = group.Cards;
+					var group = (BattlegroundsCardsGroup)VisualTreeHelper.GetChild(BattlegroundsMinionsPanel.GroupsControl.ItemContainerGenerator.ContainerFromIndex(i), 0);
+					var cardList = group.CardsList;
 					if(!group.IsVisible || !cardList.IsVisible)
 						continue;
 					var relativePos = cardList.PointFromScreen(new Point(pos.X, pos.Y));

@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
-             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
              d:DesignHeight="58" d:DesignWidth="70">
@@ -14,16 +13,16 @@
     >
         <StackPanel Orientation="Vertical" Margin="3 4 0 0" Height="60">
             <Canvas Height="42" Width="70">
-                <overlay:BattlegroundsTier
+                <local:BattlegroundsTier
                     Canvas.Left="{Binding TierLeft, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
                     Canvas.Top="{Binding TierTop, FallbackValue=2, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
                     Tier="{Binding Tier, FallbackValue=5, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
                     Opacity="{Binding TierOpacity, FallbackValue=1, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
                 >
-                    <overlay:BattlegroundsTier.RenderTransform>
+                    <local:BattlegroundsTier.RenderTransform>
                         <ScaleTransform ScaleX="0.75" ScaleY="0.75" />
-                    </overlay:BattlegroundsTier.RenderTransform>
-                </overlay:BattlegroundsTier>
+                    </local:BattlegroundsTier.RenderTransform>
+                </local:BattlegroundsTier>
                 <Image
                     Canvas.Left="28"
                     Canvas.Top="2"

@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_movableElements.Add(LblPlayerTurnTime, new ResizeGrip());
 			_movableElements.Add(BattlegroundsSessionStackPanel, new ResizeGrip());
 
-			_clickableElements.Add(BattlegroundsMinionsPanel.BgTierIcons);
+			_clickableElements.Add(BattlegroundsMinionsPanel.TierIcons);
 			_clickableElements.Add(HeroNotificationPanel);
 			_clickableElements.Add(MulliganNotificationPanel);
 			_clickableElements.Add(BobsBuddyDisplay);

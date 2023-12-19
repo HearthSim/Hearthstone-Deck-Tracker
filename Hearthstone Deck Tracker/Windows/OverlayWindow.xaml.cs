@@ -26,13 +26,14 @@ using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Utility.Animations;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
-
+using static HearthDb.CardIds;
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -85,6 +86,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
 
+		public BattlegroundsMinionsViewModel BattlegroundsMinionsVM { get; } = new();
 		public BattlegroundsSessionViewModel BattlegroundsSessionViewModelVM => Core.Game.BattlegroundsSessionViewModel;
 		public BattlegroundsHeroPickingViewModel BattlegroundsHeroPickingViewModel { get; } = new();
 		public BattlegroundsQuestPickingViewModel BattlegroundsQuestPickingViewModel { get; } = new();
@@ -453,14 +455,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void ShowBgsTopBar()
 		{
 			TurnCounter.Visibility = Config.Instance.ShowBattlegroundsTurnCounter ? Visible : Collapsed;
+			if(_game.GameEntity?.GetTag(GameTag.TURN) is int turn and > 0)
+				Core.Overlay.TurnCounter.UpdateTurn((int)turn / 2);
 
 			var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
 			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
-			BattlegroundsMinionsPanel.SetAvailableTiers(BattlegroundsUtils.GetAvailableTiers(anomalyCardId));
-			BattlegroundsMinionsPanel.SetBannedMinions(BattlegroundsUtils.GetMinionsBannedByAnomaly(anomalyDbfId) ?? new List<string>());
+			BattlegroundsMinionsVM.AvailableRaces = BattlegroundsUtils.GetAvailableRaces(_game.CurrentGameStats?.GameId);
+			BattlegroundsMinionsVM.Anomaly = anomalyCardId;
+			BattlegroundsMinionsVM.BannedMinions = BattlegroundsUtils.GetMinionsBannedByAnomaly(anomalyDbfId) ?? new List<string>();
 
-			if(_game.GameEntity?.GetTag(GameTag.TURN) is int turn and > 0)
-				Core.Overlay.TurnCounter.UpdateTurn((int)turn / 2);
+			IEnumerable<string> heroPowers = _game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id);
+			if(!heroPowers.Any() && _game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
+			{
+				var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(GameTag.BACON_SKIN)));
+				heroPowers = heroes.Select(x => Database.GetCardFromDbfId(x.GetTag(GameTag.HERO_POWER), collectible: false)?.Id ?? "");
+			}
+			BattlegroundsMinionsVM.OnHeroPowers(heroPowers);
+
 			BattlegroundsMinionsPanel.Visibility = Config.Instance.ShowBattlegroundsTiers ? Visible : Collapsed;
 
 			_bgsTopBarBehavior.Show();
@@ -474,7 +485,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void HideBgsTopBar()
 		{
-			BattlegroundsMinionsPanel.Reset();
+			BattlegroundsMinionsVM.Reset();
 			_bgsTopBarBehavior.Hide();
 			TurnCounter.UpdateTurn(1);
 			HideBobsBuddyPanel();
@@ -581,7 +592,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Remote.BattlegroundsBans.Load();
 				if(Config.Instance.ShowBattlegroundsTier7PreLobby || !(HSReplayNetOAuth.AccountData?.IsTier7 ?? false))
 				{
-					Tier7ViewModel.Update(checkAccountStatus).Forget();	
+					Tier7ViewModel.Update(checkAccountStatus).Forget();
 
 					// Wait for lobby to be actually loaded
 					await Task.Delay(delay);
