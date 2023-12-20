@@ -1,3 +1,13 @@
+## **Release v1.23.11 - 2023-12-19**
+**Updated for Hearthstone 28.2.3**
+
+**Changes**:
+- Reworked how Whizbang decks are imported, making HDT support new decks immediately when future expansions are released!
+- Show tavern tier 7 in the minion list overlay when Thorim, Stormlord is offered.
+
+**Bob's Buddy**:
+- Fixed an issue where the Recurring Nightmare deathrattle was not taken into account if it was added to another minion in the shopping phase.
+
 ## **Release v1.23.10 - 2023-12-13**
 **New**:
 - Battlegrounds: Added support for Venomous and Reborn to the Last Known Board and Final Board features.
@@ -5,12 +15,12 @@
 **Changes**:
 - Battlegrounds: Improved the behaviour of the Bob's Buddy panel at the end of a match.
 
-**Fixes:**
+**Fixes**:
 - Constructed: Fixed an issue causing the popup with a link to the Mulligan guide sometimes incorrectly identifying the First/Coin state.
 - Battlegrounds: Fixed an issue causing the hero picking overlay and popup not disappearing when HDT was started during the hero picking phase.
 
 ## **Release v1.23.9 - 2023-12-10**
-**Fixes:**
+**Fixes**:
 - Fixed an issue where tooltips from the sideboard would appear even if the deck list is hidden.
 - Fixed an issue where the attack counters would not correctly handle Mega Mountain.
 
