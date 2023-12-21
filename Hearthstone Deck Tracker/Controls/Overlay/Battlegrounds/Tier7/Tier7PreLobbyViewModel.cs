@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				OnPropertyChanged(nameof(ChevronIcon));
 			}
 		}
-		public Visual? ChevronIcon => Core.Overlay.Tier7PreLobby.TryFindResource("chevron_" + (IsCollapsed ? "down" : "up")) as Visual;
+		public Visual? ChevronIcon => Application.Current.TryFindResource("chevron_" + (IsCollapsed ? "down" : "up")) as Visual;
 		public int? PanelMinWidth => UserState is UserState.ValidPlayer or UserState.Subscribed ? 264 : 214;
 
 		public string? TrialTimeRemaining
