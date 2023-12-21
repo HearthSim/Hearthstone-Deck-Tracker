@@ -4,7 +4,7 @@ namespace HearthWatcher.Providers
 {
 	public interface IArenaProvider
 	{
-		ArenaInfo GetArenaInfo();
-		Card[] GetDraftChoices();
+		ArenaInfo? GetArenaInfo();
+		Card[]? GetDraftChoices();
 	}
 }
