@@ -328,8 +328,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				dbfIds = cards.ToDictionary(c => c.DbfId, c => c.Count);
 				sideboards = deck.Sideboards.Select(s =>
-					new { owner = Database.GetCardFromId(s.Key), sideboard = s.Value.ToDictionary(c => c.DbfId, c => c.Count) }
-				).Where(s => s.owner != null).ToDictionary(s => s.owner!.DbfId, s => s.sideboard);
+					new
+					{
+						owner = Database.GetCardFromId(s.Key),
+						sideboard = s.Value.ToDictionary(c => Database.GetCardFromId(c.Id)?.DbfId ?? 0, c => c.Count)
+					}
+				).Where(s => s.owner != null && s.sideboard.Keys.All(x => x != 0)).ToDictionary(s => s.owner!.DbfId, s => s.sideboard);
 			}
 			catch
 			{
