@@ -194,8 +194,10 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
+		private static string NormalizeImport(string import) => import.Replace(".dll", "").Trim().ToLowerInvariant();
+
 		// Blizzard has kindly asked us to stop supporting reconnector plugins
-		private readonly string[] _prohibitedImports = { "iphlpapi.dll" };
+		private readonly string[] _prohibitedImports = { "iphlpapi" };
 		private IEnumerable<PluginWrapper> GetModule(string pFileName, Type pTypeInterface)
 		{
 			var plugins = new List<PluginWrapper>();
@@ -204,7 +206,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				var assembly = Assembly.LoadFrom(pFileName);
 				var hasProhibitedImport = assembly.GetTypes().Any(t => t.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
 					.Any(m => m.GetCustomAttributes<DllImportAttribute>()
-					.Any(a => _prohibitedImports.Contains(a.Value))));
+					.Any(a => _prohibitedImports.Contains(NormalizeImport(a.Value)))));
 				if(hasProhibitedImport)
 					return plugins;
 
