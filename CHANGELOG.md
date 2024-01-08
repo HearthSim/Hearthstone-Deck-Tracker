@@ -1,3 +1,10 @@
+## **Release v1.23.12 - 2024-01-08**
+**Fixes**:
+- Fixed a long-standing issue where a duplicate overlay could appear on slower devices.
+
+**Bob's Buddy**:
+- Fixed an issue where Admiral Eliza Goreblade was not simulated correctly.
+
 ## **Release v1.23.11 - 2023-12-19**
 **Updated for Hearthstone 28.2.3**
 
