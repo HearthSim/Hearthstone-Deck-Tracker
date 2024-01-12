@@ -12,12 +12,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public static class WotogCounterHelper
 	{
-		public static Entity PlayerCthun => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Neutral.CthunOG && x.Info.OriginalZone != null);
-		public static Entity PlayerCthunProxy => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
-		public static Entity OpponentCthun => Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Neutral.CthunOG );
-		public static Entity OpponentCthunProxy => Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
-		public static Entity PlayerPogoHopper => Core.Game.Player.RevealedEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Rogue.PogoHopper && x.Info.OriginalZone != null);
-		public static Entity OpponentPogoHopper => Core.Game.Opponent.RevealedEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Rogue.PogoHopper && x.Info.OriginalZone != null);
+		public static Entity? PlayerCthun => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Neutral.CthunOG && x.Info.OriginalZone != null);
+		public static Entity? PlayerCthunProxy => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
+		public static Entity? OpponentCthun => Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Neutral.CthunOG );
+		public static Entity? OpponentCthunProxy => Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
+		public static Entity? PlayerPogoHopper => Core.Game.Player.RevealedEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Rogue.PogoHopper && x.Info.OriginalZone != null);
+		public static Entity? OpponentPogoHopper => Core.Game.Opponent.RevealedEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Rogue.PogoHopper && x.Info.OriginalZone != null);
 
 		public static bool PlayerSeenCthun
 		{
