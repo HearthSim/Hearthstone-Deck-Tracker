@@ -165,20 +165,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Entity? GameEntity => Entities.Values.FirstOrDefault(x => x.Name == "GameEntity");
 
-		public bool IsMulliganDone
-		{
-			get
-			{
-				if(IsBattlegroundsMatch)
-					return true;
-				var player = Entities.FirstOrDefault(x => x.Value.IsPlayer);
-				var opponent = Entities.FirstOrDefault(x => x.Value.HasTag(GameTag.PLAYER_ID) && !x.Value.IsPlayer);
-				if(player.Value == null || opponent.Value == null)
-					return false;
-				return player.Value.GetTag(GameTag.MULLIGAN_STATE) == (int)Mulligan.DONE
-					   && opponent.Value.GetTag(GameTag.MULLIGAN_STATE) == (int)Mulligan.DONE;
-			}
-		}
+		public bool IsMulliganDone => (GameEntity?.GetTag(GameTag.STEP) ?? (int)Step.MAIN_START) >= (int)Step.MAIN_START;
 
 		public bool Spectator => _spectator ?? (bool)(_spectator = HearthMirror.Reflection.Client.IsSpectating());
 
