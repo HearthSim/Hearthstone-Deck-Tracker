@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						_cardMarks[i].UpdateIcon(CardMark.None);
 						_cardMarks[i].UpdateSourceCard(null);
 					}
-					_cardMarks[i].Visibility = _game.IsInMenu || Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks
+					_cardMarks[i].Visibility = _game.IsInMenu || (!_game.IsBattlegroundsMatch && !_game.IsMulliganDone) || Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks
 												   ? Hidden : Visible;
 				}
 				else
@@ -202,8 +202,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var inBattlegrounds = _game.IsBattlegroundsMatch;
 			var inMercenaries = _game.IsMercenariesMatch;
 
-			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu || inBattlegrounds || inMercenaries ? Collapsed : Visible;
-			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu || inBattlegrounds || inMercenaries ? Collapsed : Visible;
+			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu || !_game.IsMulliganDone || inBattlegrounds || inMercenaries ? Collapsed : Visible;
+			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu || !_game.IsMulliganDone || inBattlegrounds || inMercenaries ? Collapsed : Visible;
 
 			// do the calculation if at least one of the icons is visible
 			if (_game.SetupDone && (IconBoardAttackPlayer.Visibility == Visible || IconBoardAttackOpponent.Visibility == Visible))
@@ -213,6 +213,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 				TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
 			}
 
+			if(_game.IsInMenu || !_game.IsMulliganDone)
+			{
+				WotogIconsPlayer.Visibility = Collapsed;
+				WotogIconsOpponent.Visibility = Collapsed;
+			}
+			else
+			{
+				WotogIconsPlayer.Visibility = Visible;
+				WotogIconsOpponent.Visibility = Visible;
+			}
 
 			var showPlayerCthunCounter = WotogCounterHelper.ShowPlayerCthunCounter;
 			var showPlayerSpellsCounter = WotogCounterHelper.ShowPlayerSpellsCounter;
