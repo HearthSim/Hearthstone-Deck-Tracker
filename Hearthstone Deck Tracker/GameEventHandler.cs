@@ -1041,8 +1041,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				HandleBattlegroundsStart();
 			}
-			else if(_game.IsConstructedMatch)
-				HandleConstructedStart();
+			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
+				HandleRealMulliganPhase();
 		}
 
 		public void HandlePlayerMulliganDone()
@@ -1052,7 +1052,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.HideBattlegroundsHeroPanel();
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 			}
-			else if(_game.IsConstructedMatch)
+			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
 			{
 				Core.Overlay.HideMulliganPanel(false);
 				_game.SnapshotOpeningHand();
@@ -1073,7 +1073,7 @@ namespace Hearthstone_Deck_Tracker
 
 					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 				}
-				else if(_game.IsConstructedMatch)
+				else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
 				{
 					_game.SnapshotMulliganChoices(choice);
 				}
@@ -1084,37 +1084,41 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async void HandleConstructedStart()
+		private async void HandleRealMulliganPhase()
 		{
-			if(Config.Instance.ShowMulliganToast)
+			for(var i = 0; i < 10; i++)
 			{
-				for(var i = 0; i < 10; i++)
+				await Task.Delay(500);
+				var step = _game.GameEntity?.GetTag(STEP) ?? 0;
+				if(step == 0)
+					continue;
+				if(step > (int)Step.BEGIN_MULLIGAN)
+					break;
+
+				// Wait for the game to fade in
+				await Task.Delay(3000);
+
+				_game.SnapshotMulligan();
+
+				if(Config.Instance.ShowMulliganToast && _game.IsConstructedMatch)
 				{
-					await Task.Delay(500);
-					var step = _game.GameEntity?.GetTag(STEP) ?? 0;
-					if(step == 0)
-						continue;
-					if(step > (int)Step.BEGIN_MULLIGAN)
-						break;
-
-					// Wait for the game to fade in
-					await Task.Delay(3000);
-
-					_game.SnapshotMulligan();
-
 					var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
 					if(!string.IsNullOrEmpty(shortId))
 					{
-						var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).Select(x => x.Card.DbfId);
-						var opponentClass = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+						var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created)
+							.Select(x => x.Card.DbfId);
+						var opponentClass =
+							_game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card
+								.CardClass ?? CardClass.INVALID;
 						var hasCoin = _game.Player.HasCoin;
 						var playerStarLevel = _game.PlayerMedalInfo?.StarLevel ?? 0;
 
-						Core.Overlay.ShowMulliganPanel(shortId!, cards.ToArray(), opponentClass, hasCoin, playerStarLevel);
+						Core.Overlay.ShowMulliganPanel(shortId!, cards.ToArray(), opponentClass, hasCoin,
+							playerStarLevel);
 					}
-
-					break;
 				}
+
+				break;
 			}
 		}
 
