@@ -1,3 +1,12 @@
+## **Release v1.23.13 - 2024-01-18**
+**Updated for the release of Delve into Deepholm**
+
+**Changes**:
+- Constructed: Hide card counters and card marks during the mulligan phase.
+
+**Bob's Buddy**:
+- Added support for Murozond (via Rylak).
+
 ## **Release v1.23.12 - 2024-01-08**
 **Fixes**:
 - Fixed a long-standing issue where a duplicate overlay could appear on slower devices.
