@@ -1056,7 +1056,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Core.Overlay.HideMulliganPanel(false);
 				_game.SnapshotOpeningHand();
-				_ = CaptureMulliganGuideFeedback();
+				CaptureMulliganGuideFeedback().Forget();
 			}
 		}
 
