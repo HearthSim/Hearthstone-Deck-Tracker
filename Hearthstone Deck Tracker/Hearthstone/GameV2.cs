@@ -408,6 +408,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				PlayerRegion = CurrentRegion != Region.UNKNOWN ? "REGION_" + CurrentRegion : null,
 				PlayerStarLevel = starLevel > 0 ? starLevel : null,
 				GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
+				FormatType = (int)CurrentFormatType,
 				OfferedCards = _mulliganState?.OfferedCards.Select(x => x.Card.DbfId).ToArray(),
 				KeptCards = _mulliganState?.KeptCards.Select(x => x.Card.DbfId).ToArray(),
 				FinalCardsInHand = _mulliganState?.FinalCardsInHand.Select(x => x.Card.DbfId).ToArray(),
