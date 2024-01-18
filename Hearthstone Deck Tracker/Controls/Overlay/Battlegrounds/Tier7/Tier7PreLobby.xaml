@@ -126,7 +126,7 @@
                             <Run Text="{Binding TrialUsesRemaining}"/>
                             </TextBlock>
                             <Border Width="18" Height="18" BorderBrush="White" Background="{StaticResource Tier7Black}" BorderThickness="1" CornerRadius="18"
-                                ToolTipService.InitialShowDelay="0" ToolTip="You can use the Tier7 overlay for free twice each week.">
+                                ToolTipService.InitialShowDelay="0" ToolTip="{lex:Loc BattlegroundsPreLobby_TrialsRemaining_Tooltip}">
                                 <TextBlock Text="i" VerticalAlignment="Center" FontSize="12" FontWeight="SemiBold"/>
                             </Border>
                         </StackPanel>
