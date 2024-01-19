@@ -1,3 +1,7 @@
+## **Release v1.23.15 - 2024-01-19**
+**Bob's Buddy**:
+- Fixed an issue that caused Bob's Buddy to get stuck on turn 1.
+
 ## **Release v1.23.13 - 2024-01-18**
 **Updated for the release of Delve into Deepholm**
 
