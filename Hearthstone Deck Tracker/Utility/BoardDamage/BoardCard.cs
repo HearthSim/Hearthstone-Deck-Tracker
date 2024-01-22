@@ -37,6 +37,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			Exhausted = e.GetTag(EXHAUSTED) == 1 || (e.GetTag(NUM_TURNS_IN_PLAY) == 0 && !e.IsHero);
 			_cantAttack = e.GetTag(CANT_ATTACK) == 1;
 			_frozen = e.GetTag(FROZEN) == 1;
+			Silenced = e.GetTag(SILENCED) == 1;
 			Charge = e.GetTag(CHARGE) == 1;
 			Windfury = e.GetTag(WINDFURY) == 1;
 			MegaWindfury = (e.CardId == HearthDb.CardIds.NonCollectible.Neutral.MimironsHead_V07Tr0NToken || e.CardId == HearthDb.CardIds.Collectible.Shaman.WalkingMountain);
@@ -62,6 +63,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		}
 
 		public string? CardId { get; }
+		public bool Silenced { get; private set;  }
 		public bool Taunt { get; private set; }
 		public bool Charge { get; }
 		public bool Windfury { get; }
@@ -78,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		{
 			get
 			{
-				if(MegaWindfury)
+				if(MegaWindfury && !Silenced)
 					return 4;
 				if(Windfury)
 					return 2;
