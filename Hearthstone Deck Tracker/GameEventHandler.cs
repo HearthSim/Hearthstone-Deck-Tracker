@@ -137,6 +137,9 @@ namespace Hearthstone_Deck_Tracker
 
 			if(!Config.Instance.KeepDecksVisible)
 				Core.Reset().Forget();
+
+			Core.Overlay.HideLinkOpponentDeckDisplay();
+
 			GameEvents.OnInMenu.Execute();
 		}
 

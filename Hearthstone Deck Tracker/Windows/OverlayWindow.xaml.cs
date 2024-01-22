@@ -524,6 +524,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LinkOpponentDeckDisplay.Show(true);
 		}
 
+		internal void HideLinkOpponentDeckDisplay()
+		{
+			LinkOpponentDeckDisplay.Hide(true);
+		}
+
 		internal void ShowBobsBuddyPanel()
 		{
 			if(!Config.Instance.RunBobsBuddy)
