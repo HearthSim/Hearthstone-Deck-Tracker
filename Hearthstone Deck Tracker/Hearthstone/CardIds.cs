@@ -221,6 +221,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard SplittingImage = new MultiIdCard(Collectible.Mage.SplittingImage);
 				public static readonly MultiIdCard Vaporize = new MultiIdCard(Collectible.Mage.Vaporize, Collectible.Mage.VaporizeVanilla);
 				public static readonly MultiIdCard VengefulVisage = new MultiIdCard(Collectible.Mage.VengefulVisage);
+				public static readonly MultiIdCard SummoningWard = new MultiIdCard(Collectible.Mage.SummoningWard);
 			}
 
 			public class Paladin : EnumerateMultiId<Paladin>
