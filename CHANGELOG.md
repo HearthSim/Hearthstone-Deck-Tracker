@@ -1,3 +1,11 @@
+## **Release v1.23.15 - 2024-01-29**
+**Updated for Hearthstone 28.4.1**
+
+**Fixes**:
+- Fixed Summoning Ward not appearing in the Mage secret tracker.
+- Fixed an issue where the attack counter incorrectly accounted for Mega-Windfury despite Silence (e.g. a silenced Walking Mountain).
+- Fixed an issue causing the "Know your opponent's deck?" prompt to stay up when entering menus.
+
 ## **Release v1.23.15 - 2024-01-19**
 **Bob's Buddy**:
 - Fixed an issue that caused Bob's Buddy to get stuck on turn 1.
