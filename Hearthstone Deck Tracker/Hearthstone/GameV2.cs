@@ -87,7 +87,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public GameTime GameTime { get; } = new GameTime();
 		public bool IsMinionInPlay => Entities.Values.FirstOrDefault(x => x.IsInPlay && x.IsMinion) != null;
 		public bool IsOpponentMinionInPlay => Entities.Values.FirstOrDefault(x => x.IsInPlay && x.IsMinion && x.IsControlledBy(Opponent.Id)) != null;
-		public int OpponentMinionCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinion && x.IsControlledBy(Opponent.Id));
+		public int OpponentMinionCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinion && !x.HasTag(GameTag.UNTOUCHABLE) && x.IsControlledBy(Opponent.Id));
 		public int OpponentBoardCount => Entities.Values.Count(x => x.IsInPlay && x.TakesBoardSlot && x.IsControlledBy(Opponent.Id));
 		public int PlayerMinionCount => Entities.Values.Count(x => x.IsInPlay && x.IsMinion && x.IsControlledBy(Player.Id));
 		public int PlayerBoardCount => Entities.Values.Count(x => x.IsInPlay && x.TakesBoardSlot && x.IsControlledBy(Player.Id));
