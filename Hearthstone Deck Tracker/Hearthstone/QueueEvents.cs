@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private static long GetSelectedDeckId(Mode mode)
 		{
-			var selectedDeckId = Reflection.Client.GetDeckPickerSelectedDeck();
+			var selectedDeckId = Reflection.Client.GetSelectedDeckInMenu();
 			if(selectedDeckId > 0)
 				return selectedDeckId;
 			if(mode != TAVERN_BRAWL)
