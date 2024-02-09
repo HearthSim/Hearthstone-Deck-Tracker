@@ -89,7 +89,7 @@
                     </Border>
                     <TextBlock
                         Style="{StaticResource StatTextStyle}"
-                        Text="{Binding PickRate, StringFormat={}{0:#,#.0}%, TargetNullValue=&#8211;, FallbackValue=&#8211;}"
+                        Text="{Binding PickRate, StringFormat={}{0:0.0}%, TargetNullValue=&#8211;, FallbackValue=&#8211;}"
                     />
                 </DockPanel>
             </Border>

@@ -100,7 +100,7 @@
 
         <!-- Pick Rate -->
         <TextBlock Grid.Column="2" Grid.Row="0" Text="{lex:Loc BattlegroundsHeroPicking_Header_PickRate}" TextTrimming="CharacterEllipsis" />
-        <TextBlock Text="{Binding PickRate, StringFormat={}{0:#,#.0}%, TargetNullValue=&#8211;, FallbackValue=&#8211;}" Grid.Row="1" Grid.Column="2"
+        <TextBlock Text="{Binding PickRate, StringFormat={}{0:0.0}%, TargetNullValue=&#8211;, FallbackValue=&#8211;}" Grid.Row="1" Grid.Column="2"
             Style="{StaticResource BoldTextStyle}"
         />
 
