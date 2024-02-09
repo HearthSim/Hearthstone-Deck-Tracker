@@ -31,6 +31,12 @@ using ControlzEx.Standard;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Newtonsoft.Json;
+using HSReplay.Requests;
+using HSReplay.Responses;
+using static HSReplay.Responses.MulliganGuideData;
 
 #endregion
 
@@ -95,6 +101,7 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.HideTimers();
 			Core.Overlay.HideSecrets();
 			Core.Overlay.Update(true);
+			Core.Overlay.UpdateMulliganGuidePreLobby();
 			DeckManager.ResetIgnoredDeckId();
 			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 
@@ -446,10 +453,14 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.SetPlayer(player);
 			if(player == ActivePlayer.Player && !_game.IsInMenu)
 			{
+				// Clear some state that should never be active at the start of a turn in case another hiding mechanism fails
+				Core.Overlay.HideMulliganGuideStats();
+				Core.Game.Player.MulliganCardStats = null;
+				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
+				Core.Overlay.HideBattlegroundsHeroPanel();
+
 				if(_game.IsBattlegroundsMatch)
 				{
-					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
-					Core.Overlay.HideBattlegroundsHeroPanel();
 					OpponentDeadForTracker.ShoppingStarted(_game);
 					if(_game.CurrentGameStats != null && turn.Item2 > 1)
 						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShoppingAsync();
@@ -600,7 +611,15 @@ namespace Hearthstone_Deck_Tracker
 					OpponentDeadForTracker.ResetOpponentDeadForTracker();
 				}
 				if(_game.IsConstructedMatch)
-					Core.Overlay.HideMulliganPanel(false);
+				{
+					Core.Overlay.HideMulliganToast(false);
+					Core.Game.Player.MulliganCardStats = null;
+					Core.Overlay.HideMulliganGuideStats();
+				}
+				if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
+				{
+					CaptureMulliganGuideFeedback().Forget();
+				}
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
 				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)
@@ -823,7 +842,8 @@ namespace Hearthstone_Deck_Tracker
 						_game.CurrentGameStats,
 						_game.CurrentGameMode,
 						_game.CurrentGameType,
-						_game.Spectator
+						_game.Spectator,
+						_game.Metrics
 					);
 
 				if(_game.IsBattlegroundsMatch)
@@ -1040,15 +1060,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleBeginMulligan()
 		{
+			var isConstructed = _game.IsConstructedMatch;
 			if(_game.IsBattlegroundsMatch)
 			{
 				HandleBattlegroundsStart();
 			}
 			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
-				HandleRealMulliganPhase();
+				HandleHearthstoneMulliganPhase();
 		}
 
-		public void HandlePlayerMulliganDone()
+		public async void HandlePlayerMulliganDone()
 		{
 			if(_game.IsBattlegroundsMatch)
 			{
@@ -1057,9 +1078,50 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
 			{
-				Core.Overlay.HideMulliganPanel(false);
-				_game.SnapshotOpeningHand();
-				CaptureMulliganGuideFeedback().Forget();
+				Core.Overlay.HideMulliganToast(false);
+
+				var openingHand = _game.SnapshotOpeningHand();
+
+				if(_game.MulliganCardStats != null && Config.Instance.EnableMulliganGuide)
+				{
+					var numSwappedCards = _game.GetMulliganSwappedCards()?.Count ?? 0;
+					if(numSwappedCards > 0)
+					{
+						// Show the updated cards
+						var dbfIds = openingHand.Select(x => x.Card.DbfId).ToList();
+						if(dbfIds.Any())
+						{
+							Core.Overlay.ShowMulliganGuideStats(
+								dbfIds.Select(dbfId => _game.MulliganCardStats.TryGetValue(dbfId, out var stats) ? stats : new SingleCardStats(dbfId)),
+								_game.MulliganCardStats.Count
+							);
+						}
+					}
+
+					// Delay until the cards fly away
+					await Task.Delay(2_375 + (Math.Max(1, numSwappedCards)) * 475);
+
+					// Wait for the mulligan to be complete (component or animation)
+					for(var j = 0; j < 16 * 60 * 120; j++) // 2 minutes
+					{
+						if(_game.IsInMenu || (_game.GameEntity?.GetTag(STEP) ?? 0) > (int)Step.BEGIN_MULLIGAN)
+						{
+							Core.Overlay.HideMulliganGuideStats();
+							Core.Game.Player.MulliganCardStats = null;
+							return;
+						}
+
+						if(
+							(_game.PlayerEntity?.GetTag(GameTag.MULLIGAN_STATE) ?? 0) >= (int)Mulligan.DONE &&
+							(_game.OpponentEntity?.GetTag(GameTag.MULLIGAN_STATE) ?? 0) >= (int)Mulligan.DONE
+						)
+							break;
+						await Task.Delay(16);
+					}
+
+					Core.Overlay.HideMulliganGuideStats();
+					Core.Game.Player.MulliganCardStats = null;
+				}
 			}
 		}
 
@@ -1087,7 +1149,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async void HandleRealMulliganPhase()
+		private async void HandleHearthstoneMulliganPhase()
 		{
 			for(var i = 0; i < 10; i++)
 			{
@@ -1098,26 +1160,96 @@ namespace Hearthstone_Deck_Tracker
 				if(step > (int)Step.BEGIN_MULLIGAN)
 					break;
 
-				// Wait for the game to fade in
-				await Task.Delay(3000);
-
 				_game.SnapshotMulligan();
 
-				if(Config.Instance.ShowMulliganToast && _game.IsConstructedMatch)
+				var showToast = Config.Instance.ShowMulliganToast && !_game.IsArenaMatch;
+				if(showToast || Config.Instance.EnableMulliganGuide)
 				{
+					// Show Mulligan Guide Elements (Overlay and/or Toast)
 					var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
 					if(!string.IsNullOrEmpty(shortId))
 					{
-						var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created)
-							.Select(x => x.Card.DbfId);
-						var opponentClass =
-							_game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card
-								.CardClass ?? CardClass.INVALID;
+						var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created);
+						var dbfIds = cards.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
+						var opponentClass = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
 						var hasCoin = _game.Player.HasCoin;
-						var playerStarLevel = _game.PlayerMedalInfo?.StarLevel ?? 0;
 
-						Core.Overlay.ShowMulliganPanel(shortId!, cards.ToArray(), opponentClass, hasCoin,
-							playerStarLevel);
+						MulliganGuideData? mulliganGuideData = null;
+						if(Config.Instance.EnableMulliganGuide)
+						{
+							mulliganGuideData = await GetMulliganGuideData();
+						}
+
+						if(mulliganGuideData is MulliganGuideData data)
+						{
+							// Show mulligan guide with parameters as selected by the API
+							if(showToast)
+							{
+								if(data.Toast is MulliganGuideToast toast)
+								{
+									var parameters = toast.Parameters;
+									Core.Overlay.ShowMulliganToast(shortId!, dbfIds, parameters, true);
+								}
+								else
+								{
+									Core.Overlay.ShowMulliganToast("", dbfIds, new() {}, true);
+								}
+							}
+
+							// Wait for the mulligan to be ready
+							for(var j = 0; j < 16 * 60 * 60; j++)
+							{
+								if(_game.IsInMenu || (_game.GameEntity?.GetTag(STEP) ?? 0) > (int)Step.BEGIN_MULLIGAN)
+									return;
+								if(Reflection.Client.GetIsMulliganWaitingForUserInput())
+									break;
+								await Task.Delay(16);
+							}
+
+							Dictionary<int, SingleCardStats>? cardStats = null;
+							// GroupBy before ToDictionary to deal with (unsupported) dbfId duplicates from the server
+							var grouped = data.DeckDbfIdList.GroupBy(x => x.DbfId).ToDictionary(x => x.Key, x => x.First());
+							try
+							{
+								cardStats = SingleCardStats.GroupCardStats(grouped, data.BaseWinrate);
+							}
+							catch(Exception e)
+							{
+								Log.Error(e);
+								cardStats = null;
+							}
+
+							if(cardStats != null)
+							{
+								_game.MulliganCardStats = cardStats;
+								Core.Game.Player.MulliganCardStats = cardStats.Values;
+								Core.Overlay.ShowMulliganGuideStats(
+									dbfIds.Select(dbfId =>
+										cardStats.TryGetValue(dbfId, out var stats) ? stats
+											: new SingleCardStats(dbfId)),
+									cardStats.Count
+								);
+								break;
+							}
+							// Something went wrong generating the card stats, continue to locally generated toast (if enabled)
+						}
+
+						if(showToast)
+						{
+							// Show mulligan guide with locally sourced parameters and let the website do it's thing
+							var parameters = new Dictionary<string, string> {
+								{ "opponentClasses", opponentClass.ToString() },
+								{ "playerInitiative", hasCoin ? "COIN" : "FIRST" }
+							};
+
+							var playerStarLevel = _game.PlayerMedalInfo?.StarLevel ?? 0;
+							if(playerStarLevel > 0)
+							{
+								parameters.Add("mulliganPlayerStarLevel", playerStarLevel.ToString());
+							}
+
+							Core.Overlay.ShowMulliganToast(shortId!, dbfIds, parameters, false, true);
+						}
 					}
 				}
 
@@ -1130,11 +1262,41 @@ namespace Hearthstone_Deck_Tracker
 			if(!Config.Instance.GoogleAnalytics || _game.Spectator)
 				return;
 
-			var parameters = _game.GetMulliganStatsParams();
-			if (parameters is null)
+			var parameters = _game.GetMulliganGuideFeedbackParams();
+			if(parameters is null)
 				return;
 
 			await ApiWrapper.PostMulliganGuideFeedback(parameters);
+		}
+
+		private async Task<MulliganGuideData?> GetMulliganGuideData()
+		{
+			if(Core.Game.Spectator)
+				return null;
+
+			if(Remote.Config.Data?.MulliganGuide?.Disabled ?? false)
+			{
+				return null;
+			}
+
+			var userOwnsPremium = HSReplayNetOAuth.AccountData?.IsPremium ?? false;
+			if(!userOwnsPremium)
+			{
+				// No trial support yet
+				return null;
+			}
+
+			// Assemble request
+			var parameters = (MulliganGuideParams?)_game.GetMulliganGuideParams();
+			if(parameters == null)
+			{
+				return null;
+			}
+
+			var json = JsonConvert.SerializeObject(parameters);
+			Log.Debug($"Fetching Mulligan Guide with parameters={json}...");
+
+			return await HSReplayNetOAuth.MakeRequest(c => c.GetConstructedMulliganGuide(parameters));
 		}
 
 		private async void HandleBattlegroundsStart()

@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 	{
 		protected VMHearthstoneAction(
 			Franchise franchise, int? maxDailyOccurrences,
-			int heroDbfId, string heroName, GameResult matchResult, GameMode gameMode, GameType gameType, int starLevel
+			int heroDbfId, string heroName, GameResult matchResult, GameMode gameMode, GameType gameType, int starLevel, GameMetrics gameMetrics
 		) : base(
 			franchise, gameMode switch
 			{
@@ -24,12 +24,13 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		{
 			HeroDbfId = heroDbfId;
 			HeroName = heroName;
-			MatchResult = matchResult;
+			MatchResult = matchResult;	
 			GameType = gameType;
 			StarLevel = starLevel;
+			MulliganGuideOverlayDisplayed = gameMetrics.ConstructedMulliganGuideOverlayDisplayed;
 			HearthstoneSettings = new HearthstoneSettings();
 		}
-		
+
 		[JsonProperty("hero_dbf_id")]
 		public int HeroDbfId { get; }
 
@@ -44,6 +45,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("star_level")]
 		public int StarLevel { get; }
+
+		[JsonIgnore]
+		public bool MulliganGuideOverlayDisplayed { get; }
 
 		[JsonIgnore]
 		public HearthstoneSettings HearthstoneSettings { get; }

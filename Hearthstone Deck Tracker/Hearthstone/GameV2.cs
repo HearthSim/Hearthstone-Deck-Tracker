@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using HearthDb.Deckstrings;
 using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -38,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BattlegroundRatingInfo? _battlegroundsRatingInfo;
 		private MercenariesRatingInfo? _mercenariesRatingInfo;
 		private BattlegroundsBoardState? _battlegroundsBoardState;
-		private MulliganState? _mulliganState;
+		private MulliganState _mulliganState;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 		internal QueueEvents QueueEvents { get; }
@@ -401,11 +403,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return _battlegroundsHeroTriplesByTier.TryGetValue(id, out var data) ? data : null;
 		}
 
-		public void SnapshotOpeningHand() => _mulliganState?.SnapshotOpeningHand();
-		public void SnapshotMulliganChoices(Choice choice) => _mulliganState?.SnapshotMulliganChoices(choice);
-		public void SnapshotMulligan() => _mulliganState?.SnapshotMulligan();
+		public List<Entity> SnapshotOpeningHand() => _mulliganState.SnapshotOpeningHand();
+		public List<Entity> SnapshotMulliganChoices(Choice choice) => _mulliganState.SnapshotMulliganChoices(choice);
+		public List<Entity> SnapshotMulligan() => _mulliganState.SnapshotMulligan();
 
-		public MulliganGuideFeedbackParams? GetMulliganStatsParams()
+		public MulliganGuideParams? GetMulliganGuideParams()
 		{
 			var activeDeck = DeckList.Instance.ActiveDeck;
 			if(activeDeck == null)
@@ -414,19 +416,48 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var opponentClass = Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
 			var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
 
-			return new MulliganGuideFeedbackParams
+			return new MulliganGuideParams
 			{
 				Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck), false),
 				OpponentClass = opponentClass.ToString(),
 				PlayerInitiative = Player.HasCoin ? "COIN" : "FIRST",
-				PlayerRegion = CurrentRegion != Region.UNKNOWN ? "REGION_" + CurrentRegion : null,
+				PlayerRegion = ((BnetRegion)CurrentRegion).ToString(),
 				PlayerStarLevel = starLevel > 0 ? starLevel : null,
 				GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
 				FormatType = (int)CurrentFormatType,
-				OfferedCards = _mulliganState?.OfferedCards.Select(x => x.Card.DbfId).ToArray(),
-				KeptCards = _mulliganState?.KeptCards.Select(x => x.Card.DbfId).ToArray(),
-				FinalCardsInHand = _mulliganState?.FinalCardsInHand.Select(x => x.Card.DbfId).ToArray(),
 			};
 		}
+
+		public MulliganGuideFeedbackParams? GetMulliganGuideFeedbackParams()
+		{
+			return GetMulliganGuideParams()?.WithFeedback(
+				_mulliganState?.OfferedCards.Select(x => x.Card.DbfId).ToArray(),
+				_mulliganState?.KeptCards.Select(x => x.Card.DbfId).ToArray(),
+				_mulliganState?.FinalCardsInHand.Select(x => x.Card.DbfId).ToArray(),
+				Metrics.ConstructedMulliganGuideOverlayDisplayed,
+				PlayerEntity?.GetTag(GameTag.PLAYSTATE) ?? 0
+			);
+		}
+
+		public List<Entity>? GetMulliganSwappedCards()
+		{
+			var offered = _mulliganState?.OfferedCards;
+			var kept = _mulliganState?.KeptCards;
+
+			if(offered is null || kept is null)
+				return null;
+
+			// assemble a list of cards that were
+			var retval = new List<Entity>();
+			foreach(var card in offered)
+			{
+				if(!kept.Contains(card))
+					retval.Add(card);
+			}
+
+			return retval;
+		}
+
+		public Dictionary<int, SingleCardStats>? MulliganCardStats { get; set; } = null;
 	}
 }

@@ -128,5 +128,22 @@
                     DockPanel.Dock="Right" />
             <Label Content="{lex:Loc Options_Overlay_General_Label_Reset}" DockPanel.Dock="Left" />
         </DockPanel>
+        <GroupBox x:Name="StackPanelMulliganGuide" Header="{lex:LocTextUpper Options_Overlay_MulliganGuide_Group_Label}" Margin="5,10,5,5">
+            <StackPanel>
+                <CheckBox x:Name="CheckboxEnableMulliganGuide"
+                  Content="{lex:LocText Options_Overlay_MulliganGuide_CheckBox_Enable}"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxEnableMulliganGuide_Checked"
+                  Unchecked="CheckboxEnableMulliganGuide_Unchecked"
+                  HorizontalAlignment="Left" />
+                <CheckBox x:Name="CheckboxShowMulliganGuidePreLobby"
+                  Content="{lex:LocText Options_Overlay_MulliganGuide_CheckBox_PreLobby}" Margin="10,5,0,0"
+                  VerticalAlignment="Top"
+                  IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableMulliganGuide}"
+                  Checked="CheckboxShowMulliganGuidePreLobby_Checked"
+                  Unchecked="CheckboxShowMulliganGuidePreLobby_Unchecked"
+                  HorizontalAlignment="Left" />
+            </StackPanel>
+        </GroupBox>
     </StackPanel>
 </UserControl>

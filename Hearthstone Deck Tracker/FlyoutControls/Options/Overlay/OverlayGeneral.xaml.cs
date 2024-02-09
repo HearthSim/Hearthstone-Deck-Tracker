@@ -3,6 +3,8 @@
 using System;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -43,6 +45,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxFlavorText.IsChecked = Config.Instance.ShowFlavorText;
 			CheckBoxOverlayUseAnimations.IsChecked = Config.Instance.OverlayCardAnimations;
 			CheckBoxRemoveSecrets.IsChecked = Config.Instance.RemoveSecretsFromList;
+
+			var isPremium = (HSReplayNetOAuth.AccountData?.IsPremium ?? false);
+			var mulliganGuideDisabled = Remote.Config.Data?.MulliganGuide?.Disabled ?? false;
+			CheckboxEnableMulliganGuide.IsChecked = Config.Instance.EnableMulliganGuide;
+			CheckboxShowMulliganGuidePreLobby.IsChecked = Config.Instance.ShowMulliganGuidePreLobby;
+			StackPanelMulliganGuide.Visibility = isPremium && !mulliganGuideDisabled ? Visibility.Visible : Visibility.Collapsed;
+
 			_initialized = true;
 		}
 
@@ -430,6 +439,45 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.RemoveSecretsFromList = false;
 			Config.Save();
+		}
+
+		private void CheckboxEnableMulliganGuide_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.EnableMulliganGuide = true;
+			Config.Save();
+			Core.Overlay.UpdateMulliganGuidePreLobby();
+		}
+
+		private void CheckboxEnableMulliganGuide_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.EnableMulliganGuide = false;
+			Config.Save();
+			Core.Overlay.HideMulliganGuideStats();
+			// Clear the Mulligan overlay if it's visible
+			Core.Game.Player.MulliganCardStats = null;
+			Core.Overlay.UpdateMulliganGuidePreLobby();
+		}
+
+		private void CheckboxShowMulliganGuidePreLobby_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowMulliganGuidePreLobby = true;
+			Config.Save();
+			Core.Overlay.UpdateMulliganGuidePreLobby();
+		}
+
+		private void CheckboxShowMulliganGuidePreLobby_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowMulliganGuidePreLobby = false;
+			Config.Save();
+			Core.Overlay.UpdateMulliganGuidePreLobby();
 		}
 	}
 }

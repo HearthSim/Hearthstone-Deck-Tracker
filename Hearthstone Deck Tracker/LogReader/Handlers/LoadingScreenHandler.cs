@@ -115,23 +115,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(game.CurrentMode == Mode.TAVERN_BRAWL)
 					Core.Game.CacheBrawlInfo();
 
-				if(game.CurrentMode == Mode.BACON)
-				{
-					Core.Game.CacheBattlegroundRatingInfo();
-					Core.Game.BattlegroundsSessionViewModel.Update();
-					if (Config.Instance.ShowSessionRecapBetweenGames)
-						Core.Overlay.ShowBattlegroundsSession(true);
-					Core.Overlay.ShowTier7PreLobby(true, true);
-					Watchers.BaconWatcher.Run();
-				}
-				else
-				{
-					if(game.CurrentMode != Mode.GAMEPLAY)
-						Core.Overlay.ShowBattlegroundsSession(false, true);
-					Core.Overlay.ShowTier7PreLobby(false, false);
-					Watchers.BaconWatcher.Stop();
-				}
-
 				if(game.CurrentMode == Mode.LETTUCE_PLAY)
 					Core.Game.CacheMercenariesRatingInfo();
 

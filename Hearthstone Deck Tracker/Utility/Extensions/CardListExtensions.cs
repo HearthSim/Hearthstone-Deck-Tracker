@@ -6,8 +6,22 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 {
 	public static class CardListExtensions
 	{
-		public static List<Card> ToSortedCardList(this IEnumerable<Card> cards)
-			=> cards.OrderByDescending(x => x.HideStats).ThenBy(x => x.Cost).ThenBy(x => x.LocalizedName).ToArray().ToList();
+		public enum CardSorting
+		{
+			Cost,
+			MulliganWr,
+		}
+
+		public static List<Card> ToSortedCardList(this IEnumerable<Card> cards, CardSorting sorting = CardSorting.Cost)
+		{
+			var orderedCards = sorting == CardSorting.MulliganWr
+				? cards.OrderByDescending(x => x.CardWinrates?.MulliganWinrate)
+				: cards.OrderByDescending(x => x.HideStats);
+			return orderedCards
+				.ThenBy(x => x.Cost)
+				.ThenBy(x => x.LocalizedName)
+				.ToArray().ToList();
+		}
 
 		public static List<Card> ToDiffCardList(this IEnumerable<Card> cards, List<Card> newCards)
 		{

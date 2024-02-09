@@ -1,5 +1,4 @@
-﻿using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Annotations;
+﻿using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Web;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
@@ -18,9 +18,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 	{
 		private string? _shortId;
 		private int[]? _dbfIds;
-		private CardClass _opponent;
-		private bool _hasCoin;
-		private int _playerStarLevel;
+		private Dictionary<string, string>? _parameters;
+		private bool? _autoFilters;
 
 		public MulliganPanel()
 		{
@@ -49,15 +48,25 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void UserControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			Core.Overlay.HideMulliganPanel(true);
+			Core.Overlay.HideMulliganToast(true);
 			if(HasData)
 			{
-				var ids = $"mulliganIds={HttpUtility.UrlEncode(string.Join(",", _dbfIds))}";
-				var opponent = $"mulliganOpponent={_opponent}";
-				var playerInitiative = $"mulliganPlayerInitiative={(_hasCoin ? "COIN" : "FIRST")}";
-				var playerStarLevel = $"mulliganPlayerStarLevel={_playerStarLevel}";
+				var fragmentParams = _parameters?.Select(kv =>
+					$"{HttpUtility.UrlEncode(kv.Key)}={HttpUtility.UrlEncode(kv.Value)}").ToList()
+					?? new List<string>();
 
-				var url = Helper.BuildHsReplayNetUrl($"/decks/{_shortId}", "mulligan_toast", null, new[] { ids, opponent, playerInitiative, playerStarLevel });
+				if(_dbfIds != null)
+					fragmentParams.Add($"mulliganIds={string.Join(",", _dbfIds)}");
+
+				if(_autoFilters == true)
+					fragmentParams.Add("mulliganAutoFilter=yes");
+
+				var url = Helper.BuildHsReplayNetUrl(
+					$"/decks/{_shortId}",
+					"mulligan_toast",
+					null,
+					fragmentParams
+				);
 				Helper.TryOpenUrl(url);
 				HSReplayNetClientAnalytics.TryTrackToastClick(Franchise.HSConstructed, ToastAction.Toast.Mulligan);
 			}
@@ -80,14 +89,34 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public void Update(string shortId, int[] dbfIds, CardClass opponent, bool hasCoin, int playerStarLevel)
+		private bool _mulliganGuideOverlay;
+		public bool MulliganGuideOverlay
+		{
+			get => _mulliganGuideOverlay;
+			set
+			{
+				if(value != _mulliganGuideOverlay)
+				{
+					_mulliganGuideOverlay = value;
+					OnPropertyChanged();
+					OnPropertyChanged(nameof(NoDataLabel));
+				}
+			}
+		}
+
+		public string NoDataLabel
+		{
+			get => LocUtil.Get(MulliganGuideOverlay ? "Toast_Mulligan_NotOnWebsite" : "Toast_Mulligan_Unavailable");
+		}
+
+		public void Update(string shortId, int[] dbfIds, Dictionary<string, string> parameters, bool showingMulliganGuideOverlay, bool autoFilters)
 		{
 			_shortId = shortId;
 			_dbfIds = dbfIds;
-			_opponent = opponent;
-			_hasCoin = hasCoin;
-			_playerStarLevel = playerStarLevel;
+			_autoFilters = autoFilters;
+			_parameters = parameters;
 			HasData = !string.IsNullOrEmpty(shortId) && HsReplayDataManager.Decks.AvailableDecks.Contains(_shortId);
+			MulliganGuideOverlay = showingMulliganGuideOverlay;
 		}
 
 		private readonly HashSet<string> _noDataShown = new HashSet<string>();

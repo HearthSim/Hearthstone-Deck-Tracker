@@ -20,6 +20,12 @@ using Hearthstone_Deck_Tracker.Utility.Themes;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
+	public struct CardWinrates
+	{
+		public float MulliganWinrate;
+		public float? BaseWinrate;
+	}
+
 	[Serializable]
 	public class Card : ICloneable, INotifyPropertyChanged
 	{
@@ -37,6 +43,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private string? _text;
 		private bool _wasDiscarded;
 		private string? _id;
+		private CardWinrates? _cardWinrates;
+		private bool _isMulliganOption;
 
 		[NonSerialized]
 		private static readonly Dictionary<string, Dictionary<int, CardImageObject>> CardImageCache =
@@ -92,7 +100,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Card(string id, string? playerClass, Rarity rarity, string? type, string? name, int cost, string? localizedName, int inHandCount,
 		            int count, string? text, string? englishText, int attack, int health, string? race, string[]? mechanics, int? durability,
-		            string? artist, string? set, bool baconCard, List<string>? alternativeNames = null, List<string>? alternativeTexts = null, HearthDb.Card? dbCard = null)
+		            string? artist, string? set, bool baconCard, List<string>? alternativeNames = null, List<string>? alternativeTexts = null, HearthDb.Card? dbCard = null, CardWinrates? cardWinrates = null, bool isMulliganOption = false)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -118,6 +126,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(alternativeTexts != null)
 				AlternativeTexts = alternativeTexts;
 			_dbCard = dbCard;
+			CardWinrates = cardWinrates;
+			IsMulliganOption = isMulliganOption;
 		}
 
 		private Locale? _selectedLanguage;
@@ -165,6 +175,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set
 			{
 				_count = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(Background));
+			}
+		}
+
+		public bool IsMulliganOption
+		{
+			get { return _isMulliganOption; }
+			set
+			{
+				_isMulliganOption = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(Background));
+			}
+		}
+
+		public CardWinrates? CardWinrates
+		{
+			get { return _cardWinrates; }
+			set
+			{
+				_cardWinrates = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(Background));
 			}
@@ -486,7 +518,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[XmlIgnore]
 		public string FlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage)) ?? "";
-		
+
 		[XmlIgnore]
 		public string FormattedFlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage), false) ?? "";
 
@@ -568,6 +600,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string? Theme { get; }
 		public int TextColorHash { get; }
 		public bool BaconCard { get; }
+		public CardWinrates? CardWinrates { get;  }
+		public bool IsMulliganOption { get; }
 
 		public CardImageObject(DrawingBrush image, Card card) : this(card)
 		{
@@ -584,6 +618,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			TextColorHash = card.ColorPlayer.Color.GetHashCode();
 			Created = card.IsCreated;
 			BaconCard = card.BaconCard;
+			CardWinrates = card.CardWinrates;
+			IsMulliganOption = card.IsMulliganOption;
 		}
 
 		public override bool Equals(object obj)
@@ -594,7 +630,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		protected bool Equals(CardImageObject other)
 			=> Count == other.Count && Jousted == other.Jousted && ColoredFrame == other.ColoredFrame && ColoredGem == other.ColoredGem
-				&& string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash && Created == other.Created;
+				&& string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash && Created == other.Created
+				&& (CardWinrates?.Equals(other.CardWinrates) ?? CardWinrates.HasValue == other.CardWinrates.HasValue) && IsMulliganOption == other.IsMulliganOption;
 
 		public override int GetHashCode()
 		{
@@ -608,6 +645,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				hashCode = (hashCode * 397) ^ TextColorHash;
 				hashCode = (hashCode * 397) ^ Created.GetHashCode();
 				hashCode = (hashCode * 397) ^ BaconCard.GetHashCode();
+				hashCode = (hashCode * 397) ^ CardWinrates.GetHashCode();
+				hashCode = (hashCode * 397) ^ (IsMulliganOption ? 1 : 0);
 				return hashCode;
 			}
 		}

@@ -1,0 +1,61 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.ConstructedMulliganGuide"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:mulligan="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan"
+             xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d">
+    <UserControl.LayoutTransform>
+        <ScaleTransform ScaleX="{Binding Scaling}" ScaleY="{Binding Scaling}" CenterX="0.5" CenterY="0.5"/>
+    </UserControl.LayoutTransform>
+    <UserControl.Resources>
+        <Style TargetType="ToolTip" BasedOn="{StaticResource ConstructedTooltipStyle}">
+            <Setter Property="LayoutTransform" Value="{Binding LayoutTransform, RelativeSource={RelativeSource AncestorType=mulligan:ConstructedMulliganGuide}}"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid anim:FadeAnimation.Visibility="{Binding StatsVisibility}" Visibility="Collapsed"
+              anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2">
+            <!-- Centered over cards -->
+            <Grid Margin="6,-30,0,0" Width="988" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ItemsControl ItemsSource="{Binding CardStats}" Margin="-16,0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="480" Width="212">
+                                <mulligan:ConstructedMulliganSingleCardStats />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+            <!--<tier7:OverlayMessage DataContext="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="738 0 0 13" />-->
+        </Grid>
+
+        <!-- Visibility Toggle -->
+        <Border MinWidth="180" Background="{StaticResource HSReplayNetBlue}" Padding="8 5" CornerRadius="4" Cursor="Hand"
+                MouseUp="OverlayVisibilityToggle_MouseUp" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 936 213"
+                extensions:OverlayExtensions.IsOverlayHitTestVisible="True" Visibility="{Binding Visibility}">
+            <DockPanel>
+                <TextBlock Text="{Binding VisibilityToggleText}" Foreground="White" VerticalAlignment="Center" TextAlignment="Left" />
+                <Border HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="0 -3 0 -3">
+                    <Rectangle Height="12" Width="16">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{Binding VisibilityToggleIcon}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Border>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>

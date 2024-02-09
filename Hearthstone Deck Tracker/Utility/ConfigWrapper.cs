@@ -441,6 +441,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public static bool ShowMulliganGuideAutomatically
+		{
+			get => Config.Instance.ShowMulliganGuideAutomatically;
+			set
+			{
+				Config.Instance.ShowMulliganGuideAutomatically = value;
+				Config.Save();
+			}
+		}
+
 		public static CardImageConfigs CardImageConfigs	{get;} = new CardImageConfigs();
 
 		public bool WindowCardToolTips => Config.Instance.WindowCardToolTips;

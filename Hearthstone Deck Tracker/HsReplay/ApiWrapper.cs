@@ -74,11 +74,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static async Task<LogUploadRequest> CreateUploadRequest(UploadMetaData metaData) 
+		public static async Task<LogUploadRequest> CreateUploadRequest(UploadMetaData metaData)
 			=> await Client.CreateUploadRequest(metaData, await GetUploadToken());
 
 
-		public static async Task UploadLog(LogUploadRequest uploadRequest, string[] logLines) 
+		public static async Task UploadLog(LogUploadRequest uploadRequest, string[] logLines)
 			=> await Client.UploadLog(uploadRequest, logLines);
 
 		public static async Task UploadPack(PackData data) => await Client.UploadPack(data, await GetUploadToken());
@@ -221,6 +221,19 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 #if(DEBUG)
 				Log.Error(e);
 #endif
+			}
+		}
+
+		public static async Task<MulliganGuideStatusData?> GetMulliganGuideStatus(MulliganGuideStatusParams parameters)
+		{
+			try
+			{
+				return await Client.GetMulliganGuideStatus(parameters);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
 			}
 		}
 	}

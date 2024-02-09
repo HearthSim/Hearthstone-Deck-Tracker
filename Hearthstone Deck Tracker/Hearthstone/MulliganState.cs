@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HearthDb.CardDefs;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	internal class MulliganState
 	{
-		public List<Entity> OfferedCards { get; private set; } = new List<Entity>();
-		public List<Entity> KeptCards { get; private set; } = new List<Entity>();
-		public List<Entity> FinalCardsInHand { get; private set; } = new List<Entity>();
+		public List<Entity> OfferedCards { get; private set; } = new();
+		public List<Entity> KeptCards { get; private set; } = new();
+		public List<Entity> FinalCardsInHand { get; private set; } = new();
 
 		private GameV2 _game;
 
@@ -21,19 +17,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_game = game;
 		}
 
-		public void SnapshotMulligan()
+		public List<Entity> SnapshotMulligan()
 		{
 			OfferedCards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).OrderBy(x => x.ZonePosition).ToList();
+			return OfferedCards;
 		}
 
-		public void SnapshotMulliganChoices(Choice choice)
+		public List<Entity> SnapshotMulliganChoices(Choice choice)
 		{
 			KeptCards = choice.ChosenEntities.ToList();
+			return KeptCards;
 		}
 
-		public void SnapshotOpeningHand()
+		public List<Entity> SnapshotOpeningHand()
 		{
 			FinalCardsInHand = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).OrderBy(x => x.ZonePosition).ToList();
+			return FinalCardsInHand;
 		}
 	}
 }

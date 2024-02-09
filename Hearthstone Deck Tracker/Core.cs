@@ -297,6 +297,7 @@ namespace Hearthstone_Deck_Tracker
 							Game.MetaData.HearthstoneBuild = null;
 						}
 						//Watchers.ExperienceWatcher.Run();
+						Watchers.SceneWatcher.Run();
 
 						Remote.Config.Load();
 						Remote.BattlegroundsBans.Load();
@@ -373,6 +374,7 @@ namespace Hearthstone_Deck_Tracker
 					Tier7Trial.Clear();
 					Overlay.BattlegroundsHeroPickingViewModel.Reset();
 					Overlay.BattlegroundsQuestPickingViewModel.Reset();
+					Overlay.ConstructedMulliganGuideViewModel.Reset();
 
 					TrayIcon.MenuItemStartHearthstone.Visible = true;
 

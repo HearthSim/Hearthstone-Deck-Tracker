@@ -5,10 +5,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using HearthDb.Deckstrings;
 using HearthDb.Enums;
+using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using HSReplay.Requests;
+using HSReplay.Responses;
 
 #endregion
 
@@ -300,15 +307,41 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var createdInHand = includeCreatedInHand ? CreatedCardsInHand : new List<Card>();
 			if(DeckList.Instance.ActiveDeck == null)
 				return RevealedCards.Concat(createdInHand).Concat(KnownCardsInDeck).Concat(GetPredictedCardsInDeck(true)).ToSortedCardList();
+
+			var sorting = _game.IsMulliganDone ? CardListExtensions.CardSorting.Cost : CardListExtensions.CardSorting.MulliganWr;
+
 			var deckState = GetDeckState();
 			var inDeck = deckState.RemainingInDeck.ToList();
 			var notInDeck = deckState.RemovedFromDeck.Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
 			var predictedInDeck = GetPredictedCardsInDeck(false).Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
 			if(!removeNotInDeck)
-				return inDeck.Concat(predictedInDeck).Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
+				return AttachMulliganData(inDeck.Concat(predictedInDeck).Concat(notInDeck).Concat(createdInHand)).ToSortedCardList(sorting);
 			if(highlightCardsInHand)
-				return inDeck.Concat(predictedInDeck).Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand).ToSortedCardList();
-			return inDeck.Concat(predictedInDeck).Concat(createdInHand).ToSortedCardList();
+				return AttachMulliganData(inDeck.Concat(predictedInDeck).Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand)).ToSortedCardList(sorting);
+
+			return AttachMulliganData(inDeck.Concat(predictedInDeck).Concat(createdInHand)).ToSortedCardList(sorting);
+		}
+
+		private IEnumerable<Card> AttachMulliganData(IEnumerable<Card> cards)
+		{
+			if(MulliganCardStats == null)
+				return cards;
+
+			return cards.Select(card =>
+			{
+				var cardStats = MulliganCardStats.FirstOrDefault(x => x.DbfId == card.DbfId);
+				if(cardStats == null)
+					return card;
+
+				Card newCard = (Card)card.Clone();
+				newCard.CardWinrates = cardStats.OpeningHandWinrate is float openingHandWinrate ? new CardWinrates()
+				{
+					MulliganWinrate = openingHandWinrate,
+					BaseWinrate = (float?) cardStats.BaseWinrate
+				} : null;
+				newCard.IsMulliganOption = Hand.Any(x => x.Card.DbfId == card.DbfId);
+				return newCard;
+			});
 		}
 
 		public List<Sideboard> PlayerSideboardsDict => GetPlayerSideboards(Config.Instance.RemoveCardsFromDeck);
@@ -699,6 +732,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(added)
 			{
 				//Log(entity);
+			}
+		}
+
+		private IEnumerable<SingleCardStats>? _mulliganCardStats = null;
+		public IEnumerable<SingleCardStats>? MulliganCardStats
+		{
+			get => _mulliganCardStats;
+			set
+			{
+				_mulliganCardStats = value;
+				Core.UpdatePlayerCards(true);
 			}
 		}
 	}

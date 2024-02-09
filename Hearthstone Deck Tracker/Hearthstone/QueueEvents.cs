@@ -51,6 +51,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(!Modes.Contains(_game.CurrentMode) && !LettuceModes.Contains(_game.CurrentMode))
 				return;
 
+			if(_game.CurrentMode == Mode.TOURNAMENT)
+				Core.Overlay.SetConstructedQueue(e.IsInQueue);
+
 			if(e.IsInQueue)
 			{
 				_game.MetaData.EnqueueTime = DateTime.Now;

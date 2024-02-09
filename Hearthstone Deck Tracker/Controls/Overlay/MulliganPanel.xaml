@@ -46,7 +46,7 @@
                     <TextBlock Foreground="White" TextAlignment="Center" Margin="20,0"
                                LineHeight="15" LineStackingStrategy="BlockLineHeight"
                                Visibility="{Binding HasData, Converter={StaticResource InverseBoolToVisibility}}">
-                        <Run Text="{lex:Loc Toast_Mulligan_Unavailable}" FontWeight="SemiBold" FontSize="17"/>
+                        <Run Text="{Binding NoDataLabel, Mode=OneWay}" FontWeight="SemiBold" FontSize="17" />
                         <LineBreak/>
                         <Run Text="{lex:Loc Toast_Mulligan_HSReplaynet}" FontSize="12"/>
                     </TextBlock>

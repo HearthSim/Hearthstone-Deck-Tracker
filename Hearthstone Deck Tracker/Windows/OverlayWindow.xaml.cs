@@ -22,6 +22,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using System.Windows.Controls;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -33,7 +34,10 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Utility.Animations;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
-using static HearthDb.CardIds;
+using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using NuGet;
+
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -82,6 +86,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _mercenariesTaskListBehavior;
 		private OverlayElementBehavior _mercenariesTaskListButtonBehavior;
 		private OverlayElementBehavior _tier7PreLobbyBehavior;
+		private OverlayElementBehavior _constructedMulliganGuidePreLobbyBehaviour;
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
@@ -90,6 +95,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public BattlegroundsSessionViewModel BattlegroundsSessionViewModelVM => Core.Game.BattlegroundsSessionViewModel;
 		public BattlegroundsHeroPickingViewModel BattlegroundsHeroPickingViewModel { get; } = new();
 		public BattlegroundsQuestPickingViewModel BattlegroundsQuestPickingViewModel { get; } = new();
+
+		public ConstructedMulliganGuidePreLobbyViewModel ConstructedMulliganGuidePreLobbyViewModel { get; } = new();
+		public ConstructedMulliganGuideViewModel ConstructedMulliganGuideViewModel { get; } = new();
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
 		public Tier7PreLobbyViewModel Tier7ViewModel { get; } = new Tier7PreLobbyViewModel();
@@ -243,6 +251,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Fade = true,
 				Distance = 50,
 				HideCallback = () => Tier7ViewModel.Reset(),
+			};
+
+			_constructedMulliganGuidePreLobbyBehaviour = new OverlayElementBehavior(ConstructedMulliganGuidePreLobby)
+			{
+				GetLeft = () => Helper.GetScaledXPos(0.087, (int)Width, ScreenRatio),
+				GetTop = () => Height * 0.217,
+				GetScaling = () => Height / 1080,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+				Fade = true,
+				Distance = 40,
 			};
 
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
@@ -419,9 +439,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void HideRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Collapsed;
 
 		private bool _mulliganToastVisible = false;
-		internal void ShowMulliganPanel(string shortId, int[] dbfIds, CardClass opponent, bool hasCoin, int playerStarLevel)
+
+		internal void ShowMulliganToast(string shortId, int[] dbfIds, Dictionary<string, string> parameters, bool showingMulliganGuideOverlay, bool autoFilters = false)
 		{
-			MulliganNotificationPanel.Update(shortId, dbfIds, opponent, hasCoin, playerStarLevel);
+			MulliganNotificationPanel.Update(shortId, dbfIds, parameters, showingMulliganGuideOverlay, autoFilters);
 			if(MulliganNotificationPanel.ShouldShow())
 			{
 				_mulliganNotificationBehavior.Show();
@@ -429,7 +450,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		internal void HideMulliganPanel(bool wasClicked)
+		internal void HideMulliganToast(bool wasClicked)
 		{
 			if(_mulliganToastVisible)
 			{
@@ -517,6 +538,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void ShowBattlegroundsHeroPickingStats(int[] heroIds)
 		{
 			BattlegroundsHeroPickingViewModel.SetHeroes(heroIds);
+		}
+
+		internal void ShowMulliganGuideStats(IEnumerable<SingleCardStats> stats, int maxRank)
+		{
+			ConstructedMulliganGuideViewModel.SetMulliganData(stats, maxRank);
+		}
+
+		internal void HideMulliganGuideStats()
+		{
+			ConstructedMulliganGuideViewModel.Reset();
 		}
 
 		internal void ShowLinkOpponentDeckDisplay()
@@ -812,6 +843,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			_showMercTasks = false;
 			HideMercenariesTasks();
+		}
+
+		internal void SetDeckPickerState(VisualsFormatType vft, IEnumerable<CollectionDeckBoxVisual?> decksOnPage, bool isModalOpen)
+		{
+			var decksList = decksOnPage.ToList();
+			if(ConstructedMulliganGuidePreLobbyViewModel.DecksOnPage == null || !decksList.Equals(ConstructedMulliganGuidePreLobbyViewModel.DecksOnPage))
+				ConstructedMulliganGuidePreLobbyViewModel.DecksOnPage = decksList.ToList();
+			ConstructedMulliganGuidePreLobbyViewModel.VisualsFormatType = vft;
+			ConstructedMulliganGuidePreLobbyViewModel.IsModalOpen = isModalOpen;
+		}
+
+		internal void SetConstructedQueue(bool inQueue)
+		{
+			ConstructedMulliganGuidePreLobbyViewModel.IsInQueue = inQueue;
 		}
 	}
 }

@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.ConstructedMulliganGuidePreLobby"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan"
+             xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             Width="800" Height="630"
+             mc:Ignorable="d">
+    <d:UserControl.DataContext>
+        <local:ConstructedMulliganGuidePreLobbyViewModel VisualsFormatType="VFT_CASUAL" />
+    </d:UserControl.DataContext>
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style.Setters>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Visibility="{Binding Visibility}">
+        <ItemsControl ItemsSource="{Binding PageStatusRows}" IsHitTestVisible="False">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="0,0,0,128">
+                        <ItemsControl ItemsSource="{Binding}" IsHitTestVisible="False">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel
+                                        Width="238"
+                                        Height="96"
+                                        Margin="0, 0, 3, 0"
+                                        Visibility="{Binding Visibility}"
+                                    >
+                                        <Border Padding="{Binding Padding}">
+                                            <Border
+                                                Background="{Binding Background}"
+                                                BorderBrush="{Binding BorderBrush}"
+                                                BorderThickness="1,0,0,1"
+                                                CornerRadius="0,0,0,2"
+                                                Padding="0"
+                                                HorizontalAlignment="Right"
+                                            >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image
+                                                        Height="22" Width="22"
+                                                        Visibility="{Binding IconVisibility}" Source="{Binding IconSource}"
+                                                        Margin="1,1,1,1"
+                                                        RenderOptions.BitmapScalingMode="Fant"
+                                                    />
+                                                    <TextBlock
+                                                        Text="{Binding Label}"
+                                                        Visibility="{Binding LabelVisibility}"
+                                                        TextWrapping="NoWrap"
+                                                        Foreground="White"
+                                                        TextAlignment="Right"
+                                                        FontWeight="SemiBold"
+                                                        Padding="0,0,6,2"
+                                                        VerticalAlignment="Center"
+                                                    />
+                                                </StackPanel>
+                                            </Border>
+                                        </Border>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

@@ -4,6 +4,7 @@ using HearthDb.Enums;
 using HearthMirror;
 using HearthMirror.Enums;
 using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -28,6 +29,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ExperienceWatcher.NewExperienceHandler += (sender, args) => Core.Overlay.ExperienceChangedAsync(args.Experience, args.ExperienceNeeded, args.Level, args.LevelChange, args.Animate).Forget();
 			QueueWatcher.InQueueChanged += (sender, args) => Core.Game.QueueEvents.Handle(args);
 			BaconWatcher.Change += OnBaconChange;
+			DeckPickerWatcher.Change += OnDeckPickerChange;
+			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning);
 		}
 
 		internal static void Stop()
@@ -40,12 +43,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ExperienceWatcher.Stop();
 			QueueWatcher.Stop();
 			BaconWatcher.Stop();
+			DeckPickerWatcher.Stop();
+			SceneWatcher.Stop();
 		}
 
 		internal static void OnBaconChange(object sender, HearthWatcher.EventArgs.BaconEventArgs args)
 		{
 			Core.Overlay.ShowBattlegroundsSession(!args.IsAnyOpen);
 			Core.Overlay.ShowTier7PreLobby(!args.IsAnyOpen, false);
+		}
+
+		internal static void OnDeckPickerChange(object sender, HearthWatcher.EventArgs.DeckPickerEventArgs args)
+		{
+			Core.Overlay.SetDeckPickerState(args.SelectedFormatType, args.DecksOnPage, args.IsModalOpen);
 		}
 
 		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.FriendlyChallengeEventArgs args)
@@ -72,6 +82,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static ExperienceWatcher ExperienceWatcher { get; } = new ExperienceWatcher(new HearthMirrorRewardTrackProvider());
 		public static QueueWatcher QueueWatcher { get; } = new QueueWatcher(new HearthMirrorQueueProvider());
 		public static BaconWatcher BaconWatcher { get; } = new BaconWatcher(new HearthMirrorBaconProvider());
+		public static DeckPickerWatcher DeckPickerWatcher { get; } = new DeckPickerWatcher(new HearthMirrorDeckPickerProvider());
+		public static SceneWatcher SceneWatcher { get; } = new SceneWatcher(new HearthMirrorSceneProvider());
 	}
 
 	public class GameDataProvider : IGameDataProvider
@@ -130,5 +142,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool? IsJournalOpen => Reflection.Client.IsJournalOpen();
 		public bool? IsPopupShowing => Reflection.Client.IsPopupShowing();
 		public bool? IsFriendslistOpen => Reflection.Client.IsFriendsListVisible();
+	}
+
+	public class HearthMirrorDeckPickerProvider : IDeckPickerProvider
+	{
+		public List<CollectionDeckBoxVisual?>? DecksOnPage => Reflection.Client.GetDeckPickerDecksOnPage();
+		public DeckPickerState? DeckPickerState => Reflection.Client.GetDeckPickerState();
+		public bool IsBlurActive => Reflection.Client.GetIsBlurActive();
+	}
+
+	public class HearthMirrorSceneProvider : ISceneProvider
+	{
+		public SceneMgrState? State => Reflection.Client.GetSceneMgrState();
 	}
 }

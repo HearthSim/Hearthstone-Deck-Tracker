@@ -29,6 +29,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("tier7")]
 			public Tier7Data? Tier7 { get; set; }
 
+			[JsonProperty("mulligan_guide")]
+			public MulliganGuideData? MulliganGuide { get; set; }
+
 			[JsonProperty("update_info")]
 			public UpdateData? UpdateInfo { get; set; }
 		}
@@ -146,6 +149,12 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 		{
 			[JsonProperty("image_update_hearthstone_version")]
 			public int Version { get; set; }
+		}
+
+		internal class MulliganGuideData
+		{
+			[JsonProperty("disabled")]
+			public bool Disabled { get; set; }
 		}
 	}
 }

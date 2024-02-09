@@ -891,5 +891,52 @@ namespace Hearthstone_Deck_Tracker
 			var pn = Math.Floor(n / divisor) * divisor;
 			return (int)pn;
 		}
+
+		public static string GetWinrateDeltaColorString(double delta, int intensity)
+		{
+			// Adapted from HSReplay.net
+			var colorWinrate = 50 + Math.Max(-50, Math.Min(50, 5 * delta));
+			var severity = Math.Abs(0.5 - colorWinrate / 100) * 2;
+
+			var scale = (double x, double from, double to) => from + (to - from) * Math.Pow(x, 1 - intensity / 100);
+			var scaleTriple = (double x, double[] from, double[] to) => new[]
+				{ scale(x, from[0], to[0]), scale(x, from[1], to[1]), scale(x, from[2], to[2]) };
+
+			var positive = new[] { 120d, 70d, 40d };
+			var neutral = new[] { 90d, 100d, 30d };
+			var negative = new[] { 0d, 100d, 65.7d };
+
+			var hsl = delta > 0
+				? scaleTriple(severity, neutral, positive)
+				: delta < 0
+					? scaleTriple(severity, neutral, negative)
+					: neutral;
+
+			return HslToColorString(hsl[0], hsl[1], hsl[2]);
+		}
+
+		public static string HslToColorString(double hue, double saturation, double lightness)
+		{
+			// Adapted from https://drafts.csswg.org/css-color/#hsl-to-rgb
+			hue %= 360;
+			if(hue < 0)
+				hue += 360;
+
+			saturation /= 100;
+			lightness /= 100;
+
+			var f = (double n) =>
+			{
+				var k = (n + hue / 30) % 12;
+				var a = saturation * Math.Min(lightness, 1 - lightness);
+				return lightness - a * Math.Max(-1, Math.Min(Math.Min(k - 3, 9 - k), 1));
+			};
+
+			var r = (byte)(f(0) * 255);
+			var g = (byte)(f(8) * 255);
+			var b = (byte)(f(4) * 255);
+
+			return string.Format($"#{r:X2}{g:X2}{b:X2}");
+		}
 	}
 }

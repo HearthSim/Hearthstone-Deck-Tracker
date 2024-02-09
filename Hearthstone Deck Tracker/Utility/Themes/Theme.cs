@@ -114,6 +114,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		LegendaryIcon,
 		CreatedIcon,
 		DarkOverlay,
-		FadeOverlay
+		FadeOverlay,
+		DefaultKeepRateBox,
+		DefaultKeepRateActiveBox
 	}
 }

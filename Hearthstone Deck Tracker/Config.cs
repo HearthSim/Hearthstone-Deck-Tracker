@@ -339,6 +339,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool EnterToSaveNote = true;
 
 		[DefaultValue(true)]
+		public bool EnableMulliganGuide = true;
+
+		[DefaultValue(true)]
 		public bool ShowExperienceCounter = true;
 
 		[DefaultValue(false)]
@@ -753,6 +756,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(1250)]
 		public int ReplayWindowWidth = 1250;
 
+		[DefaultValue(true)]
+		public bool ShowMulliganGuideAutomatically = true;
+
 		[DefaultValue(15)]
 		public double SecretsLeft = 15;
 
@@ -856,6 +862,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool SeenBobsBuddyAverageDamage = false;
+
+		[DefaultValue(true)]
+		public bool ShowMulliganGuidePreLobby = true;
 
 		[DefaultValue(15)]
 		public double SessionRecapTop = 15;

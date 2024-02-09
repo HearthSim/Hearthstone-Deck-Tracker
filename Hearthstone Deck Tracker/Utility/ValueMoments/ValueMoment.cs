@@ -11,7 +11,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			public const string PersonalStats = "Review Stats About My Progress/Performance";
 
 			// HS-Constructed
-			public const string DecklistVisible = "Overlay Decklist Visible";
+			public const string HSDecklistVisible = "Overlay Decklist Visible";
+			public const string HSMulliganGuideOverlay = "Support Mulligan Choice";
 
 			// Battlegrounds
 			public const string BGBobsBuddy = "Overlay Bob's Buddy";

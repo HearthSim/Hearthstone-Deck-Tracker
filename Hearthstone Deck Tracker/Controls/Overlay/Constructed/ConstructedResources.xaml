@@ -1,0 +1,58 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    >
+
+    <converters:CenteredTooltipConverter x:Key="TooltipPosition"/>
+
+    <SolidColorBrush x:Key="BackgroundColor" Color="#141617"/>
+
+    <Style x:Key="ConstructedTooltipStyle" TargetType="ToolTip">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Grid>
+                        <Border
+                            Background="{StaticResource BackgroundColor}"
+                            BorderBrush="#CC333333"
+                            BorderThickness="1"
+                            Padding="8 5 8 6"
+                            MaxWidth="230"
+                            Margin="0 0 0 10"
+                            CornerRadius="2"
+                        >
+                            <ContentPresenter Content="{TemplateBinding Content}">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Setters>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="TextAlignment" Value="Center"/>
+                                            <Setter Property="FontSize" Value="12"/>
+                                            <Setter Property="TextWrapping" Value="Wrap"/>
+                                        </Style.Setters>
+                                    </Style>
+                                    <DataTemplate DataType="{x:Type System:String}">
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HorizontalOffset">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource TooltipPosition}">
+                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                    <Binding Path="PlacementTarget.ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Placement" Value="Top"/>
+        <Setter Property="VerticalOffset" Value="-4"/>
+    </Style>
+</ResourceDictionary>

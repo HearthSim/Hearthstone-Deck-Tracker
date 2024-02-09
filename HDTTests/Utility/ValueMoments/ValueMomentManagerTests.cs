@@ -87,11 +87,11 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsDecklistVisibleValueMoment()
 		{
-			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 1);
+			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 1, new GameMetrics());
 			Assert.IsFalse(action.GeneralSettings.OverlayHideCompletely);
 
 			var valueMoment = ValueMomentManager.GetValueMoments(action).FirstOrDefault(
-				vm => vm.Name == ValueMoment.VMName.DecklistVisible
+				vm => vm.Name == ValueMoment.VMName.HSDecklistVisible
 			);
 
 			Assert.IsNotNull(valueMoment);
@@ -101,11 +101,11 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsDecklistVisibleValueMomentSpectate()
 		{
-			var action = new EndSpectateMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 1);
+			var action = new EndSpectateMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 1, new GameMetrics());
 			Assert.IsFalse(action.GeneralSettings.OverlayHideCompletely);
 
 			var valueMoment = ValueMomentManager.GetValueMoments(action).FirstOrDefault(
-				vm => vm.Name == ValueMoment.VMName.DecklistVisible
+				vm => vm.Name == ValueMoment.VMName.HSDecklistVisible
 			);
 
 			Assert.IsNotNull(valueMoment);

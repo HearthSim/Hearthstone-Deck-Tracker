@@ -16,7 +16,7 @@ namespace HearthWatcher
 		private bool _watch;
 		private FindGameState? _prev = null;
 
-		public QueueWatcher(IQueueProvider queueProvider, int delay = 200)
+		public QueueWatcher(IQueueProvider queueProvider, int delay = 50)
 		{
 			_provider = queueProvider ?? throw new ArgumentNullException(nameof(queueProvider));
 			_delay = delay;

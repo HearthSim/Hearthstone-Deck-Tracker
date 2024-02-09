@@ -9,6 +9,7 @@
         xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
         xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone"
         xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
+        xmlns:mulligan="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan"
         xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
         xmlns:mercenaries="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries"
         xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
@@ -244,10 +245,20 @@
                     x:Name="BattlegroundsQuestPicking"
                     DataContext="{Binding BattlegroundsQuestPickingViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                 />
+                <mulligan:ConstructedMulliganGuide
+                    x:Name="ConstructedMulliganGuide"
+                    DataContext="{Binding ConstructedMulliganGuideViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
+                <mulligan:ConstructedMulliganGuidePreLobby
+                    x:Name="ConstructedMulliganGuidePreLobby"
+                    Canvas.Top="0" Canvas.Left="0"
+                    DataContext="{Binding ConstructedMulliganGuidePreLobbyViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
+
                 <tier7:Tier7PreLobby x:Name="Tier7PreLobby" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
                                      DataContext="{Binding Tier7ViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
 
-                <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
+                    <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
                 <controls:CardImage x:Name="ToolTipCardBlock" Visibility="Hidden" />
             </Canvas>
         </Border>

@@ -8,7 +8,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public int? Tier { get; }
 		public double? AvgPlacement { get; }
 		public double? PickRate { get; }
-		
+
 		public StatsHeaderViewModel(int? tier, double? avgPlacement, double? pickRate)
 		{
 			Tier = tier;

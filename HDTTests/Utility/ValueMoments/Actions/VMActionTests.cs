@@ -26,7 +26,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		[TestMethod]
 		public void VMAction_ActionId()
 		{
-			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 1);
+			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 1, new GameMetrics());
 
 			Assert.AreEqual("end match action hdt_hs-constructed", action.Id);
 		}
@@ -34,7 +34,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		[TestMethod]
 		public void VMAction_ActionIdWithSubFranchise()
 		{
-			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Arena, GameType.GT_ARENA, 1);
+			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Arena, GameType.GT_ARENA, 1, new GameMetrics());
 
 			Assert.AreEqual("end match action hdt_hs-constructed_arena", action.Id);
 		}
@@ -46,12 +46,12 @@ namespace HDTTests.Utility.ValueMoments.Actions
 
 			Assert.AreEqual("install hdt_hs-constructed", action.Id);
 		}
-		
+
 		[TestMethod]
 		public void VMAction_MixpanelPayloadReturnsCorrect()
 		{
 			DailyEventsCount.Instance.Clear("end match action hdt_hs-constructed");
-			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 1);
+			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 1, new GameMetrics());
 
 			var expectedDict = new Dictionary<string, object> {
 				{ "action_type", "End Match Action" },
@@ -109,7 +109,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		[TestMethod]
 		public void EndMatchAction_HearthstoneIncludesExclusiveData()
 		{
-			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 5);
+			var action = new EndMatchHearthstoneAction(123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 5, new GameMetrics());
 
 			var mixpanelPayload = JObject.Parse(JsonConvert.SerializeObject(action));
 			Assert.AreEqual(5, mixpanelPayload["star_level"]);
@@ -126,7 +126,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			Assert.AreEqual(mixpanelPayload["battlegrounds_rating"], 5000);
 			Assert.IsTrue(mixpanelPayload.ContainsKey("hdt_battlegrounds_settings_enabled"));
 			Assert.IsTrue(mixpanelPayload.ContainsKey("hdt_battlegrounds_settings_disabled"));
-			
+
 			Assert.IsFalse(mixpanelPayload.ContainsKey("tier7_hero_overlay_displayed"));
 			Assert.IsFalse(mixpanelPayload.ContainsKey("tier7_quest_overlay_displayed"));
 		}

@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				TrackAction(new FirstHSCollectionUploadAction(collection.Size()));
 		}
 
-		public static void OnConstructedMatchEnds(GameStats gameStats, GameMode gameMode, GameType gameType, bool spectator)
+		public static void OnConstructedMatchEnds(GameStats gameStats, GameMode gameMode, GameType gameType, bool spectator, GameMetrics gameMetrics)
 		{
 			var heroCard = Database.GetCardFromId(gameStats.PlayerHeroCardId);
 			if(heroCard == null)
@@ -111,9 +111,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var starLevel = gameMode == GameMode.Ranked ? gameStats.StarLevel : 0;
 
 			if(spectator)
-				TrackAction(new EndSpectateMatchHearthstoneAction(heroDbfId, heroName, matchResult, gameMode, gameType, starLevel));
+				TrackAction(new EndSpectateMatchHearthstoneAction(heroDbfId, heroName, matchResult, gameMode, gameType, starLevel, gameMetrics));
 			else
-				TrackAction(new EndMatchHearthstoneAction(heroDbfId, heroName, matchResult, gameMode, gameType, starLevel));
+				TrackAction(new EndMatchHearthstoneAction(heroDbfId, heroName, matchResult, gameMode, gameType, starLevel, gameMetrics));
 		}
 		
 		public static void OnBattlegroundsMatchEnds(string? heroCardId, int finalPlacement, GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)

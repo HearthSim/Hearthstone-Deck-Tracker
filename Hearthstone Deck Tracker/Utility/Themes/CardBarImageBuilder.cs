@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HearthDb.Enums;
+using ColorConverter = System.Windows.Media.ColorConverter;
 
 namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
@@ -28,12 +29,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 										  FontWeights.Normal, FontStretches.Condensed);
 
 		protected double CountFontSize = 17;
+		protected double MulliganWinRateFontSize = 15;
 		protected double TextFontSize = 13;
 		protected double CostFontSize = 20;
 
 		protected static readonly Rect FrameRect = new Rect(0, 0, 217, 34);
 		protected static readonly Rect GemRect = new Rect(0, 0, 34, 34);
 		protected static readonly Rect BoxRect = new Rect(183, 0, 34, 34);
+		protected static readonly Rect MulliganWinrateBoxRect = new Rect(136, 4, 54, 26);
 		protected static readonly Rect ImageRect = new Rect(83, 0, 134, 34);
 		protected static readonly Rect CountTextRect = new Rect(198, 0, double.NaN, 34);
 		protected static readonly Rect CostTextRect = new Rect(0, 0, 34, 34);
@@ -43,6 +46,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			{ThemeElement.DefaultFrame, new ThemeElementInfo("frame.png", FrameRect)},
 			{ThemeElement.DefaultGem, new ThemeElementInfo("gem.png", GemRect)},
 			{ThemeElement.DefaultCountBox, new ThemeElementInfo("countbox.png", BoxRect)},
+			{ThemeElement.DefaultKeepRateBox, new ThemeElementInfo("keeprate_box.png", MulliganWinrateBoxRect)},
+			{ThemeElement.DefaultKeepRateActiveBox, new ThemeElementInfo("keeprate_active_box.png", MulliganWinrateBoxRect)},
 			{ThemeElement.DarkOverlay, new ThemeElementInfo("dark.png", FrameRect)},
 			{ThemeElement.FadeOverlay, new ThemeElementInfo("fade.png", FrameRect)},
 			{ThemeElement.CreatedIcon, new ThemeElementInfo("icon_created.png", BoxRect)},
@@ -109,6 +114,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			AddCardName();
 			if(Card.Count <= 0 || Card.Jousted)
 				AddDarken();
+			if(Card.CardWinrates != null)
+			{
+				AddMulliganWinRate();
+				AddMulliganWinRateText();
+			}
 
 			return new DrawingBrush(DrawingGroup);
 		}
@@ -231,6 +241,26 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 				AddText("+", 13, new Rect(rect.X + 5, 3, double.NaN, double.NaN), CountTextBrush, TextTypeFace);
 		}
 
+		protected virtual void AddMulliganWinRate()
+		{
+			var mulliganWinRateBox = Required[Card.IsMulliganOption ? ThemeElement.DefaultKeepRateActiveBox : ThemeElement.DefaultKeepRateBox];
+			AddChild(mulliganWinRateBox);
+		}
+		protected virtual void AddMulliganWinRateText() => AddMulliganWinRateText(MulliganWinrateBoxRect);
+		protected void AddMulliganWinRateText(Rect rect)
+		{
+			var winrate = Card.CardWinrates?.MulliganWinrate;
+			double? baseWinrate = Card.CardWinrates?.BaseWinrate;
+
+			var delta = winrate != null ? winrate - (baseWinrate ?? 50.0d): null;
+			var color = delta is double theDelta ? Helper.GetWinrateDeltaColorString(theDelta, 75) : "White";
+			var mulliganWinrateTextBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+			var text = $"{winrate?.ToString("0.0")}%";
+			var textRect = new Rect(rect.Location, rect.Size);
+			textRect.Height += 6;
+			AddText(text, MulliganWinRateFontSize, textRect, mulliganWinrateTextBrush, TextTypeFace, 2.0, true);
+		}
+
 		protected virtual void AddCreatedIcon() => AddCreatedIcon(Required[ThemeElement.CreatedIcon].Rectangle);
 		protected virtual void AddCreatedIcon(Rect rect)
 		{
@@ -250,7 +280,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 				AddText(Card.Cost, CostFontSize, rect, Card.ColorPlayer, NumbersTypeFace, 3.0, true);
 		}
 
-		protected virtual void AddCardName() => AddCardName(new Rect(38, 8, FrameRect.Width - BoxRect.Width - 38, 34));
+		protected virtual void AddCardName()
+		{
+			var keepRateWidth = Card.CardWinrates != null ? MulliganWinrateBoxRect.Width - 5 : 0;
+			var width = FrameRect.Width - BoxRect.Width - keepRateWidth - 38;
+			AddCardName(new Rect(38, 8, width, 34));
+		}
+
 		protected void AddCardName(Rect rect)
 			=> AddText(Card.LocalizedName, TextFontSize, rect, Card.ColorPlayer, TextTypeFace);
 

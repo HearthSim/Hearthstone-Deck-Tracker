@@ -14,6 +14,8 @@ using static System.Windows.Visibility;
 using static HearthDb.Enums.GameTag;
 using static Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounterStyle;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.HsReplay;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -543,6 +545,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_tier7PreLobbyBehavior.UpdatePosition();
 			_tier7PreLobbyBehavior.UpdateScaling();
 
+			_constructedMulliganGuidePreLobbyBehaviour.UpdatePosition();
+			_constructedMulliganGuidePreLobbyBehaviour.UpdateScaling();
+
 			BattlegroundsHeroPickingViewModel.Scaling = scaling;
 			BattlegroundsHeroPicking.Width = Width / scaling;
 			BattlegroundsHeroPicking.Height = Height / scaling;
@@ -550,6 +555,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsQuestPickingViewModel.Scaling = scaling;
 			BattlegroundsQuestPicking.Width = Width / scaling;
 			BattlegroundsQuestPicking.Height = Height / scaling;
+
+			ConstructedMulliganGuideViewModel.Scaling = scaling;
+			ConstructedMulliganGuide.Width = Width / scaling;
+			ConstructedMulliganGuide.Height = Height / scaling;
 		}
 
 		public void UpdateStackPanelAlignment()
@@ -567,5 +576,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		private void OverlayWindow_OnDeactivated(object sender, EventArgs e) => SetTopmost();
+
+		public void UpdateMulliganGuidePreLobby()
+		{
+			var isPremium = HSReplayNetOAuth.AccountData?.IsPremium ?? false;;
+			var show = (
+				_game.IsInMenu &&
+				SceneHandler.Scene == Mode.TOURNAMENT &&
+				Config.Instance.EnableMulliganGuide &&
+				Config.Instance.ShowMulliganGuidePreLobby &&
+				isPremium
+			);
+
+			if(show)
+			{
+				_constructedMulliganGuidePreLobbyBehaviour.Show();
+				ConstructedMulliganGuidePreLobbyViewModel.EnsureLoaded().Forget();
+			}
+			else
+				_constructedMulliganGuidePreLobbyBehaviour.Hide();
+		}
 	}
 }

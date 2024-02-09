@@ -37,8 +37,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					{
 						case Franchise.HSConstructed:
 						{
-							if(!action.GeneralSettings.OverlayHideCompletely)
-								yield return new ValueMoment(VMName.DecklistVisible, ValueMoment.VMKind.Free);
+							foreach(var vmHearthstone in GetEndMatchHearthstoneValueMoments(action))
+								yield return vmHearthstone;
 							break;
 						}
 						case Franchise.Battlegrounds:
@@ -56,6 +56,19 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					}
 					break;
 			};
+		}
+
+		private static IEnumerable<ValueMoment> GetEndMatchHearthstoneValueMoments(VMAction action)
+		{
+			var hearthstoneAction = (VMHearthstoneAction)action;
+
+			if(action.GeneralSettings.OverlayHideCompletely)
+				yield break;
+
+			yield return new ValueMoment(VMName.HSDecklistVisible, ValueMoment.VMKind.Free);
+
+			if(hearthstoneAction.MulliganGuideOverlayDisplayed)
+				yield return new ValueMoment(VMName.HSMulliganGuideOverlay, ValueMoment.VMKind.Paid);
 		}
 
 		private static IEnumerable<ValueMoment> GetEndMatchBattlegroundsValueMoments(VMAction action)
@@ -99,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			if (mercenariesAction.NumHoverMercTaskOverlay > 0)
 				yield return new ValueMoment(VMName.MercFriendlyTasks, ValueMoment.VMKind.Free);
 		}
-		
+
 		internal static bool ShouldSendEventToMixPanel(VMAction action, List<ValueMoment> valueMoments)
 		{
 			// Check action daily occurrences
