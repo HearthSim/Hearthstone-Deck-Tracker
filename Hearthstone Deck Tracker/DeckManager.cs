@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker
 		private static int _waitingForDraws;
 		private static int _autoSelectCount;
 		public static Guid IgnoredDeckId;
-		public static List<Card> NotFoundCards { get; set; } = new List<Card>(); 
+		public static List<Card> NotFoundCards { get; set; } = new List<Card>();
 
 		internal static void ResetAutoSelectCount() => _autoSelectCount = 0;
 
@@ -61,7 +61,7 @@ namespace Hearthstone_Deck_Tracker
 					//so if the newly imported version matches all existing entities, use that one.
 					Core.MainWindow.SelectDeck(deck, true);
 					return;
-				}	
+				}
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
 				Log.Warn("Cards not found in deck: " + string.Join(", ", NotFoundCards.Select(x => $"{x.Name} ({x.Id})")));
 				if(Config.Instance.AutoDeckDetection)

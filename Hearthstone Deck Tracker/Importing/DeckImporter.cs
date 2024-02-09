@@ -12,8 +12,6 @@ using Hearthstone_Deck_Tracker.Importing.Game;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using CardIds = HearthDb.CardIds;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
-using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HearthDb.Enums;
 
@@ -86,8 +84,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			try
 			{
 				var count = deck.Cards.Sum(c => c.Count);
-				return count == 30 || count == 40 || count == 1
-					&& deck.Cards.First().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful;
+				return IsExactlyWhizbang(deck) || count == 30 || count == 40;
 			}
 			catch(OverflowException e)
 			{
@@ -121,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			var hsDecks = decks.ToList();
 			foreach (var deck in hsDecks)
 			{
-				if(deck.Cards.Count == 1 && deck.Cards.Single().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful)
+				if(IsExactlyWhizbang(deck))
 					continue; // Cannot be imported here (will need to happen in the context of a game with a deck id)
 
 				var otherDecks = hsDecks.Except(new[] {deck});
@@ -223,6 +220,11 @@ namespace Hearthstone_Deck_Tracker.Importing
 			var deck = ConstructedDecksCache.FirstOrDefault(d => d.Id == deckId);
 			if(deck == null)
 				return false;
+			return IsExactlyWhizbang(deck);
+		}
+
+		public static bool IsExactlyWhizbang(HearthMirror.Objects.Deck deck)
+		{
 			return deck.Cards.Count == 1 && deck.Cards.Single().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful;
 		}
 	}
