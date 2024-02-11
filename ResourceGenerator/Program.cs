@@ -23,44 +23,7 @@ namespace ResourceGenerator
 				case "tiles":
 					GenerateTiles(args);
 					break;
-				case "whizbang":
-					GenerateWhizbangDecks(args);
-					break;
 			}
-		}
-
-		private static void GenerateWhizbangDecks(string[] args)
-		{
-			var file = args[1];
-			Console.WriteLine("Ensure Hearthstone is running. Press any key to continue...");
-			Console.ReadKey();
-			Console.WriteLine("Reading decks from memory...");
-			Console.WriteLine("(this make take a while)");
-
-			List<HearthMirror.Objects.TemplateDeck> templateDecks = null;
-			using(Reflection.ClientReadTimeout(0))
-			{
-				templateDecks = Reflection.Client.GetTemplateDecks(10000317);
-			}
-
-			Console.WriteLine("...");
-			var validDecks = templateDecks.Where(d => d.SortOrder > 1).ToList();
-			Console.WriteLine($"Found {validDecks.Count} decks");
-			var whizbangDecks = validDecks
-				.Select(d => {
-					Console.WriteLine($"{d.Class}: {d.Title}, {d.Cards.Count}");
-					return new WhizbangDeck
-					{
-						Title = d.Title,
-						Class = (CardClass)d.Class,
-						DeckId = d.DeckId,
-						Cards = d.Cards.GroupBy(c => c).Select(x => new RemoteConfigCard { DbfId = x.Key, Count = x.Count() }).ToList(),
-					};
-				});
-			using(var sw = new StreamWriter(file))
-				sw.WriteLine(JsonConvert.SerializeObject(whizbangDecks, Formatting.Indented));
-			Console.WriteLine("Saved to " + file);
-			Console.ReadKey();
 		}
 
 		private static void GenerateTiles(string[] args)
