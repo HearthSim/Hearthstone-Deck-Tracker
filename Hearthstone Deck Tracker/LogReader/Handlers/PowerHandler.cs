@@ -257,6 +257,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							entity.Info.Hidden = true;
 						}
 
+						// Plagues are flagged here due to the following info leak:
+						// 1. Plagues are created in the opponent's deck
+						// 2. SHOW_ENTITY followed by HIDE_ENTITY
+						// 3. Later on the card may enter hand in a way where it doesn't trigger (e.g. due to Sir Finley)
+						// 4. When the hand updates, we exclude the card because the entity is now in the hand (this is the info leak).
+						// By setting a GuessedCardState here we prevent the card from appearing as drawn.
+						if(
+							entity.CardId == NonCollectible.Deathknight.DistressedKvaldir_FrostPlagueToken
+							|| entity.CardId == NonCollectible.Deathknight.DistressedKvaldir_BloodPlagueToken
+							|| entity.CardId == NonCollectible.Deathknight.DistressedKvaldir_UnholyPlagueToken
+						)
+						{
+							entity.Info.GuessedCardState = GuessedCardState.Guessed;
+						}
+
 						var blockId = gameState.CurrentBlock?.Id;
 						if(blockId.HasValue && gameState.KnownCardIds.ContainsKey(blockId.Value))
 						{
