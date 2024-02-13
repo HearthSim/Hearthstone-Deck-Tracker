@@ -240,7 +240,7 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 	public Visibility Visibility => IsModalOpen || IsInQueue ? Visibility.Hidden : Visibility.Visible;
 	#endregion
 
-	private static async Task<Dictionary<string, MulliganGuideStatusData.Status>?> LoadMulliganGuideStatus(
+	private static async Task<Dictionary<string, MulliganGuideStatusData.Status>> LoadMulliganGuideStatus(
 		BnetGameType gameType,
 		int? starLevel,
 		IEnumerable<string> deckstrings
@@ -259,12 +259,10 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 
 		var result = await ApiWrapper.GetMulliganGuideStatus(parameters);
 
-		if(result is null)
-			return null;
-
 		// Select from dss so that if the API messes up we still have *some* status (NO_DATA)
 		return dss.ToDictionary(x => x,
-			x => result.Decks.TryGetValue(x, out var deck) ? deck.Status : MulliganGuideStatusData.Status.NO_DATA);
+			x => result?.Decks?.TryGetValue(x, out var deck) ?? false ? deck.Status : MulliganGuideStatusData.Status.NO_DATA
+		);
 	}
 
 	public async Task EnsureLoaded()
@@ -343,8 +341,7 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 				GameType,
 				starLevel,
 				toLoad
-			) ?? new();
-
+			);
 			foreach(var result in results)
 			{
 				_deckStatusByDeckstring[theGameType][result.Key] = result.Value switch
