@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan
 {
@@ -18,6 +19,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan
 					? Visibility.Collapsed
 					: Visibility.Visible;
 				viewModel.StatsVisibility = newVisibility;
+				ConfigWrapper.AutoShowMulliganGuide = newVisibility == Visibility.Visible;
 			}
 		}
 	}

@@ -136,6 +136,13 @@
                   Checked="CheckboxEnableMulliganGuide_Checked"
                   Unchecked="CheckboxEnableMulliganGuide_Unchecked"
                   HorizontalAlignment="Left" />
+                <CheckBox x:Name="CheckboxAutoShowMulliganGuide"
+                  Content="{lex:LocText Options_Overlay_MulliganGuide_CheckBox_AutoShow}" Margin="10,5,0,0"
+                  VerticalAlignment="Top"
+                  IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableMulliganGuide}"
+                  Checked="CheckboxAutoShowMulliganGuide_Checked"
+                  Unchecked="CheckboxAutoShowMulliganGuide_Unchecked"
+                  HorizontalAlignment="Left" />
                 <CheckBox x:Name="CheckboxShowMulliganGuidePreLobby"
                   Content="{lex:LocText Options_Overlay_MulliganGuide_CheckBox_PreLobby}" Margin="10,5,0,0"
                   VerticalAlignment="Top"

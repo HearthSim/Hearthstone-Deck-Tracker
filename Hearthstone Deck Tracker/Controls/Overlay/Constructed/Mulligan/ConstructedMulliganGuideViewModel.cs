@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan
 			//Message.Mmr(scoreData.SelectedParams. stats[0].MmrFilterValue, stats[0].MinMmr, anomalyAdjusted);
 
 			Visibility = Visible;
-			StatsVisibility = Config.Instance.ShowMulliganGuideAutomatically ? Visible : Collapsed;
+			StatsVisibility = Config.Instance.AutoShowMulliganGuide ? Visible : Collapsed;
 
 			UpdateMetrics();
 		}

@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			var isPremium = (HSReplayNetOAuth.AccountData?.IsPremium ?? false);
 			var mulliganGuideDisabled = Remote.Config.Data?.MulliganGuide?.Disabled ?? false;
 			CheckboxEnableMulliganGuide.IsChecked = Config.Instance.EnableMulliganGuide;
+			CheckboxAutoShowMulliganGuide.IsChecked = Config.Instance.AutoShowMulliganGuide;
 			CheckboxShowMulliganGuidePreLobby.IsChecked = Config.Instance.ShowMulliganGuidePreLobby;
 			StackPanelMulliganGuide.Visibility = isPremium && !mulliganGuideDisabled ? Visibility.Visible : Visibility.Collapsed;
 
@@ -460,6 +461,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			// Clear the Mulligan overlay if it's visible
 			Core.Game.Player.MulliganCardStats = null;
 			Core.Overlay.UpdateMulliganGuidePreLobby();
+		}
+
+		private void CheckboxAutoShowMulliganGuide_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoShowMulliganGuide = true;
+			Config.Save();
+		}
+
+		private void CheckboxAutoShowMulliganGuide_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoShowMulliganGuide = false;
+			Config.Save();
 		}
 
 		private void CheckboxShowMulliganGuidePreLobby_Checked(object sender, RoutedEventArgs e)

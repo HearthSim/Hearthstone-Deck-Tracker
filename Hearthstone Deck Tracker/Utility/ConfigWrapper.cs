@@ -441,12 +441,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
-		public static bool ShowMulliganGuideAutomatically
+		public static bool AutoShowMulliganGuide
 		{
-			get => Config.Instance.ShowMulliganGuideAutomatically;
+			get => Config.Instance.AutoShowMulliganGuide;
 			set
 			{
-				Config.Instance.ShowMulliganGuideAutomatically = value;
+				Config.Instance.AutoShowMulliganGuide = value;
 				Config.Save();
 			}
 		}

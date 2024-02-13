@@ -132,6 +132,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool AutoUseDeck = false;
 
 		[DefaultValue(true)]
+		public bool AutoShowMulliganGuide = true;
+
+		[DefaultValue(true)]
 		public bool DeckPickerCaps = true;
 
 		[DefaultValue("Arena {Date dd-MM HH:mm}")]
@@ -755,9 +758,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(1250)]
 		public int ReplayWindowWidth = 1250;
-
-		[DefaultValue(true)]
-		public bool ShowMulliganGuideAutomatically = true;
 
 		[DefaultValue(15)]
 		public double SecretsLeft = 15;
