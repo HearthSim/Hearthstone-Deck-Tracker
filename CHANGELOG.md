@@ -1,3 +1,15 @@
+## **Release v1.24.0 - 2024-02-13**
+**Updated for Hearthstone 28.6.0**
+- There are likely still issues with some new cards in Bob's Buddy. We will update these in the coming days.
+- The Battlegrounds Quest Picking Overlay will return as soon as there's enough data for quests.
+
+**Features**:
+- Added an in-game Mulligan Guide for HSReplay.net Premium subscribers! This feature is available in Ranked, Casual, Friendly Challenge and Arena.
+
+**Fixes**:
+- Fixed an issue where secrets would be incorrectly grayed out when dormant minions or portals were on the board.
+- Fixed an issue where Plagues moving into the opponent's hand through effects such as Sir Finley, Sea Guide were unintentionally revealed.
+
 ## **Release v1.23.15 - 2024-01-29**
 **Updated for Hearthstone 28.4.1**
 
