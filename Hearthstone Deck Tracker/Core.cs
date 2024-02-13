@@ -375,6 +375,7 @@ namespace Hearthstone_Deck_Tracker
 					Overlay.BattlegroundsHeroPickingViewModel.Reset();
 					Overlay.BattlegroundsQuestPickingViewModel.Reset();
 					Overlay.ConstructedMulliganGuideViewModel.Reset();
+					Overlay.ConstructedMulliganGuidePreLobbyViewModel.Reset();
 
 					TrayIcon.MenuItemStartHearthstone.Visible = true;
 
