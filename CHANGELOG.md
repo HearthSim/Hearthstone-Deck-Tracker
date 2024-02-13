@@ -1,4 +1,4 @@
-## **Release v1.24.0 - 2024-02-13**
+## **Release v1.24.1 - 2024-02-13**
 **Updated for Hearthstone 28.6.0**
 - There are likely still issues with some new cards in Bob's Buddy. We will update these in the coming days.
 - The Battlegrounds Quest Picking Overlay will return as soon as there's enough data for quests.
