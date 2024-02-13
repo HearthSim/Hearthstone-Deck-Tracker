@@ -23,6 +23,7 @@ public class SingleCardStats : MulliganGuideData.CardStats
 	{
 		var retval = new Dictionary<int, SingleCardStats>();
 
+		var rank = 1;
 		retval = stats
 			.OrderByDescending(x => x.Value.OpeningHandWinrate)
 			.Select(
@@ -33,7 +34,7 @@ public class SingleCardStats : MulliganGuideData.CardStats
 					{
 						OpeningHandWinrate = stats.OpeningHandWinrate is float ohw ? Math.Max(Math.Min(ohw, 100.0f), 0.0f) : null,
 						KeepPercentage = stats.KeepPercentage is float kp ? Math.Max(Math.Min(kp, 100.0f), 0.0f) : null,
-						Rank = stats.KeepPercentage != null ? i + 1 : null,
+						Rank = stats.OpeningHandWinrate != null ? rank++ : null,
 						BaseWinrate = baseWinrate
 					};
 				}
