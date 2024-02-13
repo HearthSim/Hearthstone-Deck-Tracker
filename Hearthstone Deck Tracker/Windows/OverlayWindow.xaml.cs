@@ -440,9 +440,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private bool _mulliganToastVisible = false;
 
-		internal void ShowMulliganToast(string shortId, int[] dbfIds, Dictionary<string, string> parameters, bool showingMulliganGuideOverlay, bool autoFilters = false)
+		internal void ShowMulliganToast(string shortId, int[] dbfIds, Dictionary<string, string>? parameters, bool showingMulliganStats = false)
 		{
-			MulliganNotificationPanel.Update(shortId, dbfIds, parameters, showingMulliganGuideOverlay, autoFilters);
+			MulliganNotificationPanel.Update(shortId, dbfIds, parameters, showingMulliganStats);
 			if(MulliganNotificationPanel.ShouldShow())
 			{
 				_mulliganNotificationBehavior.Show();

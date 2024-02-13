@@ -19,7 +19,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private string? _shortId;
 		private int[]? _dbfIds;
 		private Dictionary<string, string>? _parameters;
-		private bool? _autoFilters;
 
 		public MulliganPanel()
 		{
@@ -58,9 +57,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				if(_dbfIds != null)
 					fragmentParams.Add($"mulliganIds={string.Join(",", _dbfIds)}");
 
-				if(_autoFilters == true)
-					fragmentParams.Add("mulliganAutoFilter=yes");
-
 				var url = Helper.BuildHsReplayNetUrl(
 					$"/decks/{_shortId}",
 					"mulligan_toast",
@@ -89,15 +85,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private bool _mulliganGuideOverlay;
-		public bool MulliganGuideOverlay
+		private bool _showingMulliganStats;
+		public bool ShowingMulliganStats
 		{
-			get => _mulliganGuideOverlay;
+			get => _showingMulliganStats;
 			set
 			{
-				if(value != _mulliganGuideOverlay)
+				if(value != _showingMulliganStats)
 				{
-					_mulliganGuideOverlay = value;
+					_showingMulliganStats = value;
 					OnPropertyChanged();
 					OnPropertyChanged(nameof(NoDataLabel));
 				}
@@ -106,17 +102,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public string NoDataLabel
 		{
-			get => LocUtil.Get(MulliganGuideOverlay ? "Toast_Mulligan_NotOnWebsite" : "Toast_Mulligan_Unavailable");
+			get => LocUtil.Get(ShowingMulliganStats ? "Toast_Mulligan_NotOnWebsite" : "Toast_Mulligan_Unavailable");
 		}
 
-		public void Update(string shortId, int[] dbfIds, Dictionary<string, string> parameters, bool showingMulliganGuideOverlay, bool autoFilters)
+		public void Update(string shortId, int[] dbfIds, Dictionary<string, string>? parameters, bool showingMulliganStats = false)
 		{
 			_shortId = shortId;
 			_dbfIds = dbfIds;
-			_autoFilters = autoFilters;
 			_parameters = parameters;
-			HasData = !string.IsNullOrEmpty(shortId) && HsReplayDataManager.Decks.AvailableDecks.Contains(_shortId);
-			MulliganGuideOverlay = showingMulliganGuideOverlay;
+			HasData = !string.IsNullOrEmpty(shortId) && parameters is not null;
+			ShowingMulliganStats = showingMulliganStats;
 		}
 
 		private readonly HashSet<string> _noDataShown = new HashSet<string>();

@@ -1185,15 +1185,7 @@ namespace Hearthstone_Deck_Tracker
 							// Show mulligan guide with parameters as selected by the API
 							if(showToast)
 							{
-								if(data.Toast is MulliganGuideToast toast)
-								{
-									var parameters = toast.Parameters;
-									Core.Overlay.ShowMulliganToast(shortId!, dbfIds, parameters, true);
-								}
-								else
-								{
-									Core.Overlay.ShowMulliganToast("", dbfIds, new() {}, true);
-								}
+								Core.Overlay.ShowMulliganToast(shortId!, dbfIds, data.Toast?.Parameters, true);
 							}
 
 							// Wait for the mulligan to be ready
@@ -1236,19 +1228,27 @@ namespace Hearthstone_Deck_Tracker
 
 						if(showToast)
 						{
-							// Show mulligan guide with locally sourced parameters and let the website do it's thing
-							var parameters = new Dictionary<string, string> {
-								{ "opponentClasses", opponentClass.ToString() },
-								{ "playerInitiative", hasCoin ? "COIN" : "FIRST" }
-							};
-
-							var playerStarLevel = _game.PlayerMedalInfo?.StarLevel ?? 0;
-							if(playerStarLevel > 0)
+							Dictionary<string, string>? parameters = null;
+							if(HsReplayDataManager.Decks.AvailableDecks.Contains(shortId!))
 							{
-								parameters.Add("mulliganPlayerStarLevel", playerStarLevel.ToString());
+								// Show mulligan toast with locally sourced parameters
+								parameters = new Dictionary<string, string>
+								{
+									{ "opponentClasses", opponentClass.ToString() },
+									{ "playerInitiative", hasCoin ? "COIN" : "FIRST" }
+								};
+
+								var playerStarLevel = _game.PlayerMedalInfo?.StarLevel ?? 0;
+								if(playerStarLevel > 0)
+								{
+									parameters.Add("mulliganPlayerStarLevel", playerStarLevel.ToString());
+								}
+
+								// Let the website do it's thing and fallback for non-Premium users
+								parameters.Add("mulliganAutoFilter", "yes");
 							}
 
-							Core.Overlay.ShowMulliganToast(shortId!, dbfIds, parameters, false, true);
+							Core.Overlay.ShowMulliganToast(shortId!, dbfIds, parameters);
 						}
 					}
 				}
