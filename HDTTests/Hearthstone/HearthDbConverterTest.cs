@@ -16,8 +16,8 @@ namespace HDTTests.Hearthstone
 			CardSet.LETTUCE,
 			CardSet.MERCENARIES_DEV,
 			CardSet.PLACEHOLDER_202204,
-			CardSet.WILD_WEST,
-			CardSet.TUTORIAL
+			CardSet.TUTORIAL,
+			CardSet.EVENT
 		};
 
 		[TestMethod]

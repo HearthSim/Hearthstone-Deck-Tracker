@@ -84,5 +84,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_Badlands")]
 		Badlands = CardSet.WILD_WEST,
+
+		[LocDescription("Enum_ArenaRewardPacks_WhizbangsWorkshop")]
+		WhizbangsWorkshop = CardSet.WHIZBANGS_WORKSHOP,
 	}
 }
