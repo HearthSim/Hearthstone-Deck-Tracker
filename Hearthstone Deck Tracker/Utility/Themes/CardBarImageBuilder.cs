@@ -46,8 +46,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			{ThemeElement.DefaultFrame, new ThemeElementInfo("frame.png", FrameRect)},
 			{ThemeElement.DefaultGem, new ThemeElementInfo("gem.png", GemRect)},
 			{ThemeElement.DefaultCountBox, new ThemeElementInfo("countbox.png", BoxRect)},
-			{ThemeElement.DefaultKeepRateBox, new ThemeElementInfo("keeprate_box.png", MulliganWinrateBoxRect)},
-			{ThemeElement.DefaultKeepRateActiveBox, new ThemeElementInfo("keeprate_active_box.png", MulliganWinrateBoxRect)},
+			{ThemeElement.DefaultStatsBox, new ThemeElementInfo("stats_box.png", MulliganWinrateBoxRect)},
+			{ThemeElement.DefaultStatsActiveBox, new ThemeElementInfo("stats_box_active.png", MulliganWinrateBoxRect)},
 			{ThemeElement.DarkOverlay, new ThemeElementInfo("dark.png", FrameRect)},
 			{ThemeElement.FadeOverlay, new ThemeElementInfo("fade.png", FrameRect)},
 			{ThemeElement.CreatedIcon, new ThemeElementInfo("icon_created.png", BoxRect)},
@@ -243,7 +243,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		protected virtual void AddMulliganWinRate()
 		{
-			var mulliganWinRateBox = Required[Card.IsMulliganOption ? ThemeElement.DefaultKeepRateActiveBox : ThemeElement.DefaultKeepRateBox];
+			var mulliganWinRateBox = Required[Card.IsMulliganOption ? ThemeElement.DefaultStatsActiveBox : ThemeElement.DefaultStatsBox];
 			AddChild(mulliganWinRateBox);
 		}
 		protected virtual void AddMulliganWinRateText() => AddMulliganWinRateText(MulliganWinrateBoxRect);
