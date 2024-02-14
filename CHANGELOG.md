@@ -1,3 +1,7 @@
+## **Release v1.24.2 - 2024-02-14**
+**Fixes**:
+- Fixed an issue that could cause the deck lists to disappear.
+
 ## **Release v1.24.1 - 2024-02-13**
 **Updated for Hearthstone 28.6.0**
 - There are likely still issues with some new cards in Bob's Buddy. We will update these in the coming days.
