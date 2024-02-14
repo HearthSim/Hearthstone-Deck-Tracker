@@ -645,7 +645,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				hashCode = (hashCode * 397) ^ TextColorHash;
 				hashCode = (hashCode * 397) ^ Created.GetHashCode();
 				hashCode = (hashCode * 397) ^ BaconCard.GetHashCode();
-				hashCode = (hashCode * 397) ^ CardWinrates.GetHashCode();
+				hashCode = (hashCode * 397) ^ (CardWinrates?.GetHashCode() ?? 0);
 				hashCode = (hashCode * 397) ^ (IsMulliganOption ? 1 : 0);
 				return hashCode;
 			}
