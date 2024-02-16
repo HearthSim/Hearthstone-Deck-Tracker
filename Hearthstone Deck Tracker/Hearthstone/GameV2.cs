@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private MulliganState _mulliganState;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
+		private MulliganGuideParams? _mulliganGuideParams;
 		internal QueueEvents QueueEvents { get; }
 
 		public BattlegroundsSessionViewModel BattlegroundsSessionViewModel { get; } = new();
@@ -321,6 +322,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsBoardState?.Reset();
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
+			_mulliganGuideParams = null;
 			Metrics = new GameMetrics();
 
 			if(Core._game != null && Core.Overlay != null)
@@ -416,21 +418,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var opponentClass = Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
 			var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
 
-			return new MulliganGuideParams
+			_mulliganGuideParams = new MulliganGuideParams
 			{
 				Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck), false),
 				OpponentClass = opponentClass.ToString(),
-				PlayerInitiative = Player.HasCoin ? "COIN" : "FIRST",
+				PlayerInitiative = PlayerEntity?.GetTag(GameTag.FIRST_PLAYER) == 1 ? "FIRST" : "COIN",
 				PlayerRegion = ((BnetRegion)CurrentRegion).ToString(),
 				PlayerStarLevel = starLevel > 0 ? starLevel : null,
 				GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
 				FormatType = (int)CurrentFormatType,
 			};
+			return _mulliganGuideParams;
 		}
 
 		public MulliganGuideFeedbackParams? GetMulliganGuideFeedbackParams()
 		{
-			return GetMulliganGuideParams()?.WithFeedback(
+			// Use a cached version because e.g. the opponentClass may no longer be detectable
+			return (_mulliganGuideParams ?? GetMulliganGuideParams())?.WithFeedback(
 				_mulliganState?.OfferedCards.Select(x => x.Card.DbfId).ToArray(),
 				_mulliganState?.KeptCards.Select(x => x.Card.DbfId).ToArray(),
 				_mulliganState?.FinalCardsInHand.Select(x => x.Card.DbfId).ToArray(),

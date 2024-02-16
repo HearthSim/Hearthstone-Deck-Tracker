@@ -1171,8 +1171,6 @@ namespace Hearthstone_Deck_Tracker
 					{
 						var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created);
 						var dbfIds = cards.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
-						var opponentClass = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
-						var hasCoin = _game.Player.HasCoin;
 
 						MulliganGuideData? mulliganGuideData = null;
 						if(Config.Instance.EnableMulliganGuide)
@@ -1231,11 +1229,14 @@ namespace Hearthstone_Deck_Tracker
 							Dictionary<string, string>? parameters = null;
 							if(HsReplayDataManager.Decks.AvailableDecks.Contains(shortId!))
 							{
+								var opponentClass = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+								var isFirst = _game.PlayerEntity?.GetTag(GameTag.FIRST_PLAYER) == 1;
+
 								// Show mulligan toast with locally sourced parameters
 								parameters = new Dictionary<string, string>
 								{
 									{ "opponentClasses", opponentClass.ToString() },
-									{ "playerInitiative", hasCoin ? "COIN" : "FIRST" }
+									{ "playerInitiative", isFirst ? "FIRST" : "COIN" }
 								};
 
 								var playerStarLevel = _game.PlayerMedalInfo?.StarLevel ?? 0;
