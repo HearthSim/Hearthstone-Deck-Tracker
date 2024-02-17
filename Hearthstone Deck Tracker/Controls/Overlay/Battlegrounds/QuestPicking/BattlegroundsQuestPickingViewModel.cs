@@ -148,12 +148,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				MinionTypes = availableRaces.Cast<int>().ToArray(),
 				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
 				OfferedRewards = GetOffererdRewards().ToArray(),
-				LanguageCode = Config.Instance.SelectedLanguage
+				LanguageCode = Config.Instance.SelectedLanguage,
+				BattlegroundsRating = Core.Game.BattlegroundsRatingInfo?.Rating
 			};
 		}
 
 		private IEnumerable<BattlegroundsQuestStatsParams.OfferedReward> GetOffererdRewards()
-		{ 
+		{
 			foreach(var quest in _entities)
 			{
 				if(!quest.HasCardId)
