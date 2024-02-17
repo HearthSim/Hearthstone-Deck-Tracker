@@ -1,12 +1,13 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries.MercenariesTaskListButton"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
              mc:Ignorable="d" >
     <Grid>
         <Border CornerRadius="3" Margin="0,1,30,5" Background="#221717" BorderBrush="#110C0C" BorderThickness="2">
-            <TextBlock Text="Tasks" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="18" Margin="20,0,40,0"/>
+            <TextBlock Text="{lex:Loc MercenariesTaskList_TasksButton}" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="18" Margin="20,0,40,0"/>
         </Border>
         <Image Source="{StaticResource MercsIcon}" Height="60" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="Fant"/>
     </Grid>
