@@ -46,7 +46,7 @@ public partial class BattlegroundsMinionTypesBox : UserControl, INotifyPropertyC
 
 	public IEnumerable<Race> MinionTypes
 	{
-		get { return (IEnumerable<Race>)GetValue(MinionTypesProperty); }
+		get { return (IEnumerable<Race>?)GetValue(MinionTypesProperty) ?? new List<Race>(); }
 		set { SetValue(MinionTypesProperty, value); }
 	}
 
