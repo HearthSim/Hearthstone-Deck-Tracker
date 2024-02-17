@@ -267,8 +267,15 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 
 	public async Task EnsureLoaded()
 	{
-		await Update(true);
-		await Update();
+		try
+		{
+			await Update(true);
+			await Update();
+		}
+		catch(Exception ex)
+		{
+			Log.Error($"Could not load Mulligan status: {ex}");
+		}
 	}
 
 	private async Task Update(bool onlyVisiblePage = false)
