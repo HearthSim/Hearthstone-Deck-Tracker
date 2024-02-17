@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,6 +9,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using HSReplay.Requests;
 using static System.Windows.Visibility;
@@ -51,7 +53,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				return;
 			_entities.Add(questEntity);
 			if(_entities.Count == ExpectedQuestCount())
-				await Update();
+			{
+				try
+				{
+					await Update();
+				}
+				catch(Exception ex)
+				{
+					Log.Error($"Could not load Quest Data: {ex}");
+				}
+			}
 		}
 
 		public void Reset()
@@ -112,20 +123,29 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			}
 
 			var orderedEntities = choices.Cards.Select(id => _entities.Find(x => x.CardId == id));
-			Quests = orderedEntities.Select(quest => {
+			Quests = orderedEntities.Select(quest =>
+			{
 				var reward = quest.GetTag(GameTag.QUEST_REWARD_DATABASE_ID);
 				var data = questData.FirstOrDefault(x => x.RewardDbfId == reward);
 				return new BattlegroundsSingleQuestViewModel(data);
 			});
 
-			var anomalyAdjusted = questData.Where(quest => quest.AnomalyAdjusted == true).Any();
+			var anomalyAdjusted = questData.Any(quest => quest.AnomalyAdjusted == true);
 
 			Message.Mmr(questData[0].MmrFilterValue, questData[0].MinMMR, anomalyAdjusted);
-			if(choices.IsVisible)
-				Visibility = Visible;
 
-			if(Config.Instance.ShowBattlegroundsQuestPicking)
-				Core.Game.Metrics.Tier7QuestOverlayDisplayed = true;
+			// Watch choices until they're gone
+			for(var i = 0; i < 120 * (1000 / 32); i++) // max 120 seconds
+			{
+				var liveChoices = Reflection.Client.GetCardChoices();
+				if(liveChoices is null || Quests is null) // Quests is null once Reset is called
+					break;
+				Visibility = liveChoices.IsVisible ? Visible : Collapsed;
+				if(Visibility == Visible)
+					Core.Game.Metrics.Tier7QuestOverlayDisplayed = true;
+
+				await Task.Delay(32);
+			}
 		}
 
 		private BattlegroundsQuestStatsParams? GetApiParams()

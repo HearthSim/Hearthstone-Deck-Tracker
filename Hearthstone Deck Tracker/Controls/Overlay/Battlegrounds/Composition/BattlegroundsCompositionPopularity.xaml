@@ -29,7 +29,7 @@
             <ItemsControl.Style>
                 <Style TargetType="{x:Type ItemsControl}">
                     <Style.Triggers>
-                        <DataTrigger Value="{x:Null}" Binding="{Binding DataContext.Top3Compositions, RelativeSource={RelativeSource Self}}">
+                        <DataTrigger Value="{x:Null}" Binding="{Binding Top3Compositions}">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
