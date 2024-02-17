@@ -82,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session
 				BannedTribe5 = unavailableRaces[4];
 			}
 
-			if(Core.Game.CurrentMode == Mode.GAMEPLAY && bannedTribesUpdated)
+			if((Core.Game.CurrentMode == Mode.GAMEPLAY || SceneHandler.Scene == Mode.GAMEPLAY) && bannedTribesUpdated)
 			{
 				BannedTribesVisibility = Visibility.Visible;
 				BannedTribesMsgVisibility = Visibility.Collapsed;

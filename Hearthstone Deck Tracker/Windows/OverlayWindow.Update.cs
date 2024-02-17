@@ -16,6 +16,8 @@ using static Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounterStyle;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility.Animations;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -52,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(_game.CurrentMode == Mode.BACON)
 			{
-				Tier7ViewModel.RefreshAccountVisibility = Visibility.Visible;
+				Tier7PreLobbyViewModel.RefreshAccountVisibility = Visibility.Visible;
 			}
 		}
 
@@ -63,6 +65,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ListViewPlayer.Items.Refresh();
 				ListViewOpponent.Items.Refresh();
 				SetTopmost();
+				UpdateVisibilities();
 			}
 
 			var opponentHandCount = _game.Opponent.HandCount;
@@ -133,12 +136,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if (!_playerCardsHidden)
 			{
-				StackPanelPlayer.Visibility = (hideDeck && !_uiMovable) || _battlegroundsSessionVisibleTemp || inBattlegrounds ? Collapsed : Visible;
+				StackPanelPlayer.Visibility = (hideDeck && !_uiMovable) || inBattlegrounds ? Collapsed : Visible;
 			}
 
 			if (!_opponentCardsHidden)
 			{
-				StackPanelOpponent.Visibility = (hideDeck && !_uiMovable) || _battlegroundsSessionVisibleTemp || inBattlegrounds ? Collapsed : Visible;
+				StackPanelOpponent.Visibility = (hideDeck && !_uiMovable) || inBattlegrounds ? Collapsed : Visible;
 			}
 
 			CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Collapsed : Visible;
@@ -181,8 +184,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(_game.IsInMenu || !inBattlegrounds)
 			{
 				HideBgsTopBar();
-				if (!Config.Instance.ShowSessionRecapBetweenGames)
-					ShowBattlegroundsSession(false);
 			}
 
 			UpdateIcons();
@@ -577,7 +578,76 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void OverlayWindow_OnDeactivated(object sender, EventArgs e) => SetTopmost();
 
-		public void UpdateMulliganGuidePreLobby()
+		public void UpdateVisibilities()
+		{
+			UpdateBattlegroundsSessionVisibility();
+			UpdateTier7PreLobbyVisibility();
+			UpdateMulliganGuidePreLobbyVisibility();
+		}
+
+		public void UpdateBattlegroundsSessionVisibility()
+		{
+			var a = Config.Instance.ShowSessionRecapBetweenGames;
+			var b = Core.Game.IsBattlegroundsMatch;
+
+			var show = (Config.Instance.ShowSessionRecap || _uiMovable)
+				&& (
+					(
+						// Scene is not transitioning
+						SceneHandler.Scene != null &&
+						SceneHandler.Scene switch
+						{
+							Mode.BACON => Config.Instance.ShowSessionRecapBetweenGames,
+							Mode.GAMEPLAY => Core.Game.IsBattlegroundsMatch,
+							_ => false
+						}
+					)
+					|| (
+						// Scene is transitioning - do not check for IsBattlegroundsMatch because that might not be set yet/still
+						SceneHandler.Scene == null && Config.Instance.ShowSessionRecapBetweenGames &&
+						(
+							// Start of Match
+							(SceneHandler.LastScene == Mode.BACON && SceneHandler.NextScene == Mode.GAMEPLAY)
+							// End of Match
+							|| (SceneHandler.LastScene == Mode.GAMEPLAY && SceneHandler.NextScene == Mode.BACON)
+						)
+					)
+				);
+
+			if(show)
+			{
+				FadeAnimation.SetVisibility(BattlegroundsSessionStackPanel, Visible);
+				BattlegroundsSessionViewModelVM.Update();
+				Core.Game.BattlegroundsSessionViewModel.UpdateSectionsVisibilities();
+			}
+			else
+			{
+				FadeAnimation.SetVisibility(BattlegroundsSessionStackPanel, Collapsed);
+			}
+		}
+
+		public void UpdateTier7PreLobbyVisibility()
+		{
+			var show = (
+				_game.IsInMenu &&
+				!_game.QueueEvents.IsInQueue &&
+				SceneHandler.Scene == Mode.BACON &&
+				Config.Instance.EnableBattlegroundsTier7Overlay &&
+				Config.Instance.ShowBattlegroundsTier7PreLobby
+			);
+
+			if(show)
+			{
+				_tier7PreLobbyBehavior.Show();
+				Tier7PreLobbyViewModel.Update().Forget();
+			}
+			else
+			{
+				_tier7PreLobbyBehavior.Hide();
+			}
+		}
+
+		public void UpdateMulliganGuidePreLobbyVisibility()
 		{
 			var isPremium = HSReplayNetOAuth.AccountData?.IsPremium ?? false;;
 			var show = (
@@ -594,7 +664,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ConstructedMulliganGuidePreLobbyViewModel.EnsureLoaded().Forget();
 			}
 			else
+			{
 				_constructedMulliganGuidePreLobbyBehaviour.Hide();
+			}
 		}
 	}
 }

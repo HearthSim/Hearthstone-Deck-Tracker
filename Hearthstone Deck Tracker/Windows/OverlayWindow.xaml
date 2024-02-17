@@ -256,7 +256,7 @@
                 />
 
                 <tier7:Tier7PreLobby x:Name="Tier7PreLobby" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
-                                     DataContext="{Binding Tier7ViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+                                     DataContext="{Binding Tier7PreLobbyViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
 
                     <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
                 <controls:CardImage x:Name="ToolTipCardBlock" Visibility="Hidden" />

@@ -44,7 +44,9 @@ namespace HearthWatcher
 					_provider.IsShopOpen ?? false,
 					_provider.IsJournalOpen ?? false,
 					_provider.IsPopupShowing ?? false,
-					_provider.IsFriendslistOpen ?? false);
+					_provider.IsFriendslistOpen ?? false,
+					_provider.IsBlurActive ?? false
+				);
 				if(curr.Equals(_prev))
 					continue;
 				Change?.Invoke(this, curr);

@@ -72,7 +72,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private bool _opponentCardsHidden;
 		private bool _playerCardsHidden;
 		private bool _resizeElement;
-		private bool _battlegroundsSessionVisibleTemp;
 		private bool _secretsTempVisible;
 		private UIElement? _selectedUiElement;
 		private bool _uiMovable;
@@ -100,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public ConstructedMulliganGuideViewModel ConstructedMulliganGuideViewModel { get; } = new();
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
-		public Tier7PreLobbyViewModel Tier7ViewModel { get; } = new Tier7PreLobbyViewModel();
+		public Tier7PreLobbyViewModel Tier7PreLobbyViewModel { get; } = new Tier7PreLobbyViewModel();
 
 		public List<BoardMinionOverlayViewModel> OppBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
 		public List<BoardMinionOverlayViewModel> PlayerBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
@@ -250,7 +249,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ExitAnimation = AnimationType.Slide,
 				Fade = true,
 				Distance = 50,
-				HideCallback = () => Tier7ViewModel.Reset(),
 			};
 
 			_constructedMulliganGuidePreLobbyBehaviour = new OverlayElementBehavior(ConstructedMulliganGuidePreLobby)
@@ -512,29 +510,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HideBobsBuddyPanel();
 		}
 
-		internal async void ShowBattlegroundsSession(bool show, bool force = false)
-		{
-			if(await Debounce.WasCalledAgain(50))
-				return;
-			if(show)
-			{
-				if(!force)
-					await Task.Delay(500);
-				BattlegroundsSessionViewModelVM.Update();
-				if (BattlegroundsSessionStackPanel.Visibility == Visible || !Config.Instance.ShowSessionRecap)
-					return;
-
-				Core.Game.BattlegroundsSessionViewModel.UpdateSectionsVisibilities();
-				FadeAnimation.SetVisibility(BattlegroundsSessionStackPanel, Visible);
-			}
-			else
-			{
-				if (_battlegroundsSessionVisibleTemp && force)
-					return;
-				FadeAnimation.SetVisibility(BattlegroundsSessionStackPanel, Hidden);
-			}
-		}
-
 		internal void ShowBattlegroundsHeroPickingStats(int[] heroIds)
 		{
 			BattlegroundsHeroPickingViewModel.SetHeroes(heroIds);
@@ -613,31 +588,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void HideMercenariesTasks()
 		{
 			_mercenariesTaskListBehavior.Hide();
-		}
-
-		internal async void ShowTier7PreLobby(bool show, bool checkAccountStatus, int delay = 500)
-		{
-			if(await Debounce.WasCalledAgain(50))
-				return;
-			if(show)
-			{
-				if(!Config.Instance.EnableBattlegroundsTier7Overlay)
-					return;
-				Tier7ViewModel.Update(checkAccountStatus).Forget();
-				Remote.Config.Load();
-				Remote.BattlegroundsBans.Load();
-				if(Config.Instance.ShowBattlegroundsTier7PreLobby || !(HSReplayNetOAuth.AccountData?.IsTier7 ?? false))
-				{
-					Tier7ViewModel.Update(checkAccountStatus).Forget();
-
-					// Wait for lobby to be actually loaded
-					await Task.Delay(delay);
-
-					_tier7PreLobbyBehavior.Show();
-				}
-			}
-			else
-				_tier7PreLobbyBehavior.Hide();
 		}
 
 		public static bool AnimatingXPBar = false;
@@ -854,9 +804,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ConstructedMulliganGuidePreLobbyViewModel.IsModalOpen = isModalOpen;
 		}
 
+		internal void SetBaconState(bool isAnyOpen)
+		{
+			Tier7PreLobbyViewModel.IsModalOpen = !_game.QueueEvents.IsInQueue && isAnyOpen;
+		}
+
 		internal void SetConstructedQueue(bool inQueue)
 		{
 			ConstructedMulliganGuidePreLobbyViewModel.IsInQueue = inQueue;
+		}
+
+		internal void SetBaconQueue(bool isAnyOpen)
+		{
+			UpdateTier7PreLobbyVisibility();
 		}
 	}
 }

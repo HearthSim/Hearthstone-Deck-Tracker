@@ -49,13 +49,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				var prev = GetMode(match.Groups["prev"].Value);
 				var next = GetMode(match.Groups["next"].Value);
-				if(prev == Mode.BACON)
-				{
-					if(next != Mode.GAMEPLAY)
-						Core.Overlay.ShowBattlegroundsSession(false, true);
-					Core.Overlay.ShowTier7PreLobby(false, false);
-					Watchers.BaconWatcher.Stop();
-				}
 				return;
 			}
 

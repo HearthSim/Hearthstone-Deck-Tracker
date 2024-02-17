@@ -349,8 +349,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			}
 
 			SaveConfig(true);
-			if(Core.Game.IsBattlegroundsMatch || (Config.Instance.ShowSessionRecapBetweenGames && Core.Game.CurrentMode == Mode.BACON))
-				Core.Overlay.ShowBattlegroundsSession(true, true);
+
+			Core.Game.BattlegroundsSessionViewModel.UpdateSectionsVisibilities();
+			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 			Influx.OnSessionRecapEnabledChanged(true);
 		}
 
@@ -360,8 +361,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowSessionRecap = false;
 			SaveConfig(true);
-			if(Core.Game.IsBattlegroundsMatch || Core.Game.CurrentMode == Mode.BACON)
-				Core.Overlay.ShowBattlegroundsSession(false, true);
+			Core.Game.BattlegroundsSessionViewModel.UpdateSectionsVisibilities();
+			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 			Influx.OnSessionRecapEnabledChanged(false);
 		}
 
@@ -371,8 +372,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowSessionRecapBetweenGames = true;
 			SaveConfig(true);
-			if (Core.Game.CurrentMode == Mode.BACON)
-				Core.Overlay.ShowBattlegroundsSession(true, true);
+			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 		}
 
 		private void CheckboxShowSessionRecapBetweenGames_Unchecked(object sender, RoutedEventArgs e)
@@ -381,8 +381,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowSessionRecapBetweenGames = false;
 			SaveConfig(true);
-			if (!Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.ShowBattlegroundsSession(false, true);
+			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 		}
 
 		private void CheckboxShowMinionsBanned_Checked(object sender, RoutedEventArgs e)
@@ -551,8 +550,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.EnableBattlegroundsTier7Overlay = true;
 			SaveConfig(true);
-			if(Core.Game.CurrentMode == Mode.BACON)
-				Core.Overlay.ShowTier7PreLobby(true, true, 0);
+			Core.Overlay.UpdateTier7PreLobbyVisibility();
 		}
 
 		private void CheckboxEnableTier7_Unchecked(object sender, RoutedEventArgs e)
@@ -561,8 +559,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.EnableBattlegroundsTier7Overlay = false;
 			SaveConfig(true);
-			if(Core.Game.CurrentMode == Mode.BACON)
-				Core.Overlay.ShowTier7PreLobby(false, false);
+			Core.Overlay.UpdateTier7PreLobbyVisibility();
 		}
 
 		private void CheckboxShowTier7PreLobby_Checked(object sender, RoutedEventArgs e)
@@ -571,8 +568,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTier7PreLobby = true;
 			SaveConfig(true);
-			if(Core.Game.CurrentMode == Mode.BACON)
-				Core.Overlay.ShowTier7PreLobby(true, true, 0);
+			Core.Overlay.UpdateTier7PreLobbyVisibility();
 		}
 
 		private void CheckboxShowTier7PreLobby_Unchecked(object sender, RoutedEventArgs e)
@@ -581,8 +577,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTier7PreLobby = false;
 			SaveConfig(true);
-			if(Core.Game.CurrentMode == Mode.BACON)
-				Core.Overlay.ShowTier7PreLobby(false, false);
+			Core.Overlay.UpdateTier7PreLobbyVisibility();
 		}
 	}
 }

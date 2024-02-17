@@ -28,7 +28,8 @@
 
         <Style TargetType="ToolTip" BasedOn="{StaticResource BgsTooltipStyle}"/>
     </UserControl.Resources>
-    <Grid>
+
+    <Grid Visibility="{Binding Visibility}">
 
         <!-- Anonymous Tooltip -->
         <Border Background="{StaticResource Tier7Black}" BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="4"

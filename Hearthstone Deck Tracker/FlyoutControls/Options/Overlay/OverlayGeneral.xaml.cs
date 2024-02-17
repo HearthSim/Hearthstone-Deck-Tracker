@@ -448,7 +448,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.EnableMulliganGuide = true;
 			Config.Save();
-			Core.Overlay.UpdateMulliganGuidePreLobby();
+			Core.Overlay.UpdateMulliganGuidePreLobbyVisibility();
 		}
 
 		private void CheckboxEnableMulliganGuide_Unchecked(object sender, RoutedEventArgs e)
@@ -460,7 +460,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Core.Overlay.HideMulliganGuideStats();
 			// Clear the Mulligan overlay if it's visible
 			Core.Game.Player.MulliganCardStats = null;
-			Core.Overlay.UpdateMulliganGuidePreLobby();
+			Core.Overlay.UpdateMulliganGuidePreLobbyVisibility();
 		}
 
 		private void CheckboxAutoShowMulliganGuide_Checked(object sender, RoutedEventArgs e)
@@ -485,7 +485,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowMulliganGuidePreLobby = true;
 			Config.Save();
-			Core.Overlay.UpdateMulliganGuidePreLobby();
+			Core.Overlay.UpdateMulliganGuidePreLobbyVisibility();
 		}
 
 		private void CheckboxShowMulliganGuidePreLobby_Unchecked(object sender, RoutedEventArgs e)
@@ -494,7 +494,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowMulliganGuidePreLobby = false;
 			Config.Save();
-			Core.Overlay.UpdateMulliganGuidePreLobby();
+			Core.Overlay.UpdateMulliganGuidePreLobbyVisibility();
 		}
 	}
 }

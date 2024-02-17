@@ -19,13 +19,41 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 	{
 		public Tier7PreLobbyViewModel()
 		{
-			HSReplayNetOAuth.AccountDataUpdated += () => Update(false).Forget();
-			HSReplayNetOAuth.LoggedOut += () => Update(false).Forget();
+			HSReplayNetOAuth.AccountDataUpdated += () =>
+			{
+				InvalidateUserState();
+				Update().Forget();
+			};
+			HSReplayNetOAuth.LoggedOut += () =>
+			{
+				InvalidateUserState();
+				Update().Forget();
+			};
 			Remote.Config.Loaded += (_) =>
 			{
 				OnPropertyChanged(nameof(UserState));
 				OnPropertyChanged(nameof(PanelMinWidth));
 			};
+		}
+
+		#region Visibiliy
+		public bool IsModalOpen
+		{
+			get { return GetProp(false); }
+
+			set
+			{
+				SetProp(value);
+				OnPropertyChanged(nameof(Visibility));
+			}
+		}
+
+		public Visibility Visibility => IsModalOpen ? Visibility.Hidden : Visibility.Visible;
+		#endregion
+
+		public void InvalidateUserState()
+		{
+			UserState = UserState.Loading;
 		}
 
 		public UserState UserState
@@ -89,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		public string? Username { get => GetProp<string?>(null); set => SetProp(value); }
 
 		private bool _isUpdatingAccount;
-		public async Task Update(bool checkAccountStatus)
+		public async Task Update()
 		{
 			if(UserState == UserState.Disabled)
 				return;
@@ -101,21 +129,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				return;
 			}
 
-			if(Core.Game.CurrentMode != Mode.BACON)
-				return;
-
-			if(await Debounce.WasCalledAgain(50))
-			{
-				// Debounce to avoid multiple invocations of this when the log
-				// is being (re-)read and contains multiple scene changes in
-				// and out of BACON.
-				return;
-			}
-
 			var ownsTier7 = false;
 			if(HSReplayNetOAuth.IsFullyAuthenticated && HSReplayNetOAuth.AccountData != null)
 			{
-				if(checkAccountStatus)
+				if(UserState == UserState.Loading)
 				{
 					// This will fire a HSReplayNetOAuth.AccountDataUpdated event. We
 					// set a flag for the duration of the update check to avoid
@@ -171,8 +188,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				return;
 			}
 
-			if(UserState != UserState.Subscribed)
-				UserState = UserState.Loading;
 			TrialTimeRemaining = null;
 			int? allTimeFromApi = null;
 			if(acc != null)
@@ -229,12 +244,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		public ICommand RefreshAccountCommand => new Command(async () =>
 		{
 			RefreshAccountEnabled = false;
+			InvalidateUserState();
 			await Task.WhenAll(HSReplayNetOAuth.UpdateAccountData(), Task.Delay(3000));
 			RefreshAccountEnabled = true;
 		});
 	}
 
-	internal record SubscriberData 
+	internal record SubscriberData
 	{
 		public int SeasonMaxMMR { get; init;  }
 		public int AllTimeMaxMMR { get; init;  }

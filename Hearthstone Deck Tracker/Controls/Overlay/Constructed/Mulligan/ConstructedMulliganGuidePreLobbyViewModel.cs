@@ -100,8 +100,8 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 
 	public ConstructedMulliganGuidePreLobbyViewModel()
 	{
-		HSReplayNetOAuth.AccountDataUpdated += () => Core.Overlay.UpdateMulliganGuidePreLobby();
-		HSReplayNetOAuth.LoggedOut += () => Core.Overlay.UpdateMulliganGuidePreLobby();
+		HSReplayNetOAuth.AccountDataUpdated += () => Core.Overlay.UpdateMulliganGuidePreLobbyVisibility();
+		HSReplayNetOAuth.LoggedOut += () => Core.Overlay.UpdateMulliganGuidePreLobbyVisibility();
 	}
 
 	#region Pagination

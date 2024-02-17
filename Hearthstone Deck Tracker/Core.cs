@@ -372,6 +372,7 @@ namespace Hearthstone_Deck_Tracker
 					Helper.ClearCachedHearthstoneBuild();
 					TurnTimer.Instance.Stop();
 					Tier7Trial.Clear();
+					Overlay.Tier7PreLobbyViewModel.Reset();
 					Overlay.BattlegroundsHeroPickingViewModel.Reset();
 					Overlay.BattlegroundsQuestPickingViewModel.Reset();
 					Overlay.ConstructedMulliganGuideViewModel.Reset();

@@ -101,7 +101,6 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.HideTimers();
 			Core.Overlay.HideSecrets();
 			Core.Overlay.Update(true);
-			Core.Overlay.UpdateMulliganGuidePreLobby();
 			DeckManager.ResetIgnoredDeckId();
 			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 
@@ -540,7 +539,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
 			{
 				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
-				Core.Overlay.ShowBattlegroundsSession(true);
+				Core.Overlay.Tier7PreLobbyViewModel.Reset();
 			}
 			if(_game.IsFriendlyMatch)
 				if(!Config.Instance.InteractedWithLinkOpponentDeck)
@@ -574,7 +573,6 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 					Core.Overlay.BattlegroundsSessionViewModelVM.Update();
-					Core.Overlay.ShowBattlegroundsSession(true);
 				}
 			}
 		}
@@ -1345,7 +1343,6 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
-			Core.Overlay.ShowBattlegroundsSession(true);
 		}
 
 		#region Player

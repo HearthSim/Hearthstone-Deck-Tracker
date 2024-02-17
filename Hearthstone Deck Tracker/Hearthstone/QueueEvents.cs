@@ -37,6 +37,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BACON
 		};
 
+		private bool _isInQueue = false;
+		public bool IsInQueue => _isInQueue;
+
 		public QueueEvents(IGame game)
 		{
 			_game = game;
@@ -46,6 +49,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void Handle(QueueEventArgs e)
 		{
+			_isInQueue = e.IsInQueue;
+
 			if(!_game.IsInMenu)
 				return;
 			if(!Modes.Contains(_game.CurrentMode) && !LettuceModes.Contains(_game.CurrentMode))
@@ -53,6 +58,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			if(_game.CurrentMode == Mode.TOURNAMENT)
 				Core.Overlay.SetConstructedQueue(e.IsInQueue);
+
+			if(_game.CurrentMode == Mode.BACON)
+				Core.Overlay.SetBaconQueue(e.IsInQueue);
 
 			if(e.IsInQueue)
 			{
@@ -79,7 +87,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						Log.Info("Switching to no-deck mode for battlegrounds");
 						Core.MainWindow.SelectDeck(null, true);
 					}
-					Core.Overlay.ShowTier7PreLobby(false, false);
 				}
 				else if(LettuceModes.Contains(_game.CurrentMode))
 				{
@@ -93,8 +100,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			else
 			{
 				Log.Info($"No longer in queue");
-				if(_game.CurrentMode == BACON && e.Previous != FindGameState.SERVER_GAME_CONNECTING)
-					Core.Overlay.ShowTier7PreLobby(true, false, 0);
 			}
 		}
 
