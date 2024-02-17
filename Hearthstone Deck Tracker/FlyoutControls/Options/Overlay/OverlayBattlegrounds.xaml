@@ -58,19 +58,26 @@
                 <TextBlock Name="TextBobsBuddyDisabled" Foreground="Yellow" Visibility="Collapsed" Margin="0,0,0,5"/>
                 <CheckBox x:Name="CheckboxRunCombatSimulations" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_RunCombatSimulations}"
                           HorizontalAlignment="Left"
-                          VerticalAlignment="Top" Checked="CheckboxRunCombatSimulations_Checked"
+                          VerticalAlignment="Top"
+                          Checked="CheckboxRunCombatSimulations_Checked"
                           Unchecked="CheckboxRunCombatSimulations_Unchecked" Margin="0" />
                 <CheckBox x:Name="CheckboxShowResultsDuringCombat" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowDuringCombat}"
                           HorizontalAlignment="Left"
-                          VerticalAlignment="Top" Checked="CheckboxShowResultsDuringCombat_Checked"
+                          VerticalAlignment="Top"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxRunCombatSimulations}"
+                          Checked="CheckboxShowResultsDuringCombat_Checked"
                           Unchecked="CheckboxShowResultsDuringCombat_Unchecked" Margin="0,5,0,0" />
                 <CheckBox x:Name="CheckboxShowResultsDuringShopping" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowDuringShopping}"
                           HorizontalAlignment="Left"
-                          VerticalAlignment="Top" Checked="CheckboxShowResultsDuringShopping_Checked"
+                          VerticalAlignment="Top"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxRunCombatSimulations}"
+                          Checked="CheckboxShowResultsDuringShopping_Checked"
                           Unchecked="CheckboxShowResultsDuringShopping_Unchecked" Margin="0,5,0,0" />
                 <CheckBox x:Name="CheckboxAlwaysShowAverageDamage" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowAverageDamage}"
                           HorizontalAlignment="Left"
-                          VerticalAlignment="Top" Checked="CheckboxAlwaysShowAverageDamage_Checked"
+                          VerticalAlignment="Top"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxRunCombatSimulations}"
+                          Checked="CheckboxAlwaysShowAverageDamage_Checked"
                           Unchecked="CheckboxAlwaysShowAverageDamage_Unchecked" Margin="0,5,0,0" />
             </StackPanel>
         </GroupBox>
@@ -90,6 +97,7 @@
                     Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowSessionRecapBetweenGames}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
+                    IsEnabled="{Binding IsChecked, ElementName=CheckboxShowSessionRecap}"
                     Checked="CheckboxShowSessionRecapBetweenGames_Checked"
                     Unchecked="CheckboxShowSessionRecapBetweenGames_Unchecked"
                     Margin="0,5,0,0"

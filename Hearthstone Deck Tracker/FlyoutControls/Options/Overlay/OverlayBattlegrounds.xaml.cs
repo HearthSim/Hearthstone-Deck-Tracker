@@ -78,15 +78,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowBattlegroundsTurnCounter.IsChecked = Config.Instance.ShowBattlegroundsTurnCounter;
 
 			CheckboxRunCombatSimulations.IsChecked = Config.Instance.RunBobsBuddy;
-
 			CheckboxShowResultsDuringCombat.IsChecked = Config.Instance.ShowBobsBuddyDuringCombat;
-			CheckboxShowResultsDuringCombat.IsEnabled = Config.Instance.RunBobsBuddy;
-
 			CheckboxShowResultsDuringShopping.IsChecked = Config.Instance.ShowBobsBuddyDuringShopping;
-			CheckboxShowResultsDuringShopping.IsEnabled = Config.Instance.RunBobsBuddy;
-
 			CheckboxAlwaysShowAverageDamage.IsChecked = Config.Instance.AlwaysShowAverageDamage;
-			CheckboxAlwaysShowAverageDamage.IsEnabled = Config.Instance.RunBobsBuddy;
 
 			CheckboxShowSessionRecap.IsChecked = Config.Instance.ShowSessionRecap;
 			CheckboxShowMinionsBanned.IsChecked = Config.Instance.ShowSessionRecapMinionsBanned;
@@ -118,9 +112,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				}
 			}
 			TextBobsBuddyDisabled.Visibility = enabled ? Visibility.Collapsed : Visibility.Visible;
-			CheckboxShowResultsDuringCombat.IsEnabled = enabled && Config.Instance.RunBobsBuddy;
-			CheckboxShowResultsDuringShopping.IsEnabled = enabled && Config.Instance.RunBobsBuddy;
-			CheckboxAlwaysShowAverageDamage.IsEnabled = enabled && Config.Instance.RunBobsBuddy;
 		}
 
 		private void SaveConfig(bool updateOverlay)
@@ -267,8 +258,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.RunBobsBuddy = true;
-			CheckboxShowResultsDuringCombat.IsEnabled = true;
-			CheckboxShowResultsDuringShopping.IsEnabled = true;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.ShowBobsBuddyPanel();
@@ -280,8 +269,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.RunBobsBuddy = false;
-			CheckboxShowResultsDuringCombat.IsEnabled = false;
-			CheckboxShowResultsDuringShopping.IsEnabled = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.HideBobsBuddyPanel();
