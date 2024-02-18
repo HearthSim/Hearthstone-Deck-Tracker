@@ -1184,6 +1184,7 @@ namespace Hearthstone_Deck_Tracker
 							if(showToast)
 							{
 								Core.Overlay.ShowMulliganToast(shortId!, dbfIds, data.Toast?.Parameters, true);
+								showToast = false;
 							}
 
 							// Wait for the mulligan to be ready
@@ -1219,7 +1220,6 @@ namespace Hearthstone_Deck_Tracker
 											: new SingleCardStats(dbfId)),
 									cardStats.Count
 								);
-								break;
 							}
 							// Something went wrong generating the card stats, continue to locally generated toast (if enabled)
 						}
