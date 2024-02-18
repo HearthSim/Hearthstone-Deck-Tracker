@@ -1,3 +1,14 @@
+## **Release v1.24.3 - 2024-02-17**
+**Bob's Buddy**:
+- Enable combat simulations for Diremuck Forager when the opponent's board is full.
+
+**Changes**:
+- Started using data more appropriate for the current MMR in the Tier7 quest and hero picking overlays.
+
+**Fixes**:
+- Fixed an issue where the Tier7 quest overlay would not appear.
+- Fixed an issue where the in-menu Battlegrounds overlays would appear and disappear at incorrect times.
+
 ## **Release v1.24.2 - 2024-02-14**
 **Fixes**:
 - Fixed an issue that could cause the deck lists to disappear.
