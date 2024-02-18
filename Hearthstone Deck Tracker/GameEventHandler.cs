@@ -1130,10 +1130,18 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(_game.IsBattlegroundsMatch)
 				{
-					var hero = choice.ChosenEntities.Single();
-					var heroPower = Database.GetCardFromDbfId(hero.GetTag(GameTag.HERO_POWER), collectible: false)?.Id;
-					if(heroPower is string hp)
-						Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(new List<string>() { hp });
+					if(choice.ChosenEntities.Count == 1)
+					{
+						var hero = choice.ChosenEntities.Single();
+						var heroPower = Database.GetCardFromDbfId(hero.GetTag(GameTag.HERO_POWER), collectible: false)
+							?.Id;
+						if(heroPower is string hp)
+							Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(new List<string>() { hp });
+					}
+					else
+					{
+						Log.Error($"Could not reliably determine Battlegrounds hero power. {choice.ChosenEntities.Count} hero(es) chosen.");
+					}
 
 					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 				}
