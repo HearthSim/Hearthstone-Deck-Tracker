@@ -60,7 +60,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_spellsByTier.Clear();
 
 			var baconSpells = Cards.All.Values
-				.Where(x => getTag(x, GameTag.TECH_LEVEL) > 0 && x.Type == CardType.BATTLEGROUND_SPELL);
+				.Where(x => (
+					getTag(x, GameTag.TECH_LEVEL) > 0
+					&& x.Type == CardType.BATTLEGROUND_SPELL
+					// seems to indicate whether the spell is in the pool, similar to IS_BACON_POOL_MINION
+					&& getTag(x, (GameTag)3081) == 1
+				));
 			foreach(var card in baconSpells)
 			{
 				var tier = getTag(card, GameTag.TECH_LEVEL);
