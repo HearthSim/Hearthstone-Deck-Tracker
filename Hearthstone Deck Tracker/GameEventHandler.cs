@@ -614,10 +614,6 @@ namespace Hearthstone_Deck_Tracker
 					Core.Game.Player.MulliganCardStats = null;
 					Core.Overlay.HideMulliganGuideStats();
 				}
-				if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
-				{
-					CaptureMulliganGuideFeedback().Forget();
-				}
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
 				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)
@@ -831,6 +827,11 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var deckName = _assignedDeck == null ? "No deck - " + _game.CurrentGameStats.PlayerHero : _assignedDeck.NameAndVersion;
 					ToastManager.ShowGameResultToast(deckName ?? "Unknown deck", _game.CurrentGameStats);
+				}
+
+				if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
+				{
+					CaptureMulliganGuideFeedback();
 				}
 
 				await SaveReplays(_game.CurrentGameStats);
@@ -1159,6 +1160,7 @@ namespace Hearthstone_Deck_Tracker
 					break;
 
 				_game.SnapshotMulligan();
+				_game.CacheMulliganGuideParams();
 
 				var showToast = Config.Instance.ShowMulliganToast && !_game.IsArenaMatch;
 				if(showToast || Config.Instance.EnableMulliganGuide)
@@ -1256,7 +1258,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async Task CaptureMulliganGuideFeedback()
+		private void CaptureMulliganGuideFeedback()
 		{
 			if(!Config.Instance.GoogleAnalytics || _game.Spectator)
 				return;
@@ -1265,7 +1267,7 @@ namespace Hearthstone_Deck_Tracker
 			if(parameters is null)
 				return;
 
-			await ApiWrapper.PostMulliganGuideFeedback(parameters);
+			ApiWrapper.PostMulliganGuideFeedback(parameters).Forget();
 		}
 
 		private async Task<MulliganGuideData?> GetMulliganGuideData()

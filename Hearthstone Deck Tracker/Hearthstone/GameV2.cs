@@ -405,15 +405,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return _battlegroundsHeroTriplesByTier.TryGetValue(id, out var data) ? data : null;
 		}
 
-		public List<Entity> SnapshotOpeningHand() => _mulliganState.SnapshotOpeningHand();
-		public List<Entity> SnapshotMulliganChoices(Choice choice) => _mulliganState.SnapshotMulliganChoices(choice);
 		public List<Entity> SnapshotMulligan() => _mulliganState.SnapshotMulligan();
+		public List<Entity> SnapshotMulliganChoices(Choice choice) => _mulliganState.SnapshotMulliganChoices(choice);
+		public List<Entity> SnapshotOpeningHand() => _mulliganState.SnapshotOpeningHand();
 
-		public MulliganGuideParams? GetMulliganGuideParams()
+		public void CacheMulliganGuideParams()
 		{
+			if(_mulliganGuideParams != null)
+				return;
+
 			var activeDeck = DeckList.Instance.ActiveDeck;
 			if(activeDeck == null)
-				return null;
+				return;
 
 			var opponentClass = Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
 			var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
@@ -428,13 +431,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
 				FormatType = (int)CurrentFormatType,
 			};
+		}
+
+		public MulliganGuideParams? GetMulliganGuideParams()
+		{
 			return _mulliganGuideParams;
 		}
 
 		public MulliganGuideFeedbackParams? GetMulliganGuideFeedbackParams()
 		{
 			// Use a cached version because e.g. the opponentClass may no longer be detectable
-			return (_mulliganGuideParams ?? GetMulliganGuideParams())?.WithFeedback(
+			return _mulliganGuideParams?.WithFeedback(
 				_mulliganState?.OfferedCards.Select(x => x.Card.DbfId).ToArray(),
 				_mulliganState?.KeptCards.Select(x => x.Card.DbfId).ToArray(),
 				_mulliganState?.FinalCardsInHand.Select(x => x.Card.DbfId).ToArray(),
