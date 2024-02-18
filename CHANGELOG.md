@@ -1,3 +1,8 @@
+## **Release v1.24.4 - 2024-02-18**
+**Fixes**:
+- Fixed an issue that could cause the mulligan popup to appear twice.
+- Fixed an issue causing the Wild icon to appear on decks with Gift cards and/or Harth Stonebrew.
+
 ## **Release v1.24.3 - 2024-02-17**
 **Bob's Buddy**:
 - Enable combat simulations for Diremuck Forager when the opponent's board is full.
