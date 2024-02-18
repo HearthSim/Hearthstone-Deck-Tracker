@@ -69,6 +69,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{(int)CardSet.WONDERS, "Caverns of Time" },
 			{(int)CardSet.WILD_WEST, "Showdown in the Badlands" },
 			{(int)CardSet.WHIZBANGS_WORKSHOP, "Whizbang's Workshop" },
+			{(int)CardSet.EVENT, "Event" },
 		};
 
 		public static string? ConvertClass(CardClass cardClass)
