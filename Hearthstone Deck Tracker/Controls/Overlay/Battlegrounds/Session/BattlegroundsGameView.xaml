@@ -15,7 +15,7 @@
              d:DesignHeight="450" d:DesignWidth="800"
              MouseEnter="Game_MouseEnter"
              MouseLeave="Game_MouseLeave"
-             ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltip, RelativeSource={RelativeSource AncestorType=battlegrounds:BattlegroundsGameView}}"
+             ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltip, RelativeSource={RelativeSource Self}}"
 >
     <Canvas
         Height="34"
