@@ -14,9 +14,6 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("collection_banner")]
 			public CollectionBannerData? CollectionBanner { get; set; }
 
-			[JsonProperty("arena")]
-			public ArenaData? Arena { get; set; }
-
 			[JsonProperty("battlegrounds_short_names")]
 			public List<CardShortName>? BattlegroundsShortNames { get; set; }
 
@@ -58,34 +55,6 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 
 			[JsonProperty("removal_id")]
 			public int RemovalId { get; set; }
-		}
-
-		internal class ArenaData
-		{
-			[JsonProperty("current_sets")]
-			public List<CardSet>? CurrentSets { get; set; }
-
-			[JsonProperty("exclusive_secrets")]
-			public List<string>? ExclusiveSecrets { get; set; }
-
-			[JsonProperty("banned_secrets")]
-			public List<string>? BannedSecrets { get; set; }
-		}
-
-		internal class WhizbangDeck
-		{
-
-			[JsonProperty("title")]
-			public string? Title { get; set; }
-
-			[JsonProperty("class")]
-			public CardClass Class { get; set; }
-
-			[JsonProperty("deck_id")]
-			public int DeckId { get; set; }
-
-			[JsonProperty("cards")]
-			public List<RemoteConfigCard>? Cards { get; set; }
 		}
 
 		internal class RemoteConfigCard
