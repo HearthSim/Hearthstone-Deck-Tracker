@@ -457,6 +457,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Game.Player.MulliganCardStats = null;
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 				Core.Overlay.HideBattlegroundsHeroPanel();
+				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 
 				if(_game.IsBattlegroundsMatch)
 				{
@@ -1352,6 +1353,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
+
+			Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
 		}
 
