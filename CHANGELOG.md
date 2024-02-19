@@ -1,3 +1,8 @@
+## **Release v1.24.5 - 2024-02-19**
+**Fixes**:
+- Battlegrounds: Fixed an issue where the "Minions Banned" component showed the wrong minion types.
+- Battlegrounds: Fixed an issue where the hero picking overlay did not disappear immediately upon choosing a hero.
+
 ## **Release v1.24.4 - 2024-02-18**
 **Fixes**:
 - Fixed an issue that could cause the mulligan popup to appear twice.
@@ -46,7 +51,7 @@
 **Updated for the release of Delve into Deepholm**
 
 **Changes**:
-- Constructed: Hide card counters and card marks during the mulligan phase.
+- Hide card counters and card marks during the mulligan phase.
 
 **Bob's Buddy**:
 - Added support for Murozond (via Rylak).
@@ -76,7 +81,7 @@
 - Battlegrounds: Improved the behaviour of the Bob's Buddy panel at the end of a match.
 
 **Fixes**:
-- Constructed: Fixed an issue causing the popup with a link to the Mulligan guide sometimes incorrectly identifying the First/Coin state.
+- Fixed an issue causing the popup with a link to the Mulligan guide sometimes incorrectly identifying the First/Coin state.
 - Battlegrounds: Fixed an issue causing the hero picking overlay and popup not disappearing when HDT was started during the hero picking phase.
 
 ## **Release v1.23.9 - 2023-12-10**
