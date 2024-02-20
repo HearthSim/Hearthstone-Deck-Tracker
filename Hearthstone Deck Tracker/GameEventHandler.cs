@@ -456,6 +456,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.HideMulliganGuideStats();
 				Core.Game.Player.MulliganCardStats = null;
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
+				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 				Core.Overlay.HideBattlegroundsHeroPanel();
 				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 

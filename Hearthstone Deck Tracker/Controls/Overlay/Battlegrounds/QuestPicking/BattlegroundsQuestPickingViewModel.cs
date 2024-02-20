@@ -160,6 +160,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			if(availableRaces == null)
 				return null;
 
+			var rewards = GetOffererdRewards().ToArray();
+			if(rewards.Length == 0)
+				return null;
+
 			return new BattlegroundsQuestStatsParams
 			{
 				HeroDbfId = heroCard.DbfId,
@@ -167,7 +171,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				Turn = Core.Game.GetTurnNumber(),
 				MinionTypes = availableRaces.Cast<int>().ToArray(),
 				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
-				OfferedRewards = GetOffererdRewards().ToArray(),
+				OfferedRewards = rewards,
 				LanguageCode = Config.Instance.SelectedLanguage,
 				BattlegroundsRating = Core.Game.BattlegroundsRatingInfo?.Rating
 			};
