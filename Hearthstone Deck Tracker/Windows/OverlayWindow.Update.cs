@@ -587,10 +587,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void UpdateBattlegroundsSessionVisibility()
 		{
-			var a = Config.Instance.ShowSessionRecapBetweenGames;
-			var b = Core.Game.IsBattlegroundsMatch;
-
-			var show = (Config.Instance.ShowSessionRecap || _uiMovable)
+			var show = _game.IsRunning
+			    && (Config.Instance.ShowSessionRecap || _uiMovable)
 				&& (
 					(
 						// Scene is not transitioning
@@ -629,6 +627,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void UpdateTier7PreLobbyVisibility()
 		{
 			var show = (
+				_game.IsRunning &&
 				_game.IsInMenu &&
 				!_game.QueueEvents.IsInQueue &&
 				SceneHandler.Scene == Mode.BACON &&
@@ -651,6 +650,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var isPremium = HSReplayNetOAuth.AccountData?.IsPremium ?? false;;
 			var show = (
+				_game.IsRunning &&
 				_game.IsInMenu &&
 				SceneHandler.Scene == Mode.TOURNAMENT &&
 				Config.Instance.EnableMulliganGuide &&

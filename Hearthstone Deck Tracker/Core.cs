@@ -354,6 +354,7 @@ namespace Hearthstone_Deck_Tracker
 					Game.IsRunning = false;
 					GameIsRunningChanged?.Invoke(false);
 					Overlay.ShowOverlay(false);
+					Overlay.UpdateVisibilities();
 					Watchers.Stop();
 					if(Windows.CapturableOverlay != null)
 					{
