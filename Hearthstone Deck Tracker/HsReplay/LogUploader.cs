@@ -22,16 +22,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static async Task<bool> Upload(string[] logLines, GameMetaData? gameMetaData, GameStats? game)
 		{
-			var log = string.Join(Environment.NewLine, logLines);
-			var item = new UploaderItem(log.GetHashCode());
+			var uploadId = game?.GameId.GetHashCode() ?? string.Join("", logLines.Take(100)).GetHashCode();
+			var item = new UploaderItem(uploadId);
 			if(InProgress.Contains(item))
 			{
-				Log.Info($"{item.Hash} already in progress. Waiting for it to complete...");
+				Log.Info($"{item.Id} already in progress. Waiting for it to complete...");
 				InProgress.Add(item);
 				return await item.Success;
 			}
 			InProgress.Add(item);
-			Log.Info($"Uploading {item.Hash}...");
+			Log.Info($"Uploading {item.Id}...");
 			var success = false;
 			try
 			{
@@ -42,10 +42,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Log.Error(ex);
 				Influx.OnGameUploadFailed();
 			}
-			Log.Info($"{item.Hash} complete. Success={success}");
-			foreach(var waiting in InProgress.Where(x => x.Hash == item.Hash))
+			Log.Info($"{item.Id} complete. Success={success}");
+			foreach(var waiting in InProgress.Where(x => x.Id == item.Id))
 				waiting.Complete(success);
-			InProgress.RemoveAll(x => x.Hash == item.Hash);
+			InProgress.RemoveAll(x => x.Id == item.Id);
 			return success;
 		}
 
@@ -93,22 +93,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			private readonly TaskCompletionSource<bool> _tcs = new TaskCompletionSource<bool>();
 
-			public int Hash { get; }
+			public int Id { get; }
 
-			public UploaderItem(int hash)
+			public UploaderItem(int id)
 			{
-				Hash = hash;
+				Id = id;
 			}
-
-			public override bool Equals(object obj)
-			{
-				var uObj = obj as UploaderItem;
-				return uObj != null && Equals(uObj);
-			}
-
-			public override int GetHashCode() => Hash;
-
-			public bool Equals(UploaderItem obj) => obj.Hash == Hash;
 
 			public void Complete(bool result) => _tcs.SetResult(result);
 
