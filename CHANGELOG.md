@@ -1,3 +1,6 @@
+## **Release v1.24.6 - 2024-02-22**
+**Updated for Hearthstone 28.6.2**
+
 ## **Release v1.24.5 - 2024-02-19**
 **Fixes**:
 - Battlegrounds: Fixed an issue where the "Minions Banned" component showed the wrong minion types.
