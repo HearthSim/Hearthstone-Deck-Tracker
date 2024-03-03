@@ -233,7 +233,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var found = false;
 				for(var i = 0; i < BattlegroundsMinionsPanel.GroupsControl.Items.Count; i++)
 				{
-					var group = (BattlegroundsCardsGroup)VisualTreeHelper.GetChild(BattlegroundsMinionsPanel.GroupsControl.ItemContainerGenerator.ContainerFromIndex(i), 0);
+					var container = BattlegroundsMinionsPanel.GroupsControl.ItemContainerGenerator.ContainerFromIndex(i);
+					if(VisualTreeHelper.GetChildrenCount(container) == 0)
+						continue;
+					var group = (BattlegroundsCardsGroup)VisualTreeHelper.GetChild(container, 0);
 					var cardList = group.CardsList;
 					if(!group.IsVisible || !cardList.IsVisible)
 						continue;
