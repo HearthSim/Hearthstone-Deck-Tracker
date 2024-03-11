@@ -1,3 +1,7 @@
+## **Release v1.24.7 - 2024-03-11**
+**Updated for Hearthstone 29.0.0**
+- Updates for the release of Whizbang's Workshop and the Standard rotation will follow!
+
 ## **Release v1.24.6 - 2024-02-22**
 **Updated for Hearthstone 28.6.2**
 
