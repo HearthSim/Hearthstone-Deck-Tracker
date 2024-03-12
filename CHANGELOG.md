@@ -1,3 +1,6 @@
+## **Release v1.24.8 - 2024-03-12**
+- Fixed a crash related to Arena runs with new cards.
+
 ## **Release v1.24.7 - 2024-03-11**
 **Updated for Hearthstone 29.0.0**
 - Updates for the release of Whizbang's Workshop and the Standard rotation will follow!
