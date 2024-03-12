@@ -472,8 +472,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.SmugSenior:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SmugSenior_SpectralSeniorToken);
 								break;
-							case Collectible.Rogue.Plagiarize:
-							case Collectible.Rogue.PlagiarizeCore:
+							case Collectible.Rogue.PlagiarizeSCHOLOMANCE:
+							case Collectible.Rogue.PlagiarizeInvalid:
 								if (actionStartingEntity != null)
 								{
 									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Opponent : game.Player;
@@ -540,15 +540,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, Collectible.Druid.Bottomfeeder, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Shaman.PiranhaPoacher:
-								AddKnownCardId(gameState, Collectible.Neutral.PiranhaSwarmer); 
+								AddKnownCardId(gameState, Collectible.Neutral.PiranhaSwarmer);
 								break;
 							case Collectible.Paladin.SinfulSousChef:
 								AddKnownCardId(gameState, NonCollectible.Paladin.SilverHandRecruitLegacyToken1, 2);
 								break;
 							case Collectible.Neutral.RivendareWarrider:
-								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_BlaumeuxFamineriderToken); 
-								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_KorthazzDeathriderToken); 
-								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_ZeliekConquestriderToken); 
+								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_BlaumeuxFamineriderToken);
+								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_KorthazzDeathriderToken);
+								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_ZeliekConquestriderToken);
 								break;
 							case NonCollectible.Deathknight.Helya_PlightOfTheDeadEnchantment:
 								if (gameState.LastPlagueDrawn != null)
@@ -662,7 +662,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.TheDarkness:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheDarkness_DarknessCandleToken, 3);
 								break;
-							case Collectible.Rogue.FaldoreiStrider:
+							case Collectible.Rogue.FaldoreiStriderLOOTAPALOOZA:
+							case Collectible.Rogue.FaldoreiStriderInvalid:
 								AddKnownCardId(gameState, NonCollectible.Rogue.FaldoreiStrider_SpiderAmbushEnchantment, 3);
 								break;
 							case Collectible.Neutral.KingTogwaggle:
@@ -761,13 +762,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Mage.ConfectionCyclone:
 								AddKnownCardId(gameState, NonCollectible.Mage.ConfectionCyclone_SugarElementalToken, 2);
 								break;
-							case Collectible.Druid.KiriChosenOfElune:
-								AddKnownCardId(gameState, Collectible.Druid.LunarEclipse);
-								AddKnownCardId(gameState, Collectible.Druid.SolarEclipse);
+							case Collectible.Druid.KiriChosenOfEluneDARKMOON_FAIRE:
+								AddKnownCardId(gameState, Collectible.Druid.LunarEclipseDARKMOON_FAIRE);
+								AddKnownCardId(gameState, Collectible.Druid.SolarEclipseDARKMOON_FAIRE);
 								break;
-							case Collectible.Druid.KiriChosenOfEluneCore:
-								AddKnownCardId(gameState, Collectible.Druid.LunarEclipseCore);
-								AddKnownCardId(gameState, Collectible.Druid.SolarEclipseCore);
+							case Collectible.Druid.KiriChosenOfEluneInvalid:
+								AddKnownCardId(gameState, Collectible.Druid.LunarEclipseInvalid);
+								AddKnownCardId(gameState, Collectible.Druid.SolarEclipseInvalid);
 								break;
 							case NonCollectible.Neutral.CThuntheShattered_EyeOfCthunToken:
 							case NonCollectible.Neutral.CThuntheShattered_HeartOfCthunToken:
@@ -865,23 +866,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, Collectible.Neutral.PiranhaSwarmer, 3); // Is this the correct token? These are 4 different ones
 								break;
 							case Collectible.Druid.AzsharanGardens:
-								AddKnownCardId(gameState, NonCollectible.Druid.AzsharanGardens_SunkenGardensToken, 1, DeckLocation.Bottom); 
+								AddKnownCardId(gameState, NonCollectible.Druid.AzsharanGardens_SunkenGardensToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Mage.AzsharanSweeper:
-								AddKnownCardId(gameState, NonCollectible.Mage.AzsharanSweeper_SunkenSweeperToken, 1, DeckLocation.Bottom); 
+								AddKnownCardId(gameState, NonCollectible.Mage.AzsharanSweeper_SunkenSweeperToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Rogue.BootstrapSunkeneer:
 								if(target != null)
 									AddKnownCardId(gameState, target, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Mage.FrozenTouch:
-								AddKnownCardId(gameState, NonCollectible.Mage.FrozenTouch_FrozenTouchToken); 
+								AddKnownCardId(gameState, NonCollectible.Mage.FrozenTouch_FrozenTouchToken);
 								break;
 							case Collectible.Mage.ArcaneWyrm:
-								AddKnownCardId(gameState, Collectible.Mage.ArcaneBolt); 
+								AddKnownCardId(gameState, Collectible.Mage.ArcaneBolt);
 								break;
 							case Collectible.Priest.SisterSvalna:
-								AddKnownCardId(gameState, NonCollectible.Priest.SisterSvalna_VisionOfDarknessToken); 
+								AddKnownCardId(gameState, NonCollectible.Priest.SisterSvalna_VisionOfDarknessToken);
 								break;
 							case Collectible.Neutral.PozzikAudioEngineer:
 								AddKnownCardId(gameState, NonCollectible.Neutral.PozzikAudioEngineer_AudioBotToken, 2);
