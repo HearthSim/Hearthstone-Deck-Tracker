@@ -335,6 +335,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
+		public static void OnMulliganGuideDeckSerializationError(string reason, string message)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_mulligan_guide_params_serialization_error")
+				.Tag("reason", Regex.Escape(reason))
+				.Field("message", Regex.Escape(message))
+				.Build()
+			);
+		}
+
 		private static readonly List<InfluxPoint> _queue = new();
 		public static void SendQueuedMetrics()
 		{

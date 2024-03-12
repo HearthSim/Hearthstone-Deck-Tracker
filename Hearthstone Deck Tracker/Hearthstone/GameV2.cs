@@ -19,6 +19,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using HSReplay;
@@ -418,19 +419,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(activeDeck == null)
 				return;
 
-			var opponentClass = Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
-			var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
-
-			_mulliganGuideParams = new MulliganGuideParams
+			try
 			{
-				Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck), false),
-				OpponentClass = opponentClass.ToString(),
-				PlayerInitiative = PlayerEntity?.GetTag(GameTag.FIRST_PLAYER) == 1 ? "FIRST" : "COIN",
-				PlayerRegion = ((BnetRegion)CurrentRegion).ToString(),
-				PlayerStarLevel = starLevel > 0 ? starLevel : null,
-				GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
-				FormatType = (int)CurrentFormatType,
-			};
+				var opponentClass = Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+				var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
+
+				_mulliganGuideParams = new MulliganGuideParams
+				{
+					Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck), false),
+					OpponentClass = opponentClass.ToString(),
+					PlayerInitiative = PlayerEntity?.GetTag(GameTag.FIRST_PLAYER) == 1 ? "FIRST" : "COIN",
+					PlayerRegion = ((BnetRegion)CurrentRegion).ToString(),
+					PlayerStarLevel = starLevel > 0 ? starLevel : null,
+					GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
+					FormatType = (int)CurrentFormatType,
+				};
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				Influx.OnMulliganGuideDeckSerializationError(e.GetType().Name, e.Message);
+			}
 		}
 
 		public MulliganGuideParams? GetMulliganGuideParams()
