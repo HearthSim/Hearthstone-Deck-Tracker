@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		// todo: conditional deathrattle summons: Voidcaller
 		public static readonly Dictionary<string, int> DeathrattleSummonCardIds = new Dictionary<string, int>
 		{
-			{Collectible.Druid.MountedRaptorLOE, 1},
+			{Collectible.Druid.MountedRaptor, 1},
 			{Collectible.Hunter.InfestedWolf, 2},
 			{Collectible.Hunter.KindlyGrandmother, 1},
 			{Collectible.Hunter.RatPack, 2},
@@ -55,13 +55,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{Collectible.Rogue.AnubarakTGT, 1},
 			{Collectible.Rogue.JadeSwarmerGANGS, 1},
 			{Collectible.Warlock.Dreadsteed, 1},
-			{Collectible.Warlock.PossessedVillagerOG, 1},
-			{Collectible.Warlock.VoidcallerNAXX, 1}, //false negative better than false positive
-			{Collectible.Warlock.VoidcallerInvalid, 1}, //false negative better than false positive
+			{Collectible.Warlock.PossessedVillager, 1},
+			{Collectible.Warlock.Voidcaller, 1}, //false negative better than false positive
 			{Collectible.Neutral.AyaBlackpawGANGS, 1},
-			{Collectible.Neutral.CairneBloodhoofExpert1, 1},
-			{Collectible.Neutral.CairneBloodhoofInvalid, 1},
-			{Collectible.Neutral.CairneBloodhoofVanilla, 1},
+			{Collectible.Neutral.CairneBloodhoof, 1},
 			{Collectible.Neutral.DevilsaurEgg, 1},
 			{Collectible.Neutral.Eggnapper, 2},
 			{Collectible.Neutral.HarvestGolem, 1},
@@ -167,24 +164,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				public static readonly MultiIdCard BaitAndSwitch = new MultiIdCard(Collectible.Hunter.BaitAndSwitch);
 				public static readonly MultiIdCard BearTrap = new MultiIdCard(Collectible.Hunter.BearTrap);
-				public static readonly MultiIdCard CatTrick = new MultiIdCard(Collectible.Hunter.CatTrickKARA, Collectible.Hunter.CatTrickInvalid);
+				public static readonly MultiIdCard CatTrick = new MultiIdCard(Collectible.Hunter.CatTrick, Collectible.Hunter.CatTrickCore);
 				public static readonly MultiIdCard DartTrap = new MultiIdCard(Collectible.Hunter.DartTrap);
 				public static readonly MultiIdCard ExplosiveTrap = new MultiIdCard(Collectible.Hunter.ExplosiveTrap, Collectible.Hunter.ExplosiveTrapCore, Collectible.Hunter.ExplosiveTrapVanilla);
 				public static readonly MultiIdCard EmergencyManeuvers = new MultiIdCard(Collectible.Hunter.EmergencyManeuvers);
 				public static readonly MultiIdCard FreezingTrap = new MultiIdCard(Collectible.Hunter.FreezingTrap, Collectible.Hunter.FreezingTrapCore, Collectible.Hunter.FreezingTrapVanilla);
 				public static readonly MultiIdCard HiddenCache = new MultiIdCard(Collectible.Hunter.HiddenCache);
 				public static readonly MultiIdCard HiddenMeaning = new MultiIdCard(Collectible.Hunter.HiddenMeaning);
-				public static readonly MultiIdCard IceTrap = new MultiIdCard(Collectible.Hunter.IceTrapALTERAC_VALLEY, Collectible.Hunter.IceTrapInvalid);
+				public static readonly MultiIdCard IceTrap = new MultiIdCard(Collectible.Hunter.IceTrap);
 				public static readonly MultiIdCard Misdirection = new MultiIdCard(Collectible.Hunter.Misdirection, Collectible.Hunter.MisdirectionVanilla);
 				public static readonly MultiIdCard MotionDenied = new MultiIdCard(Collectible.Hunter.MotionDenied);
 				public static readonly MultiIdCard OpenTheCages = new MultiIdCard(Collectible.Hunter.OpenTheCages);
 				public static readonly MultiIdCard PackTactics = new MultiIdCard(Collectible.Hunter.PackTactics);
 				public static readonly MultiIdCard PressurePlate = new MultiIdCard(Collectible.Hunter.PressurePlate);
-				public static readonly MultiIdCard RatTrap = new MultiIdCard(Collectible.Hunter.RatTrapGILNEAS, Collectible.Hunter.RatTrapInvalid);
-				public static readonly MultiIdCard SnakeTrap = new MultiIdCard(Collectible.Hunter.SnakeTrapExpert1, Collectible.Hunter.SnakeTrapPLACEHOLDER_202204, Collectible.Hunter.SnakeTrapVanilla);
+				public static readonly MultiIdCard RatTrap = new MultiIdCard(Collectible.Hunter.RatTrap);
+				public static readonly MultiIdCard SnakeTrap = new MultiIdCard(Collectible.Hunter.SnakeTrap, Collectible.Hunter.SnakeTrapCorePlaceholder, Collectible.Hunter.SnakeTrapVanilla);
 				public static readonly MultiIdCard Snipe = new MultiIdCard(Collectible.Hunter.SnipeExpert1, Collectible.Hunter.SnipeVanilla, Collectible.Hunter.SnipeWONDERS);
 				public static readonly MultiIdCard VenomstrikeTrap = new MultiIdCard(Collectible.Hunter.VenomstrikeTrapICECROWN, Collectible.Hunter.VenomstrikeTrapInvalid);
-				public static readonly MultiIdCard WanderingMonster = new MultiIdCard(Collectible.Hunter.WanderingMonsterLOOTAPALOOZA, Collectible.Hunter.WanderingMonsterInvalid);
+				public static readonly MultiIdCard WanderingMonster = new MultiIdCard(Collectible.Hunter.WanderingMonster, Collectible.Hunter.WanderingMonsterCore);
 				public static readonly MultiIdCard Zombeeees = new MultiIdCard(Collectible.Hunter.Zombeeees);
 			}
 
@@ -200,7 +197,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard IceBarrier = new MultiIdCard(Collectible.Mage.IceBarrier, Collectible.Mage.IceBarrierCore, Collectible.Mage.IceBarrierVanilla);
 				public static readonly MultiIdCard IceBlock = new MultiIdCard(Collectible.Mage.IceBlock, Collectible.Mage.IceBlockVanilla);
 				public static readonly MultiIdCard ManaBind = new MultiIdCard(Collectible.Mage.ManaBind);
-				public static readonly MultiIdCard MirrorEntity = new MultiIdCard(Collectible.Mage.MirrorEntityExpert1, Collectible.Mage.MirrorEntityVanilla);
+				public static readonly MultiIdCard MirrorEntity = new MultiIdCard(Collectible.Mage.MirrorEntity, Collectible.Mage.MirrorEntityCorePlaceholder, Collectible.Mage.MirrorEntityVanilla);
 				public static readonly MultiIdCard NetherwindPortal = new MultiIdCard(Collectible.Mage.NetherwindPortal);
 				public static readonly MultiIdCard OasisAlly = new MultiIdCard(Collectible.Mage.OasisAlly);
 				public static readonly MultiIdCard Objection = new MultiIdCard(Collectible.Mage.Objection);
@@ -216,7 +213,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			public class Paladin : EnumerateMultiId<Paladin>
 			{
 				public static readonly MultiIdCard AutodefenseMatrix = new MultiIdCard(Collectible.Paladin.AutodefenseMatrix);
-				public static readonly MultiIdCard Avenge = new MultiIdCard(Collectible.Paladin.AvengeNAXX, Collectible.Paladin.AvengePLACEHOLDER_202204);
+				public static readonly MultiIdCard Avenge = new MultiIdCard(Collectible.Paladin.Avenge, Collectible.Paladin.AvengeCorePlaceholder);
 				public static readonly MultiIdCard CompetitiveSpirit = new MultiIdCard(Collectible.Paladin.CompetitiveSpirit);
 				public static readonly MultiIdCard EyeForAnEye = new MultiIdCard(Collectible.Paladin.EyeForAnEye, Collectible.Paladin.EyeForAnEyeVanilla);
 				public static readonly MultiIdCard GetawayKodo = new MultiIdCard(Collectible.Paladin.GetawayKodo);
@@ -224,9 +221,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard HandOfSalvation = new MultiIdCard(NonCollectible.Paladin.HandOfSalvationLegacy);
 				public static readonly MultiIdCard HiddenWisdom = new MultiIdCard(Collectible.Paladin.HiddenWisdom);
 				public static readonly MultiIdCard NeverSurrender = new MultiIdCard(Collectible.Paladin.NeverSurrender);
-				public static readonly MultiIdCard NobleSacrifice = new MultiIdCard(Collectible.Paladin.NobleSacrificeExpert1, Collectible.Paladin.NobleSacrificePLACEHOLDER_202204, Collectible.Paladin.NobleSacrificeVanilla);
+				public static readonly MultiIdCard NobleSacrifice = new MultiIdCard(Collectible.Paladin.NobleSacrifice, Collectible.Paladin.NobleSacrificeCorePlaceholder, Collectible.Paladin.NobleSacrificeVanilla);
 				public static readonly MultiIdCard OhMyYogg = new MultiIdCard(Collectible.Paladin.OhMyYogg);
-				public static readonly MultiIdCard Reckoning = new MultiIdCard(Collectible.Paladin.Reckoning);
+				public static readonly MultiIdCard Reckoning = new MultiIdCard(Collectible.Paladin.ReckoningLegacy, Collectible.Paladin.ReckoningCorePlaceholder);
 				public static readonly MultiIdCard Redemption = new MultiIdCard(Collectible.Paladin.Redemption, Collectible.Paladin.RedemptionVanilla);
 				public static readonly MultiIdCard Repentance = new MultiIdCard(Collectible.Paladin.Repentance, Collectible.Paladin.RepentanceVanilla);
 				public static readonly MultiIdCard SacredTrial = new MultiIdCard(Collectible.Paladin.SacredTrial);
@@ -235,15 +232,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public class Rogue : EnumerateMultiId<Rogue>
 			{
-				public static readonly MultiIdCard Ambush = new MultiIdCard(Collectible.Rogue.AmbushBLACK_TEMPLE, Collectible.Rogue.AmbushInvalid);
+				public static readonly MultiIdCard Ambush = new MultiIdCard(Collectible.Rogue.Ambush, Collectible.Rogue.AmbushCore);
 				public static readonly MultiIdCard Bamboozle = new MultiIdCard(Collectible.Rogue.Bamboozle);
-				public static readonly MultiIdCard CheatDeath = new MultiIdCard(Collectible.Rogue.CheatDeathLOOTAPALOOZA, Collectible.Rogue.CheatDeathInvalid);
+				public static readonly MultiIdCard CheatDeath = new MultiIdCard(Collectible.Rogue.CheatDeath, Collectible.Rogue.CheatDeathCore);
 				public static readonly MultiIdCard DirtyTricks = new MultiIdCard(Collectible.Rogue.DirtyTricks);
 				public static readonly MultiIdCard DoubleCross = new MultiIdCard(Collectible.Rogue.DoubleCross);
 				public static readonly MultiIdCard Evasion = new MultiIdCard(Collectible.Rogue.Evasion);
 				public static readonly MultiIdCard Kidnap = new MultiIdCard(Collectible.Rogue.Kidnap);
 				public static readonly MultiIdCard Perjury = new MultiIdCard(Collectible.Rogue.Perjury);
-				public static readonly MultiIdCard Plagiarize = new MultiIdCard(Collectible.Rogue.PlagiarizeSCHOLOMANCE, Collectible.Rogue.PlagiarizeInvalid);
+				public static readonly MultiIdCard Plagiarize = new MultiIdCard(Collectible.Rogue.Plagiarize, Collectible.Rogue.PlagiarizeCore);
 				public static readonly MultiIdCard ShadowClone = new MultiIdCard(Collectible.Rogue.ShadowClone);
 				public static readonly MultiIdCard Shenanigans = new MultiIdCard(Collectible.Rogue.Shenanigans);
 				public static readonly MultiIdCard StickySituation = new MultiIdCard(Collectible.Rogue.StickySituation);
