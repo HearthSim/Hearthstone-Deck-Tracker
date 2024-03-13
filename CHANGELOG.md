@@ -1,3 +1,6 @@
+## **Release v1.24.9 - 2024-03-13**
+- Fixed an issue that could cause deck that are legal in Standard to appear in the Wild section.
+
 ## **Release v1.24.8 - 2024-03-12**
 - Fixed a crash related to Arena runs with new cards.
 
