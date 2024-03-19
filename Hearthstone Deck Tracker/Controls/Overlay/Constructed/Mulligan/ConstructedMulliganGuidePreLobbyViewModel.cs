@@ -119,7 +119,14 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 		}
 	}
 
-	public List<CollectionDeckBoxVisual?>? ValidDecksOnPage => DecksOnPage?.Select(x => x != null && !x.IsShowingInvalidCardCount ? x : null).ToList();
+	public List<CollectionDeckBoxVisual?>? ValidDecksOnPage => DecksOnPage?.Select(x =>
+	{
+		if(x == null)
+			return null;
+		if(x.IsShowingInvalidCardCount || x.InvalidSideboardCardCount > 0 || x.MissingSideboardCardCount > 0)
+			return null;
+		return x;
+	}).ToList();
 
 	#endregion
 
