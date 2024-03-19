@@ -315,15 +315,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var notInDeck = deckState.RemovedFromDeck.Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
 			var predictedInDeck = GetPredictedCardsInDeck(false).Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
 			if(!removeNotInDeck)
-				return AttachMulliganData(inDeck.Concat(predictedInDeck).Concat(notInDeck).Concat(createdInHand)).ToSortedCardList(sorting);
+				return AnnotateCards(inDeck.Concat(predictedInDeck).Concat(notInDeck).Concat(createdInHand)).ToSortedCardList(sorting);
 			if(highlightCardsInHand)
-				return AttachMulliganData(inDeck.Concat(predictedInDeck).Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand)).ToSortedCardList(sorting);
+				return AnnotateCards(inDeck.Concat(predictedInDeck).Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand)).ToSortedCardList(sorting);
 
-			return AttachMulliganData(inDeck.Concat(predictedInDeck).Concat(createdInHand)).ToSortedCardList(sorting);
+			return AnnotateCards(inDeck.Concat(predictedInDeck).Concat(createdInHand)).ToSortedCardList(sorting);
 		}
 
-		private IEnumerable<Card> AttachMulliganData(IEnumerable<Card> cards)
+		private IEnumerable<Card> AnnotateCards(IEnumerable<Card> cards)
 		{
+			// Override Zilliax 3000 cost
+			cards = Helper.ResolveZilliax3000(cards, PlayerSideboardsDict);
+
+			// Attach Mulligan Card Data
 			if(MulliganCardStats == null)
 				return cards;
 

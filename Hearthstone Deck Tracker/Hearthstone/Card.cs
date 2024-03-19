@@ -427,6 +427,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			return classes;
 		}
+
+		public bool ZilliaxCustomizableFunctionalModule => _dbCard?.Entity.GetTag(GameTag.ZILLIAX_CUSTOMIZABLE_FUNCTIONALMODULE) > 0;
+
 		public SolidColorBrush ColorPlayer
 		{
 			get
@@ -580,6 +583,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		public DrawingBrush? Image { get; }
 		public int Count { get; }
+		public int Cost { get; }
 		public bool Jousted { get; }
 		public bool ColoredFrame { get; }
 		public bool ColoredGem { get; }
@@ -598,6 +602,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public CardImageObject(Card card)
 		{
 			Count = card.Count;
+			Cost = card.Cost;
 			Jousted = card.Jousted;
 			ColoredFrame = Config.Instance.RarityCardFrames;
 			ColoredGem = Config.Instance.RarityCardGems;
@@ -616,7 +621,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		protected bool Equals(CardImageObject other)
-			=> Count == other.Count && Jousted == other.Jousted && ColoredFrame == other.ColoredFrame && ColoredGem == other.ColoredGem
+			=> Count == other.Count && Cost == other.Cost && Jousted == other.Jousted && ColoredFrame == other.ColoredFrame && ColoredGem == other.ColoredGem
 				&& string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash && Created == other.Created
 				&& (CardWinrates?.Equals(other.CardWinrates) ?? CardWinrates.HasValue == other.CardWinrates.HasValue) && IsMulliganOption == other.IsMulliganOption;
 	}

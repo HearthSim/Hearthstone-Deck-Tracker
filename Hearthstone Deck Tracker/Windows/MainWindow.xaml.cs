@@ -60,12 +60,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void UpdateDeckList(Deck? selected)
 		{
+			var version = selected?.GetSelectedDeckVersion();
 			ListViewDeck.ItemsSource = null;
 			// always update the sideboard to ensure we hide the header if empty
-			PlayerSideboards.Update(selected?.GetSelectedDeckVersion().Sideboards, true);
+			PlayerSideboards.Update(version?.Sideboards, true);
 			if(selected == null)
 				return;
-			ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
+			ListViewDeck.ItemsSource = Helper.ResolveZilliax3000(version?.Cards ?? new(), version?.Sideboards ?? new());
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 		}
 

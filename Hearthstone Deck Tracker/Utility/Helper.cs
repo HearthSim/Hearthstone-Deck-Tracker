@@ -938,5 +938,29 @@ namespace Hearthstone_Deck_Tracker
 
 			return string.Format($"#{r:X2}{g:X2}{b:X2}");
 		}
+
+		public static IEnumerable<Card> ResolveZilliax3000(IEnumerable<Card> cards, IEnumerable<Sideboard> sideboards)
+		{
+			return cards.Select(card =>
+			{
+				var cardId = card.Id;
+				if(cardId == HearthDb.CardIds.Collectible.Neutral.ZilliaxDeluxe3000)
+			    {
+					var sideboard = sideboards.FirstOrDefault(sb => sb.OwnerCardId == cardId);
+					if(sideboard != null && sideboard.Cards.Count > 0)
+					{
+						var modules = sideboard.Cards.Where(module => module.ZilliaxCustomizableFunctionalModule);
+
+						// Clone Zilliax with new cost, attack and health
+						card = (Card)card.Clone();
+						card.Attack = modules.Sum(module => module.Attack);
+						card.Health = modules.Sum(module => module.Health);
+						card.Cost = modules.Sum(module => module.Cost);
+					}
+			    }
+
+				return card;
+			});
+		}
 	}
 }
