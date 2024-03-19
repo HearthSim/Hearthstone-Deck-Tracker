@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				return;
 			}
 
-			Container.Visibility = Visibility.Visible;
+			ETCContainer.Visibility = Visibility.Collapsed;
 			var etcSideboard =
 				sideboards.FirstOrDefault(s => s.OwnerCardId == CardIds.Collectible.Neutral.ETCBandManager);
 			if(etcSideboard != null)
@@ -31,6 +31,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 				if(etcSideboard.Cards.Count > 0)
 					ETCContainer.Visibility = Visibility.Visible;
 			}
+
+			Container.Visibility = ETCContainer.Visibility;
 		}
 	}
 
