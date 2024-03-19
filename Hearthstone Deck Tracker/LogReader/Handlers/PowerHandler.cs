@@ -473,7 +473,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.SmugSenior_SpectralSeniorToken);
 								break;
 							case Collectible.Rogue.Plagiarize:
-							case Collectible.Rogue.PlagiarizeCore:
+							case Collectible.Rogue.PlagiarizeCorePlaceholder:
 								if (actionStartingEntity != null)
 								{
 									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Opponent : game.Player;
@@ -664,7 +664,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheDarkness_DarknessCandleToken, 3);
 								break;
 							case Collectible.Rogue.FaldoreiStrider:
-							case Collectible.Rogue.FaldoreiStriderCorePlaceholder:
+							case Collectible.Rogue.FaldoreiStriderCore:
 								AddKnownCardId(gameState, NonCollectible.Rogue.FaldoreiStrider_SpiderAmbushEnchantment, 3);
 								break;
 							case Collectible.Neutral.KingTogwaggle:
@@ -767,9 +767,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, Collectible.Druid.LunarEclipse);
 								AddKnownCardId(gameState, Collectible.Druid.SolarEclipse);
 								break;
-							case Collectible.Druid.KiriChosenOfEluneCore:
-								AddKnownCardId(gameState, Collectible.Druid.LunarEclipseCore);
-								AddKnownCardId(gameState, Collectible.Druid.SolarEclipseCore);
+							case Collectible.Druid.KiriChosenOfEluneCorePlaceholder:
+								AddKnownCardId(gameState, Collectible.Druid.LunarEclipseCorePlaceholder);
+								AddKnownCardId(gameState, Collectible.Druid.SolarEclipseCorePlaceholder);
 								break;
 							case NonCollectible.Neutral.CThuntheShattered_EyeOfCthunToken:
 							case NonCollectible.Neutral.CThuntheShattered_HeartOfCthunToken:
