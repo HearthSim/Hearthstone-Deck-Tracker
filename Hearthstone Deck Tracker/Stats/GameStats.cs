@@ -522,10 +522,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			var cards = deck.Cards.Select(c => new Card { Id = c.Id, Count = c.Count });
 			SetPlayerCards(cards, revealedCards);
-			SetPlayerSideboards(deck.Sideboards);
 		}
 
-		public void SetPlayerCards(IEnumerable<Card>? deck, List<Card> revealedCards)
+		private void SetPlayerCards(IEnumerable<Card>? deck, List<Card> revealedCards)
 		{
 			PlayerCards.Clear();
 			foreach(var c in revealedCards)
@@ -552,7 +551,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 
-		public void SetPlayerSideboards(Dictionary<string, List<HearthMirror.Objects.Card>> sideboardsDict)
+		public void SetPlayerSideboardsFromDict(Dictionary<string, List<HearthMirror.Objects.Card>> sideboardsDict)
 		{
 			PlayerSideboards = sideboardsDict.Select(s =>
 				new Sideboard(s.Key, s.Value.Select(c => new Card { Id = c.Id, Count = c.Count }).ToList())

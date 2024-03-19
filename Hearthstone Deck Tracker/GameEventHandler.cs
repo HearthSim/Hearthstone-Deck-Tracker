@@ -717,11 +717,13 @@ namespace Hearthstone_Deck_Tracker
 				{
 					_game.CurrentGameStats.HsDeckId = _game.CurrentSelectedDeck.Id;
 					_game.CurrentGameStats.SetPlayerCards(_game.CurrentSelectedDeck, confirmedCards);
+					_game.CurrentGameStats.SetPlayerSideboardsFromDict(_game.CurrentSelectedDeck.Sideboards);
 				}
 				else
 				{
 					_game.CurrentGameStats.HsDeckId = DeckList.Instance.ActiveDeckVersion?.HsId ?? 0;
 					_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, confirmedCards);
+					_game.CurrentGameStats.PlayerSideboards = DeckList.Instance.ActiveDeckVersion?.Sideboards.ToList() ?? new List<Sideboard>();
 				}
 				_game.CurrentGameStats.SetOpponentCards(_game.Opponent.OpponentCardList.Where(x => !x.IsCreated).ToList());
 				_game.CurrentGameStats.GameEnd();
