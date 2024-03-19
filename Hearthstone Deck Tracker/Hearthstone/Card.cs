@@ -619,23 +619,5 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			=> Count == other.Count && Jousted == other.Jousted && ColoredFrame == other.ColoredFrame && ColoredGem == other.ColoredGem
 				&& string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash && Created == other.Created
 				&& (CardWinrates?.Equals(other.CardWinrates) ?? CardWinrates.HasValue == other.CardWinrates.HasValue) && IsMulliganOption == other.IsMulliganOption;
-
-		public override int GetHashCode()
-		{
-			unchecked
-			{
-				var hashCode = Count;
-				hashCode = (hashCode * 397) ^ Jousted.GetHashCode();
-				hashCode = (hashCode * 397) ^ ColoredFrame.GetHashCode();
-				hashCode = (hashCode * 397) ^ ColoredGem.GetHashCode();
-				hashCode = (hashCode * 397) ^ (Theme?.GetHashCode() ?? 0);
-				hashCode = (hashCode * 397) ^ TextColorHash;
-				hashCode = (hashCode * 397) ^ Created.GetHashCode();
-				hashCode = (hashCode * 397) ^ BaconCard.GetHashCode();
-				hashCode = (hashCode * 397) ^ (CardWinrates?.GetHashCode() ?? 0);
-				hashCode = (hashCode * 397) ^ (IsMulliganOption ? 1 : 0);
-				return hashCode;
-			}
-		}
 	}
 }
