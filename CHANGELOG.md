@@ -1,3 +1,12 @@
+## **Release v1.25.1 - 2024-03-19**
+**Features**:
+- Added support for Zilliax Deluxe 3000's custom cost in the deck list.
+
+**Fixes**:
+- Fixed an issue causing E.T.C.'s Band to appear when Zilliax was in the deck.
+- Fixed an issue causing the deck list to continuously reset when playing a Whizbang deck.
+- Fixed an issue causing decks with cards from Caverns of Time or Legacy to not be flagged as Wild.
+
 ## **Release v1.25.0 - 2024-03-19**
 **Updated for Year of the Pegasus**
 
