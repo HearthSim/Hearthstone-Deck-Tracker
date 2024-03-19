@@ -59,8 +59,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case CREATOR:
 				case DISPLAYED_CREATOR:
 					return () => CreatorChanged(id, value, game);
-				case WHIZBANG_DECK_ID:
-					return () => WhizbangDeckIdChange(id, value, game);
 				case MULLIGAN_STATE:
 					return () => MulliganStateChange(id, value, game, gameState);
 				case COPIED_FROM_ENTITY_ID:
@@ -239,22 +237,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.GameHandler?.HandlePlayerMulliganDone();
 		}
 
-		private void WhizbangDeckIdChange(int id, int value, IGame game)
-		{
-			if(value == 0)
-				return;
-			if(!game.Entities.TryGetValue(id, out var entity))
-				return;
-			if(entity.IsControlledBy(game.Player.Id))
-				game.Player.IsPlayingWhizbang = true;
-			else if(entity.IsControlledBy(game.Opponent.Id))
-				game.Opponent.IsPlayingWhizbang = true;
-			if(!entity.IsPlayer)
-				return;
-			if(Config.Instance.AutoDeckDetection)
-				DeckManager.AutoSelectTemplateDeckById(game, value);
-		}
-
 		private void CreatorChanged(int id, int value, IGame game)
 		{
 			if(value == 0)
@@ -283,17 +265,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				if(creatorId == game.GameEntity?.Id)
 					return;
-				// All cards created by Whizbang have a creator tag set
-				if(game.Entities.TryGetValue(creatorId, out var creator))
-				{
-					if(creator.CardId == CardIds.Collectible.Neutral.WhizbangTheWonderful)
-						return;
-					var controller = creator.GetTag(CONTROLLER);
-					var usingWhizbang = controller == game.Player?.Id && game.Player.IsPlayingWhizbang
-										|| controller == game.Opponent?.Id && game.Opponent.IsPlayingWhizbang;
-					if(usingWhizbang && creator.IsInSetAside)
-						return;
+
+				if(game.Entities.TryGetValue(creatorId, out var creator) && creator.CardId == Collectible.Neutral.WhizbangTheWonderful) {
+					// The decks created by Whizbang used to have a creator tag set, but not anymore. Keep for safety.
+					return;
 				}
+
 				entity.Info.Created = true;
 			}
 		}
