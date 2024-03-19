@@ -37,8 +37,6 @@ namespace Hearthstone_Deck_Tracker
 		public static async Task DetectCurrentDeck()
 		{
 			var deck = DeckList.Instance.ActiveDeck;
-			if(deck == null && Core.Game.Player.SetAside.Any(x => x.CardId == CardIds.Collectible.Neutral.WhizbangTheWonderful))
-				deck = new Deck();
 			if(deck == null || deck.DeckId == IgnoredDeckId || _waitingForClass || _waitingForUserInput)
 				return;
 			if(string.IsNullOrEmpty(Core.Game.Player.Class))
