@@ -225,7 +225,10 @@ namespace Hearthstone_Deck_Tracker.Importing
 
 		public static bool IsExactlyWhizbang(HearthMirror.Objects.Deck deck)
 		{
-			return deck.Cards.Count == 1 && deck.Cards.Single().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful;
+			return deck.Cards.Count == 1 && (
+				deck.Cards.Single().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful ||
+				deck.Cards.Single().Id == CardIds.Collectible.Neutral.SplendiferousWhizbang
+			);
 		}
 	}
 }
