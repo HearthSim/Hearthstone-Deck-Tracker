@@ -1020,7 +1020,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				//game was not supposed to be recorded, remove from deck again.
 				_assignedDeck.DeckStats.Games.Remove(_game.CurrentGameStats);
-				Log.Info($"Gamemode {_game.CurrentGameMode} is not supposed to be saved. Removed game from {_assignedDeck}.");
+				Log.Info($"Local deck stats are disabled for {_game.CurrentGameMode}. Removed game from {_assignedDeck}.");
 			}
 			else if(_assignedDeck == null)
 			{
@@ -1029,7 +1029,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(_game.CurrentGameStats != null)
 						defaultDeck.Games.Remove(_game.CurrentGameStats);
-					Log.Info($"Gamemode {_game.CurrentGameMode} is not supposed to be saved. Removed game from default {_game.Player.Class}.");
+					Log.Info($"Local deck stats are disabled for {_game.CurrentGameMode}. Removed game from default {_game.Player.Class}.");
 				}
 			}
 		}
