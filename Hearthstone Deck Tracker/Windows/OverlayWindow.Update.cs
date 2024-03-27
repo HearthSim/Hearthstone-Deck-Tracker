@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						_cardMarks[i].UpdateIcon(CardMark.None);
 						_cardMarks[i].UpdateSourceCard(null);
 					}
-					_cardMarks[i].Visibility = _game.IsInMenu || (!_game.IsBattlegroundsMatch && !_game.IsMulliganDone) || Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks
+					_cardMarks[i].Visibility = _game.IsInMenu || _game.IsBattlegroundsMatch || !_game.IsMulliganDone || Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks
 												   ? Hidden : Visible;
 				}
 				else
