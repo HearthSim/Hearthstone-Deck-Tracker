@@ -43,8 +43,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			exception.Tags.Add("squirrel", "false");
 #endif
 			exception.Tags.Add("hearthstone", Helper.GetHearthstoneBuild()?.ToString());
-			if(!Helper.IsSigned)
-				return "Executable was not properly signed.";
+
 			return Client.Capture(exception);
 		}
 
@@ -60,9 +59,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 #if(SQUIRREL)
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
-				return;
-
-			if(!Helper.IsSigned)
 				return;
 
 			// Clean up data

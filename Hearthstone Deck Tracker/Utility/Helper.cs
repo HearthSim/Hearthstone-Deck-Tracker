@@ -48,24 +48,6 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public static double DpiScalingX = 1.0, DpiScalingY = 1.0;
 
-		private static bool? _isSigned = null;
-		public static bool IsSigned => _isSigned ?? (_isSigned = CheckIfSigned()).Value;
-
-		private static bool CheckIfSigned()
-		{
-			try
-			{
-				X509Certificate basicSigner = X509Certificate.CreateFromSignedFile(Assembly.GetExecutingAssembly().Location);
-				if(basicSigner.Subject.Contains("HearthSim, LLC"))
-					return true;
-			}
-			catch(Exception ex)
-			{
-				Log.Error("Error reading executable certificate: " + ex);
-			}
-			return false;
-		}
-
 		public static readonly Dictionary<string, string> LanguageDict = new Dictionary<string, string>
 		{
 			{"English", "enUS"},
@@ -837,9 +819,8 @@ namespace Hearthstone_Deck_Tracker
 			const string name = "HDTPortable";
 #endif
 			var hdtPart = name + "/" + GetCurrentVersion();
-			var signedPart = IsSigned ? "Signed" : "Unsigned";
 			var windowsPart = GetWindowsVersion();
-			return string.Format("{0} ({1}; {2})", hdtPart, signedPart, windowsPart);
+			return string.Format("{0} ({1})", hdtPart, windowsPart);
 		}
 
 		internal static void OpenBattlegroundsHeroPicker(int[] heroIds, int? mmr, int? anomalyDbfId)
