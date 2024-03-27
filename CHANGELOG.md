@@ -2,7 +2,7 @@
 **Fixes**:
 - Fixed a memory leak that could cause the deck tracker to crash mid-game.
 - Fixed a long-standing issue that could cause long games (especially Battlegrounds) to go missing.
-- Fixed an issue causing Ziliax Deluxe 3000 to appear in the deck list twice after drawing it.
+- Fixed an issue causing Zilliax Deluxe 3000 to appear in the deck list twice after drawing it.
 - Fixed an issue causing new core secrets to not appear in the secret tracker.
 
 ## **Release v1.25.1 - 2024-03-19**
