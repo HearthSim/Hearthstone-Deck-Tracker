@@ -527,12 +527,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(!(card is Card))
 				return false;
 			var c = (Card)card;
-			return c.Name == Name;
+			return c.Id == Id;
 		}
 
 		public bool EqualsWithCount(Card card) => card.Id == Id && card.Count == Count;
 
-		public override int GetHashCode() => (Name ?? "").GetHashCode();
+		public override int GetHashCode() => (Id ?? "").GetHashCode();
 
 		public void Load()
 		{
