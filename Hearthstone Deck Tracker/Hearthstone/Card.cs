@@ -430,6 +430,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool ZilliaxCustomizableFunctionalModule => _dbCard?.Entity.GetTag(GameTag.ZILLIAX_CUSTOMIZABLE_FUNCTIONALMODULE) > 0;
 
+		public bool ZilliaxCustomizableCosmeticModule => _dbCard?.Entity.GetTag(GameTag.ZILLIAX_CUSTOMIZABLE_COSMETICMODULE) > 0;
+
 		public SolidColorBrush ColorPlayer
 		{
 			get

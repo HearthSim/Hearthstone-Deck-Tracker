@@ -119,9 +119,9 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Dictionary<string, MediaColor> ClassicClassColors = new Dictionary<string, MediaColor>
 		{
-			{"Deathknight", MediaColor.FromArgb(0xFF, 0xC4, 0x1E, 0x3A)}, 
-			{"DemonHunter", MediaColor.FromArgb(0xFF, 0xA3, 0x30, 0xC9)}, //#A330C9, 
-			{"Druid", MediaColor.FromArgb(0xFF, 0xFF, 0x7D, 0x0A)}, //#FF7D0A, 
+			{"Deathknight", MediaColor.FromArgb(0xFF, 0xC4, 0x1E, 0x3A)},
+			{"DemonHunter", MediaColor.FromArgb(0xFF, 0xA3, 0x30, 0xC9)}, //#A330C9,
+			{"Druid", MediaColor.FromArgb(0xFF, 0xFF, 0x7D, 0x0A)}, //#FF7D0A,
 			{"Death Knight", MediaColor.FromArgb(0xFF, 0xC4, 0x1F, 0x3B)}, //#C41F3B,
 			{"Hunter", MediaColor.FromArgb(0xFF, 0xAB, 0xD4, 0x73)}, //#ABD473,
 			{"Mage", MediaColor.FromArgb(0xFF, 0x69, 0xCC, 0xF0)}, //#69CCF0,
@@ -136,8 +136,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Dictionary<string, MediaColor> HearthStatsClassColors = new Dictionary<string, MediaColor>
 		{
-			{"Deathknight", MediaColor.FromArgb(0xFF, 0xC4, 0x1E, 0x3A)}, 
-			{"DemonHunter", MediaColor.FromArgb(0xFF, 0xA3, 0x30, 0xC9)}, //#A330C9, 
+			{"Deathknight", MediaColor.FromArgb(0xFF, 0xC4, 0x1E, 0x3A)},
+			{"DemonHunter", MediaColor.FromArgb(0xFF, 0xA3, 0x30, 0xC9)}, //#A330C9,
 			{"Druid", MediaColor.FromArgb(0xFF, 0x62, 0x31, 0x13)}, //#623113,
 			{"Death Knight", MediaColor.FromArgb(0xFF, 0xC4, 0x1F, 0x3B)}, //#C41F3B,
 			{"Hunter", MediaColor.FromArgb(0xFF, 0x20, 0x8D, 0x43)}, //#208D43,
@@ -239,7 +239,7 @@ namespace Hearthstone_Deck_Tracker
 			view1.SortDescriptions.Add(new SortDescription(nameof(Card.Cost), ListSortDirection.Ascending));
 			view1.SortDescriptions.Add(new SortDescription(nameof(Card.LocalizedName), ListSortDirection.Ascending));
 		}
-		
+
 		public static void UpdateEverything(GameV2 game)
 		{
 			if(Core.Overlay.IsVisible || Core.Windows.CapturableOverlay != null)
@@ -930,10 +930,11 @@ namespace Hearthstone_Deck_Tracker
 					var sideboard = sideboards.FirstOrDefault(sb => sb.OwnerCardId == cardId);
 					if(sideboard != null && sideboard.Cards.Count > 0)
 					{
+						var cosmetic = sideboard.Cards.FirstOrDefault(module => !module.ZilliaxCustomizableFunctionalModule);
 						var modules = sideboard.Cards.Where(module => module.ZilliaxCustomizableFunctionalModule);
 
 						// Clone Zilliax with new cost, attack and health
-						card = (Card)card.Clone();
+						card = cosmetic != null ? (Card)cosmetic.Clone() : (Card)card.Clone();
 						card.Attack = modules.Sum(module => module.Attack);
 						card.Health = modules.Sum(module => module.Health);
 						card.Cost = modules.Sum(module => module.Cost);

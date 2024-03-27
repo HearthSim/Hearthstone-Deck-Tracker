@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static Deck? KnownOpponentDeck = null;
 		public List<PredictedCard> InDeckPredictions { get; } = new List<PredictedCard>();
 		public HashSet<string> PastHeroPowers { get; } = new HashSet<string>();
-	
+
 		private DeckState GetDeckState()
 		{
 			var createdCardsInDeck =
@@ -105,23 +105,31 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 																&& x.Info.OriginalController == Id
 																&& !(x.Info.Hidden && (x.IsInDeck || x.IsInHand))).ToList();
 
+			var originalSideboards = DeckList.Instance.ActiveDeckVersion?.Sideboards;
+
 			var removedFromDeckIds = new List<string>();
+			var zilliaxCosmetic = originalSideboards?
+				.FirstOrDefault(s => s.OwnerCardId == HearthDb.CardIds.Collectible.Neutral.ZilliaxDeluxe3000)?.Cards
+				.FirstOrDefault(c => c.ZilliaxCustomizableCosmeticModule);
 			foreach(var e in revealedNotInDeck)
 			{
-				if(e.CardId == null)
+				var cardId = e.CardId;
+				if(cardId == null)
 					continue;
-				originalCardsInDeckIds?.Remove(e.CardId);
+				if(cardId == zilliaxCosmetic?.Id)
+					originalCardsInDeckIds?.Remove(HearthDb.CardIds.Collectible.Neutral.ZilliaxDeluxe3000);
+				originalCardsInDeckIds?.Remove(cardId);
 				if(!e.Info.Stolen || e.Info.OriginalController == Id)
-					removedFromDeckIds.Add(e.CardId);
+					removedFromDeckIds.Add(cardId);
 			}
-			
+
 			Card? ToRemainingCard(IGrouping<string, string> x)
 			{
 				var card = Database.GetCardFromId(x.Key);
 				if(card == null)
 					return null;
 				card.Count = x.Count();
-				if(Hand.Any(e => e.CardId == x.Key))
+				if(Hand.Any(e => e.CardId == card.Id))
 					card.HighlightInHand = true;
 				return card;
 			}
@@ -132,20 +140,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(card == null)
 					return null;
 				card.Count = 0;
-				if(Hand.Any(e => e.CardId == c.Key))
+				if(Hand.Any(e => e.CardId == card.Id))
 					card.HighlightInHand = true;
 				return card;
 			}
 
-			var remainingInDeck = createdCardsInDeck.Concat(originalCardsInDeckIds?.GroupBy(x => x).Select(ToRemainingCard).WhereNotNull() ?? new List<Card>());
+			var remainingInDeck = Helper.ResolveZilliax3000(createdCardsInDeck.Concat(originalCardsInDeckIds?.GroupBy(x => x).Select(ToRemainingCard).WhereNotNull() ?? new List<Card>()), originalSideboards ?? new ());
 			var removedFromDeck = removedFromDeckIds.GroupBy(x => x).Select(ToRemovedCard).WhereNotNull();
 
-			var originalSideboards = DeckList.Instance.ActiveDeckVersion?.Sideboards;
 			var removedFromSideboardIds = RevealedEntities.Where(x => x.HasCardId
 			                                                          && x.IsPlayableCard
 			                                                          && x.Info.OriginalController == Id
-			                                                          && x.Info is { OriginalZone: Zone.HAND, Hidden: false } 
-			                                                          && x.GetTag(GameTag.COPIED_FROM_ENTITY_ID) > 0 
+			                                                          && x.Info is { OriginalZone: Zone.HAND, Hidden: false }
+			                                                          && x.GetTag(GameTag.COPIED_FROM_ENTITY_ID) > 0
 			                                                          && RevealedEntities.FirstOrDefault(
 				                                                          c => c.Id == x.GetTag(GameTag.COPIED_FROM_ENTITY_ID) && c is {
 					                                                          IsInSetAside: true,
@@ -332,7 +339,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			return cards.Select(card =>
 			{
-				var cardStats = MulliganCardStats.FirstOrDefault(x => x.DbfId == card.DbfId);
+				var dbfId = card.ZilliaxCustomizableCosmeticModule ? 102983 : card.DbfId;
+
+				var cardStats = MulliganCardStats.FirstOrDefault(x => x.DbfId == dbfId);
 				if(cardStats == null)
 					return card;
 
@@ -342,7 +351,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					MulliganWinrate = openingHandWinrate,
 					BaseWinrate = (float?) cardStats.BaseWinrate
 				} : null;
-				newCard.IsMulliganOption = Hand.Any(x => x.Card.DbfId == card.DbfId);
+				newCard.IsMulliganOption = Hand.Any(x => x.Card.DbfId == dbfId);
 				return newCard;
 			});
 		}
@@ -463,10 +472,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 
-		private void Log(Entity entity, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") 
+		private void Log(Entity entity, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
 			=> Log(entity.ToString(), memberName, sourceFilePath);
 
-		private void Log(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") 
+		private void Log(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
 			=> Utility.Logging.Log.Info((IsLocalPlayer ? "[Player] "  : "[Opponent] ") + msg, memberName, sourceFilePath);
 
 		public void Play(Entity entity, int turn)
@@ -481,7 +490,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				case (int)CardType.MINION:
 					if (entity.CardId == HearthDb.CardIds.Collectible.Rogue.PogoHopper)
 					{
-						PogoHopperPlayedCount++;	
+						PogoHopperPlayedCount++;
 					}
 					break;
 				case (int)CardType.SPELL:
