@@ -217,8 +217,12 @@ namespace Hearthstone_Deck_Tracker
 				HSReplayNetOAuth.IsFullyAuthenticated,
 				HSReplayNetOAuth.AccountData?.IsPremium ?? false,
 				(int)(DateTime.UtcNow - _startUpTime).TotalSeconds,
-				PluginManager.Instance.Plugins.Count
+				PluginManager.Instance.Plugins.Count,
+				Config.Instance.CleanShutdown
 			);
+
+			Config.Instance.CleanShutdown = false;
+			Config.Save();
 		}
 
 		private static void CheckForHearthstoneUpdate()

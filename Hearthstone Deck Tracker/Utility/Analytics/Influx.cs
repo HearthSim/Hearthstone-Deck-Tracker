@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static DateTime? _lastMainWindowActivation;
 		private static DateTime _oAuthInitiated;
 
-		public static void OnAppStart(Version version, bool isNew, bool authenticated, bool premium, int startupDuration, int numPlugins)
+		public static void OnAppStart(Version version, bool isNew, bool authenticated, bool premium, int startupDuration, int numPlugins, bool cleanShutdown)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
 				.Tag("lang_card", Config.Instance.SelectedLanguage)
 				.Tag("lang_ui", Config.Instance.Localization.ToString())
+				.Tag("clean_shutdown", cleanShutdown)
 				.Field("num_plugins", numPlugins)
 				.Field("startup_duration", startupDuration);
 #if(SQUIRREL)

@@ -362,6 +362,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Core.Windows.TimerWindow.Shutdown();
 				Core.Windows.PlayerWindow.Shutdown();
 				Core.Windows.OpponentWindow.Shutdown();
+				Config.Instance.CleanShutdown = true;
 				Config.Save();
 				DeckList.Save();
 				DeckStatsList.Save();
