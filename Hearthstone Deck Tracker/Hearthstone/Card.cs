@@ -624,7 +624,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		protected bool Equals(CardImageObject other)
 			=> Count == other.Count && Cost == other.Cost && Jousted == other.Jousted && ColoredFrame == other.ColoredFrame && ColoredGem == other.ColoredGem
-				&& string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash && Created == other.Created
+				&& string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash && Created == other.Created && BaconCard == other.BaconCard
 				&& (CardWinrates?.Equals(other.CardWinrates) ?? CardWinrates.HasValue == other.CardWinrates.HasValue) && IsMulliganOption == other.IsMulliganOption;
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				var hashCode = Count + 1;
+				hashCode = (hashCode * 397) ^ (Cost + 1);
+				hashCode = (hashCode * 397) ^ (Jousted.GetHashCode() + 1);
+				hashCode = (hashCode * 397) ^ (ColoredFrame.GetHashCode() + 1);
+				hashCode = (hashCode * 397) ^ (ColoredGem.GetHashCode() + 1);
+				hashCode = (hashCode * 397) ^ (Theme?.GetHashCode() ?? 1);
+				hashCode = (hashCode * 397) ^ TextColorHash;
+				hashCode = (hashCode * 397) ^ (Created.GetHashCode() + 1);
+				hashCode = (hashCode * 397) ^ (BaconCard.GetHashCode() + 1);
+				hashCode = (hashCode * 397) ^ (CardWinrates?.GetHashCode() ?? 1);
+				hashCode = (hashCode * 397) ^ (IsMulliganOption.GetHashCode() + 1);
+				return hashCode;
+			}
+		}
 	}
 }
