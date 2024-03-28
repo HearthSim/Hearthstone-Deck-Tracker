@@ -338,7 +338,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			public static List<string> Priest = new List<string>
 			{
 				Collectible.Priest.HolySmiteLegacy,
-				Collectible.Priest.NorthshireCleric,
+				Collectible.Priest.NorthshireClericLegacy,
 				Collectible.Priest.PotionOfMadness,
 				Collectible.Neutral.FaerieDragon,
 				Collectible.Priest.MindBlastLegacy,
