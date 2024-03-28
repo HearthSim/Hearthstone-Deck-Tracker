@@ -1,3 +1,6 @@
+## **Release v1.25.3 - 2024-03-28**
+**Updated for Hearthstone 29.0.3**
+
 ## **Release v1.25.2 - 2024-03-27**
 **Fixes**:
 - Fixed a memory leak that could cause the deck tracker to crash mid-game.
