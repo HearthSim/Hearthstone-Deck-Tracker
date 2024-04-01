@@ -172,10 +172,21 @@ namespace Hearthstone_Deck_Tracker.Live
 			var playerSideboardsList = new List<int[]>();
 			if(deck != null)
 			{
-				foreach(var card in player.GetPlayerCardList(false, false, false).Where(x => !x.Jousted))
+				foreach(var card in player.GetPlayerCardList(false, false, false))
 				{
-					var inDeck = card.IsCreated ? 0 : FullCount(card.DbfId);
-					playerCardsList.Add(new[] { card.DbfId, card.Count, inDeck });
+					if(card.ZilliaxCustomizableCosmeticModule)
+					{
+						var zilliax = Database.GetCardFromId(HearthDb.CardIds.Collectible.Neutral.ZilliaxDeluxe3000);
+						if(zilliax == null)
+							continue;
+						var inDeck = FullCount(zilliax.DbfId);
+						playerCardsList.Add(new[] { zilliax.DbfId, card.Count, inDeck });
+					}
+					else
+					{
+						var inDeck = card.IsCreated ? 0 : FullCount(card.DbfId);
+						playerCardsList.Add(new[] { card.DbfId, card.Count, inDeck });
+					}
 				}
 				var currentSideboards = player.GetPlayerSideboards(false);
 				foreach(var sideboard in currentSideboards)
