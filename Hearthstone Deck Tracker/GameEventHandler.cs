@@ -1096,7 +1096,8 @@ namespace Hearthstone_Deck_Tracker
 						{
 							Core.Overlay.ShowMulliganGuideStats(
 								dbfIds.Select(dbfId => _game.MulliganCardStats.TryGetValue(dbfId, out var stats) ? stats : new SingleCardStats(dbfId)),
-								_game.MulliganCardStats.Count
+								_game.MulliganCardStats.Count,
+								null
 							);
 						}
 					}
@@ -1230,7 +1231,8 @@ namespace Hearthstone_Deck_Tracker
 									dbfIds.Select(dbfId =>
 										cardStats.TryGetValue(dbfId, out var stats) ? stats
 											: new SingleCardStats(dbfId)),
-									cardStats.Count
+									cardStats.Count,
+									data.SelectedParams
 								);
 							}
 							// Something went wrong generating the card stats, continue to locally generated toast (if enabled)

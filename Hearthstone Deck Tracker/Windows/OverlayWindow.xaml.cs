@@ -515,9 +515,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsHeroPickingViewModel.SetHeroes(heroIds);
 		}
 
-		internal void ShowMulliganGuideStats(IEnumerable<SingleCardStats> stats, int maxRank)
+		internal void ShowMulliganGuideStats(IEnumerable<SingleCardStats> stats, int maxRank, Dictionary<string, string>? selectedParams)
 		{
-			ConstructedMulliganGuideViewModel.SetMulliganData(stats, maxRank);
+			ConstructedMulliganGuideViewModel.SetMulliganData(stats, maxRank, selectedParams);
 		}
 
 		internal void HideMulliganGuideStats()

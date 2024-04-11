@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:mulligan="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan"
              xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              lex:LocalizeDictionary.DesignCulture="en"
@@ -16,7 +16,7 @@
     </UserControl.LayoutTransform>
     <UserControl.Resources>
         <Style TargetType="ToolTip" BasedOn="{StaticResource ConstructedTooltipStyle}">
-            <Setter Property="LayoutTransform" Value="{Binding LayoutTransform, RelativeSource={RelativeSource AncestorType=mulligan:ConstructedMulliganGuide}}"/>
+            <Setter Property="LayoutTransform" Value="{Binding LayoutTransform, RelativeSource={RelativeSource AncestorType=local:ConstructedMulliganGuide}}"/>
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -28,7 +28,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Height="480" Width="212">
-                                <mulligan:ConstructedMulliganSingleCardStats />
+                                <local:ConstructedMulliganSingleCardStats />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -39,7 +39,7 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </Grid>
-            <!--<tier7:OverlayMessage DataContext="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="738 0 0 13" />-->
+            <local:OverlayMessage DataContext="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="738 0 0 13" />
         </Grid>
 
         <!-- Visibility Toggle -->
