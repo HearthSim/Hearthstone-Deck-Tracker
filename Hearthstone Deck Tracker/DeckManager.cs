@@ -490,7 +490,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!Config.Instance.DungeonAutoImport)
 				return;
 			Log.Info($"Dungeon run detected! New={newRun}, Recursive={recursive}");
-			var boardHero = Core.Game.Player.Board.FirstOrDefault(x => x.IsHero)?.Card;
+			var boardHero = Core.Game.Player.Hero?.Card;
 			if(boardHero == null)
 				return;
 			var playerClass = set == CardSet.ULDUM

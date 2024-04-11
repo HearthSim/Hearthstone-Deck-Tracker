@@ -77,6 +77,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public IEnumerable<Entity> SetAside => PlayerEntities.Where(x => x.IsInSetAside);
 		public static Deck? KnownOpponentDeck = null;
 		public List<PredictedCard> InDeckPredictions { get; } = new List<PredictedCard>();
+		public Entity? Hero => Board.FirstOrDefault(x => x.IsHero);
 		public HashSet<string> PastHeroPowers { get; } = new HashSet<string>();
 
 		private DeckState GetDeckState()

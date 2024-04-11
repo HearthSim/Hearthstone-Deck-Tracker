@@ -339,8 +339,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				? opponentMurkyBuff / (opponentMurky.HasTag(GameTag.PREMIUM) ? 2 : 1) - 1
 				: 0;
 
-			var opponentHero = _game.Opponent.Board.FirstOrDefault(x => x.IsHero);
-			var playerHero = _game.Player.Board.FirstOrDefault(x => x.IsHero);
+			var opponentHero = _game.Opponent.Hero;
+			var playerHero = _game.Player.Hero;
 			if(opponentHero == null || playerHero == null)
 			{
 				DebugLog("Hero(es) could not be found. Exiting.");

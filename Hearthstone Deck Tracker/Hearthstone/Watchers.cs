@@ -104,8 +104,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return Core.Game.CurrentMode == Mode.GAMEPLAY && Core.Game.PreviousMode == Mode.PVP_DUNGEON_RUN;
 			}
 		}
-		public string? OpponentHeroId => Core.Game.Opponent.Board.FirstOrDefault(x => x.IsHero)?.CardId;
-		public int OpponentHeroHealth => Core.Game.Opponent.Board.FirstOrDefault(x => x.IsHero)?.GetTag(GameTag.HEALTH) ?? 0;
+		public string? OpponentHeroId => Core.Game.Opponent.Hero?.CardId;
+		public int OpponentHeroHealth => Core.Game.Opponent.Hero?.GetTag(GameTag.HEALTH) ?? 0;
 	}
 
 	public class HearthMirrorPackProvider : IPackProvider

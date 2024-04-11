@@ -116,8 +116,7 @@ namespace Hearthstone_Deck_Tracker.Live
 		{
 			if(Core.Game.GameEntity?.GetTag(GameTag.BACON_BUDDY_ENABLED) == 0)
 				return null;
-			var hero = player.Board.FirstOrDefault(x => x.IsHero);
-			var buddyDbfId = hero?.GetTag(GameTag.BACON_COMPANION_ID);
+			var buddyDbfId = player.Hero?.GetTag(GameTag.BACON_COMPANION_ID);
 			if(buddyDbfId == 0)
 				return null;
 			return buddyDbfId;
