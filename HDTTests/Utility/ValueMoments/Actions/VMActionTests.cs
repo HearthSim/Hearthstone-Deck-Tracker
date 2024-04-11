@@ -60,7 +60,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "match_result", 1 },
 				{ "game_type", 1 },
 				{ "star_level", 1 },
-				{ "hdt_hsconstructed_settings_enabled", new []{ "hide_timers" }},
+				{ "hdt_hsconstructed_settings_enabled", new []{ "hide_timers", "mulligan_guide_overlay", "mulligan_guide_overlay_auto_expand", "mulligan_guide_toast" }},
 				{ "hdt_hsconstructed_settings_disabled", new []{ "hide_decks" }},
 				{ "action_source", "app" },
 				{ "action_name", "end_match" },
