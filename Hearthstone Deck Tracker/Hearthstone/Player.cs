@@ -339,8 +339,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			return cards.Select(card =>
 			{
-				var dbfId = card.ZilliaxCustomizableCosmeticModule ? 102983 : card.DbfId;
-
+				var dbfId = card.DeckbuildingCard.DbfId;
 				var cardStats = MulliganCardStats.FirstOrDefault(x => x.DbfId == dbfId);
 				if(cardStats == null)
 					return card;

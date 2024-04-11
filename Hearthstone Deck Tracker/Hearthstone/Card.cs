@@ -432,6 +432,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool ZilliaxCustomizableCosmeticModule => _dbCard?.Entity.GetTag(GameTag.ZILLIAX_CUSTOMIZABLE_COSMETICMODULE) > 0;
 
+		public Card DeckbuildingCard
+		{
+			get
+			{
+				if(ZilliaxCustomizableCosmeticModule)
+				{
+					return Database.GetCardFromId(HearthDb.CardIds.Collectible.Neutral.ZilliaxDeluxe3000) ?? this;
+				}
+
+				return this;
+			}
+		}
+
 		public SolidColorBrush ColorPlayer
 		{
 			get

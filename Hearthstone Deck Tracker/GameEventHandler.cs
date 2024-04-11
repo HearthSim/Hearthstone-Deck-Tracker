@@ -1091,7 +1091,7 @@ namespace Hearthstone_Deck_Tracker
 					if(numSwappedCards > 0)
 					{
 						// Show the updated cards
-						var dbfIds = openingHand.Select(x => x.Card.DbfId).ToList();
+						var dbfIds = openingHand.Select(x => x.Card.DeckbuildingCard.DbfId).ToList();
 						if(dbfIds.Any())
 						{
 							Core.Overlay.ShowMulliganGuideStats(
@@ -1182,7 +1182,7 @@ namespace Hearthstone_Deck_Tracker
 					if(!string.IsNullOrEmpty(shortId))
 					{
 						var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created);
-						var dbfIds = cards.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
+						var dbfIds = cards.OrderBy(x => x.ZonePosition).Select(x => x.Card.DeckbuildingCard.DbfId).ToArray();
 
 						MulliganGuideData? mulliganGuideData = null;
 						if(Config.Instance.EnableMulliganGuide)
