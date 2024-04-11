@@ -423,6 +423,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				var opponentClass = Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
 				var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
+				var starsPerWin = PlayerMedalInfo?.StarsPerWin ?? 0;
 
 				_mulliganGuideParams = new MulliganGuideParams
 				{
@@ -431,6 +432,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					PlayerInitiative = PlayerEntity?.GetTag(GameTag.FIRST_PLAYER) == 1 ? "FIRST" : "COIN",
 					PlayerRegion = ((BnetRegion)CurrentRegion).ToString(),
 					PlayerStarLevel = starLevel > 0 ? starLevel : null,
+					PlayerStarMultiplier = starsPerWin > 0 ? starsPerWin : null,
 					GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
 					FormatType = (int)CurrentFormatType,
 				};

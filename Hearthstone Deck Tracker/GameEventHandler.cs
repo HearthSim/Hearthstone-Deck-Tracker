@@ -670,7 +670,7 @@ namespace Hearthstone_Deck_Tracker
 						_game.CurrentGameStats.OpponentRank = isClassic ? opposingPlayer.ClassicRank : isWild ? opposingPlayer.WildRank : isTwist ? localPlayer.TwistRank : opposingPlayer.StandardRank;
 					}
 					_game.CurrentGameStats.StarLevel = playerInfo?.StarLevel ?? 0;
-					_game.CurrentGameStats.StarMultiplier = playerInfo?.StarMultipier ?? 0;
+					_game.CurrentGameStats.StarMultiplier = playerInfo?.StarsPerWin ?? 0;
 					_game.CurrentGameStats.Stars = playerInfo?.Stars ?? 0;
 					_game.CurrentGameStats.OpponentStarLevel = opponentInfo?.StarLevel ?? 0;
 					_game.CurrentGameStats.LegendRank = playerInfo?.LegendRank ?? 0;
