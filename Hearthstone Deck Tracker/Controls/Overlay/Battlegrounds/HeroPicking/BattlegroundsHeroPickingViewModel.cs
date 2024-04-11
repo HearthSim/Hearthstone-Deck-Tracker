@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			if(availableRaces == null)
 				return null;
 
-			return new BattlegroundsHeroPickStatsParams
+			var parameters = new BattlegroundsHeroPickStatsParams
 			{
 				HeroDbfIds = heroIds,
 				BattlegroundsRaces = availableRaces.Cast<int>().ToArray(),
@@ -179,6 +179,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 				LanguageCode = Config.Instance.SelectedLanguage,
 				BattlegroundsRating = Core.Game.BattlegroundsRatingInfo?.Rating
 			};
+
+			game.BattlegroundsHeroPickStatsParams = parameters;
+
+			return parameters;
 		}
 	}
 }

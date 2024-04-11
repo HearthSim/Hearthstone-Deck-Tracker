@@ -224,6 +224,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
+		public static async Task PostBattlegroundsHeroPickFeedback(BattlegroundsHeroPickFeedbackParams parameters)
+		{
+			try
+			{
+				await Client.PostBattlegroundsHeroPickFeedback(parameters);
+			}
+			catch(Exception e)
+			{
+#if(DEBUG)
+				Log.Error(e);
+#endif
+			}
+		}
+
 		public static async Task<MulliganGuideStatusData?> GetMulliganGuideStatus(MulliganGuideStatusParams parameters)
 		{
 			try

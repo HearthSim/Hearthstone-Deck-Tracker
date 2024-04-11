@@ -863,6 +863,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
 					var finalPlacement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0;
+					CaptureBattlegroundsHeroPickingFeedback(finalPlacement);
 					HSReplayNetClientAnalytics.OnBattlegroundsMatchEnds(
 						hero?.CardId,
 						finalPlacement,
@@ -871,7 +872,6 @@ namespace Hearthstone_Deck_Tracker
 						_game.CurrentGameType,
 						_game.Spectator
 					);
-
 				}
 
 				if(_game.IsMercenariesMatch)
@@ -1076,6 +1076,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_game.IsBattlegroundsMatch)
 			{
+				_game.SnapshotBattlegroundsHeroPick();
 				Core.Overlay.HideBattlegroundsHeroPanel();
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 			}
@@ -1361,6 +1362,18 @@ namespace Hearthstone_Deck_Tracker
 
 			Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
+		}
+
+		private void CaptureBattlegroundsHeroPickingFeedback(int finalPlacement)
+		{
+			if(!Config.Instance.GoogleAnalytics || _game.Spectator)
+				return;
+
+			var parameters = _game.GetBattlegroundsHeroPickFeedbackParams(finalPlacement);
+			if(parameters is null)
+				return;
+
+			ApiWrapper.PostBattlegroundsHeroPickFeedback(parameters).Forget();
 		}
 
 		#region Player

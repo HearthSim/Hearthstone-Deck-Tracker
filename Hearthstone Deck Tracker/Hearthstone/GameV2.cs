@@ -41,7 +41,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BattlegroundRatingInfo? _battlegroundsRatingInfo;
 		private MercenariesRatingInfo? _mercenariesRatingInfo;
 		private BattlegroundsBoardState? _battlegroundsBoardState;
-		private MulliganState _mulliganState;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 		private MulliganGuideParams? _mulliganGuideParams;
@@ -58,7 +57,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
-			_mulliganState = new MulliganState(this);
 			QueueEvents = new(this);
 			Reset();
 			LiveDataManager.OnStreamingChecked += async streaming =>
@@ -324,6 +322,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
 			_mulliganGuideParams = null;
+			_mulliganState = null;
+			_battlegroundsHeroPickState = null;
 			Metrics = new GameMetrics();
 
 			if(Core._game != null && Core.Overlay != null)
@@ -406,9 +406,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return _battlegroundsHeroTriplesByTier.TryGetValue(id, out var data) ? data : null;
 		}
 
-		public List<Entity> SnapshotMulligan() => _mulliganState.SnapshotMulligan();
-		public List<Entity> SnapshotMulliganChoices(Choice choice) => _mulliganState.SnapshotMulliganChoices(choice);
-		public List<Entity> SnapshotOpeningHand() => _mulliganState.SnapshotOpeningHand();
+		private BattlegroundsHeroPickStatsParams? _battlegroundsHeroPickStatsParams = null;
+		public BattlegroundsHeroPickStatsParams? BattlegroundsHeroPickStatsParams
+		{
+			get => _battlegroundsHeroPickStatsParams;
+			set => _battlegroundsHeroPickStatsParams = value;
+		}
+
+		private MulliganState? _mulliganState;
+		private MulliganState MulliganState
+		{
+			get
+			{
+				if(_mulliganState == null)
+				{
+					_mulliganState = new MulliganState(this);
+				}
+
+				return _mulliganState;
+			}
+		}
+
+		public List<Entity> SnapshotMulligan() => MulliganState.SnapshotMulligan();
+		public List<Entity> SnapshotMulliganChoices(Choice choice) => MulliganState.SnapshotMulliganChoices(choice);
+		public List<Entity> SnapshotOpeningHand() => MulliganState.SnapshotOpeningHand();
 
 		public void CacheMulliganGuideParams()
 		{
@@ -453,9 +474,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			// Use a cached version because e.g. the opponentClass may no longer be detectable
 			return _mulliganGuideParams?.WithFeedback(
-				_mulliganState?.OfferedCards.Select(x => x.Card.DbfId).ToArray(),
-				_mulliganState?.KeptCards.Select(x => x.Card.DbfId).ToArray(),
-				_mulliganState?.FinalCardsInHand.Select(x => x.Card.DbfId).ToArray(),
+				MulliganState.OfferedCards?.Select(x => x.Card.DbfId).ToArray(),
+				MulliganState.KeptCards?.Select(x => x.Card.DbfId).ToArray(),
+				MulliganState.FinalCardsInHand?.Select(x => x.Card.DbfId).ToArray(),
 				Metrics.ConstructedMulliganGuideOverlayDisplayed,
 				PlayerEntity?.GetTag(GameTag.PLAYSTATE) ?? 0
 			);
@@ -463,8 +484,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public List<Entity>? GetMulliganSwappedCards()
 		{
-			var offered = _mulliganState?.OfferedCards;
-			var kept = _mulliganState?.KeptCards;
+			var offered = MulliganState.OfferedCards;
+			var kept = MulliganState.KeptCards;
 
 			if(offered is null || kept is null)
 				return null;
@@ -481,5 +502,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public Dictionary<int, SingleCardStats>? MulliganCardStats { get; set; } = null;
+
+		private BattlegroundsHeroPickState? _battlegroundsHeroPickState;
+		private BattlegroundsHeroPickState BattlegroundsHeroPickState
+		{
+			get
+			{
+				if(_battlegroundsHeroPickState == null)
+				{
+					_battlegroundsHeroPickState = new BattlegroundsHeroPickState(this);
+				}
+
+				return _battlegroundsHeroPickState;
+			}
+		}
+
+		public void SnapshotBattlegroundsHeroPick() => BattlegroundsHeroPickState.SnapshotPickedHero();
+
+		public BattlegroundsHeroPickFeedbackParams? GetBattlegroundsHeroPickFeedbackParams(int finalPlacement)
+		{
+			if(
+				BattlegroundsHeroPickState.PickedHero?.Card.DbfId is int heroDbfId &&
+				finalPlacement > 0
+			)
+				return _battlegroundsHeroPickStatsParams?.WithFeedback(
+					finalPlacement,
+					heroDbfId,
+					Metrics.Tier7HeroOverlayDisplayed
+				);
+
+			return null;
+		}
 	}
 }

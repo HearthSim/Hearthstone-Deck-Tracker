@@ -1,38 +1,37 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
-namespace Hearthstone_Deck_Tracker.Hearthstone
+namespace Hearthstone_Deck_Tracker.Hearthstone;
+
+internal class MulliganState
 {
-	internal class MulliganState
+	public List<Entity>? OfferedCards { get; private set; }
+	public List<Entity>? KeptCards { get; private set; }
+	public List<Entity>? FinalCardsInHand { get; private set; }
+
+	private GameV2 _game;
+
+	public MulliganState(GameV2 game)
 	{
-		public List<Entity> OfferedCards { get; private set; } = new();
-		public List<Entity> KeptCards { get; private set; } = new();
-		public List<Entity> FinalCardsInHand { get; private set; } = new();
+		_game = game;
+	}
 
-		private GameV2 _game;
+	public List<Entity> SnapshotMulligan()
+	{
+		OfferedCards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).OrderBy(x => x.ZonePosition).ToList();
+		return OfferedCards;
+	}
 
-		public MulliganState(GameV2 game)
-		{
-			_game = game;
-		}
+	public List<Entity> SnapshotMulliganChoices(Choice choice)
+	{
+		KeptCards = choice.ChosenEntities.ToList();
+		return KeptCards;
+	}
 
-		public List<Entity> SnapshotMulligan()
-		{
-			OfferedCards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).OrderBy(x => x.ZonePosition).ToList();
-			return OfferedCards;
-		}
-
-		public List<Entity> SnapshotMulliganChoices(Choice choice)
-		{
-			KeptCards = choice.ChosenEntities.ToList();
-			return KeptCards;
-		}
-
-		public List<Entity> SnapshotOpeningHand()
-		{
-			FinalCardsInHand = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).OrderBy(x => x.ZonePosition).ToList();
-			return FinalCardsInHand;
-		}
+	public List<Entity> SnapshotOpeningHand()
+	{
+		FinalCardsInHand = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).OrderBy(x => x.ZonePosition).ToList();
+		return FinalCardsInHand;
 	}
 }
