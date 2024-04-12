@@ -543,7 +543,7 @@
 **Updated for Hearthstone 24.2.0**
 
 **Fixes**:
-- Fixed an issue where it was revealed that the opponent was playing Renathal during mulligan. 
+- Fixed an issue where it was revealed that the opponent was playing Renathal during mulligan.
 
 **Notes**:
 - There are likely still issues with some new cards in Bob's Buddy. We will update these in the coming days.
@@ -998,7 +998,7 @@ Dredge support coming soon!
 
 ## **Release v1.13.20 - 2020-12-18**
 **New**:
-- Added experience bar. 
+- Added experience bar.
 **Fixes**:
 - Improved Bob's Buddy for most recent patch.
 
@@ -1266,7 +1266,7 @@ Dredge support coming soon!
 
 **Fixes**:
 - Fixed an issue where running other deck trackers in parallel may have caused HDT to stop working in some cases.
-- Fixed an issue causing several created cards (e.g. Bombs) to not be tracked correctly. 
+- Fixed an issue causing several created cards (e.g. Bombs) to not be tracked correctly.
 - Fixed an issue where weapons were not correctly accounted for in the attacak mana curve.
 
 **Notes**:
@@ -1433,15 +1433,15 @@ This update should restore the basic functionality. Support for Demon Hunter car
 
 ## **Release v1.8.21 - 2019-10-08**
 **Fixes**:
-- Fixed an issue introduced with 15.4.0.34670 where Arena Decks would not be imported. 
-- Fixed an issue introduced with 15.4.0.34670 where Adventure Decks would not be imported. 
+- Fixed an issue introduced with 15.4.0.34670 where Arena Decks would not be imported.
+- Fixed an issue introduced with 15.4.0.34670 where Adventure Decks would not be imported.
 
 
 ## **Release v1.8.20 - 2019-10-08**
 **Updated for Hearthstone 15.4.0.34670**
 
 **Fixes**:
-- Fixed an issue introduced with 15.4.0.34670 where HDT would hang when starting Hearthstone. 
+- Fixed an issue introduced with 15.4.0.34670 where HDT would hang when starting Hearthstone.
 
 **Outstanding issues:**
 - Adventure deck detection broke with 15.4.0.34670. We are hoping we can fix this soon.
@@ -1627,7 +1627,7 @@ __Fixes__:
 __Fixes__:
 - Fixed an issue where Autodefense Matrix would be greyed out when attacking minions with divine shield.
 - (Hopefully) Fixed an issue where the player and opponent decks could be swapped in some cases.
-- Fixed an issue where it would sometimes still be possible to tell that the opponent was playing a Whizbang deck. 
+- Fixed an issue where it would sometimes still be possible to tell that the opponent was playing a Whizbang deck.
 - Improved automatic deck selection when playing the Whizbang deck.
 
 
@@ -1673,7 +1673,7 @@ __Updated for Taverns of Time event__
 __New__:
 - Redesigned the plugins menu (`options > tracker > plugins`).
 - Added an option to display the "last edited" date on decks (`options > tracker > general`).
-- Improved configuration for turn start and friendly challenge notifications (`options > tracker > notifications`). 
+- Improved configuration for turn start and friendly challenge notifications (`options > tracker > notifications`).
 
 __Fixes__:
 - Fixed an issue where cards were sometimes not permanently removed from the deck after patch 11.2.0.
@@ -1833,7 +1833,7 @@ __Updated for Hearthstone 9.4.0.22115__
 ## __Release v1.5.2 - 2017-10-26__
 
 __New__:
-- Our Twitch Overlay Extension is now available! (`options (advanced) > streaming > twitch extension`) 
+- Our Twitch Overlay Extension is now available! (`options (advanced) > streaming > twitch extension`)
 
 __Fixes__:
 - Fixed an issue where starting Battle.net/Hearthstone was not working with the Battle.net beta client.
