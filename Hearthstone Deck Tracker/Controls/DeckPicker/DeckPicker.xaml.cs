@@ -109,7 +109,16 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Visibility VisibilitySearchBar => SearchBarVisibile ? Visible : Collapsed;
 
-		public ObservableCollection<DeckType> DeckTypeItems => _deckTypeItems ?? (_deckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Where(x => x != DeckType.Classic)));
+		public ObservableCollection<DeckType> DeckTypeItems => _deckTypeItems ??= new ObservableCollection<DeckType>(new() {
+			DeckType.All,
+			DeckType.Standard,
+			DeckType.Wild,
+			DeckType.Twist,
+			DeckType.Arena,
+			DeckType.Dungeon,
+			DeckType.Duels,
+			DeckType.Brawl,
+		});
 
 		public Deck? ActiveDeck => DeckList.Instance.ActiveDeck;
 
@@ -738,7 +747,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			}
 		}
 
-		private void RectangleSortIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) 
+		private void RectangleSortIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 			=> Core.MainWindow.FlyoutSortFilter.IsOpen = !Core.MainWindow.FlyoutSortFilter.IsOpen;
 
 		private void RectangleUseNoDeckIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
