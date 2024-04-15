@@ -33,23 +33,23 @@
         <GroupBox Header="{lex:LocTextUpper Options_Overlay_Battlegrounds_Label_Tier7}" Margin="5,10,5,5">
             <StackPanel>
                 <CheckBox x:Name="CheckboxEnableTier7" Content="{lex:Loc Options_Overlay_Battlegrounds_EnableTier7}"
-                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" 
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxEnableTier7_Checked" Unchecked="CheckboxEnableTier7_Unchecked" />
                 <CheckBox x:Name="CheckboxShowTier7PreLobby" Content="{lex:Loc Options_Overlay_Battlegrounds_ShowTier7PreLobby}"
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
-                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" 
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxShowTier7PreLobby_Checked" Unchecked="CheckboxShowTier7PreLobby_Unchecked" />
                 <CheckBox x:Name="CheckboxShowBattlegroundsHeroPicking" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsHeroPicking}"
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
-                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" 
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxShowBattlegroundsHeroPicking_Checked" Unchecked="CheckboxShowBattlegroundsHeroPicking_Unchecked"/>
                 <CheckBox x:Name="CheckboxShowBattlegroundsQuestPicking" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsQuestPicking}"
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
-                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" 
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxShowBattlegroundsQuestPicking_Checked" Unchecked="CheckboxShowBattlegroundsQuestPicking_Unchecked" />
                 <CheckBox x:Name="CheckboxShowBattlegroundsQuestPickingComps" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsQuestPickingComps}"
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
-                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,5,0,0" 
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,5,0,0"
                           Checked="CheckboxShowBattlegroundsQuestPickingComps_Checked" Unchecked="CheckboxShowBattlegroundsQuestPickingComps_Unchecked" />
             </StackPanel>
         </GroupBox>
@@ -109,6 +109,15 @@
                     VerticalAlignment="Top"
                     Checked="CheckboxShowExternalWindow_Checked"
                     Unchecked="CheckboxShowExternalWindow_Unchecked"
+                    Margin="0,5,0,0"
+                />
+                <CheckBox
+                    x:Name="CheckboxShowMinionsAvailable"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowMinionsAvailable}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowMinionsAvailable_Checked"
+                    Unchecked="CheckboxShowMinionsAvailable_Unchecked"
                     Margin="0,5,0,0"
                 />
                 <CheckBox

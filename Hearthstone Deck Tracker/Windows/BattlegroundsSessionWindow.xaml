@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
-        xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
+        xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session"
         xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:LocalizeDictionary.DesignCulture="en"

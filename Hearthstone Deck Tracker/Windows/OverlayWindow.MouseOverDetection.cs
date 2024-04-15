@@ -19,6 +19,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 
 #endregion
 

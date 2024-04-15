@@ -9,6 +9,7 @@
         xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
         xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone"
         xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
+        xmlns:battlegroundsSession="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session"
         xmlns:mulligan="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan"
         xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
         xmlns:mercenaries="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries"
@@ -210,7 +211,7 @@
                 <StackPanel Name="BattlegroundsSessionStackPanel" Width="auto" Height="auto"
                             Visibility="Collapsed" anim:FadeAnimation.Visibility="Collapsed"
                             anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2">
-                    <battlegrounds:BattlegroundsSession
+                    <battlegroundsSession:BattlegroundsSession
                         x:Name="BattlegroundsSession"
                         DataContext="{Binding BattlegroundsSessionViewModelVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                         CornerRadius="5"

@@ -4,83 +4,82 @@ using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 
-namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
+namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
+
+public partial class BattlegroundsSession : INotifyPropertyChanged
 {
-	public partial class BattlegroundsSession : INotifyPropertyChanged
+	private readonly BrushConverter _bc = new();
+
+	public event PropertyChangedEventHandler? PropertyChanged;
+
+	[NotifyPropertyChangedInvocator]
+	internal virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 	{
-		private readonly BrushConverter _bc = new();
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
 
-		public event PropertyChangedEventHandler? PropertyChanged;
+	public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(BattlegroundsSession));
+	public static readonly DependencyProperty FinalBoardTooltipProperty = DependencyProperty.Register("FinalBoardTooltip", typeof(bool), typeof(BattlegroundsSession));
 
-		[NotifyPropertyChangedInvocator]
-		internal virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+	public BattlegroundsSession()
+	{
+		InitializeComponent();
+		CogBtnVisibility = Visibility.Hidden;
+	}
+
+	private Visibility _cogBtnVisibility;
+	public Visibility CogBtnVisibility
+	{
+		get => _cogBtnVisibility;
+		set
 		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			_cogBtnVisibility = value;
+			OnPropertyChanged();
 		}
+	}
 
-		public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(BattlegroundsSession));
-		public static readonly DependencyProperty FinalBoardTooltipProperty = DependencyProperty.Register("FinalBoardTooltip", typeof(bool), typeof(BattlegroundsSession));
+	public CornerRadius CornerRadius
+	{
+		get { return (CornerRadius)GetValue(CornerRadiusProperty); }
+		set
+		{
+			SetValue(CornerRadiusProperty, value);
+		}
+	}
 
-		public BattlegroundsSession()
+	public bool FinalBoardTooltip
+	{
+		get { return (bool)GetValue(FinalBoardTooltipProperty); }
+		set
 		{
-			InitializeComponent();
-			CogBtnVisibility = Visibility.Hidden;
+			SetValue(FinalBoardTooltipProperty, value);
 		}
+	}
 
-		private Visibility _cogBtnVisibility;
-		public Visibility CogBtnVisibility
-		{
-			get => _cogBtnVisibility;
-			set
-			{
-				_cogBtnVisibility = value;
-				OnPropertyChanged();
-			}
-		}
+	private void Panel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+	{
+		CogBtnVisibility = Visibility.Visible;
+	}
 
-		public CornerRadius CornerRadius
-		{
-			get { return (CornerRadius)GetValue(CornerRadiusProperty); }
-			set
-			{
-				SetValue(CornerRadiusProperty, value);
-			}
-		}
+	private void Panel_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+	{
+		CogBtnVisibility = Visibility.Hidden;
+	}
 
-		public bool FinalBoardTooltip
-		{
-			get { return (bool)GetValue(FinalBoardTooltipProperty); }
-			set
-			{
-				SetValue(FinalBoardTooltipProperty, value);
-			}
-		}
-		
-		private void Panel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-		{
-			CogBtnVisibility = Visibility.Visible;
-		}
+	private void BtnOptions_MouseUp(object sender, System.Windows.Input.MouseEventArgs e)
+	{
+		Core.MainWindow.ActivateWindow();
+		Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
+		Core.MainWindow.FlyoutOptions.IsOpen = true;
+	}
 
-		private void Panel_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-		{
-			CogBtnVisibility = Visibility.Hidden;
-		}
+	private void BtnOptions_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+	{
+		BtnOptions.Background = (Brush)_bc.ConvertFromString("#22FFFFFF");
+	}
 
-		private void BtnOptions_MouseUp(object sender, System.Windows.Input.MouseEventArgs e)
-		{
-			Core.MainWindow.ActivateWindow();
-			Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
-			Core.MainWindow.FlyoutOptions.IsOpen = true;
-		}
-
-		private void BtnOptions_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-		{
-			BtnOptions.Background = (Brush)_bc.ConvertFromString("#22FFFFFF");
-		}
-
-		private void BtnOptions_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-		{
-			BtnOptions.Background = (Brush)_bc.ConvertFromString("#00FFFFFF");
-		}
+	private void BtnOptions_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+	{
+		BtnOptions.Background = (Brush)_bc.ConvertFromString("#00FFFFFF");
 	}
 }

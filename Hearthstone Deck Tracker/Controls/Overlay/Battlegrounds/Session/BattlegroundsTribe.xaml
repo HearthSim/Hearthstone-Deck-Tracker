@@ -1,14 +1,14 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.BattlegroundsTribe"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session.BattlegroundsTribe"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
-             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
-             mc:Ignorable="d" >
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session"
+             mc:Ignorable="d">
     <StackPanel Orientation="Vertical">
         <Canvas Width="38" Height="38">
-            <Border BorderBrush="#D44040" BorderThickness="2" CornerRadius="36">
+            <Border BorderBrush="{Binding BorderColor, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}" BorderThickness="2" CornerRadius="36">
                 <Ellipse Height="34" Width="34">
                     <Ellipse.Fill>
                         <ImageBrush
@@ -27,6 +27,7 @@
                 Canvas.Left="16"
                 Canvas.Top="15"
                 Source="/HearthstoneDeckTracker;component/Resources/tribes-x.png"
+                Visibility="{Binding XVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
             />
         </Canvas>
         <StackPanel Height="16" Margin="0,2,0,0" Orientation="Vertical">

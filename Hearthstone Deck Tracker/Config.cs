@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(".")]
 		public string DataDirPath = ".";
 
-		//updating from <= 0.5.1: 
+		//updating from <= 0.5.1:
 		//SaveConfigInAppData and SaveDataInAppData are set to SaveInAppData AFTER the config isloaded
 		//=> Need to be null to avoid creating new config in appdata if config is stored locally.
 		[DefaultValue(true)]
@@ -881,6 +881,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowSessionRecapBetweenGames = true;
 
+		[DefaultValue(false)]
+		public bool ShowSessionRecapMinionsAvailable = false;
+
 		[DefaultValue(true)]
 		public bool ShowSessionRecapMinionsBanned = true;
 
@@ -1247,7 +1250,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 		}
-		
+
 		public static void Save() => XmlManager<Config>.Save(Instance.ConfigPath, Instance);
 
 		public static void SaveBackup(bool deleteOriginal = false)
