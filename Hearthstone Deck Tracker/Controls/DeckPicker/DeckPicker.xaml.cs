@@ -116,7 +116,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			DeckType.Twist,
 			DeckType.Arena,
 			DeckType.Dungeon,
-			DeckType.Duels,
 			DeckType.Brawl,
 		});
 
