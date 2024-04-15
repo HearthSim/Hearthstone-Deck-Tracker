@@ -116,7 +116,7 @@ public partial class BattlegroundsTribe : INotifyPropertyChanged
 			return Availability switch
 			{
 				MinionTypeAvailability.Banned => "#D44040",
-				MinionTypeAvailability.Available => "#33EE40",
+				MinionTypeAvailability.Available => "#16d220",
 				_ => "#FF000000"
 			};
 		}
