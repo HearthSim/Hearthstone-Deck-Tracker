@@ -2,6 +2,7 @@
 using HearthWatcher.Providers;
 using System;
 using System.Threading.Tasks;
+using HearthMirror.Objects;
 
 namespace HearthWatcher
 {
@@ -45,7 +46,8 @@ namespace HearthWatcher
 					_provider.IsJournalOpen ?? false,
 					_provider.IsPopupShowing ?? false,
 					_provider.IsFriendslistOpen ?? false,
-					_provider.IsBlurActive ?? false
+					_provider.IsBlurActive ?? false,
+					_provider.SelectedBattlegroundsGameMode ?? SelectedBattlegroundsGameMode.UNKNOWN
 				);
 				if(curr.Equals(_prev))
 					continue;

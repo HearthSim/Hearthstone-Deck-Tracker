@@ -123,7 +123,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool? IsDungeonMatch => string.IsNullOrEmpty(CurrentGameStats?.OpponentHeroCardId) || CurrentGameType == GameType.GT_UNKNOWN ? (bool?)null
 			: CurrentGameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(CurrentGameStats?.OpponentHeroCardId);
 
-		public bool IsBattlegroundsMatch => CurrentGameType == GameType.GT_BATTLEGROUNDS || CurrentGameType == GameType.GT_BATTLEGROUNDS_FRIENDLY;
+		public bool IsBattlegroundsMatch => IsBattlegroundsSoloMatch || IsBattlegroundsDuosMatch;
+		public bool IsBattlegroundsSoloMatch =>
+			CurrentGameType is
+				GameType.GT_BATTLEGROUNDS or
+				GameType.GT_BATTLEGROUNDS_FRIENDLY or
+				GameType.GT_BATTLEGROUNDS_AI_VS_AI or
+				GameType.GT_BATTLEGROUNDS_PLAYER_VS_AI;
+		public bool IsBattlegroundsDuosMatch =>
+			CurrentGameType is
+				GameType.GT_BATTLEGROUNDS_DUO or
+				GameType.GT_BATTLEGROUNDS_DUO_VS_AI or
+				GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY;
+
 		public bool IsMercenariesMatch => CurrentGameType == GameType.GT_MERCENARIES_AI_VS_AI || CurrentGameType == GameType.GT_MERCENARIES_FRIENDLY
 					|| CurrentGameType == GameType.GT_MERCENARIES_PVE || CurrentGameType == GameType.GT_MERCENARIES_PVP
 					|| CurrentGameType == GameType.GT_MERCENARIES_PVE_COOP;
@@ -235,11 +247,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public BrawlInfo BrawlInfo => _brawlInfo ?? (_brawlInfo = HearthMirror.Reflection.Client.GetBrawlInfo());
+		public BrawlInfo? BrawlInfo => _brawlInfo ?? (_brawlInfo = HearthMirror.Reflection.Client.GetBrawlInfo());
 
-		public BattlegroundRatingInfo BattlegroundsRatingInfo => _battlegroundsRatingInfo ?? (_battlegroundsRatingInfo = HearthMirror.Reflection.Client.GetBattlegroundRatingInfo());
+		public BattlegroundRatingInfo? BattlegroundsRatingInfo => _battlegroundsRatingInfo ?? (_battlegroundsRatingInfo = HearthMirror.Reflection.Client.GetBattlegroundRatingInfo());
 
-		public MercenariesRatingInfo MercenariesRatingInfo => _mercenariesRatingInfo ?? (_mercenariesRatingInfo = HearthMirror.Reflection.Client.GetMercenariesRatingInfo());
+		public int? CurrentBattlegroundsRating => IsBattlegroundsMatch
+			? (IsBattlegroundsDuosMatch ? BattlegroundsRatingInfo?.DuosRating : BattlegroundsRatingInfo?.Rating)
+			: null;
+
+		public MercenariesRatingInfo? MercenariesRatingInfo => _mercenariesRatingInfo ?? (_mercenariesRatingInfo = HearthMirror.Reflection.Client.GetMercenariesRatingInfo());
 
 		public MercenariesMapInfo MercenariesMapInfo => HearthMirror.Reflection.Client.GetMercenariesMapInfo();
 

@@ -372,7 +372,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var turn = _game.GetTurnNumber();
 			_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Collapsed);
 			_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Collapsed);
-			if(turn == 0)
+			if(turn == 0 || _game.IsBattlegroundsDuosMatch)
 				return;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
 			{

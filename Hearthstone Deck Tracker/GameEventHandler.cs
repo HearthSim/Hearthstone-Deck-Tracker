@@ -681,19 +681,26 @@ namespace Hearthstone_Deck_Tracker
 					_game.CurrentGameStats.ArenaWins = DeckImporter.ArenaInfoCache?.Wins ?? 0;
 					_game.CurrentGameStats.ArenaLosses = DeckImporter.ArenaInfoCache?.Losses ?? 0;
 				}
-				else if(_game.CurrentGameMode == Brawl && _game.BrawlInfo != null)
+				else if(_game.CurrentGameMode == Brawl)
 				{
-					_game.CurrentGameStats.BrawlWins = _game.BrawlInfo.Wins;
-					_game.CurrentGameStats.BrawlLosses = _game.BrawlInfo.Losses;
+					var brawlInfo = _game.BrawlInfo;
+					if(brawlInfo != null)
+					{
+						_game.CurrentGameStats.BrawlWins = brawlInfo.Wins;
+						_game.CurrentGameStats.BrawlLosses = brawlInfo.Losses;
+					}
 				}
-				else if (_game.IsBattlegroundsMatch && _game.BattlegroundsRatingInfo != null)
+				else if (_game.IsBattlegroundsMatch)
 				{
-					_game.CurrentGameStats.BattlegroundsRating = _game.BattlegroundsRatingInfo.Rating;
+					var rating = _game.CurrentBattlegroundsRating;
+					if(rating.HasValue)
+						_game.CurrentGameStats.BattlegroundsRating = rating.Value;
 				}
 				else if (_game.IsMercenariesMatch)
 				{
-					if(_game.IsMercenariesPvpMatch && _game.MercenariesRatingInfo != null)
-						_game.CurrentGameStats.MercenariesRating = _game.MercenariesRatingInfo.Rating;
+					var ratingInfo = _game.MercenariesRatingInfo;
+					if(_game.IsMercenariesPvpMatch && ratingInfo != null)
+						_game.CurrentGameStats.MercenariesRating = ratingInfo.Rating;
 					if(_game.IsMercenariesPveMatch)
 					{
 						_game.CurrentGameStats.MercenariesBountyRunId = _game.MercenariesMapInfo?.Seed.ToString();
@@ -855,7 +862,8 @@ namespace Hearthstone_Deck_Tracker
 						Sentry.SendQueuedBobsBuddyEvents(_game.CurrentGameStats.HsReplay.UploadId);
 					else
 						Sentry.ClearBobsBuddyEvents();
-					RecordBattlegroundsGame();
+					if(!_game.IsBattlegroundsDuosMatch)
+						RecordBattlegroundsGame();
 					Tier7Trial.Clear();
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
@@ -1317,7 +1325,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void HandleBattlegroundsStart()
 		{
-			if(Config.Instance.ShowBattlegroundsToast)
+			if(Config.Instance.ShowBattlegroundsToast && _game.IsBattlegroundsSoloMatch)
 			{
 				for(var i = 0; i < 10; i++)
 				{

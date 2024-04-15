@@ -173,7 +173,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
 				OfferedRewards = rewards,
 				LanguageCode = Config.Instance.SelectedLanguage,
-				BattlegroundsRating = Core.Game.BattlegroundsRatingInfo?.Rating
+				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating
 			};
 		}
 

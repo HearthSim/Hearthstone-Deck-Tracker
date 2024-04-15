@@ -14,6 +14,7 @@ using static System.Windows.Visibility;
 using static HearthDb.Enums.GameTag;
 using static Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounterStyle;
 using HearthDb.Enums;
+using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Animations;
@@ -632,7 +633,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				!_game.QueueEvents.IsInQueue &&
 				SceneHandler.Scene == Mode.BACON &&
 				Config.Instance.EnableBattlegroundsTier7Overlay &&
-				Config.Instance.ShowBattlegroundsTier7PreLobby
+				Config.Instance.ShowBattlegroundsTier7PreLobby &&
+				Tier7PreLobbyViewModel.BattlegroundsGameMode != SelectedBattlegroundsGameMode.DUOS
 			);
 
 			if(show)

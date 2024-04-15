@@ -541,6 +541,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			if(Remote.Config.Data?.BobsBuddy?.Disabled ?? false)
 				return;
+			if(_game.IsBattlegroundsDuosMatch)
+				return; // disable in Duos for now
 			_bgsBobsBuddyBehavior.Show();
 		}
 
@@ -804,9 +806,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ConstructedMulliganGuidePreLobbyViewModel.IsModalOpen = isModalOpen;
 		}
 
-		internal void SetBaconState(bool isAnyOpen)
+		internal void SetBaconState(SelectedBattlegroundsGameMode mode, bool isAnyOpen)
 		{
+			Tier7PreLobbyViewModel.BattlegroundsGameMode = mode;
 			Tier7PreLobbyViewModel.IsModalOpen = !_game.QueueEvents.IsInQueue && isAnyOpen;
+			BattlegroundsSessionViewModelVM.BattlegroundsGameMode = mode;
+			UpdateTier7PreLobbyVisibility();
 		}
 
 		internal void SetConstructedQueue(bool inQueue)

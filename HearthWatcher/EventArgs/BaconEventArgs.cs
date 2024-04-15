@@ -1,4 +1,6 @@
-﻿namespace HearthWatcher.EventArgs
+﻿using HearthMirror.Objects;
+
+namespace HearthWatcher.EventArgs
 {
 	public class BaconEventArgs : System.EventArgs
 	{
@@ -7,14 +9,18 @@
 		public bool IsPopupShowing { get; }
 		public bool IsFriendslistOpen { get; }
 		public bool IsBlurActive { get; }
+		public SelectedBattlegroundsGameMode SelectedBattlegroundsGameMode { get; }
 
-		public BaconEventArgs(bool isShopOpen, bool isJournalOpen, bool isPopupShowing, bool isFriendslistOpen, bool isBlurActive)
+		public BaconEventArgs(
+			bool isShopOpen, bool isJournalOpen, bool isPopupShowing, bool isFriendslistOpen, bool isBlurActive, SelectedBattlegroundsGameMode selectedBattlegroundsGameMode
+		)
 		{
 			IsShopOpen = isShopOpen;
 			IsJournalOpen = isJournalOpen;
 			IsPopupShowing = isPopupShowing;
 			IsFriendslistOpen = isFriendslistOpen;
 			IsBlurActive = isBlurActive;
+			SelectedBattlegroundsGameMode = selectedBattlegroundsGameMode;
 		}
 
 		public bool IsAnyOpen => IsShopOpen || IsJournalOpen || IsPopupShowing || IsFriendslistOpen || IsBlurActive;
@@ -24,7 +30,8 @@
 			&& IsJournalOpen == args.IsJournalOpen
 			&& IsPopupShowing == args.IsPopupShowing
 			&& IsFriendslistOpen == args.IsFriendslistOpen
-			&& IsBlurActive == args.IsBlurActive;
+			&& IsBlurActive == args.IsBlurActive
+			&& SelectedBattlegroundsGameMode == args.SelectedBattlegroundsGameMode;
 
 		public override int GetHashCode()
 		{
@@ -34,6 +41,7 @@
 			hashCode = hashCode * -1521134295 + IsPopupShowing.GetHashCode();
 			hashCode = hashCode * -1521134295 + IsFriendslistOpen.GetHashCode();
 			hashCode = hashCode * -1521134295 + IsBlurActive.GetHashCode();
+			hashCode = hashCode * -1521134295 + SelectedBattlegroundsGameMode.GetHashCode();
 			return hashCode;
 		}
 	}

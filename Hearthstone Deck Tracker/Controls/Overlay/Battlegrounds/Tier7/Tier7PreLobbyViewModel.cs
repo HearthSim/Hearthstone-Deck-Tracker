@@ -6,6 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using HearthMirror;
+using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
@@ -35,6 +36,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				OnPropertyChanged(nameof(PanelMinWidth));
 			};
 		}
+
+		#region Mode
+		public SelectedBattlegroundsGameMode BattlegroundsGameMode
+		{
+			get
+			{
+				return GetProp(SelectedBattlegroundsGameMode.UNKNOWN);
+			}
+			set
+			{
+				SetProp(value);
+			}
+		}
+		#endregion
 
 		#region Visibiliy
 		public bool IsModalOpen

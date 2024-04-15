@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal static void OnBaconChange(object sender, HearthWatcher.EventArgs.BaconEventArgs args)
 		{
-			Core.Overlay.SetBaconState(args.IsAnyOpen);
+			Core.Overlay.SetBaconState(args.SelectedBattlegroundsGameMode, args.IsAnyOpen);
 		}
 
 		internal static void OnDeckPickerChange(object sender, HearthWatcher.EventArgs.DeckPickerEventArgs args)
@@ -142,6 +142,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool? IsPopupShowing => Reflection.Client.IsPopupShowing();
 		public bool? IsFriendslistOpen => Reflection.Client.IsFriendsListVisible();
 		public bool? IsBlurActive => Reflection.Client.GetIsBlurActive();
+		public SelectedBattlegroundsGameMode? SelectedBattlegroundsGameMode => Reflection.Client.GetSelectedBattlegroundsGameMode();
 	}
 
 	public class HearthMirrorDeckPickerProvider : IDeckPickerProvider

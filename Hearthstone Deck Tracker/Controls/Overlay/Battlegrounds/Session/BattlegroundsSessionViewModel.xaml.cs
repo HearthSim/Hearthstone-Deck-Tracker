@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using HearthDb.Enums;
+using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
@@ -53,7 +54,11 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	public void UpdateSectionsVisibilities()
 	{
-		AvailableMinionTypesSectionVisibility = Config.Instance.ShowSessionRecapMinionsAvailable
+		var isDuos = Core.Game.IsInMenu
+			? BattlegroundsGameMode == SelectedBattlegroundsGameMode.DUOS
+			: Core.Game.IsBattlegroundsDuosMatch;
+
+			AvailableMinionTypesSectionVisibility = Config.Instance.ShowSessionRecapMinionsAvailable
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
@@ -61,11 +66,11 @@ public class BattlegroundsSessionViewModel : ViewModel
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
-		BgStartCurrentMMRSectionVisibility = Config.Instance.ShowSessionRecapStartCurrentMMR
+		BgStartCurrentMMRSectionVisibility = Config.Instance.ShowSessionRecapStartCurrentMMR && !isDuos
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
-		BgLatestGamesSectionVisibility = Config.Instance.ShowSessionRecapLatestGames
+		BgLatestGamesSectionVisibility = Config.Instance.ShowSessionRecapLatestGames && !isDuos
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
@@ -342,4 +347,19 @@ public class BattlegroundsSessionViewModel : ViewModel
 			OnPropertyChanged();
 		}
 	}
+
+	#region Mode
+	public SelectedBattlegroundsGameMode BattlegroundsGameMode
+	{
+		get
+		{
+			return GetProp(SelectedBattlegroundsGameMode.UNKNOWN);
+		}
+		set
+		{
+			SetProp(value);
+			UpdateSectionsVisibilities();
+		}
+	}
+	#endregion
 }
