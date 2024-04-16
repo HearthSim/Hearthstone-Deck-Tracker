@@ -1,3 +1,16 @@
+## **Release v1.25.4 - 2024-04-16**
+**Updated for Hearthstone 29.2.0**
+
+**Notes**:
+- Most Battlegrounds features are disabled in Duos right now. We'll be investigating what's possible in the coming days!
+
+**Features**:
+- Added a new setting to show the available Minion Types in the Battlegrounds session panel!
+
+**Fixes**:
+- Fixed an issue causing the Twitch Extension to generate incomplete deck codes if Zilliax Deluxe 3000 was in the deck.
+- Fixed an issue causing the Mulligan Guide to not show data for Zilliax Deluxe 3000.
+
 ## **Release v1.25.3 - 2024-03-28**
 **Updated for Hearthstone 29.0.3**
 
