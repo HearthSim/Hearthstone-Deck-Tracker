@@ -143,6 +143,13 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		private BoardState? GetBoardState()
 		{
+			if(Core.Game.IsBattlegroundsMatch)
+				return GetBattlegroundsBoardState();
+			return GetTraditionalBoardState();
+		}
+
+		private BoardState? GetTraditionalBoardState()
+		{
 			if(Core.Game.PlayerEntity == null || Core.Game.OpponentEntity == null)
 				return null;
 
@@ -204,6 +211,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				}
 
 			}
+
 			var format = Core.Game.CurrentFormat ?? Format.Wild;
 			var gameType = HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, format);
 			var playerWeapon = DbfId(Find(player, WeaponId(Core.Game.PlayerEntity)));
@@ -254,8 +262,54 @@ namespace Hearthstone_Deck_Tracker.Live
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},
 				GameType = gameType,
+			};
+		}
+
+
+		private BoardState? GetBattlegroundsBoardState()
+		{
+			if(Core.Game.PlayerEntity == null || Core.Game.OpponentEntity == null)
+				return null;
+
+			var player = Core.Game.Player;
+			var opponent = Core.Game.Opponent;
+			var format = Core.Game.CurrentFormat ?? Format.Wild;
+			var gameType = HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, format);
+			var playerWeapon = DbfId(Find(player, WeaponId(Core.Game.PlayerEntity)));
+			var opponentWeapon = DbfId(Find(opponent, WeaponId(Core.Game.OpponentEntity)));
+
+			return new BoardState
+			{
+				Player = new BoardStatePlayer
+				{
+					Board = SortedDbfIds(player.Board.Where(x => x.TakesBoardSlot)),
+					Hero = HeroDbfId(Find(player, HeroId(Core.Game.PlayerEntity))),
+					HeroPower = BgsQuestReward(player, true) ?? DbfId(FindHeroPower(player)),
+					Weapon = playerWeapon != 0 ? playerWeapon : (BgsQuestReward(player, false) ?? BuddyDbfId(player) ?? 0),
+					Hand = new BoardStateHand
+					{
+						Cards = SortedDbfIds(player.Hand),
+						Size = player.HandCount
+					},
+					Secrets = SortedDbfIds(player.PlayerEntities.Where(x => x.IsInSecret)),
+					Fatigue = 0
+				},
+				Opponent = new BoardStatePlayer
+				{
+					Board = SortedDbfIds(opponent.Board.Where(x => x.TakesBoardSlot)),
+					Hero = HeroDbfId(Find(opponent, HeroId(Core.Game.OpponentEntity))),
+					HeroPower = BgsQuestReward(opponent, true) ?? DbfId(FindHeroPower(opponent)),
+					Weapon = opponentWeapon != 0 ? opponentWeapon : (BgsQuestReward(opponent, false) ?? BuddyDbfId(opponent) ?? 0),
+					Hand = new BoardStateHand
+					{
+						Size = opponent.HandCount
+					},
+					Secrets = SortedDbfIds(opponent.PlayerEntities.Where(x => x.IsInSecret)),
+					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
+				},
+				GameType = gameType,
 				BattlegroundsAnomaly = BgsAnomaly(Core.Game.GameEntity),
-				BobsBuddyOutput = Core.Game.IsBattlegroundsMatch ? GetBobsBuddyState() : null
+				BobsBuddyOutput = GetBobsBuddyState()
 			};
 		}
 
@@ -264,7 +318,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			if(Core.Game.CurrentGameStats == null || Core.Game.GameEntity == null)
 				return null;
 			var turn = Core.Game.GameEntity.GetTag(GameTag.TURN) %2 == 0? Core.Game.GetTurnNumber() : Core.Game.GetTurnNumber() - 1;
-			
+
 			var invokerInstance = BobsBuddyInvoker.GetInstance(Core.Game.CurrentGameStats.GameId, Math.Max(turn, 1) , false);
 
 			var output = invokerInstance?.Output;
@@ -314,7 +368,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					break;
 				case BobsBuddy.BobsBuddyState.CombatWithoutSimulation:
 					break;
-				case null:	
+				case null:
 					simulationState = TwitchSimulationState.WaitingForCombat;
 					break;
 
