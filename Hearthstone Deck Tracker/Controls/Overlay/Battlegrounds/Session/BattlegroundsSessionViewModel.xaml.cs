@@ -52,13 +52,13 @@ public class BattlegroundsSessionViewModel : ViewModel
 		BgRatingCurrent = $"{rating:N0}";
 	}
 
+	private bool IsDuos => Core.Game.IsInMenu
+		? BattlegroundsGameMode == SelectedBattlegroundsGameMode.DUOS
+		: Core.Game.IsBattlegroundsDuosMatch;
+
 	public void UpdateSectionsVisibilities()
 	{
-		var isDuos = Core.Game.IsInMenu
-			? BattlegroundsGameMode == SelectedBattlegroundsGameMode.DUOS
-			: Core.Game.IsBattlegroundsDuosMatch;
-
-			AvailableMinionTypesSectionVisibility = Config.Instance.ShowSessionRecapMinionsAvailable
+		AvailableMinionTypesSectionVisibility = Config.Instance.ShowSessionRecapMinionsAvailable
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
@@ -66,11 +66,11 @@ public class BattlegroundsSessionViewModel : ViewModel
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
-		BgStartCurrentMMRSectionVisibility = Config.Instance.ShowSessionRecapStartCurrentMMR && !isDuos
+		BgStartCurrentMMRSectionVisibility = Config.Instance.ShowSessionRecapStartCurrentMMR && !IsDuos
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
-		BgLatestGamesSectionVisibility = Config.Instance.ShowSessionRecapLatestGames && !isDuos
+		BgLatestGamesSectionVisibility = Config.Instance.ShowSessionRecapLatestGames && !IsDuos
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
