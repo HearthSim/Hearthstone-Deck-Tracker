@@ -575,6 +575,8 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 					Core.Overlay.BattlegroundsSessionViewModelVM.Update();
+					if(_game.IsBattlegroundsDuosMatch)
+						Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
 				}
 			}
 		}
@@ -1366,7 +1368,11 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			else
+			{
 				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
+				if(Core.Game.IsBattlegroundsDuosMatch)
+					Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
+			}
 
 			Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();

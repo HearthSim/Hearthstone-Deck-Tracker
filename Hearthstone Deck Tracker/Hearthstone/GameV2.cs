@@ -41,6 +41,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BattlegroundRatingInfo? _battlegroundsRatingInfo;
 		private MercenariesRatingInfo? _mercenariesRatingInfo;
 		private BattlegroundsBoardState? _battlegroundsBoardState;
+		public BattlegroundsDuosBoardState? BattlegroundsDuosBoardState { get; set; }
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 		private MulliganGuideParams? _mulliganGuideParams;
@@ -337,6 +338,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 			PowerLog.Clear();
 			_battlegroundsBoardState?.Reset();
+			BattlegroundsDuosBoardState = null;
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
 			_mulliganGuideParams = null;

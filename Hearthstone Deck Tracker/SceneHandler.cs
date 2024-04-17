@@ -50,6 +50,7 @@ public class SceneHandler
 		else if(from == Mode.GAMEPLAY)
 		{
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
+			Watchers.BattlegroundsTeammateBoardStateWatcher.Stop();
 		}
 	}
 

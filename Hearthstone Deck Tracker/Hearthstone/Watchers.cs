@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Importing;
+using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HearthWatcher;
 using HearthWatcher.Providers;
@@ -31,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BaconWatcher.Change += OnBaconChange;
 			DeckPickerWatcher.Change += OnDeckPickerChange;
 			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning);
+			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
 		}
 
 		internal static void Stop()
@@ -45,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BaconWatcher.Stop();
 			DeckPickerWatcher.Stop();
 			SceneWatcher.Stop();
+			BattlegroundsTeammateBoardStateWatcher.Stop();
 		}
 
 		internal static void OnBaconChange(object sender, HearthWatcher.EventArgs.BaconEventArgs args)
@@ -73,16 +76,29 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static ArenaWatcher ArenaWatcher { get; } = new ArenaWatcher(new HearthMirrorArenaProvider());
-		public static PackOpeningWatcher PackWatcher { get; } = new PackOpeningWatcher(new HearthMirrorPackProvider());
-		public static DungeonRunWatcher DungeonRunWatcher { get; } = new DungeonRunWatcher(new GameDataProvider());
-		public static PVPDungeonRunWatcher PVPDungeonRunWatcher { get; } = new PVPDungeonRunWatcher(new GameDataProvider());
-		public static FriendlyChallengeWatcher FriendlyChallengeWatcher { get; } = new FriendlyChallengeWatcher(new HearthMirrorFriendlyChallengeProvider());
-		public static ExperienceWatcher ExperienceWatcher { get; } = new ExperienceWatcher(new HearthMirrorRewardTrackProvider());
-		public static QueueWatcher QueueWatcher { get; } = new QueueWatcher(new HearthMirrorQueueProvider());
-		public static BaconWatcher BaconWatcher { get; } = new BaconWatcher(new HearthMirrorBaconProvider());
-		public static DeckPickerWatcher DeckPickerWatcher { get; } = new DeckPickerWatcher(new HearthMirrorDeckPickerProvider());
-		public static SceneWatcher SceneWatcher { get; } = new SceneWatcher(new HearthMirrorSceneProvider());
+		internal static void OnBattlegroundsTeammateBoardStateChange(object sender, HearthWatcher.EventArgs.BattlegroundsTeammateBoardStateArgs args)
+		{
+			if(args is { IsViewingTeammate: false, Entities.Count: 0, MulliganHeroes.Count: 0 })
+			{
+				Core.Game.BattlegroundsDuosBoardState = null;
+				return;
+			}
+
+			var state = new BattlegroundsDuosBoardState(args.IsViewingTeammate, args.MulliganHeroes, args.Entities);
+			Core.Game.BattlegroundsDuosBoardState = state;
+		}
+
+		public static ArenaWatcher ArenaWatcher { get; } = new(new HearthMirrorArenaProvider());
+		public static PackOpeningWatcher PackWatcher { get; } = new(new HearthMirrorPackProvider());
+		public static DungeonRunWatcher DungeonRunWatcher { get; } = new(new GameDataProvider());
+		public static PVPDungeonRunWatcher PVPDungeonRunWatcher { get; } = new(new GameDataProvider());
+		public static FriendlyChallengeWatcher FriendlyChallengeWatcher { get; } = new(new HearthMirrorFriendlyChallengeProvider());
+		public static ExperienceWatcher ExperienceWatcher { get; } = new(new HearthMirrorRewardTrackProvider());
+		public static QueueWatcher QueueWatcher { get; } = new(new HearthMirrorQueueProvider());
+		public static BaconWatcher BaconWatcher { get; } = new(new HearthMirrorBaconProvider());
+		public static DeckPickerWatcher DeckPickerWatcher { get; } = new(new HearthMirrorDeckPickerProvider());
+		public static SceneWatcher SceneWatcher { get; } = new(new HearthMirrorSceneProvider());
+		public static BattlegroundsTeammateBoardStateWatcher BattlegroundsTeammateBoardStateWatcher { get; } = new(new HearthMirrorBattlegroundsTeammateBoardStateProvider());
 	}
 
 	public class GameDataProvider : IGameDataProvider
@@ -155,5 +171,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorSceneProvider : ISceneProvider
 	{
 		public SceneMgrState? State => Reflection.Client.GetSceneMgrState();
+	}
+
+	public class HearthMirrorBattlegroundsTeammateBoardStateProvider : IBattlegroundsTeammateBoardStateProvider
+	{
+		public BattlegroundsTeammateBoardState? BattlegroundsTeammateBoardState =>
+			Reflection.Client.GetBattlegroundsTeammateBoardState();
 	}
 }
