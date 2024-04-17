@@ -36,7 +36,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private readonly Random _rnd = new Random();
 
 		private static BobsBuddyPanel BobsBuddyDisplay => Core.Overlay.BobsBuddyDisplay;
-		private static bool ReportErrors => Remote.Config.Data?.BobsBuddy?.SentryReporting ?? false;
+		private static bool ReportErrors
+		{
+			get
+			{
+				var verStr = Remote.Config.Data?.BobsBuddy?.SentryMinRequiredVersion ?? string.Empty;
+				if(Version.TryParse(verStr, out var requiredVersion))
+					return Helper.GetCurrentVersion() >= requiredVersion;
+				return false;
+			}
+		}
 
 		private Input? _input;
 		private int _turn;
