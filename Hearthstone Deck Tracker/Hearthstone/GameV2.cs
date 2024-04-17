@@ -130,11 +130,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				GameType.GT_BATTLEGROUNDS_FRIENDLY or
 				GameType.GT_BATTLEGROUNDS_AI_VS_AI or
 				GameType.GT_BATTLEGROUNDS_PLAYER_VS_AI;
+
 		public bool IsBattlegroundsDuosMatch =>
 			CurrentGameType is
 				GameType.GT_BATTLEGROUNDS_DUO or
 				GameType.GT_BATTLEGROUNDS_DUO_VS_AI or
-				GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY;
+				GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY or
+				GameType.GT_BATTLEGROUNDS_DUO_AI_VS_AI;
 
 		public bool IsMercenariesMatch => CurrentGameType == GameType.GT_MERCENARIES_AI_VS_AI || CurrentGameType == GameType.GT_MERCENARIES_FRIENDLY
 					|| CurrentGameType == GameType.GT_MERCENARIES_PVE || CurrentGameType == GameType.GT_MERCENARIES_PVP

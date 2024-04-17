@@ -157,6 +157,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return GameMode.Arena;
 				case GameType.GT_BATTLEGROUNDS:
 				case GameType.GT_BATTLEGROUNDS_FRIENDLY:
+				case GameType.GT_BATTLEGROUNDS_AI_VS_AI:
+				case GameType.GT_BATTLEGROUNDS_PLAYER_VS_AI:
+				case GameType.GT_BATTLEGROUNDS_DUO:
+				case GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY:
+				case GameType.GT_BATTLEGROUNDS_DUO_VS_AI:
+				case GameType.GT_BATTLEGROUNDS_DUO_AI_VS_AI:
 					return GameMode.Battlegrounds;
 				case GameType.GT_RANKED:
 					return GameMode.Ranked;
@@ -270,6 +276,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return BGT_BATTLEGROUNDS;
 				case GameType.GT_BATTLEGROUNDS_FRIENDLY:
 					return BGT_BATTLEGROUNDS_FRIENDLY;
+				case GameType.GT_BATTLEGROUNDS_PLAYER_VS_AI:
+					return BGT_BATTLEGROUNDS_PLAYER_VS_AI;
 				case GameType.GT_PVPDR:
 					return BGT_PVPDR;
 				case GameType.GT_PVPDR_PAID:
@@ -284,6 +292,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return BGT_MERCENARIES_PVP;
 				case GameType.GT_MERCENARIES_PVE_COOP:
 					return BGT_MERCENARIES_PVE_COOP;
+				case GameType.GT_BATTLEGROUNDS_DUO:
+					return BGT_BATTLEGROUNDS_DUO;
+				case GameType.GT_BATTLEGROUNDS_DUO_VS_AI:
+					return BGT_BATTLEGROUNDS_DUO_VS_AI;
+				case GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY:
+					return BGT_BATTLEGROUNDS_DUO_FRIENDLY;
 				default:
 					return BGT_UNKNOWN;
 			}
