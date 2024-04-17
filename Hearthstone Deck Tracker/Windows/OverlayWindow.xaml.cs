@@ -480,6 +480,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
 			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
 			BattlegroundsMinionsVM.AvailableRaces = BattlegroundsUtils.GetAvailableRaces(_game.CurrentGameStats?.GameId);
+			BattlegroundsMinionsVM.IsDuos = _game.IsBattlegroundsDuosMatch;
 			BattlegroundsMinionsVM.Anomaly = anomalyCardId;
 			BattlegroundsMinionsVM.BannedMinions = BattlegroundsUtils.GetMinionsBannedByAnomaly(anomalyDbfId) ?? new List<string>();
 

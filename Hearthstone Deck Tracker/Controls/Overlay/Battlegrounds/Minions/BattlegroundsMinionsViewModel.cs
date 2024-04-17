@@ -44,6 +44,16 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
+	public bool IsDuos
+	{
+		get => GetProp(false);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(Groups));
+		}
+	}
+
 	public string? Anomaly
 	{
 		get => GetProp<string?>(null);
@@ -128,7 +138,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 				if(AvailableRaces != null && !AvailableRaces.Contains(race) && race != Race.INVALID && race != Race.ALL)
 					continue;
 
-				IEnumerable<Hearthstone.Card> cards = _db.Value.GetCards(tier, race);
+				IEnumerable<Hearthstone.Card> cards = _db.Value.GetCards(tier, race, IsDuos);
 
 				if(!cards.Any())
 					continue;
@@ -156,7 +166,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 				});
 			}
 
-			IEnumerable<Hearthstone.Card> spells = _db.Value.GetSpells(tier);
+			IEnumerable<Hearthstone.Card> spells = _db.Value.GetSpells(tier, IsDuos);
 			if(spells.Any())
 			{
 				spells = spells.Select(x =>
@@ -194,6 +204,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 	{
 		AvailableRaces = null;
 		ActiveTier = null;
+		IsDuos = false;
 		Anomaly = null;
 		IsThorimRelevant = false;
 		BannedMinions = null;
