@@ -255,7 +255,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				},
 				GameType = gameType,
 				BattlegroundsAnomaly = BgsAnomaly(Core.Game.GameEntity),
-				BobsBuddyOutput = gameType == BnetGameType.BGT_BATTLEGROUNDS ? GetBobsBuddyState() : null
+				BobsBuddyOutput = Core.Game.IsBattlegroundsMatch ? GetBobsBuddyState() : null
 			};
 		}
 
