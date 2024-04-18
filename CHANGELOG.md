@@ -1,3 +1,14 @@
+## **Release v1.26.0 - 2024-04-18**
+
+**Features**:
+- Added a button to filter the Battlegrounds minion list by minion type!
+
+**Fixes**:
+- Fixed an issue causing the Battlegrounds Hero Picking overlay to not align with the heroes.
+- Fixed an issue causing Duos-exclusive Battlegrounds minions to appear in the normal Battlegrounds minion list.
+- Fixed an issue causing the Twitch Extension to show incorrect card tooltips while you viewed your teammate's board in Duos.
+- Fixed plugin compatibility in Duos.
+
 ## **Release v1.25.4 - 2024-04-16**
 **Updated for Hearthstone 29.2.0**
 
