@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 
@@ -31,6 +32,12 @@ public partial class BattlegroundsMinions : UserControl
 	public ICommand SetActiveTierCommand => new Command<int>(value =>
 	{
 		((BattlegroundsMinionsViewModel)DataContext).ActiveTier = ((BattlegroundsMinionsViewModel)DataContext).ActiveTier == value ? null : value;
+		Core.Game.Metrics.IncrementBattlegroundsMinionsTabClick();
+	});
+
+	public ICommand SetActiveMinionTypeCommand => new Command<Race>(value =>
+	{
+		((BattlegroundsMinionsViewModel)DataContext).ActiveMinionType = value;
 		Core.Game.Metrics.IncrementBattlegroundsMinionsTabClick();
 	});
 }

@@ -32,18 +32,18 @@
         <ScrollViewer x:Name="MinionScrollViewer" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalScrollBarVisibility="Auto"
                       ext:OverlayExtensions.IsOverlayHitTestVisible="True">
             <StackPanel>
-                <!-- Set HitTestVisible=False to prevent showing normal tooltips-->
                 <ItemsControl
                     x:Name="GroupsControl"
                     ItemsSource="{Binding Groups}"
-                    IsHitTestVisible="False"
                 >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <local:BattlegroundsCardsGroup
-                                Title="{Binding Title}"
+                                Tier="{Binding Tier}"
+                                MinionType="{Binding MinionType}"
+                                GroupedByMinionType="{Binding GroupedByMinionType}"
                                 Cards="{Binding Cards}"
-                                Visibility="{Binding Visibility}"
+                                ClickMinionTypeCommand="{Binding SetActiveMinionTypeCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
                             />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

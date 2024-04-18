@@ -228,7 +228,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				ToolTipCardBlock.Visibility = Config.Instance.OverlaySecretToolTipsOnly ? Visible : visibility;
 			}
-			else if(BgsTopBar.Visibility == Visible && BattlegroundsMinionsPanel.Visibility == Visible && BattlegroundsMinionsVM.ActiveTier != null)
+			else if(BgsTopBar.Visibility == Visible && BattlegroundsMinionsPanel.Visibility == Visible && (BattlegroundsMinionsVM.ActiveTier != null || BattlegroundsMinionsVM.ActiveMinionType != null))
 			{
 				var found = false;
 				for(var i = 0; i < BattlegroundsMinionsPanel.GroupsControl.Items.Count; i++)

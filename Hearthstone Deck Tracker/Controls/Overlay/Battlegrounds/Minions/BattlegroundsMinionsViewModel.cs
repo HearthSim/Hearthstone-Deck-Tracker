@@ -19,7 +19,6 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		set
 		{
 			SetProp(value);
-			OnPropertyChanged();
 			OnPropertyChanged(nameof(Groups));
 			OnPropertyChanged(nameof(UnavailableRaces));
 			OnPropertyChanged(nameof(UnavailableMinionTypesVisibility));
@@ -37,7 +36,22 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		set
 		{
 			SetProp(value);
-			OnPropertyChanged();
+			if(value != null)
+				ActiveMinionType = null;
+			OnPropertyChanged(nameof(TierButtons));
+			OnPropertyChanged(nameof(Groups));
+			OnPropertyChanged(nameof(UnavailableMinionTypesVisibility));
+		}
+	}
+
+	public Race? ActiveMinionType
+	{
+		get => GetProp<Race?>(null);
+		set
+		{
+			SetProp(value);
+			if(value != null)
+				ActiveTier = null;
 			OnPropertyChanged(nameof(TierButtons));
 			OnPropertyChanged(nameof(Groups));
 			OnPropertyChanged(nameof(UnavailableMinionTypesVisibility));
@@ -118,9 +132,17 @@ public class BattlegroundsMinionsViewModel : ViewModel
 
 	public class CardGroup
 	{
-		public int Order { get; set; } = 0;
-		public string? Title { get; set; }
+		public int Tier { get; set;  }
+
+		/// <summary>
+		/// The minion type or -1 for spells
+		/// </summary>
+		public Race MinionType { get; set; }
+
+		public bool GroupedByMinionType { get; set; } = false;
+
 		public IEnumerable<Hearthstone.Card> Cards { get; set; } = new List<Hearthstone.Card>();
+
 	}
 
 	public IEnumerable<CardGroup> Groups
@@ -128,25 +150,46 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		get
 		{
 			var groups = new List<CardGroup>();
-			if(!(ActiveTier is int tier))
-				return groups;
-
-			var isTierAvailable = AvailableTiers.Contains(tier);
-
-			foreach(var race in _db.Value.Races)
+			if(ActiveTier is int tier)
 			{
-				if(AvailableRaces != null && !AvailableRaces.Contains(race) && race != Race.INVALID && race != Race.ALL)
-					continue;
+				var isTierAvailable = AvailableTiers.Contains(tier);
 
-				IEnumerable<Hearthstone.Card> cards = _db.Value.GetCards(tier, race, IsDuos);
+				foreach(var race in _db.Value.Races)
+				{
+					if(AvailableRaces != null && !AvailableRaces.Contains(race) && race != Race.INVALID
+					   && race != Race.ALL)
+						continue;
 
-				if(!cards.Any())
-					continue;
+					IEnumerable<Hearthstone.Card> cards = _db.Value.GetCards(tier, race, IsDuos);
 
-				if(!isTierAvailable || (BannedMinions != null && BannedMinions.Any()))
-					cards = cards.Select(x =>
+					if(!cards.Any())
+						continue;
+
+					if(!isTierAvailable || (BannedMinions != null && BannedMinions.Any()))
+						cards = cards.Select(x =>
+						{
+							if(isTierAvailable && (BannedMinions == null || !BannedMinions.Contains(x.Id)))
+								return x;
+
+							var ret = (Hearthstone.Card)x.Clone();
+							ret.Count = 0;
+							return ret;
+						});
+
+					groups.Add(new CardGroup
 					{
-						if(isTierAvailable && (BannedMinions == null || !BannedMinions.Contains(x.Id)))
+						Tier = tier,
+						MinionType = race,
+						Cards = cards.OrderBy(x => x.LocalizedName),
+					});
+				}
+
+				IEnumerable<Hearthstone.Card> spells = _db.Value.GetSpells(tier, IsDuos);
+				if(spells.Any())
+				{
+					spells = spells.Select(x =>
+					{
+						if(isTierAvailable)
 							return x;
 
 						var ret = (Hearthstone.Card)x.Clone();
@@ -154,40 +197,48 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						return ret;
 					});
 
-				groups.Add(new CardGroup()
-				{
-					Order = race switch {
-						Race.ALL => -1,
-						Race.INVALID => 1,
-						_ => 0
-					},
-					Title = HearthDbConverter.GetLocalizedRace(race),
-					Cards = cards.OrderBy(x => x.LocalizedName),
-				});
-			}
+					groups.Add(new CardGroup
+					{
+						Tier = tier,
+						MinionType = (Race)(-1), // Spells are encoded as a -1 race
+						Cards = spells.OrderBy(x => x.Cost).ThenBy(x => x.LocalizedName),
+					});
+				}
 
-			IEnumerable<Hearthstone.Card> spells = _db.Value.GetSpells(tier, IsDuos);
-			if(spells.Any())
+				return groups
+					.OrderBy(x =>
+						(x.MinionType) switch
+						{
+							Race.ALL => -1, // Always first
+							Race.INVALID => 1, // Other
+							(Race)(-1) => 2, // Spells
+							_ => 0, // Minion Types
+						}
+					)
+					.ThenBy(x => HearthDbConverter.GetLocalizedRace(x.MinionType) ?? string.Empty);
+			}
+			else if(ActiveMinionType is Race minionType)
 			{
-				spells = spells.Select(x =>
+				foreach(var tierGroup in AvailableTiers)
 				{
-					if(isTierAvailable)
-						return x;
+					var cards = (int)minionType == -1
+						? _db.Value.GetSpells(tierGroup, IsDuos).OrderBy(x => x.Cost).ThenBy(x => x.LocalizedName).ToList()
+						: _db.Value.GetCards(tierGroup, minionType, IsDuos).OrderBy(x => x.LocalizedName).ToList();
 
-					var ret = (Hearthstone.Card)x.Clone();
-					ret.Count = 0;
-					return ret;
-				});
+					if(!cards.Any())
+						continue;
 
-				groups.Add(new CardGroup()
-				{
-					Title = LocUtil.Get("Battlegrounds_Spells", useCardLanguage: true),
-					Cards = spells.OrderBy(x => x.Cost).ThenBy(x => x.LocalizedName),
-					Order = 2,
-				});
+					groups.Add(new CardGroup
+					{
+						Tier = tierGroup,
+						MinionType = minionType,
+						GroupedByMinionType = true,
+						Cards = cards,
+					});
+				}
 			}
 
-			return groups.OrderBy(x => x.Order).ThenBy(x => x.Title);
+			return groups;
 		}
 	}
 
@@ -198,12 +249,13 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		);
 	}
 
-	public Visibility UnavailableMinionTypesVisibility => ActiveTier is null || !UnavailableRaces.Any() ? Visibility.Collapsed : Visibility.Visible;
+	public Visibility UnavailableMinionTypesVisibility => ActiveTier is null || ActiveMinionType != null || !UnavailableRaces.Any() ? Visibility.Collapsed : Visibility.Visible;
 
 	public void Reset()
 	{
 		AvailableRaces = null;
 		ActiveTier = null;
+		ActiveMinionType = null;
 		IsDuos = false;
 		Anomaly = null;
 		IsThorimRelevant = false;
