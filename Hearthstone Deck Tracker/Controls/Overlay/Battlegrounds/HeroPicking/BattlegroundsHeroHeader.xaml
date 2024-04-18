@@ -1,15 +1,15 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking.BattlegroundsHeroHeader"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="60" d:DesignWidth="243">
     <UserControl.Resources>
         <Style x:Key="DefaultTextStyle" TargetType="TextBlock">
@@ -41,7 +41,17 @@
                     <DrawingImage.Drawing>
                         <DrawingGroup ClipGeometry="M0,0 V61 H243 V0 H0 Z">
                             <!-- Tier -->
-                            <GeometryDrawing Brush="{Binding TierGradient}" Geometry="F1 M243,61z M0,0z M95,4C95,1.79086,96.7909,0,99,0L144,0C146.209,0,148,1.79086,148,4L148,49C148,51.2091,146.209,53,144,53L99,53C96.7909,53,95,51.2091,95,49L95,4z" />
+                            <GeometryDrawing
+                                Brush="{Binding TierGradient}"
+                                Geometry="F1 M243,61z M0,0z M95,4C95,1.79086,96.7909,0,99,0L144,0C146.209,0,148,1.79086,148,4L148,49C148,51.2091,146.209,53,144,53L99,53C96.7909,53,95,51.2091,95,49L95,4z"
+                            >
+                                <d:GeometryDrawing.Brush>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#6A9D36" Offset="0.0" />
+                                        <GradientStop Color="#587937" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </d:GeometryDrawing.Brush>
+                            </GeometryDrawing>
                             <GeometryDrawing Geometry="F1 M243,61z M0,0z M99,0.5L144,0.5C145.933,0.5,147.5,2.067,147.5,4L147.5,49C147.5,50.933,145.933,52.5,144,52.5L99,52.5C97.067,52.5,95.5,50.933,95.5,49L95.5,4C95.5,2.067,97.067,0.5,99,0.5z">
                                 <GeometryDrawing.Pen>
                                     <Pen Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter">
@@ -78,8 +88,13 @@
 
         <!-- Avg Placement -->
         <TextBlock Grid.Column="0" Grid.Row="0" Text="{lex:Loc BattlegroundsHeroPicking_Header_AvgPlacement}" TextTrimming="CharacterEllipsis" />
-        <TextBlock Text="{Binding AvgPlacement, StringFormat=N2, TargetNullValue=&#8211;, FallbackValue=&#8211;}" Grid.Row="1"
-            Style="{StaticResource BoldTextStyle}" Foreground="{Binding AvgPlacementColor, FallbackValue=White}" />
+        <TextBlock
+            Text="{Binding AvgPlacement, StringFormat=N2, TargetNullValue=&#8211;, FallbackValue=&#8211;}"
+            d:Text="4.5"
+            Grid.Row="1"
+            Style="{StaticResource BoldTextStyle}"
+            Foreground="{Binding AvgPlacementColor, FallbackValue=White}"
+        />
 
         <!-- Avg Placement Tooltip -->
         <Grid Name="AvgPlacementTrigger" Grid.RowSpan="2" Grid.Column="0" ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True"
@@ -100,7 +115,11 @@
 
         <!-- Pick Rate -->
         <TextBlock Grid.Column="2" Grid.Row="0" Text="{lex:Loc BattlegroundsHeroPicking_Header_PickRate}" TextTrimming="CharacterEllipsis" />
-        <TextBlock Text="{Binding PickRate, StringFormat={}{0:0.0}%, TargetNullValue=&#8211;, FallbackValue=&#8211;}" Grid.Row="1" Grid.Column="2"
+        <TextBlock
+            Text="{Binding PickRate, StringFormat={}{0:0.0}%, TargetNullValue=&#8211;, FallbackValue=&#8211;}"
+            d:Text="52.2%"
+            Grid.Row="1"
+            Grid.Column="2"
             Style="{StaticResource BoldTextStyle}"
         />
 
@@ -131,14 +150,15 @@
             </Grid.ToolTip>
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="{lex:Loc BattlegroundsHeroPicking_Header_Tier}" FontSize="10" Margin="0 4 0 0" TextTrimming="CharacterEllipsis" />
-                <TextBlock Style="{StaticResource BoldTextStyle}" Text="{Binding Tier, TargetNullValue=&#8211;, FallbackValue=&#8211;}" FontSize="28" />
+                <TextBlock Style="{StaticResource BoldTextStyle}" Text="{Binding Tier, TargetNullValue=&#8211;, FallbackValue=&#8211;}" d:Text="1"  FontSize="28" />
             </StackPanel>
         </Grid>
 
         <!-- Placement Distribution -->
         <battlegrounds:BattlegroundsPlacementDistribution
-            Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="5 0 0 0" MaxValue="30" Values="{Binding PlacementDistribution}" 
+            Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="5 0 0 0" MaxValue="30" Values="{Binding PlacementDistribution}"
             Visibility="{Binding PlacementDistributionVisibility}"
+            d:Visibility="Collapsed"
         />
     </Grid>
 </UserControl>

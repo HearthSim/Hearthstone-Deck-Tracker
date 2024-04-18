@@ -22,13 +22,19 @@
     </UserControl.Resources>
     <Grid>
         <Grid anim:FadeAnimation.Visibility="{Binding StatsVisibility}" Visibility="Collapsed"
-              anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2">
+              anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2"
+                d:Visibility="Visible"
+            >
             <!-- Centered over heroes -->
             <Grid Margin="14,15,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <ItemsControl ItemsSource="{Binding HeroStats}" Margin="-16,0">
+                <ItemsControl
+                    ItemsSource="{Binding HeroStats}"
+                    d:ItemsSource="{d:SampleData ItemCount=4}"
+                    Margin="-16,0"
+                >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Height="480" Width="266" Margin="16,0">
+                            <Grid Height="480" Width="266" Margin="37,0">
                                 <heroPicking:BattlegroundsSingleHeroStats
                                     SetSelectedHeroDbfIdCommand="{Binding SetSelectedHeroDbfIdCommand, RelativeSource={RelativeSource AncestorType=heroPicking:BattlegroundsHeroPicking}}"
                                 />
