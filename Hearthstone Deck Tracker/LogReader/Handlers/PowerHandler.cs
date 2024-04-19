@@ -643,6 +643,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.Cthun);
 								break;
 							case Collectible.Druid.JadeIdol:
+							case NonCollectible.Druid.JadeIdol_JadeStash:
 								AddKnownCardId(gameState, Collectible.Druid.JadeIdol, 3);
 								break;
 							case NonCollectible.Hunter.TheMarshQueen_QueenCarnassaToken:
