@@ -411,12 +411,15 @@ namespace Hearthstone_Deck_Tracker.Live
 		{
 			if(Core.Game.CurrentGameStats == null || Core.Game.GameEntity == null)
 				return null;
+
+			if(Core.Game.IsBattlegroundsDuosMatch)
+				return null;
+
 			var turn = Core.Game.GameEntity.GetTag(GameTag.TURN) %2 == 0? Core.Game.GetTurnNumber() : Core.Game.GetTurnNumber() - 1;
 
 			var invokerInstance = BobsBuddyInvoker.GetInstance(Core.Game.CurrentGameStats.GameId, Math.Max(turn, 1) , false);
 
 			var output = invokerInstance?.Output;
-
 
 			TwitchSimulationState simulationState = TwitchSimulationState.WaitingForCombat;
 			var errorstate = invokerInstance?.ErrorState ?? BobsBuddyErrorState.None;
