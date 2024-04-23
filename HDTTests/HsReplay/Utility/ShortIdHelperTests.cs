@@ -18,7 +18,7 @@ namespace HDTTests.HsReplay.Utility
 			var hearthDbDeck = DeckSerializer.Deserialize("AAECAf0EAA9NWtgBtAK7AosDqwS0BOAE+wSWBYoH7AeeCZYNAA==");
 			var deck = HearthDbConverter.FromHearthDbDeck(hearthDbDeck);
 			var shortid = ShortIdHelper.GetShortId(deck);
-			Assert.AreEqual(shortid, "KtYDbAkM8IjSSyLMWQn5zb");
+			Assert.AreEqual("KtYDbAkM8IjSSyLMWQn5zb", shortid);
 		}
 
 		[TestMethod]
@@ -27,7 +27,7 @@ namespace HDTTests.HsReplay.Utility
 			var hearthDbDeck = DeckSerializer.Deserialize("AAECAa0GBqUJ+wzl9wLQ/gKnhwOppQMM+ALlBPYH1QjRCtIK8gz3DK+lA9KlA/2nA4SoAwA=");
 			var deck = HearthDbConverter.FromHearthDbDeck(hearthDbDeck);
 			var shortid = ShortIdHelper.GetShortId(deck);
-			Assert.AreEqual(shortid, "0gsPp02q8ajKsGVstRwLpb");
+			Assert.AreEqual("0gsPp02q8ajKsGVstRwLpb", shortid);
 		}
 
 		[TestMethod]
@@ -36,7 +36,7 @@ namespace HDTTests.HsReplay.Utility
 			var hearthDbDeck = DeckSerializer.Deserialize("AAECAR8engGoArUDxwOHBMkErgbFCNsJ7Qn+DJjwAp7wAu/xAqCAA6eCA5uFA/WJA+aWA/mWA76YA7acA56dA/yjA+WkA5+lA6KlA6alA4SnA5+3AwAA");
 			var deck = HearthDbConverter.FromHearthDbDeck(hearthDbDeck);
 			var shortid = ShortIdHelper.GetShortId(deck);
-			Assert.AreEqual(shortid, "O2VpFDQokIrwww8iOmE3Lc");
+			Assert.AreEqual("O2VpFDQokIrwww8iOmE3Lc", shortid);
 		}
 
 		[TestMethod]
@@ -45,7 +45,7 @@ namespace HDTTests.HsReplay.Utility
 			var hearthDbDeck = DeckSerializer.Deserialize("AAEBAf0EHnGeAcABwwG7Au4CqwSWBewF9w2JDroWwxbXtgLrugLYuwLZuwKHvQLBwQKP0wKi0wLu9gKnggP1iQP8owOSpAO+pAO/pAPdqQP0qwMAAA==");
 			var deck = HearthDbConverter.FromHearthDbDeck(hearthDbDeck);
 			var shortid = ShortIdHelper.GetShortId(deck);
-			Assert.AreEqual(shortid, "mA9O7wXvzxMsx1KO7EuFve");
+			Assert.AreEqual("mA9O7wXvzxMsx1KO7EuFve", shortid);
 		}
 
 		[TestMethod]
@@ -54,7 +54,16 @@ namespace HDTTests.HsReplay.Utility
 			var hearthDbDeck = DeckSerializer.Deserialize("AAECAfHhBAjlsASJ5gSP7QSX7wSE9gTipAX9xAXIxwUQlrcE9OME/eMEieQElOQEh/YEsvcEs/cEtvoEq4AFopkF8cIF4MgF1c4Fj+QF0Z4GAAEDuNkE/cQF/+EE/cQF76IF/cQFAAA=");
 			var deck = HearthDbConverter.FromHearthDbDeck(hearthDbDeck);
 			var shortid = ShortIdHelper.GetShortId(deck);
-			Assert.AreEqual(shortid, "QqdKc0MXat74LUQguHM3N");
+			Assert.AreEqual("QqdKc0MXat74LUQguHM3N", shortid);
+		}
+
+		[TestMethod]
+		public void ZilliaxDeluxe3000Cosmetic_ValidShortId()
+		{
+			var hearthDbDeck = DeckSerializer.Deserialize("AAECAaIHAtrDBcekBg6RnwT3nwTZ0AW/9wWm+AXm+gWh/AXJgAbIlAa9ngbungbZogatpwaS5gYAAQPyswbHpAb0swbHpAbt3gbHpAYAAA==");
+			var deck = HearthDbConverter.FromHearthDbDeck(hearthDbDeck);
+			var shortid = ShortIdHelper.GetShortId(deck);
+			Assert.AreEqual("Wk9FoQAUWvzTh5KbKEE0d", shortid);
 		}
 
 		[TestMethod]
