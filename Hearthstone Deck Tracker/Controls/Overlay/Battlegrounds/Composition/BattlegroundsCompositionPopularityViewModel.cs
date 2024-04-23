@@ -14,13 +14,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition
 			if(top3Comps.Any())
 			{
 				var max = Math.Max(Math.Ceiling(top3Comps[0].Popularity), 40);
-				Top3Compositions = top3Comps.Select(compData => new BattlegroundsCompositionPopularityRowViewModel(
-					compData.Name,
-					compData.KeyMinionsTop3[0],
-					compData.IsValid,
-					compData.Popularity,
-					max
-				));
+				Top3Compositions = top3Comps
+					.Where(compData => compData.KeyMinionsTop3.Any())
+					.Select(compData => new BattlegroundsCompositionPopularityRowViewModel(
+							compData.Name,
+							compData.KeyMinionsTop3[0],
+							compData.IsValid,
+							compData.Popularity,
+							max
+						)
+					);
 			}
 		}
 
