@@ -224,7 +224,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 					var cards = (int)minionType == -1
 						? _db.Value.GetSpells(tierGroup, IsDuos).OrderBy(x => x.Cost).ThenBy(x => x.LocalizedName).ToList()
 						: _db.Value.GetCards(tierGroup, minionType, IsDuos)
-							.Concat(minionType != Race.ALL ? _db.Value.GetCards(tierGroup, Race.ALL, IsDuos) : new())
+							.Concat(minionType != Race.ALL && minionType != Race.INVALID ? _db.Value.GetCards(tierGroup, Race.ALL, IsDuos) : new())
 							.OrderBy(x => x.LocalizedName).ToList();
 
 					if(!cards.Any())
