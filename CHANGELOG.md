@@ -1,3 +1,17 @@
+## **Release v1.26.1 - 2024-04-23**
+
+**Fixes:**
+- Fixed "All" type minions missing from the Battlegrounds minion list when filtering for a specific minion type.
+- Fixed decks containing certain Zilliax Deluxe 3000 cosmetics not showing HSReplay.net statistics.
+- Fixed duplicate tooltips in the overlay when deck window card tooltips were enabled.
+- Fixed various crashes related to the Battlegrounds overlay.
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Pack Tactics.
+- Fixed incorrect simulation results due to Golden Goose.
+- Fixed incorrect simulation results due to Silithid Burrower.
+- Fixed incorrect simulation results due to Teron Gorefiend's hero power (Rapid Reanimation).
+
 ## **Release v1.26.0 - 2024-04-18**
 
 **Features**:
