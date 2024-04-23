@@ -81,8 +81,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static async Task UploadLog(LogUploadRequest uploadRequest, string[] logLines)
 			=> await Client.UploadLog(uploadRequest, logLines);
 
-		public static async Task UploadPack(PackData data) => await Client.UploadPack(data, await GetUploadToken());
-
 		private static ClientConfig? TryGetConfig()
 		{
 			var file = new FileInfo(Path.Combine(Config.AppDataPath, "hsreplaynet.xml"));
