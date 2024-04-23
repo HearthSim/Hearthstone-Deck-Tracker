@@ -450,6 +450,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public static MetroWindow? GetParentWindow(DependencyObject current) => GetVisualParent<MetroWindow>(current);
+		public static bool IsInOverlay(DependencyObject current) => GetVisualParent<MetroWindow>(current) != null;
 
 		public static T? GetVisualParent<T>(DependencyObject current)
 		{

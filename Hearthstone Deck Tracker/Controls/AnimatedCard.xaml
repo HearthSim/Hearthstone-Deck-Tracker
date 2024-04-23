@@ -28,7 +28,7 @@
         </Storyboard>
     </UserControl.Resources>
     <Grid Name="Grid">
-        <local:Card HasTooltip="{Binding Path=WindowCardToolTips, Source={StaticResource ConfigWrapper}}"/>
+        <local:Card x:Name="CardObj" />
         <Grid Name="CoinCost" HorizontalAlignment="Right" Visibility="Collapsed">
             <Image Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/HearthstoneDeckTracker;component/Images/coin-cost.png" />
             <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="Cost" Width="34" Height="34" FontSize="17" TextAlignment="Center" FontWeight="Bold" />

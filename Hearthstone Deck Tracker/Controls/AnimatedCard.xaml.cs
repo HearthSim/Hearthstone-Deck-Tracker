@@ -17,6 +17,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			DataContext = card;
 			CoinCost.Visibility = Card.TypeEnum == CardType.BATTLEGROUND_SPELL ? Visibility.Visible : Visibility.Collapsed;
 			Cost.Text = Card.Cost.ToString();
+			Loaded += (_, _) => UpdateTooltip();
 		}
 
 		public Hearthstone.Card Card => (Hearthstone.Card)DataContext;
@@ -64,6 +65,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 			sb.Begin();
 			await Task.Delay(sb.Duration.TimeSpan);
 			_runningStoryBoards.Remove(key);
+		}
+
+		private void UpdateTooltip()
+		{
+			CardObj.HasTooltip = Config.Instance.WindowCardToolTips && Helper.IsInOverlay(this);
 		}
 	}
 }

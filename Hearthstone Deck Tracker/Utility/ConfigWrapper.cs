@@ -453,8 +453,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static CardImageConfigs CardImageConfigs	{get;} = new CardImageConfigs();
 
-		public bool WindowCardToolTips => Config.Instance.WindowCardToolTips;
-
 		private static int? ValidateSeason(string value, bool allowEmpty)
 		{
 			if(allowEmpty && string.IsNullOrEmpty(value))
