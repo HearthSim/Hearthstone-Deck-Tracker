@@ -411,7 +411,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void UpdateBattlegroundsPlayerTriples(int id, int value)
 		{
-			var heroCurrentTier = Entities[id].GetTag(GameTag.PLAYER_TECH_LEVEL);
+			if(!Entities.TryGetValue(id, out var entity))
+				return;
+
+			var heroCurrentTier = entity.GetTag(GameTag.PLAYER_TECH_LEVEL);
 			if(!_battlegroundsHeroTriplesByTier.ContainsKey(id))
 				_battlegroundsHeroTriplesByTier[id] = new Dictionary<int, int>();
 
