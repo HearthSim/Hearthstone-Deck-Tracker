@@ -110,7 +110,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 			}
 
-			minion.game_id = entity.Id;
+			// As of 198037 the shop identity of the card is more important, because e.g. Teron Gorefiends hero power
+			// encodes the id from the shop. Luckily we have COPIED_FROM_ENTITY_ID for that.
+			var copiedFromId = entity.GetTag(GameTag.COPIED_FROM_ENTITY_ID);
+			minion.game_id = copiedFromId > 0 ? copiedFromId : entity.Id;
 
 			return minion;
 		}
