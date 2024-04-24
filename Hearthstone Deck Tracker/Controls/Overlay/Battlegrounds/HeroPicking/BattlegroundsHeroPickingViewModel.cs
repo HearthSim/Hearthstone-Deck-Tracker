@@ -91,10 +91,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 
 		public async void SetHeroes(int[] heroIds)
 		{
-			if(!Config.Instance.EnableBattlegroundsTier7Overlay)
-				return;
-			// Trials not supported for now.
 			if(Core.Game.Spectator)
+				return;
+
+			// Assemble the params for later feedback metrics
+			var requestParams = GetApiParams(Core.Game, heroIds);
+
+			if(!Config.Instance.EnableBattlegroundsTier7Overlay)
 				return;
 
 			if(Remote.Config.Data?.Tier7?.Disabled ?? false)
@@ -105,20 +108,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			}
 
 			var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
-
 			if(!userOwnsTier7 && (Tier7Trial.RemainingTrials ?? 0) == 0)
 				return;
 
-			Message.Loading();
-
 			// Avoid using a trial when we can't get the api params anyway.
-			var requestParams = GetApiParams(Core.Game, heroIds);
 			if(requestParams == null)
 			{
 				Message.Error();
 				return;
 			}
 
+			Message.Loading();
+
+			// Use a trial if we can
 			string? token = null;
 			if(!userOwnsTier7)
 			{
