@@ -1,3 +1,8 @@
+
+## **Release v1.27.0 - 2024-04-25**
+
+- Updated for Heathstone 29.2.2
+
 ## **Release v1.26.1 - 2024-04-23**
 
 **Fixes:**
