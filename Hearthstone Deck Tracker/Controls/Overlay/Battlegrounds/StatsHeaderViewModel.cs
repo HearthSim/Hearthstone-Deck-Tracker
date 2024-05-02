@@ -25,13 +25,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			_ => new SolidColorBrush(Color.FromRgb(0x14, 0x16, 0x17)),
 		};
 
-		public string AvgPlacementColor => Tier switch
+		public string AvgPlacementColor
 		{
-			1 => "#6BA036",
-			2 => "#92A036",
-			3 => "#A07C36",
-			4 => "#B44646",
-			_ => "#FFFFFF"
-		};
+			get
+			{
+				if(AvgPlacement is double avgPlacement)
+					return Helper.GetColorString(Helper.ColorStringMode.BATTLEGROUNDS, (4.5f - avgPlacement) * 100f / 3.5f, 75);
+
+				return "#FFFFFF";
+			}
+		}
 	}
 }

@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan
 			get
 			{
 				if(MulliganWr is double mulliganWr)
-					return Helper.GetWinrateDeltaColorString(mulliganWr - (BaseWinrate ?? 50.0f), 75);
+					return Helper.GetColorString(mulliganWr - (BaseWinrate ?? 50.0f), 75);
 
 				return "White";
 			}

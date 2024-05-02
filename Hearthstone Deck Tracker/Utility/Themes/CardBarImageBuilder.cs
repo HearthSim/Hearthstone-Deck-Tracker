@@ -253,7 +253,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			double? baseWinrate = Card.CardWinrates?.BaseWinrate;
 
 			var delta = winrate != null ? winrate - (baseWinrate ?? 50.0d): null;
-			var color = delta is double theDelta ? Helper.GetWinrateDeltaColorString(theDelta, 75) : "White";
+			var color = delta is double theDelta ? Helper.GetColorString(theDelta, 75) : "White";
 			var mulliganWinrateTextBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
 			var text = $"{winrate?.ToString("0.0")}%";
 			var textRect = new Rect(rect.Location, rect.Size);

@@ -883,7 +883,15 @@ namespace Hearthstone_Deck_Tracker
 			return (int)pn;
 		}
 
-		public static string GetWinrateDeltaColorString(double delta, int intensity)
+		public enum ColorStringMode
+		{
+			DEFAULT,
+			BATTLEGROUNDS,
+		}
+
+		public static string GetColorString(double delta, int intensity) => GetColorString(ColorStringMode.DEFAULT, delta, intensity);
+
+		public static string GetColorString(ColorStringMode mode, double delta, int intensity)
 		{
 			// Adapted from HSReplay.net
 			var colorWinrate = 50 + Math.Max(-50, Math.Min(50, 5 * delta));
@@ -893,9 +901,22 @@ namespace Hearthstone_Deck_Tracker
 			var scaleTriple = (double x, double[] from, double[] to) => new[]
 				{ scale(x, from[0], to[0]), scale(x, from[1], to[1]), scale(x, from[2], to[2]) };
 
-			var positive = new[] { 120d, 70d, 40d };
-			var neutral = new[] { 90d, 100d, 30d };
-			var negative = new[] { 0d, 100d, 65.7d };
+			double[] positive, neutral, negative;
+			switch(mode)
+			{
+				case ColorStringMode.DEFAULT:
+					positive = new[] { 120d, 70d, 40d };
+					neutral = new[] { 90d, 100d, 30d };
+					negative = new[] { 0d, 100d, 65.7d };
+					break;
+				case ColorStringMode.BATTLEGROUNDS:
+					positive = new[] { 120d, 32d, 44d };
+					neutral = new[] { 60d, 32d, 44d };
+					negative = new[] { 0d, 32d, 44d };
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+			}
 
 			var hsl = delta > 0
 				? scaleTriple(severity, neutral, positive)
