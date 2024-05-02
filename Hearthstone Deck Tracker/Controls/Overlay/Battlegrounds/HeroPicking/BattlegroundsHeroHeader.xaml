@@ -149,8 +149,8 @@
                 </TextBlock>
             </Grid.ToolTip>
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="{lex:Loc BattlegroundsHeroPicking_Header_Tier}" FontSize="10" Margin="0 4 0 0" TextTrimming="CharacterEllipsis" />
-                <TextBlock Style="{StaticResource BoldTextStyle}" Text="{Binding Tier, TargetNullValue=&#8211;, FallbackValue=&#8211;}" d:Text="1"  FontSize="28" />
+                <TextBlock Text="{lex:Loc BattlegroundsHeroPicking_Header_Tier}" d:Text="TIER" FontSize="10" Margin="0 4 0 0" TextTrimming="CharacterEllipsis" />
+                <TextBlock Style="{StaticResource DefaultTextStyle}" Text="{Binding TierChar, TargetNullValue=&#8211;, FallbackValue=&#8211;}" d:Text="1" FontSize="28" FontWeight="Bold" Margin="0 -5 0 0" />
             </StackPanel>
         </Grid>
 
