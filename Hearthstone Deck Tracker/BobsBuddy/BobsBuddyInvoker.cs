@@ -75,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_currentGameId = gameId;
 
 			var key = $"{gameId}_{turn}";
-			
+
 			if(!_instances.TryGetValue(key, out var instance) && createInstanceIfNoneFound)
 			{
 				instance = new BobsBuddyInvoker(key);
@@ -334,7 +334,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			input.availableRaces = BattlegroundsUtils.GetAvailableRaces(_currentGameId).ToList();
-			input.DamageCap = _game.GameEntity.GetTag(GameTag.BACON_COMBAT_DAMAGE_CAP);
+			if(_game.GameEntity.GetTag(GameTag.BACON_COMBAT_DAMAGE_CAP_ENABLED) > 0)
+				input.DamageCap = _game.GameEntity.GetTag(GameTag.BACON_COMBAT_DAMAGE_CAP);
 
 			var friendlyMurky = _game.Player.Board.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.Murky);
 			var friendlyMurkyBuff = friendlyMurky?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
@@ -551,7 +552,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_input == null || State != BobsBuddyState.Combat)
 				return;
 
-			// Only allow feathermane for now. 
+			// Only allow feathermane for now.
 			if(copy.CardId != NonCollectible.Neutral.FreeFlyingFeathermane && copy.CardId != NonCollectible.Neutral.FreeFlyingFeathermane_FreeFlyingFeathermane)
 				return;
 
@@ -723,7 +724,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			if(LastAttackingHero != null)
 				return LastAttackingHeroAttack;
-			return 0;	
+			return 0;
 		}
 
 		private CombatResult GetLastCombatResult()
@@ -775,7 +776,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog("Nothing to report. Exiting.");
 				return;
 			}
-			
+
 			//We delay checking the combat results because the tag changes can sometimes be read by the parser with a bit of delay after they're printed in the log.
 			//Without this delay they can occasionally be missed.
 
