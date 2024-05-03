@@ -156,7 +156,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			if(heroCard == null)
 				return null;
 
-			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId);
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
 			if(availableRaces == null)
 				return null;
 

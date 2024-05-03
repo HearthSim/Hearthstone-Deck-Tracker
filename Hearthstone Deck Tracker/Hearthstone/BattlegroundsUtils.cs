@@ -25,29 +25,55 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{ TransformedQueenAzshara, UntransformedQueenAzshara }
 		};
 
+		public static HashSet<Race>? GetAvailableRaces()
+		{
+			return GetAvailableRaces(Core.Game.CurrentGameStats?.GameId);
+		}
+
 		public static HashSet<Race>? GetAvailableRaces(Guid? gameId)
 		{
-			if(!gameId.HasValue)
-				return AvailableRaces;
-			if(!_availableRacesCache.TryGetValue(gameId.Value, out var races))
+			var currentGameId = Core.Game.CurrentGameStats?.GameId;
+
+			// Return from cache, if available
+			if(
+				(gameId ?? currentGameId) is Guid requestedGameId &&
+				_availableRacesCache.TryGetValue(requestedGameId, out var cachedRaces)
+			)
 			{
-				races = AvailableRaces;
-				// Before initialized this contains only contains Race.INVALID
-				if (races != null && (races.Count > 1 || races.SingleOrDefault() != Race.INVALID))
-					_availableRacesCache[gameId.Value] = races;
+				return cachedRaces;
 			}
+
+			// Not cached, so we need to get it from the game
+
+			// If a specific game is requested, and we can't ensure it's the current game, we have to give up
+			if(gameId.HasValue && (!currentGameId.HasValue || gameId.Value != currentGameId.Value))
+				return null;
+
+			// Otherwise get data from the current game
+			var races = ReadAvailableRacesFromMemory();
+			if(races is null)
+				return null;
+
+			// If we know the current game id, cache it as such
+			if(currentGameId.HasValue)
+				_availableRacesCache[currentGameId.Value] = races;
+
 			return races;
 		}
 
-		private static HashSet<Race>? AvailableRaces
+		private static HashSet<Race>? ReadAvailableRacesFromMemory()
 		{
-			get
-			{
-				var races = Reflection.Client.GetAvailableBattlegroundsRaces();
-				if(races == null)
-					return null;
-				return new HashSet<Race>(races.Cast<Race>());
-			}
+			var races = Reflection.Client.GetAvailableBattlegroundsRaces();
+			if(races == null)
+				return null;
+
+			var hashSet = new HashSet<Race>(races.Cast<Race>());
+
+			// Before initialized this contains only contains Race.INVALID
+			if(hashSet.Count > 1 || hashSet.SingleOrDefault() != Race.INVALID)
+				return hashSet;
+
+			return null;
 		}
 
 		public static string GetOriginalHeroId(string heroId) => TransformableHeroCardidTable.TryGetValue(heroId, out var mapped) ? mapped : heroId;

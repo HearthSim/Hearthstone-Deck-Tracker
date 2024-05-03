@@ -169,7 +169,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 
 		private BattlegroundsHeroPickStatsParams? GetApiParams(GameV2 game, int[] heroIds)
 		{
-			var availableRaces = BattlegroundsUtils.GetAvailableRaces(game.CurrentGameStats?.GameId);
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
 			if(availableRaces == null)
 				return null;
 

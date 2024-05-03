@@ -832,7 +832,7 @@ namespace Hearthstone_Deck_Tracker
 			if(mmr.HasValue)
 				url += $"&mmr={mmr.Value}";
 
-			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId);
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
 			if(availableRaces?.Count > 0)
 			{
 				var availableRacesAsList = availableRaces.ToList();

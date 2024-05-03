@@ -80,7 +80,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 	private void UpdateMinionTypes()
 	{
 		var allRaces = _db.Value.Races.Where(x => x != Race.INVALID && x != Race.ALL).ToList();
-		var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId)?.ToList() ?? allRaces;
+		var availableRaces = BattlegroundsUtils.GetAvailableRaces()?.ToList() ?? allRaces;
 		var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x)).ToList();
 
 		var validMinionTypes = unavailableRaces.Count() >= 5 && unavailableRaces.Count() != allRaces.Count();
