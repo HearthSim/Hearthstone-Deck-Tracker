@@ -1387,7 +1387,7 @@ namespace Hearthstone_Deck_Tracker
 			if(parameters is null)
 				return;
 
-			ApiWrapper.PostBattlegroundsHeroPickFeedback(parameters).Forget();
+			ApiWrapper.PostBattlegroundsHeroPickFeedback(parameters, isDuos: _game.IsBattlegroundsDuosMatch).Forget();
 		}
 
 		#region Player

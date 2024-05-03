@@ -180,7 +180,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
 				LanguageCode = Config.Instance.SelectedLanguage,
 				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
-				IsDuos = Core.Game.IsBattlegroundsDuosMatch
 			};
 
 			game.BattlegroundsHeroPickStatsParams = parameters;

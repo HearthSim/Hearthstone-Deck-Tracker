@@ -222,11 +222,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static async Task PostBattlegroundsHeroPickFeedback(BattlegroundsHeroPickFeedbackParams parameters)
+		public static async Task PostBattlegroundsHeroPickFeedback(
+			BattlegroundsHeroPickFeedbackParams parameters, bool isDuos
+		)
 		{
 			try
 			{
-				await Client.PostBattlegroundsHeroPickFeedback(parameters);
+				if(isDuos)
+					await Client.PostBattlegroundsDuosHeroPickFeedback(parameters);
+				else
+					await Client.PostBattlegroundsHeroPickFeedback(parameters);
 			}
 			catch(Exception e)
 			{
