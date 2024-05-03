@@ -4,7 +4,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone;
 
 internal class BattlegroundsHeroPickState
 {
-	public Entity? PickedHero { get; private set; }
+	public int? PickedHeroDbfId { get; private set; }
 
 	private GameV2 _game;
 
@@ -13,9 +13,9 @@ internal class BattlegroundsHeroPickState
 		_game = game;
 	}
 
-	public Entity? SnapshotPickedHero()
+	public int? SnapshotPickedHero()
 	{
-		PickedHero = _game.Player.Hero;
-		return PickedHero;
+		PickedHeroDbfId = _game.Player.Hero?.Card.DbfId;
+		return PickedHeroDbfId;
 	}
 }

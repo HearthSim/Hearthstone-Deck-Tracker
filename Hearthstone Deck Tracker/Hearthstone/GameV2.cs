@@ -545,7 +545,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public BattlegroundsHeroPickFeedbackParams? GetBattlegroundsHeroPickFeedbackParams(int finalPlacement)
 		{
 			if(
-				BattlegroundsHeroPickState.PickedHero?.Card.DbfId is int heroDbfId &&
+				BattlegroundsHeroPickState.PickedHeroDbfId is int heroDbfId &&
 				finalPlacement > 0
 			)
 				return _battlegroundsHeroPickStatsParams?.WithFeedback(
