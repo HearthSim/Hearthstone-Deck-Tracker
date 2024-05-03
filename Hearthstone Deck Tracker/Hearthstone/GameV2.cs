@@ -343,6 +343,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
 			_mulliganGuideParams = null;
 			_mulliganState = null;
+			_battlegroundsHeroPickStatsParams = null;
 			_battlegroundsHeroPickState = null;
 			Metrics = new GameMetrics();
 
