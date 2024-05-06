@@ -26,7 +26,7 @@
                 d:Visibility="Visible"
             >
             <!-- Centered over heroes -->
-            <Grid Margin="14,15,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid Margin="14,57,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <ItemsControl
                     ItemsSource="{Binding HeroStats}"
                     d:ItemsSource="{d:SampleData ItemCount=4}"
@@ -34,7 +34,7 @@
                 >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Height="480" Width="266" Margin="37,0">
+                            <Grid Height="440" Width="266" Margin="37,0">
                                 <heroPicking:BattlegroundsSingleHeroStats
                                     SetSelectedHeroDbfIdCommand="{Binding SetSelectedHeroDbfIdCommand, RelativeSource={RelativeSource AncestorType=heroPicking:BattlegroundsHeroPicking}}"
                                 />
