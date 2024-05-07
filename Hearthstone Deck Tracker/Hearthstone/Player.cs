@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool IsLocalPlayer { get; }
 		public int SpellsPlayedCount { get; private set; }
 		public List<string> CardsPlayedThisTurn { get; private set; } = new List<string>();
+		public bool IsPlayingWhizbang { get; set; }
 		public int PogoHopperPlayedCount { get; private set; }
 		public string? LastDiedMinionCardId { get; set; }
 		public string? LastDrawnCardId { get; set; }
