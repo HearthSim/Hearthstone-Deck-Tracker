@@ -94,7 +94,8 @@ public class BattlegroundsGameViewModel : ViewModel
 	{
 		get
 		{
-			return new SolidColorBrush(Placement <= 4 ? Color.FromRgb(109, 235, 108) : Color.FromRgb(236, 105, 105));
+			var win = _gameItem.Duos ? Placement <= 2 : Placement <= 4;
+			return new SolidColorBrush(win ? Color.FromRgb(109, 235, 108) : Color.FromRgb(236, 105, 105));
 		}
 	}
 

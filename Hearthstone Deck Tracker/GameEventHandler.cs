@@ -864,8 +864,7 @@ namespace Hearthstone_Deck_Tracker
 						Sentry.SendQueuedBobsBuddyEvents(_game.CurrentGameStats.HsReplay.UploadId);
 					else
 						Sentry.ClearBobsBuddyEvents();
-					if(!_game.IsBattlegroundsDuosMatch)
-						RecordBattlegroundsGame();
+					RecordBattlegroundsGame();
 					Tier7Trial.Clear();
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
@@ -925,7 +924,8 @@ namespace Hearthstone_Deck_Tracker
 				.Where(x => x.IsMinion && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Player.Id))
 				.Select(x => x.Clone())
 				.ToArray();
-			var friendlyGame = Core.Game.CurrentGameType == GameType.GT_BATTLEGROUNDS_FRIENDLY;
+			var friendlyGame = _game.CurrentGameType is GameType.GT_BATTLEGROUNDS_FRIENDLY or GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY;
+			var duos = _game.IsBattlegroundsDuosMatch;
 
 			if(startTime != null && endTime != null && heroCardId != null && rating != null && ratingAfter != null && placement != null)
 			{
@@ -937,7 +937,9 @@ namespace Hearthstone_Deck_Tracker
 					(int)ratingAfter,
 					(int)placement,
 					finalBoard,
-					friendlyGame
+					friendlyGame,
+					duos,
+					save: true
 				);
 			}
 			else

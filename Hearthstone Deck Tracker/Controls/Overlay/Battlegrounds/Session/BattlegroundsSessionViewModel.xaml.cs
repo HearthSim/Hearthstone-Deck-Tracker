@@ -44,7 +44,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 		var firstGame = await UpdateLatestGames();
 
-		var rating = Core.Game.BattlegroundsRatingInfo?.Rating ?? 0;
+		var rating = (IsDuos  ? Core.Game.BattlegroundsRatingInfo?.DuosRating : Core.Game.BattlegroundsRatingInfo?.Rating) ?? 0;
 		var ratingStart = firstGame?.Rating ?? rating;
 		if(rating == 0)
 			rating = ratingStart;
@@ -66,11 +66,11 @@ public class BattlegroundsSessionViewModel : ViewModel
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
-		BgStartCurrentMMRSectionVisibility = Config.Instance.ShowSessionRecapStartCurrentMMR && !IsDuos
+		BgStartCurrentMMRSectionVisibility = Config.Instance.ShowSessionRecapStartCurrentMMR
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
-		BgLatestGamesSectionVisibility = Config.Instance.ShowSessionRecapLatestGames && !IsDuos
+		BgLatestGamesSectionVisibility = Config.Instance.ShowSessionRecapLatestGames
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
@@ -115,8 +115,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	private async Task<GameItem?> UpdateLatestGames()
 	{
-		SessionGames.Clear();
-		var sortedGames = (await Instance.PlayerGames())
+		var sortedGames = (await Instance.PlayerGames(IsDuos))
 			.OrderBy(g => g.StartTime)
 			.ToList();
 		DeleteOldGames(sortedGames);
@@ -124,11 +123,10 @@ public class BattlegroundsSessionViewModel : ViewModel
 		var sessionGames = GetSessionGames(sortedGames);
 		var firstGame = sessionGames.FirstOrDefault();
 
-		// Limit list to latest 10 items
-		if(sessionGames.Count > 10)
-			sessionGames.RemoveRange(0, sessionGames.Count - 10);
-
-		sessionGames.OrderByDescending(g => g.StartTime)
+		SessionGames.Clear();
+		sessionGames
+			.GetRange(Math.Max(sessionGames.Count - 10, 0), Math.Min(10, sessionGames.Count))
+			.OrderByDescending(g => g.StartTime)
 			.ToList()
 			.ForEach(AddOrUpdateGame);
 
@@ -160,9 +158,9 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 				var diffMMR = g.Rating - previousGameRatingAfter;
 				// Check for MMR reset
-				var ratingReseted = g.Rating < 500 && diffMMR < -500;
+				var ratingReset = g.Rating < 500 && diffMMR < -500;
 
-				if(ts.TotalHours >= 2 || ratingReseted)
+				if(ts.TotalHours >= 2 || ratingReset)
 					sessionStartTime = gStartTime;
 			}
 			previousGameEndTime = DateTime.Parse(g.EndTime);
@@ -178,17 +176,17 @@ public class BattlegroundsSessionViewModel : ViewModel
 			var lastGame = sessionGames.LastOrDefault();
 
 			// Check for MMR reset on last game
-			var ratingResetedAfterLastGame = false;
+			var ratingResetAfterLastGame = false;
 			if(Core.Game.BattlegroundsRatingInfo?.Rating != null)
 			{
 				var currentMMR = Core.Game.BattlegroundsRatingInfo?.Rating;
 				var sessionLastMMR = lastGame.RatingAfter;
-				ratingResetedAfterLastGame = currentMMR < 500 && currentMMR - sessionLastMMR < -500;
+				ratingResetAfterLastGame = currentMMR < 500 && currentMMR - sessionLastMMR < -500;
 			}
 
 			var ts = DateTime.Now - DateTime.Parse(lastGame.EndTime);
 
-			if(ts.TotalHours >= 2 || ratingResetedAfterLastGame)
+			if(ts.TotalHours >= 2 || ratingResetAfterLastGame)
 				return new List<GameItem>();
 		}
 
@@ -357,8 +355,13 @@ public class BattlegroundsSessionViewModel : ViewModel
 		}
 		set
 		{
+			var modified = GetProp(SelectedBattlegroundsGameMode.UNKNOWN) != value;
 			SetProp(value);
-			UpdateSectionsVisibilities();
+			if(modified)
+			{
+				UpdateSectionsVisibilities();
+				Update();
+			}
 		}
 	}
 	#endregion

@@ -44,17 +44,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			return accountId != null ? $"{accountId.Hi}_{accountId.Lo}" : null;
 		}
 
-		public async Task<List<GameItem>> PlayerGames()
+		public async Task<List<GameItem>> PlayerGames(bool duos)
 		{
 			var playerId = await GetPlayerId();
 			if (playerId == null)
 				return new List<GameItem>();
-			
-			return Games.Where(g => g.Player == null || g.Player == playerId).ToList();
+
+			return Games.Where(g => (g.Player == null || g.Player == playerId) && (g.Duos == duos || (g.Duos == null && !duos))).ToList();
 		}
 
 		public async void AddGame(
-			string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, bool save = true
+			string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, bool duos, bool save = true
 		)
 		{
 			var playerId = await GetPlayerId();
@@ -63,9 +63,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 				Log.Info("Unable to save the game. User account can not found...");
 				return;
 			}
-			
+
 			RemoveGame(startTime, false);
-			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter, placemenent, finalBoard, friendlyGame, playerId));
+			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter, placemenent, finalBoard, friendlyGame, playerId, duos));
 			if(save)
 				Save();
 		}
@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 
 		public class GameItem
 		{
-			public GameItem(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, string player)
+			public GameItem(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, string player, bool duos)
 			{
 				StartTime = startTime;
 				EndTime = endTime;
@@ -110,6 +110,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 				FinalBoard = new FinalBoardItem(finalBoard);
 				FriendlyGame = friendlyGame;
 				Player = player;
+				Duos = duos;
 			}
 
 			public GameItem()
@@ -143,6 +144,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			[XmlAttribute("FriendlyGame")]
 			public bool FriendlyGame { get; set; }
 
+			[XmlAttribute("Duos")]
+			public bool Duos { get; set; }
 		}
 
 		public class FinalBoardItem
