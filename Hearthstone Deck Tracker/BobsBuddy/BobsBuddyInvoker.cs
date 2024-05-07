@@ -16,8 +16,6 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
-using BobsBuddy.Spells;
-using HearthDb;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
@@ -55,8 +53,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public Entity? LastAttackingHero = null;
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
-		private static List<Entity> _currentOpponentSecrets = new List<Entity>();
-		private static Dictionary<Entity, Entity> _opponentSecretMap = new();
 
 		private List<Entity> _opponentHand = new();
 		private readonly Dictionary<Entity, Entity> _opponentHandMap = new();
@@ -459,8 +455,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			input.SetTurn(turn);
 
-			_currentOpponentSecrets = _game.Opponent.Secrets.ToList();
-
 			var playerSide = GetOrderedMinions(_game.Player.Board)
 				.Where(e => e.IsControlledBy(_game.Player.Id))
 				.Select(e => GetMinionFromEntity(simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)));
@@ -571,20 +565,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
-		internal async void UpdateSecret(Entity entity)
+		internal async void UpdateOpponentSecret(Entity entity)
 		{
-			var oldSecret = _currentOpponentSecrets.Find(x => x.Id == entity.Id);
-			if(oldSecret != null)
-				_opponentSecretMap[oldSecret] = entity;
-
-			_currentOpponentSecrets = _currentOpponentSecrets.Select(x => {
-				if(_opponentSecretMap.TryGetValue(x, out var retval))
-				{
-					return retval;
-				}
-				return entity;
-			}).ToList();
-
 			await TryRerun();
 		}
 
@@ -628,7 +610,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			try
 			{
-				_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Select(x => x != null && !string.IsNullOrEmpty(x.CardId) ? (int?)x.Card.DbfId : null).ToList(), false);
+				_input.SetupSecretsFromDbfidList(
+					_game.Opponent.Secrets
+						.Select(x => !string.IsNullOrEmpty(x.CardId) ? (int?)x.Card.DbfId : null)
+						.Distinct(new SecretDbfIdComparer())
+						.ToList(),
+					false
+				);
 				DebugLog($"Set opponent S. with {_input.OpponentSecrets.Count} S.");
 
 				DebugLog("----- Simulation Input -----");
@@ -651,14 +639,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
 
 
-				if(_input.PlayerSecrets.Count() > 0)
+				if(_input.PlayerSecrets.Any())
 				{
 					DebugLog("Detected the following player S.");
 					foreach(var s in _input.PlayerSecrets)
 						DebugLog(s.ToString());
 				}
 
-				if(_input.OpponentSecrets.Count() > 0)
+				if(_input.OpponentSecrets.Any())
 				{
 					DebugLog("Detected the following opponent S.");
 					foreach(var s in _input.OpponentSecrets)
@@ -844,6 +832,32 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			DebugLog($"Queueing alert... (valid input: {_input != null})");
 			if(_input != null && Output != null)
 				Sentry.QueueBobsBuddyTerminalCase(_input, Output, result, _turn, _recentHDTLog, _game.CurrentRegion);
+		}
+
+		/**
+		 * A comparer that keeps unknown secrets (null) and de-duplicates dbf ids otherwise.
+		 * For example { 1, null, 3, 3, null} will be deduplicated to {1, null, 3, null}.
+		 */
+		private class SecretDbfIdComparer : IEqualityComparer<int?>
+		{
+			public bool Equals(int? x, int? y)
+			{
+				if (x == null || y == null)
+				{
+					return false;
+				}
+
+				return x == y;
+			}
+
+			public int GetHashCode(int? obj)
+			{
+				if (obj == null)
+				{
+					return 0;
+				}
+				return obj.GetHashCode();
+			}
 		}
 	}
 }
