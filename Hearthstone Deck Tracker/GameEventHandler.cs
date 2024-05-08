@@ -870,6 +870,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 					Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
+					Core.Overlay.HideBattlegroundsHeroPanel();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
 					var finalPlacement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0;
 					CaptureBattlegroundsHeroPickingFeedback(finalPlacement);
