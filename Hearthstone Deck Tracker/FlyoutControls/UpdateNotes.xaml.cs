@@ -112,6 +112,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 					releaseNotes = reader.ReadToEnd();
 				}
 
+				releaseNotes = Regex.Replace(releaseNotes, "\\\\\r", "\r"); // yes, this the right number of slashes...
 				releaseNotes = Regex.Replace(releaseNotes, "\n", "\n\n");
 				releaseNotes = Regex.Replace(releaseNotes, "#(\\d+)",
 					"[#$1](https://github.com/HearthSim/Hearthstone-Deck-Tracker/issues/$1)");
