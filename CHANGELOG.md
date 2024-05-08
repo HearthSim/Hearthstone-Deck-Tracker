@@ -1,3 +1,19 @@
+## **Release v1.27.1 - 2024-05-08**
+**Features**:
+- Added Duos support to the Battlegrounds session recap.\
+  *Duos support for Bob's Buddy and the hero picking overlay are being worked on!*
+
+**Fixes:**
+- Fixed automatic deck importing for Whizbang the Wonderful.\
+  *Whizbang the Splendiferous and Zayle, Shadow Cloak will follow in a future update.*
+- Fixed the Battlegrounds hero picking popup not disappearing after a disconnect.
+- Improved the reliability of detecting the available minion types in Battlegrounds.
+
+**Bob's Buddy**:
+- Fixed incorrect lethal rates due to an issue detecting the damage cap.
+- Fixed incorrect simulation results due to Fleeting Vigor.
+- Fixed incorrect simulation results due to Teron Gorefiend's hero power.
+
 ## **Release v1.27.0 - 2024-04-25**
 **Updated for Hearthstone 29.2.2**
 
