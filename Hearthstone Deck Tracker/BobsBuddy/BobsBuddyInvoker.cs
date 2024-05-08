@@ -377,11 +377,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var pHpData2 = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
 			if(playerHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
 			{
-				var ench = _game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (x.IsInPlay || x.IsInSetAside))
-						?? _game.Player.Graveyard.LastOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath);
-				var target = ench?.GetTag(GameTag.ATTACHED) ?? 0;
-				if(target > 0)
-					pHpData = target;
+				var minionsInPlay = _game.Player.Board.Where(e => e.IsMinion && e.IsControlledBy(_game.Player.Id)).Select(x => x.Id);
+				var attachedToEntityId = _game.Player.PlayerEntities
+					.Where(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && x.IsInPlay)
+					.Select(x => x.GetTag(GameTag.ATTACHED))
+					.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
+				if(attachedToEntityId > 0)
+					pHpData = attachedToEntityId;
 			}
 			input.SetPlayerHeroPower(playerHeroPower?.CardId ?? "", WasHeroPowerActivated(playerHeroPower), pHpData, pHpData2);
 
@@ -391,7 +393,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(opponentHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
 			{
 				// It appear this enchantment may be in the graveyard now in the opponents case
-				var ench = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (x.IsInPlay || x.IsInSetAside))
+				var ench = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && x.IsInPlay)
+				        ?? _game.Opponent.PlayerEntities.LastOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && x.IsInSetAside)
 						?? _game.Opponent.Graveyard.LastOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath);
 				var target = ench?.GetTag(GameTag.ATTACHED) ?? 0;
 				if(target > 0)
