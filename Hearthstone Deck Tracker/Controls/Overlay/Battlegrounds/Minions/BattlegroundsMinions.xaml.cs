@@ -38,6 +38,6 @@ public partial class BattlegroundsMinions : UserControl
 	public ICommand SetActiveMinionTypeCommand => new Command<Race>(value =>
 	{
 		((BattlegroundsMinionsViewModel)DataContext).ActiveMinionType = value;
-		Core.Game.Metrics.IncrementBattlegroundsMinionsTabClick();
+		Core.Game.Metrics.IncrementBattlegroundsMinionsByMinionTypeClick();
 	});
 }

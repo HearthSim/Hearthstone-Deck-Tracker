@@ -93,6 +93,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			if (battlegroundsAction.NumClickBattlegroundsMinionTab > 0)
 				yield return new ValueMoment(VMName.BGMinionBrowser, ValueMoment.VMKind.Free);
 
+			if (battlegroundsAction.NumClickBattlegroundsMinionsByMinionTypeFilter > 0)
+				yield return new ValueMoment(VMName.BGMinionBrowserMinionType, ValueMoment.VMKind.Free);
+
 			var isTrialActivated = battlegroundsAction.TrialsActivated != null &&
 			                       battlegroundsAction.TrialsActivated.Contains(VMBattlegroundsAction.Tier7OverlayTrial);
 			if (battlegroundsAction.Tier7HeroOverlayDisplayed)

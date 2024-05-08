@@ -32,6 +32,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("minions_banned")]
 		public bool MinionsBanned { get => Config.Instance.ShowSessionRecapMinionsBanned; }
 
+		[JsonProperty("minions_available")]
+		public bool MinionsAvailable { get => Config.Instance.ShowSessionRecapMinionsAvailable; }
+
 		[JsonProperty("start_and_current_mmr")]
 		public bool StartAndCurrentMMR { get => Config.Instance.ShowSessionRecapStartCurrentMMR; }
 
