@@ -36,6 +36,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using HSReplay.Responses;
 using NuGet;
 
 #endregion
@@ -458,11 +459,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_mulliganNotificationBehavior.Hide();
 		}
 
-		internal void ShowBattlegroundsHeroPanel(int[] heroIds)
+		internal void ShowBattlegroundsHeroPanel(int[] heroIds, Dictionary<string, string>? parameters)
 		{
 			HeroNotificationPanel.HeroIds = heroIds;
-			HeroNotificationPanel.MMR = _game.BattlegroundsRatingInfo?.Rating;
 			HeroNotificationPanel.AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
+			HeroNotificationPanel.Parameters = parameters;
 			_heroNotificationBehavior.Show();
 		}
 
@@ -511,9 +512,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HideBobsBuddyPanel();
 		}
 
-		internal void ShowBattlegroundsHeroPickingStats(int[] heroIds)
+		internal void ShowBattlegroundsHeroPickingStats(
+			IEnumerable<BattlegroundsHeroPickStats.BattlegroundsSingleHeroPickStats> heroStats,
+			Dictionary<string, string>? parameters,
+			int? minMmr,
+			bool anomalyAdjusted
+		)
 		{
-			BattlegroundsHeroPickingViewModel.SetHeroes(heroIds);
+			BattlegroundsHeroPickingViewModel.SetHeroStats(heroStats, parameters, minMmr, anomalyAdjusted);
 		}
 
 		internal void ShowMulliganGuideStats(IEnumerable<SingleCardStats> stats, int maxRank, Dictionary<string, string>? selectedParams)

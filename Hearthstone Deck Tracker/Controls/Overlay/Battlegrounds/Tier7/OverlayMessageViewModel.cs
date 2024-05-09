@@ -47,9 +47,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			{ "TOP_50_PERCENT", 50 },
 		};
 
-		public void Mmr(string filterValue, int? minMMR, bool anomalyAdjusted)
+		public void Mmr(string? filterValue, int? minMMR, bool anomalyAdjusted)
 		{
-			if(MmrPercentValues.TryGetValue(filterValue, out var percent) && minMMR is int minMmrInt)
+			if(filterValue != null && MmrPercentValues.TryGetValue(filterValue, out var percent) && minMMR is int minMmrInt)
 			{
 				var mmr = Helper.ToPrettyNumber(minMmrInt);
 				if(anomalyAdjusted)

@@ -28,10 +28,12 @@ using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using ControlzEx.Standard;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Newtonsoft.Json;
 using HSReplay.Requests;
@@ -1215,14 +1217,7 @@ namespace Hearthstone_Deck_Tracker
 							}
 
 							// Wait for the mulligan to be ready
-							for(var j = 0; j < 16 * 60 * 60; j++)
-							{
-								if(_game.IsInMenu || (_game.GameEntity?.GetTag(STEP) ?? 0) > (int)Step.BEGIN_MULLIGAN)
-									return;
-								if(Reflection.Client.GetIsMulliganWaitingForUserInput())
-									break;
-								await Task.Delay(16);
-							}
+							await WaitForMulliganStart();
 
 							Dictionary<int, SingleCardStats>? cardStats = null;
 							// GroupBy before ToDictionary to deal with (unsupported) dbfId duplicates from the server
@@ -1263,8 +1258,8 @@ namespace Hearthstone_Deck_Tracker
 								// Show mulligan toast with locally sourced parameters
 								parameters = new Dictionary<string, string>
 								{
-									{ "opponentClasses", opponentClass.ToString() },
-									{ "playerInitiative", isFirst ? "FIRST" : "COIN" }
+									["opponentClasses"] = opponentClass.ToString(),
+									["playerInitiative"] = isFirst ? "FIRST" : "COIN"
 								};
 
 								var playerStarLevel = _game.PlayerMedalInfo?.StarLevel ?? 0;
@@ -1316,26 +1311,40 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			// Assemble request
-			var parameters = (MulliganGuideParams?)_game.GetMulliganGuideParams();
+			var parameters = _game.GetMulliganGuideParams();
 			if(parameters == null)
 			{
 				return null;
 			}
 
+#if(DEBUG)
 			var json = JsonConvert.SerializeObject(parameters);
 			Log.Debug($"Fetching Mulligan Guide with parameters={json}...");
+#endif
 
 			return await HSReplayNetOAuth.MakeRequest(c => c.GetConstructedMulliganGuide(parameters));
 		}
 
+		private async Task WaitForMulliganStart(int timeout = 60)
+		{
+			for(var j = 0; j < 16 * 60 * timeout; j++)
+			{
+				if(_game.IsInMenu || (_game.GameEntity?.GetTag(STEP) ?? 0) > (int)Step.BEGIN_MULLIGAN)
+					return;
+				if(Reflection.Client.GetIsMulliganWaitingForUserInput())
+					break;
+				await Task.Delay(16);
+			}
+		}
+
 		private async void HandleBattlegroundsStart()
 		{
-			if(Config.Instance.ShowBattlegroundsToast && _game.IsBattlegroundsSoloMatch)
+			if(_game.IsBattlegroundsSoloMatch)
 			{
 				for(var i = 0; i < 10; i++)
 				{
 					await Task.Delay(500);
-					var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN)));
+					var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN))).ToList();
 					if(heroes.Count() < 2)
 						continue;
 					await Task.Delay(500);
@@ -1346,26 +1355,81 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					}
 
+					_game.SnapshotBattlegroundsOfferedHeroes(heroes);
+					_game.CacheBattlegroundsHeroPickParams();
+
 					var heroIds = heroes.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
-
-					// Wait for the game to fade in
-					await Task.Delay(3000);
-
 					if(Config.Instance.HideOverlay)
 					{
-						var mmr = Core.Game.BattlegroundsRatingInfo?.Rating;
-						var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity);
-						ToastManager.ShowBattlegroundsToast(heroIds, mmr, anomalyDbfId);
-						Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
+						if(Config.Instance.ShowBattlegroundsToast)
+						{
+							// Wait for the mulligan to be ready
+							await WaitForMulliganStart();
+
+							// Wait for screen to fade in
+							await Task.Delay(500);
+
+							var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity);
+							ToastManager.ShowBattlegroundsToast(heroIds, anomalyDbfId);
+
+							Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel(); // in case the overlay is enabled later
+						}
 					}
 					else
 					{
-						Core.Overlay.ShowBgsTopBar();
-						Core.Overlay.ShowBattlegroundsHeroPickingStats(heroIds);
-						Core.Overlay.ShowBattlegroundsHeroPanel(heroIds);
-						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
-						if(Tier7Trial.RemainingTrials.HasValue)
-							Core.Game.Metrics.Tier7TrialsRemaining = Math.Max(0, Tier7Trial.RemainingTrials.Value - 1);
+						var statsTask = GetBattlegroundsHeroPickStats();
+
+						// Wait for the mulligan to be ready
+						await WaitForMulliganStart();
+
+						async Task WaitAndAppear()
+						{
+							await Task.Delay(500);
+							Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
+						}
+
+						var appearTask = WaitAndAppear();
+						BattlegroundsHeroPickStats? battlegroundsHeroPickStats = null;
+						try
+						{
+							await Task.WhenAll(statsTask, appearTask);
+							battlegroundsHeroPickStats = await statsTask;
+						}
+						catch(Exception)
+						{
+							// pass
+						}
+
+						Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
+
+						Dictionary<string, string>? toastParams = null;
+						if(battlegroundsHeroPickStats is BattlegroundsHeroPickStats stats)
+						{
+							toastParams = stats.Toast.Parameters;
+
+							Core.Overlay.ShowBattlegroundsHeroPickingStats(
+								heroIds.Select(dbfId => stats.Data.FirstOrDefault(x => x.HeroDbfId == dbfId)),
+								stats.Toast.Parameters,
+								stats.Toast.MinMmr,
+								stats.Toast.AnomalyAdjusted ?? false
+							);
+						}
+						else if(statsTask.Exception != null)
+						{
+							if(statsTask.Exception.InnerExceptions.Any(x => x is HeroPickingDisabledException))
+							{
+								Core.Overlay.BattlegroundsHeroPickingViewModel.ShowDisabledMessage();
+							}
+							else
+							{
+								Core.Overlay.BattlegroundsHeroPickingViewModel.ShowErrorMessage();
+							}
+						}
+
+						if(Config.Instance.ShowBattlegroundsToast)
+						{
+							Core.Overlay.ShowBattlegroundsHeroPanel(heroIds, toastParams);
+						}
 					}
 					break;
 				}
@@ -1379,6 +1443,56 @@ namespace Hearthstone_Deck_Tracker
 
 			Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
+		}
+
+		private async Task<BattlegroundsHeroPickStats?> GetBattlegroundsHeroPickStats()
+		{
+			if(Core.Game.Spectator)
+				return null;
+
+			if(!Config.Instance.EnableBattlegroundsTier7Overlay)
+				return null;
+
+			if(Remote.Config.Data?.Tier7?.Disabled ?? false)
+				throw new HeroPickingDisabledException("Hero picking remotely disabled");
+
+			var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
+			if(!userOwnsTier7 && (Tier7Trial.RemainingTrials ?? 0) == 0)
+				return null;
+
+			var parameters = _game.GetBattlegroundsHeroPickParams();
+
+			// Avoid using a trial when we can't get the api params anyway.
+			if(parameters == null)
+				throw new HeroPickingException("Unable to get API parameters");
+
+			// Use a trial if we can
+			string? token = null;
+			if(!userOwnsTier7)
+			{
+				var acc = Reflection.Client.GetAccountId();
+				token = acc != null ? await Tier7Trial.Activate(acc.Hi, acc.Lo) : null;
+				if(token == null)
+					throw new HeroPickingException("Unable to get trial token");
+
+				Core.Game.Metrics.Tier7TrialsRemaining = Math.Max(0, (Tier7Trial.RemainingTrials ?? 0) - 1);
+			}
+
+#if(DEBUG)
+			var json = JsonConvert.SerializeObject(parameters);
+			Log.Debug($"Fetching Battlegrounds Hero Pick stats with parameters={json}...");
+#endif
+
+			// At this point the user either owns tier7 or has an active trial!
+
+			var stats = (token != null && !userOwnsTier7
+				? await ApiWrapper.GetTier7HeroPickStats(token, parameters)
+				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7HeroPickStats(parameters)));
+
+			if(stats == null)
+				throw new HeroPickingException("Invalid server response");
+
+			return stats;
 		}
 
 		private void CaptureBattlegroundsHeroPickingFeedback(int finalPlacement)

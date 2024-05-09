@@ -195,7 +195,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static async Task<BattlegroundsSingleHeroPickStats[]?> GetTier7HeroPickStats(string token, BattlegroundsHeroPickStatsParams parameters)
+		public static async Task<BattlegroundsHeroPickStats?> GetTier7HeroPickStats(string token, BattlegroundsHeroPickStatsParams parameters)
 		{
 			try
 			{

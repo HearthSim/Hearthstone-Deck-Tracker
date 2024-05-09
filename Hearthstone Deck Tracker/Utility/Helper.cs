@@ -824,26 +824,35 @@ namespace Hearthstone_Deck_Tracker
 			return string.Format("{0} ({1})", hdtPart, windowsPart);
 		}
 
-		internal static void OpenBattlegroundsHeroPicker(int[] heroIds, int? mmr, int? anomalyDbfId)
+		internal static void OpenBattlegroundsHeroPicker(int[] heroIds, int? anomalyDbfId, Dictionary<string, string>? parameters)
 		{
-			var encodedHeroIds = HttpUtility.UrlEncode(string.Join(",", heroIds));
-			var url = $"{BuildHsReplayNetUrl("battlegrounds/heroes", "bgs_toast")}#heroes={encodedHeroIds}";
+			// time frame and rank range
+			var queryParams = parameters?.Select(kv =>
+				$"{HttpUtility.UrlEncode(kv.Key)}={HttpUtility.UrlEncode(kv.Value)}"
+			).ToList() ?? new List<string>();
 
-			if(mmr.HasValue)
-				url += $"&mmr={mmr.Value}";
+			// remaining params
+			var fragmentParams = new List<string> { $"heroes={string.Join(",", heroIds)}" };
+
+			if(anomalyDbfId.HasValue && anomalyDbfId.Value > 0)
+				fragmentParams.Add($"anomalyDbfId={anomalyDbfId.Value}");
 
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
 			if(availableRaces?.Count > 0)
 			{
 				var availableRacesAsList = availableRaces.ToList();
 				availableRacesAsList.Sort((x, y) => ((int)x).CompareTo((int)y));
-				url += $"&minionTypes={HttpUtility.UrlEncode(string.Join(",", availableRacesAsList.Select(type => type.ToString())))}";
-
+				fragmentParams.Add(
+					$"minionTypes={HttpUtility.UrlEncode(string.Join(",", availableRacesAsList.Select(type => type.ToString())))}"
+				);
 			}
 
-			if(anomalyDbfId.HasValue && anomalyDbfId.Value > 0)
-				url += $"&anomalyDbfId={anomalyDbfId.Value}";
-
+			var url = BuildHsReplayNetUrl(
+				"/battlegrounds/heroes/",
+				"bgs_toast",
+				queryParams,
+				fragmentParams
+			);
 			TryOpenUrl(url);
 			HSReplayNetClientAnalytics.TryTrackToastClick(Franchise.Battlegrounds, ToastAction.Toast.BattlegroundsHeroPicker);
 		}

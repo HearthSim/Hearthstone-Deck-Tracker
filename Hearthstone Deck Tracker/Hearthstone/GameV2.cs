@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -430,13 +431,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return _battlegroundsHeroTriplesByTier.TryGetValue(id, out var data) ? data : null;
 		}
 
-		private BattlegroundsHeroPickStatsParams? _battlegroundsHeroPickStatsParams = null;
-		public BattlegroundsHeroPickStatsParams? BattlegroundsHeroPickStatsParams
-		{
-			get => _battlegroundsHeroPickStatsParams;
-			set => _battlegroundsHeroPickStatsParams = value;
-		}
-
 		private MulliganState? _mulliganState;
 		private MulliganState MulliganState
 		{
@@ -527,6 +521,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Dictionary<int, SingleCardStats>? MulliganCardStats { get; set; } = null;
 
+		private BattlegroundsHeroPickStatsParams? _battlegroundsHeroPickStatsParams;
+
+		public void CacheBattlegroundsHeroPickParams()
+		{
+			if(_battlegroundsHeroPickStatsParams != null)
+				return;
+
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+			if(availableRaces == null)
+				return;
+
+			var heroDbfIds = BattlegroundsHeroPickState.OfferedHeroDbfIds;
+			if(heroDbfIds == null)
+				return;
+
+			_battlegroundsHeroPickStatsParams = new BattlegroundsHeroPickStatsParams
+			{
+				HeroDbfIds = heroDbfIds,
+				BattlegroundsRaces = availableRaces.Cast<int>().ToArray(),
+				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
+				LanguageCode = Config.Instance.SelectedLanguage,
+				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
+			};
+		}
+
+		public BattlegroundsHeroPickStatsParams? GetBattlegroundsHeroPickParams()
+		{
+			return _battlegroundsHeroPickStatsParams;
+		}
+
 		private BattlegroundsHeroPickState? _battlegroundsHeroPickState;
 		private BattlegroundsHeroPickState BattlegroundsHeroPickState
 		{
@@ -541,6 +565,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public void SnapshotBattlegroundsOfferedHeroes(IEnumerable<Entity> heroes) => BattlegroundsHeroPickState.SnapshotOfferedHeroes(heroes);
 		public void SnapshotBattlegroundsHeroPick() => BattlegroundsHeroPickState.SnapshotPickedHero();
 
 		public BattlegroundsHeroPickFeedbackParams? GetBattlegroundsHeroPickFeedbackParams(int finalPlacement)

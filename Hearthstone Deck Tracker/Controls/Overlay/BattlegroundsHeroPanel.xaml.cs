@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
@@ -12,8 +13,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		}
 
 		public int[]? HeroIds { get; internal set; }
-		public int? MMR { get; internal set; }
 		public int? AnomalyDbfId { get; internal set; }
+		public Dictionary<string, string>? Parameters { get; internal set; }
 
 		private void UserControl_MouseEnter(object sender, MouseEventArgs e)
 		{
@@ -29,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			Core.Overlay.HideBattlegroundsHeroPanel();
 			if(HeroIds != null)
-				Helper.OpenBattlegroundsHeroPicker(HeroIds, MMR, AnomalyDbfId);
+				Helper.OpenBattlegroundsHeroPicker(HeroIds, AnomalyDbfId, Parameters);
 		}
 	}
 }
