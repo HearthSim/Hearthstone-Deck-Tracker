@@ -392,13 +392,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var oHpData2 = opponentHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
 			if(opponentHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
 			{
-				// It appear this enchantment may be in the graveyard now in the opponents case
-				var ench = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && x.IsInPlay)
-				        ?? _game.Opponent.PlayerEntities.LastOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && x.IsInSetAside)
-						?? _game.Opponent.Graveyard.LastOrDefault(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath);
-				var target = ench?.GetTag(GameTag.ATTACHED) ?? 0;
-				if(target > 0)
-					oHpData = target;
+				var minionsInPlay = _game.Opponent.Board.Where(e => e.IsMinion && e.IsControlledBy(_game.Opponent.Id)).Select(x => x.Id);
+				var attachedToEntityId = _game.Opponent.PlayerEntities
+					.Where(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath)
+					.Select(x => x.GetTag(GameTag.ATTACHED))
+					.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
+				if(attachedToEntityId > 0)
+					oHpData = attachedToEntityId;
 			}
 			input.SetOpponentHeroPower(opponentHeroPower?.CardId ?? "", WasHeroPowerActivated(opponentHeroPower), oHpData, oHpData2);
 
