@@ -1,3 +1,10 @@
+## **Release v1.27.2 - 2024-05-10**
+**Fixes:**
+- Ensure the Battlegrounds Compare Heroes popup uses the same filters as the hero picking overlay.
+
+**Bob's Buddy**:
+- Fixed various simulation issues.
+
 ## **Release v1.27.1 - 2024-05-08**
 **Features**:
 - Added Duos support to the Battlegrounds session recap.\
