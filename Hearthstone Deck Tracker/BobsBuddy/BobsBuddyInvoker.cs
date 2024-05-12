@@ -794,13 +794,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			if(IsIncorrectLethalResult(lethalResult) && !OpposingKelThuzadDied(lethalResult))
 			{
-				// Akazamzarak hero power - secrets are supported but not for lethal.
-				if(_input?.OpponentHeroPower.CardId == NonCollectible.Neutral.PrestidigitationTavernBrawl)
-				{
-					DebugLog("Opponent was Akazamarak. Currently not reporting lethal results. Exiting.");
-					return;
-				}
-
 				// There should never be relevant lethals this early in the game.
 				// These missed lethals are likely caused by some bug.
 				if(_turn <= 5)
