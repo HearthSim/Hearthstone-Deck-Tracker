@@ -1,3 +1,13 @@
+## **Release v1.27.3 - 2024-05-13**
+**Features:**
+- Switched the tiers shown in Battlegrounds hero picking overlay to a new and improved methodology.\
+  *Hero tiers are now one of S, A, B, C, D and F. The S and F tiers are very rare and will only appear for true outliers.*
+- Visual improvements to the Battlegrounds hero picking oerlay.
+
+**Bob's Buddy**:
+- Added support for Boon of Beetles.
+- Fixed incorrect simulation results when the opponent had multiple secrets.
+
 ## **Release v1.27.2 - 2024-05-10**
 **Fixes:**
 - Ensure the Battlegrounds Compare Heroes popup uses the same filters as the hero picking overlay.
