@@ -446,12 +446,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			foreach(var objective in _game.Player.Objectives)
 			{
-				input.PlayerObjectives.Add(simulator.ObjectiveFactory.Create(objective.CardId ?? "", true));
+				input.PlayerObjectives.Add(GetObjectiveFromEntity(simulator.ObjectiveFactory, true, objective));
 			}
 
 			foreach(var objective in _game.Opponent.Objectives)
 			{
-				input.OpponentObjectives.Add(simulator.ObjectiveFactory.Create(objective.CardId ?? "", false));
+				input.OpponentObjectives.Add(GetObjectiveFromEntity(simulator.ObjectiveFactory, false, objective));
 			}
 
 			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => (int?)x.Card.DbfId).ToList(), true);

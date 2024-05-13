@@ -6,6 +6,7 @@ using BobsBuddy.HeroPowers;
 using BobsBuddy.Minions.Mech;
 using BobsBuddy.Minions.Undead;
 using BobsBuddy.Simulation;
+using BobsBuddy.Spells;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -24,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal const string RebornRite = NonCollectible.Neutral.RebornRitesTavernBrawl;
 
 
-		internal static Minion GetMinionFromEntity(MinionFactory minionFactory, bool player, Entity entity, IEnumerable<Entity> attachedEntities) 
+		internal static Minion GetMinionFromEntity(MinionFactory minionFactory, bool player, Entity entity, IEnumerable<Entity> attachedEntities)
 		{
 			var cardId = entity.Info.LatestCardId ?? "Unknown";
 			var minion = minionFactory.CreateFromCardId(cardId, player);
@@ -113,6 +114,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.game_id = entity.Id;
 
 			return minion;
+		}
+
+		internal static Objective GetObjectiveFromEntity(ObjectiveFactory factory, bool player, Entity entity)
+		{
+			var objective = factory.Create(entity.CardId ?? "", player);
+			var scriptDataNum = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			if(scriptDataNum > 0)
+				objective.ScriptDataNum1 = scriptDataNum;
+			return objective;
 		}
 
 		internal static bool WasHeroPowerActivated(Entity? heroPower)
