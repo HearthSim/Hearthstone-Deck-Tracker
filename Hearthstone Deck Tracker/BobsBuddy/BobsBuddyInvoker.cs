@@ -537,6 +537,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					var expandAfterError = ErrorState == BobsBuddyErrorState.None && Config.Instance.ShowBobsBuddyDuringCombat;
 					ErrorState = BobsBuddyErrorState.None;
 					BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.None, null, BobsBuddyDisplay.ResultsPanelExpanded || expandAfterError);
+					Output = null;
 					await RunAndDisplaySimulationAsync();
 				}
 			}
