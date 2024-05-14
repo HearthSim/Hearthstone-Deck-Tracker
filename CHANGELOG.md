@@ -1,3 +1,6 @@
+## **Release v1.28.0 - 2024-05-14**
+**Updated for Hearthstone 29.4.0**
+
 ## **Release v1.27.3 - 2024-05-13**
 **Features:**
 - Switched the tiers shown in Battlegrounds hero picking overlay to a new and improved methodology.\
