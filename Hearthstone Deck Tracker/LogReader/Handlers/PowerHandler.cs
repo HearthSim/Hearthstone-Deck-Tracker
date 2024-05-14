@@ -640,7 +640,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.EliseStarseeker_GoldenMonkeyToken);
 								break;
 							case Collectible.Neutral.Doomcaller:
-								AddKnownCardId(gameState, NonCollectible.Neutral.Cthun);
+								AddKnownCardId(gameState, NonCollectible.Neutral.CthunOG);
 								break;
 							case Collectible.Druid.JadeIdol:
 							case NonCollectible.Druid.JadeIdol_JadeStash:
@@ -922,7 +922,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warlock.DisposalAssistant:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TramMechanic_BarrelOfSludgeToken, 1, DeckLocation.Bottom);
 								break;
-
+							case Collectible.Warlock.MassProduction:
+								AddKnownCardId(gameState, Collectible.Warlock.MassProduction, 2);
+								break;
+							case Collectible.Warrior.SafetyExpert:
+								AddKnownCardId(gameState, NonCollectible.Neutral.SeaforiumBomber_BombToken, 3);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
