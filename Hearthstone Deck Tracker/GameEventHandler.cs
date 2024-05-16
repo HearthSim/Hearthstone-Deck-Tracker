@@ -1341,99 +1341,104 @@ namespace Hearthstone_Deck_Tracker
 		private async void HandleBattlegroundsStart()
 		{
 			Watchers.BattlegroundsLeaderboardWatcher.Run();
+			OpponentDeadForTracker.ResetOpponentDeadForTracker();
+
+			IEnumerable<Entity> heroes = new List<Entity>();
+			for(var i = 0; i < 10; i++)
+			{
+				await Task.Delay(500);
+				heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN))).ToList();
+				if(heroes.Count() >= 2)
+					break;
+			}
+
+			await Task.Delay(500);
+
+			Core.Overlay.BattlegroundsSessionViewModelVM.Update();
+
+			if(_game.GameEntity?.GetTag(STEP) != (int)Step.BEGIN_MULLIGAN)
+			{
+				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
+				return;
+			}
+
+			_game.SnapshotBattlegroundsOfferedHeroes(heroes);
+			_game.CacheBattlegroundsHeroPickParams();
+
 			if(_game.IsBattlegroundsSoloMatch)
 			{
-				for(var i = 0; i < 10; i++)
+				var heroIds = heroes.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
+				if(Config.Instance.HideOverlay)
 				{
-					await Task.Delay(500);
-					var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN))).ToList();
-					if(heroes.Count() < 2)
-						continue;
-					await Task.Delay(500);
-
-					if(_game.GameEntity?.GetTag(STEP) != (int)Step.BEGIN_MULLIGAN)
+					if(Config.Instance.ShowBattlegroundsToast)
 					{
-						Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
-						break;
-					}
-
-					_game.SnapshotBattlegroundsOfferedHeroes(heroes);
-					_game.CacheBattlegroundsHeroPickParams();
-
-					var heroIds = heroes.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
-					if(Config.Instance.HideOverlay)
-					{
-						if(Config.Instance.ShowBattlegroundsToast)
-						{
-							// Wait for the mulligan to be ready
-							await WaitForMulliganStart();
-
-							// Wait for screen to fade in
-							await Task.Delay(500);
-
-							var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity);
-							ToastManager.ShowBattlegroundsToast(heroIds, anomalyDbfId);
-
-							Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel(); // in case the overlay is enabled later
-						}
-					}
-					else
-					{
-						var statsTask = GetBattlegroundsHeroPickStats();
-
 						// Wait for the mulligan to be ready
 						await WaitForMulliganStart();
 
-						async Task WaitAndAppear()
-						{
-							await Task.Delay(500);
-							Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
-						}
+						// Wait for screen to fade in
+						await Task.Delay(500);
 
-						var appearTask = WaitAndAppear();
-						BattlegroundsHeroPickStats? battlegroundsHeroPickStats = null;
-						try
-						{
-							await Task.WhenAll(statsTask, appearTask);
-							battlegroundsHeroPickStats = await statsTask;
-						}
-						catch(Exception)
-						{
-							// pass
-						}
+						var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity);
+						ToastManager.ShowBattlegroundsToast(heroIds, anomalyDbfId);
 
+						Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel(); // in case the overlay is enabled later
+					}
+				}
+				else
+				{
+					var statsTask = GetBattlegroundsHeroPickStats();
+
+					// Wait for the mulligan to be ready
+					await WaitForMulliganStart();
+
+					async Task WaitAndAppear()
+					{
+						await Task.Delay(500);
 						Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
+					}
 
-						Dictionary<string, string>? toastParams = null;
-						if(battlegroundsHeroPickStats is BattlegroundsHeroPickStats stats)
+					var appearTask = WaitAndAppear();
+					BattlegroundsHeroPickStats? battlegroundsHeroPickStats = null;
+					try
+					{
+						await Task.WhenAll(statsTask, appearTask);
+						battlegroundsHeroPickStats = await statsTask;
+					}
+					catch(Exception)
+					{
+						// pass
+					}
+
+					Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
+
+					Dictionary<string, string>? toastParams = null;
+					if(battlegroundsHeroPickStats is BattlegroundsHeroPickStats stats)
+					{
+						toastParams = stats.Toast.Parameters;
+
+						Core.Overlay.ShowBattlegroundsHeroPickingStats(
+							heroIds.Select(dbfId => stats.Data.FirstOrDefault(x => x.HeroDbfId == dbfId)),
+							stats.Toast.Parameters,
+							stats.Toast.MinMmr,
+							stats.Toast.AnomalyAdjusted ?? false
+						);
+					}
+					else if(statsTask.Exception != null)
+					{
+						if(statsTask.Exception.InnerExceptions.Any(x => x is HeroPickingDisabledException))
 						{
-							toastParams = stats.Toast.Parameters;
-
-							Core.Overlay.ShowBattlegroundsHeroPickingStats(
-								heroIds.Select(dbfId => stats.Data.FirstOrDefault(x => x.HeroDbfId == dbfId)),
-								stats.Toast.Parameters,
-								stats.Toast.MinMmr,
-								stats.Toast.AnomalyAdjusted ?? false
-							);
+							Core.Overlay.BattlegroundsHeroPickingViewModel.ShowDisabledMessage();
 						}
-						else if(statsTask.Exception != null)
+						else
 						{
-							if(statsTask.Exception.InnerExceptions.Any(x => x is HeroPickingDisabledException))
-							{
-								Core.Overlay.BattlegroundsHeroPickingViewModel.ShowDisabledMessage();
-							}
-							else
-							{
-								Core.Overlay.BattlegroundsHeroPickingViewModel.ShowErrorMessage();
-							}
-						}
-
-						if(Config.Instance.ShowBattlegroundsToast)
-						{
-							Core.Overlay.ShowBattlegroundsHeroPanel(heroIds, toastParams);
+							Core.Overlay.BattlegroundsHeroPickingViewModel.ShowErrorMessage();
 						}
 					}
-					break;
+
+					if(Config.Instance.ShowBattlegroundsToast)
+					{
+						Core.Overlay.ShowBattlegroundsHeroPanel(heroIds, toastParams);
+					}
 				}
 			}
 			else
@@ -1442,9 +1447,6 @@ namespace Hearthstone_Deck_Tracker
 				if(Core.Game.IsBattlegroundsDuosMatch)
 					Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
 			}
-
-			Core.Overlay.BattlegroundsSessionViewModelVM.Update();
-			OpponentDeadForTracker.ResetOpponentDeadForTracker();
 		}
 
 		private async Task<BattlegroundsHeroPickStats?> GetBattlegroundsHeroPickStats()
