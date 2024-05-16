@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		bool PlayerChallengeable { get; }
 		bool SetupDone { get; set; }
 		void SnapshotBattlegroundsBoardState();
-		BoardSnapshot? GetBattlegroundsBoardStateFor(string cardId);
+		BoardSnapshot? GetBattlegroundsBoardStateFor(int entityId);
 		int GetTurnNumber();
 	}
 }

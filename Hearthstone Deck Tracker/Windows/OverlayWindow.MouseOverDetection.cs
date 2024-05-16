@@ -42,6 +42,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private double LeaderboardTop => Height * 0.15;
 		private const int MaxHandSize = 10;
 		private const int MaxBoardSize = 7;
+		public int? _leaderboardHoveredEntityId = null;
 		private bool _mouseIsOverLeaderboardIcon = false;
 		private int _nextOpponentLeaderboardPosition = -1;
 		private const int MouseLeaveEventDelay = 200;
@@ -361,42 +362,28 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlavorTextVisibility = Visibility.Collapsed;
 		}
 
+		public void SetHoveredBattlegroundsLeaderboardEntityId(int? entityId)
+		{
+			_leaderboardHoveredEntityId = entityId;
+		}
+
 		private void UpdateBattlegroundsOverlay()
 		{
-			var cursorPos = GetCursorPos();
-			if(cursorPos.X == -1 && cursorPos.Y == -1)
-				return;
-			var shouldShowOpponentInfo = false;
 			var fadeBgsMinionsList = false;
-			_mouseIsOverLeaderboardIcon = false;
 			var turn = _game.GetTurnNumber();
 			_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Collapsed);
 			_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Collapsed);
 			if(turn == 0 || _game.IsBattlegroundsDuosMatch)
 				return;
-			for(var i = 0; i < _leaderboardIcons.Count; i++)
+			var shouldShowOpponentInfo = false;
+			if(_leaderboardHoveredEntityId is int heroEntityId)
 			{
-				if(ElementContains(_leaderboardIcons[i], cursorPos))
-				{
-					_mouseIsOverLeaderboardIcon = true;
-					fadeBgsMinionsList = true;
-					_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Visible);
-					_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Visible);
-					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
-					if(entity == null)
-					{
-						if(turn == 1 && i != 0)
-						{
-							BgsOpponentInfo.ShowNotFoughtOpponent();
-							shouldShowOpponentInfo = true;
-						}
-						break;
-					}
-					var state = _game.GetBattlegroundsBoardStateFor(entity.CardId);
-					shouldShowOpponentInfo = !(state == null && entity.CardId == Core.Game.Player.Hero?.CardId);
-					BgsOpponentInfo.Update(entity, state, turn);
-					break;
-				}
+				fadeBgsMinionsList = true;
+				_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Visible);
+				_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Visible);
+				var state = _game.GetBattlegroundsBoardStateFor(heroEntityId);
+				BgsOpponentInfo.Update(heroEntityId, state, turn);
+				shouldShowOpponentInfo = !(_game.Entities.TryGetValue(heroEntityId, out var entity) && entity.IsControlledBy(_game.Player.Id));
 			}
 			if(shouldShowOpponentInfo)
 			{
@@ -422,7 +409,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private async void ShowBobsBuddyPanelDelayed()
 		{
 			await Task.Delay(300);
-			if(!_mouseIsOverLeaderboardIcon &&
+			if(_leaderboardHoveredEntityId == null &&
 				_game.IsBattlegroundsMatch &&
 				_game.GetTurnNumber() != 0 &&
 				!_game.IsInMenu)

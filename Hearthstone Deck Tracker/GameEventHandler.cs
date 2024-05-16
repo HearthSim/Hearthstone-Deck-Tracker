@@ -577,6 +577,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 					Core.Overlay.BattlegroundsSessionViewModelVM.Update();
+					Watchers.BattlegroundsLeaderboardWatcher.Run();
 					if(_game.IsBattlegroundsDuosMatch)
 						Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
 				}
@@ -1339,6 +1340,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void HandleBattlegroundsStart()
 		{
+			Watchers.BattlegroundsLeaderboardWatcher.Run();
 			if(_game.IsBattlegroundsSoloMatch)
 			{
 				for(var i = 0; i < 10; i++)

@@ -62,7 +62,7 @@ namespace HDTTests.Hearthstone.Secrets
 			throw new NotImplementedException();
 		}
 
-		public BoardSnapshot GetBattlegroundsBoardStateFor(string cardId)
+		public BoardSnapshot GetBattlegroundsBoardStateFor(int entityId)
 		{
 			throw new NotImplementedException();
 		}

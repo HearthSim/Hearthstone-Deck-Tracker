@@ -396,7 +396,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void SnapshotBattlegroundsBoardState() => _battlegroundsBoardState?.SnapshotCurrentBoard();
 
-		public BoardSnapshot? GetBattlegroundsBoardStateFor(string? cardId) => _battlegroundsBoardState?.GetSnapshot(cardId);
+		public BoardSnapshot? GetBattlegroundsBoardStateFor(int id) => _battlegroundsBoardState?.GetSnapshot(id);
 
 		public void UpdateBattlegroundsPlayerTechLevel(int id, int value)
 		{

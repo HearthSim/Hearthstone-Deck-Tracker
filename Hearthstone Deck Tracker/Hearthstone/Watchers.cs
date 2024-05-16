@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DeckPickerWatcher.Change += OnDeckPickerChange;
 			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning);
 			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
+			BattlegroundsLeaderboardWatcher.Change += (sender, args) => Core.Overlay.SetHoveredBattlegroundsLeaderboardEntityId(args.HoveredEntityId);
 		}
 
 		internal static void Stop()
@@ -47,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DeckPickerWatcher.Stop();
 			SceneWatcher.Stop();
 			BattlegroundsTeammateBoardStateWatcher.Stop();
+			BattlegroundsLeaderboardWatcher.Stop();
 		}
 
 		internal static void OnBaconChange(object sender, HearthWatcher.EventArgs.BaconEventArgs args)
@@ -98,6 +100,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static DeckPickerWatcher DeckPickerWatcher { get; } = new(new HearthMirrorDeckPickerProvider());
 		public static SceneWatcher SceneWatcher { get; } = new(new HearthMirrorSceneProvider());
 		public static BattlegroundsTeammateBoardStateWatcher BattlegroundsTeammateBoardStateWatcher { get; } = new(new HearthMirrorBattlegroundsTeammateBoardStateProvider());
+		public static BattlegroundsLeaderboardWatcher BattlegroundsLeaderboardWatcher { get; } = new(new HearthMirrorBattlegroundsLeaderboardProvider());
 	}
 
 	public class GameDataProvider : IGameDataProvider
@@ -176,5 +179,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		public BattlegroundsTeammateBoardState? BattlegroundsTeammateBoardState =>
 			Reflection.Client.GetBattlegroundsTeammateBoardState();
+	}
+
+	public class HearthMirrorBattlegroundsLeaderboardProvider : IBattlegroundsLeaderboardProvider
+	{
+		public int? BattlegroundsLeaderboardHoveredEntityId =>
+			Reflection.Client.GetBattlegroundsLeaderboardHoveredEntityId();
 	}
 }

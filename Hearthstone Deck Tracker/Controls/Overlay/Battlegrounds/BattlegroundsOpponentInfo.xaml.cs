@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			BattlegroundsBoard.Children.Clear();
 		}
 
-		public void Update(Entity hero, BoardSnapshot? state, int turnNumber)
+		public void Update(int heroId, BoardSnapshot? state, int turnNumber)
 		{
 			BattlegroundsBoard.Children.Clear();
 			NotFoughtOpponent.Visibility = Visibility.Collapsed;
@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				BattlegroundsAge.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turns"), age);
 			}
 
-			var heroTriples = Core.Game.GetBattlegroundsHeroTriplesByTier(hero.Id);
+			var heroTriples = Core.Game.GetBattlegroundsHeroTriplesByTier(heroId);
 			_heroTriples = heroTriples ?? new Dictionary<int, int>();
 			OnPropertyChanged(nameof(TriplesTier1));
 			OnPropertyChanged(nameof(TriplesTier2));
@@ -83,8 +83,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			OnPropertyChanged(nameof(TriplesTier5));
 			OnPropertyChanged(nameof(TriplesTier6));
 
-
-			var heroTavernUpTurn = Core.Game.GetBattlegroundsHeroLatestTavernUpTurn(hero.Id);
+			var heroTavernUpTurn = Core.Game.GetBattlegroundsHeroLatestTavernUpTurn(heroId);
 			_heroTierTurns = heroTavernUpTurn ?? new Dictionary<int, int>();
 			OnPropertyChanged(nameof(TurnTier2));
 			OnPropertyChanged(nameof(TurnTier3));
@@ -94,4 +93,3 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		}
 	}
 }
-
