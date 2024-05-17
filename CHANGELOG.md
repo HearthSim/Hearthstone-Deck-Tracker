@@ -1,3 +1,12 @@
+## **Release v1.28.1 - 2024-05-17**
+**Features:**:
+- Start tracking the last known board state in Battlegrounds Duos!\
+  *Hover over heroes on the leaderboard as usual to see the last board you encountered.*
+
+**Fixes:**
+- Fixed an issue causing the last known board state in Battlegrounds sometimes showing a board from the wrong hero.
+- Fixed an issue causing the death counter in Battlegrounds to sometimes be misaligned.
+
 ## **Release v1.28.0 - 2024-05-14**
 **Updated for Hearthstone 29.4.0**
 
