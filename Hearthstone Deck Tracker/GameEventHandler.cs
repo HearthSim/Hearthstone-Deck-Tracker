@@ -613,7 +613,7 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.IsBattlegroundsMatch && stateComplete)
 				{
 					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?.StartShoppingAsync(true);
-					OpponentDeadForTracker.ResetOpponentDeadForTracker();
+					OpponentDeadForTracker.Reset();
 				}
 				if(_game.IsConstructedMatch)
 				{
@@ -1341,7 +1341,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void HandleBattlegroundsStart()
 		{
 			Watchers.BattlegroundsLeaderboardWatcher.Run();
-			OpponentDeadForTracker.ResetOpponentDeadForTracker();
+			OpponentDeadForTracker.Reset();
 
 			IEnumerable<Entity> heroes = new List<Entity>();
 			for(var i = 0; i < 10; i++)

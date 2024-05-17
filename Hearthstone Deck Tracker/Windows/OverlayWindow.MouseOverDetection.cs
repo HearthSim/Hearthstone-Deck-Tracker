@@ -45,7 +45,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int MaxBoardSize = 7;
 		public int? _leaderboardHoveredEntityId = null;
 		private bool _mouseIsOverLeaderboardIcon = false;
-		private int _nextOpponentLeaderboardPosition = -1;
 		private const int MouseLeaveEventDelay = 200;
 
 		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
@@ -111,13 +110,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		internal void ResetNextOpponentLeaderboardPosition() => _nextOpponentLeaderboardPosition = -1;
-
-		internal void PositionDeadForText(int nextOpponentLeaderboardPosition = 0)
+		internal void PositionDeadForText(int nextOpponentLeaderboardPosition)
 		{
-			if(nextOpponentLeaderboardPosition > 0)
-				_nextOpponentLeaderboardPosition = nextOpponentLeaderboardPosition;
-
 			if(Core.Game.IsBattlegroundsDuosMatch)
 			{
 				for(int i = 0; i < _leaderboardDeadForText.Count; i++)

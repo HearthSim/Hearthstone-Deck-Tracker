@@ -96,6 +96,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => OnBattlegroundsCombatSetupChange(value, prevValue, game);
 				case HERO_ENTITY:
 					return () => OnHeroEntityChange(id, value, game);
+				case NEXT_OPPONENT_PLAYER_ID:
+					return () => OnNextOpponentPlayerId(id, value, game);
 			}
 			return null;
 		}
@@ -961,6 +963,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(value == 4 && game.Entities.TryGetValue(id, out var entity) && entity.CardId != NonCollectible.Neutral.TheCoinCore)
 				entity.ClearCardId();
+		}
+
+		private void OnNextOpponentPlayerId(int entityId, int playerId, IGame game)
+		{
+			if(entityId != game.PlayerEntity?.Id)
+				return;
+			OpponentDeadForTracker.SetNextOpponentPlayerId(playerId, game);
 		}
 	}
 }
