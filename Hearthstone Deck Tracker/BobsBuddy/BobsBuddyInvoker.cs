@@ -178,7 +178,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
 				BobsBuddyDisplay.ResetText();
 
-				if(_input != null && ((_input.PlayerHeroPower.CardId == RebornRite && _input.PlayerHeroPower.IsActivated) || (_input.OpponentHeroPower.CardId == RebornRite && _input.OpponentHeroPower.IsActivated)))
+				if(_input != null && ((_input.Player.HeroPower.CardId == RebornRite && _input.Player.HeroPower.IsActivated) || (_input.Opponent.HeroPower.CardId == RebornRite && _input.Opponent.HeroPower.IsActivated)))
 					await Task.Delay(LichKingDelay);
 
 				await RunAndDisplaySimulationAsync();
@@ -290,6 +290,152 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_attackingHero = attacker;
 		}
 
+		private bool SetupInputPlayer(
+			Simulator simulator,
+			Hearthstone.Player gamePlayer,
+			global::BobsBuddy.Simulation.Player inputPlayer,
+			Entity? playerEntity,
+			bool friendly
+			)
+		{
+			var playerGameHero = gamePlayer.Hero;
+
+			if(playerEntity == null)
+			{
+				throw new ArgumentException(friendly ? "Player" : "Opponent" + " Entity could not be found. Exiting.");
+			}
+
+			if(gamePlayer.Board.Any(IsUnknownCard))
+			{
+				ErrorState = BobsBuddyErrorState.UnkownCards;
+				throw new ArgumentException("Board has unknown cards. Exiting.");
+			}
+
+			if(gamePlayer.Board.Any(IsUnsupportedCard))
+			{
+				ErrorState = BobsBuddyErrorState.UnsupportedCards;
+				throw new ArgumentException("Board has unsupported cards. Exiting.");
+			}
+
+			if(playerGameHero == null)
+			{
+				throw new ArgumentException("Hero(es) could not be found. Exiting.");
+			}
+
+			var murky = gamePlayer.Board.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.Murky);
+			var murkyBuff = murky?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
+			inputPlayer.BattlecriesPlayed = murky != null && murkyBuff > 0
+				? murkyBuff / (murky.HasTag(GameTag.PREMIUM) ? 2 : 1) - 1
+				: 0;
+
+			if(!friendly && inputPlayer.Health <= 0)
+			{
+				inputPlayer.Health = 1000;
+			}
+
+			inputPlayer.Health = playerGameHero.Health + playerGameHero.GetTag(GameTag.ARMOR);
+			inputPlayer.DamageTaken = playerGameHero.GetTag(GameTag.DAMAGE);
+			inputPlayer.Tier = playerGameHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
+
+			var playerHeroPower = gamePlayer.Board.FirstOrDefault(x => x.IsHeroPower);
+			var pHpData = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
+			var pHpData2 = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
+			if(playerHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
+			{
+				var minionsInPlay = gamePlayer.Board.Where(e => e.IsMinion && e.IsControlledBy(gamePlayer.Id)).Select(x => x.Id);
+				var attachedToEntityId = gamePlayer.PlayerEntities
+					.Where(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (!friendly || (x.IsInPlay && friendly)))
+					.Select(x => x.GetTag(GameTag.ATTACHED))
+					.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
+				if(attachedToEntityId > 0)
+					pHpData = attachedToEntityId;
+			}
+			inputPlayer.SetHeroPower(playerHeroPower?.CardId ?? "", friendly, WasHeroPowerActivated(playerHeroPower), pHpData, pHpData2);
+
+			foreach(var quest in gamePlayer.Quests)
+			{
+				var rewardDbfId = quest.GetTag(GameTag.QUEST_REWARD_DATABASE_ID);
+				var reward = Database.GetCardFromDbfId(rewardDbfId, false);
+				inputPlayer.Quests.Add(new QuestData()
+				{
+					QuestProgress = quest.GetTag(GameTag.QUEST_PROGRESS),
+					QuestProgressTotal = quest.GetTag(GameTag.QUEST_PROGRESS_TOTAL),
+					QuestCardId = quest.CardId ?? "",
+					RewardCardId = reward?.Id ?? ""
+				});
+			}
+
+			foreach(var reward in gamePlayer.QuestRewards)
+			{
+				inputPlayer.Quests.Add(new QuestData()
+				{
+					RewardCardId = reward.Info.LatestCardId ?? ""
+				});
+			}
+
+			foreach(var objective in gamePlayer.Objectives)
+			{
+				//TODO: [Duos] Check if friendly translates to player correctly
+				inputPlayer.Objectives.Add(GetObjectiveFromEntity(simulator.ObjectiveFactory, friendly, objective));
+			}
+
+			var playerSide = GetOrderedMinions(gamePlayer.Board)
+				.Where(e => e.IsControlledBy(gamePlayer.Id))
+				.Select(e => GetMinionFromEntity(simulator.MinionFactory, friendly, e, GetAttachedEntities(e.Id)));
+			foreach(var m in playerSide)
+				inputPlayer.Side.Add(m);
+
+			if(friendly)
+			{
+				inputPlayer.SetSecrets(gamePlayer.Secrets.Select(x => (int?)x.Card.DbfId).ToList());
+
+				foreach(var e in gamePlayer.Hand)
+				{
+					if(e.IsMinion)
+					{
+						var minionEntity = new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)), null, simulator)
+						{
+							CanSummon = !e.HasTag(GameTag.LITERALLY_UNPLAYABLE),
+						};
+						inputPlayer.Hand.Add(minionEntity);
+					}
+					else if(e.CardId == NonCollectible.Neutral.BloodGem1)
+						inputPlayer.Hand.Add(new BloodGem(null, simulator));
+					else if(e.IsSpell)
+						inputPlayer.Hand.Add(new SpellCardEntity(null, simulator));
+					else
+						inputPlayer.Hand.Add(new CardEntity(e.CardId ?? "", null, simulator)); // Not Unknown
+				}
+			}
+			else
+			{
+				// TODO: [Duos] refactor
+				_opponentHand = gamePlayer.Hand.ToList();
+				inputPlayer.Hand.Clear();
+				inputPlayer.Hand.AddRange(GetOpponentHandEntities(simulator));
+			}
+
+
+			var playerAttached = GetAttachedEntities(playerEntity.Id);
+			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchant);
+			if(pEternalLegion != null)
+				inputPlayer.EternalKnightCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
+			if(pUndeadBonus != null)
+				inputPlayer.UndeadAttackBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);
+
+			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, friendly={friendly}");
+
+			inputPlayer.BloodGemAtkBuff = playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFATKVALUE);
+			inputPlayer.BloodGemHealthBuff =playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);
+
+			Log.Info($"pBloodGem=+{inputPlayer.BloodGemAtkBuff}/+{inputPlayer.BloodGemHealthBuff}, friendly={friendly}");
+
+			return true;
+		}
+
+
 		private void SnapshotBoardState(int turn)
 		{
 			DebugLog("Snapshotting board state...");
@@ -297,35 +443,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var simulator = new Simulator();
 			var input = new Input();
 
-			if(_game.Player.Board.Any(IsUnknownCard) || _game.Opponent.Board.Any(IsUnknownCard))
-			{
-				ErrorState = BobsBuddyErrorState.UnkownCards;
-				DebugLog("Board has unknown cards. Exiting.");
-				return;
-			}
-
-			if(_game.Player.Board.Any(IsUnsupportedCard) || _game.Opponent.Board.Any(IsUnsupportedCard))
-			{
-				ErrorState = BobsBuddyErrorState.UnsupportedCards;
-				DebugLog("Board has unsupported cards. Exiting.");
-				return;
-			}
-
 			if(_game.GameEntity == null)
 			{
 				DebugLog("GameEntity could not be found. Exiting.");
-				return;
-			}
-
-			if(_game.PlayerEntity == null)
-			{
-				DebugLog("PlayerEntity could not be found. Exiting.");
-				return;
-			}
-
-			if(_game.OpponentEntity == null)
-			{
-				DebugLog("OpponentEntity could not be found. Exiting.");
 				return;
 			}
 
@@ -333,191 +453,22 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_game.GameEntity.GetTag(GameTag.BACON_COMBAT_DAMAGE_CAP_ENABLED) > 0)
 				input.DamageCap = _game.GameEntity.GetTag(GameTag.BACON_COMBAT_DAMAGE_CAP);
 
-			var friendlyMurky = _game.Player.Board.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.Murky);
-			var friendlyMurkyBuff = friendlyMurky?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
-			input.PlayerBattlecriesPlayed = friendlyMurky != null && friendlyMurkyBuff > 0
-				? friendlyMurkyBuff / (friendlyMurky.HasTag(GameTag.PREMIUM) ? 2 : 1) - 1
-				: 0;
-
-			var opponentMurky = _game.Opponent.Board.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.Murky);
-			var opponentMurkyBuff = opponentMurky?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
-			input.OpponentBattlecriesPlayed = opponentMurky != null && opponentMurkyBuff > 0
-				? opponentMurkyBuff / (opponentMurky.HasTag(GameTag.PREMIUM) ? 2 : 1) - 1
-				: 0;
-
-			var opponentHero = _game.Opponent.Hero;
-			var playerHero = _game.Player.Hero;
-			if(opponentHero == null || playerHero == null)
+			try
 			{
-				DebugLog("Hero(es) could not be found. Exiting.");
+				SetupInputPlayer(simulator, _game.Player, input.Player, _game.PlayerEntity, true);
+				SetupInputPlayer(simulator, _game.Opponent, input.Opponent, _game.OpponentEntity, false);
+			} catch(Exception e)
+			{
+				DebugLog(e.ToString());
 				return;
-			}
-
-			input.SetHealths(playerHero.Health + playerHero.GetTag(GameTag.ARMOR), opponentHero.Health + opponentHero.GetTag(GameTag.ARMOR));
-
-			if(input.opponentHealth <= 0)
-			{
-				input.opponentHealth = 1000;
-			}
-
-			input.PlayerDamageTaken = playerHero.GetTag(GameTag.DAMAGE);
-			input.OpponentDamageTaken = opponentHero.GetTag(GameTag.DAMAGE);
-
-			var playerTechLevel = playerHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
-			var opponentTechLevel = opponentHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
-			input.SetTiers(playerTechLevel, opponentTechLevel);
+			}	
 
 			var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
 			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
 			if(anomalyCardId != null)
 				input.Anomaly = simulator.AnomalyFactory.Create(anomalyCardId);
 
-			var playerHeroPower = _game.Player.Board.FirstOrDefault(x => x.IsHeroPower);
-			var pHpData = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
-			var pHpData2 = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
-			if(playerHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
-			{
-				var minionsInPlay = _game.Player.Board.Where(e => e.IsMinion && e.IsControlledBy(_game.Player.Id)).Select(x => x.Id);
-				var attachedToEntityId = _game.Player.PlayerEntities
-					.Where(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && x.IsInPlay)
-					.Select(x => x.GetTag(GameTag.ATTACHED))
-					.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
-				if(attachedToEntityId > 0)
-					pHpData = attachedToEntityId;
-			}
-			input.SetPlayerHeroPower(playerHeroPower?.CardId ?? "", WasHeroPowerActivated(playerHeroPower), pHpData, pHpData2);
-
-			var opponentHeroPower = _game.Opponent.Board.FirstOrDefault(x => x.IsHeroPower);
-			var oHpData = opponentHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
-			var oHpData2 = opponentHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
-			if(opponentHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
-			{
-				var minionsInPlay = _game.Opponent.Board.Where(e => e.IsMinion && e.IsControlledBy(_game.Opponent.Id)).Select(x => x.Id);
-				var attachedToEntityId = _game.Opponent.PlayerEntities
-					.Where(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath)
-					.Select(x => x.GetTag(GameTag.ATTACHED))
-					.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
-				if(attachedToEntityId > 0)
-					oHpData = attachedToEntityId;
-			}
-			input.SetOpponentHeroPower(opponentHeroPower?.CardId ?? "", WasHeroPowerActivated(opponentHeroPower), oHpData, oHpData2);
-
-			foreach(var quest in _game.Player.Quests)
-			{
-				var rewardDbfId = quest.GetTag(GameTag.QUEST_REWARD_DATABASE_ID);
-				var reward = Database.GetCardFromDbfId(rewardDbfId, false);
-				input.PlayerQuests.Add(new QuestData()
-				{
-					QuestProgress = quest.GetTag(GameTag.QUEST_PROGRESS),
-					QuestProgressTotal = quest.GetTag(GameTag.QUEST_PROGRESS_TOTAL),
-					QuestCardId = quest.CardId ?? "",
-					RewardCardId = reward?.Id ?? ""
-				});
-			}
-
-			foreach(var reward in _game.Player.QuestRewards)
-			{
-				input.PlayerQuests.Add(new QuestData()
-				{
-					RewardCardId = reward.Info.LatestCardId ?? ""
-				});
-			}
-
-			foreach(var quest in _game.Opponent.Quests)
-			{
-				var rewardDbfId = quest.GetTag(GameTag.QUEST_REWARD_DATABASE_ID);
-				var reward = Database.GetCardFromDbfId(rewardDbfId, false);
-				input.OpponentQuests.Add(new QuestData()
-				{
-					QuestProgress = quest.GetTag(GameTag.QUEST_PROGRESS),
-					QuestProgressTotal = quest.GetTag(GameTag.QUEST_PROGRESS_TOTAL),
-					QuestCardId = quest.CardId ?? "",
-					RewardCardId = reward?.Id ?? ""
-				});
-			}
-
-			foreach(var reward in _game.Opponent.QuestRewards)
-			{
-				input.OpponentQuests.Add(new QuestData()
-				{
-					RewardCardId = reward.Info.LatestCardId ?? ""
-				});
-			}
-
-			foreach(var objective in _game.Player.Objectives)
-			{
-				input.PlayerObjectives.Add(GetObjectiveFromEntity(simulator.ObjectiveFactory, true, objective));
-			}
-
-			foreach(var objective in _game.Opponent.Objectives)
-			{
-				input.OpponentObjectives.Add(GetObjectiveFromEntity(simulator.ObjectiveFactory, false, objective));
-			}
-
-			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => (int?)x.Card.DbfId).ToList(), true);
-
 			input.SetTurn(turn);
-
-			var playerSide = GetOrderedMinions(_game.Player.Board)
-				.Where(e => e.IsControlledBy(_game.Player.Id))
-				.Select(e => GetMinionFromEntity(simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)));
-			foreach(var m in playerSide)
-				input.playerSide.Add(m);
-
-			foreach(var e in _game.Player.Hand)
-			{
-				if(e.IsMinion)
-				{
-					var minionEntity = new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)), null, simulator)
-					{
-						CanSummon = !e.HasTag(GameTag.LITERALLY_UNPLAYABLE),
-					};
-					input.PlayerHand.Add(minionEntity);
-				}
-				else if(e.CardId == NonCollectible.Neutral.BloodGem1)
-					input.PlayerHand.Add(new BloodGem(null, simulator));
-				else if(e.IsSpell)
-					input.PlayerHand.Add(new SpellCardEntity(null, simulator));
-				else
-					input.PlayerHand.Add(new CardEntity(e.CardId ?? "", null, simulator)); // Not Unknown
-			}
-
-			var opponentSide = GetOrderedMinions(_game.Opponent.Board)
-				.Where(e => e.IsControlledBy(_game.Opponent.Id))
-				.Select(e => GetMinionFromEntity(simulator.MinionFactory, false, e, GetAttachedEntities(e.Id)));
-			foreach(var m in opponentSide)
-				input.opponentSide.Add(m);
-
-			_opponentHand = _game.Opponent.Hand.ToList();
-			input.OpponentHand.Clear();
-			input.OpponentHand.AddRange(GetOpponentHandEntities(simulator));
-
-			var playerAttached = GetAttachedEntities(_game.PlayerEntity.Id);
-			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchant);
-			if(pEternalLegion != null)
-				input.PlayerEternalKnightCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
-			if(pUndeadBonus != null)
-				input.PlayerUndeadAttackBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-			input.PlayerElementalPlayCounter = _game.PlayerEntity.GetTag((GameTag)2878);
-
-			var opponentAttached = GetAttachedEntities(_game.OpponentEntity.Id);
-			var oEternalLegion = opponentAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchant);
-			if(oEternalLegion != null)
-				input.OpponentEternalKnightCounter = oEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-			var oUndeadBonus = opponentAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
-			if(oUndeadBonus != null)
-				input.OpponentUndeadAttackBonus = oUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-			input.OpponentElementalPlayCounter = _game.OpponentEntity.GetTag((GameTag)2878);
-
-			Log.Info($"pEternal={input.PlayerEternalKnightCounter}, pUndead={input.PlayerUndeadAttackBonus}, pElemental={input.PlayerElementalPlayCounter} | oEternal={input.OpponentEternalKnightCounter}, oUndead={input.OpponentUndeadAttackBonus}, oElemental={input.OpponentElementalPlayCounter}");
-
-			input.PlayerBloodGemAtkBuff = _game.PlayerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFATKVALUE);
-			input.PlayerBloodGemHealthBuff = _game.PlayerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);
-			input.OpponentBloodGemAtkBuff =_game.OpponentEntity.GetTag(GameTag.BACON_BLOODGEMBUFFATKVALUE);
-			input.OpponentBloodGemHealthBuff = _game.OpponentEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);
-
-			Log.Info($"pBloodGem=+{input.PlayerBloodGemAtkBuff}/+{input.PlayerBloodGemHealthBuff}, oBloodGem=+{input.OpponentBloodGemAtkBuff}/+{input.OpponentBloodGemHealthBuff}");
 
 			_input = input;
 			_turn = turn;
@@ -560,11 +511,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			//await _game.GameTime.WaitForDuration(1);
 
 			var entities = GetOpponentHandEntities(new Simulator()).ToList();
-			if(entities.Count(x => x is MinionCardEntity) <= _input.OpponentHand.Count(x => x is MinionCardEntity))
+			if(entities.Count(x => x is MinionCardEntity) <= _input.Opponent.Hand.Count(x => x is MinionCardEntity))
 				return;
 
-			_input.OpponentHand.Clear();
-			_input.OpponentHand.AddRange(entities);
+			_input.Opponent.Hand.Clear();
+			_input.Opponent.Hand.AddRange(entities);
 
 			await TryRerun();
 		}
@@ -614,46 +565,45 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			try
 			{
-				_input.SetupSecretsFromDbfidList(
+				_input.Opponent.SetSecrets(
 					_game.Opponent.Secrets
 						.Select(x => !string.IsNullOrEmpty(x.CardId) ? (int?)x.Card.DbfId : null)
 						.Distinct(new SecretDbfIdComparer())
-						.ToList(),
-					false
+						.ToList()
 				);
-				DebugLog($"Set opponent S. with {_input.OpponentSecrets.Count} S.");
+				DebugLog($"Set opponent S. with {_input.Opponent.Secrets.Count} S.");
 
 				DebugLog("----- Simulation Input -----");
-				DebugLog($"Player: heroPower={_input.PlayerHeroPower.CardId}, used={_input.PlayerHeroPower.IsActivated}, data={_input.PlayerHeroPower.Data}");
-				DebugLog($"Hand: {string.Join(", ",_input.PlayerHand.Select(x => x.ToString()))}");
+				DebugLog($"Player: heroPower={_input.Player.HeroPower.CardId}, used={_input.Player.HeroPower.IsActivated}, data={_input.Player.HeroPower.Data}");
+				DebugLog($"Hand: {string.Join(", ",_input.Player.Hand.Select(x => x.ToString()))}");
 
-				foreach(var minion in _input.playerSide)
+				foreach(var minion in _input.Player.Side)
 					DebugLog(minion.ToString());
 
-				foreach(var quest in _input.PlayerQuests)
+				foreach(var quest in _input.Player.Quests)
 					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
 
 				DebugLog("---");
-				DebugLog($"Opponent: heroPower={_input.OpponentHeroPower.CardId}, used={_input.OpponentHeroPower.IsActivated}, data={_input.OpponentHeroPower.Data}");
-				DebugLog($"Hand: {string.Join(", ",_input.OpponentHand.Select(x => x.ToString()))}");
-				foreach(var minion in _input.opponentSide)
+				DebugLog($"Opponent: heroPower={_input.Opponent.HeroPower.CardId}, used={_input.Opponent.HeroPower.IsActivated}, data={_input.Opponent.HeroPower.Data}");
+				DebugLog($"Hand: {string.Join(", ",_input.Opponent.Hand.Select(x => x.ToString()))}");
+				foreach(var minion in _input.Opponent.Side)
 					DebugLog(minion.ToString());
 
-				foreach(var quest in _input.OpponentQuests)
+				foreach(var quest in _input.Opponent.Quests)
 					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
 
 
-				if(_input.PlayerSecrets.Any())
+				if(_input.Player.Secrets.Any())
 				{
 					DebugLog("Detected the following player S.");
-					foreach(var s in _input.PlayerSecrets)
+					foreach(var s in _input.Player.Secrets)
 						DebugLog(s.ToString());
 				}
 
-				if(_input.OpponentSecrets.Any())
+				if(_input.Opponent.Secrets.Any())
 				{
 					DebugLog("Detected the following opponent S.");
-					foreach(var s in _input.OpponentSecrets)
+					foreach(var s in _input.Opponent.Secrets)
 						DebugLog(s.ToString());
 				}
 				DebugLog("----- End of Input -----");
@@ -662,7 +612,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				var start = DateTime.Now;
 
-				int timeAlloted = _input.playerSide.Count >= 6 || _input.opponentSide.Count >= 6 ? MaxTimeForComplexBoards : MaxTime;
+				int timeAlloted = _input.Player.Side.Count >= 6 || _input.Opponent.Side.Count >= 6 ? MaxTimeForComplexBoards : MaxTime;
 				Output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount, timeAlloted);
 
 				DebugLog("----- Simulation Output -----");
@@ -822,7 +772,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			|| result == LethalResult.OpponentDied && Output?.theirDeathRate == 0;
 
 		private bool OpposingKelThuzadDied(LethalResult result)
-			=> result == LethalResult.OpponentDied && _input != null && _input.OpponentHeroPower.CardId == HeroPowerIds.KelThuzad;
+			=> result == LethalResult.OpponentDied && _input != null && _input.Opponent.HeroPower.CardId == HeroPowerIds.KelThuzad;
 
 		private void AlertWithLastInputOutput(string result)
 		{
