@@ -20,23 +20,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var opponentHero = _game.Entities.Values
 				.FirstOrDefault(x => x.IsHero && x.IsInZone(Zone.PLAY) && x.IsControlledBy(_game.Opponent.Id));
-			if(opponentHero == null || opponentHero.CardId == null)
+			if(opponentHero?.CardId == null)
 				return;
-			var leaderboardEntityId = _game.Entities.Values.Where(x => x.IsHero && x.HasTag(GameTag.PLAYER_LEADERBOARD_PLACE))
-				.Where(x => x.CardId == opponentHero.CardId)
-				.Select(x => x.Id)
-				.FirstOrDefault();
-			if(leaderboardEntityId == 0)
+			var playerId = opponentHero.GetTag(GameTag.PLAYER_ID);
+			if(playerId == 0)
 				return;
 			var entities = _game.Entities.Values
 				.Where(x => x.IsMinion && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Opponent.Id))
 				.Select(x => x.Clone())
 				.ToArray();
-			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with entity id {leaderboardEntityId} ({entities.Length} entities");
-			LastKnownBoardState[leaderboardEntityId] = new BoardSnapshot(entities, _game.GetTurnNumber());
+			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with player id {playerId} ({entities.Length} entities");
+			LastKnownBoardState[playerId] = new BoardSnapshot(entities, _game.GetTurnNumber());
 		}
 
-		public BoardSnapshot? GetSnapshot(int entityId) => LastKnownBoardState.TryGetValue(entityId, out var state) ? state : null;
+		public BoardSnapshot? GetSnapshot(int entityId)
+		{
+			if(!_game.Entities.TryGetValue(entityId, out var entity))
+				return null;
+
+			return LastKnownBoardState.TryGetValue(entity.GetTag(GameTag.PLAYER_ID), out var state) ? state : null;
+		}
 
 		public void Reset()
 		{
