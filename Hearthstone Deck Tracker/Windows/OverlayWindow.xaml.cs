@@ -311,6 +311,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			=> Config.Instance.OverlayCenterOpponentStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
 
 		public double BattlegroundsTileHeight => Height * 0.69 / 8;
+		public double BattlegroundsDuosTileToSpacingRatio = 0.137;
+		public double BattlegroundsDuosTileHeight => Height * 0.69 * (1 - BattlegroundsDuosTileToSpacingRatio) / 8;
+		public double BattlegroundsDuosSpacingHeight => Height * 0.69 * BattlegroundsDuosTileToSpacingRatio / 3;
 		public double BattlegroundsTileWidth => BattlegroundsTileHeight;
 
 		private double MercenariesButtonOffset

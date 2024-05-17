@@ -36,9 +36,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double CardHeight => Height * 0.189;
 		public double MercAbilityHeight => Height * 0.3;
 		//Adjusts OpponentDeadFor textblocks left by this amount depending on what position they represent on the leaderboard.
-		const double LeftAdjust = .00075;
+		const double LeftAdjust = .0017;
 		//Adjusts the OpponentDeadFor textblock of the next oponent by this to the right so it aligns correctly with the hero portrait.
-		const double NextOpponentRightAdjust = .025;
+		const double NextOpponentRightAdjust = .023;
+		const double DuosNextOpponentRightAdjust = .015;
 		private double LeaderboardTop => Height * 0.15;
 		private const int MaxHandSize = 10;
 		private const int MaxBoardSize = 7;
@@ -108,8 +109,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Canvas.SetTop(_leaderboardIcons[i], LeaderboardTop + BattlegroundsTileHeight * i);
 				Canvas.SetLeft(_leaderboardIcons[i], Helper.GetScaledXPos(0.001 * (_leaderboardIcons.Count - i - 1), (int)Width, ScreenRatio));
 			}
-
-			PositionDeadForText();
 		}
 
 		internal void ResetNextOpponentLeaderboardPosition() => _nextOpponentLeaderboardPosition = -1;
@@ -119,18 +118,34 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(nextOpponentLeaderboardPosition > 0)
 				_nextOpponentLeaderboardPosition = nextOpponentLeaderboardPosition;
 
-			for(int i = 0; i < _leaderboardDeadForText.Count; i++)
+			if(Core.Game.IsBattlegroundsDuosMatch)
 			{
-				Canvas.SetTop(_leaderboardDeadForText[i], LeaderboardTop + BattlegroundsTileHeight * i);
-				Canvas.SetLeft(_leaderboardDeadForText[i], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForText.Count - i - 1), (int)Width, ScreenRatio));
-				Canvas.SetTop(_leaderboardDeadForTurnText[i], LeaderboardTop + BattlegroundsTileHeight * i);
-				Canvas.SetLeft(_leaderboardDeadForTurnText[i], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForTurnText.Count - i - 1), (int)Width, ScreenRatio));
+				for(int i = 0; i < _leaderboardDeadForText.Count; i++)
+				{
+					int j = i / 2;
+					var top = LeaderboardTop + BattlegroundsDuosTileHeight * i + BattlegroundsDuosSpacingHeight * j;
+					var left = ((_leaderboardDeadForText.Count / 2) - i) * LeftAdjust;
+					if(j == nextOpponentLeaderboardPosition - 1)
+						left += DuosNextOpponentRightAdjust;
+					Canvas.SetTop(_leaderboardDeadForText[i], top);
+					Canvas.SetLeft(_leaderboardDeadForText[i], Helper.GetScaledXPos(left, (int)Width, ScreenRatio));
+					Canvas.SetTop(_leaderboardDeadForTurnText[i], top);
+					Canvas.SetLeft(_leaderboardDeadForTurnText[i], Helper.GetScaledXPos(left, (int)Width, ScreenRatio));
+				}
 			}
-
-			if(_nextOpponentLeaderboardPosition > 0)
+			else
 			{
-				Canvas.SetLeft(_leaderboardDeadForText[_nextOpponentLeaderboardPosition - 1], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForText.Count - _nextOpponentLeaderboardPosition - 2) + NextOpponentRightAdjust, (int)Width, ScreenRatio));
-				Canvas.SetLeft(_leaderboardDeadForTurnText[_nextOpponentLeaderboardPosition - 1], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForTurnText.Count - _nextOpponentLeaderboardPosition - 2) + NextOpponentRightAdjust, (int)Width, ScreenRatio));
+				for(int i = 0; i < _leaderboardDeadForText.Count; i++)
+				{
+					var top = LeaderboardTop + BattlegroundsTileHeight * i;
+					var left = ((_leaderboardDeadForText.Count / 2) - i) * LeftAdjust;
+					if(i == nextOpponentLeaderboardPosition - 1)
+						left += NextOpponentRightAdjust;
+					Canvas.SetTop(_leaderboardDeadForText[i], top);
+					Canvas.SetLeft(_leaderboardDeadForText[i], Helper.GetScaledXPos(left, (int)Width, ScreenRatio));
+					Canvas.SetTop(_leaderboardDeadForTurnText[i], top);
+					Canvas.SetLeft(_leaderboardDeadForTurnText[i], Helper.GetScaledXPos(left, (int)Width, ScreenRatio));
+				}
 			}
 		}
 
@@ -373,7 +388,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var turn = _game.GetTurnNumber();
 			_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Collapsed);
 			_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Collapsed);
-			if(turn == 0 || _game.IsBattlegroundsDuosMatch)
+			if(turn == 0)
 				return;
 			var shouldShowOpponentInfo = false;
 			if(_leaderboardHoveredEntityId is int heroEntityId)
@@ -381,9 +396,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				fadeBgsMinionsList = true;
 				_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Visible);
 				_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Visible);
+
+				// check if it's the team mate
+				Core.Game.Entities.TryGetValue(heroEntityId, out var entity);
 				var state = _game.GetBattlegroundsBoardStateFor(heroEntityId);
 				BgsOpponentInfo.Update(heroEntityId, state, turn);
-				shouldShowOpponentInfo = !(_game.Entities.TryGetValue(heroEntityId, out var entity) && entity.IsControlledBy(_game.Player.Id));
+				shouldShowOpponentInfo = !(entity != null && (
+					entity.IsControlledBy(_game.Player.Id) ||
+					(
+						Core.Game.IsBattlegroundsDuosMatch &&
+						entity.GetTag(GameTag.BACON_DUO_TEAM_ID) == Core.Game.PlayerEntity?.GetTag(GameTag.BACON_DUO_TEAM_ID)
+					)
+				));
 			}
 			if(shouldShowOpponentInfo)
 			{

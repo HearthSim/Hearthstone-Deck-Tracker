@@ -24,6 +24,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		bool IsMulliganDone { get; }
 		bool IsInMenu { get; set; }
 		bool IsUsingPremade { get; set; }
+		bool IsBattlegroundsMatch { get; }
+		bool IsBattlegroundsSoloMatch { get; }
+		bool IsBattlegroundsDuosMatch { get; }
 		bool IsRunning { get; set; }
 		Region CurrentRegion { get; set; }
 		GameMode CurrentGameMode { get; }
@@ -57,6 +60,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		bool PlayerChallengeable { get; }
 		bool SetupDone { get; set; }
 		void SnapshotBattlegroundsBoardState();
+
+		void DuosSetHeroModified(bool isPlayer);
+		void DuosResetHeroTracking();
+		bool DuosWasPlayerHeroModified { get; }
+		bool DuosWasOpponentHeroModified { get; }
+
 		BoardSnapshot? GetBattlegroundsBoardStateFor(int entityId);
 		int GetTurnNumber();
 	}

@@ -29,6 +29,9 @@ namespace HDTTests.Hearthstone.Secrets
 		public bool IsMulliganDone { get; set; }
 		public bool IsInMenu { get; set; }
 		public bool IsUsingPremade { get; set; }
+		public bool IsBattlegroundsMatch => IsBattlegroundsSoloMatch || IsBattlegroundsDuosMatch;
+		public bool IsBattlegroundsSoloMatch { get; set; }
+		public bool IsBattlegroundsDuosMatch { get; set; }
 		public bool IsRunning { get; set; }
 		public Region CurrentRegion { get; set; }
 		public GameMode CurrentGameMode { get; set; }
@@ -60,6 +63,18 @@ namespace HDTTests.Hearthstone.Secrets
 		public void SnapshotBattlegroundsBoardState()
 		{
 			throw new NotImplementedException();
+		}
+
+
+		public bool DuosWasPlayerHeroModified { get; set; }
+		public bool DuosWasOpponentHeroModified { get; set;  }
+
+		public void DuosSetHeroModified(bool isPlayer) => throw new NotImplementedException();
+
+		public void DuosResetHeroTracking()
+		{
+			DuosWasPlayerHeroModified = false;
+			DuosWasOpponentHeroModified = false;
 		}
 
 		public BoardSnapshot GetBattlegroundsBoardStateFor(int entityId)

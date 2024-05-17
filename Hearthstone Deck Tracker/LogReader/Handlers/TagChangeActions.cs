@@ -92,6 +92,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => gameState.GameHandler?.HandleQuestRewardDatabaseId(id, value);
 				case (GameTag)2022:
 					return () => OnBattlegroundsSetupChange(value, prevValue, game, gameState);
+				case (GameTag)3533:
+					return () => OnBattlegroundsCombatSetupChange(value, prevValue, game);
+				case HERO_ENTITY:
+					return () => OnHeroEntityChange(id, value, game);
 			}
 			return null;
 		}
@@ -100,11 +104,43 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(prevValue == 1 && value == 0)
 			{
-				game.SnapshotBattlegroundsBoardState();
 				if(game.CurrentGameStats != null)
 				{
 					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
 						.StartCombat();
+				}
+			}
+		}
+
+		private void OnBattlegroundsCombatSetupChange(int value, int prevValue, IGame game)
+		{
+			if(prevValue == 0 && value == 1)
+				game.DuosResetHeroTracking();
+
+			if(prevValue == 1 && value == 0)
+			{
+				if(game.IsBattlegroundsSoloMatch)
+				{
+					game.SnapshotBattlegroundsBoardState();
+				}
+				else if(game.DuosWasOpponentHeroModified)
+				{
+					game.SnapshotBattlegroundsBoardState();
+				}
+			}
+		}
+
+		private void OnHeroEntityChange(int playerEntityId, int heroEntityId, IGame game)
+		{
+			if(game.IsBattlegroundsDuosMatch)
+			{
+				if(playerEntityId == game.PlayerEntity?.Id)
+				{
+					game.DuosSetHeroModified(true);
+				}
+				else if(playerEntityId == game.OpponentEntity?.Id)
+				{
+					game.DuosSetHeroModified(false);
 				}
 			}
 		}

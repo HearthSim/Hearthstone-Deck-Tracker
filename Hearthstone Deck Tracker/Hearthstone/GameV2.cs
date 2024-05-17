@@ -582,5 +582,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			return null;
 		}
+
+		public bool DuosWasPlayerHeroModified { get; private set; }
+		public bool DuosWasOpponentHeroModified { get; private set; }
+
+		public void DuosSetHeroModified(bool isPlayer)
+		{
+			if(isPlayer)
+			{
+				DuosWasPlayerHeroModified = true;
+			}
+			else
+			{
+				DuosWasOpponentHeroModified = true;
+			}
+		}
+
+		public void DuosResetHeroTracking()
+		{
+			DuosWasPlayerHeroModified = false;
+			DuosWasOpponentHeroModified = false;
+		}
 	}
 }
