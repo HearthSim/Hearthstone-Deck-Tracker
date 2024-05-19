@@ -1,3 +1,8 @@
+## **Release v1.28.2 - 2024-05-18**
+**Bob's Buddy**:
+- Fixed opposing Boon of Beetles not being simulated correctly.
+- Fixed various minor simulation issues.
+
 ## **Release v1.28.1 - 2024-05-17**
 **Features:**
 - Start tracking the last known board state in Battlegrounds Duos!\
