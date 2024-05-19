@@ -1,5 +1,5 @@
 ## **Release v1.28.1 - 2024-05-17**
-**Features:**:
+**Features:**
 - Start tracking the last known board state in Battlegrounds Duos!\
   *Hover over heroes on the leaderboard as usual to see the last board you encountered.*
 
@@ -14,7 +14,7 @@
 **Features:**
 - Switched the tiers shown in Battlegrounds hero picking overlay to a new and improved methodology.\
   *Hero tiers are now one of S, A, B, C, D and F. The S and F tiers are very rare and will only appear for true outliers.*
-- Visual improvements to the Battlegrounds hero picking oerlay.
+- Visual improvements to the Battlegrounds hero picking overlay.
 
 **Bob's Buddy**:
 - Added support for Boon of Beetles.
