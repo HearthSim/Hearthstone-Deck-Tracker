@@ -110,6 +110,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		public Output? Output { get; private set; }
 
+		private bool DoNotReport { get; set; } = true;
+
 		public BobsBuddyErrorState ErrorState { get; private set; }
 
 		private BobsBuddyState _state;
@@ -461,7 +463,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				DebugLog(e.ToString());
 				return;
-			}	
+			}
 
 			var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
 			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
@@ -478,7 +480,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private int _reRunCount;
 
-		private async Task TryRerun()
+		private Task TryRerun()
 		{
 			if(_reRunCount++ <= 10)
 			{
@@ -489,11 +491,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					ErrorState = BobsBuddyErrorState.None;
 					BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.None, null, BobsBuddyDisplay.ResultsPanelExpanded || expandAfterError);
 					Output = null;
-					await RunAndDisplaySimulationAsync();
+					return RunAndDisplaySimulationAsync();
 				}
 			}
 			else
+			{
 				DebugLog("Input changed, but the simulation already re-ran ten times");
+			}
+
+			return Task.CompletedTask;
 		}
 
 		internal async void UpdateOpponentHand(Entity entity, Entity copy)
@@ -522,6 +528,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateOpponentSecret(Entity entity)
 		{
+			DoNotReport = true;
 			await TryRerun();
 		}
 
@@ -614,6 +621,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				int timeAlloted = _input.Player.Side.Count >= 6 || _input.Opponent.Side.Count >= 6 ? MaxTimeForComplexBoards : MaxTime;
 				Output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount, timeAlloted);
+				DoNotReport = false;
 
 				DebugLog("----- Simulation Output -----");
 				DebugLog($"Duration={(DateTime.Now - start).TotalMilliseconds}ms, " +
@@ -699,7 +707,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			DebugLog("Validating results...");
 			if(Output == null)
 			{
-				DebugLog("_lastSimulationResult is null. Exiting");
+				DebugLog("Output is null. Exiting");
+				return;
+			}
+
+			if(DoNotReport)
+			{
+				DebugLog("Output was invalidated. Exiting");
 				return;
 			}
 
