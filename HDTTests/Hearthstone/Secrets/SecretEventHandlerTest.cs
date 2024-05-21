@@ -266,7 +266,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_playerMinion1.SetTag(GameTag.NUM_TURNS_IN_HAND, 1);
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
 			_gameEventHandler.HandlePlayerPlay(_playerMinion1, HearthDb.CardIds.Collectible.Neutral.Wisp, 1, "");
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BargainBin, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection, MageSecrets.AzeriteVein);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
@@ -278,7 +278,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_playerMinion1.SetTag(GameTag.NUM_TURNS_IN_HAND, 3);
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
 			_gameEventHandler.HandlePlayerPlay(_playerMinion1, "", 1, "");
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BargainBin, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
@@ -349,7 +349,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_game.SecretsManager.HandleCardPlayed(_playerSpell1, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BargainBin, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks, RogueSecrets.StickySituation);
@@ -360,7 +360,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_game.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BargainBin, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks, RogueSecrets.StickySituation);
@@ -373,7 +373,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap, HunterSecrets.MotionDenied, HunterSecrets.RatTrap);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BargainBin, HunterSecrets.CatTrick, HunterSecrets.IceTrap, HunterSecrets.MotionDenied, HunterSecrets.RatTrap);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.OhMyYogg, PaladinSecrets.GallopingSavior, PaladinSecrets.HiddenWisdom);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks, RogueSecrets.StickySituation);
@@ -387,7 +387,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BargainBin, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks, RogueSecrets.StickySituation);
@@ -477,7 +477,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_opponentCardInHand1.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
 			_game.SecretsManager.OnEntityRevealedAsMinion(_opponentCardInHand1);
 
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.HiddenCache, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BargainBin, HunterSecrets.HiddenCache, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
 		}
 
 		[TestMethod]
@@ -647,7 +647,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
 			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion2);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BargainBin, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);

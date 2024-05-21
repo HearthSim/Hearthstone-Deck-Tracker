@@ -163,6 +163,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			public class Hunter : EnumerateMultiId<Hunter>
 			{
 				public static readonly MultiIdCard BaitAndSwitch = new MultiIdCard(Collectible.Hunter.BaitAndSwitch);
+				public static readonly MultiIdCard BargainBin = new MultiIdCard(Collectible.Hunter.BargainBin);
 				public static readonly MultiIdCard BearTrap = new MultiIdCard(Collectible.Hunter.BearTrap);
 				public static readonly MultiIdCard CatTrick = new MultiIdCard(Collectible.Hunter.CatTrick, Collectible.Hunter.CatTrickCorePlaceholder);
 				public static readonly MultiIdCard DartTrap = new MultiIdCard(Collectible.Hunter.DartTrap);

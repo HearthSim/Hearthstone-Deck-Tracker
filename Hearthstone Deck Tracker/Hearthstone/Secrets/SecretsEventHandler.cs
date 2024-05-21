@@ -169,6 +169,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if(!entity.HasTag(GameTag.DORMANT))
 			{
+				SaveSecret(Hunter.BargainBin);
+				exclude.Add(Hunter.BargainBin);
 				SaveSecret(Hunter.Snipe);
 				exclude.Add(Hunter.Snipe);
 				SaveSecret(Mage.ExplosiveRunes);
@@ -196,7 +198,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			exclude.Add(Rogue.Kidnap);
 
-			//Hidden cache will only trigger if the opponent has a minion in hand. 
+			//Hidden cache will only trigger if the opponent has a minion in hand.
 			//We might not know this for certain - requires additional tracking logic.
 			var cardsInOpponentsHand = Game.Entities.Select(kvp => kvp.Value).Where(e => e.IsInHand && e.IsControlledBy(Game.Opponent.Id)).ToList();
 			foreach (var cardInOpponentsHand in cardsInOpponentsHand)
@@ -436,6 +438,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					return;
 				}
 
+				exclude.Add(Hunter.BargainBin);
+
 				exclude.Add(Paladin.OhMyYogg);
 
 				if(Game.OpponentMinionCount > 0)
@@ -464,6 +468,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			}
 			else if(entity.IsMinion && Game.PlayerMinionCount > 3)
 				exclude.Add(Paladin.SacredTrial);
+
+			if(entity.IsWeapon)
+				exclude.Add(Hunter.BargainBin);
 
 			Exclude(exclude);
 		}
