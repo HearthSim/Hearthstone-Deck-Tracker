@@ -5,6 +5,7 @@
 		public bool ConstructedMulliganGuideOverlayDisplayed { get; set; }
 		public int BattlegroundsMinionsTabClicks { get; private set; }
 		public int BattlegroundsMinionsByMinionTypeFilterClicks { get; private set; }
+		public int BobsBuddyTerminalCases { get; set; }
 		public int MercenariesHoversOpponentMercToShowAbility { get; private set; }
 		public int MercenariesHoverTasksDuringMatch { get; private set; }
 		public bool Tier7HeroOverlayDisplayed { get; set; }
@@ -20,6 +21,11 @@
 		public void IncrementBattlegroundsMinionsByMinionTypeClick()
 		{
 			BattlegroundsMinionsByMinionTypeFilterClicks += 1;
+		}
+
+		public void IncrementBobsBuddyTerminalCase()
+		{
+			BobsBuddyTerminalCases += 1;
 		}
 
 		public void IncrementMercenariesHoversOpponentMercToShowAbility()

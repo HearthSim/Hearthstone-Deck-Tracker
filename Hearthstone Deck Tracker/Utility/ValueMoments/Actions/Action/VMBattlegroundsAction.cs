@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			Tier7QuestOverlayDisplayed = gameMetrics.Tier7QuestOverlayDisplayed;
 			NumClickBattlegroundsMinionTab = gameMetrics.BattlegroundsMinionsTabClicks;
 			NumClickBattlegroundsMinionsByMinionTypeFilter = gameMetrics.BattlegroundsMinionsByMinionTypeFilterClicks;
+			NumBobsBuddyTerminalCases = gameMetrics.BobsBuddyTerminalCases;
 			if (gameMetrics.Tier7TrialActivated)
 				TrialsActivated = new[] { Tier7OverlayTrial };
 			if (gameMetrics.Tier7TrialsRemaining.HasValue)
@@ -57,6 +58,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("num_click_battlegrounds_minions_by_minion_type_filter")]
 		public int NumClickBattlegroundsMinionsByMinionTypeFilter { get;  }
+
+		[JsonProperty("num_bobs_buddy_terminal_cases")]
+		public int NumBobsBuddyTerminalCases { get;  }
 
 		[JsonProperty("trials_activated", NullValueHandling = NullValueHandling.Ignore)]
 		public string[]? TrialsActivated { get; }
