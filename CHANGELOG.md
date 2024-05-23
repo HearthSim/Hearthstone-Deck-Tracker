@@ -1,3 +1,10 @@
+## **Release v1.28.3 - 2024-05-23**
+**Updated for Hearthstone 29.4.2**
+
+**Fixes:**
+- Fixed Bargain Bin not appearing as a possible secret.
+- Added extra logging to help us investigate certain types of bugs.
+
 ## **Release v1.28.2 - 2024-05-18**
 **Bob's Buddy**:
 - Fixed opposing Boon of Beetles not being simulated correctly.
