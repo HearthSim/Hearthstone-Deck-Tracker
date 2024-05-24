@@ -923,15 +923,15 @@ namespace Hearthstone_Deck_Tracker
 			var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
 			var rating = _game.CurrentGameStats?.BattlegroundsRating;
 			var ratingAfter = _game.CurrentGameStats?.BattlegroundsRatingAfter;
-			var placement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE);
 			var finalBoard = _game.Entities.Values
 				.Where(x => x.IsMinion && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Player.Id))
 				.Select(x => x.Clone())
 				.ToArray();
 			var friendlyGame = _game.CurrentGameType is GameType.GT_BATTLEGROUNDS_FRIENDLY or GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY;
 			var duos = _game.IsBattlegroundsDuosMatch;
+			var placement = Math.Min(hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0, duos ? 4 : 8);
 
-			if(startTime != null && endTime != null && heroCardId != null && rating != null && ratingAfter != null && placement != null)
+			if(startTime != null && endTime != null && heroCardId != null && rating != null && ratingAfter != null && placement > 0)
 			{
 				BattlegroundsLastGames.Instance.AddGame(
 					startTime,
@@ -939,7 +939,7 @@ namespace Hearthstone_Deck_Tracker
 					heroCardId,
 					(int)rating,
 					(int)ratingAfter,
-					(int)placement,
+					placement,
 					finalBoard,
 					friendlyGame,
 					duos,
