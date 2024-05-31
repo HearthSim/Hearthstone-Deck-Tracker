@@ -9,4 +9,3 @@ public interface IDeckPickerProvider
 	List<CollectionDeckBoxVisual?>? DecksOnPage { get; }
 	bool IsBlurActive { get; }
 }
-
