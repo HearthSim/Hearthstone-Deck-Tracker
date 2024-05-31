@@ -290,7 +290,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!entity.IsPlayer)
 				return;
 			if(Config.Instance.AutoDeckDetection)
-				DeckManager.AutoSelectTemplateDeckById(game, value);
+				DeckManager.AutoSelectTemplateDeckByDeckId(game, value);
 		}
 
 		private void CreatorChanged(int id, int value, IGame game)

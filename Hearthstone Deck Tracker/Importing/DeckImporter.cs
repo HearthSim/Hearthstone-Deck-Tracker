@@ -172,19 +172,19 @@ namespace Hearthstone_Deck_Tracker.Importing
 			return null;
 		}
 
-		public static ImportedDeck? FromTemplateDeck(int id)
+		public static ImportedDeck? FromDeckTemplateId(int deckTemplateId)
 		{
-			var deck = GetTemplateDeck(id);
+			var deck = GetTemplateDeck(deckTemplateId);
 			if(deck is null)
 				return null;
 			return new ImportedDeck(deck, null, DeckList.Instance.Decks);
 		}
 
-		private static HearthMirror.Objects.Deck? GetTemplateDeck(int id)
+		private static HearthMirror.Objects.Deck? GetTemplateDeck(int deckTemplateId)
 		{
 			try
 			{
-				var deck = Reflection.Client.GetTemplateDeckById(id);
+				var deck = Reflection.Client.GetTemplateDeckByDeckTemplateId(deckTemplateId);
 				if(deck is null)
 					return null;
 

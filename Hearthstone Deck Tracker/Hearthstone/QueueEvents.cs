@@ -76,8 +76,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 				if(!Config.Instance.AutoDeckDetection)
 					return;
-				if(new[] { TOURNAMENT, FRIENDLY, ADVENTURE, TAVERN_BRAWL }.Contains(_game.CurrentMode))
-					DeckManager.AutoSelectDeckById(_game, GetSelectedDeckId(_game.CurrentMode));
+				if(_game.CurrentMode is TOURNAMENT or FRIENDLY or ADVENTURE or TAVERN_BRAWL)
+				{
+					var deckId = GetSelectedDeckId(_game.CurrentMode) ?? 0;
+					if(deckId > 0)
+					{
+						DeckManager.AutoSelectDeckById(_game, deckId);
+					}
+					else if(deckId < 0)
+					{
+						DeckManager.AutoSelectTemplateDeckByDeckTemplateId(_game, (int)-deckId);
+					}
+				}
 				else if(_game.CurrentMode == DRAFT)
 					AutoSelectArenaDeck();
 				else if(_game.CurrentMode == BACON)
@@ -118,14 +128,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Core.MainWindow.SelectDeck(selectedDeck, true);
 		}
 
-		private static long GetSelectedDeckId(Mode mode)
+		private static long? GetSelectedDeckId(Mode mode)
 		{
-			var selectedDeckId = Reflection.Client.GetSelectedDeckInMenu();
-			if(selectedDeckId > 0)
+			var deckPickerState = Reflection.Client.GetDeckPickerState();
+			if(deckPickerState?.SelectedDeck is long selectedDeckId)
 				return selectedDeckId;
-			if(mode != TAVERN_BRAWL)
-				return 0;
-			return Reflection.Client.GetEditedDeck()?.Id ?? 0;
+			if(deckPickerState?.SelectedTemplateDeck is int selectedTemplateDeck)
+				return -selectedTemplateDeck;
+			if(mode == TAVERN_BRAWL)
+				return Reflection.Client.GetEditedDeck()?.Id;
+			return null;
 		}
 	}
 }

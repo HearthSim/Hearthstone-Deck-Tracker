@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using HearthDb.Enums;
+using HearthMirror;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Enums;
@@ -397,16 +398,25 @@ namespace Hearthstone_Deck_Tracker
 			return false;
 		}
 
-		public static void AutoSelectTemplateDeckById(IGame game, int deckId)
+		public static void AutoSelectTemplateDeckByDeckTemplateId(IGame game, int deckId)
 		{
 			if(DeckList.Instance.Decks.All(x => x.HsId != deckId))
 			{
-				var selectedDeck2 = DeckImporter.FromTemplateDeck(deckId);
+				var selectedDeck2 = DeckImporter.FromDeckTemplateId(deckId);
 				if(selectedDeck2 is null)
 					return;
 				ImportDecks(new List<ImportedDeck>() { selectedDeck2 }, false);
 			}
 			AutoSelectDeckById(game, deckId);
+		}
+
+		public static void AutoSelectTemplateDeckByDeckId(IGame game, int deckId)
+		{
+			var maybeDeckTemplateId = Reflection.Client.FindDeckTemplateIdForDeckId(deckId);
+			if(maybeDeckTemplateId is int deckTemplateId)
+			{
+				AutoSelectTemplateDeckByDeckTemplateId(game, deckTemplateId);
+			}
 		}
 
 		internal static async void AutoSelectDeckById(IGame game, long id)
