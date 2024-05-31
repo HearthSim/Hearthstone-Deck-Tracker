@@ -1,3 +1,8 @@
+## **Release v1.28.5 - 2024-05-31**
+**Features**
+- Added automatic deck importing for the new Twist season!
+- Added automatic deck importing for Loaner decks!
+
 ## **Release v1.28.4 - 2024-05-30**
 **Fixes:**
 - Fixed a memory leak that could cause the deck tracker to crash mid-game.
