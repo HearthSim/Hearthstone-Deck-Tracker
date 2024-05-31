@@ -306,9 +306,9 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 				return;
 			foreach(var box in ValidDecksOnPage)
 			{
-				if(box is null)
+				if(box?.DeckId is not long deckId)
 					continue;
-				if(deckboxes.TryGetValue(box.DeckId, out var deckData) && !_deckStatusByDeckstring[GameType].ContainsKey(deckData.Deckstring))
+				if(deckboxes.TryGetValue(deckId, out var deckData) && !_deckStatusByDeckstring[GameType].ContainsKey(deckData.Deckstring))
 				{
 					toLoad.Add(deckData.Deckstring);
 					_deckStatusByDeckstring[GameType][deckData.Deckstring] = SingleDeckState.LOADING;
@@ -386,7 +386,7 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 			{
 				try
 				{
-					if(x is CollectionDeckBoxVisual box && deckMap.TryGetValue(box.DeckId, out var deckData))
+					if(x is CollectionDeckBoxVisual box && box.DeckId is long deckId && deckMap.TryGetValue(deckId, out var deckData))
 					{
 						// At this point we know the deck is valid for this format, so either fetch the API status or show NO_DATA
 						if(allDecks.TryGetValue(deckData.Deckstring, out var state))
