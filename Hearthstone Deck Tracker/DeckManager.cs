@@ -398,14 +398,15 @@ namespace Hearthstone_Deck_Tracker
 			return false;
 		}
 
-		public static void AutoSelectTemplateDeckByDeckTemplateId(IGame game, int deckId)
+		public static void AutoSelectTemplateDeckByDeckTemplateId(IGame game, int deckTemplateId)
 		{
+			var selectedDeck = DeckImporter.FromDeckTemplateId(deckTemplateId);
+			if(selectedDeck == null)
+				return;
+			var deckId = selectedDeck.Deck.Id;
 			if(DeckList.Instance.Decks.All(x => x.HsId != deckId))
 			{
-				var selectedDeck2 = DeckImporter.FromDeckTemplateId(deckId);
-				if(selectedDeck2 is null)
-					return;
-				ImportDecks(new List<ImportedDeck>() { selectedDeck2 }, false);
+				ImportDecks(new List<ImportedDeck>() { selectedDeck }, false);
 			}
 			AutoSelectDeckById(game, deckId);
 		}
