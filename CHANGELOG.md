@@ -1,5 +1,5 @@
 ## **Release v1.28.4 - 2024-05-30**
-**Fixed:**
+**Fixes:**
 - Fixed a memory leak that could cause the deck tracker to crash mid-game.
 - Fixed an issue where the session recap would show really bad Duos losses as 5th place.
 - Fixed an issue where Twitch VODs would not appear on HSReplay.net.
