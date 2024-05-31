@@ -46,7 +46,7 @@ public class DeckPickerWatcher
 				_provider.DeckPickerState?.VisualsFormatType ?? VisualsFormatType.VFT_UNKNOWN,
 				_provider.DecksOnPage ?? new(),
 				_provider.DeckPickerState?.SelectedDeck,
-				(_provider.DeckPickerState?.IsModeSwitching ?? false) || _provider.IsBlurActive || _provider.DeckPickerState.SetRotationOpen
+				(_provider.DeckPickerState?.IsModeSwitching ?? false) || _provider.IsBlurActive || (_provider.DeckPickerState?.SetRotationOpen ?? false)
 			);
 			if(curr.Equals(_prev))
 				continue;
