@@ -1,3 +1,7 @@
+## **Release v1.28.6 - 2024-05-31**
+**Fixes:**
+- Fixed a crash when closing Hearthstone.
+
 ## **Release v1.28.5 - 2024-05-31**
 **Features**
 - Added automatic deck importing for the new Twist season!
