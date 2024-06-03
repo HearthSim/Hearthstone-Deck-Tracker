@@ -1,3 +1,12 @@
+## **Release v1.29.0 - 2024-06-03**
+**Features**:
+- Added Tier7 Hero Picking stats in Duos!
+- Added Bob's Buddy in Duos!\
+  *You may occasionally see a partial result, in case where we don't see one of the teammates.*
+
+**Changes**:
+- Limit how fast HDT catches up with the game, which should prevent sudden HDT crashes in very complex Battlegrounds games.
+
 ## **Release v1.28.6 - 2024-05-31**
 **Fixes**:
 - Fixed a crash when closing Hearthstone.
