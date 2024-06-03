@@ -268,7 +268,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			_lastMainWindowActivation = null;
 		}
 
-		public static void OnBobsBuddySimulationCompleted(CombatResult result, Output output, int turn, Anomaly? anomaly, bool terminalCase, bool isDuos)
+		public static void OnBobsBuddySimulationCompleted(
+			CombatResult result, Output output, int turn, Anomaly? anomaly, bool terminalCase,
+			bool isDuos, bool isOpposingAkazamzarak
+		)
 		{
 #if(SQUIRREL)
 			if(!Config.Instance.GoogleAnalytics)
@@ -290,6 +293,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			if(anomaly != null)
 				point.Tag("anomaly", anomaly.cardID);
+
+			point.Tag("opposing_akazamzarak", isOpposingAkazamzarak.ToString());
 
 			_queue.Add(point.Build());
 #endif

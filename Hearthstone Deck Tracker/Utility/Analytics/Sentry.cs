@@ -56,7 +56,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
 
-		public static void QueueBobsBuddyTerminalCase(Input testInput, Output output, string result, int turn, List<string> debugLog, Region region, bool isDuos)
+		public static void QueueBobsBuddyTerminalCase(
+			Input testInput, Output output, string result, int turn, List<string> debugLog, Region region,
+			bool isDuos, bool isOpposingAkazamzarak
+		)
 		{
 #if(SQUIRREL)
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
@@ -90,6 +93,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				{"turn", turn.ToString()},
 				{"region", data.Region.ToString()},
 				{"is_duos", isDuos.ToString()},
+				{"opposing_akazamzarak", isOpposingAkazamzarak.ToString()}
 			};
 
 			if(testInput.Anomaly != null)

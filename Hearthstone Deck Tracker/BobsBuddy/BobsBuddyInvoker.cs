@@ -950,11 +950,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
-				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, _input?.Anomaly, terminalCase, _game.IsBattlegroundsDuosMatch);
+				Influx.OnBobsBuddySimulationCompleted(
+					result, Output, _turn, _input?.Anomaly, terminalCase,
+					isDuos:_game.IsBattlegroundsDuosMatch, isOpposingAkazamzarak: IsOpposingAkazamzarak()
+				);
 
 			if(terminalCase)
 				Core.Game.Metrics.IncrementBobsBuddyTerminalCase();
-	
 		}
 
 		private bool IsIncorrectCombatResult(CombatResult result)
@@ -969,11 +971,17 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private bool OpposingKelThuzadDied(LethalResult result)
 			=> result == LethalResult.OpponentDied && _input != null && _input.Opponent.HeroPower.CardId == HeroPowerIds.KelThuzad;
 
+		private bool IsOpposingAkazamzarak()
+			=> _input?.Opponent.HeroPower.CardId == HeroPowerIds.Azamarak || _input?.OpponentTeammate?.HeroPower.CardId == HeroPowerIds.Azamarak;
+
 		private void AlertWithLastInputOutput(string result)
 		{
 			DebugLog($"Queueing alert... (valid input: {_input != null})");
 			if(_input != null && Output != null)
-				Sentry.QueueBobsBuddyTerminalCase(_input, Output, result, _turn, _recentHDTLog, _game.CurrentRegion, _game.IsBattlegroundsDuosMatch);
+				Sentry.QueueBobsBuddyTerminalCase(
+					_input, Output, result, _turn, _recentHDTLog, _game.CurrentRegion,
+					isDuos: _game.IsBattlegroundsDuosMatch, isOpposingAkazamzarak: IsOpposingAkazamzarak()
+				);
 		}
 
 		/**
