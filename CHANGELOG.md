@@ -1,5 +1,5 @@
 ## **Release v1.28.6 - 2024-05-31**
-**Fixes:**
+**Fixes**:
 - Fixed a crash when closing Hearthstone.
 
 ## **Release v1.28.5 - 2024-05-31**
@@ -8,7 +8,7 @@
 - Added automatic deck importing for Loaner decks!
 
 ## **Release v1.28.4 - 2024-05-30**
-**Fixes:**
+**Fixes**:
 - Fixed a memory leak that could cause the deck tracker to crash mid-game.
 - Fixed an issue where the session recap would show really bad Duos losses as 5th place.
 - Fixed an issue where Twitch VODs would not appear on HSReplay.net.
@@ -19,7 +19,7 @@
 ## **Release v1.28.3 - 2024-05-23**
 **Updated for Hearthstone 29.4.2**
 
-**Fixes:**
+**Fixes**:
 - Fixed Bargain Bin not appearing as a possible secret.
 - Added extra logging to help us investigate certain types of bugs.
 
@@ -29,11 +29,11 @@
 - Fixed various minor simulation issues.
 
 ## **Release v1.28.1 - 2024-05-17**
-**Features:**
+**Features**:
 - Start tracking the last known board state in Battlegrounds Duos!\
   *Hover over heroes on the leaderboard as usual to see the last board you encountered.*
 
-**Fixes:**
+**Fixes**:
 - Fixed an issue causing the last known board state in Battlegrounds sometimes showing a board from the wrong hero.
 - Fixed an issue causing the death counter in Battlegrounds to sometimes be misaligned.
 
@@ -41,7 +41,7 @@
 **Updated for Hearthstone 29.4.0**
 
 ## **Release v1.27.3 - 2024-05-13**
-**Features:**
+**Features**:
 - Switched the tiers shown in Battlegrounds hero picking overlay to a new and improved methodology.\
   *Hero tiers are now one of S, A, B, C, D and F. The S and F tiers are very rare and will only appear for true outliers.*
 - Visual improvements to the Battlegrounds hero picking overlay.
@@ -51,7 +51,7 @@
 - Fixed incorrect simulation results when the opponent had multiple secrets.
 
 ## **Release v1.27.2 - 2024-05-10**
-**Fixes:**
+**Fixes**:
 - Ensure the Battlegrounds Compare Heroes popup uses the same filters as the hero picking overlay.
 
 **Bob's Buddy**:
@@ -62,7 +62,7 @@
 - Added Duos support to the Battlegrounds session recap.\
   *Duos support for Bob's Buddy and the hero picking overlay are being worked on!*
 
-**Fixes:**
+**Fixes**:
 - Fixed automatic deck importing for Whizbang the Wonderful.\
   *Whizbang the Splendiferous and Zayle, Shadow Cloak will follow in a future update.*
 - Fixed the Battlegrounds hero picking popup not disappearing after a disconnect.
@@ -78,7 +78,7 @@
 
 ## **Release v1.26.1 - 2024-04-23**
 
-**Fixes:**
+**Fixes**:
 - Fixed "All" type minions missing from the Battlegrounds minion list when filtering for a specific minion type.
 - Fixed decks containing certain Zilliax Deluxe 3000 cosmetics not showing HSReplay.net statistics.
 - Fixed duplicate tooltips in the overlay when deck window card tooltips were enabled.
@@ -1559,7 +1559,7 @@ This update should restore the basic functionality. Support for Demon Hunter car
 **Fixes**:
 - Fixed an issue introduced with 15.4.0.34670 where HDT would hang when starting Hearthstone.
 
-**Outstanding issues:**
+**Outstanding issues**:
 - Adventure deck detection broke with 15.4.0.34670. We are hoping we can fix this soon.
 - There might be more issues introduced by the patch that we missed so far. Please let us know if you find any.
 
