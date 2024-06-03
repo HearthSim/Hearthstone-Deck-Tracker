@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BobsBuddy.Simulation;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Enums;
@@ -106,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(prevValue == 1 && value == 0)
 			{
-				if(game.CurrentGameStats != null)
+				if(game.IsBattlegroundsSoloMatch && game.CurrentGameStats != null)
 				{
 					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
 						.StartCombat();
@@ -121,13 +122,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 			if(prevValue == 1 && value == 0)
 			{
-				if(game.IsBattlegroundsSoloMatch)
+				if(!game.IsBattlegroundsDuosMatch || game.DuosWasOpponentHeroModified)
 				{
 					game.SnapshotBattlegroundsBoardState();
 				}
-				else if(game.DuosWasOpponentHeroModified)
+				if(game.IsBattlegroundsDuosMatch && game.CurrentGameStats != null)
 				{
-					game.SnapshotBattlegroundsBoardState();
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?
+						.StartCombat();
 				}
 			}
 		}
@@ -230,7 +232,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			Collectible.Mage.PuzzleBoxOfYoggSaron,
 		};
 
-		private void OnDredge(Entity entity, Entity target, IGame game, IHsGameState gameState)
+		private void OnDredge(Hearthstone.Entities.Entity entity, Hearthstone.Entities.Entity target, IGame game, IHsGameState gameState)
 		{
 			if(entity.GetTag(LINKED_ENTITY) != target.Id)
 				return;
@@ -402,6 +404,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(entity.IsHero)
 			{
 				Log.Debug($"Saw hero attack from {entity.CardId}");
+
+				if(game.IsBattlegroundsDuosMatch && game.CurrentGameStats != null)
+				{
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
+						.MaybeRunDuosPartialCombat();
+				}
 			}
 			gameState.GameHandler?.HandleProposedAttackerChange(entity);
 		}

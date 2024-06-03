@@ -7,6 +7,10 @@
 		Shopping,
 		CombatWithoutSimulation,
 		GameOver,
+		WaitingForTeammates,
+		CombatPartial,
+		ShoppingAfterPartial,
+		GameOverAfterPartial,
 	};
 
 	/// <summary>

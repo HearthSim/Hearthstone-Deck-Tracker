@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using BobsBuddy;
 using BobsBuddy.Simulation;
+using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -55,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
 
-		public static void QueueBobsBuddyTerminalCase(Input testInput, Output output, string result, int turn, List<string> debugLog, Region region)
+		public static void QueueBobsBuddyTerminalCase(Input testInput, Output output, string result, int turn, List<string> debugLog, Region region, bool isDuos)
 		{
 #if(SQUIRREL)
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
@@ -64,7 +65,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			// Clean up data
 			output.ClearListsForReporting(); //ignoring for some temporary debugging
 
-			var msg = new SentryMessage($"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: {result}");
+			var msg = new SentryMessage(isDuos ?
+				$"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: {result}" :
+				$"BobsBuddy {BobsBuddyUtils.VersionString} (Duos): Incorrect Terminal Case: {result}"
+			);
 
 			var data = new BobsBuddyData()
 			{
@@ -85,6 +89,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				{"bobs_buddy_version", BobsBuddyUtils.VersionString},
 				{"turn", turn.ToString()},
 				{"region", data.Region.ToString()},
+				{"is_duos", isDuos.ToString()},
 			};
 
 			if(testInput.Anomaly != null)
@@ -101,6 +106,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			bbEvent.Fingerprint.Add(result);
 			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
+			bbEvent.Fingerprint.Add(isDuos.ToString());
 
 			BobsBuddyEvents.Enqueue(bbEvent);
 #endif
@@ -124,7 +130,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		}
 
-		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, List<string> debugLog)
+		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, List<string> debugLog, bool isDuos)
 		{
 #if(SQUIRREL)
 			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptions)
@@ -155,8 +161,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				Extra = data,
 			};
 
-			bbEvent.Message = $"BobsBuddy {BobsBuddyUtils.VersionString}: {bbEvent.Message}";
+			bbEvent.Message = isDuos ?
+				$"BobsBuddy {BobsBuddyUtils.VersionString} (Duos): {bbEvent.Message}":
+				$"BobsBuddy {BobsBuddyUtils.VersionString}: {bbEvent.Message}";
 			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
+			bbEvent.Fingerprint.Add(isDuos.ToString());
 
 			BobsBuddyEvents.Enqueue(bbEvent);
 #endif

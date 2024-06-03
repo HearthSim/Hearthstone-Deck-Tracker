@@ -268,7 +268,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			_lastMainWindowActivation = null;
 		}
 
-		public static void OnBobsBuddySimulationCompleted(CombatResult result, Output output, int turn, Anomaly? anomaly, bool terminalCase)
+		public static void OnBobsBuddySimulationCompleted(CombatResult result, Output output, int turn, Anomaly? anomaly, bool terminalCase, bool isDuos)
 		{
 #if(SQUIRREL)
 			if(!Config.Instance.GoogleAnalytics)
@@ -279,6 +279,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("terminal_case", terminalCase.ToString())
 				.Tag("turn", turn)
 				.Tag("bb_version", BobsBuddyUtils.VersionString)
+				.Tag("is_duos", isDuos.ToString())
 				.Field("iterations", output.simulationCount)
 				.Field("result_win", result == CombatResult.Win ? 1 : 0)
 				.Field("result_tie", result == CombatResult.Tie ? 1 : 0)

@@ -30,13 +30,21 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			switch(state)
 			{
 				case BobsBuddyState.Initial:
-						return LocUtil.Get("BobsBuddyStatusMessage_WaitingForCombat");
+					return LocUtil.Get("BobsBuddyStatusMessage_WaitingForCombat");
+				case BobsBuddyState.WaitingForTeammates:
+					return LocUtil.Get("BobsBuddyStatusMessage_WaitingForTeammates");
 				case BobsBuddyState.Combat:
 					return LocUtil.Get(statsShown ? "BobsBuddyStatusMessage_CurrentCombat" : "BobsBuddyStatusMessage_ShowCurrentCombat");
 				case BobsBuddyState.Shopping:
 					return LocUtil.Get(statsShown ? "BobsBuddyStatusMessage_PreviousCombat" : "BobsBuddyStatusMessage_ShowPreviousCombat");
 				case BobsBuddyState.GameOver:
 					return LocUtil.Get(statsShown ? "BobsBuddyStatusMessage_FinalCombat" : "BobsBuddyStatusMessage_ShowFinalCombat");
+				case BobsBuddyState.CombatPartial:
+					return LocUtil.Get(statsShown ? "BobsBuddyStatusMessage_CurrentCombatPartial" : "BobsBuddyStatusMessage_ShowCurrentCombatPartial");
+				case BobsBuddyState.ShoppingAfterPartial:
+					return LocUtil.Get(statsShown ? "BobsBuddyStatusMessage_PreviousCombatPartial" : "BobsBuddyStatusMessage_ShowPreviousCombatPartial");
+				case BobsBuddyState.GameOverAfterPartial:
+					return LocUtil.Get(statsShown ? "BobsBuddyStatusMessage_FinalCombatPartial" : "BobsBuddyStatusMessage_ShowFinalCombatPartial");
 				case BobsBuddyState.CombatWithoutSimulation:
 					return LocUtil.Get("BobsBuddyStatusMessage_AwaitingShopping");
 			}

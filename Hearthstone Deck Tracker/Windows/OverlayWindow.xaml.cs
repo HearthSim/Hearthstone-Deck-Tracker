@@ -552,8 +552,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			if(Remote.Config.Data?.BobsBuddy?.Disabled ?? false)
 				return;
-			if(_game.IsBattlegroundsDuosMatch)
-				return; // disable in Duos for now
 			_bgsBobsBuddyBehavior.Show();
 		}
 

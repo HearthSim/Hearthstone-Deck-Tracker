@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
+using BobsBuddyPlayer = BobsBuddy.Simulation.Player;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
@@ -60,6 +61,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
 		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
+
+		private BobsBuddyPlayer DuosInputPlayer = new BobsBuddyPlayer(null);
+		private BobsBuddyPlayer DuosInputOpponent = new BobsBuddyPlayer(null);
+		private BobsBuddyPlayer? DuosInputPlayerTeammate;
+		private BobsBuddyPlayer? DuosInputOpponentTeammate;
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
 		{
@@ -128,7 +134,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		public bool ShouldRun()
 		{
-			if(!Config.Instance.RunBobsBuddy || !_game.IsBattlegroundsSoloMatch)
+			if(!Config.Instance.RunBobsBuddy)
 				return false;
 			if(Remote.Config.Data?.BobsBuddy?.Disabled ?? false)
 				return false;
@@ -157,13 +163,28 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(!ShouldRun())
 					return;
 				DebugLog(_instanceKey);
-				if(State >= BobsBuddyState.Combat)
+				if(_game.IsBattlegroundsDuosMatch)
+				{
+					SnapshotBoardState(_game.GetTurnNumber());
+
+					BobsBuddyDisplay.SetState(BobsBuddyState.WaitingForTeammates);
+					BobsBuddyDisplay.ResetText();
+
+					if(_input != null && (DuosInputPlayerTeammate == null || DuosInputOpponentTeammate == null))
+					{
+						DebugLog("Waiting Teammates. Exiting.");
+						return;
+					}
+				}
+				else if(State >= BobsBuddyState.Combat)
 				{
 					DebugLog($"{_instanceKey} already in {State} state. Exiting");
 					return;
-				}
+				} else
+					SnapshotBoardState(_game.GetTurnNumber());
+				
+				
 				State = BobsBuddyState.Combat;
-				SnapshotBoardState(_game.GetTurnNumber());
 				DebugLog($"{_instanceKey} Waiting for state changes...");
 				await Task.Delay(StateChangeDelay);
 				if(State != BobsBuddyState.Combat)
@@ -190,7 +211,40 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog, _game.IsBattlegroundsDuosMatch);
+				return;
+			}
+		}
+
+		public async void MaybeRunDuosPartialCombat()
+		{
+			if(_input != null && !(DuosInputPlayerTeammate == null || DuosInputOpponentTeammate == null))
+			{
+				DebugLog("No need to run patial combat, all teammates found. Exiting.");
+				return;
+			}
+			try
+			{
+				if(!ShouldRun())
+					return;
+				DebugLog(_instanceKey);
+
+				if(HasErrorState())
+					return;
+
+				State = BobsBuddyState.CombatPartial;
+				DebugLog("Setting UI state to combat...");
+				BobsBuddyDisplay.SetState(BobsBuddyState.CombatPartial);
+				BobsBuddyDisplay.ResetText();
+
+				await RunAndDisplaySimulationAsync();
+			}
+			catch(Exception e)
+			{
+				DebugLog(e.ToString());
+				Log.Error(e);
+				if(ReportErrors)
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog, isDuos: true);
 				return;
 			}
 		}
@@ -200,7 +254,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			DebugLog("Running simulation...");
 			BobsBuddyDisplay.HidePercentagesShowSpinners();
 			var result = await RunSimulation();
-			if(result == null)
+			if(result == null || _input == null)
 			{
 				DebugLog("Simulation returned no result. Exiting.");
 				return;
@@ -211,6 +265,21 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog("Could not perform enough simulations. Displaying error state and exiting.");
 				ErrorState = BobsBuddyErrorState.NotEnoughData;
 				BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.NotEnoughData);
+			}
+			else if(State == BobsBuddyState.CombatPartial)
+			{
+				DebugLog("Displaying partial simulation results");
+				BobsBuddyDisplay.ShowPartialDuosSimulation(
+					result.winRate,
+					result.tieRate,
+					result.lossRate,
+					result.theirDeathRate,
+					result.myDeathRate,
+					result.damageResults.ToList(),
+					friendlyWon: DuosInputPlayerTeammate == null,
+					playerCanDie: _input.Player.Health <= _input.DamageCap,
+					opponentCanDie: _input.Opponent.Health <= _input.DamageCap
+				);
 			}
 			else
 			{
@@ -233,12 +302,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(!ShouldRun())
 					return;
 				DebugLog(_instanceKey);
-				if(State == BobsBuddyState.Shopping)
+				if(State == BobsBuddyState.Shopping || State == BobsBuddyState.ShoppingAfterPartial)
 				{
 					DebugLog($"{_instanceKey} already in shopping state. Exiting");
 					return;
 				}
-				State = BobsBuddyState.Shopping;
+				var wasPreviousStateParcial = State == BobsBuddyState.CombatPartial;
+
+				State = wasPreviousStateParcial ? BobsBuddyState.ShoppingAfterPartial : BobsBuddyState.Shopping;
 
 				if(HasErrorState())
 					return;
@@ -246,12 +317,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				BobsBuddyDisplay.SetLastOutcome(GetLastCombatDamageDealt());
 				if(isGameOver)
 				{
-					BobsBuddyDisplay.SetState(BobsBuddyState.GameOver);
+					BobsBuddyDisplay.SetState(wasPreviousStateParcial ? BobsBuddyState.GameOverAfterPartial : BobsBuddyState.GameOver);
 					DebugLog("Setting UI state to GameOver");
 				}
 				else
 				{
-					BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
+					BobsBuddyDisplay.SetState(wasPreviousStateParcial ? BobsBuddyState.ShoppingAfterPartial : BobsBuddyState.Shopping);
 					DebugLog("Setting UI state to shopping");
 				}
 
@@ -262,7 +333,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog, _game.IsBattlegroundsDuosMatch);
 				return;
 			}
 		}
@@ -352,6 +423,18 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(attachedToEntityId > 0)
 					pHpData = attachedToEntityId;
 			}
+
+			if(playerHeroPower?.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop)
+			{
+				var minionsInPlay = gamePlayer.Board.Where(e => e.IsMinion && e.IsControlledBy(gamePlayer.Id)).Select(x => x.Id);
+				var attachedToEntityId = gamePlayer.PlayerEntities
+					.Where(x => x.CardId == NonCollectible.Neutral.FlobbidinousFloop_InTheGloop && (!friendly || (x.IsInPlay && friendly)))
+					.Select(x => x.GetTag(GameTag.ATTACHED))
+					.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
+				if(attachedToEntityId > 0)
+					pHpData = attachedToEntityId;
+			}
+
 			inputPlayer.SetHeroPower(playerHeroPower?.CardId ?? "", friendly, WasHeroPowerActivated(playerHeroPower), pHpData, pHpData2);
 
 			foreach(var quest in gamePlayer.Quests)
@@ -457,8 +540,38 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			try
 			{
-				SetupInputPlayer(simulator, _game.Player, input.Player, _game.PlayerEntity, true);
-				SetupInputPlayer(simulator, _game.Opponent, input.Opponent, _game.OpponentEntity, false);
+				if(_input == null)
+				{
+					SetupInputPlayer(simulator, _game.Player, input.Player, _game.PlayerEntity, true);
+					SetupInputPlayer(simulator, _game.Opponent, input.Opponent, _game.OpponentEntity, false);
+					DuosInputPlayer = input.Player;
+					DuosInputOpponent = input.Opponent;
+
+					DuosInputPlayerTeammate = null;
+					DuosInputOpponentTeammate = null;
+				}
+				else
+				{
+					if(_game.DuosWasPlayerHeroModified && DuosInputPlayerTeammate == null)
+					{
+						SetupInputPlayer(simulator, _game.Player, input.PlayerTeammate, _game.PlayerEntity, true);
+						DuosInputPlayerTeammate = input.PlayerTeammate;
+					}
+					if(_game.DuosWasOpponentHeroModified && DuosInputOpponentTeammate == null)
+					{
+						SetupInputPlayer(simulator, _game.Opponent, input.OpponentTeammate, _game.OpponentEntity, false);
+						DuosInputOpponentTeammate = input.OpponentTeammate;
+					}
+				}
+
+				if(_game.IsBattlegroundsDuosMatch)
+				{
+					input.isDuos = true;
+					input.Player = DuosInputPlayer;
+					input.Opponent = DuosInputOpponent;
+					input.PlayerTeammate = DuosInputPlayerTeammate ?? input.PlayerTeammate;
+					input.OpponentTeammate = DuosInputOpponentTeammate ?? input.OpponentTeammate;
+				}
 			} catch(Exception e)
 			{
 				DebugLog(e.ToString());
@@ -529,7 +642,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal async void UpdateOpponentSecret(Entity entity)
 		{
 			DoNotReport = true;
-			await TryRerun();
+			if(!_game.IsBattlegroundsDuosMatch)
+				await TryRerun();
 		}
 
 		private IEnumerable<CardEntity> GetOpponentHandEntities(Simulator simulator)
@@ -600,6 +714,52 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
 
 
+				if(_input.isDuos)
+				{
+					DebugLog("---");
+					DebugLog("PlayerTeammate: heroPower=" + _input.PlayerTeammate.HeroPower.CardId + ", used=" + _input.PlayerTeammate.HeroPower.IsActivated + ", data=" + _input.PlayerTeammate.HeroPower.Data);
+					DebugLog("Hand: " + string.Join(", ", _input.PlayerTeammate.Hand.Select(x => x.ToString())));
+					foreach(var minion in _input.PlayerTeammate.Side)
+						DebugLog(minion.ToString());
+
+					foreach(var quest in _input.PlayerTeammate.Quests)
+						DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+
+					DebugLog("---");
+					DebugLog("OpponentTeammate: heroPower=" + _input.OpponentTeammate.HeroPower.CardId + ", used=" + _input.OpponentTeammate.HeroPower.IsActivated + ", data=" + _input.OpponentTeammate.HeroPower.Data);
+					DebugLog("Hand: " + string.Join(", ", _input.OpponentTeammate.Hand.Select(x => x.ToString())));
+					foreach(var minion in _input.OpponentTeammate.Side)
+						DebugLog(minion.ToString());
+
+					foreach(var quest in _input.OpponentTeammate.Quests)
+						DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+				}
+
+				DebugLog("---");
+
+				if(_input.isDuos)
+				{
+					DebugLog("---");
+					DebugLog("PlayerTeammate: heroPower=" + _input.PlayerTeammate.HeroPower.CardId + ", used=" + _input.PlayerTeammate.HeroPower.IsActivated + ", data=" + _input.PlayerTeammate.HeroPower.Data);
+					DebugLog("Hand: " + string.Join(", ", _input.PlayerTeammate.Hand.Select(x => x.ToString())));
+					foreach(var minion in _input.PlayerTeammate.Side)
+						DebugLog(minion.ToString());
+
+					foreach(var quest in _input.PlayerTeammate.Quests)
+						DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+
+					DebugLog("---");
+					DebugLog("OpponentTeammate: heroPower=" + _input.OpponentTeammate.HeroPower.CardId + ", used=" + _input.OpponentTeammate.HeroPower.IsActivated + ", data=" + _input.OpponentTeammate.HeroPower.Data);
+					DebugLog("Hand: " + string.Join(", ", _input.OpponentTeammate.Hand.Select(x => x.ToString())));
+					foreach(var minion in _input.OpponentTeammate.Side)
+						DebugLog(minion.ToString());
+
+					foreach(var quest in _input.OpponentTeammate.Quests)
+						DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+				}
+
+				DebugLog("---");
+
 				if(_input.Player.Secrets.Any())
 				{
 					DebugLog("Detected the following player S.");
@@ -613,6 +773,23 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					foreach(var s in _input.Opponent.Secrets)
 						DebugLog(s.ToString());
 				}
+
+				if(_input.isDuos) { 
+					if(_input.OpponentTeammate.Secrets.Any())
+					{
+						DebugLog("Detected the following opponent teammate S.");
+						foreach(var s in _input.OpponentTeammate.Secrets)
+							DebugLog(s.ToString());
+					}
+
+					if(_input.PlayerTeammate.Secrets.Any())
+					{
+						DebugLog("Detected the following player teammate S.");
+						foreach(var s in _input.PlayerTeammate.Secrets)
+							DebugLog(s.ToString());
+					}
+				}
+				 
 				DebugLog("----- End of Input -----");
 
 				DebugLog($"Running simulations with MaxIterations={Iterations} and ThreadCount={ThreadCount}...");
@@ -646,7 +823,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				var message = (cardName != null ? $"{cardName}: " : "") + ex.Message;
 				BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.UnsupportedInteraction, message);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(ex, _input, _turn, _recentHDTLog);
+					Sentry.CaptureBobsBuddyException(ex, _input, _turn, _recentHDTLog, _game.IsBattlegroundsDuosMatch);
 				Output = null;
 				return null;
 			}
@@ -655,7 +832,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog, _game.IsBattlegroundsDuosMatch);
 				Output = null;
 				return null;
 			}
@@ -773,10 +950,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
-				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, _input?.Anomaly, terminalCase);
+				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, _input?.Anomaly, terminalCase, _game.IsBattlegroundsDuosMatch);
 
 			if(terminalCase)
 				Core.Game.Metrics.IncrementBobsBuddyTerminalCase();
+	
 		}
 
 		private bool IsIncorrectCombatResult(CombatResult result)
@@ -795,7 +973,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			DebugLog($"Queueing alert... (valid input: {_input != null})");
 			if(_input != null && Output != null)
-				Sentry.QueueBobsBuddyTerminalCase(_input, Output, result, _turn, _recentHDTLog, _game.CurrentRegion);
+				Sentry.QueueBobsBuddyTerminalCase(_input, Output, result, _turn, _recentHDTLog, _game.CurrentRegion, _game.IsBattlegroundsDuosMatch);
 		}
 
 		/**

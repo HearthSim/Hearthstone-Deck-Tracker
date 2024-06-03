@@ -412,9 +412,6 @@ namespace Hearthstone_Deck_Tracker.Live
 			if(Core.Game.CurrentGameStats == null || Core.Game.GameEntity == null)
 				return null;
 
-			if(Core.Game.IsBattlegroundsDuosMatch)
-				return null;
-
 			var turn = Core.Game.GameEntity.GetTag(GameTag.TURN) %2 == 0? Core.Game.GetTurnNumber() : Core.Game.GetTurnNumber() - 1;
 
 			var invokerInstance = BobsBuddyInvoker.GetInstance(Core.Game.CurrentGameStats.GameId, Math.Max(turn, 1) , false);
@@ -454,13 +451,13 @@ namespace Hearthstone_Deck_Tracker.Live
 			var outputState = invokerInstance?.State;
 			switch(outputState)
 			{
-				case BobsBuddy.BobsBuddyState.Combat:
+				case BobsBuddy.BobsBuddyState.Combat or BobsBuddy.BobsBuddyState.CombatPartial:
 					simulationState = TwitchSimulationState.InCombat;
 					break;
-				case BobsBuddy.BobsBuddyState.Shopping:
+				case BobsBuddy.BobsBuddyState.Shopping or BobsBuddy.BobsBuddyState.ShoppingAfterPartial:
 					simulationState = TwitchSimulationState.InNonFirstShoppingPhase;
 					break;
-				case BobsBuddy.BobsBuddyState.Initial:
+				case BobsBuddy.BobsBuddyState.Initial or BobsBuddy.BobsBuddyState.WaitingForTeammates:
 					simulationState = TwitchSimulationState.WaitingForCombat;
 					break;
 				case BobsBuddy.BobsBuddyState.CombatWithoutSimulation:
@@ -468,7 +465,6 @@ namespace Hearthstone_Deck_Tracker.Live
 				case null:
 					simulationState = TwitchSimulationState.WaitingForCombat;
 					break;
-
 			}
 
 			return new Data.BobsBuddyState

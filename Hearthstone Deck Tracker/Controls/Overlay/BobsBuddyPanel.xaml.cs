@@ -160,7 +160,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		}
 
 		private List<int>? _lastCombatPossibilities;
-
 		private int _lastCombatResult = 0;
 
 		const float SoftLabelOpacity = 0.3f;
@@ -311,6 +310,53 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			OpponentAverageDamageOpacity = possibleResults.Any(x => x < 0) ? 1 : SoftLabelOpacity;
 		}
 
+		internal void ShowPartialDuosSimulation(
+			double winRate,
+			double tieRate,
+			double lossRate,
+			double playerLethal,
+			double opponentLethal,
+			List<int> possibleResults,
+			bool friendlyWon,
+			bool playerCanDie,
+			bool opponentCanDie
+		)
+		{
+			ResetText();
+
+			if(winRate == 1 || lossRate == 1)
+			{
+				WinRateDisplay = string.Format("{0:0.#%}", winRate);
+				TieRateDisplay = string.Format("{0:0.#%}", tieRate);
+				LossRateDisplay = string.Format("{0:0.#%}", lossRate);
+			}
+			else if (friendlyWon)
+			{
+				WinRateDisplay = string.Format("≥{0:0.#%}", winRate);
+			}
+			else
+			{
+				LossRateDisplay = string.Format("≥{0:0.#%}", lossRate);
+			}
+
+			OpponentLethalDisplay = "0%";
+			OpponentLethalOpacity = SoftLabelOpacity;
+			PlayerLethalDisplay = "0%";
+			PlayerLethalOpacity = SoftLabelOpacity;
+
+			if(opponentCanDie)
+			{
+				OpponentLethalDisplay = string.Format(opponentLethal == 1 ? "" : "≥" + "{0:0.#%}", opponentLethal);
+				OpponentLethalOpacity = opponentLethal > 0 ? 1 : SoftLabelOpacity;
+			}
+			if(playerCanDie)
+			{
+				PlayerLethalDisplay = string.Format(playerLethal == 1 ? "" : "≥" + "{0:0.#%}", playerLethal);
+				PlayerLethalOpacity = playerLethal > 0 ? 1 : SoftLabelOpacity;
+			}
+			ShowPercentagesHideSpinners();
+		}
+
 
 		internal void SetLastOutcome(int lastOutcome)
 		{
@@ -458,13 +504,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				return;
 			var lastState = State;
 			State = state;
-
-			if(state == BobsBuddyState.Combat)
+			
+			if(state == BobsBuddyState.Combat || state == BobsBuddyState.CombatPartial)
 			{
 				ClearErrorState();
 				ShowResults(Config.Instance.ShowBobsBuddyDuringCombat);
 			}
-			else if(state is BobsBuddyState.Shopping or BobsBuddyState.GameOver)
+			else if(state is BobsBuddyState.Shopping or BobsBuddyState.ShoppingAfterPartial or BobsBuddyState.GameOver or BobsBuddyState.GameOverAfterPartial)
 			{
 				if(Config.Instance.ShowBobsBuddyDuringShopping)
 				{
@@ -475,7 +521,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					// However we want to keep the panel expanded if the user left it expanded during combat and either:
 					// - the game has ended (so we don't hide it again on the results screen), or
 					// - the previous simulation was deferred (so that the user can see the result).
-					ShowResults(state == BobsBuddyState.GameOver  || lastState == BobsBuddyState.CombatWithoutSimulation);
+					ShowResults(state == BobsBuddyState.GameOver || state == BobsBuddyState.GameOverAfterPartial || lastState == BobsBuddyState.CombatWithoutSimulation);
 				}
 				else
 				{
@@ -484,6 +530,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 			else if(state == BobsBuddyState.CombatWithoutSimulation)
 				ShowResults(false);
+			else if(state == BobsBuddyState.WaitingForTeammates)
+			{
+				ClearErrorState();
+				ShowResults(false);
+			}
 		}
 
 		/// <summary>
@@ -519,8 +570,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Core.MainWindow.ActivateWindow();
 		}
 
-		private bool InCombatPhase => State is BobsBuddyState.Combat or BobsBuddyState.CombatWithoutSimulation;
-		private bool InShoppingPhase => State is BobsBuddyState.Shopping or BobsBuddyState.GameOver;
+		private bool InCombatPhase => State is BobsBuddyState.Combat or BobsBuddyState.CombatPartial or BobsBuddyState.CombatWithoutSimulation;
+		private bool InShoppingPhase => State is BobsBuddyState.Shopping or BobsBuddyState.ShoppingAfterPartial or BobsBuddyState.GameOver or BobsBuddyState.GameOverAfterPartial;
 		private bool CanMinimize
 			=> InCombatPhase && !Config.Instance.ShowBobsBuddyDuringCombat
 			|| InShoppingPhase && !Config.Instance.ShowBobsBuddyDuringShopping;
