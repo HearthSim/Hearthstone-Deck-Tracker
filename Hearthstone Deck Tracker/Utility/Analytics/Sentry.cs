@@ -69,8 +69,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			output.ClearListsForReporting(); //ignoring for some temporary debugging
 
 			var msg = new SentryMessage(isDuos ?
-				$"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: {result}" :
-				$"BobsBuddy {BobsBuddyUtils.VersionString} (Duos): Incorrect Terminal Case: {result}"
+				$"BobsBuddy {BobsBuddyUtils.VersionString} (Duos): Incorrect Terminal Case: {result}" :
+				$"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: {result}"
 			);
 
 			var data = new BobsBuddyData()
