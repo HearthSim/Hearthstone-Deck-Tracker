@@ -180,6 +180,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
 		public bool IsMulliganOption
 		{
 			get { return _isMulliganOption; }
@@ -191,6 +192,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
 		public CardWinrates? CardWinrates
 		{
 			get { return _cardWinrates; }
