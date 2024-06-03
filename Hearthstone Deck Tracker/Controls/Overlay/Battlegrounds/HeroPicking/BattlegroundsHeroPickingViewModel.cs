@@ -1,17 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using HearthDb.Enums;
-using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
-using Hearthstone_Deck_Tracker.Utility.RemoteData;
-using HSReplay.Requests;
 using HSReplay.Responses;
 using static System.Windows.Visibility;
 
@@ -19,13 +12,24 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 {
 	public class BattlegroundsHeroPickingViewModel : ViewModel
 	{
-		public Visibility Visibility
+		public bool IsViewingTeammate
 		{
-			get => GetProp(Collapsed);
+			get => GetProp(false);
 			set
 			{
 				SetProp(value);
+				OnPropertyChanged(nameof(Visibility));
 				UpdateMetrics();
+			}
+		}
+
+		public Visibility Visibility
+		{
+			get
+			{
+				if(IsViewingTeammate)
+					return Collapsed;
+				return HeroStats != null ? Visible : Collapsed;
 			}
 		}
 
@@ -50,7 +54,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 		public List<BattlegroundsSingleHeroViewModel>? HeroStats
 		{
 			get => GetProp<List<BattlegroundsSingleHeroViewModel>?>(null);
-			set => SetProp(value);
+			set
+			{
+				SetProp(value);
+				OnPropertyChanged(nameof(Visibility));
+				UpdateMetrics();
+			}
 		}
 
 		public OverlayMessageViewModel Message { get; } = new();
@@ -61,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 		public void Reset()
 		{
 			HeroStats = null;
-			Visibility = Collapsed;
+			IsViewingTeammate = false;
 			StatsVisibility = Collapsed;
 			Message.Clear();
 		}
@@ -103,15 +112,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 
 			Message.Mmr(filterValue, minMmr, anomalyAdjusted);
 
-			Visibility = Visible;
 			StatsVisibility = Config.Instance.ShowBattlegroundsHeroPicking ? Visible : Collapsed;
-
-			UpdateMetrics();
 		}
 
 		private void UpdateMetrics()
 		{
-			if(Visibility == Visible && StatsVisibility == Visible)
+			if(HeroStats != null && Visibility == Visible && StatsVisibility == Visible)
 				Core.Game.Metrics.Tier7HeroOverlayDisplayed = true;
 		}
 

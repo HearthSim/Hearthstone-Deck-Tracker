@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		}
 
 		public int[]? HeroIds { get; internal set; }
+		public bool Duos { get; internal set;  }
 		public int? AnomalyDbfId { get; internal set; }
 		public Dictionary<string, string>? Parameters { get; internal set; }
 
@@ -30,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			Core.Overlay.HideBattlegroundsHeroPanel();
 			if(HeroIds != null)
-				Helper.OpenBattlegroundsHeroPicker(HeroIds, AnomalyDbfId, Parameters);
+				Helper.OpenBattlegroundsHeroPicker(HeroIds, Duos, AnomalyDbfId, Parameters);
 		}
 	}
 }

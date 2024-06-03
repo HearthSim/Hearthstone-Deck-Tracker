@@ -19,7 +19,7 @@
         </Grid>
 
         <!-- Compositions -->
-        <Grid Width="236" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Height="72">
+        <Grid Width="236" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Height="72" Visibility="{Binding CompositionsVisibility}">
             <comp:BattlegroundsCompositionPopularity DataContext="{Binding BgsCompsPopularityVM}" VerticalAlignment="Top"/>
         </Grid>
 

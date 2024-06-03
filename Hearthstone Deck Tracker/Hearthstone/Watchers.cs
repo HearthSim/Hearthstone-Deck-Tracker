@@ -1,15 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
 using HearthDb.Enums;
 using HearthMirror;
 using HearthMirror.Enums;
 using HearthMirror.Objects;
-using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
-using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Importing;
-using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HearthWatcher;
 using HearthWatcher.Providers;
@@ -79,6 +75,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal static void OnBattlegroundsTeammateBoardStateChange(object sender, HearthWatcher.EventArgs.BattlegroundsTeammateBoardStateArgs args)
 		{
+			Core.Overlay.BattlegroundsHeroPickingViewModel.IsViewingTeammate = args.IsViewingTeammate;
+
 			if(args is { IsViewingTeammate: false, Entities.Count: 0, MulliganHeroes.Count: 0 })
 			{
 				Core.Game.BattlegroundsDuosBoardState = null;

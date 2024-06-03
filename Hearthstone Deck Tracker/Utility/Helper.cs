@@ -824,7 +824,7 @@ namespace Hearthstone_Deck_Tracker
 			return string.Format("{0} ({1})", hdtPart, windowsPart);
 		}
 
-		internal static void OpenBattlegroundsHeroPicker(int[] heroIds, int? anomalyDbfId, Dictionary<string, string>? parameters)
+		internal static void OpenBattlegroundsHeroPicker(int[] heroIds, bool duos, int? anomalyDbfId, Dictionary<string, string>? parameters)
 		{
 			// time frame and rank range
 			var queryParams = parameters?.Select(kv =>
@@ -848,7 +848,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			var url = BuildHsReplayNetUrl(
-				"/battlegrounds/heroes/",
+				duos ? "/battlegrounds/duos/heroes/" : "/battlegrounds/heroes/",
 				"bgs_toast",
 				queryParams,
 				fragmentParams

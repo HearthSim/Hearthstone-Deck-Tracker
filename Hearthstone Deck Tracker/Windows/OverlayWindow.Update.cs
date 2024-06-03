@@ -634,7 +634,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				SceneHandler.Scene == Mode.BACON &&
 				Config.Instance.EnableBattlegroundsTier7Overlay &&
 				Config.Instance.ShowBattlegroundsTier7PreLobby &&
-				Tier7PreLobbyViewModel.BattlegroundsGameMode != SelectedBattlegroundsGameMode.DUOS
+				(
+					Tier7PreLobbyViewModel.BattlegroundsGameMode == SelectedBattlegroundsGameMode.SOLO ||
+					Tier7PreLobbyViewModel.BattlegroundsGameMode == SelectedBattlegroundsGameMode.DUOS
+				)
 			);
 
 			if(show)

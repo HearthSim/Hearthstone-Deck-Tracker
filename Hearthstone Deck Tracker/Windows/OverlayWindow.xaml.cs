@@ -462,9 +462,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_mulliganNotificationBehavior.Hide();
 		}
 
-		internal void ShowBattlegroundsHeroPanel(int[] heroIds, Dictionary<string, string>? parameters)
+		internal void ShowBattlegroundsHeroPanel(int[] heroIds, bool duos, Dictionary<string, string>? parameters)
 		{
 			HeroNotificationPanel.HeroIds = heroIds;
+			HeroNotificationPanel.Duos = duos;
 			HeroNotificationPanel.AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
 			HeroNotificationPanel.Parameters = parameters;
 			_heroNotificationBehavior.Show();

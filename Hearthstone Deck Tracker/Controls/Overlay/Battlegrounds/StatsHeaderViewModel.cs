@@ -48,8 +48,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		{
 			get
 			{
+				var pivot = Core.Game.IsBattlegroundsDuosMatch ? 2.5f : 4.5f;
+				var factor = Core.Game.IsBattlegroundsDuosMatch ? 0.5f : 1f;
+
 				if(AvgPlacement is double avgPlacement)
-					return Helper.GetColorString(Helper.ColorStringMode.BATTLEGROUNDS, (4.5f - avgPlacement) * 100f / 3.5f, 75);
+					return Helper.GetColorString(
+						Helper.ColorStringMode.BATTLEGROUNDS,
+						(pivot - avgPlacement) * 100f / 3.5f * factor,
+						75
+					);
 
 				return "#FFFFFF";
 			}

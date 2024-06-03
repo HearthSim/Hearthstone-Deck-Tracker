@@ -208,6 +208,19 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
+		public static async Task<BattlegroundsHeroPickStats?> GetTier7DuosHeroPickStats(string token, BattlegroundsHeroPickStatsParams parameters)
+		{
+			try
+			{
+				return await Client.GetTier7DuosHeroPickStats(token, parameters);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
 		public static async Task PostMulliganGuideFeedback(MulliganGuideFeedbackParams parameters)
 		{
 			try

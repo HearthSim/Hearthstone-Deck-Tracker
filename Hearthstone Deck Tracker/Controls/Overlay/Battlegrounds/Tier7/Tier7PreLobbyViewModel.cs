@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			set
 			{
 				SetProp(value);
+				OnPropertyChanged(nameof(AllTimeHighMMRVisibility));
 			}
 		}
 		#endregion
@@ -98,8 +99,28 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		}
 
 		public int? TrialUsesRemaining { get => GetProp<int?>(null); set => SetProp(value); }
-		public string? AllTimeHighMMR { get => GetProp<string?>(null); set => SetProp(value); }
-		public Visibility AllTimeHighMMRVisibility { get => GetProp(Visibility.Collapsed); set => SetProp(value); }
+
+		public string? AllTimeHighMMR
+		{
+			get => GetProp<string?>(null);
+			set
+			{
+				SetProp(value);
+				OnPropertyChanged(nameof(AllTimeHighMMRVisibility));
+			}
+		}
+
+		public Visibility AllTimeHighMMRVisibility
+		{
+			get
+			{
+				if(AllTimeHighMMR == null || BattlegroundsGameMode != SelectedBattlegroundsGameMode.SOLO)
+				{
+					return Visibility.Collapsed;
+				}
+				return Visibility.Visible;
+			}
+		}
 
 		public bool IsCollapsed
 		{
@@ -218,7 +239,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				(null, int curr) => curr.ToString(),
 				(null, null) => null,
 			};
-			AllTimeHighMMRVisibility = allTimeFromApi == null ? Visibility.Collapsed : Visibility.Visible;
 			UserState = UserState.Subscribed;
 		}
 
