@@ -30,6 +30,14 @@ namespace HearthWatcher.LogReader
 		 */
 		 const int KoreanMillhouseBugHack = 54253;
 
+		/**
+		 * Limit the amount of LogLines we keep in the ConcurrentQueue, so that we don't run out of memory.
+		 * If we hit the limit we temporarily stop advancing through the log file until the queue has room again.
+		 * This limit will usually only be hit in very late Battlegrounds matches, especially when restarting HDT or
+		 * when a combat has excessively many actions.
+		 */
+		private const int MAX_LOG_LINE_BUFFER = 100_000;
+
 		private DirectoryInfo _latestActiveDir;
 		private DirectoryInfo _latestInactiveDir;
 		private DateTime _lastCheck;
@@ -51,7 +59,7 @@ namespace HearthWatcher.LogReader
 				latest = subDirs.OrderByDescending(x => x.CreationTime).First();
 				if(latest.FullName == _latestInactiveDir?.FullName)
 					return null;
-				}
+			}
 			catch
 			{
 				return null;
@@ -78,7 +86,7 @@ namespace HearthWatcher.LogReader
 			_latestInactiveDir = latest;
 			return null;
 		}
-		 
+
 		private string GetFilePath()
 		{
 			var dir = GetActualLogDir();
@@ -89,7 +97,7 @@ namespace HearthWatcher.LogReader
 			}
 			return Path.Combine(dir.FullName, Info.Name + ".log");
 		}
-		
+
 
 		public LogFileWatcher(LogWatcherInfo info)
 		{
@@ -207,7 +215,7 @@ namespace HearthWatcher.LogReader
 						using(var sr = new StreamReader(fs))
 						{
 							string line;
-							while(!sr.EndOfStream && (line = sr.ReadLine()) != null)
+							while(!sr.EndOfStream && _lines.Count < MAX_LOG_LINE_BUFFER && (line = sr.ReadLine()) != null)
 							{
 								if(line.StartsWith("D "))
 								{
