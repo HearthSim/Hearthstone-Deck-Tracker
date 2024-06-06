@@ -309,23 +309,25 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 				var wasPreviousStateParcial = State == BobsBuddyState.CombatPartial;
 
-				State = wasPreviousStateParcial ? BobsBuddyState.ShoppingAfterPartial : BobsBuddyState.Shopping;
+				if(isGameOver)
+				{
+					if(State != BobsBuddyState.Initial)
+					{
+						DebugLog("Setting UI state to GameOver");
+						State = wasPreviousStateParcial ? BobsBuddyState.GameOverAfterPartial : BobsBuddyState.GameOver;
+					}
+				}
+				else
+				{
+					DebugLog("Setting UI state to Shopping");
+					State = wasPreviousStateParcial ? BobsBuddyState.ShoppingAfterPartial : BobsBuddyState.Shopping;
+				}
 
 				if(HasErrorState())
 					return;
 
 				BobsBuddyDisplay.SetLastOutcome(GetLastCombatDamageDealt());
-				if(isGameOver)
-				{
-					BobsBuddyDisplay.SetState(wasPreviousStateParcial ? BobsBuddyState.GameOverAfterPartial : BobsBuddyState.GameOver);
-					DebugLog("Setting UI state to GameOver");
-				}
-				else
-				{
-					BobsBuddyDisplay.SetState(wasPreviousStateParcial ? BobsBuddyState.ShoppingAfterPartial : BobsBuddyState.Shopping);
-					DebugLog("Setting UI state to shopping");
-				}
-
+				BobsBuddyDisplay.SetState(State);
 				ValidateSimulationResultAsync().Forget();
 			}
 			catch(Exception e)
