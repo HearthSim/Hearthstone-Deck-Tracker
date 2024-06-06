@@ -57,6 +57,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private List<Entity> _opponentHand = new();
 		private readonly Dictionary<Entity, Entity> _opponentHandMap = new();
+		private List<Entity> _opponentSecrets = new();
 
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
@@ -158,6 +159,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		public async void StartCombat()
 		{
+			_opponentHand = new();
+			_opponentSecrets = new();
+
 			try
 			{
 				if(!ShouldRun())
@@ -182,8 +186,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 				} else
 					SnapshotBoardState(_game.GetTurnNumber());
-				
-				
+
+
 				State = BobsBuddyState.Combat;
 				DebugLog($"{_instanceKey} Waiting for state changes...");
 				await Task.Delay(StateChangeDelay);
@@ -496,12 +500,19 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 			else
 			{
-				// TODO: [Duos] refactor
+				var secrets = gamePlayer.Secrets.ToList();
+				_opponentSecrets = secrets;
+				inputPlayer.SetSecrets(
+					secrets
+						.Select(x => !string.IsNullOrEmpty(x.CardId) ? (int?)x.Card.DbfId : null)
+						.Distinct(new SecretDbfIdComparer())
+						.ToList()
+				);
+
 				_opponentHand = gamePlayer.Hand.ToList();
 				inputPlayer.Hand.Clear();
 				inputPlayer.Hand.AddRange(GetOpponentHandEntities(simulator));
 			}
-
 
 			var playerAttached = GetAttachedEntities(playerEntity.Id);
 			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchant);
@@ -643,9 +654,17 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateOpponentSecret(Entity entity)
 		{
-			DoNotReport = true;
-			if(!_game.IsBattlegroundsDuosMatch)
-				await TryRerun();
+			if(_input == null || State != BobsBuddyState.Combat ||_game.IsBattlegroundsDuosMatch)
+				return;
+
+			_input.Opponent.SetSecrets(
+				_opponentSecrets
+					.Select(x => !string.IsNullOrEmpty(x.CardId) ? (int?)x.Card.DbfId : null)
+					.Distinct(new SecretDbfIdComparer())
+					.ToList()
+			);
+
+			await TryRerun();
 		}
 
 		private IEnumerable<CardEntity> GetOpponentHandEntities(Simulator simulator)
@@ -688,14 +707,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			try
 			{
-				_input.Opponent.SetSecrets(
-					_game.Opponent.Secrets
-						.Select(x => !string.IsNullOrEmpty(x.CardId) ? (int?)x.Card.DbfId : null)
-						.Distinct(new SecretDbfIdComparer())
-						.ToList()
-				);
-				DebugLog($"Set opponent S. with {_input.Opponent.Secrets.Count} S.");
-
 				DebugLog("----- Simulation Input -----");
 				DebugLog($"Player: heroPower={_input.Player.HeroPower.CardId}, used={_input.Player.HeroPower.IsActivated}, data={_input.Player.HeroPower.Data}");
 				DebugLog($"Hand: {string.Join(", ",_input.Player.Hand.Select(x => x.ToString()))}");
@@ -776,7 +787,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						DebugLog(s.ToString());
 				}
 
-				if(_input.isDuos) { 
+				if(_input.isDuos) {
 					if(_input.OpponentTeammate.Secrets.Any())
 					{
 						DebugLog("Detected the following opponent teammate S.");
@@ -791,7 +802,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							DebugLog(s.ToString());
 					}
 				}
-				 
+
 				DebugLog("----- End of Input -----");
 
 				DebugLog($"Running simulations with MaxIterations={Iterations} and ThreadCount={ThreadCount}...");
