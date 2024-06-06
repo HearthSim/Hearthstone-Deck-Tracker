@@ -220,7 +220,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			if(_input != null && !(DuosInputPlayerTeammate == null || DuosInputOpponentTeammate == null))
 			{
-				DebugLog("No need to run patial combat, all teammates found. Exiting.");
+				DebugLog("No need to run partial combat, all teammates found. Exiting.");
 				return;
 			}
 			try
@@ -380,7 +380,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			if(gamePlayer.Board.Any(IsUnknownCard))
 			{
-				ErrorState = BobsBuddyErrorState.UnkownCards;
+				ErrorState = BobsBuddyErrorState.UnknownCards;
 				throw new ArgumentException("Board has unknown cards. Exiting.");
 			}
 

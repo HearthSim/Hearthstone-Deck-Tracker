@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						return string.Format(LocUtil.Get("BobsBuddyStatusMessage_UpdateRequired"), version);
 					case BobsBuddyErrorState.NotEnoughData:
 						return LocUtil.Get("BobsBuddyStatusMessage_NotEnoughData");
-					case BobsBuddyErrorState.UnkownCards:
+					case BobsBuddyErrorState.UnknownCards:
 						return LocUtil.Get("BobsBuddyStatusMessage_UnknownCards");
 					case BobsBuddyErrorState.UnsupportedCards:
 						return LocUtil.Get("BobsBuddyStatusMessage_UnsupportedCards");

@@ -427,7 +427,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					case BobsBuddyErrorState.NotEnoughData:
 						simulationState = TwitchSimulationState.TooFewSimulations;
 						break;
-					case BobsBuddyErrorState.UnkownCards:
+					case BobsBuddyErrorState.UnknownCards:
 					// Re-using unknown here to not add new state on twitch
 					case BobsBuddyErrorState.UnsupportedCards:
 					case BobsBuddyErrorState.UnsupportedInteraction:
