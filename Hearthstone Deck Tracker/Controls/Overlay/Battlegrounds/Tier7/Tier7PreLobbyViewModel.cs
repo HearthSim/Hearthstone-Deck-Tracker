@@ -88,9 +88,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			}
 		}
 
-		public RefreshSubscriptionState RefreshSubscriptionState
+		public void OnFocus() => PossiblySubscribed = true;
+		private bool PossiblySubscribed
 		{
-			get => GetProp(RefreshSubscriptionState.Hidden);
+			get => GetProp(false);
 			set
 			{
 				SetProp(value);
@@ -98,7 +99,27 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			}
 		}
 
-		public int? TrialUsesRemaining { get => GetProp<int?>(null); set => SetProp(value); }
+		public RefreshSubscriptionState RefreshSubscriptionState
+		{
+			get {
+				if((TrialUsesRemaining > 0 && !PossiblySubscribed) || IsAuthenticated == null)
+				{
+					return RefreshSubscriptionState.Hidden;
+				}
+
+				return IsAuthenticated == true ? RefreshSubscriptionState.Refresh : RefreshSubscriptionState.SignIn;
+			}
+		}
+
+		public int? TrialUsesRemaining
+		{
+			get => GetProp<int?>(null);
+			set
+			{
+				SetProp(value);
+				OnPropertyChanged(nameof(RefreshSubscriptionState));
+			}
+		}
 
 		public string? AllTimeHighMMR
 		{
@@ -147,7 +168,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 
 		public Visibility? ResetTimeVisibility => TrialTimeRemaining != null ? Visibility.Visible : Visibility.Collapsed;
 
-		public Visibility RefreshAccountVisibility { get => GetProp(Visibility.Collapsed); set => SetProp(value); }
 		public bool RefreshAccountEnabled { get => GetProp(true); set => SetProp(value); }
 
 		public string? Username { get => GetProp<string?>(null); set => SetProp(value); }
@@ -184,24 +204,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 
 				IsAuthenticated = true;
 				ownsTier7 = HSReplayNetOAuth.AccountData.IsTier7;
-
-				// Update the Refresh button, as it's otherwise only updated after a click on GET PREMIUM
-				if(ownsTier7)
-				{
-					RefreshSubscriptionState = RefreshSubscriptionState.Hidden;
-				}
-				else if(RefreshSubscriptionState == RefreshSubscriptionState.SignIn)
-				{
-					RefreshSubscriptionState = RefreshSubscriptionState.Refresh;
-				}
 			}
 			else
 			{
 				IsAuthenticated = false;
-				if(RefreshSubscriptionState == RefreshSubscriptionState.Refresh)
-				{
-					RefreshSubscriptionState = RefreshSubscriptionState.SignIn;
-				}
 			}
 
 			var acc = Reflection.Client.GetAccountId();
@@ -250,7 +256,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			Username = null;
 		}
 
-		public bool? IsAuthenticated { get; set; }
+		public bool? IsAuthenticated
+		{
+			get => GetProp<bool?>(null);
+			set
+			{
+				SetProp(value);
+				OnPropertyChanged(nameof(RefreshSubscriptionState));
+			}
+		}
+
 		public ICommand SignInCommand => new Command(() => {
 			HSReplayNetHelper.TryAuthenticate().Forget();
 
@@ -265,7 +280,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		{
 			var url = Helper.BuildHsReplayNetUrl("battlegrounds/tier7/", "bgs_lobby_subscribe");
 			Helper.TryOpenUrl(url);
-			RefreshSubscriptionState = IsAuthenticated == true ? RefreshSubscriptionState.Refresh : RefreshSubscriptionState.SignIn;
+			PossiblySubscribed = true;
 		});
 
 		public ICommand MyStatsCommand => new Command(() =>

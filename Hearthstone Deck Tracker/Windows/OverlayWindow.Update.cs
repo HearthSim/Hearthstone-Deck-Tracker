@@ -55,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(_game.CurrentMode == Mode.BACON)
 			{
-				Tier7PreLobbyViewModel.RefreshAccountVisibility = Visibility.Visible;
+				Tier7PreLobbyViewModel.OnFocus();
 			}
 		}
 
