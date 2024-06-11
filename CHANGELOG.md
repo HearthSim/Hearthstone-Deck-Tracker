@@ -1,3 +1,12 @@
+## **Release v1.29.1 - 2024-06-11**
+**New**:
+- Show Fatigue Counter in more circumstances (such as when playing Insanity Warlock).
+- Make it easier to sign in to HSReplay.net after subscribing to Tier7.
+
+**Fixes**:
+- Fixed an issue where Bob's Buddy would not update after an Akazamzarak secret was revealed.
+- Fixed an issue where Bob's Buddy would enter an invalid state when conceding during hero selection.
+
 ## **Release v1.29.0 - 2024-06-03**
 **New**:
 - Added Tier7 Hero Picking stats in Duos!
