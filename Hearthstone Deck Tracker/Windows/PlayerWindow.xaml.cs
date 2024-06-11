@@ -23,7 +23,6 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class PlayerWindow : INotifyPropertyChanged
 	{
-		private const string LocFatigue = "Overlay_DeckList_Label_Fatigue";
 		private readonly GameV2 _game;
 		private bool _appIsClosing;
 
@@ -50,7 +49,7 @@ namespace Hearthstone_Deck_Tracker
 				Top = 100;
 				Left = 100;
 			}
-			
+
 			if(forScreenshot != null)
 			{
 				CanvasPlayerChance.Visibility = Visibility.Collapsed;
@@ -144,16 +143,28 @@ namespace Hearthstone_Deck_Tracker
 			LblCardCount.Text = cardCount.ToString();
 			LblDeckCount.Text = cardsLeftInDeck.ToString();
 
+			var fatigueDamage = Math.Max(_game.Player.Fatigue + 1, 1);
 			if(cardsLeftInDeck <= 0)
 			{
-				LblPlayerFatigue.Text = LocUtil.Get(LocFatigue) + " " + (_game.Player.Fatigue + 1);
-
+				LblPlayerFatigue.Text = string.Format(
+					LocUtil.Get("Overlay_DeckList_Label_FatigueNextDraw"),
+					fatigueDamage
+				);
 				LblDrawChance2.Text = "0%";
 				LblDrawChance1.Text = "0%";
 				return;
 			}
-
-			LblPlayerFatigue.Text = "";
+			else if(fatigueDamage > 1 || WotogCounterHelper.ShowPlayerFatigueCounter)
+			{
+				LblPlayerFatigue.Text = string.Format(
+					LocUtil.Get("Overlay_DeckList_Label_FatigueDamage"),
+					fatigueDamage
+				);
+			}
+			else
+			{
+				LblPlayerFatigue.Text = "";
+			}
 
 			LblDrawChance2.Text = Math.Round(200.0f / cardsLeftInDeck, 1) + "%";
 			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";

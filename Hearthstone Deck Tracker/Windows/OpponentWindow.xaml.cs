@@ -24,7 +24,6 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class OpponentWindow : INotifyPropertyChanged
 	{
-		private const string LocFatigue = "Overlay_DeckList_Label_Fatigue";
 		private readonly GameV2 _game;
 		private bool _appIsClosing;
 
@@ -111,9 +110,13 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentCardCount.Text = cardCount.ToString();
 			LblOpponentDeckCount.Text = cardsLeftInDeck.ToString();
 
+			var fatigueDamage = Math.Max(_game.Opponent.Fatigue + 1, 1);
 			if(cardsLeftInDeck <= 0)
 			{
-				LblOpponentFatigue.Text = LocUtil.Get(LocFatigue) + " " + (_game.Opponent.Fatigue + 1);
+				LblOpponentFatigue.Text = string.Format(
+					LocUtil.Get("Overlay_DeckList_Label_FatigueNextDraw"),
+					fatigueDamage
+				);
 
 				LblOpponentDrawChance2.Text = "0%";
 				LblOpponentDrawChance1.Text = "0%";
@@ -121,8 +124,17 @@ namespace Hearthstone_Deck_Tracker
 				LblOpponentHandChance1.Text = cardCount <= 0 ? "0%" : "100%";
 				return;
 			}
-
-			LblOpponentFatigue.Text = "";
+			else if(fatigueDamage > 1 || WotogCounterHelper.ShowOpponentFatigueCounter)
+			{
+				LblOpponentFatigue.Text = string.Format(
+					LocUtil.Get("Overlay_DeckList_Label_FatigueDamage"),
+					fatigueDamage
+				);
+			}
+			else
+			{
+				LblOpponentFatigue.Text = "";
+			}
 
 			var handWithoutCoin = cardCount - (opponentHasCoin ? 1 : 0);
 

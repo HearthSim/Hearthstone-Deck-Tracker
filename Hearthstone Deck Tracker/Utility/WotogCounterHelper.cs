@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ShowPlayerSpellsCounter =>
 			Config.Instance.PlayerSpellsCounter == DisplayMode.Always ||
-			(Config.Instance.PlayerSpellsCounter == DisplayMode.Auto && InDeckAndHand(new[] {
+			(Config.Instance.PlayerSpellsCounter == DisplayMode.Auto && InDeckOrKnown(new[] {
 				CardIds.Collectible.Neutral.YoggSaronHopesEnd,
 				CardIds.Collectible.Neutral.ArcaneGiant,
 				CardIds.Collectible.Priest.GraveHorror,
@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ShowPlayerSpellSchoolsCounter =>
 			Config.Instance.PlayerSpellSchoolsCounter == DisplayMode.Always ||
-			(Config.Instance.PlayerSpellSchoolsCounter == DisplayMode.Auto && InDeckAndHand(new[] {
+			(Config.Instance.PlayerSpellSchoolsCounter == DisplayMode.Auto && InDeckOrKnown(new[] {
 				CardIds.Collectible.Mage.DiscoveryOfMagic,
 				CardIds.Collectible.Mage.InquisitiveCreation,
 				CardIds.Collectible.Neutral.Multicaster,
@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ShowPlayerExcavateTier =>
 			Config.Instance.PlayerExcavateTierCounter == DisplayMode.Always ||
-			(Config.Instance.PlayerExcavateTierCounter == DisplayMode.Auto && InDeckAndHand(new[] {
+			(Config.Instance.PlayerExcavateTierCounter == DisplayMode.Auto && InDeckOrKnown(new[] {
 				CardIds.Collectible.Rogue.BloodrockCoShovel,
 				CardIds.Collectible.Warlock.Smokestack,
 				CardIds.Collectible.Mage.Cryopreservation,
@@ -150,13 +150,31 @@ namespace Hearthstone_Deck_Tracker.Utility
 			Config.Instance.OpponentExcavateCounter == DisplayMode.Always ||
 			(Config.Instance.OpponentExcavateCounter == DisplayMode.Auto && (Core.Game.OpponentEntity?.GetTag((GameTag)2822) ?? 0) > 0);
 
+		public static bool ShowPlayerFatigueCounter =>
+			InDeckOrKnown(new[]
+			{
+				CardIds.Collectible.Warlock.BaritoneImp,
+				CardIds.Collectible.Warlock.CrazedConductor,
+				CardIds.Collectible.Warlock.Crescendo,
+				CardIds.Collectible.Warlock.EncroachingInsanity,
+				CardIds.NonCollectible.Warlock.CurseofAgony_AgonyToken,
+			});
+
+		public static bool ShowOpponentFatigueCounter =>
+			InDeckOrKnown(new[]
+			{
+				// Note: this is inspecting the friendly deck, not the opposing deck
+				CardIds.Collectible.Warlock.EncroachingInsanity,
+				CardIds.Collectible.Warlock.CurseOfAgony,
+			});
+
 		private static bool InDeckOrKnown(string cardId)
 		{
 			var contains = DeckContains(cardId);
 			if(!contains.HasValue) return false;
 			return contains.Value || Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == cardId && x.Info.OriginalZone != null) != null;
 		}
-		private static bool InDeckAndHand(string[] cardIds) => cardIds.Any(cardId => InDeckOrKnown(cardId));
+		private static bool InDeckOrKnown(string[] cardIds) => cardIds.Any(cardId => InDeckOrKnown(cardId));
 
 		private static bool? DeckContains(string cardId) => DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId);
 		private static bool? DeckContains(string[] cardIds) => DeckList.Instance.ActiveDeck?.Cards.Any(x => cardIds.Contains(x.Id));
