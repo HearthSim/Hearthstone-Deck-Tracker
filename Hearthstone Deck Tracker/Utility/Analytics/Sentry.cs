@@ -195,6 +195,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			public int Iterations { get; set; }
 			public string? ExitCondition { get; set; }
 			public Input? Input { get; set; }
+			public string? UnitTestableVersion => Input?.UnitTestableVersion;
 			public Output? Output { get; set; }
 
 			public Region Region { get; set; }
