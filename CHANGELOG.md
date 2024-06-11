@@ -1,5 +1,5 @@
 ## **Release v1.29.0 - 2024-06-03**
-**Features**:
+**New**:
 - Added Tier7 Hero Picking stats in Duos!
 - Added Bob's Buddy in Duos!\
   *You may occasionally see a partial result, in case where we don't see one of the teammates.*
@@ -12,7 +12,7 @@
 - Fixed a crash when closing Hearthstone.
 
 ## **Release v1.28.5 - 2024-05-31**
-**Features**
+**New**:
 - Added automatic deck importing for the new Twist season!
 - Added automatic deck importing for Loaner decks!
 
@@ -38,7 +38,7 @@
 - Fixed various minor simulation issues.
 
 ## **Release v1.28.1 - 2024-05-17**
-**Features**:
+**New**:
 - Start tracking the last known board state in Battlegrounds Duos!\
   *Hover over heroes on the leaderboard as usual to see the last board you encountered.*
 
@@ -50,7 +50,7 @@
 **Updated for Hearthstone 29.4.0**
 
 ## **Release v1.27.3 - 2024-05-13**
-**Features**:
+**New**:
 - Switched the tiers shown in Battlegrounds hero picking overlay to a new and improved methodology.\
   *Hero tiers are now one of S, A, B, C, D and F. The S and F tiers are very rare and will only appear for true outliers.*
 - Visual improvements to the Battlegrounds hero picking overlay.
@@ -67,7 +67,7 @@
 - Fixed various simulation issues.
 
 ## **Release v1.27.1 - 2024-05-08**
-**Features**:
+**New**:
 - Added Duos support to the Battlegrounds session recap.\
   *Duos support for Bob's Buddy and the hero picking overlay are being worked on!*
 
@@ -101,7 +101,7 @@
 
 ## **Release v1.26.0 - 2024-04-18**
 
-**Features**:
+**New**:
 - Added a button to filter the Battlegrounds minion list by minion type!
 
 **Fixes**:
@@ -116,7 +116,7 @@
 **Notes**:
 - Most Battlegrounds features are disabled in Duos right now. We'll be investigating what's possible in the coming days!
 
-**Features**:
+**New**:
 - Added a new setting to show the available Minion Types in the Battlegrounds session panel!
 
 **Fixes**:
@@ -134,7 +134,7 @@
 - Fixed an issue causing new core secrets to not appear in the secret tracker.
 
 ## **Release v1.25.1 - 2024-03-19**
-**Features**:
+**New**:
 - Added support for Zilliax Deluxe 3000's custom cost in the deck list.
 
 **Fixes**:
@@ -188,7 +188,7 @@
 - There are likely still issues with some new cards in Bob's Buddy. We will update these in the coming days.
 - The Battlegrounds Quest Picking Overlay will return as soon as there's enough data for quests.
 
-**Features**:
+**New**:
 - Added an in-game Mulligan Guide for HSReplay.net Premium subscribers! This feature is available in Ranked, Casual, Friendly Challenge and Arena.
 
 **Fixes**:
