@@ -217,7 +217,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
 			}
 
-			if(_game.IsInMenu || !_game.IsMulliganDone)
+			if(_game.IsInMenu || !_game.IsMulliganDone || inBattlegrounds)
 			{
 				WotogIconsPlayer.Visibility = Collapsed;
 				WotogIconsOpponent.Visibility = Collapsed;
