@@ -86,5 +86,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		WILD_WEST = 1892,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_WhizbangsWorkshop")]
 		WHIZBANGS_WORKSHOP = 1897,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_IslandVacation")]
+		ISLAND_VACATION = 1905,
 	}
 }

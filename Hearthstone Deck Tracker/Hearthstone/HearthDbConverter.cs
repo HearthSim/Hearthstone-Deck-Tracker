@@ -69,6 +69,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{(int)CardSet.WONDERS, "Caverns of Time" },
 			{(int)CardSet.WILD_WEST, "Showdown in the Badlands" },
 			{(int)CardSet.WHIZBANGS_WORKSHOP, "Whizbang's Workshop" },
+			{(int)CardSet.ISLAND_VACATION, "Perils in Paradise" },
+			{(int)CardSet.TB_DEV, "Tavern Brawl (Dev)"},
 			{(int)CardSet.EVENT, "Event" },
 		};
 

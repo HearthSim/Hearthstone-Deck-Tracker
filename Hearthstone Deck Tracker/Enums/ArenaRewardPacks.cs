@@ -87,5 +87,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_WhizbangsWorkshop")]
 		WhizbangsWorkshop = CardSet.WHIZBANGS_WORKSHOP,
+
+		[LocDescription("Enum_ArenaRewardPacks_PerilsInParadise")]
+		PerilsInParadise = CardSet.ISLAND_VACATION,
 	}
 }
