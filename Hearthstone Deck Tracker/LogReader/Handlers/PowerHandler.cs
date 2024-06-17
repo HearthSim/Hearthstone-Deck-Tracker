@@ -550,7 +550,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_KorthazzDeathriderToken);
 								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_ZeliekConquestriderToken);
 								break;
-							case NonCollectible.Deathknight.Helya_PlightOfTheDeadEnchantment:
+							case NonCollectible.Deathknight.Helya_HelyaEnchantment:
 								if (gameState.LastPlagueDrawn != null)
 								{
 									AddKnownCardId(gameState, gameState.LastPlagueDrawn);
