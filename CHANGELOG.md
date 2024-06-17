@@ -1,3 +1,9 @@
+## **Release v1.29.2 - 2024-06-17**
+**Updated for Hearthstone 29.6.0**
+
+**Fixes**:
+- Fixed an issue where constructed counters would be shown in Battlegrounds.
+
 ## **Release v1.29.1 - 2024-06-11**
 **New**:
 - Show Fatigue Counter in more circumstances (such as when playing Insanity Warlock).
