@@ -1,3 +1,10 @@
+## **Release v1.29.3 - 2024-06-20**
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Tarecgosa.
+- Fixed incorrect simulation results due to Golden Persistent Poet.
+- Fixed incorrect simulation results due to Sky Pirate (Scallywag's summon).
+- Fixed incorrect simulation results due to Teron Gorefiend's hero power (Rapid Reanimation).
+
 ## **Release v1.29.2 - 2024-06-17**
 **Updated for Hearthstone 29.6.0**
 
