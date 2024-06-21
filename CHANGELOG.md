@@ -1,3 +1,8 @@
+## **Release v1.29.4 - 2024-06-21**
+**Bob's Buddy**:
+- Fixed incorrect simulation results in Duos due to minions being unable to attack.
+- Fixed incorrect simulation results due to Teron Gorefiend's hero power (Rapid Reanimation).
+
 ## **Release v1.29.3 - 2024-06-20**
 **Bob's Buddy**:
 - Fixed incorrect simulation results due to Tarecgosa.
