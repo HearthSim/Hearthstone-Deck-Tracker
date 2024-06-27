@@ -1,3 +1,10 @@
+## **Release v1.29.5 - 2024-06-27**
+**Updated for Hearthstone 29.6.2**
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Sky Pirate (Scallywag's summon).
+- Fixed incorrect simulation results due to Sr. Tomb Diver.
+
 ## **Release v1.29.4 - 2024-06-21**
 **Bob's Buddy**:
 - Fixed incorrect simulation results in Duos due to minions being unable to attack.
