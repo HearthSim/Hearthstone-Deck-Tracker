@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 					{
 						element.Unloaded -= callback;
 						OnRegisterHitTestVisible?.Invoke(element, false);
+						UnregisterCallbacks.Remove(element);
 					}
 				};
 				element.Unloaded += UnregisterCallbacks[element];
@@ -51,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 			}
 		}
 
-		
+
 		public static readonly DependencyProperty IsOverlayHoverVisibleProperty =
 			DependencyProperty.RegisterAttached("IsOverlayHoverVisible", typeof(bool), typeof(OverlayExtensions), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsOverlayHoverVisibleChange)));
 
@@ -80,6 +81,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 					{
 						element.Unloaded -= callback;
 						OnRegisterHoverVisible?.Invoke(element, false);
+						UnregisterCallbacks.Remove(element);
 					}
 				};
 				element.Unloaded += UnregisterCallbacks[element];
