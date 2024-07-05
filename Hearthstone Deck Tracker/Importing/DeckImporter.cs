@@ -177,7 +177,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 			var deck = GetTemplateDeck(deckTemplateId);
 			if(deck is null)
 				return null;
-			return new ImportedDeck(deck, null, DeckList.Instance.Decks);
+			var matches = GetImportedDecks(new[] { deck }, DeckList.Instance.Decks);
+			return matches.Count == 1 ? matches[0] : null;
 		}
 
 		private static HearthMirror.Objects.Deck? GetTemplateDeck(int deckTemplateId)

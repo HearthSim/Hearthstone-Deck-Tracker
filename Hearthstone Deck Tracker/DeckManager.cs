@@ -404,10 +404,7 @@ namespace Hearthstone_Deck_Tracker
 			if(selectedDeck == null)
 				return;
 			var deckId = selectedDeck.Deck.Id;
-			if(DeckList.Instance.Decks.All(x => x.HsId != deckId))
-			{
-				ImportDecks(new List<ImportedDeck>() { selectedDeck }, false);
-			}
+			ImportDecks(new List<ImportedDeck>() { selectedDeck }, false);
 			AutoSelectDeckById(game, deckId);
 		}
 
