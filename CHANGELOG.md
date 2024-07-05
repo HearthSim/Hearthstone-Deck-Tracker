@@ -1,3 +1,11 @@
+## **Release v1.29.6 - 2024-05-07**
+**Fixes**:
+- Fixed an issue causing automatic deck importing to not update premade decks, such as Twist and Loaner decks.
+- Fixed a memory leak that could cause a sudden crash after a long session of interacting with the Battlegrounds minion browser.
+
+**Bob's Buddy**:
+- Fixed an issue where minions exclusive to Duos would prevent simulations even when not playing Duos.
+
 ## **Release v1.29.5 - 2024-06-27**
 **Updated for Hearthstone 29.6.2**
 
