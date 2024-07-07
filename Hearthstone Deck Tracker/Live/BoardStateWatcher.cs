@@ -127,7 +127,7 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		private int? BuddyDbfId(Player player)
 		{
-			if(Core.Game.GameEntity?.GetTag(GameTag.BACON_BUDDY_ENABLED) == 0)
+			if(Core.Game.BattlegroundsBuddiesEnabled)
 				return null;
 			var buddyDbfId = player.Hero?.GetTag(GameTag.BACON_COMPANION_ID);
 			if(buddyDbfId == 0)

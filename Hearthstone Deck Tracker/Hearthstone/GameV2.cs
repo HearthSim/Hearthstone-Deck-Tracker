@@ -603,5 +603,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DuosWasPlayerHeroModified = false;
 			DuosWasOpponentHeroModified = false;
 		}
+
+		public bool BattlegroundsBuddiesEnabled => GameEntity?.GetTag(GameTag.BACON_BUDDY_ENABLED) > 0;
 	}
 }

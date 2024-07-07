@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
@@ -90,7 +91,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 				{
 					var direction = (selectedHeroIndex >= HeroStats.Count / 2) ? -1 : 1;
 					for(var i = 0; i < HeroStats.Count; i++)
-						HeroStats[i].SetHiddenByHeroPower(i == selectedHeroIndex + direction);
+						HeroStats[i].SetHiddenByHeroPower(
+							i == selectedHeroIndex + direction || (
+								Core.Game.BattlegroundsBuddiesEnabled && i == selectedHeroIndex + 2 * direction
+							)
+						);
 				}
 				else
 				{
