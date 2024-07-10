@@ -241,6 +241,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				BobsBuddyDisplay.SetState(BobsBuddyState.CombatPartial);
 				BobsBuddyDisplay.ResetText();
 
+				// Enforce input teammate to be null if teammate was not snapshot
+				if(_input != null && DuosInputPlayerTeammate == null)
+					_input.PlayerTeammate = null;
+				if(_input != null && DuosInputOpponentTeammate == null)
+					_input.OpponentTeammate = null;
+
 				await RunAndDisplaySimulationAsync();
 			}
 			catch(Exception e)
@@ -369,7 +375,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_attackingHero = attacker;
 		}
 
-		private bool SetupInputPlayer(
+		private void SetupInputPlayer(
 			Simulator simulator,
 			Hearthstone.Player gamePlayer,
 			global::BobsBuddy.Simulation.Player inputPlayer,
@@ -529,8 +535,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			inputPlayer.BloodGemHealthBuff =playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);
 
 			Log.Info($"pBloodGem=+{inputPlayer.BloodGemAtkBuff}/+{inputPlayer.BloodGemHealthBuff}, friendly={friendly}");
-
-			return true;
 		}
 
 
@@ -565,12 +569,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 				else
 				{
-					if(_game.DuosWasPlayerHeroModified && DuosInputPlayerTeammate == null)
+					if(_game.DuosWasPlayerHeroModified && DuosInputPlayerTeammate == null && input.PlayerTeammate != null)
 					{
 						SetupInputPlayer(simulator, _game.Player, input.PlayerTeammate, _game.PlayerEntity, true);
 						DuosInputPlayerTeammate = input.PlayerTeammate;
 					}
-					if(_game.DuosWasOpponentHeroModified && DuosInputOpponentTeammate == null)
+					if(_game.DuosWasOpponentHeroModified && DuosInputOpponentTeammate == null && input.OpponentTeammate != null)
 					{
 						SetupInputPlayer(simulator, _game.Opponent, input.OpponentTeammate, _game.OpponentEntity, false);
 						DuosInputOpponentTeammate = input.OpponentTeammate;
@@ -726,49 +730,73 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				foreach(var quest in _input.Opponent.Quests)
 					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
 
-
 				if(_input.isDuos)
 				{
 					DebugLog("---");
-					DebugLog("PlayerTeammate: heroPower=" + _input.PlayerTeammate.HeroPower.CardId + ", used=" + _input.PlayerTeammate.HeroPower.IsActivated + ", data=" + _input.PlayerTeammate.HeroPower.Data);
-					DebugLog("Hand: " + string.Join(", ", _input.PlayerTeammate.Hand.Select(x => x.ToString())));
-					foreach(var minion in _input.PlayerTeammate.Side)
-						DebugLog(minion.ToString());
+					if(_input.PlayerTeammate == null)
+						DebugLog("PlayerTeammate: null");
+					if(_input.OpponentTeammate == null)
+						DebugLog("OpponentTeammate: null");
 
-					foreach(var quest in _input.PlayerTeammate.Quests)
-						DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+					if(_input.PlayerTeammate != null)
+					{
+						DebugLog("---");
+						DebugLog("PlayerTeammate: heroPower=" + _input.PlayerTeammate.HeroPower.CardId + ", used="
+						         + _input.PlayerTeammate.HeroPower.IsActivated + ", data="
+						         + _input.PlayerTeammate.HeroPower.Data);
+						DebugLog("Hand: " + string.Join(", ", _input.PlayerTeammate.Hand.Select(x => x.ToString())));
+						foreach(var minion in _input.PlayerTeammate.Side)
+							DebugLog(minion.ToString());
 
-					DebugLog("---");
-					DebugLog("OpponentTeammate: heroPower=" + _input.OpponentTeammate.HeroPower.CardId + ", used=" + _input.OpponentTeammate.HeroPower.IsActivated + ", data=" + _input.OpponentTeammate.HeroPower.Data);
-					DebugLog("Hand: " + string.Join(", ", _input.OpponentTeammate.Hand.Select(x => x.ToString())));
-					foreach(var minion in _input.OpponentTeammate.Side)
-						DebugLog(minion.ToString());
+						foreach(var quest in _input.PlayerTeammate.Quests)
+							DebugLog(
+								$"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+					}
 
-					foreach(var quest in _input.OpponentTeammate.Quests)
-						DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
-				}
+					if(_input.OpponentTeammate != null)
+					{
+						DebugLog("---");
+						DebugLog("OpponentTeammate: heroPower=" + _input.OpponentTeammate.HeroPower.CardId + ", used="
+						         + _input.OpponentTeammate.HeroPower.IsActivated + ", data="
+						         + _input.OpponentTeammate.HeroPower.Data);
+						DebugLog("Hand: " + string.Join(", ", _input.OpponentTeammate.Hand.Select(x => x.ToString())));
+						foreach(var minion in _input.OpponentTeammate.Side)
+							DebugLog(minion.ToString());
 
-				DebugLog("---");
+						foreach(var quest in _input.OpponentTeammate.Quests)
+							DebugLog(
+								$"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+					}
 
-				if(_input.isDuos)
-				{
-					DebugLog("---");
-					DebugLog("PlayerTeammate: heroPower=" + _input.PlayerTeammate.HeroPower.CardId + ", used=" + _input.PlayerTeammate.HeroPower.IsActivated + ", data=" + _input.PlayerTeammate.HeroPower.Data);
-					DebugLog("Hand: " + string.Join(", ", _input.PlayerTeammate.Hand.Select(x => x.ToString())));
-					foreach(var minion in _input.PlayerTeammate.Side)
-						DebugLog(minion.ToString());
+					if(_input.PlayerTeammate != null)
+					{
+						DebugLog("---");
+						DebugLog("PlayerTeammate: heroPower=" + _input.PlayerTeammate.HeroPower.CardId + ", used="
+						         + _input.PlayerTeammate.HeroPower.IsActivated + ", data="
+						         + _input.PlayerTeammate.HeroPower.Data);
+						DebugLog("Hand: " + string.Join(", ", _input.PlayerTeammate.Hand.Select(x => x.ToString())));
+						foreach(var minion in _input.PlayerTeammate.Side)
+							DebugLog(minion.ToString());
 
-					foreach(var quest in _input.PlayerTeammate.Quests)
-						DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+						foreach(var quest in _input.PlayerTeammate.Quests)
+							DebugLog(
+								$"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+					}
 
-					DebugLog("---");
-					DebugLog("OpponentTeammate: heroPower=" + _input.OpponentTeammate.HeroPower.CardId + ", used=" + _input.OpponentTeammate.HeroPower.IsActivated + ", data=" + _input.OpponentTeammate.HeroPower.Data);
-					DebugLog("Hand: " + string.Join(", ", _input.OpponentTeammate.Hand.Select(x => x.ToString())));
-					foreach(var minion in _input.OpponentTeammate.Side)
-						DebugLog(minion.ToString());
+					if(_input.OpponentTeammate != null)
+					{
+						DebugLog("---");
+						DebugLog("OpponentTeammate: heroPower=" + _input.OpponentTeammate.HeroPower.CardId + ", used="
+						         + _input.OpponentTeammate.HeroPower.IsActivated + ", data="
+						         + _input.OpponentTeammate.HeroPower.Data);
+						DebugLog("Hand: " + string.Join(", ", _input.OpponentTeammate.Hand.Select(x => x.ToString())));
+						foreach(var minion in _input.OpponentTeammate.Side)
+							DebugLog(minion.ToString());
 
-					foreach(var quest in _input.OpponentTeammate.Quests)
-						DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+						foreach(var quest in _input.OpponentTeammate.Quests)
+							DebugLog(
+								$"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+					}
 				}
 
 				DebugLog("---");
@@ -788,14 +816,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 
 				if(_input.isDuos) {
-					if(_input.OpponentTeammate.Secrets.Any())
+					if(_input.OpponentTeammate != null && _input.OpponentTeammate.Secrets.Any())
 					{
 						DebugLog("Detected the following opponent teammate S.");
 						foreach(var s in _input.OpponentTeammate.Secrets)
 							DebugLog(s.ToString());
 					}
 
-					if(_input.PlayerTeammate.Secrets.Any())
+					if(_input.PlayerTeammate != null && _input.PlayerTeammate.Secrets.Any())
 					{
 						DebugLog("Detected the following player teammate S.");
 						foreach(var s in _input.PlayerTeammate.Secrets)
