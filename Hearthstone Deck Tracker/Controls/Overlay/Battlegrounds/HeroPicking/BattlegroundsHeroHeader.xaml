@@ -139,15 +139,7 @@
         </Grid>
 
         <!-- Tier Tooltip -->
-        <Grid Grid.RowSpan="2" Grid.Column="1" Height="52" Width="52" VerticalAlignment="Top" Background="#01000000"
-              ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
-            <Grid.ToolTip>
-                <TextBlock TextAlignment="Left" FontSize="12" TextWrapping="Wrap">
-                    <Bold><Run Text="{Binding TierTooltipTitle, Mode=OneWay}"/></Bold>
-                    <LineBreak/>
-                    <Run Text="{Binding TierTooltipText, Mode=OneWay}"/>
-                </TextBlock>
-            </Grid.ToolTip>
+        <Grid Grid.RowSpan="2" Grid.Column="1" Height="52" Width="52" VerticalAlignment="Top">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="{lex:Loc BattlegroundsHeroPicking_Header_Tier}" d:Text="TIER" FontSize="10" Margin="0 4 0 0" TextTrimming="CharacterEllipsis" />
                 <TextBlock Style="{StaticResource DefaultTextStyle}" Text="{Binding TierChar, TargetNullValue=&#8211;, FallbackValue=&#8211;}" d:Text="1" FontSize="28" FontWeight="Bold" Margin="0 -5 0 0" />
