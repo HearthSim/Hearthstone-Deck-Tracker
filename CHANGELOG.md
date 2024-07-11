@@ -1,3 +1,7 @@
+## **Release v1.29.8 - 2024-07-11**
+**Fixes**:
+- Tier7 Composition Stats visibility.
+
 ## **Release v1.29.7 - 2024-07-11**
 **New**:
 - Hide Hero Picking overlay covering up buddies.
