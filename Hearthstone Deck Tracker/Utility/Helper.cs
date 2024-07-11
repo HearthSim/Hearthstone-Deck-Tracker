@@ -889,9 +889,15 @@ namespace Hearthstone_Deck_Tracker
 			BATTLEGROUNDS,
 		}
 
+		private static double AdjustSaturation(double originalSaturation, double multiplier)
+		{
+			var adjustedSaturation = originalSaturation * multiplier;
+			return Math.Min(adjustedSaturation, 100); // Ensure saturation does not exceed 100%
+		}
+
 		public static string GetColorString(double delta, int intensity) => GetColorString(ColorStringMode.DEFAULT, delta, intensity);
 
-		public static string GetColorString(ColorStringMode mode, double delta, int intensity)
+		public static string GetColorString(ColorStringMode mode, double delta, int intensity, double saturationMultiplier = 1.0)
 		{
 			// Adapted from HSReplay.net
 			var colorWinrate = 50 + Math.Max(-50, Math.Min(50, 5 * delta));
@@ -899,20 +905,24 @@ namespace Hearthstone_Deck_Tracker
 
 			var scale = (double x, double from, double to) => from + (to - from) * Math.Pow(x, 1 - intensity / 100);
 			var scaleTriple = (double x, double[] from, double[] to) => new[]
-				{ scale(x, from[0], to[0]), scale(x, from[1], to[1]), scale(x, from[2], to[2]) };
+			{
+				scale(x, from[0], to[0]),
+				scale(x, from[1], to[1]),
+				scale(x, from[2], to[2])
+			};
 
 			double[] positive, neutral, negative;
-			switch(mode)
+			switch (mode)
 			{
 				case ColorStringMode.DEFAULT:
-					positive = new[] { 120d, 70d, 40d };
-					neutral = new[] { 90d, 100d, 30d };
-					negative = new[] { 0d, 100d, 65.7d };
+					positive = new[] { 120d, AdjustSaturation(70d, saturationMultiplier), 40d };
+					neutral = new[] { 90d, AdjustSaturation(100d, saturationMultiplier), 30d };
+					negative = new[] { 0d, AdjustSaturation(100d, saturationMultiplier), 65.7d };
 					break;
 				case ColorStringMode.BATTLEGROUNDS:
-					positive = new[] { 120d, 32d, 44d };
-					neutral = new[] { 60d, 32d, 44d };
-					negative = new[] { 0d, 32d, 44d };
+					positive = new[] { 120d, AdjustSaturation(32d, saturationMultiplier), 44d };
+					neutral = new[] { 60d, AdjustSaturation(32d, saturationMultiplier), 44d };
+					negative = new[] { 0d, AdjustSaturation(32d, saturationMultiplier), 44d };
 					break;
 				default:
 					throw new ArgumentOutOfRangeException(nameof(mode), mode, null);

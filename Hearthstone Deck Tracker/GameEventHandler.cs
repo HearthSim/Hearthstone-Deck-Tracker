@@ -554,6 +554,10 @@ namespace Hearthstone_Deck_Tracker
 				// Called here so that UpdatePostGameMercenariesRewards can generate an accurate delta.
 				MercenariesCoins.Update();
 			}
+			if(_game.IsBattlegroundsMatch)
+			{
+				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
+			}
 		}
 
 		private DateTime _lastReconnectStartTimestamp = DateTime.MinValue;
@@ -1095,6 +1099,7 @@ namespace Hearthstone_Deck_Tracker
 				_game.SnapshotBattlegroundsHeroPick();
 				Core.Overlay.HideBattlegroundsHeroPanel();
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
+				Core.Overlay.BattlegroundsSessionViewModelVM.HideCompStatsOnError();
 			}
 			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
 			{
@@ -1473,7 +1478,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!userOwnsTier7)
 			{
 				var acc = Reflection.Client.GetAccountId();
-				token = acc != null ? await Tier7Trial.Activate(acc.Hi, acc.Lo) : null;
+				token = acc != null ? await Tier7Trial.ActivateOrContinue(acc.Hi, acc.Lo, _game.MetaData.ServerInfo?.GameHandle) : null;
 				if(token == null)
 					throw new HeroPickingException("Unable to get trial token");
 

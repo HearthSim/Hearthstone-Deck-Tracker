@@ -6,6 +6,9 @@
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:composition="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition"
+             xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
+             xmlns:animations="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -110,6 +113,98 @@
                             />
                         </Grid>
                     </StackPanel>
+
+                    <StackPanel VerticalAlignment="Top" animations:FadeAnimation.Visibility="{Binding AvailableCompStatsSectionVisibility}"
+                                animations:FadeAnimation.Direction="Up" animations:FadeAnimation.Distance="10" animations:FadeAnimation.Duration="0:0:0.2">
+                        <StackPanel.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=BorderMask}" />
+                        </StackPanel.OpacityMask>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Background="#2E3235">
+
+                                <Border BorderBrush="#4A5256" BorderThickness="0,1,0,1" Background="#1C2022" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <tier7:Tier7Logo Width="16" Height="16"  VerticalAlignment="Center" />
+                                        <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_CompStats}" d:Text="Composition Stats" FontSize="13" HorizontalAlignment="Center" Margin="6,6, 0, 6"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Grid>
+                                    <StackPanel Visibility="{Binding CompStatsBodyVisibility, FallbackValue=Visible}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.9*"/>
+                                        <ColumnDefinition Width="70px"/>
+                                        <ColumnDefinition Width="0.8*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        Grid.Column="0"
+                                        Content="{lex:Loc Battlegrounds_Session_CompStats_Label_Composition}"
+                                        Foreground="#FFFFFF"
+                                        Opacity=".55"
+                                        FontSize="11"
+                                        HorizontalAlignment="Left"
+                                        Margin="2,0,0,0"
+                                    />
+                                    <Label
+                                        Grid.Column="1"
+                                        Content="{lex:Loc Battlegrounds_Session_CompStats_Label_FirstPlace}"
+                                        Foreground="#FFFFFF"
+                                        Opacity=".55"
+                                        FontSize="11"
+                                        HorizontalAlignment="Center"
+                                    />
+                                    <Label
+                                        Grid.Column="2"
+                                        Content="{lex:Loc Battlegrounds_Session_CompStats_Label_AveragePlace}"
+                                        Foreground="#FFFFFF"
+                                        Opacity=".55"
+                                        FontSize="11"
+                                        HorizontalAlignment="Center"
+                                    />
+                                    </Grid>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="150">
+                                        <ItemsControl ItemsSource="{Binding CompositionStats}" d:ItemsSource="{d:SampleData ItemCount=6}" HorizontalContentAlignment="Center" >
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <composition:BattlegroundsCompositionStatsRow DataContext="{Binding}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                    </StackPanel>
+                                    <TextBlock
+                                        Text="{lex:Loc Battlegrounds_Session_Text_WaitingNextGame}"
+                                        Foreground="#FFFFFF"
+                                        Opacity=".5"
+                                        TextWrapping="WrapWithOverflow"
+                                        TextAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Visibility="{Binding CompStatsWaitingMsgVisibility, FallbackValue=Collapsed}"
+                                        Margin="0 26 0 26"
+                                    />
+                                    <TextBlock
+                                        Text="{lex:Loc Battlegrounds_Session_CompStats_ErrorMessage}"
+                                        Foreground="#FFFFFF"
+                                        Opacity=".5"
+                                        TextWrapping="WrapWithOverflow"
+                                        TextAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Visibility="{Binding CompStatsErrorVisibility, FallbackValue=Collapsed}"
+                                        Margin="0 26 0 26"
+                                    />
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
                     <StackPanel Background="#2E3235" Visibility="{Binding BgStartCurrentMMRSectionVisibility}">
                         <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgBannedTribesSection, Path=Visibility}"/>
                         <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">

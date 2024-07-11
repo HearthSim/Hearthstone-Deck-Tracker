@@ -58,5 +58,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("tier7_quest_overlay_compositions")]
 		public bool Tier7QuestOverlayCompositions { get => Config.Instance.ShowBattlegroundsQuestPickingComps; }
+
+		[JsonProperty("tier7_composition_stats_overlay")]
+		public bool Tier7CompositionStatsOverlay { get => Config.Instance.ShowBattlegroundsTier7SessionCompStats; }
 	}
 }

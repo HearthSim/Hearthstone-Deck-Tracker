@@ -890,6 +890,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowSessionRecapLatestGames = true;
 
+		[DefaultValue(true)]
+		public bool ShowBattlegroundsTier7SessionCompStats = true;
+
 		[DefaultValue(false)]
 		public bool BattlegroundsSessionRecapWindowOnStart = false;
 

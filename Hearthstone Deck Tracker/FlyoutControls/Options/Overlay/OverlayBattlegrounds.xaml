@@ -43,6 +43,10 @@
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxShowBattlegroundsHeroPicking_Checked" Unchecked="CheckboxShowBattlegroundsHeroPicking_Unchecked"/>
+                <CheckBox x:Name="CheckboxShowTier7CompStats" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsCompStats}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxShowBattlegroundsCompStats_Checked" Unchecked="CheckboxShowBattlegroundsCompStats_Unchecked" />
                 <CheckBox x:Name="CheckboxShowBattlegroundsQuestPicking" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsQuestPicking}"
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"

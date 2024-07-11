@@ -71,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowTier7PreLobby.IsChecked = Config.Instance.ShowBattlegroundsTier7PreLobby;
 			CheckboxShowTier7PreLobby.Visibility = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) ? Visibility.Visible : Visibility.Collapsed;
 
+			CheckboxShowTier7CompStats.IsChecked = Config.Instance.ShowBattlegroundsTier7SessionCompStats;
 			CheckboxShowBattlegroundsHeroPicking.IsChecked = Config.Instance.ShowBattlegroundsHeroPicking;
 			CheckboxShowBattlegroundsQuestPicking.IsChecked = Config.Instance.ShowBattlegroundsQuestPicking;
 			CheckboxShowBattlegroundsQuestPickingComps.IsChecked = Config.Instance.ShowBattlegroundsQuestPickingComps;
@@ -176,6 +177,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.BattlegroundsHeroPickingViewModel.StatsVisibility = Visibility.Collapsed;
+		}
+
+		private void CheckboxShowBattlegroundsCompStats_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsTier7SessionCompStats = true;
+			SaveConfig(true);
+		}
+
+		private void CheckboxShowBattlegroundsCompStats_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsTier7SessionCompStats = false;
+			SaveConfig(true);
 		}
 
 		private void CheckboxShowBattlegroundsQuestPicking_Checked(object sender, RoutedEventArgs e)

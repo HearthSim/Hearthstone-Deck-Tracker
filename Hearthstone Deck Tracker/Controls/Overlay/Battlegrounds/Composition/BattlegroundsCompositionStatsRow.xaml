@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition.BattlegroundsCompositionStatsRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             d:DataContext="{d:DesignInstance local:BattlegroundsCompositionStatsRowViewModel}"
+             mc:Ignorable="d">
+    <Grid VerticalAlignment="Center" Height="30" Width="240" Background="#141617">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.9*"/>
+            <ColumnDefinition Width="70px"/>
+            <ColumnDefinition Width="0.8*"/>
+        </Grid.ColumnDefinitions>
+        <Canvas Grid.Column="0" Height="30"
+            Width="120px"
+            ClipToBounds="True">
+            <Image
+                Canvas.Left="-35"
+                Canvas.Top="5"
+                Source="{Binding CardImage.AssetPath}"
+                Height="34"
+                Width="145"
+                Margin="-18,-5,0,0"
+                RenderOptions.BitmapScalingMode="Fant"
+            >
+                <Image.OpacityMask>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#141617" Offset="0"/>
+                        <GradientStop Color="Transparent" Offset="1"/>
+                    </LinearGradientBrush>
+                </Image.OpacityMask>
+            </Image>
+            <hearthstoneDeckTracker:HearthstoneTextBlock
+                Text="{Binding Name}"
+                d:Text="Beast"
+                FontSize="13"
+                Canvas.Left="8"
+                Canvas.Top="6"
+            />
+        </Canvas>
+        <Grid Grid.Column="1" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <local:BattlegroundsCompositionStatsBar Percent="{Binding FirstPlacePercent}" MaxPercent="{Binding MaxBarPercentage}"  d:Percent="20" d:MaxPercent="40"/>
+        </Grid>
+        <!-- Number TextBlock -->
+        <TextBlock
+            Grid.Column="2"
+            Text="{Binding AvgPlacement}"
+            d:Text="3.87"
+            FontSize="13"
+
+            Foreground="{Binding AvgPlacementColor}"
+            FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+            d:Foreground="#6DEB6C"
+            TextAlignment="Center"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+        />
+    </Grid>
+</UserControl>
+

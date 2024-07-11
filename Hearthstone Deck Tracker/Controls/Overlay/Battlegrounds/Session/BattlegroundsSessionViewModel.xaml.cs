@@ -2,14 +2,26 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using HearthDb.Enums;
+using HearthMirror;
 using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.Exceptions;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using HSReplay.Requests;
+using HSReplay.Responses;
+using Newtonsoft.Json;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
@@ -35,6 +47,9 @@ public class BattlegroundsSessionViewModel : ViewModel
 		UpdateLatestGames();
 	}
 
+	private readonly SemaphoreSlim _updateCompStatsSemaphore = new SemaphoreSlim(1, 1);
+
+
 	public async void Update()
 	{
 		if(Core.Game.Spectator)
@@ -50,6 +65,19 @@ public class BattlegroundsSessionViewModel : ViewModel
 			rating = ratingStart;
 		BgRatingStart = $"{ratingStart:N0}";
 		BgRatingCurrent = $"{rating:N0}";
+
+		// Update method might be called multiple times.
+		// We need to prevent multiple calls to UpdateCompositionStatsIfNeeded to happen at the same time.
+		// This also ensures only one API call is made.
+		try
+		{
+			await _updateCompStatsSemaphore.WaitAsync();
+			await UpdateCompositionStatsIfNeeded();
+		}
+		finally
+		{
+			_updateCompStatsSemaphore.Release();
+		}
 	}
 
 	private bool IsDuos => Core.Game.IsInMenu
@@ -75,6 +103,23 @@ public class BattlegroundsSessionViewModel : ViewModel
 			: Visibility.Collapsed;
 
 		Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
+	}
+
+	private async void UpdateCompositionStatsVisibility()
+	{
+		var acc = Reflection.Client.GetAccountId();
+		if(acc != null)
+			await Tier7Trial.Update(acc.Hi, acc.Lo);
+
+		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
+
+		if(IsDuos || !Config.Instance.ShowBattlegroundsTier7SessionCompStats)
+			AvailableCompStatsSectionVisibility = Visibility.Collapsed;
+		else {
+			AvailableCompStatsSectionVisibility =
+				Tier7Trial.RemainingTrials > 0 || userOwnsTier7 || CompositionStats != null ? Visibility.Visible
+					: Visibility.Collapsed;
+		}
 	}
 
 	private void UpdateMinionTypes()
@@ -111,6 +156,166 @@ public class BattlegroundsSessionViewModel : ViewModel
 			MinionTypesBodyVisibility = Visibility.Hidden;
 			MinionTypesWaitingMsgVisibility = Visibility.Visible;
 		}
+	}
+
+	private async Task<BattlegroundsCompStats?> GetBattlegroundsCompStats()
+	{
+		if(IsDuos)
+			return null;
+
+	    if(Core.Game.Spectator)
+	        return null;
+
+	    if(!Config.Instance.EnableBattlegroundsTier7Overlay)
+	        return null;
+
+	    if(Remote.Config.Data?.Tier7?.Disabled ?? false)
+	        throw new CompositionStatsException("Tier 7 remotely disabled");
+
+	    var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
+
+	    var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+
+	    if(availableRaces == null)
+		    throw new CompositionStatsException("Unable to get available races");
+
+	    var compParams = new BattlegroundsCompStatsParams
+	    {
+		    BattlegroundsRaces = availableRaces.Cast<int>().ToArray(),
+		    LanguageCode = Config.Instance.SelectedLanguage,
+	    };
+
+	    // Avoid using a trial when we can't get the api params anyway.
+	    if(compParams == null)
+			throw new CompositionStatsException("Unable to get API parameters");
+
+	    // Use a trial if we can
+	    string? token = null;
+	    if(!userOwnsTier7)
+	    {
+	        var acc = Reflection.Client.GetAccountId();
+	        token = acc != null ? await Tier7Trial.ActivateOrContinue(acc.Hi, acc.Lo, Core.Game.MetaData.ServerInfo?.GameHandle) : null;
+	        if(token == null)
+	            throw new CompositionStatsException("Unable to get trial token");
+	    }
+
+	#if(DEBUG)
+	    var json = JsonConvert.SerializeObject(compParams);
+	    Log.Debug($"Fetching Battlegrounds Hero Pick stats with parameters={json}...");
+	#endif
+
+	    // At this point the user either owns tier7 or has an active trial!
+
+	    BattlegroundsCompStats? compStats;
+	    try
+	    {
+		    compStats = token != null && !userOwnsTier7
+			    ?  await ApiWrapper.GetTier7CompStats(token, compParams)
+			    : await HSReplayNetOAuth.MakeRequest(c => c.GetTier7CompStats(compParams)
+			);
+	    }
+	    catch
+	    {
+		    throw new CompositionStatsException("Invalid server response");
+	    }
+
+	    if(compStats == null || compStats.Data.FirstPlaceCompsLobbyRaces.Count == 0)
+		    throw new CompositionStatsException("Invalid server response");
+
+	    return compStats;
+	}
+
+	private void ClearCompositionStats()
+	{
+		CompositionStats = null;
+		CompStatsBodyVisibility = Visibility.Hidden;
+		CompStatsWaitingMsgVisibility = Visibility.Visible;
+		CompStatsErrorVisibility = Visibility.Hidden;
+
+		Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
+	}
+
+	private void ShowCompositionStats()
+	{
+		CompStatsBodyVisibility = Visibility.Visible;
+		CompStatsWaitingMsgVisibility = Visibility.Collapsed;
+		CompStatsErrorVisibility = Visibility.Hidden;
+
+		Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
+	}
+
+	private async Task UpdateCompositionStatsIfNeeded()
+	{
+		if(Core.Game.CurrentMode != Mode.GAMEPLAY || SceneHandler.Scene != Mode.GAMEPLAY)
+		{
+			ClearCompositionStats();
+			return;
+		}
+
+		// Ensures data was already fetched and no more API calls are needed
+		if(((CompositionStats != null && CompositionStats.Any()) || CompStatsErrorVisibility == Visibility.Visible)  &&
+		   (Core.Game.CurrentMode == Mode.GAMEPLAY || SceneHandler.Scene == Mode.GAMEPLAY))
+		{
+			return;
+		}
+
+		await TrySetCompStats();
+	}
+
+	private async Task TrySetCompStats()
+	{
+		var statsTask = GetBattlegroundsCompStats();
+
+		BattlegroundsCompStats? battlegroundsCompStats = null;
+		try
+		{
+			battlegroundsCompStats = await statsTask;
+		}
+		catch(Exception e)
+		{
+			HandleCompStatsError(e);
+		}
+
+		if(battlegroundsCompStats is BattlegroundsCompStats compStats)
+		{
+			var firstPlaceComps = compStats.Data?.FirstPlaceCompsLobbyRaces;
+			if(firstPlaceComps != null)
+			{
+				SetBattlegroundsCompositionStatsViewModel(
+					firstPlaceComps
+				);
+				ShowCompositionStats();
+			}
+		}
+	}
+
+	public void HideCompStatsOnError()
+	{
+		if(CompStatsErrorVisibility == Visibility.Visible)
+		{
+			AvailableCompStatsSectionVisibility = Visibility.Collapsed;
+			Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
+		}
+	}
+
+	private void HandleCompStatsError(Exception error)
+	{
+		Influx.OnGetBattlegroundsCompositionStatsError(error.GetType().Name, error.Message);
+
+		var beforeHeroPicked = (Core.Game.GameEntity?.GetTag(GameTag.STEP) ?? 0) <= (int)Step.BEGIN_MULLIGAN;
+		if(!beforeHeroPicked)
+		{
+			Task.Run(async () =>
+			{
+				// Ensure update after 20 seconds
+				await Task.Delay(20_000);
+				HideCompStatsOnError();
+			}).Forget();
+		}
+
+		CompStatsErrorVisibility = Visibility.Visible;
+		CompStatsBodyVisibility = Visibility.Hidden;
+		CompStatsWaitingMsgVisibility = Visibility.Hidden;
 	}
 
 	private async Task<GameItem?> UpdateLatestGames()
@@ -230,6 +435,35 @@ public class BattlegroundsSessionViewModel : ViewModel
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
+	public Visibility CompStatsSectionVisibility =>
+		_availableMinionTypesSectionVisibility == Visibility.Visible || _bannedMinionTypesSectionVisibility == Visibility.Visible
+			? Visibility.Visible
+			: Visibility.Collapsed;
+
+	// Animation delay to update the layout height
+	private async Task UpdateBattlegroundsSessionLayoutHeightWithDelay()
+	{
+		await Task.Delay(300);
+
+		Application.Current.Dispatcher.Invoke(() =>
+			Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight());
+	}
+
+	private Visibility _availableCompStatsSectionVisibility;
+	public Visibility AvailableCompStatsSectionVisibility
+	{
+		get => _availableCompStatsSectionVisibility;
+		set
+		{
+			_availableCompStatsSectionVisibility = value;
+
+			UpdateBattlegroundsSessionLayoutHeightWithDelay().Forget();
+
+			OnPropertyChanged();
+			OnPropertyChanged(nameof(CompStatsSectionVisibility));
+		}
+	}
+
 	private Visibility _availableMinionTypesSectionVisibility;
 	public Visibility AvailableMinionTypesSectionVisibility
 	{
@@ -265,6 +499,40 @@ public class BattlegroundsSessionViewModel : ViewModel
 		set
 		{
 			_minionTypesBodyVisibility = value;
+			OnPropertyChanged();
+		}
+	}
+
+	private Visibility _compStatsErrorVisibility = Visibility.Hidden;
+
+	public Visibility CompStatsErrorVisibility
+	{
+		get => _compStatsErrorVisibility;
+		set
+		{
+			_compStatsErrorVisibility = value;
+			OnPropertyChanged();
+		}
+	}
+
+	private Visibility _compStatsWaitingMsgVisibility;
+	public Visibility CompStatsWaitingMsgVisibility
+	{
+		get => _compStatsWaitingMsgVisibility;
+		set
+		{
+			_compStatsWaitingMsgVisibility = value;
+			OnPropertyChanged();
+		}
+	}
+
+	private Visibility _compStatsBodyVisibility = Visibility.Hidden;
+	public Visibility CompStatsBodyVisibility
+	{
+		get => _compStatsBodyVisibility;
+		set
+		{
+			_compStatsBodyVisibility = value;
 			OnPropertyChanged();
 		}
 	}
@@ -346,6 +614,33 @@ public class BattlegroundsSessionViewModel : ViewModel
 		}
 	}
 
+	public void SetBattlegroundsCompositionStatsViewModel(List<BattlegroundsCompStats.LobbyComp> compsData)
+	{
+		var compStatsOrdered = compsData.OrderByDescending(c => c.Popularity).ToList();
+		if(compStatsOrdered.Any())
+		{
+			var max = Math.Max(Math.Ceiling(compStatsOrdered[0].Popularity), 40);
+			CompositionStats = compStatsOrdered
+				.Where(comp => comp.Id != -1 && comp.Name != null)
+				.Select(comp => {
+					var minionDbfId = comp.KeyMinionsTop3 == null || !comp.KeyMinionsTop3.Any() ? 59201 : comp.KeyMinionsTop3.First();
+					return new BattlegroundsCompositionStatsRowViewModel(
+						comp.Name,
+						minionDbfId,
+						comp.Popularity,
+						comp.AvgFinalPlacement,
+						max
+					);
+				});
+		}
+	}
+
+	public IEnumerable<BattlegroundsCompositionStatsRowViewModel>? CompositionStats
+	{
+		get => GetProp<IEnumerable<BattlegroundsCompositionStatsRowViewModel>?>(null);
+		set => SetProp(value);
+	}
+
 	#region Mode
 	public SelectedBattlegroundsGameMode BattlegroundsGameMode
 	{
@@ -360,6 +655,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 			if(modified)
 			{
 				UpdateSectionsVisibilities();
+				UpdateCompositionStatsVisibility();
 				Update();
 			}
 		}
