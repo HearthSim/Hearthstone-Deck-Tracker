@@ -1,4 +1,15 @@
-## **Release v1.29.6 - 2024-05-07**
+## **Release v1.29.7 - 2024-07-11**
+**New**:
+- Hide Hero Picking overlay covering up buddies.
+- Added Tier7 Composition Stats!
+
+**Fixes**:
+- Remove obsolete tooltip from Hero Picking tiers.
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results in Duos due to partial combat.
+
+## **Release v1.29.6 - 2024-07-05**
 **Fixes**:
 - Fixed an issue causing automatic deck importing to not update premade decks, such as Twist and Loaner decks.
 - Fixed a memory leak that could cause a sudden crash after a long session of interacting with the Battlegrounds minion browser.
