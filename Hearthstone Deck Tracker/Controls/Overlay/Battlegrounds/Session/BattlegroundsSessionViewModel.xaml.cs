@@ -105,7 +105,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 		Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
 	}
 
-	private async void UpdateCompositionStatsVisibility()
+	public async void UpdateCompositionStatsVisibility()
 	{
 		var acc = Reflection.Client.GetAccountId();
 		if(acc != null)
@@ -160,6 +160,13 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	private async Task<BattlegroundsCompStats?> GetBattlegroundsCompStats()
 	{
+		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
+
+		var userHasTrials = Tier7Trial.RemainingTrials > 0;
+
+		if(!userOwnsTier7 && !userHasTrials)
+			return null;
+
 		if(IsDuos)
 			return null;
 
@@ -172,7 +179,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 	    if(Remote.Config.Data?.Tier7?.Disabled ?? false)
 	        throw new CompositionStatsException("Tier 7 remotely disabled");
 
-	    var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
+
 
 	    var availableRaces = BattlegroundsUtils.GetAvailableRaces();
 

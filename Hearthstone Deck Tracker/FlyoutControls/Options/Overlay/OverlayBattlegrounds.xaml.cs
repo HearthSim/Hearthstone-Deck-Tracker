@@ -185,6 +185,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTier7SessionCompStats = true;
 			SaveConfig(true);
+			Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
 		}
 
 		private void CheckboxShowBattlegroundsCompStats_Unchecked(object sender, RoutedEventArgs e)
@@ -193,6 +194,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTier7SessionCompStats = false;
 			SaveConfig(true);
+			Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
 		}
 
 		private void CheckboxShowBattlegroundsQuestPicking_Checked(object sender, RoutedEventArgs e)

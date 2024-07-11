@@ -557,6 +557,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsBattlegroundsMatch)
 			{
 				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
+				Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
 			}
 		}
 
