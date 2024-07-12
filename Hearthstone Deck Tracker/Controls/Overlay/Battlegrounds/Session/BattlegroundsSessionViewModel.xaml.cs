@@ -107,19 +107,21 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	public async void UpdateCompositionStatsVisibility()
 	{
+		if(IsDuos || !Config.Instance.ShowBattlegroundsTier7SessionCompStats
+		          || !Config.Instance.EnableBattlegroundsTier7Overlay)
+		{
+			AvailableCompStatsSectionVisibility = Visibility.Collapsed;
+			return;
+		}
 		var acc = Reflection.Client.GetAccountId();
 		if(acc != null)
 			await Tier7Trial.Update(acc.Hi, acc.Lo);
 
 		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
 
-		if(IsDuos || !Config.Instance.ShowBattlegroundsTier7SessionCompStats)
-			AvailableCompStatsSectionVisibility = Visibility.Collapsed;
-		else {
-			AvailableCompStatsSectionVisibility =
-				Tier7Trial.RemainingTrials > 0 || userOwnsTier7 || CompositionStats != null ? Visibility.Visible
-					: Visibility.Collapsed;
-		}
+		AvailableCompStatsSectionVisibility =
+			Tier7Trial.RemainingTrials > 0 || Tier7Trial.IsTrialForCurrentGameActive(Core.Game.MetaData.ServerInfo?.GameHandle) || userOwnsTier7 || CompositionStats != null ? Visibility.Visible
+				: Visibility.Collapsed;
 	}
 
 	private void UpdateMinionTypes()
@@ -160,11 +162,11 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	private async Task<BattlegroundsCompStats?> GetBattlegroundsCompStats()
 	{
+		var gameId = Core.Game.MetaData.ServerInfo?.GameHandle;
 		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
-
 		var userHasTrials = Tier7Trial.RemainingTrials > 0;
 
-		if(!userOwnsTier7 && !userHasTrials)
+		if(!userOwnsTier7 && !(userHasTrials || Tier7Trial.IsTrialForCurrentGameActive(gameId)))
 			return null;
 
 		if(IsDuos)
@@ -173,13 +175,11 @@ public class BattlegroundsSessionViewModel : ViewModel
 	    if(Core.Game.Spectator)
 	        return null;
 
-	    if(!Config.Instance.EnableBattlegroundsTier7Overlay)
+	    if(!Config.Instance.EnableBattlegroundsTier7Overlay || !Config.Instance.ShowBattlegroundsTier7SessionCompStats)
 	        return null;
 
 	    if(Remote.Config.Data?.Tier7?.Disabled ?? false)
 	        throw new CompositionStatsException("Tier 7 remotely disabled");
-
-
 
 	    var availableRaces = BattlegroundsUtils.GetAvailableRaces();
 
@@ -201,7 +201,10 @@ public class BattlegroundsSessionViewModel : ViewModel
 	    if(!userOwnsTier7)
 	    {
 	        var acc = Reflection.Client.GetAccountId();
-	        token = acc != null ? await Tier7Trial.ActivateOrContinue(acc.Hi, acc.Lo, Core.Game.MetaData.ServerInfo?.GameHandle) : null;
+	        token = acc != null ? await Tier7Trial.ActivateOrContinue(acc.Hi, acc.Lo, gameId) : null;
+	        if(!((Core.Game.GameEntity?.GetTag(GameTag.STEP) ?? 0) <= (int)Step.BEGIN_MULLIGAN) && token == null)
+		        return null;
+
 	        if(token == null)
 	            throw new CompositionStatsException("Unable to get trial token");
 	    }
@@ -260,7 +263,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 		}
 
 		// Ensures data was already fetched and no more API calls are needed
-		if(((CompositionStats != null && CompositionStats.Any()) || CompStatsErrorVisibility == Visibility.Visible)  &&
+		if(((CompositionStats != null && CompositionStats.Any()) || CompStatsErrorVisibility == Visibility.Visible) &&
 		   (Core.Game.CurrentMode == Mode.GAMEPLAY || SceneHandler.Scene == Mode.GAMEPLAY))
 		{
 			return;

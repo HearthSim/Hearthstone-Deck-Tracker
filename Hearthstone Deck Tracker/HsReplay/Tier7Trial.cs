@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility;
 using HSReplay.Responses;
 
@@ -27,9 +28,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			public uint? GameID { get; set; }
 		}
 
+		public static bool IsTrialForCurrentGameActive(uint? gameId) => Serializer.Load().GameID == gameId;
+
 		private static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
-		public static async Task<string?> ActivateOrContinue(ulong accountHi, ulong accountLo, uint? gameId)
+		public static async Task<string?> ActivateOrContinue(ulong accountHi, ulong accountLo, uint? gameId, bool activateAfterMulligan = false)
 		{
 			await semaphore.WaitAsync();
 			try
@@ -43,6 +46,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				{
 					return currentData.Token;
 				}
+
+				// Prevent using trials after mulligan phase
+				if(!((Core.Game.GameEntity?.GetTag(GameTag.STEP) ?? 0) <= (int)Step.BEGIN_MULLIGAN) && !activateAfterMulligan)
+					return null;
 
 				if(_status == null || _status.TrialsRemaining == 0)
 					return null;

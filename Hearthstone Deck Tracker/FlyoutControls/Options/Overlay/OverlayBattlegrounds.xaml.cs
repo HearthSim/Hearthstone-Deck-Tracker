@@ -545,6 +545,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.EnableBattlegroundsTier7Overlay = true;
 			SaveConfig(true);
 			Core.Overlay.UpdateTier7PreLobbyVisibility();
+			Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
 		}
 
 		private void CheckboxEnableTier7_Unchecked(object sender, RoutedEventArgs e)
@@ -554,6 +555,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.EnableBattlegroundsTier7Overlay = false;
 			SaveConfig(true);
 			Core.Overlay.UpdateTier7PreLobbyVisibility();
+			Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
 		}
 
 		private void CheckboxShowTier7PreLobby_Checked(object sender, RoutedEventArgs e)
