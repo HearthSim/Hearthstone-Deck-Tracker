@@ -2,99 +2,128 @@
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Hearthstone_Deck_Tracker.Utility.Extensions
+namespace Hearthstone_Deck_Tracker.Utility.Extensions;
+
+public delegate void MouseIntersectionChangedEventHandler(object sender, bool intersecting);
+
+public class OverlayExtensions : DependencyObject
 {
-	public class OverlayExtensions : DependencyObject
+	public static Dictionary<FrameworkElement, RoutedEventHandler> UnregisterCallbacks = new Dictionary<FrameworkElement, RoutedEventHandler>();
+
+	#region IsOverlayHitTestVisible
+
+	public static readonly DependencyProperty IsOverlayHitTestVisibleProperty =
+		DependencyProperty.RegisterAttached("IsOverlayHitTestVisible", typeof(bool), typeof(OverlayExtensions), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsOverlayHitTestVisibleChange)));
+
+	public static bool GetIsOverlayHitTestVisible(DependencyObject obj)
 	{
-		public static Dictionary<FrameworkElement, RoutedEventHandler> UnregisterCallbacks = new Dictionary<FrameworkElement, RoutedEventHandler>();
+		return (bool)obj.GetValue(IsOverlayHitTestVisibleProperty);
+	}
 
-		public static readonly DependencyProperty IsOverlayHitTestVisibleProperty =
-			DependencyProperty.RegisterAttached("IsOverlayHitTestVisible", typeof(bool), typeof(OverlayExtensions), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsOverlayHitTestVisibleChange)));
+	public static void SetIsOverlayHitTestVisible(DependencyObject obj, bool value)
+	{
+		obj.SetValue(IsOverlayHitTestVisibleProperty, value);
+	}
 
-		public static bool GetIsOverlayHitTestVisible(DependencyObject obj)
+	public static event Action<FrameworkElement, bool>? OnRegisterHitTestVisible;
+
+	private static void OnIsOverlayHitTestVisibleChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+	{
+		if(!(d is FrameworkElement element))
+			return;
+		if((bool)e.NewValue)
 		{
-			return (bool)obj.GetValue(IsOverlayHitTestVisibleProperty);
-		}
-
-		public static void SetIsOverlayHitTestVisible(DependencyObject obj, bool value)
-		{
-			obj.SetValue(IsOverlayHitTestVisibleProperty, value);
-		}
-
-		public static event Action<FrameworkElement, bool>? OnRegisterHitTestVisible;
-
-		private static void OnIsOverlayHitTestVisibleChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			if(!(d is FrameworkElement element))
-				return;
-			if((bool)e.NewValue)
-			{
-				OnRegisterHitTestVisible?.Invoke(element, true);
-				UnregisterCallbacks[element] = (object sender, RoutedEventArgs args) =>
-				{
-					if(UnregisterCallbacks.TryGetValue(element, out var callback))
-					{
-						element.Unloaded -= callback;
-						OnRegisterHitTestVisible?.Invoke(element, false);
-						UnregisterCallbacks.Remove(element);
-					}
-				};
-				element.Unloaded += UnregisterCallbacks[element];
-			}
-			else
+			OnRegisterHitTestVisible?.Invoke(element, true);
+			UnregisterCallbacks[element] = (object sender, RoutedEventArgs args) =>
 			{
 				if(UnregisterCallbacks.TryGetValue(element, out var callback))
 				{
 					element.Unloaded -= callback;
+					OnRegisterHitTestVisible?.Invoke(element, false);
 					UnregisterCallbacks.Remove(element);
 				}
-				OnRegisterHitTestVisible?.Invoke(element, false);
-			}
+			};
+			element.Unloaded += UnregisterCallbacks[element];
 		}
-
-
-		public static readonly DependencyProperty IsOverlayHoverVisibleProperty =
-			DependencyProperty.RegisterAttached("IsOverlayHoverVisible", typeof(bool), typeof(OverlayExtensions), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsOverlayHoverVisibleChange)));
-
-		public static bool GetIsOverlayHoverVisible(DependencyObject obj)
+		else
 		{
-			return (bool)obj.GetValue(IsOverlayHoverVisibleProperty);
-		}
-
-		public static void SetIsOverlayHoverVisible(DependencyObject obj, bool value)
-		{
-			obj.SetValue(IsOverlayHoverVisibleProperty, value);
-		}
-
-		public static event Action<FrameworkElement, bool>? OnRegisterHoverVisible;
-
-		private static void OnIsOverlayHoverVisibleChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			if(!(d is FrameworkElement element))
-				return;
-			if((bool)e.NewValue)
+			if(UnregisterCallbacks.TryGetValue(element, out var callback))
 			{
-				OnRegisterHoverVisible?.Invoke(element, true);
-				UnregisterCallbacks[element] = (object sender, RoutedEventArgs args) =>
-				{
-					if(UnregisterCallbacks.TryGetValue(element, out var callback))
-					{
-						element.Unloaded -= callback;
-						OnRegisterHoverVisible?.Invoke(element, false);
-						UnregisterCallbacks.Remove(element);
-					}
-				};
-				element.Unloaded += UnregisterCallbacks[element];
+				element.Unloaded -= callback;
+				UnregisterCallbacks.Remove(element);
 			}
-			else
-			{
-				if(UnregisterCallbacks.TryGetValue(element, out var callback))
-				{
-					element.Unloaded -= callback;
-					UnregisterCallbacks.Remove(element);
-				}
-				OnRegisterHoverVisible?.Invoke(element, false);
-			}
+			OnRegisterHitTestVisible?.Invoke(element, false);
 		}
 	}
+
+	#endregion
+
+	#region IsOverlayHoverVisible
+
+	public static readonly DependencyProperty IsOverlayHoverVisibleProperty =
+		DependencyProperty.RegisterAttached("IsOverlayHoverVisible", typeof(bool), typeof(OverlayExtensions), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsOverlayHoverVisibleChange)));
+
+	public static bool GetIsOverlayHoverVisible(DependencyObject obj)
+	{
+		return (bool)obj.GetValue(IsOverlayHoverVisibleProperty);
+	}
+
+	public static void SetIsOverlayHoverVisible(DependencyObject obj, bool value)
+	{
+		obj.SetValue(IsOverlayHoverVisibleProperty, value);
+	}
+
+	public static event Action<FrameworkElement, bool>? OnRegisterHoverVisible;
+
+	private static void OnIsOverlayHoverVisibleChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+	{
+		if(!(d is FrameworkElement element))
+			return;
+		if((bool)e.NewValue)
+		{
+			OnRegisterHoverVisible?.Invoke(element, true);
+			UnregisterCallbacks[element] = (object sender, RoutedEventArgs args) =>
+			{
+				if(UnregisterCallbacks.TryGetValue(element, out var callback))
+				{
+					element.Unloaded -= callback;
+					OnRegisterHoverVisible?.Invoke(element, false);
+					UnregisterCallbacks.Remove(element);
+				}
+			};
+			element.Unloaded += UnregisterCallbacks[element];
+		}
+		else
+		{
+			if(UnregisterCallbacks.TryGetValue(element, out var callback))
+			{
+				element.Unloaded -= callback;
+				UnregisterCallbacks.Remove(element);
+			}
+			OnRegisterHoverVisible?.Invoke(element, false);
+		}
+	}
+
+	#endregion
+
+	#region OverlayHoverChanged
+
+	public static readonly DependencyProperty OverlayMouseIntersectionChangedProperty =
+		DependencyProperty.RegisterAttached(
+			name: "OverlayMouseIntersectionChanged",
+			propertyType: typeof(MouseIntersectionChangedEventHandler),
+			ownerType: typeof(OverlayExtensions)
+		);
+
+	public static bool GetOverlayMouseIntersectionChanged(DependencyObject obj)
+	{
+		return (bool)obj.GetValue(OverlayMouseIntersectionChangedProperty);
+	}
+
+	public static void SetOverlayMouseIntersectionChanged(DependencyObject obj, MouseIntersectionChangedEventHandler value)
+	{
+		obj.SetValue(OverlayMouseIntersectionChangedProperty, value);
+	}
+
+	#endregion
 }

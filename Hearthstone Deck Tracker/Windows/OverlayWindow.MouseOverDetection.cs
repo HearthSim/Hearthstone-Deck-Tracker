@@ -20,6 +20,7 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -468,7 +469,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return cardWidth;
 		}
 
-		private FrameworkElement? _currentlyHoveredElement;
 		private void UpdateInteractiveElements()
 		{
 			var cursorPos = GetCursorPos();
@@ -505,12 +505,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			public CustomMouseEventArgs(MouseDevice mouse, int timestamp) : base(mouse, timestamp) { }
 		}
 
+		private FrameworkElement? _currentlyHoveredElement;
+		private HashSet<FrameworkElement> _mouseOverElements = new();
+
 		private void UpdateHoverable()
 		{
 			var cursorPos = GetCursorPos();
 			if(cursorPos.X == -1 && cursorPos.Y == -1)
 				return;
-			var hoveredElement = _hoverableElements.FirstOrDefault(x => x.IsVisible && ElementContains(x, cursorPos));
+
+			var mouseOverElements = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, cursorPos)).ToList();
+
+			// pick an arbitrary one as the primary hover target
+			var hoveredElement = mouseOverElements.FirstOrDefault(x => x.IsHitTestVisible);
 			if(hoveredElement != _currentlyHoveredElement)
 			{
 				if(_currentlyHoveredElement != null)
@@ -527,6 +534,29 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_currentlyHoveredElement = hoveredElement;
 				}
 			}
+
+			// for every element, if it was not hovered, emit a MouseEnter event
+			foreach(var mouseOverElement in mouseOverElements)
+			{
+				if(!_mouseOverElements.Contains(mouseOverElement))
+				{
+					var handler = (MouseIntersectionChangedEventHandler)mouseOverElement.GetValue(OverlayExtensions.OverlayMouseIntersectionChangedProperty);
+					handler?.Invoke(mouseOverElement, true);
+				}
+			}
+
+			// for every previously mouse overed element, if it is no longer hovered, emit a MouseLeaveEvent
+			foreach(var previousMouseOverElement in _mouseOverElements)
+			{
+				if(!mouseOverElements.Contains(previousMouseOverElement))
+				{
+					var handler = (MouseIntersectionChangedEventHandler)previousMouseOverElement.GetValue(OverlayExtensions.OverlayMouseIntersectionChangedProperty);
+					handler?.Invoke(previousMouseOverElement, false);
+				}
+			}
+
+			// remember all elements that are currently hovered
+			_mouseOverElements = new HashSet<FrameworkElement>(mouseOverElements);
 		}
 
 		public bool EllipseContains(Ellipse ellipse, Point location)
