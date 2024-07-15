@@ -24,8 +24,10 @@
         </Grid>
 
         <!-- Hero Portrait Container -->
-        <Grid Background="#00FF00FF" Margin="0 -115 0 0" Height="285" Visibility="{Binding HeroPowerVisibility}"
-              MouseEnter="Hero_MouseEnter" MouseLeave="Hero_MouseLeave" extensions:OverlayExtensions.IsOverlayHoverVisible="True">
+        <Grid Background="#00FF00FF" Margin="0 -110 0 0" Height="285" Visibility="{Binding HeroPowerVisibility}"
+              IsHitTestVisible="False"
+              extensions:OverlayExtensions.IsOverlayHoverVisible="True"
+              extensions:OverlayExtensions.OverlayMouseIntersectionChanged="Hero_MouseIntersectionChanged">
         </Grid>
     </DockPanel>
 </UserControl>

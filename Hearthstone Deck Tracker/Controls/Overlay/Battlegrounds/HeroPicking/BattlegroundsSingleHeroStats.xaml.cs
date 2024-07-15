@@ -1,7 +1,6 @@
 
 using System.Windows;
 using Hearthstone_Deck_Tracker.Utility;
-using static Hearthstone_Deck_Tracker.Windows.OverlayWindow;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 {
@@ -25,19 +24,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			set { SetValue(SetSelectedHeroDbfIdCommandProperty, value); }
 		}
 
-		private void Hero_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		private void Hero_MouseIntersectionChanged(object sender, bool intersecting)
 		{
-			if(e is not CustomMouseEventArgs)
-				return;
-			if(DataContext is BattlegroundsSingleHeroViewModel vm && vm.HeroDbfId.HasValue)
-				SetSelectedHeroDbfIdCommand?.Execute(vm.HeroDbfId);
-		}
+			if(intersecting)
+			{
+				if(DataContext is BattlegroundsSingleHeroViewModel vm && vm.HeroDbfId.HasValue)
+					SetSelectedHeroDbfIdCommand?.Execute(vm.HeroDbfId);
+			}
+			else
+			{
+				SetSelectedHeroDbfIdCommand?.Execute(0);
+			}
 
-		private void Hero_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-		{
-			if(e is not CustomMouseEventArgs)
-				return;
-			SetSelectedHeroDbfIdCommand?.Execute(0);
 		}
 	}
 }
