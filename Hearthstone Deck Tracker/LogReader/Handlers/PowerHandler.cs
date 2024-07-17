@@ -573,6 +573,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warlock.SludgeOnWheels:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TramMechanic_BarrelOfSludgeToken, 1, DeckLocation.Bottom);
 								break;
+							case Collectible.Neutral.AdaptiveAmalgam:
+								AddKnownCardId(gameState, Collectible.Neutral.AdaptiveAmalgam);
+								break;
+							case Collectible.Demonhunter.PatchesThePilot:
+								AddKnownCardId(gameState, NonCollectible.Demonhunter.PatchesthePilot_ParachuteToken, 6);
+								break;
 						}
 					}
 					else //POWER
@@ -927,6 +933,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Warrior.SafetyExpert:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SeaforiumBomber_BombToken, 3);
+								break;
+							case Collectible.Neutral.Incindius:
+								AddKnownCardId(gameState, NonCollectible.Neutral.Incindius_EruptionToken, 5);
+								break;
+							case Collectible.Neutral.Mixologist:
+								AddKnownCardId(gameState, NonCollectible.Neutral.Mixologist_MixologistsSpecialToken);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
