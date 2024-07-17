@@ -78,6 +78,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountWhizbangsWorkshop => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.WhizbangsWorkshop));
 
+		public int PacksCountPerilsInParadise => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.PerilsInParadise));
+
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
 		public double PacksCountAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.PackCount).DefaultIfEmpty(0).Average(), 2);
