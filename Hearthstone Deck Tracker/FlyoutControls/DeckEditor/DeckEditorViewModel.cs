@@ -8,6 +8,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
@@ -48,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			{
 				if(value != _searchText)
 				{
-					_searchText = value; 
+					_searchText = value;
 					OnPropertyChanged();
 					OnPropertyChanged(nameof(CardDatabase));
 					SelectedDbIndex = 0;
@@ -106,7 +107,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		{
 			get
 			{
-				var cards = _allCards.Where(x => x.IsClass(Deck.Class) || x.IsNeutral);
+				if(_allCards == null)
+					return new List<Card>();
+
+				var tourist = Cards.Select(x => x.GetTouristClass()).WhereNotNull().FirstOrDefault();
+				var cards = _allCards.Where(x => x.IsClass(Deck.Class) || x.IsNeutral || (tourist != null && x.IsClass(tourist) && x.CanBeVisitedByTourist));
 				if(!string.IsNullOrEmpty(SearchText))
 				{
 					var input = CleanString(SearchText!).ToLowerInvariant();
@@ -115,11 +120,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 				if(SelectedCostFilter != CostFilter.All)
 					cards = cards.Where(c => Math.Min(c.Cost, 9) == (int)SelectedCostFilter);
 				if(SelectedClassFilter != ClassFilter.All)
-					cards = cards.Where(c => c.IsClassCard == (SelectedClassFilter == ClassFilter.ClassOnly));
+					cards = cards.Where(
+						SelectedClassFilter == ClassFilter.TouristOnly
+							? c => c.IsTourist || (tourist != null && c.IsClass(tourist))
+							: c => c.IsClassCard == (SelectedClassFilter == ClassFilter.ClassOnly) && (tourist == null || c.IsClass(Deck.Class))
+					);
 				if(SelectedSetFilter != SetFilter.ALL)
 					cards = cards.Where(c => c.CardSet.HasValue && (int)c.CardSet.Value == (int)SelectedSetFilter);
 				if(!IncludeWild || Deck.IsArenaDeck)
 					cards = cards.Where(c => !Helper.WildOnlySets.Contains(c.Set));
+
 				return cards;
 			}
 		}
@@ -149,7 +159,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			get => _includeWild;
 			set
 			{
-				_includeWild = value; 
+				_includeWild = value;
 				Config.Instance.CardDbIncludeWildOnlyCards = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(CardDatabase));
@@ -160,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		{
 			get => _constructedCardLimits; set
 			{
-				_constructedCardLimits = value; 
+				_constructedCardLimits = value;
 				OnPropertyChanged();
 			}
 		}
@@ -214,7 +224,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			get => _saveOperations;
 			set
 			{
-				_saveOperations = value; 
+				_saveOperations = value;
 				OnPropertyChanged();
 			}
 		}
@@ -245,7 +255,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			if(!string.IsNullOrEmpty(DeckName) &&
 				DeckList.Instance.Decks.Any(d => d.Name == DeckName && d.DeckId != Deck.DeckId))
 				Warnings |= DeckEditorWarnings.NameAlreadyExists;
-			else 
+			else
 				Warnings &= ~DeckEditorWarnings.NameAlreadyExists;
 		}
 
@@ -276,7 +286,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			{
 				if(value != _errors)
 				{
-					_errors = value; 
+					_errors = value;
 					OnPropertyChanged();
 					OnPropertyChanged(nameof(ErrorMessages));
 					OnPropertyChanged(nameof(CanSave));
@@ -346,7 +356,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		{
 			get => _selectedDbIndex; set
 			{
-				_selectedDbIndex = value; 
+				_selectedDbIndex = value;
 				OnPropertyChanged();
 			}
 		}
@@ -364,11 +374,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			get => _selectedSearchText;
 			set
 			{
-				_selectedSearchText = value; 
+				_selectedSearchText = value;
 				OnPropertyChanged();
 			}
 		}
-		
+
 		private void RemoveCardFromDeck(Card card)
 		{
 			if(Deck == null || card == null)
@@ -379,7 +389,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			OnPropertyChanged(nameof(Cards));
 			OnPropertyChanged(nameof(Deck));
 			OnPropertyChanged(nameof(CardCount));
+			OnPropertyChanged(nameof(CardDatabase)); // recalculate for tourist
 			UpdateCardCountWarning();
+			UpdateTouristWarning();
 		}
 
 		private void AddCardToDeck(Card card)
@@ -403,7 +415,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			OnPropertyChanged(nameof(Cards));
 			OnPropertyChanged(nameof(Deck));
 			OnPropertyChanged(nameof(CardCount));
+			OnPropertyChanged(nameof(CardDatabase)); // recalculate for tourist
 			UpdateCardCountWarning();
+			UpdateTouristWarning();
 			SelectedSearchText = SearchText;
 			DbInputFocusRequest?.Invoke();
 		}
@@ -430,6 +444,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 					Warnings |= DeckEditorWarnings.MoreThan30Cards;
 				else
 					Warnings |= DeckEditorWarnings.LessThan30Cards;
+			}
+		}
+
+		private void UpdateTouristWarning()
+		{
+			Warnings &= ~DeckEditorWarnings.MissingTourist;
+			var tourist = Cards.Select(x => x.GetTouristClass()).WhereNotNull().FirstOrDefault();
+			if(tourist != null)
+				return;
+			if(Cards.Any(x => !x.IsClass(Deck.Class) && !x.IsNeutral && x.CanBeVisitedByTourist))
+			{
+				Warnings |= DeckEditorWarnings.MissingTourist;
 			}
 		}
 

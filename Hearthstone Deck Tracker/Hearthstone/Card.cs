@@ -430,6 +430,40 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return classes;
 		}
 
+		[XmlIgnore]
+		private static readonly Dictionary<GameTag, CardClass> TOURIST_MAP = new ()
+		{
+			{ GameTag.MAGE_TOURIST, CardClass.MAGE },
+			{ GameTag.PALADIN_TOURIST, CardClass.PALADIN },
+			{ GameTag.WARRIOR_TOURIST, CardClass.WARRIOR },
+			{ GameTag.HUNTER_TOURIST, CardClass.HUNTER },
+			{ GameTag.ROGUE_TOURIST, CardClass.ROGUE },
+			{ GameTag.DRUID_TOURIST, CardClass.DRUID },
+			{ GameTag.SHAMAN_TOURIST, CardClass.SHAMAN },
+			{ GameTag.WARLOCK_TOURIST, CardClass.WARLOCK },
+			{ GameTag.PRIEST_TOURIST, CardClass.PRIEST },
+			{ GameTag.DEMON_HUNTER_TOURIST, CardClass.DEMONHUNTER },
+			{ GameTag.DEATH_KNIGHT_TOURIST, CardClass.DEATHKNIGHT }
+		};
+
+		public bool IsTourist => _dbCard?.Entity.GetTag(GameTag.TOURIST) > 0;
+
+		public bool CanBeVisitedByTourist => !IsTourist && CardSet == HearthDb.Enums.CardSet.ISLAND_VACATION;
+
+		public string? GetTouristClass()
+		{
+			if(!IsTourist)
+				return null;
+
+			foreach (var tag in TOURIST_MAP)
+			{
+				if (_dbCard?.Entity.GetTag(tag.Key) > 0)
+					return HearthDbConverter.ConvertClass(tag.Value);
+			}
+
+			return null;
+		}
+
 		public bool ZilliaxCustomizableFunctionalModule => _dbCard?.Entity.GetTag(GameTag.ZILLIAX_CUSTOMIZABLE_FUNCTIONALMODULE) > 0;
 
 		public bool ZilliaxCustomizableCosmeticModule => _dbCard?.Entity.GetTag(GameTag.ZILLIAX_CUSTOMIZABLE_COSMETICMODULE) > 0;

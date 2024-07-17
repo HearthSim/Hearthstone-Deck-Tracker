@@ -9,6 +9,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		[LocDescription("MainWindow_DeckBuilder_Filter_Type_Class")]
 		ClassOnly,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Type_Neutral")]
-		NeutralOnly
+		NeutralOnly,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Type_Tourist")]
+		TouristOnly,
 	}
 }
