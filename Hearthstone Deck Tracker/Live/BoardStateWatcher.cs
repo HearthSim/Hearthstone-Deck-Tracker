@@ -127,12 +127,18 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		private int? BuddyDbfId(Player player)
 		{
-			if(Core.Game.BattlegroundsBuddiesEnabled)
+			if(!Core.Game.BattlegroundsBuddiesEnabled)
 				return null;
-			var buddyDbfId = player.Hero?.GetTag(GameTag.BACON_COMPANION_ID);
+
+			var meter = player.Board.FirstOrDefault(x => x.GetTag(GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_HERO_BUDDY);
+			if(meter == null || meter?.GetTag(GameTag.ZONE) != (int)Zone.PLAY)
+				return null;
+
+			var buddyDbfId = meter?.GetTag(GameTag.BACON_COMPANION_ID);
 			if(buddyDbfId == 0)
-				return null;
-			return buddyDbfId;
+				buddyDbfId = player.Hero?.GetTag(GameTag.BACON_COMPANION_ID);
+
+			return buddyDbfId != 0 ? buddyDbfId : null;
 		}
 
 		private int? BgsQuestReward(Player player, bool heroPower)
@@ -322,8 +328,10 @@ namespace Hearthstone_Deck_Tracker.Live
 			);
 		}
 
-		private static int GetTag(BattlegroundsTeammateBoardStateEntity entity, GameTag tag)
+		private static int GetTag(BattlegroundsTeammateBoardStateEntity? entity, GameTag tag)
 		{
+			if(entity == null)
+				return 0;
 			return entity.Tags.TryGetValue((int)tag, out var value) ? value : 0;
 		}
 
@@ -340,10 +348,18 @@ namespace Hearthstone_Deck_Tracker.Live
 				entity => GetTag(entity, GameTag.ZONE) == (int)Zone.PLAY
 			).ToList();
 
-			var hero =inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.HERO);
+			var hero = inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.HERO);
 			var heroPower = inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.HERO_POWER);
+
 			var weapon = inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.WEAPON)
 				?? inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_QUEST_REWARD);
+			var buddyDbfId = 0;
+			if(Core.Game.BattlegroundsBuddiesEnabled)
+			{
+				var meter = friendlyEntities.FirstOrDefault(x => GetTag(x, GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_HERO_BUDDY);
+				if(meter != null && GetTag(meter, GameTag.ZONE) == (int)Zone.PLAY)
+					buddyDbfId = GetTag(meter, GameTag.BACON_COMPANION_ID);
+			}
 
 			var board = inPlay.Where(x =>
 				(CardType)GetTag(x, GameTag.CARDTYPE) is CardType.MINION or CardType.LOCATION or CardType.BATTLEGROUND_SPELL
@@ -362,7 +378,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				Board = SortedDbfIds(board),
 				Hero = DbfId(hero),
 				HeroPower = DbfId(heroPower),
-				Weapon = DbfId(weapon),
+				Weapon = weapon != null ? DbfId(weapon) : buddyDbfId,
 				Hand = new BoardStateHand
 				{
 					Cards = SortedDbfIds(hand),
