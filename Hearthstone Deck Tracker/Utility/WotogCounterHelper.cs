@@ -118,7 +118,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 				CardIds.Collectible.Warlock.MoargDrillfist,
 				CardIds.Collectible.Deathknight.SkeletonCrew,
 				CardIds.Collectible.Neutral.BurrowBuster,
-				CardIds.Collectible.Mage.BlastmageMiner
+				CardIds.Collectible.Mage.BlastmageMiner,
+				CardIds.Collectible.Shaman.DiggingStraightDown,
+				CardIds.Collectible.Paladin.FossilizedKaleidosaur,
+				CardIds.Collectible.Paladin.Shroomscavate,
 			}));
 
 		public static bool ShowPlayerJadeCounter =>
