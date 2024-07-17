@@ -1,3 +1,18 @@
+## **Release v1.30.0 - 2024-07-17**
+**Updated for Hearthstone 30.0.0**
+
+Arena players may have noticed the deck tracker repeatedly importing decks that contained cards from the new expansion.
+This issue is resolved for now as this update contains the new cards, but we'll fix the underlying issue in a future update.
+
+**New**:
+- Added initial deck tracking support for Perils in Paradise cards. More to come soon!
+- Added Tourist support to the deck builder.
+
+**Fixes**:
+- Fixed the Excavate counter not appearing for all Excavate cards.
+- Fixed an issue where the Tier7 hero picking overlay would have conflicting hover zones.
+- Fixed the Twitch Extension not allowing viewers to hover the buddy button.
+
 ## **Release v1.29.9 - 2024-07-12**
 **Fixes**:
 - Tier7 setting not affecting Composition Stats visibility.
