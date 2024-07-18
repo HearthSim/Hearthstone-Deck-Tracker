@@ -380,7 +380,10 @@ namespace Hearthstone_Deck_Tracker
 			var recentArenaDecks =
 				DeckList.Instance.Decks.Where(d => d.IsArenaDeck && d.Cards.Sum(x => x.Count) == 30).OrderByDescending(
 					d => d.LastPlayedNewFirst).Take(15);
-			if(recentArenaDecks.Any(d => d.Cards.All(c => deck.Deck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
+			if(recentArenaDecks.Any(
+				   d => (d.HsId != 0 && d.HsId == deck.Deck.Id) ||
+				        d.Cards.All(c => deck.Deck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))
+			   ))
 				Log.Info("...but we already have that one. Discarding.");
 			else if(Core.Game.IgnoredArenaDecks.Contains(deck.Deck.Id))
 				Log.Info("...but it was already discarded by the user. No automatic action taken.");
