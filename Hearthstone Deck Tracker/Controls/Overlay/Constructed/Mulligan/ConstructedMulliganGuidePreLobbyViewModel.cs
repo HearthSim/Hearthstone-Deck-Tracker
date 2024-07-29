@@ -32,22 +32,22 @@ public class SingleDeckStatus
 {
 	public Visibility Visibility { get; }
 	public SingleDeckState State { get; }
-	public CardClass CardClass { get; }
+	public bool HasRunes { get; }
 	public bool IsFocused { get; }
-	public string Padding => CardClass == CardClass.DEATHKNIGHT ? "18,16,29,0" : "18,16,15,0";
+	public string Padding => HasRunes ? "18,16,29,0" : "18,16,15,0";
 
 	public SingleDeckStatus()
 	{
 		Visibility = Visibility.Hidden;
 		State = SingleDeckState.INVALID;
-		CardClass = CardClass.INVALID;
+		HasRunes = false;
 	}
 
-	public SingleDeckStatus(SingleDeckState state, CardClass cardClass, bool isFocused)
+	public SingleDeckStatus(SingleDeckState state, bool hasRunes, bool isFocused)
 	{
 		Visibility = Visibility.Visible;
 		State = state;
-		CardClass = cardClass;
+		HasRunes = hasRunes;
 		IsFocused = isFocused;
 	}
 
@@ -134,8 +134,8 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 
 	struct DeckData
 	{
-		public CardClass CardClass;
 		public string Deckstring;
+		public bool HasRunes;
 	}
 
 	private Dictionary<FormatType, Dictionary<long, DeckData>> _decksByFormatAndDeckId = new();
@@ -168,7 +168,10 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 			cache[deck.Id] = new DeckData
 			{
 				Deckstring = DeckSerializer.Serialize(hearthDbDeck, false),
-				CardClass = hearthDbDeck.GetHero()?.Class ?? CardClass.INVALID
+				HasRunes = (
+					hearthDbDeck.GetHero()?.Class == CardClass.DEATHKNIGHT ||
+					hearthDbDeck.GetCards().Keys.Any(x => x.Entity.GetTag(GameTag.DEATH_KNIGHT_TOURIST) > 0)
+				),
 			};
 		}
 
@@ -392,10 +395,10 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 						if(allDecks.TryGetValue(deckData.Deckstring, out var state))
 							return new SingleDeckStatus(
 								state,
-								deckData.CardClass,
+								deckData.HasRunes,
 								box.IsFocused || box.IsSelected
 							);
-						return new SingleDeckStatus(SingleDeckState.NO_DATA, deckData.CardClass, box.IsSelected);
+						return new SingleDeckStatus(SingleDeckState.NO_DATA, deckData.HasRunes, box.IsSelected);
 					}
 				}
 				catch(Exception ex)
