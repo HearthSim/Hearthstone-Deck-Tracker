@@ -200,7 +200,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var centeredListOffset = Config.Instance.OverlayCenterOpponentStackPanel ? (BorderStackPanelOpponent.ActualHeight - StackPanelOpponent.ActualHeight) / 2 : 0;
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(BorderStackPanelOpponent) + centeredListOffset
-								+ GetListViewOffset(StackPanelOpponent, ListViewOpponent) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100 - ToolTipCardBlock.ActualHeight / 2;
+								+ GetListViewOffset(StackPanelOpponent, ViewBoxOpponent) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100 - ToolTipCardBlock.ActualHeight / 2;
 				var card = ListViewOpponent.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card;
 				ToolTipCardBlock.SetCardIdFromCard(card);
 				//prevent tooltip from going outside of the overlay
