@@ -37,8 +37,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var cardMark =
 				relativeCardMark.FirstOrDefault(
-												x =>
-												x.Label.IsVisible && PointInsideControl(x.Pos, x.Label.ActualWidth, x.Label.ActualHeight, new Thickness(3, 1, 7, 1)));
+					x =>
+						x.Label.IsVisible &&
+						PointInsideControl(
+							x.Pos,
+							x.Label.ActualWidth,
+							x.Label.SourceCardBitmap != null ? x.Label.ActualHeight * 1.7 : x.Label.ActualHeight,
+							new Thickness(2, 2, 2, 2)
+						)
+				);
 
 			ToolTipCardBlock.CreatedByVisibility = Collapsed;
 			if(!Config.Instance.HideOpponentCardMarks && cardMark != null)
