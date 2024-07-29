@@ -22,11 +22,13 @@
         <Grid.RenderTransform>
             <ScaleTransform/>
         </Grid.RenderTransform>
-        <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="CreatedByInfo" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding CreatedByVisibility}" Text="{Binding CreatedByText}" FontSize="16"/>
+        <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="CreatedByInfo" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding CreatedByVisibility}" Text="{Binding CreatedByText}" d:Text="Created By" FontSize="16"/>
         <Image HorizontalAlignment="Center" Margin="0 12 0 0"
               MaxWidth="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
               MaxHeight="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}"
-              Source="{Binding LoadingImageSource, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant">
+              Source="{Binding LoadingImageSource, TargetNullValue={x:Null}}"
+              d:Source="{StaticResource LoadingMinion}"
+              RenderOptions.BitmapScalingMode="Fant">
         </Image>
         <Image x:Name="CardImageDisplay" HorizontalAlignment="Center" Margin="0 12 0 0"
               MaxWidth="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
@@ -48,11 +50,11 @@
                 <Canvas.RenderTransform>
                     <ScaleTransform ScaleX="{Binding IconScaling}" ScaleY="{Binding IconScaling}"/>
                 </Canvas.RenderTransform>
-                <Grid ClipToBounds="False" Canvas.Top="-20" Canvas.Left="-20" Visibility="{Binding QuestionmarkVisibility}">
+                <Grid ClipToBounds="False" Canvas.Top="-20" Canvas.Left="-20" Visibility="{Binding QuestionmarkVisibility}" d:Visibility="Collapsed">
                     <Ellipse Width="40" Height="40" Fill="#141617" />
                     <Ellipse Width="36" Height="36" Fill="#23272A" />
                     <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="UnknownIndicator" HorizontalAlignment="Center" VerticalAlignment="Center" Text="?" FontSize="28" />
-                </Grid> 
+                </Grid>
             </Canvas>
         </Grid>
     </Grid>
