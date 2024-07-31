@@ -582,6 +582,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.WhelpWrangler:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TaketotheSkies_HappyWhelpToken);
 								break;
+							case Collectible.Hunter.RangerGilly:
+								AddKnownCardId(gameState, NonCollectible.Hunter.RangerGilly_IslandCrocoliskToken);
+								break;
 						}
 					}
 					else //POWER
