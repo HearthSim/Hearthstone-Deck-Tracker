@@ -579,6 +579,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Demonhunter.PatchesThePilot:
 								AddKnownCardId(gameState, NonCollectible.Demonhunter.PatchesthePilot_ParachuteToken, 6);
 								break;
+							case Collectible.Neutral.WhelpWrangler:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TaketotheSkies_HappyWhelpToken);
+								break;
 						}
 					}
 					else //POWER
