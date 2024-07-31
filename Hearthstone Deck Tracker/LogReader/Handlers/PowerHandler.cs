@@ -940,6 +940,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.Mixologist:
 								AddKnownCardId(gameState, NonCollectible.Neutral.Mixologist_MixologistsSpecialToken);
 								break;
+							case Collectible.Neutral.CelestialProjectionist:
+								if(target != null)
+									AddKnownCardId(gameState, target);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
