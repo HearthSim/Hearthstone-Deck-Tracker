@@ -947,6 +947,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								if(target != null)
 									AddKnownCardId(gameState, target);
 								break;
+							case Collectible.Neutral.Gorgonzormu:
+								AddKnownCardId(gameState, NonCollectible.Neutral.Gorgonzormu_DeliciousCheeseToken);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
