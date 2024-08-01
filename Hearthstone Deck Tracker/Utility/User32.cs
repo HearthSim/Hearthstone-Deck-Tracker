@@ -199,8 +199,8 @@ namespace Hearthstone_Deck_Tracker
 			ptUL.X = rect.left;
 			ptUL.Y = rect.top;
 
-			ptLR.X = rect.right;
-			ptLR.Y = rect.bottom;
+			ptLR.X = Math.Max(rect.left, rect.right - 1);
+			ptLR.Y = Math.Max(rect.top, rect.bottom - 1);
 
 			ClientToScreen(hsHandle, ref ptUL);
 			ClientToScreen(hsHandle, ref ptLR);
