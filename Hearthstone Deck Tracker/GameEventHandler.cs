@@ -2029,8 +2029,12 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentHandToDeck(Entity entity, string? cardId, int turn)
 		{
-			if(!string.IsNullOrEmpty(cardId) && entity.HasTag(GameTag.TRADEABLE))
-				_game.Opponent.PredictUniqueCardInDeck(cardId!, false);
+			if(!string.IsNullOrEmpty(cardId) && entity.HasTag(GameTag.IS_USING_TRADE_OPTION))
+			{
+				_game.Opponent.PredictUniqueCardInDeck(cardId!, entity.Info.Created);
+				entity.Info.GuessedCardState = GuessedCardState.None;
+				entity.Info.Hidden = true;
+			}
 			_game.Opponent.HandToDeck(entity, turn);
 			Core.UpdateOpponentCards();
 			var card = Database.GetCardFromId(cardId);
