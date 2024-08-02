@@ -1,3 +1,16 @@
+## **Release v1.30.1 - 2024-08-02**
+**Deck Tracker**:
+- Fixed a number of recent cards not showing what the opponent added to their hand.
+- Fixed Snake Oil appearing twice in the opponent's deck list after trading.
+- Fixed the spell school counter not automatically appearing for Shaman decks with Razzle-Dazzler.
+- Fixed the underlying issue causing Arena decks to be repeatedly imported when a new set is released.
+
+**Overlay**:
+- Fixed the full screen overlay being misaligned when screen scaling was enabled on a second monitor.
+- Fixed card tooltips to not appear in the correct place when hovering the opponent's deck list.
+- Fixed hover zones for card marks in the opponent's hand sometimes being too small.
+- Fixed an issue causing the Mulligan Guide box to be misaligned in the deck picker for Warlock decks with runes (from Tourist).
+
 ## **Release v1.30.0 - 2024-07-17**
 **Updated for Hearthstone 30.0.0**
 
