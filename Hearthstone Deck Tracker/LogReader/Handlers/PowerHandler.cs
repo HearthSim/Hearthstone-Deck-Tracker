@@ -588,6 +588,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.MiracleSalesman:
 								AddKnownCardId(gameState, NonCollectible.Neutral.MiracleSalesman_SnakeOilToken);
 								break;
+							case Collectible.Hunter.Starshooter:
+								AddKnownCardId(gameState, Collectible.Hunter.ArcaneShotCore);
+								break;
+							case Collectible.Priest.PuppetTheatre:
+								if(target != null)
+									AddKnownCardId(gameState, target);
+								break;
+							case Collectible.Paladin.LifesavingAura:
+								AddKnownCardId(gameState, NonCollectible.Paladin.Grillmaster_SunscreenToken);
+								break;
+							case Collectible.Rogue.MetalDetector:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
 						}
 					}
 					else //POWER
@@ -955,6 +968,22 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Neutral.Gorgonzormu:
 								AddKnownCardId(gameState, NonCollectible.Neutral.Gorgonzormu_DeliciousCheeseToken);
+								break;
+							case Collectible.Rogue.TentacleGrip:
+								AddKnownCardId(gameState, Collectible.Neutral.ChaoticTendril);
+								break;
+							case Collectible.Rogue.DigForTreasure:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+							case Collectible.Rogue.OhManager:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+							case Collectible.Neutral.CarryOnGrub:
+								// TODO Token2 if only one card is left
+								AddKnownCardId(gameState, NonCollectible.Neutral.CarryOnGrub_CarryOnSuitcaseToken1);
+								break;
+							case Collectible.Warrior.TheRyecleaver:
+								AddKnownCardId(gameState, NonCollectible.Warrior.TheRyecleaver_SliceOfBreadToken);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
