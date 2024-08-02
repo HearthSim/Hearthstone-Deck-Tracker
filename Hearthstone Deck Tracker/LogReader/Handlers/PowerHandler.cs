@@ -585,6 +585,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Hunter.RangerGilly:
 								AddKnownCardId(gameState, NonCollectible.Hunter.RangerGilly_IslandCrocoliskToken);
 								break;
+							case Collectible.Neutral.MiracleSalesman:
+								AddKnownCardId(gameState, NonCollectible.Neutral.MiracleSalesman_SnakeOilToken);
+								break;
 						}
 					}
 					else //POWER
