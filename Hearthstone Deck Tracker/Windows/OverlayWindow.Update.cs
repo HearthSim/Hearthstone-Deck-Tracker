@@ -523,6 +523,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var scaling = Height / 1080;
 			AutoScaling = Math.Max(0.8, Math.Min(1.3, scaling));
 
+			_mulliganNotificationBehavior.UpdatePosition();
+			_mulliganNotificationBehavior.UpdateScaling();
+
 			_bgsTopBarBehavior.UpdatePosition();
 			_bgsTopBarBehavior.UpdateScaling();
 
