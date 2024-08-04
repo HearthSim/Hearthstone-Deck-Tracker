@@ -935,6 +935,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warrior.BoombossThogrun:
 								AddKnownCardId(gameState, NonCollectible.Warrior.BoombossThogrun_TNTToken, 3);
 								break;
+							case NonCollectible.Neutral.KoboldMiner_PouchOfCoinsToken:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore, 2);
+								break;
 							case Collectible.Rogue.DartThrow:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
