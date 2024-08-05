@@ -371,34 +371,68 @@ namespace Hearthstone_Deck_Tracker
 			return false;
 		}
 
-		public static bool AutoImportArena(ArenaImportingBehaviour behaviour, ArenaInfo? info = null)
+		public static void AutoImportArena(ArenaImportingBehaviour behaviour, ArenaInfo? info = null)
 		{
 			var deck = info ?? DeckImporter.FromArena();
 			if(deck?.Deck.Cards.Sum(x => x.Count) != 30)
-				return false;
+				return;
+
 			Log.Info($"Found new complete {deck.Deck.Hero} arena deck!");
-			var recentArenaDecks =
-				DeckList.Instance.Decks.Where(d => d.IsArenaDeck && d.Cards.Sum(x => x.Count) == 30).OrderByDescending(
+
+			var matchingHsId =
+				DeckList.Instance.Decks.FirstOrDefault(d => d.IsArenaDeck && d.HsId != 0 && d.HsId == deck.Deck.Id);
+			if(matchingHsId != null)
+			{
+				// update NOOOOOO! cards after expansion release
+				Log.Info("...but we already know that id. Checking for changes...");
+
+				if(matchingHsId.Cards.All(c => deck.Deck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
+				{
+					Log.Info("No changes found.");
+					return;
+				}
+
+				Log.Info("Updating deck with new cards...");
+				matchingHsId.Cards.Clear();
+				var cards = deck.Deck.Cards.Select(x =>
+				{
+					var card = Database.GetCardFromId(x.Id);
+					if(card == null)
+						return null;
+					card.Count = x.Count;
+					return card;
+				}).WhereNotNull();
+				foreach(var card in cards)
+					matchingHsId.Cards.Add(card);
+				Core.MainWindow.DeckPickerList.UpdateDecks();
+				Core.MainWindow.SelectDeck(matchingHsId, true);
+				return;
+			}
+
+			var recentArenaDecks = DeckList.Instance.Decks.Where(d => d.IsArenaDeck && d.Cards.Sum(x => x.Count) == 30).OrderByDescending(
 					d => d.LastPlayedNewFirst).Take(15);
-			if(recentArenaDecks.Any(
-				   d => (d.HsId != 0 && d.HsId == deck.Deck.Id) ||
-				        d.Cards.All(c => deck.Deck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))
-			   ))
+			if(recentArenaDecks.Any(d => d.Cards.All(c => deck.Deck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
+			{
 				Log.Info("...but we already have that one. Discarding.");
-			else if(Core.Game.IgnoredArenaDecks.Contains(deck.Deck.Id))
+				return;
+			}
+
+			if(Core.Game.IgnoredArenaDecks.Contains(deck.Deck.Id))
+			{
 				Log.Info("...but it was already discarded by the user. No automatic action taken.");
-			else if(behaviour == ArenaImportingBehaviour.AutoAsk)
-			{
-				Core.MainWindow.ShowNewArenaDeckMessageAsync(deck.Deck);
-				return true;
+				return;
 			}
-			else if(behaviour == ArenaImportingBehaviour.AutoImportSave)
+
+			switch(behaviour)
 			{
-				Log.Info("...auto saving new arena deck.");
-				Core.MainWindow.ImportArenaDeck(deck.Deck);
-				return true;
+				case ArenaImportingBehaviour.AutoImportSave:
+					Log.Info("...auto saving new arena deck.");
+					Core.MainWindow.ImportArenaDeck(deck.Deck);
+					break;
+				case ArenaImportingBehaviour.AutoAsk:
+					Core.MainWindow.ShowNewArenaDeckMessageAsync(deck.Deck);
+					break;
 			}
-			return false;
 		}
 
 		public static void AutoSelectTemplateDeckByDeckTemplateId(IGame game, int deckTemplateId)
