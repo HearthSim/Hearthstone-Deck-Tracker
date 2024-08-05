@@ -1,3 +1,10 @@
+## **Release v1.30.2 - 2024-08-05**
+**Arena**:
+- Fixed Arena deck with unknown cards being stuck in a broken state after an expansion release.
+
+**Overlay**:
+- Fixed the Mulligan Guide popup in the bottom right corner not appearing correctly.
+
 ## **Release v1.30.1 - 2024-08-02**
 **Deck Tracker**:
 - Fixed a number of recent cards not showing what the opponent added to their hand.
