@@ -1,3 +1,6 @@
+## **Release v1.30.3 - 2024-08-08**
+**Updated for Hearthstone 30.0.3**
+
 ## **Release v1.30.2 - 2024-08-05**
 **Arena**:
 - Fixed Arena deck with unknown cards being stuck in a broken state after an expansion release.
