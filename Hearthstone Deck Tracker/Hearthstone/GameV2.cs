@@ -229,7 +229,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public MatchInfo MatchInfo => _matchInfo ?? (_matchInfo = HearthMirror.Reflection.Client.GetMatchInfo());
+		public MatchInfo MatchInfo => _matchInfo ??= HearthMirror.Reflection.Client.GetMatchInfo();
 		private bool _matchInfoCacheInvalid = true;
 
 		public MatchInfo.MedalInfo? PlayerMedalInfo
@@ -263,7 +263,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public MercenariesMapInfo MercenariesMapInfo => HearthMirror.Reflection.Client.GetMercenariesMapInfo();
 
-		private bool IsValidPlayerInfo(MatchInfo.Player playerInfo, bool allowMissing = true)
+		private bool IsValidPlayerInfo(MatchInfo.Player? playerInfo, bool allowMissing = true)
 		{
 			var name = playerInfo?.Name ?? playerInfo?.BattleTag?.Name;
 			var valid = allowMissing || name != null;
@@ -271,16 +271,48 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return valid;
 		}
 
+		private bool IsMedalInfoPresent(MatchInfo.Player? playerInfo)
+		{
+			return playerInfo?.Standard != null || playerInfo?.Wild != null || playerInfo?.Classic != null || playerInfo?.Twist != null;
+		}
+
 		internal async void CacheMatchInfo()
 		{
 			if(!_matchInfoCacheInvalid)
 				return;
-			MatchInfo matchInfo;
-			while((matchInfo = HearthMirror.Reflection.Client.GetMatchInfo()) == null || !IsValidPlayerInfo(matchInfo.LocalPlayer) || !IsValidPlayerInfo(matchInfo.OpposingPlayer, IsMercenariesMatch))
+
+			var missingMedals = 0;
+			MatchInfo? matchInfo = null;
+			for(var i = 0; i <= 30; i++)
 			{
-				Log.Info($"Waiting for matchInfo... (matchInfo={matchInfo}, localPlayer={matchInfo?.LocalPlayer?.Name}, opposingPlayer={matchInfo?.OpposingPlayer?.Name})");
-				await Task.Delay(1000);
+				if(i > 0)
+				{
+					Log.Info($"Waiting for matchInfo... (matchInfo={matchInfo}, localPlayer={matchInfo?.LocalPlayer?.Name}, opposingPlayer={matchInfo?.OpposingPlayer?.Name})");
+					await Task.Delay(1000);
+				}
+
+				matchInfo = HearthMirror.Reflection.Client.GetMatchInfo();
+				if(matchInfo == null)
+					continue;
+
+				// the player info will probably arrive shortly
+				if(!IsValidPlayerInfo(matchInfo.LocalPlayer) || !IsValidPlayerInfo(matchInfo.OpposingPlayer, IsMercenariesMatch))
+					continue;
+
+				// sometimes the opponent player info is incomplete for a moment, give it a chance
+				if(missingMedals++ < 2 && IsMedalInfoPresent(matchInfo.LocalPlayer) != IsMedalInfoPresent(matchInfo.OpposingPlayer))
+					continue;
+
+				// looking good
+				break;
 			}
+
+			if(matchInfo == null)
+			{
+				Log.Info("Giving up waiting for matchInfo");
+				return;
+			}
+
 			_matchInfo = matchInfo;
 			UpdatePlayers(matchInfo);
 			_matchInfoCacheInvalid = false;
