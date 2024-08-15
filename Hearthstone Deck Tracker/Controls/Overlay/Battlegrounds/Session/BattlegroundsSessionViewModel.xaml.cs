@@ -340,7 +340,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 		SessionGames.Clear();
 		sessionGames
-			.GetRange(Math.Max(sessionGames.Count - 10, 0), Math.Min(10, sessionGames.Count))
+			.GetRange(Math.Max(sessionGames.Count - 8, 0), Math.Min(8, sessionGames.Count))
 			.OrderByDescending(g => g.StartTime)
 			.ToList()
 			.ForEach(AddOrUpdateGame);

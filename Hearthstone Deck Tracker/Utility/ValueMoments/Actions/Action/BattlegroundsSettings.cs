@@ -38,8 +38,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("start_and_current_mmr")]
 		public bool StartAndCurrentMMR { get => Config.Instance.ShowSessionRecapStartCurrentMMR; }
 
-		[JsonProperty("latest_10_game")]
-		public bool Latest10Game { get => Config.Instance.ShowSessionRecapLatestGames; }
+		[JsonProperty("latest_games")]
+		public bool LatestGames { get => Config.Instance.ShowSessionRecapLatestGames; }
 
 		[JsonProperty("tier7_overlay")]
 		public bool Tier7Overlay { get => Config.Instance.EnableBattlegroundsTier7Overlay; }
