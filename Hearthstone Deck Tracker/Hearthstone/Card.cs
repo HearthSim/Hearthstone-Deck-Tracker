@@ -88,6 +88,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool BaconCard;
 
 		[XmlIgnore]
+		public bool BaconTriple;
+
+		[XmlIgnore]
 		public int DeckListIndex;
 
 		[XmlIgnore]
@@ -166,6 +169,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Artist = dbCard.ArtistName;
 			Set = HearthDbConverter.SetConverter(dbCard.Set);
 			BaconCard = baconCard;
+			BaconTriple = false;
 			_loaded = true;
 		}
 

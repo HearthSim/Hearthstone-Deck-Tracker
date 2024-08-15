@@ -57,10 +57,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			{
 				cardImageDownloader = new AssetDownloader<Hearthstone.Card>(
 					Path.Combine(Config.AppDataPath, "Images", "CardImages"),
-					(Hearthstone.Card card) => $"https://art.hearthstonejson.com/v1/{(card.BaconCard ? "bgs" : "render")}/latest" +
-					$"/{Config.Instance.SelectedLanguage}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}" +
-					$"/{card.Id}.png",
-					(Hearthstone.Card card) => $"{card.Id}.png",
+					card => $"https://art.hearthstonejson.com/v1/{(card.BaconCard ? "bgs" : "render")}/latest" +
+					        $"/{Config.Instance.SelectedLanguage}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}" +
+					        $"/{card.Id}{(card.BaconTriple ? "_triple" : "")}.png",
+					card => $"{card.Id}{(card.BaconTriple ? "_triple" : "")}.png",
 					maxSize: 200,
 					placeholderAsset: "pack://application:,,,/Resources/faceless_manipulator.png"
 				);

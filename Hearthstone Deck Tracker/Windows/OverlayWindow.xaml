@@ -253,6 +253,7 @@
 
                     <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
                 <controls:CardImage x:Name="ToolTipCardBlock" Visibility="Hidden" />
+                <controls:CardImage x:Name="ToolTipCardBlock2" Visibility="Hidden" />
             </Canvas>
         </Border>
     </Grid>

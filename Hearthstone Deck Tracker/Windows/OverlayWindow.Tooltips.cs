@@ -5,12 +5,14 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using BobsBuddy.Factory;
 using HearthDb.Enums;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 
@@ -21,6 +23,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public partial class OverlayWindow
 	{
 		#region CardTooltips
+
+		private DateTime? _minionBrowserHoverStart = null;
+		private string? _minionBrowserHoverCardId = null;
 
 		private void UpdateCardTooltip()
 		{
@@ -258,7 +263,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 						var card = cards.GetItemAt(cardIndex) as AnimatedCard;
 						if(card == null)
 							return;
+
 						ToolTipCardBlock.SetCardIdFromCard(card.Card);
+
 						//offset is affected by scaling
 						var cardListPos = cardList.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
 						var topOffset = cardListPos.Y + cardIndex * cardSize * AutoScaling - ToolTipCardBlock.ActualHeight / 2;
@@ -271,21 +278,68 @@ namespace Hearthstone_Deck_Tracker.Windows
 						Canvas.SetLeft(ToolTipCardBlock, cardListPos.X - ToolTipCardBlock.ActualWidth + 22);
 
 						ToolTipCardBlock.Visibility = visibility;
+
+						if(_minionBrowserHoverCardId != card.Card.Id)
+						{
+							_minionBrowserHoverStart = DateTime.Now;
+							_minionBrowserHoverCardId = card.Card.Id;
+						}
+
+						var goldenCardId = MinionFactory.TryGetPremiumIdFromNormal(card.Card.Id);
+
+						if(goldenCardId != card.Card.Id)
+						{
+							var goldenCard = Database.GetCardFromId(goldenCardId);
+							if(goldenCard != null)
+							{
+								goldenCard.BaconCard = true;
+								goldenCard.BaconTriple = true;
+								var hovered = (_minionBrowserHoverStart is DateTime start) ? DateTime.Now - start : TimeSpan.Zero;
+								if(hovered >= TimeSpan.FromMilliseconds(800)) {
+									ToolTipCardBlock2.SetCardIdFromCard(goldenCard);
+
+									Canvas.SetTop(ToolTipCardBlock2, topOffset);
+									Canvas.SetLeft(ToolTipCardBlock2, cardListPos.X - ToolTipCardBlock.ActualWidth + 22 - ToolTipCardBlock2.ActualWidth + 22);
+
+									ToolTipCardBlock2.Visibility = Visible;
+								}
+								else
+								{
+									if(hovered >= TimeSpan.FromMilliseconds(250))
+									{
+										var downloader = AssetDownloaders.cardImageDownloader;
+										if(downloader != null && !downloader.HasAsset(goldenCard))
+											downloader.DownloadAsset(goldenCard);
+									}
+
+									ToolTipCardBlock2.Visibility = Hidden;
+								}
+							}
+						}
+
 						found = true;
 					}
 				}
 
 				if(!found)
 				{
-					ToolTipCardBlock.Visibility = Hidden;
-					HideAdditionalToolTips();
 					ToolTipCardBlock.SetCardIdFromCard(null);
+					ToolTipCardBlock2.SetCardIdFromCard(null);
+					ToolTipCardBlock.Visibility = Hidden;
+					ToolTipCardBlock2.Visibility = Hidden;
+					_minionBrowserHoverStart = null;
+					_minionBrowserHoverCardId = null;
+					HideAdditionalToolTips();
 				}
 			}
 			else
 			{
 				ToolTipCardBlock.SetCardIdFromCard(null);
+				ToolTipCardBlock2.SetCardIdFromCard(null);
 				ToolTipCardBlock.Visibility = Hidden;
+				ToolTipCardBlock2.Visibility = Hidden;
+				_minionBrowserHoverStart = null;
+				_minionBrowserHoverCardId = null;
 				HideAdditionalToolTips();
 			}
 
