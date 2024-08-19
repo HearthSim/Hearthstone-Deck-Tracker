@@ -470,6 +470,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				});
 			}
 
+			foreach(var trinket in gamePlayer.Trinkets)
+			{
+				if(trinket.CardId != null)
+				{
+					inputPlayer.Trinkets.Add(simulator.TrinketFactory.Create(trinket.CardId, friendly));
+				}
+			}
+
 			foreach(var objective in gamePlayer.Objectives)
 			{
 				//TODO: [Duos] Check if friendly translates to player correctly

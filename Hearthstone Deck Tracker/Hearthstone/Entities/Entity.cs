@@ -128,6 +128,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsBattlegroundsSpell => GetTag(GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_SPELL;
 
 		[JsonIgnore]
+		public bool IsBattlegroundsTrinket => HasTag(GameTag.BACON_TRINKET);
+
+		[JsonIgnore]
 		public bool IsSideQuest => HasTag(GameTag.SIDEQUEST);
 
 		[JsonIgnore]
