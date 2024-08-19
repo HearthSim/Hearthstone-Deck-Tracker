@@ -520,14 +520,19 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				inputPlayer.Hand.AddRange(GetOpponentHandEntities(simulator));
 			}
 
-			var playerAttached = GetAttachedEntities(playerEntity.Id);
+			var playerAttached = GetAttachedEntities(playerEntity.Id).ToList();
 			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchant);
 			if(pEternalLegion != null)
 				inputPlayer.EternalKnightCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
 			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
 			if(pUndeadBonus != null)
 				inputPlayer.UndeadAttackBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			var pAncestralAutomaton = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.AncestralAutomaton_AncestralAutomatonPlayerEnchantDnt);
+			if(pAncestralAutomaton != null)
+				inputPlayer.AncestralAutomatonCounter = pAncestralAutomaton.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+
 			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);
+
 
 			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, friendly={friendly}");
 
