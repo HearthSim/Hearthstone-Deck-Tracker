@@ -75,6 +75,12 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("weapon", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int Weapon { get; set; }
 
+		[JsonProperty("lesser-trinket", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public int? LesserTrinket { get; set; }
+
+		[JsonProperty("greater-trinket", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public int? GreaterTrinket { get; set; }
+
 		[JsonProperty("fatigue", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int Fatigue { get; set; }
 
@@ -91,6 +97,10 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 			if(HeroPower != other.HeroPower)
 				return false;
 			if(Weapon != other.Weapon)
+				return false;
+			if(LesserTrinket != other.LesserTrinket)
+				return false;
+			if(GreaterTrinket != other.GreaterTrinket)
 				return false;
 			if(!Board?.SequenceEqual(other.Board) ?? false)
 				return false;

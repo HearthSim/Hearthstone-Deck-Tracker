@@ -57,7 +57,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public Dictionary<GameTag, int> Tags { get; set; }
 		public string? Name { get; set; }
 		public int Id { get; set; }
-		public string? CardId { get; set; }
+
+		private string? _cardId;
+		public string? CardId
+		{
+			get => _cardId;
+			set
+			{
+				if (_cardId != value)
+				{
+					_cardId = value;
+					_cachedCard = null;
+				}
+			}
+		}
 
 		/// <Summary>
 		/// This is player entity, NOT the player hero.
