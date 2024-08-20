@@ -1,3 +1,18 @@
+## **Release v1.31.0 - 2024-08-20**
+**Updated for Hearthstone 30.2.0**
+
+**Overlay**:
+- Added golden cards to the Battlegrounds minion browser: hover over the cards for a little longer to see the golden version.
+- Slightly reduced the number of games shown in the session recap from 10 to 8 to free up some vertical screen space.
+
+**Bob's Buddy**:
+- Added over 70 implementations for the new trinkets and new or updated cards.\
+  *We'll be monitoring the simulation accuracy and will likely issue another update within the coming days.*
+
+**Twitch**:
+- Added basic trinket support to the Twitch Extension so that viewers can hover one of the trinkets on the stream.\
+  *We're working on an update to the extension so that viewers can hover both trinkets as you'd expect.*
+
 ## **Release v1.30.3 - 2024-08-08**
 **Updated for Hearthstone 30.0.3**
 
