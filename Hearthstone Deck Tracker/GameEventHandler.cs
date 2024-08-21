@@ -468,6 +468,7 @@ namespace Hearthstone_Deck_Tracker
 					if(_game.CurrentGameStats != null && turn.Item2 > 1)
 						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShoppingAsync();
 					Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id));
+					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Select(x => x.Card.Id));
 				}
 				switch(Config.Instance.TurnStartAction)
 				{
@@ -1181,6 +1182,7 @@ namespace Hearthstone_Deck_Tracker
 			else if(_game.IsBattlegroundsMatch)
 			{
 				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
+				Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Select(x => x.Card.Id));
 			}
 		}
 

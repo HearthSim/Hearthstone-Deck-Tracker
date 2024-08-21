@@ -92,6 +92,27 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
+	public bool IsPaglesFishingRodRelevant
+	{
+		get => GetProp(false);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(AvailableTiers));
+			OnPropertyChanged(nameof(TierButtons));
+			OnPropertyChanged(nameof(Groups));
+		}
+	}
+
+	private bool ShowTavernTier7 => Config.Instance.AlwaysShowBattlegroundsTavernTier7 || IsThorimRelevant || IsPaglesFishingRodRelevant;
+
+	public void UpdateTavernTier7Visibility()
+	{
+		OnPropertyChanged(nameof(AvailableTiers));
+		OnPropertyChanged(nameof(TierButtons));
+		OnPropertyChanged(nameof(Groups));
+	}
+
 	public IEnumerable<string>? BannedMinions
 	{
 		get => GetProp<IEnumerable<string>?>(null);
@@ -118,7 +139,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		get
 		{
 			var tiers = Enumerable.Range(1, 6).ToList();
-			if(AvailableTiers.Contains(7) || IsThorimRelevant)
+			if(AvailableTiers.Contains(7) || ShowTavernTier7)
 				tiers.Add(7);
 			return tiers.Select(x => new TierButton()
 			{
@@ -251,6 +272,11 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		);
 	}
 
+	public void OnTrinkets(IEnumerable<string> trinkets)
+	{
+		IsPaglesFishingRodRelevant = trinkets.Contains(HearthDb.CardIds.NonCollectible.Neutral.PaglesFishingRod);
+	}
+
 	public Visibility UnavailableMinionTypesVisibility => ActiveTier is null || ActiveMinionType != null || !UnavailableRaces.Any() ? Visibility.Collapsed : Visibility.Visible;
 
 	public void Reset()
@@ -261,6 +287,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		IsDuos = false;
 		Anomaly = null;
 		IsThorimRelevant = false;
+		IsPaglesFishingRodRelevant = false;
 		BannedMinions = null;
 	}
 }

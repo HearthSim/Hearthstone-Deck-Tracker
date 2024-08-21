@@ -843,6 +843,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowBattlegroundsTiers = true;
 
 		[DefaultValue(true)]
+		public bool AlwaysShowBattlegroundsTavernTier7 = false;
+
+		[DefaultValue(true)]
 		public bool ShowBattlegroundsTurnCounter = true;
 
 		[DefaultValue(true)]

@@ -26,6 +26,11 @@
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTiers_Checked"
                   Unchecked="CheckboxShowBattlegroundsTiers_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxAlwaysShowBattlegroundsTavernTier7" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_AlwaysShowTavernTier7}"
+                  HorizontalAlignment="Left" VerticalAlignment="Top"
+                  IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
+                  Checked="CheckboxAlwaysShowBattlegroundsTavernTier7_Checked" Unchecked="CheckboxAlwaysShowBattlegroundsTavernTier7_Unchecked"
+                  Margin="30,5,0,0" />
         <CheckBox x:Name="CheckboxShowBattlegroundsTurnCounter" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsTurnCounter}"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTurnCounter_Checked"
@@ -54,7 +59,7 @@
                 <CheckBox x:Name="CheckboxShowBattlegroundsQuestPickingComps" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsQuestPickingComps}"
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,5,0,0"
-                          Checked="CheckboxShowBattlegroundsQuestPickingComps_Checked" Unchecked="CheckboxShowBattlegroundsQuestPickingComps_Unchecked" />
+                          Checked="CheckboxShowBattlegroundsQuestPickingComps_Checked" Unchecked="CheckboxShowBattlegroundsQuestPickingComps_Unchecked"/>
             </StackPanel>
         </GroupBox>
         <GroupBox Header="{lex:LocTextUpper Options_Overlay_Battlegrounds_Label_BobsBuddy}" Margin="5,10,5,5">
