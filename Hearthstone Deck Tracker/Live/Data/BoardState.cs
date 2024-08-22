@@ -75,11 +75,11 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("weapon", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int Weapon { get; set; }
 
-		[JsonProperty("lesser-trinket", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? LesserTrinket { get; set; }
+		[JsonProperty("first_trinket", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public int? FirstTrinket { get; set; }
 
-		[JsonProperty("greater-trinket", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? GreaterTrinket { get; set; }
+		[JsonProperty("second_trinket", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public int? SecondTrinket { get; set; }
 
 		[JsonProperty("fatigue", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int Fatigue { get; set; }
@@ -98,9 +98,9 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 				return false;
 			if(Weapon != other.Weapon)
 				return false;
-			if(LesserTrinket != other.LesserTrinket)
+			if(FirstTrinket != other.FirstTrinket)
 				return false;
-			if(GreaterTrinket != other.GreaterTrinket)
+			if(SecondTrinket != other.SecondTrinket)
 				return false;
 			if(!Board?.SequenceEqual(other.Board) ?? false)
 				return false;

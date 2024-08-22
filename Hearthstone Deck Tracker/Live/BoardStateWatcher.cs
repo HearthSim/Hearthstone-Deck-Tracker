@@ -150,18 +150,6 @@ namespace Hearthstone_Deck_Tracker.Live
 		private const int TrinketSecondSlot = 2;
 		private const int TrinketHeroPowerSlot = 3;
 
-		private int? BgsTrinket(Player player, bool heroPowerSlot)
-		{
-			var trinketEntity = player.Trinkets.FirstOrDefault(x =>
-				x.HasTag(GameTag.TAG_SCRIPT_DATA_NUM_6) &&
-				(heroPowerSlot ?
-					x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_6) == TrinketHeroPowerSlot :
-					x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_6) == TrinketFirstSlot)
-			);
-
-			return DbfId(trinketEntity);
-		}
-
 		private int? BgsTrinket(Player player, int trinketSlot)
 		{
 			var trinketEntity = player.Trinkets.FirstOrDefault(x =>
@@ -169,7 +157,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_6) == trinketSlot
 			);
 
-			return DbfId(trinketEntity);
+			return trinketEntity?.Card.DbfId;
 		}
 
 		private int? BgsAnomaly(Entity? game) => BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(game);
@@ -328,10 +316,10 @@ namespace Hearthstone_Deck_Tracker.Live
 				{
 					Board = SortedDbfIds(player.Board.Where(x => x.TakesBoardSlot)),
 					Hero = HeroDbfId(playerEntity != null ? Find(player, HeroId(playerEntity)) : null),
-					HeroPower = BgsQuestReward(player, true) ?? BgsTrinket(player, true) ?? DbfId(FindHeroPower(player)),
-					Weapon = playerWeapon != 0 ? playerWeapon : (BgsQuestReward(player, false) ?? BgsTrinket(player, false) ?? BuddyDbfId(player) ?? 0),
-					LesserTrinket = BgsTrinket(player, TrinketFirstSlot),
-					GreaterTrinket = BgsTrinket(player, TrinketSecondSlot),
+					HeroPower = BgsQuestReward(player, true) ?? BgsTrinket(player, TrinketHeroPowerSlot) ?? DbfId(FindHeroPower(player)),
+					Weapon = playerWeapon != 0 ? playerWeapon : (BgsQuestReward(player, false) ?? BgsTrinket(player, TrinketFirstSlot) ?? BuddyDbfId(player) ?? 0),
+					FirstTrinket = BgsTrinket(player, TrinketFirstSlot),
+					SecondTrinket = BgsTrinket(player, TrinketSecondSlot),
 					Hand = new BoardStateHand
 					{
 						Cards = SortedDbfIds(player.Hand),
@@ -343,11 +331,10 @@ namespace Hearthstone_Deck_Tracker.Live
 				{
 					Board = SortedDbfIds(opponent.Board.Where(x => x.TakesBoardSlot)),
 					Hero = HeroDbfId(opponentEntity != null ? Find(opponent, HeroId(opponentEntity)) : null),
-					HeroPower = BgsQuestReward(opponent, true) ?? BgsTrinket(opponent, true) ?? DbfId(FindHeroPower(opponent)),
-					Weapon = opponentWeapon != 0 ? opponentWeapon
-						: (BgsQuestReward(opponent, false) ?? BgsTrinket(opponent, false) ?? BuddyDbfId(opponent) ?? 0),
-					LesserTrinket = BgsTrinket(opponent, TrinketFirstSlot),
-					GreaterTrinket = BgsTrinket(opponent, TrinketSecondSlot),
+					HeroPower = BgsQuestReward(opponent, true) ?? BgsTrinket(opponent, TrinketHeroPowerSlot) ?? DbfId(FindHeroPower(opponent)),
+					Weapon = opponentWeapon != 0 ? opponentWeapon : (BgsQuestReward(opponent, false) ?? BgsTrinket(opponent, TrinketFirstSlot) ?? BuddyDbfId(opponent) ?? 0),
+					FirstTrinket = BgsTrinket(opponent, TrinketFirstSlot),
+					SecondTrinket = BgsTrinket(opponent, TrinketSecondSlot),
 					Hand = new BoardStateHand
 					{
 						Size = opponent.HandCount
@@ -416,8 +403,8 @@ namespace Hearthstone_Deck_Tracker.Live
 				Hero = DbfId(hero),
 				HeroPower = DbfId(heroPower),
 				Weapon = weapon != null ? DbfId(weapon) : buddyDbfId,
-				LesserTrinket = DbfId(lesserTrinket),
-				GreaterTrinket = DbfId(greaterTrinket),
+				FirstTrinket = DbfId(lesserTrinket),
+				SecondTrinket = DbfId(greaterTrinket),
 				Hand = new BoardStateHand
 				{
 					Cards = SortedDbfIds(hand),
