@@ -108,6 +108,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					case NonCollectible.Neutral.RecurringNightmare_NightmareInside:
 						minion.AdditionalDeathrattles.Add(RecurringNightmare.SummonDeathrattle(true));
 						break;
+					case NonCollectible.Neutral.BloodGem2:
+						var atk = ent.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+						var health = ent.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+						minion.SetBloodGemStats(atk, health);
+						break;
 				}
 			}
 
