@@ -250,6 +250,9 @@ namespace Hearthstone_Deck_Tracker.Live
 			var playerWeapon = DbfId(Find(player, WeaponId(Core.Game.PlayerEntity)));
 			var opponentWeapon = DbfId(Find(opponent, WeaponId(Core.Game.OpponentEntity)));
 
+			var anomalyId = new[] { GameTag.ANOMALY1, GameTag.ANOMALY2 }.Select(x => Core.Game.GameEntity?.GetTag(x)).FirstOrDefault(x => x is > 0);
+			var anomaly = anomalyId.HasValue && Core.Game.Entities.TryGetValue(anomalyId.Value, out var anomalyEntity) ? anomalyEntity?.Card.DbfId : null;
+
 			return new BoardState
 			{
 				Player = new BoardStatePlayer
@@ -295,6 +298,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},
 				GameType = gameType,
+				TraditionalAnomaly = anomaly,
 			};
 		}
 
