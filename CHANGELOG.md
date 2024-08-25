@@ -1,3 +1,19 @@
+## **Release v1.31.1 - 2024-08-25**
+**Overlay**:
+- Automatically show Tavern Tier 7 in the Battlegrounds minion browser when you have Pagle's Fishing Rod.
+- Added a setting to always show Tavern Tier 7 in the Battlegrounds minion browser.\
+  *You'll find this setting under Options > Overlay > Battlegrounds > Always show Tavern Tier 7.*
+
+**Bob's Buddy**:
+- Fixed a simulation crash that could cause the odds to spin forever.
+- Added support for the Blood Golem Sticker trinket.
+
+**Twitch**:
+- Fixed hero powers not being hoverable on the Twitch Extension.
+- Added full trinket support in an upcoming version of the Twitch Extension.\
+  *Until then, your viewers can hover the weapon slot to see the latest trinket.*
+- Added support for Cho'Gall anomalies in an upcoming version of the Twitch Extension.
+
 ## **Release v1.31.0 - 2024-08-20**
 **Updated for Hearthstone 30.2.0**
 
