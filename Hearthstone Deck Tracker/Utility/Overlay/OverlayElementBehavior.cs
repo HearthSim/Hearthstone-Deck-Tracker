@@ -17,6 +17,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		private bool _animating;
 		private double _currentScaling = 1;
+		private double _currentCenterX = 1;
+		private double _currentCenterY = 1;
 		private Style? _baseTooltipStyle = null;
 
 		public FrameworkElement Element { get; }
@@ -133,9 +135,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var centerX = GetLeft == null ? Element.ActualWidth : 0;
 			var centerY = GetTop == null ? Element.ActualHeight : 0;
 			var scaling = GetScaling?.Invoke() ?? 1;
-			if (_currentScaling != scaling)
+			if (_currentScaling != scaling || centerX != _currentCenterX || centerY != _currentCenterY)
 			{
 				_currentScaling = scaling;
+				_currentCenterX = centerX;
+				_currentCenterY = centerY;
 				var transform = new ScaleTransform(scaling, scaling, centerX, centerY);
 				Element.RenderTransform = transform;
 
