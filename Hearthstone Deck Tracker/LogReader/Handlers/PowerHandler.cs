@@ -194,7 +194,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(!game.Entities.ContainsKey(entityId))
 						game.Entities.Add(entityId, new Entity(entityId));
 					var entity = game.Entities[entityId];
-					if(string.IsNullOrEmpty(entity.CardId) || entity.HasTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER))
+					if(
+						string.IsNullOrEmpty(entity.CardId) ||
+						entity.HasTag(GameTag.BACON_IS_POTENTIAL_TRINKET) ||
+						entity.HasTag(GameTag.BACON_TRINKET)
+					)
 						entity.CardId = cardId;
 					entity.Info.LatestCardId = cardId;
 					if(type == "SHOW_ENTITY")
