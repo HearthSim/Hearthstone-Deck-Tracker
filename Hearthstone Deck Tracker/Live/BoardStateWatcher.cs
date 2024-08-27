@@ -323,8 +323,6 @@ namespace Hearthstone_Deck_Tracker.Live
 					HeroPower = BgsQuestReward(player, true) ?? BgsTrinket(player, TrinketHeroPowerSlot) ?? DbfId(FindHeroPower(player)),
 					Weapon = playerWeapon != 0 ? playerWeapon :
 						BgsQuestReward(player, false) ??
-						BgsTrinket(player, TrinketSecondSlot) ??
-						BgsTrinket(player, TrinketFirstSlot) ??
 						BuddyDbfId(player) ?? 0,
 					FirstTrinket = BgsTrinket(player, TrinketFirstSlot),
 					SecondTrinket = BgsTrinket(player, TrinketSecondSlot),
@@ -342,8 +340,6 @@ namespace Hearthstone_Deck_Tracker.Live
 					HeroPower = BgsQuestReward(opponent, true) ?? BgsTrinket(opponent, TrinketHeroPowerSlot) ?? DbfId(FindHeroPower(opponent)),
 					Weapon = opponentWeapon != 0 ? opponentWeapon :
 						BgsQuestReward(opponent, false) ??
-						BgsTrinket(opponent, TrinketSecondSlot) ??
-						BgsTrinket(opponent, TrinketFirstSlot) ??
 						BuddyDbfId(opponent) ?? 0,
 					FirstTrinket = BgsTrinket(opponent, TrinketFirstSlot),
 					SecondTrinket = BgsTrinket(opponent, TrinketSecondSlot),
@@ -386,8 +382,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				?? inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_TRINKET && GetTag(entity, GameTag.TAG_SCRIPT_DATA_NUM_6) == TrinketHeroPowerSlot);
 
 			var weapon = inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.WEAPON)
-				?? inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_QUEST_REWARD)
-				?? lesserTrinket;
+				?? inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_QUEST_REWARD);
 
 			var buddyDbfId = 0;
 			if(Core.Game.BattlegroundsBuddiesEnabled)
