@@ -196,7 +196,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					var entity = game.Entities[entityId];
 					if(
 						string.IsNullOrEmpty(entity.CardId) ||
-						entity.HasTag(GameTag.BACON_IS_POTENTIAL_TRINKET) ||
+						// placeholders and Fantastic Treasure (Marin's hero power)
+						entity.HasTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) ||
+						// Souvenir Stand
 						entity.HasTag(GameTag.BACON_TRINKET)
 					)
 						entity.CardId = cardId;
