@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 
 		// Logic to silently skip hotfix releases to fix some regressions that players haven't noticed yet
-		private static readonly (Version, Version)[] SilentUpgrades = {};
+		private static readonly (Version, Version)[] SilentUpgrades = { (new(1, 31, 2), new(1, 31, 3)) };
 		public static bool ShouldShowUpdateNotes()
 		{
 			if(UpdatedVersion == null)

@@ -1,4 +1,4 @@
-## **Release v1.31.2 - 2024-08-26**
+## **Release v1.31.3 - 2024-08-27**
 **Bob's Buddy**:
 - Fixed a major simulation issue with the Bronze Timepiece trinket.
 - Fixed trinkets from Souvenir Stand not being incorporated into the simulations.
