@@ -1,3 +1,8 @@
+## **Release v1.31.2 - 2024-08-26**
+**Bob's Buddy**:
+- Fixed a major simulation issue with the Bronze Timepiece trinket.
+- Fixed trinkets from Souvenir Stand not being incorporated into the simulations.
+
 ## **Release v1.31.1 - 2024-08-25**
 **Overlay**:
 - Automatically show Tavern Tier 7 in the Battlegrounds minion browser when you have Pagle's Fishing Rod.
