@@ -150,8 +150,12 @@ namespace Hearthstone_Deck_Tracker
 #if(!SQUIRREL)
 				Updater.Cleanup();
 #endif
-				MainWindow.FlyoutUpdateNotes.IsOpen = true;
-				MainWindow.UpdateNotesControl.SetHighlight(ConfigManager.PreviousVersion);
+				if(ConfigManager.ShouldShowUpdateNotes())
+				{
+					MainWindow.FlyoutUpdateNotes.IsOpen = true;
+					MainWindow.UpdateNotesControl.SetHighlight(ConfigManager.PreviousVersion);
+				}
+
 #if(SQUIRREL && !DEV)
 				if(Config.Instance.CheckForDevUpdates && !Config.Instance.AllowDevUpdates.HasValue)
 					MainWindow.ShowDevUpdatesMessage();

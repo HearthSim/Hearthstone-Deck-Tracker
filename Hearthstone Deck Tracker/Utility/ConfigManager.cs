@@ -36,6 +36,21 @@ namespace Hearthstone_Deck_Tracker.Utility
 #endif
 		}
 
+		// Logic to silently skip hotfix releases to fix some regressions that players haven't noticed yet
+		private static readonly (Version, Version)[] SilentUpgrades = {};
+		public static bool ShouldShowUpdateNotes()
+		{
+			if(UpdatedVersion == null)
+				return false;
+
+			if(PreviousVersion == null)
+				return true;
+
+			var fromVersion = new Version(PreviousVersion.Major, PreviousVersion.Minor, PreviousVersion.Build);
+			var toVersion = new Version(UpdatedVersion.Major, UpdatedVersion.Minor, UpdatedVersion.Build);
+			return !SilentUpgrades.Any(x => x.Item1 == fromVersion && x.Item2 == toVersion);
+		}
+
 		// Logic for dealing with legacy config file semantics
 		// Use difference of versions to determine what should be done
 		private static void ConvertLegacyConfig(Version currentVersion, Version? configVersion)
