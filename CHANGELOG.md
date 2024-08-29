@@ -1,4 +1,4 @@
-## **Release v1.31.4 - 2024-08-29**
+## **Release v1.31.5 - 2024-08-29**
 **Updated for Hearthstone 30.2.2**
 
 **Overlay**:
