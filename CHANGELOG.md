@@ -1,3 +1,14 @@
+## **Release v1.31.4 - 2024-08-29**
+**Updated for Hearthstone 30.2.2**
+
+**Overlay**:
+- Fixed an issue where the "Always show Tavern Tier 7" setting for Battlegrounds was disabled.
+- Fixed Rylak Metalhead's card text being outdated in the Battlegrounds minion browser.
+
+**Bob's Buddy**:
+- Fixed a simulation issue when Flourishing Frostling triggers Moss of the Schloss.
+- Fixed a simulation crash when the Boom Controller trinket was present.
+
 ## **Release v1.31.3 - 2024-08-27**
 **Bob's Buddy**:
 - Fixed a major simulation issue with the Bronze Timepiece trinket.
