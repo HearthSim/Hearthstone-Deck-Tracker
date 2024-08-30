@@ -362,6 +362,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateElementSizes();
 			ApplyAutoScaling();
 			UpdateElementPositions();
+			UpdateOpacityMask();
 
 			try
 			{

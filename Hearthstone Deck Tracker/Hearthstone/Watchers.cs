@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BaconWatcher.Change += OnBaconChange;
 			DeckPickerWatcher.Change += OnDeckPickerChange;
 			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning);
+			BigCardWatcher.Change += OnBigCardChange;
 			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
 			BattlegroundsLeaderboardWatcher.Change += (sender, args) => Core.Overlay.SetHoveredBattlegroundsLeaderboardEntityId(args.HoveredEntityId);
 		}
@@ -43,6 +44,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BaconWatcher.Stop();
 			DeckPickerWatcher.Stop();
 			SceneWatcher.Stop();
+			BigCardWatcher.Stop();
 			BattlegroundsTeammateBoardStateWatcher.Stop();
 			BattlegroundsLeaderboardWatcher.Stop();
 		}
@@ -50,6 +52,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		internal static void OnBaconChange(object sender, HearthWatcher.EventArgs.BaconEventArgs args)
 		{
 			Core.Overlay.SetBaconState(args.SelectedBattlegroundsGameMode, args.IsAnyOpen);
+
+			Core.Overlay.SetFriendListOpacityMask(args.IsFriendslistOpen);
+		}
+
+		internal static void OnBigCardChange(object sender, HearthWatcher.EventArgs.BigCardArgs args)
+		{
+			var state = new BigCardState
+				{
+					CardId = args.CardId,
+					EnchantmentHeights = args.EnchantmentHeights,
+					TooltipHeights = args.TooltipHeights,
+					ZonePosition = args.ZonePosition,
+					Side = args.Side,
+					IsHand = args.IsHand
+				}
+			;
+
+			Core.Overlay.SetCardOpacityMask(state);
 		}
 
 		internal static void OnDeckPickerChange(object sender, HearthWatcher.EventArgs.DeckPickerEventArgs args)
@@ -97,6 +117,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static BaconWatcher BaconWatcher { get; } = new(new HearthMirrorBaconProvider());
 		public static DeckPickerWatcher DeckPickerWatcher { get; } = new(new HearthMirrorDeckPickerProvider());
 		public static SceneWatcher SceneWatcher { get; } = new(new HearthMirrorSceneProvider());
+
+		public static BigCardStateWatcher BigCardWatcher { get; } = new(new HearthMirrorBigCardProvider());
 		public static BattlegroundsTeammateBoardStateWatcher BattlegroundsTeammateBoardStateWatcher { get; } = new(new HearthMirrorBattlegroundsTeammateBoardStateProvider());
 		public static BattlegroundsLeaderboardWatcher BattlegroundsLeaderboardWatcher { get; } = new(new HearthMirrorBattlegroundsLeaderboardProvider());
 	}
@@ -171,6 +193,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorSceneProvider : ISceneProvider
 	{
 		public SceneMgrState? State => Reflection.Client.GetSceneMgrState();
+	}
+
+	public class HearthMirrorBigCardProvider : IBigCardProvider
+	{
+		public BigCardState? State => Reflection.Client.GetBigCardState();
 	}
 
 	public class HearthMirrorBattlegroundsTeammateBoardStateProvider : IBattlegroundsTeammateBoardStateProvider

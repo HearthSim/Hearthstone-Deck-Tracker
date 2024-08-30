@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Utility.Overlay;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -68,13 +69,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ContentGrid.Width = Width = rect.Width;
 			ContentGrid.Height = Height = rect.Height;
 		}
-
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
+		public void UpdateOpacityMask(OverlayOpacityMask opacityMask) => ContentGrid.OpacityMask = opacityMask.Mask;
 		public void UpdateBackground() => OnPropertyChanged(nameof(BackgroundColor));
 
 		public void UpdateContentVisibility() => OnPropertyChanged(nameof(ContentVisibility));

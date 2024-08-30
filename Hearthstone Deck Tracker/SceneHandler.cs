@@ -46,11 +46,14 @@ public class SceneHandler
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 			Core.Overlay.UpdateTier7PreLobbyVisibility();
 			Watchers.BaconWatcher.Stop();
+			Watchers.BigCardWatcher.Stop();
 		}
 		else if(from == Mode.GAMEPLAY)
 		{
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 			Watchers.BattlegroundsTeammateBoardStateWatcher.Stop();
+			Watchers.BaconWatcher.Stop();
+			Watchers.BigCardWatcher.Stop();
 		}
 	}
 
@@ -77,10 +80,13 @@ public class SceneHandler
 		else if(to == Mode.GAMEPLAY)
 		{
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
+			Watchers.BigCardWatcher.Run();
+			Watchers.BaconWatcher.Run();
 		}
 
 		if(from == Mode.BACON)
 		{
+			Watchers.BigCardWatcher.Run();
 			Core.Overlay.Tier7PreLobbyViewModel.InvalidateUserState();
 		}
 	}

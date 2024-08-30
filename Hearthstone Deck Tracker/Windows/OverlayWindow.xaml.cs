@@ -36,6 +36,9 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Overlay;
+using Hearthstone_Deck_Tracker.Utility.RegionDrawer;
 using HSReplay.Responses;
 using NuGet;
 
@@ -89,6 +92,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
+		public OverlayOpacityMask OpacityMaskOverlay { get; } = new();
 
 		public BattlegroundsMinionsViewModel BattlegroundsMinionsVM { get; } = new();
 		public BattlegroundsSessionViewModel BattlegroundsSessionViewModelVM => Core.Game.BattlegroundsSessionViewModel;
@@ -427,6 +431,140 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var presentationsource = PresentationSource.FromVisual(this);
 			Helper.DpiScalingX = presentationsource?.CompositionTarget?.TransformToDevice.M11 ?? 1.0;
 			Helper.DpiScalingY = presentationsource?.CompositionTarget?.TransformToDevice.M22 ?? 1.0;
+
+			UpdateOpacityMask();
+		}
+		private void UpdateOpacityMask()
+		{
+			OpacityMask = OpacityMaskOverlay.Mask;
+			Core.Windows.CapturableOverlay?.UpdateOpacityMask(OpacityMaskOverlay);
+		}
+
+		public void SetFriendListOpacityMask(bool visible)
+		{
+
+			if(visible)
+			{
+				var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
+				var rect = regionDrawer.DrawFriendsListRegion();
+
+				OpacityMaskOverlay.AddMaskedRegion("FriendsList", rect);
+			}
+			else
+				OpacityMaskOverlay.RemoveMaskedRegion("FriendsList");
+
+			UpdateOpacityMask();
+		}
+
+		public void SetCardOpacityMask(BigCardState state)
+		{
+			var card = Database.GetCardFromId(state.CardId);
+			var isFriendly = state.Side == (int)PlayerSide.FRIENDLY;
+			var isHand = state.IsHand;
+
+			OpacityMaskOverlay.RemoveMaskedRegion("BigCard");
+
+			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
+
+			// Enemy secret area
+			if(card == null && state.ZonePosition > 0 && !isFriendly && !isHand)
+			{
+				var rects = regionDrawer.DrawSecretCardRegions(state.ZonePosition, isFriendly, state.TooltipHeights.Sum());
+
+				foreach(var rect in rects)
+				{
+					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
+				}
+
+				UpdateOpacityMask();
+			}
+
+			if (card == null)
+			{
+				UpdateOpacityMask();
+				return;
+			}
+
+			if (card.Type is "Minion" or "Location" or "Battleground_Spell" && !isHand)
+			{
+				var boardCount = isFriendly ? _game.Player.Board.Count(x => x.IsMinion || x.IsLocation || x.IsBattlegroundsSpell)  : _game.Opponent.Board.Count(x => x.IsMinion || x.IsLocation || x.IsBattlegroundsSpell);
+
+				var rects = regionDrawer.DrawBoardCardRegions(boardCount, state.ZonePosition, isFriendly, state.TooltipHeights.Sum(), state.EnchantmentHeights.Sum());
+
+				foreach(var rect in rects)
+				{
+					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
+				}
+
+				UpdateOpacityMask();
+			}
+
+			if(card.Type == "Spell" && !isHand)
+			{
+
+				var rects = regionDrawer.DrawSecretCardRegions(state.ZonePosition, isFriendly, state.TooltipHeights.Sum());
+
+				foreach(var rect in rects)
+				{
+					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
+				}
+
+				UpdateOpacityMask();
+			}
+
+			if(card.Type == "Battleground_Trinket" && !isHand)
+			{
+				if(card.Id is "BG30_Trinket_1st" or "BG30_Trinket_2nd")
+					return;
+
+				var position = card.SpellSchool == SpellSchool.LESSER_TRINKET ? 1 : 2;
+
+				var rects = regionDrawer.DrawBgTrinketRegions(position, isFriendly, state.TooltipHeights.Sum());
+
+				foreach(var rect in rects)
+				{
+					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
+				}
+
+				UpdateOpacityMask();
+			}
+
+			if(card.Type == "Hero Power" && !isHand)
+			{
+
+				var rect = regionDrawer.DrawHeroPowerRegion(isFriendly);
+
+				OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
+
+				UpdateOpacityMask();
+			}
+
+			if(card.Type == "Weapon" && !isHand)
+			{
+
+				var rects = regionDrawer.DrawWeaponRegions(isFriendly, state.TooltipHeights.Sum(), state.EnchantmentHeights.Sum());
+
+				foreach(var rect in rects)
+				{
+					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
+				}
+
+				UpdateOpacityMask();
+			}
+
+			if(isHand)
+			{
+				var handCount = isFriendly ? _game.Player.HandCount : _game.Opponent.HandCount;
+
+				var rects = regionDrawer.DrawHandCardRegions(handCount, state.ZonePosition, isFriendly, card.Type, state.TooltipHeights.Sum(), state.EnchantmentHeights.Sum());
+
+				foreach(var rect in rects)
+				{
+					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
+				}
+
+				UpdateOpacityMask();
+			}
 		}
 
 		[NotifyPropertyChangedInvocator]

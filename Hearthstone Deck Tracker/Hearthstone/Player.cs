@@ -75,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public IEnumerable<Entity> Quests => PlayerEntities.Where(x => x.IsInSecret && (x.IsQuest || x.IsSideQuest));
 		public IEnumerable<Entity> Trinkets => Board.Where(x => x.IsBattlegroundsTrinket);
 		public IEnumerable<Entity> QuestRewards => Board.Where(x => x.IsBgsQuestReward);
+		public IEnumerable<Entity> Minions => Board.Where(x => x.IsMinion);
 		public IEnumerable<Entity> Objectives => PlayerEntities.Where(x => x.IsInSecret && x.IsObjective);
 		public IEnumerable<Entity> SetAside => PlayerEntities.Where(x => x.IsInSetAside);
 		public static Deck? KnownOpponentDeck = null;

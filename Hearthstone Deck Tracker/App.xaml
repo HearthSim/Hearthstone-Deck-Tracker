@@ -4,6 +4,7 @@
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Utility.Overlay"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              Startup="App_OnStartup"
              DispatcherUnhandledException="App_DispatcherUnhandledException">
@@ -87,6 +88,7 @@
                 <ResourceDictionary Source="Controls/Overlay/Constructed/ConstructedResources.xaml"/>
                 <ResourceDictionary Source="Controls/Overlay/Battlegrounds/BattlegroundsResources.xaml"/>
                 <ResourceDictionary>
+                    <overlay:OverlayOpacityMask x:Key="OverlayOpacityMask"/>
                     <utility:ConfigWrapper x:Key="ConfigWrapper"/>
                     <utility:GlobalCommands x:Key="GlobalCommands"/>
                     <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
