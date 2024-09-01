@@ -1182,7 +1182,9 @@ namespace Hearthstone_Deck_Tracker
 			else if(_game.IsBattlegroundsMatch)
 			{
 				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
-				Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Select(x => x.Card.Id));
+				var chosen = choice.ChosenEntities;
+				if(chosen.TrueForAll(x => x.IsBattlegroundsTrinket))
+					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Concat(chosen).Select(x => x.Card.Id));
 			}
 		}
 

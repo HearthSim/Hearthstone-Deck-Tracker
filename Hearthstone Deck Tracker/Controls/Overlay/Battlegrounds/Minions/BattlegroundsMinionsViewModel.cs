@@ -89,6 +89,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 			OnPropertyChanged(nameof(AvailableTiers));
 			OnPropertyChanged(nameof(TierButtons));
 			OnPropertyChanged(nameof(Groups));
+			OnPropertyChanged(nameof(ShowTavernTier7));
 		}
 	}
 
@@ -101,6 +102,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 			OnPropertyChanged(nameof(AvailableTiers));
 			OnPropertyChanged(nameof(TierButtons));
 			OnPropertyChanged(nameof(Groups));
+			OnPropertyChanged(nameof(ShowTavernTier7));
 		}
 	}
 
