@@ -491,9 +491,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if (card.Type is "Minion" or "Location" or "Battleground_Spell" && !isHand)
 			{
-				var boardCount = isFriendly ? _game.Player.Board.Count(x => x.IsMinion || x.IsLocation || x.IsBattlegroundsSpell)  : _game.Opponent.Board.Count(x => x.IsMinion || x.IsLocation || x.IsBattlegroundsSpell);
-
-				var rects = regionDrawer.DrawBoardCardRegions(boardCount, state.ZonePosition, isFriendly, state.TooltipHeights.Sum(), state.EnchantmentHeights.Sum());
+				var rects = regionDrawer.DrawBoardCardRegions(state.ZoneSize, state.ZonePosition, isFriendly, state.TooltipHeights.Sum(), state.EnchantmentHeights.Sum());
 
 				foreach(var rect in rects)
 				{
@@ -558,9 +556,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(isHand)
 			{
-				var handCount = isFriendly ? _game.Player.HandCount : _game.Opponent.HandCount;
-
-				var rects = regionDrawer.DrawHandCardRegions(handCount, state.ZonePosition, isFriendly, card.Type, state.TooltipHeights.Sum(), state.EnchantmentHeights.Sum());
+				var rects = regionDrawer.DrawHandCardRegions(state.ZoneSize, state.ZonePosition, isFriendly, card.Type, state.TooltipHeights.Sum(), state.EnchantmentHeights.Sum());
 
 				foreach(var rect in rects)
 				{

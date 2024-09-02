@@ -9,15 +9,17 @@ namespace HearthWatcher.EventArgs
 		public List<float> EnchantmentHeights { get; }
 		public string CardId { get; }
 		public int ZonePosition { get; }
+		public int ZoneSize { get; }
 		public int Side { get; }
 		public bool IsHand { get; }
 
-		public BigCardArgs(List<float> tooltipHeights, List<float> enchantmentHeights, string cardId, int zonePosition, int side, bool isHand)
+		public BigCardArgs(List<float> tooltipHeights, List<float> enchantmentHeights, string cardId, int zonePosition, int zoneSize, int side, bool isHand)
 		{
 			TooltipHeights = tooltipHeights;
 			EnchantmentHeights = enchantmentHeights;
 			CardId = cardId;
 			ZonePosition = zonePosition;
+			ZoneSize = zoneSize;
 			Side = side;
 			IsHand = isHand;
 		}
@@ -27,6 +29,7 @@ namespace HearthWatcher.EventArgs
 			&& args.EnchantmentHeights.SequenceEqual(EnchantmentHeights)
 			&& args.CardId == CardId
 			&& args.ZonePosition == ZonePosition
+			&& args.ZoneSize == ZoneSize
 			&& args.Side == Side
 			&& args.IsHand == IsHand;
 
@@ -37,6 +40,7 @@ namespace HearthWatcher.EventArgs
 			hashCode = hashCode * -1521134295 + EnchantmentHeights.GetHashCode();
 			hashCode = hashCode * -1521134295 + CardId.GetHashCode();
 			hashCode = hashCode * -1521134295 + ZonePosition.GetHashCode();
+			hashCode = hashCode * -1521134295 + ZoneSize.GetHashCode();
 			hashCode = hashCode * -1521134295 + Side.GetHashCode();
 			hashCode = hashCode * -1521134295 + IsHand.GetHashCode();
 			return hashCode;

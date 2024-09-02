@@ -64,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					EnchantmentHeights = args.EnchantmentHeights,
 					TooltipHeights = args.TooltipHeights,
 					ZonePosition = args.ZonePosition,
+					ZoneSize = args.ZoneSize,
 					Side = args.Side,
 					IsHand = args.IsHand
 				}

@@ -48,6 +48,7 @@ public class BigCardStateWatcher
 				state?.EnchantmentHeights ?? new List<float>(),
 				state?.CardId ?? "",
 				state?.ZonePosition ?? 0,
+				state?.ZoneSize ?? 0,
 				state?.Side ?? 0,
 				state?.IsHand ?? false
 			);
