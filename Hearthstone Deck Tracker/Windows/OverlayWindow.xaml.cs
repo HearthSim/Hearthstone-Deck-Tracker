@@ -437,7 +437,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void UpdateOpacityMask()
 		{
 			OpacityMask = OpacityMaskOverlay.Mask;
-			Core.Windows.CapturableOverlay?.UpdateOpacityMask(OpacityMaskOverlay);
+			if(Config.Instance.ShowCapturableOverlay && Config.Instance.MaskCapturableOverlay)
+				Core.Windows.CapturableOverlay?.UpdateOpacityMask(OpacityMaskOverlay);
 		}
 
 		public void SetFriendListOpacityMask(bool visible)

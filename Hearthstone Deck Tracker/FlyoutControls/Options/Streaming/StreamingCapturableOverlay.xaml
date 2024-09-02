@@ -16,6 +16,8 @@
               Checked="CheckBoxShowCapOverlay_OnChecked" Unchecked="CheckBoxShowCapOverlay_OnUnchecked"/>
         <CheckBox Margin="5,5,0,0" Name="CheckBoxDisableOpacityTransition" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_DisableTransitions}" 
                           Checked="CheckBoxDisableOpacityTransition_Checked" Unchecked="CheckBoxDisableOpacityTransition_Unchecked" />
+        <CheckBox Margin="5,5,0,0" Name="CheckBoxMaskCapturableOverlay" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_MaskOverlay}"
+                  Checked="CheckBoxMaskCapturableOverlay_OnChecked" Unchecked="CheckBoxMaskCapturableOverlay_OnUnchecked" />
         <DockPanel Margin="0,5,0,0">
             <Label Content="{lex:LocText Options_Overlay_Streaming_Label_Background}" DockPanel.Dock="Left" />
             <Border Width="26" Height="26" Background="{Binding SelectedColor, RelativeSource={RelativeSource AncestorType=UserControl}}" 

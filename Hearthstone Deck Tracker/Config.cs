@@ -917,6 +917,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;
 
+		[DefaultValue(true)]
+		public bool MaskCapturableOverlay = true;
+
 		[DefaultValue(DeckDateType.None)]
 		public DeckDateType SelectedDateOnDecks = DeckDateType.None;
 
