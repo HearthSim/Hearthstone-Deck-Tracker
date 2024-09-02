@@ -257,7 +257,7 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 			return regions;
 		}
 
-		public List<Rect> DrawBgTrinketRegions(int position, bool isPlayerBoard, double tooltipHeight)
+		public List<Rect> DrawBgTrinketRegions(int position, bool hasAttachedCard, bool isPlayerBoard, double tooltipHeight)
 		{
 			var baseOffsetX = 0.463;
 			var baseOffsetY = isPlayerBoard ? 0.525 : 0;
@@ -269,11 +269,42 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 			var offsetY = isPlayerBoard ? baseOffsetY - relativePosition * 0.06 : baseOffsetY - 0.02 + (relativePosition * 0.01);
 
 			var rectCard = DrawCardRegion(offsetX, offsetY, TrinketHeight, TrinketAspectRatio);
-			var tooltipOffsetX = offsetX + TrinketToToolTipOffsetX;
+			var tooltipOffsetX = hasAttachedCard ? offsetX - 0.17 : offsetX + TrinketToToolTipOffsetX;
 			var rectTooltip = DrawCardTooltipRegion(tooltipOffsetX, offsetY + 0.008, tooltipHeight * 1.08, HandTooltipWidth);
 
 			regions.Add(rectCard);
 			regions.Add(rectTooltip);
+
+			if(hasAttachedCard)
+			{
+				var rectAttachedCard = DrawCardRegion(offsetX + 0.19, offsetY + 0.015, TrinketHeight, TrinketAspectRatio);
+				regions.Add(rectAttachedCard);
+			}
+
+			return regions;
+		}
+
+		public List<Rect> DrawBgHeroTrinketRegions(bool isPlayerBoard,bool hasAttachedCard, double tooltipHeight)
+		{
+			var baseOffsetX = 0.383;
+			var baseOffsetY = isPlayerBoard ? 0.48 : 0;
+			var regions = new List<Rect>();
+
+			var offsetX = baseOffsetX;
+			var offsetY = isPlayerBoard ? baseOffsetY : baseOffsetY - 0.03;
+
+			var rectCard = DrawCardRegion(offsetX, offsetY, TrinketHeight, TrinketAspectRatio);
+			var tooltipOffsetX = offsetX - TrinketToToolTipOffsetX + 0.027;
+			var rectTooltip = DrawCardTooltipRegion(tooltipOffsetX, offsetY + 0.008, tooltipHeight * 1.08, HandTooltipWidth);
+
+			regions.Add(rectCard);
+			regions.Add(rectTooltip);
+
+			if(hasAttachedCard)
+			{
+				var rectAttachedCard = DrawCardRegion(offsetX + 0.19, offsetY + 0.015, TrinketHeight, TrinketAspectRatio);
+				regions.Add(rectAttachedCard);
+			}
 
 			return regions;
 		}

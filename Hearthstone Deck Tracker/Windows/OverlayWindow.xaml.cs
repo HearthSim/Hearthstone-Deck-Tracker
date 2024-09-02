@@ -519,9 +519,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(card.Id is "BG30_Trinket_1st" or "BG30_Trinket_2nd")
 					return;
 
-				var position = card.SpellSchool == SpellSchool.LESSER_TRINKET ? 1 : 2;
+				var trinkets = isFriendly ? _game.Player.Trinkets : _game.Opponent.Trinkets;
 
-				var rects = regionDrawer.DrawBgTrinketRegions(position, isFriendly, state.TooltipHeights.Sum());
+				 var trinketEntity = trinkets.FirstOrDefault(x =>
+					 x.HasTag(GameTag.TAG_SCRIPT_DATA_NUM_6) &&
+					 x.Card.DbfId == card.DbfId
+				 );
+
+				 var hasAttachedCard = trinketEntity?.HasTag(GameTag.BACON_EVOLUTION_CARD_ID) ?? false;
+
+				 var position = trinketEntity?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_6) ?? 0;
+
+				if(position == 0)
+					return;
+
+				var rects = position == 3 ?
+					regionDrawer.DrawBgHeroTrinketRegions(isFriendly, true, state.TooltipHeights.Sum())
+					: regionDrawer.DrawBgTrinketRegions(position, hasAttachedCard, isFriendly, state.TooltipHeights.Sum());
 
 				foreach(var rect in rects)
 				{
