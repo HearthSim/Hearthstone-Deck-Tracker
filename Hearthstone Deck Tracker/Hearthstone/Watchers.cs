@@ -96,6 +96,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		internal static void OnBattlegroundsTeammateBoardStateChange(object sender, HearthWatcher.EventArgs.BattlegroundsTeammateBoardStateArgs args)
 		{
 			Core.Overlay.BattlegroundsHeroPickingViewModel.IsViewingTeammate = args.IsViewingTeammate;
+			Core.Overlay.IsViewingBGsTeammate = args.IsViewingTeammate;
 
 			if(args is { IsViewingTeammate: false, Entities.Count: 0, MulliganHeroes.Count: 0 })
 			{

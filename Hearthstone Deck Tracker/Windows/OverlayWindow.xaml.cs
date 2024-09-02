@@ -329,6 +329,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return Height * 0.05;
 			}
 		}
+		public bool IsViewingBGsTeammate { get; set; }
 
 		public void ShowOverlay(bool enable)
 		{
@@ -459,6 +460,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void SetCardOpacityMask(BigCardState state)
 		{
+			if(IsViewingBGsTeammate) return;
+
 			var card = Database.GetCardFromId(state.CardId);
 			var isFriendly = state.Side == (int)PlayerSide.FRIENDLY;
 			var isHand = state.IsHand;
