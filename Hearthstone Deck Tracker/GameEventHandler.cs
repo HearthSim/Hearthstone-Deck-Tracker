@@ -1156,6 +1156,22 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandlePlayerEntityChoices(IHsChoice choice)
 		{
+			if(choice.ChoiceType == ChoiceType.GENERAL && _game.IsBattlegroundsMatch)
+			{
+				if(
+					_game.Entities.TryGetValue(choice.SourceEntityId, out var source) &&
+					source.GetTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) > 0
+				)
+				{
+					var offered = choice.OfferedEntityIds
+						?.Select(id => _game.Entities.TryGetValue(id, out var e) ? e : null)
+						.WhereNotNull()
+						.Where(x => x.IsBattlegroundsTrinket)
+						.ToList() ?? new List<Entity>();
+					var existingTrinkets = Core.Game.Player.Trinkets.Select(x => x.Card.Id);
+					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(existingTrinkets.Concat(offered.Select(x => x.Card.Id)));
+				}
+			}
 		}
 
 		public void HandlePlayerEntitiesChosen(IHsCompletedChoice choice)
