@@ -99,14 +99,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 			AddCardImage();
 			AddFadeOverlay();
-			if(Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.LEGENDARY)
+			if(Math.Abs(Card.Count) > 1 || Card is { Rarity: Rarity.LEGENDARY, BaconCard: false })
 			{
 				AddCountBox();
 				AddCountText();
 			}
 			if(Card.IsCreated)
 				AddCreatedIcon();
-			if(Math.Abs(Card.Count) <= 1 && Card.Rarity == Rarity.LEGENDARY)
+			if(Math.Abs(Card.Count) <= 1 && Card is { Rarity: Rarity.LEGENDARY, BaconCard: false })
 				AddLegendaryIcon();
 			AddFrame();
 			AddGem();
@@ -129,7 +129,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var bmp = ImageCache.GetCardImage(Card);
 			if(bmp != null)
 			{
-				if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.LEGENDARY))
+				if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card is { Rarity: Rarity.LEGENDARY, BaconCard: false }))
 					AddChild(bmp, rect.Move(ImageOffset, 0));
 				else
 					AddChild(bmp, rect);
