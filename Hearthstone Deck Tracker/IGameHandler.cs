@@ -5,6 +5,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 #endregion
 
@@ -22,7 +23,8 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerDeckDiscard(Entity entity, string cardId, int turn);
 		void HandlePlayerPlayToDeck(Entity entity, string cardId, int turn);
 		void HandlePlayerHeroPower(string cardId, int turn);
-		void HandlePlayerSendChoices(Choice choice);
+		void HandlePlayerEntityChoices(IHsChoice choice);
+		void HandlePlayerEntitiesChosen(IHsCompletedChoice choice);
 		void SetPlayerHero(string? cardId);
 		void HandlePlayerGetToDeck(Entity entity, string cardId, int turn);
 		void TurnStart(ActivePlayer player, int turnNumber);

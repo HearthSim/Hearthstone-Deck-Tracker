@@ -45,8 +45,11 @@ public static class LogConstants
 
 	public static class Choices
 	{
-		public static readonly Regex SendChoicesHeaderRegex = CompileRegex(@"id=(?<id>(\d+)) ChoiceType=(?<choiceType>(\w+))");
-		public static readonly Regex SendChoicesBodyRegex = CompileRegex(@"m_chosenEntities\[(?<index>(\d+))]=.* id=(?<id>(\d+))");
+		public static readonly Regex ChoicesHeaderRegex = CompileRegex(@"id=(?<id>(\d+)) Player=(?<player>(.+)) TaskList=(?<taskList>(\d+))? ChoiceType=(?<choiceType>(\w+))");
+		public static readonly Regex ChosenHeaderRegex = CompileRegex(@"id=(?<id>(\d+)) Player=(?<player>(.+)) EntitiesCount=.*");
+		public static readonly Regex ChoicesSourceRegex = CompileRegex(@"Source=.* id=(?<id>(\d+))");
+		public static readonly Regex ChoicesEntityRegex = CompileRegex(@"Entities\[(?<index>(\d+))]=.* id=(?<id>(\d+))");
+		public static readonly Regex EndTaskListRegex = CompileRegex(@"m_currentTaskList=(?<taskList>(\d+))");
 	}
 
 	public static class GameInfo

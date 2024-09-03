@@ -33,6 +33,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Newtonsoft.Json;
@@ -1153,38 +1154,50 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void HandlePlayerSendChoices(Choice choice)
+		public void HandlePlayerEntityChoices(IHsChoice choice)
 		{
-			if(choice.ChoiceType == ChoiceType.MULLIGAN)
-			{
-				if(_game.IsBattlegroundsMatch)
-				{
-					if(choice.ChosenEntities.Count == 1)
-					{
-						var hero = choice.ChosenEntities.Single();
-						var heroPower = Database.GetCardFromDbfId(hero.GetTag(GameTag.HERO_POWER), collectible: false)
-							?.Id;
-						if(heroPower is string hp)
-							Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(new List<string>() { hp });
-					}
-					else
-					{
-						Log.Error($"Could not reliably determine Battlegrounds hero power. {choice.ChosenEntities.Count} hero(es) chosen.");
-					}
+		}
 
-					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
-				}
-				else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
-				{
-					_game.SnapshotMulliganChoices(choice);
-				}
-			}
-			else if(_game.IsBattlegroundsMatch)
+		public void HandlePlayerEntitiesChosen(IHsCompletedChoice choice)
+		{
+			var chosen = choice.ChosenEntityIds
+				?.Select(id => _game.Entities.TryGetValue(id, out var e) ? e : null)
+				.WhereNotNull()
+				.ToList() ?? new List<Entity>();
+			var source = _game.Entities.TryGetValue(choice.SourceEntityId, out var e) ? e : null;
+			switch(choice.ChoiceType)
 			{
-				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
-				var chosen = choice.ChosenEntities;
-				if(chosen.TrueForAll(x => x.IsBattlegroundsTrinket))
-					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Concat(chosen).Select(x => x.Card.Id));
+				case ChoiceType.MULLIGAN:
+					if(_game.IsBattlegroundsMatch)
+					{
+						if(chosen.Count == 1)
+						{
+							var hero = chosen.Single();
+							var heroPower = Database.GetCardFromDbfId(hero.GetTag(GameTag.HERO_POWER), collectible: false)
+								?.Id;
+							if(heroPower is string hp)
+								Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(new List<string>() { hp });
+						}
+						else
+						{
+							Log.Error($"Could not reliably determine Battlegrounds hero power. {chosen.Count} hero(es) chosen.");
+						}
+
+						Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
+					}
+					else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
+					{
+						_game.SnapshotMulliganChoices(choice);
+					}
+					break;
+				case ChoiceType.GENERAL:
+					if(_game.IsBattlegroundsMatch)
+					{
+						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
+						if((source?.GetTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) ?? 0) > 0)
+							Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Concat(chosen).Select(x => x.Card.Id));
+					}
+					break;
 			}
 		}
 
@@ -2143,7 +2156,8 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.SetOpponentHero(string? cardId) => SetOpponentHero(cardId);
 		void IGameHandler.SetPlayerHero(string? cardId) => SetPlayerHero(cardId);
 		void IGameHandler.HandleOpponentHeroPower(string cardId, int turn) => HandleOpponentHeroPower(cardId, turn);
-		void IGameHandler.HandlePlayerSendChoices(Choice choice) => HandlePlayerSendChoices(choice);
+		void IGameHandler.HandlePlayerEntityChoices(IHsChoice choice) => HandlePlayerEntityChoices(choice);
+		void IGameHandler.HandlePlayerEntitiesChosen(IHsCompletedChoice choice) => HandlePlayerEntitiesChosen(choice);
 		void IGameHandler.TurnStart(ActivePlayer player, int turnNumber) => TurnStart(player, turnNumber);
 		void IGameHandler.HandleGameStart(DateTime timestamp) => HandleGameStart(timestamp);
 		void IGameHandler.HandleGameEnd(bool stateComplete) => HandleGameEnd(stateComplete);

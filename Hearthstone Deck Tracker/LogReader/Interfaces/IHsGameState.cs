@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Handlers;
 
 #endregion
@@ -39,5 +40,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		Tuple<int, string>? ChameleosReveal { get; set; }
 		int DredgeCounter { get; set; }
 		Dictionary<string, int> PlayerIdsByPlayerName { get; }
+		Dictionary<int, IHsChoice> ChoicesById { get; }
+		Dictionary<int, List<IHsChoice>> ChoicesByTaskList { get; }
 	}
 }

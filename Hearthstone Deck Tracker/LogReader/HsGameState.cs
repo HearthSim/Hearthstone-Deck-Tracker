@@ -88,6 +88,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			if(_game.Entities.TryGetValue(CurrentEntityId, out var entity))
 				entity.Info.HasOutstandingTagChanges = false;
 		}
+
+		public Dictionary<int, IHsChoice> ChoicesById { get; } = new();
+		public Dictionary<int, List<IHsChoice>> ChoicesByTaskList { get; } = new();
 	}
 
 	public class Block

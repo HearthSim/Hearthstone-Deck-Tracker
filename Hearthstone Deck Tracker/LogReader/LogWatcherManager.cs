@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public static LogWatcherInfo PowerLogWatcherInfo => new LogWatcherInfo
 		{
 			Name = "Power",
-			StartsWithFilters = new[] {"PowerTaskList.DebugPrintPower", "GameState."},
+			StartsWithFilters = new[] {"PowerTaskList.DebugPrintPower", "GameState.", "PowerProcessor.EndCurrentTaskList"},
 			ContainsFilters = new[] {"Begin Spectating", "Start Spectator", "End Spectator"}
 		};
 
@@ -132,15 +132,31 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						if(line.LineContent.StartsWith("GameState."))
 						{
 							_game.PowerLog.Add(line.Line);
-							if(line.LineContent.StartsWith("GameState.SendChoices") || line.LineContent.StartsWith("GameState.DebugPrintEntitiesChosen"))
+							if(
+								line.LineContent.StartsWith("GameState.DebugPrintEntityChoices") ||
+								line.LineContent.StartsWith("GameState.DebugPrintEntitiesChosen")
+							)
+							{
 								_choicesHandler.Handle(line.Line, _gameState, _game);
+							}
+							else {
+								_choicesHandler.Flush(_gameState, _game);
+							}
+
 							if(line.LineContent.StartsWith("GameState.DebugPrintGame"))
+							{
 								_gameInfoHandler.Handle(line.Line, _gameState, _game);
+							}
+						}
+						else if(line.LineContent.StartsWith("PowerProcessor.EndCurrentTaskList"))
+						{
+							_choicesHandler.Handle(line.Line, _gameState, _game);
 						}
 						else
 						{
 							_powerLineHandler.Handle(line.Line, _gameState, _game);
 							OnPowerLogLine.Execute(line.Line);
+							_choicesHandler.Flush(_gameState, _game);
 						}
 						break;
 					case "Arena":

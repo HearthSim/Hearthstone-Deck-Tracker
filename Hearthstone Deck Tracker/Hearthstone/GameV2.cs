@@ -19,6 +19,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -478,7 +479,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public List<Entity> SnapshotMulligan() => MulliganState.SnapshotMulligan();
-		public List<Entity> SnapshotMulliganChoices(Choice choice) => MulliganState.SnapshotMulliganChoices(choice);
+		public List<Entity> SnapshotMulliganChoices(IHsCompletedChoice choice) => MulliganState.SnapshotMulliganChoices(choice);
 		public List<Entity> SnapshotOpeningHand() => MulliganState.SnapshotOpeningHand();
 
 		public void CacheMulliganGuideParams()
