@@ -638,7 +638,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsMinionsVM.AvailableRaces = BattlegroundsUtils.GetAvailableRaces();
 			BattlegroundsMinionsVM.IsDuos = _game.IsBattlegroundsDuosMatch;
 			BattlegroundsMinionsVM.Anomaly = anomalyCardId;
-			BattlegroundsMinionsVM.BannedMinions = BattlegroundsUtils.GetMinionsBannedByAnomaly(anomalyDbfId) ?? new List<string>();
 
 			IEnumerable<string> heroPowers = _game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id);
 			if(!heroPowers.Any() && _game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)

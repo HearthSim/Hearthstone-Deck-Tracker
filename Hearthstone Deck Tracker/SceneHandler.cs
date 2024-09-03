@@ -75,7 +75,6 @@ public class SceneHandler
 			Core.Overlay.UpdateTier7PreLobbyVisibility();
 			Watchers.BaconWatcher.Run();
 			Remote.Config.Load();
-			Remote.BattlegroundsBans.Load();
 		}
 		else if(to == Mode.GAMEPLAY)
 		{

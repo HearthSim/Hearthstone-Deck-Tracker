@@ -308,7 +308,6 @@ namespace Hearthstone_Deck_Tracker
 						Watchers.SceneWatcher.Run();
 
 						Remote.Config.Load();
-						Remote.BattlegroundsBans.Load();
 						Remote.Mercenaries.Load();
 						Remote.LiveSecrets.Load();
 

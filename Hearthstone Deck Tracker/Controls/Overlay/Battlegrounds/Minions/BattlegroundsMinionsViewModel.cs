@@ -110,17 +110,6 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		OnPropertyChanged(nameof(ShowTavernTier7));
 	}
 
-	public IEnumerable<string>? BannedMinions
-	{
-		get => GetProp<IEnumerable<string>?>(null);
-		set
-		{
-			SetProp(value);
-			OnPropertyChanged();
-			OnPropertyChanged(nameof(Groups));
-		}
-	}
-
 	public class TierButton
 	{
 		public int Tier { get; set; }
@@ -182,17 +171,6 @@ public class BattlegroundsMinionsViewModel : ViewModel
 
 					if(!cards.Any())
 						continue;
-
-					if(!isTierAvailable || (BannedMinions != null && BannedMinions.Any()))
-						cards = cards.Select(x =>
-						{
-							if(isTierAvailable && (BannedMinions == null || !BannedMinions.Contains(x.Id)))
-								return x;
-
-							var ret = (Hearthstone.Card)x.Clone();
-							ret.Count = 0;
-							return ret;
-						});
 
 					groups.Add(new CardGroup
 					{
@@ -285,6 +263,5 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		Anomaly = null;
 		IsThorimRelevant = false;
 		IsPaglesFishingRodRelevant = false;
-		BannedMinions = null;
 	}
 }

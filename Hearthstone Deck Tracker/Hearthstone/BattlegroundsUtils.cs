@@ -100,19 +100,5 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return anomalyDbfId;
 			return null;
 		}
-
-		public static IEnumerable<string>? GetMinionsBannedByAnomaly(int? anomalyDbfId)
-		{
-			if(anomalyDbfId == null)
-				return null;
-
-			IEnumerable<RemoteData.BattlegroundsAnomalyBans> allAnomalies = Remote.BattlegroundsBans.Data?.ByAnomaly ?? new List<RemoteData.BattlegroundsAnomalyBans>();
-			var anomalyData = allAnomalies.FirstOrDefault(x => x.AnomalyDbfId == anomalyDbfId);
-
-			if(anomalyData == null)
-				return null;
-
-			return anomalyData.BannedMinionIds;
-		}
 	}
 }
