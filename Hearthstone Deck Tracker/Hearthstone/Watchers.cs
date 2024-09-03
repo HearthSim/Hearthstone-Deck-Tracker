@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal static void OnBaconChange(object sender, HearthWatcher.EventArgs.BaconEventArgs args)
 		{
-			Core.Overlay.SetBaconState(args.SelectedBattlegroundsGameMode, args.IsAnyOpen);
+			Core.Overlay.SetBaconState(args.SelectedBattlegroundsGameMode, args.IsShopOpen || args.IsJournalOpen || args.IsPopupShowing || args.IsBlurActive);
 
 			Core.Overlay.SetFriendListOpacityMask(args.IsFriendslistOpen);
 		}

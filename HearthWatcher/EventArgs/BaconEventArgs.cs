@@ -23,8 +23,6 @@ namespace HearthWatcher.EventArgs
 			SelectedBattlegroundsGameMode = selectedBattlegroundsGameMode;
 		}
 
-		public bool IsAnyOpen => IsShopOpen || IsJournalOpen || IsPopupShowing || IsFriendslistOpen || IsBlurActive;
-
 		public override bool Equals(object obj) => obj is BaconEventArgs args
 			&& IsShopOpen == args.IsShopOpen
 			&& IsJournalOpen == args.IsJournalOpen
