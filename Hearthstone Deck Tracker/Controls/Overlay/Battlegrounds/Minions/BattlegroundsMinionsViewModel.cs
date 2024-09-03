@@ -215,7 +215,10 @@ public class BattlegroundsMinionsViewModel : ViewModel
 			}
 			else if(ActiveMinionType is Race minionType)
 			{
-				foreach(var tierGroup in AvailableTiers)
+				var tiers = AvailableTiers;
+				if(ShowTavernTier7)
+					tiers.Add(7);
+				foreach(var tierGroup in tiers)
 				{
 					var cards = (int)minionType == -1
 						? _db.Value.GetSpells(tierGroup, IsDuos).OrderBy(x => x.Cost).ThenBy(x => x.LocalizedName).ToList()
