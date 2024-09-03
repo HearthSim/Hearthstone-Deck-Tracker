@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected static readonly Rect BoxRect = new Rect(183, 0, 34, 34);
 		protected static readonly Rect MulliganWinrateBoxRect = new Rect(136, 4, 54, 26);
 		protected static readonly Rect ImageRect = new Rect(83, 0, 134, 34);
-		protected static readonly Rect CountTextRect = new Rect(198, 0, double.NaN, 34);
+		protected static readonly Rect CountTextRect = new Rect(196, 0, 14, 34);
 		protected static readonly Rect CostTextRect = new Rect(0, 0, 34, 34);
 
 		protected static readonly Dictionary<ThemeElement, ThemeElementInfo> Required = new Dictionary<ThemeElement, ThemeElementInfo>
@@ -236,9 +236,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var count = Math.Abs(Card.Count);
 			if(count <= 1)
 				return;
-			AddText(Math.Min(count, 9), CountFontSize, rect, CountTextBrush, NumbersTypeFace);
-			if(count > 9)
-				AddText("+", 13, new Rect(rect.X + 5, 3, double.NaN, double.NaN), CountTextBrush, TextTypeFace);
+			AddText(count, CountFontSize, rect, CountTextBrush, NumbersTypeFace, centered: true);
 		}
 
 		protected virtual void AddMulliganWinRate()
