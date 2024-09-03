@@ -48,4 +48,9 @@ public static class LogConstants
 		public static readonly Regex SendChoicesHeaderRegex = CompileRegex(@"id=(?<id>(\d+)) ChoiceType=(?<choiceType>(\w+))");
 		public static readonly Regex SendChoicesBodyRegex = CompileRegex(@"m_chosenEntities\[(?<index>(\d+))]=.* id=(?<id>(\d+))");
 	}
+
+	public static class GameInfo
+	{
+		public static readonly Regex PlayerRegex = CompileRegex(@"PlayerID=(?<playerId>(\d+)), PlayerName=(?<playerName>(.+))");
+	}
 }

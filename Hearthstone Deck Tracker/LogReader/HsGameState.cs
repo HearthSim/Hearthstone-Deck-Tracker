@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
@@ -21,7 +22,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public HsGameState(GameV2 game)
 		{
 			_game = game;
-			KnownCardIds = new Dictionary<int, IList<(string, DeckLocation)>>();
 		}
 		public bool CurrentEntityHasCardId { get; set; }
 		public int CurrentEntityId { get; private set; }
@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool PlayerUsedHeroPower { get; set; }
 		public bool FoundSpectatorStart { get; set; }
 		public int JoustReveals { get; set; }
-		public Dictionary<int, IList<(string, DeckLocation)>> KnownCardIds { get; set; }
+		public Dictionary<int, IList<(string, DeckLocation)>> KnownCardIds { get; set; } = new();
 		public int LastCardPlayed { get; set; }
 		public string? LastPlagueDrawn { get; set; }
 		public bool WasInProgress { get; set; }
@@ -41,8 +41,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public Zone CurrentEntityZone { get; set; }
 		public bool DeterminedPlayers => _game.Player.Id > 0 && _game.Opponent.Id > 0;
 		public Tuple<int, string>? ChameleosReveal { get; set; }
-
 		public int DredgeCounter { get; set; }
+		public Dictionary<string, int> PlayerIdsByPlayerName { get; set; } = new();
 
 		public int GetTurnNumber()
 		{
