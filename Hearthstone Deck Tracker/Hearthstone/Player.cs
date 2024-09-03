@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HSReplay.Requests;
 using HSReplay.Responses;
+using static HearthDb.CardIds;
 
 #endregion
 
@@ -392,7 +393,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(KnownOpponentDeck == null)
 			{
-				return RevealedEntities.Where(x => !(x.Info.GuessedCardState == GuessedCardState.None && x.Info.Hidden && (x.IsInDeck || x.IsInHand))
+				return RevealedEntities.Where(x =>
+										!(x.Info.GuessedCardState == GuessedCardState.None && x.Info.Hidden && (x.IsInDeck || x.IsInHand))
 										&& (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
 										&& (x.GetTag(GameTag.CREATOR) == 1
 											|| ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
@@ -400,7 +402,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 											|| x.IsInHand || x.IsInDeck)
 										&& !CardIds.HiddenCardidPrefixes.Any(y => x.CardId != null && x.CardId.StartsWith(y))
 										&& !EntityIsRemovedFromGamePassive(x)
-										&& !(x.Info.Created && x.IsInSetAside && x.Info.GuessedCardState != GuessedCardState.Guessed))
+										&& !(x.Info.Created && x.IsInSetAside
+											&& (x.Info.GuessedCardState != GuessedCardState.Guessed
+											// Plagues go to setaside when they are drawn. We only want to keep tracking of the ones that are still in the deck,
+											// so we hide them here
+												|| (x.Info.GuessedCardState == GuessedCardState.Guessed
+												&& (x.CardId == NonCollectible.Deathknight.DistressedKvaldir_FrostPlagueToken ||
+													x.CardId == NonCollectible.Deathknight.DistressedKvaldir_BloodPlagueToken ||
+													x.CardId == NonCollectible.Deathknight.DistressedKvaldir_UnholyPlagueToken)
+										))))
 								.GroupBy(e => new {
 									CardId = e.Info.WasTransformed ? e.Info.OriginalCardId : e.CardId,
 									Hidden = (e.IsInHand || e.IsInDeck || (e.IsInSetAside && e.Info.GuessedCardState == GuessedCardState.Guessed)) && e.IsControlledBy(Id),

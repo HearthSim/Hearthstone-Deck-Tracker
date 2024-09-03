@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int JoustReveals { get; set; }
 		public Dictionary<int, IList<(string, DeckLocation)>> KnownCardIds { get; set; } = new();
 		public int LastCardPlayed { get; set; }
-		public string? LastPlagueDrawn { get; set; }
+		public Stack<string> LastPlagueDrawn { get; set; } = new();
 		public bool WasInProgress { get; set; }
 		public int GameTriggerCount { get; set; }
 		public Zone CurrentEntityZone { get; set; }
@@ -56,6 +56,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			GameEnded = false;
 			JoustReveals = 0;
 			KnownCardIds.Clear();
+			LastPlagueDrawn.Clear();
 			LastGameStart = DateTime.Now;
 			WasInProgress = false;
 			CurrentEntityId = 0;

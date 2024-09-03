@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using NuGet;
 using static HearthDb.CardIds;
 using static Hearthstone_Deck_Tracker.LogReader.LogConstants.PowerTaskList;
 
@@ -557,9 +558,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.RivendareWarrider_ZeliekConquestriderToken);
 								break;
 							case NonCollectible.Deathknight.Helya_HelyaEnchantment:
-								if (gameState.LastPlagueDrawn != null)
+								if (!gameState.LastPlagueDrawn.IsEmpty())
 								{
-									AddKnownCardId(gameState, gameState.LastPlagueDrawn);
+									AddKnownCardId(gameState, gameState.LastPlagueDrawn.Pop());
 								}
 								break;
 							case Collectible.Rogue.TombPillagerLOE:

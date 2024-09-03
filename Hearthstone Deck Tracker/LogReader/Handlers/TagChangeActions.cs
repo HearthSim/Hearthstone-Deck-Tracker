@@ -847,7 +847,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						cardId == NonCollectible.Deathknight.DistressedKvaldir_BloodPlagueToken ||
 						cardId == NonCollectible.Deathknight.DistressedKvaldir_UnholyPlagueToken)
 					{
-						gameState.LastPlagueDrawn = cardId;
+						gameState.LastPlagueDrawn.Push(cardId!);
 					}
 					if(controller == game.Player.Id && cardId != null)
 						gameState.GameHandler?.HandlePlayerDraw(entity, cardId, gameState.GetTurnNumber());
