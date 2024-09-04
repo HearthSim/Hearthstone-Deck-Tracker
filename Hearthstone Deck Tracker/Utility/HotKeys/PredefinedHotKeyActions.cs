@@ -109,6 +109,18 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Core.Overlay.UpdatePosition();
 		}
 
+		[PredefinedHotKeyAction("Toggle overlay: active effects", "Turns both active effects on the overlay on or off (if the game is running).")
+		]
+		public static void ToggleOverlayActiveEffects()
+		{
+			if(!Core.Game.IsRunning)
+				return;
+			Config.Instance.HidePlayerActiveEffects = !Config.Instance.HidePlayerActiveEffects;
+			Config.Instance.HidePlayerActiveEffects = Config.Instance.HidePlayerActiveEffects;
+			Config.Save();
+			Core.Overlay.UpdatePosition();
+		}
+
 		[PredefinedHotKeyAction("Toggle My Games panel", "Turns on or off visibility of My Games panel.")]
 		public static void ToggleMyGamesPanel()
 		{

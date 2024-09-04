@@ -57,7 +57,6 @@ namespace Hearthstone_Deck_Tracker
 		private GameStats? _lastGame;
 		private DateTime _lastGameStart;
 
-
 		private bool _showedNoteDialog;
 
 		public GameEventHandler(GameV2 game)
@@ -1787,9 +1786,25 @@ namespace Hearthstone_Deck_Tracker
 			Core.UpdateOpponentCards();
 		}
 
-		public void HandlePlayerRemoveFromPlay(Entity entity, int turn) => _game.Player.RemoveFromPlay(entity, turn);
+		public void HandlePlayerRemoveFromPlay(Entity entity, int turn)
+		{
+			if(entity.IsEnchantment)
+			{
+				_game.ActiveEffects.TryRemoveEffect(entity, true);
+			}
 
-		public void HandleOpponentRemoveFromPlay(Entity entity, int turn) => _game.Player.RemoveFromPlay(entity, turn);
+			_game.Player.RemoveFromPlay(entity, turn);
+		}
+
+		public void HandleOpponentRemoveFromPlay(Entity entity, int turn)
+		{
+			if(entity.IsEnchantment)
+			{
+				_game.ActiveEffects.TryRemoveEffect(entity, false);
+			}
+
+			_game.Player.RemoveFromPlay(entity, turn);
+		}
 
 		public void HandlePlayerCreateInSetAside(Entity entity, int turn) => _game.Player.CreateInSetAside(entity, turn);
 
@@ -1797,16 +1812,27 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn)
 		{
+			if(entity.IsEnchantment)
+			{
+				_game.ActiveEffects.TryRemoveEffect(entity, true);
+			}
+
 			_game.Player.PlayToGraveyard(entity, cardId, turn);
 			var card = Database.GetCardFromId(entity.Info.LatestCardId);
 			if(card != null)
 				GameEvents.OnPlayerPlayToGraveyard.Execute(card);
+
 			if(playersTurn && entity.IsMinion)
 				HandlePlayerMinionDeath(entity);
 		}
 
 		public async void HandleOpponentPlayToGraveyard(Entity entity, string? cardId, int turn, bool playersTurn)
 		{
+			if(entity.IsEnchantment)
+			{
+				_game.ActiveEffects.TryRemoveEffect(entity, false);
+			}
+
 			if(cardId != null)
 				_game.Opponent.PlayToGraveyard(entity, cardId, turn);
 			var card = Database.GetCardFromId(entity.Info.LatestCardId);
@@ -1841,14 +1867,25 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn)
 		{
+			if(entity.IsEnchantment)
+			{
+				_game.ActiveEffects.TryAddEffect(entity, true);
+			}
+
 			_game.Player.CreateInPlay(entity, turn);
 			var card = Database.GetCardFromId(cardId);
+
 			if(card != null)
 				GameEvents.OnPlayerCreateInPlay.Execute(card);
 		}
 
 		public void HandleOpponentCreateInPlay(Entity entity, string? cardId, int turn)
 		{
+			if(entity.IsEnchantment)
+			{
+				_game.ActiveEffects.TryAddEffect(entity, false);
+			}
+
 			if(IsMaestraHero(entity))
 				OpponentIsDisguisedRogue();
 			_game.Opponent.CreateInPlay(entity, turn);

@@ -64,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			TextBoxScaling.Text = Config.Instance.OverlayPlayerScaling.ToString(CultureInfo.InvariantCulture);
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
 			CheckBoxCenterDeckVertically.IsChecked = Config.Instance.OverlayCenterPlayerStackPanel;
+			CheckBoxActiveEffects.IsChecked = !Config.Instance.HidePlayerActiveEffects;
 			CheckBoxAttack.IsChecked = !Config.Instance.HidePlayerAttackIcon;
 			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxCthun.SelectedItem = Config.Instance.PlayerCthunCounter;
@@ -321,6 +322,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HidePlayerAttackIcon = true;
+			Config.Save();
+		}
+
+		private void CheckBoxActiveEffects_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerActiveEffects = false;
+			Config.Save();
+		}
+
+		private void CheckBoxActiveEffects_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerActiveEffects = true;
 			Config.Save();
 		}
 

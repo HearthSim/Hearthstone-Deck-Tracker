@@ -1,0 +1,118 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects.ActiveEffectsOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             >
+    <Grid>
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext.IsPlayer, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False">
+                        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleY="-1" />
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid Margin="{Binding OuterMargin}">
+                <ItemsControl ItemsSource="{Binding VisibleEffects}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="{Binding ColumnCount}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                              <Grid Width="{Binding DataContext.EffectSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    Height="{Binding DataContext.EffectSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    Margin="{Binding DataContext.InnerMargin, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                  <Grid.Style>
+                                      <Style TargetType="Grid">
+                                          <Style.Triggers>
+                                              <DataTrigger Binding="{Binding DataContext.IsPlayer, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False">
+                                                  <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                                                  <Setter Property="RenderTransform">
+                                                      <Setter.Value>
+                                                          <ScaleTransform ScaleY="-1" />
+                                                      </Setter.Value>
+                                                  </Setter>
+                                              </DataTrigger>
+                                          </Style.Triggers>
+                                      </Style>
+                                  </Grid.Style>
+                                  <Grid.Effect>
+                                        <DropShadowEffect Color="{Binding ShadowColor}" BlurRadius="24" ShadowDepth="1"/>
+                                    </Grid.Effect>
+                                    <Border BorderThickness="3" CornerRadius="8">
+                                        <Border.BorderBrush>
+                                            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                                                <GradientStop Color="{Binding BorderDarkerColor}" Offset="0" />
+                                                <GradientStop Color="{Binding BorderColor}" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.BorderBrush>
+                                        <Border BorderThickness="3" CornerRadius="5">
+                                            <Border.BorderBrush>
+                                                <LinearGradientBrush StartPoint="0,0.6" EndPoint="1,0">
+                                                    <GradientStop Color="{Binding BorderDarkerColor}" Offset="0.5" />
+                                                    <GradientStop Color="{Binding BorderColor}" Offset="0" />
+                                                </LinearGradientBrush>
+                                            </Border.BorderBrush>
+                                            <Rectangle Height="37" Width="37" RadiusX="4" RadiusY="4">
+                                                <Rectangle.Fill>
+                                                    <ImageBrush
+                                                        x:Name="ImgBrush"
+                                                        ImageSource="{Binding Effect.CardAsset.AssetPath}">
+                                                        <ImageBrush.Transform>
+                                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="20" CenterY="14" />
+                                                        </ImageBrush.Transform>
+                                                    </ImageBrush>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                        </Border>
+                                    </Border>
+                                    <Canvas Width="48" Height="48">
+                                        <Canvas.Style>
+                                            <Style TargetType="Canvas">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Count}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Canvas.Style>
+                                        <Grid Width="24" Height="24" Canvas.Right="-8" Canvas.Bottom="-8">
+                                            <Grid.Effect>
+                                                <DropShadowEffect Color="{Binding BorderDarkerColor}" BlurRadius="4" ShadowDepth="0" />
+                                            </Grid.Effect>
+                                            <Border CornerRadius="12" Width="24" Height="24">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0.5,0.5" EndPoint="1,1">
+                                                        <GradientStop Color="{Binding BorderColor}" Offset="0" />
+                                                        <GradientStop Color="{Binding BorderDarkerColor}" Offset="1.0" />
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                    Text="{Binding Count}"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontWeight="Bold"
+                                                    MaxWidth="36">
+                                                </hearthstoneDeckTracker:HearthstoneTextBlock>
+                                            </Border>
+                                        </Grid>
+                                    </Canvas>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -187,6 +187,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				HideBgsTopBar();
 			}
 
+			UpdateActiveEffects();
+
 			UpdateIcons();
 
 			SetDeckTitle();
@@ -199,6 +201,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Core.Windows.PlayerWindow.Update();
 			if (Core.Windows.OpponentWindow.Visibility == Visible)
 				Core.Windows.OpponentWindow.Update();
+
+		}
+
+		private void UpdateActiveEffects()
+		{
+			var inBattlegrounds = _game.IsBattlegroundsMatch;
+
+			if(_game.IsInMenu || !_game.IsMulliganDone || inBattlegrounds)
+			{
+				PlayerActiveEffects.Visibility = Collapsed;
+				OpponentActiveEffects.Visibility = Collapsed;
+			}
+			else
+			{
+				PlayerActiveEffects.Visibility = Config.Instance.HidePlayerActiveEffects ? Collapsed : Visible;
+				OpponentActiveEffects.Visibility = Config.Instance.HideOpponentActiveEffects ? Collapsed : Visible;
+			}
 		}
 
 		private void UpdateIcons()
@@ -359,8 +378,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
-			UpdateElementSizes();
 			ApplyAutoScaling();
+			UpdateElementSizes();
 			UpdateElementPositions();
 			UpdateOpacityMask();
 
@@ -437,6 +456,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(WotogIconsPlayer, Helper.GetScaledXPos(Config.Instance.WotogIconsPlayerHorizontal / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(WotogIconsOpponent, Height * Config.Instance.WotogIconsOpponentVertical / 100);
 			Canvas.SetLeft(WotogIconsOpponent, Helper.GetScaledXPos(Config.Instance.WotogIconsOpponentHorizontal / 100, (int)Width, ScreenRatio));
+			Canvas.SetTop(PlayerActiveEffects, Height * Config.Instance.PlayerActiveEffectsVertical / 100);
+			Canvas.SetLeft(PlayerActiveEffects, Helper.GetScaledXPos(Config.Instance.PlayerActiveEffectsHorizontal / 100, (int)Width, ScreenRatio));
+			Canvas.SetTop(OpponentActiveEffects, Height - (OpponentActiveEffects.ActualHeight * _activeEffectsScale + Height * Config.Instance.OpponentActiveEffectsVertical / 100));
+			Canvas.SetLeft(OpponentActiveEffects, Helper.GetScaledXPos(Config.Instance.OpponentActiveEffectsHorizontal / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackPlayer, Height * Config.Instance.AttackIconPlayerVerticalPosition / 100);
 			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
@@ -478,6 +501,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		private double _wotogSize;
+		private double _activeEffectsScale;
 		private void UpdateElementSizes()
 		{
 			OnPropertyChanged(nameof(PlayerStackHeight));
@@ -514,6 +538,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsPlayer.RenderTransform = new ScaleTransform(wotogSize, wotogSize);
 				WotogIconsOpponent.RenderTransform = new ScaleTransform(wotogSize, wotogSize);
 				_wotogSize = wotogSize;
+			}
+
+			var activeEffectsSize = Height / 1080;
+			if(_activeEffectsScale != activeEffectsSize)
+			{
+				PlayerActiveEffects.RenderTransform = new ScaleTransform(activeEffectsSize, activeEffectsSize);
+				OpponentActiveEffects.RenderTransform = new ScaleTransform(activeEffectsSize, activeEffectsSize);
+				_activeEffectsScale = activeEffectsSize;
 			}
 
 			BattlegroundsMinionsPanel.MinionScrollViewer.MaxHeight = (ActualHeight * 0.89) / (_bgsTopBarBehavior.GetScaling?.Invoke() ?? 1.0);

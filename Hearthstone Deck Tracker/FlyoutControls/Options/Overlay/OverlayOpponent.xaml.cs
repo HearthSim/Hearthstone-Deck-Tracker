@@ -80,6 +80,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxCenterDeckVertically.IsChecked = Config.Instance.OverlayCenterOpponentStackPanel;
 			CheckboxIncludeCreated.IsChecked = Config.Instance.OpponentIncludeCreated;
 			CheckBoxAttack.IsChecked = !Config.Instance.HideOpponentAttackIcon;
+			CheckBoxActiveEffects.IsChecked = !Config.Instance.HideOpponentActiveEffects;
 			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxCthun.SelectedItem = Config.Instance.OpponentCthunCounter;
 			ComboBoxSpells.ItemsSource = new[] {DisplayMode.Always, DisplayMode.Never};
@@ -306,6 +307,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HideOpponentAttackIcon = true;
+			Config.Save();
+		}
+
+		private void CheckBoxActiveEffects_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentActiveEffects = false;
+			Config.Save();
+		}
+
+		private void CheckBoxActiveEffects_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentActiveEffects = true;
 			Config.Save();
 		}
 

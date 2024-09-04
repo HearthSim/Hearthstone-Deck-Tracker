@@ -179,6 +179,11 @@
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxHideSecrets_Checked"
                   Unchecked="CheckboxHideSecrets_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckBoxActiveEffects"
+                  Content="{lex:LocText Options_Overlay_Opponent_CheckBox_ActiveEffects}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxActiveEffects_Checked"
+                  Unchecked="CheckBoxActiveEffects_Unchecked" />
         <CheckBox x:Name="CheckBoxAttack"
                   Content="{lex:LocText Options_Overlay_Opponent_CheckBox_Attack}" HorizontalAlignment="Left"
                   Margin="10,5,0,0" VerticalAlignment="Top"

@@ -141,6 +141,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.Reset(nameof(Config.WotogIconsOpponentHorizontal));
 			Config.Instance.Reset(nameof(Config.WotogIconsOpponentVertical));
 
+			Config.Instance.Reset(nameof(Config.PlayerActiveEffectsHorizontal));
+			Config.Instance.Reset(nameof(Config.PlayerActiveEffectsVertical));
+
+			Config.Instance.Reset(nameof(Config.OpponentActiveEffectsHorizontal));
+			Config.Instance.Reset(nameof(Config.OpponentActiveEffectsVertical));
+
 			Config.Instance.Reset(nameof(Config.AttackIconPlayerHorizontalPosition));
 			Config.Instance.Reset(nameof(Config.AttackIconPlayerVerticalPosition));
 

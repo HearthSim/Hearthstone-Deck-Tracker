@@ -8,6 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -140,6 +141,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
+			if(_selectedUiElement is ActiveEffectsOverlay activeEffects)
+			{
+				if(activeEffects.Equals(PlayerActiveEffects))
+				{
+					Config.Instance.PlayerActiveEffectsVertical += delta.Y / Height;
+					Config.Instance.PlayerActiveEffectsHorizontal += delta.X / (Width * ScreenRatio);
+					Canvas.SetTop(_movableElements[activeEffects], Height * Config.Instance.PlayerActiveEffectsVertical / 100);
+					Canvas.SetLeft(_movableElements[activeEffects], Helper.GetScaledXPos(Config.Instance.PlayerActiveEffectsHorizontal / 100, (int)Width, ScreenRatio));
+					return;
+				}
+				if(activeEffects.Equals(OpponentActiveEffects))
+				{
+					Config.Instance.OpponentActiveEffectsVertical -= delta.Y / Height;
+					Config.Instance.OpponentActiveEffectsHorizontal += delta.X / (Width * ScreenRatio);
+					Canvas.SetTop(_movableElements[activeEffects], Height - (OpponentActiveEffects.ActualHeight * _activeEffectsScale + Height * Config.Instance.OpponentActiveEffectsVertical / 100));
+					Canvas.SetLeft(_movableElements[activeEffects], Helper.GetScaledXPos(Config.Instance.OpponentActiveEffectsHorizontal / 100, (int)Width, ScreenRatio));
+				}
+			}
+
 			if (_selectedUiElement is HearthstoneTextBlock timer)
 			{
 				if (timer.Equals(LblPlayerTurnTime))
@@ -206,6 +226,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						_selectedUiElement = element.Key;
 						return;
 					}
+					if(element.Key is ActiveEffectsOverlay && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
+					{
+						_selectedUiElement = element.Key;
+						return;
+					}
 				}
 			}
 
@@ -241,6 +266,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 						ShowTimers();
 					WotogIconsPlayer.ForceShow(true);
 					WotogIconsOpponent.ForceShow(true);
+
+					PlayerActiveEffects.ForceShowExampleEffects(true);
+					OpponentActiveEffects.ForceShowExampleEffects(false);
 				}
 
 				foreach (var movableElement in _movableElements)
@@ -252,8 +280,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 						movableElement.Value.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#4C0000FF");
 
-						Canvas.SetTop(movableElement.Value, Canvas.GetTop(movableElement.Key));
-						Canvas.SetLeft(movableElement.Value, Canvas.GetLeft(movableElement.Key));
+						if(movableElement.Key == OpponentActiveEffects)
+						{
+							Canvas.SetTop(movableElement.Value, Height - (OpponentActiveEffects.MaxHeight * _activeEffectsScale + Height * Config.Instance.OpponentActiveEffectsVertical / 100));
+							Canvas.SetLeft(movableElement.Value, Canvas.GetLeft(movableElement.Key));
+						}
+						else
+						{
+							Canvas.SetTop(movableElement.Value, Canvas.GetTop(movableElement.Key));
+							Canvas.SetLeft(movableElement.Value, Canvas.GetLeft(movableElement.Key));
+						}
 
 						var elementSize = GetUiElementSize(movableElement.Key);
 						if (movableElement.Key == BorderStackPanelPlayer)
@@ -319,6 +355,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsPlayer.ForceShow(false);
 				WotogIconsOpponent.ForceShow(false);
 
+				PlayerActiveEffects.ForceHideExampleEffects();
+				OpponentActiveEffects.ForceHideExampleEffects();
+
 				foreach(var movableElement in _movableElements)
 					movableElement.Value.Visibility = Visibility.Collapsed;
 			}
@@ -346,6 +385,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return new Size(block.ActualWidth, block.ActualHeight);
 			if(element is WotogCounter wotogIcons)
 				return new Size(wotogIcons.IconWidth * _wotogSize, wotogIcons.ActualHeight * _wotogSize);
+			if(element is ActiveEffectsOverlay activeEffects)
+			{
+				var width = activeEffects.MaxWidth * _activeEffectsScale;
+				var height =  activeEffects.MaxHeight * _activeEffectsScale;
+
+				return new Size(width, height);
+			}
 			return new Size();
 		}
 		public void HookMouse()

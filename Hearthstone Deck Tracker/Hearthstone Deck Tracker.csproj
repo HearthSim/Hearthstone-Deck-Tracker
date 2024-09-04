@@ -90,6 +90,7 @@
     <Reference Include="BobsBuddy">
       <HintPath>..\lib\BobsBuddy.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="ReachFramework" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Deployment" />
@@ -174,6 +175,11 @@
     </Page>
     <Page Update="Controls\Overlay\Constructed\Mulligan\ConstructedMulliganGuide.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Controls\Overlay\Constructed\ActiveEffects\ActiveEffectsOverlay.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
 

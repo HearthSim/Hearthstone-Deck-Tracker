@@ -43,5 +43,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("show_news_bar")]
 		public bool ShowNewsBar { get => Config.Instance.IgnoreNewsId < (Remote.Config.Data?.News?.Id ?? 0); }
+
+		[JsonProperty("player_active_effects")]
+		public bool PlayerActiveEffects { get => !Config.Instance.HidePlayerActiveEffects; }
+
+		[JsonProperty("opponent_active_effects")]
+		public bool OpponentActiveEffects { get => !Config.Instance.HideOpponentActiveEffects; }
 	}
 }

@@ -104,17 +104,17 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(null)]
 		public int? ArenaStatsCustomSeasonMax = null;
 
-		[DefaultValue(71.67)]
-		public double AttackIconPlayerVerticalPosition = 71.67;
+		[DefaultValue(67.62)]
+		public double AttackIconPlayerVerticalPosition = 67.62;
 
-		[DefaultValue(67.5)]
-		public double AttackIconPlayerHorizontalPosition = 67.5;
+		[DefaultValue(25.5)]
+		public double AttackIconPlayerHorizontalPosition = 25.5;
 
-		[DefaultValue(19.91)]
-		public double AttackIconOpponentVerticalPosition = 19.91;
+		[DefaultValue(22.39)]
+		public double AttackIconOpponentVerticalPosition = 22.39;
 
-		[DefaultValue(67.5)]
-		public double AttackIconOpponentHorizontalPosition = 67.5;
+		[DefaultValue(25.5)]
+		public double AttackIconOpponentHorizontalPosition = 25.5;
 
 		[DefaultValue(false)]
 		public bool AutoArchiveArenaDecks = false;
@@ -401,6 +401,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool HideOpponentAttackIcon = true;
 
+		[DefaultValue(false)]
+		public bool HideOpponentActiveEffects = false;
+
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode OpponentCthunCounter = DisplayMode.Auto;
 
@@ -454,6 +457,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool HidePlayerAttackIcon = true;
+
+		[DefaultValue(false)]
+		public bool HidePlayerActiveEffects = false;
 
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode PlayerCthunCounter = DisplayMode.Auto;
@@ -1132,6 +1138,18 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool WindowsTopmostIfHsForeground = false;
+
+		[DefaultValue(66.7)]
+		public double PlayerActiveEffectsVertical = 66.7;
+
+		[DefaultValue(66.8)]
+		public double PlayerActiveEffectsHorizontal = 66.8;
+
+		[DefaultValue(68.6)]
+		public double OpponentActiveEffectsVertical = 68.6;
+
+		[DefaultValue(66.8)]
+		public double OpponentActiveEffectsHorizontal = 66.8;
 
 		[DefaultValue(68.5)]
 		public double WotogIconsPlayerVertical = 68.5;

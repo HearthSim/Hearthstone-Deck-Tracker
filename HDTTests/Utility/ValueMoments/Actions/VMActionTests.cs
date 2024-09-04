@@ -77,7 +77,9 @@ namespace HDTTests.Utility.ValueMoments.Actions
 					"overlay_menu_hide_if_hs_in_background",
 					"card_tooltips",
 					"analytics_submit_anonymous_data",
-					"show_news_bar"
+					"show_news_bar",
+					"player_active_effects",
+					"opponent_active_effects"
 				}},
 				{ "hdt_general_settings_disabled", new []{
 					"overlay_hide_completely",

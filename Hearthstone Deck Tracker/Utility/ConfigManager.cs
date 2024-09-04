@@ -229,6 +229,21 @@ namespace Hearthstone_Deck_Tracker.Utility
 					DataIssueResolver.RunDeckStatsFix = true;
 			}
 
+			if(configVersion <= new Version(1, 31, 5, 0))
+			{
+				if(Math.Abs(Config.Instance.AttackIconPlayerVerticalPosition - 71.67) < 0.01
+				   && Math.Abs(Config.Instance.AttackIconPlayerHorizontalPosition - 67.5) < 0.01
+				   && Math.Abs(Config.Instance.AttackIconOpponentVerticalPosition - 19.91) < 0.01
+				   && Math.Abs(Config.Instance.AttackIconOpponentHorizontalPosition - 67.5) < 0.01)
+				{
+					Config.Instance.Reset(nameof(Config.AttackIconPlayerVerticalPosition));
+					Config.Instance.Reset(nameof(Config.AttackIconPlayerHorizontalPosition));
+					Config.Instance.Reset(nameof(Config.AttackIconOpponentVerticalPosition));
+					Config.Instance.Reset(nameof(Config.AttackIconOpponentHorizontalPosition));
+					converted = true;
+				}
+			}
+
 			if(!Config.Instance.DeckPanelOrderLocalPlayer.Contains(DeckPanel.Sideboards))
 			{
 				Config.Instance.DeckPanelOrderLocalPlayer = Config.Instance.DeckPanelOrderLocalPlayer.SelectMany(x =>
