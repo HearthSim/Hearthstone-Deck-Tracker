@@ -1158,18 +1158,25 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(choice.ChoiceType == ChoiceType.GENERAL && _game.IsBattlegroundsMatch)
 			{
+				var offeredEntities = choice.OfferedEntityIds?
+					.Select(id => _game.Entities.TryGetValue(id, out var e) ? e : null)
+					.WhereNotNull().ToList() ?? new List<Entity>();
+
 				if(
 					_game.Entities.TryGetValue(choice.SourceEntityId, out var source) &&
-					source.GetTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) > 0
+					source.GetTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) > 0 &&
+					offeredEntities.All(x => x.IsBattlegroundsTrinket)
 				)
 				{
-					var offered = choice.OfferedEntityIds
-						?.Select(id => _game.Entities.TryGetValue(id, out var e) ? e : null)
-						.WhereNotNull()
-						.Where(x => x.IsBattlegroundsTrinket)
-						.ToList() ?? new List<Entity>();
-					var existingTrinkets = Core.Game.Player.Trinkets.Select(x => x.Card.Id);
-					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(existingTrinkets.Concat(offered.Select(x => x.Card.Id)));
+					var offered = offeredEntities.Where(x => x.IsBattlegroundsTrinket).ToList();
+					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(_game.Player.Trinkets.Concat(offered).Select(x => x.Card.Id));
+				}
+				if(offeredEntities.All(x => x.IsHeroPower))
+				{
+					var offered = offeredEntities.Where(x => x.IsHeroPower).ToList();
+					Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(
+						_game.Player.Board.Where(x => x.IsHeroPower).Concat(offered).Select(x => x.Card.Id)
+					);
 				}
 			}
 		}
@@ -1212,6 +1219,9 @@ namespace Hearthstone_Deck_Tracker
 						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 						if((source?.GetTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) ?? 0) > 0)
 							Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Concat(chosen).Select(x => x.Card.Id));
+						Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(
+							_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id)
+						);
 					}
 					break;
 			}
