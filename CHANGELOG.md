@@ -1,4 +1,4 @@
-## **Release v1.32.0 - 2024-09-04**
+## **Release v1.32.1 - 2024-09-04**
 **Deck Tracker**:
 - Fixed Plagues not being tracked correctly after playing Helya.
 - Fixed Plagues not being removed from the deck list when playing Steamcleaner.
