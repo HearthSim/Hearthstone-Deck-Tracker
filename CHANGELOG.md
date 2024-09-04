@@ -1,3 +1,20 @@
+## **Release v1.32.0 - 2024-09-04**
+**Deck Tracker**:
+- Fixed Plagues not being tracked correctly after playing Helya.
+- Fixed Plagues not being removed from the deck list when playing Steamcleaner.
+- Show exact card counts, even when there's more than 9 cards in the deck.
+
+**Overlay:**
+- New Active Effects Indicator: Added a visual indicator to the overlay to show when game effects are present.
+- New Overlay Masking Feature: Introduced a mask that automatically hides the tracker overlay when a specific game UI element is focused. This feature ensures the tracker is more seamlessly integrated with the game interface, reducing clutter and enhancing immersion.
+- Automatically show Tavern Tier 7 in the Battlegrounds minion browser when Pagle's Fishing Rod or Thorim's Hero Power is offered.
+- Fixed Brann Bronzebeard having a golden star in the Battlegrounds minion browser.
+- Fixed minions from Tavern Tier 7 not appearing when filtering for a specific minion type.
+
+**Streaming:**
+- Added a streaming-specific masking setting for the capturable overlay. This setting allows you to choose whether the overlay should be masked when streaming or not.\
+  *You'll find this setting under Options > Streaming > Capturable Overlay*
+
 ## **Release v1.31.5 - 2024-08-29**
 **Updated for Hearthstone 30.2.2**
 
