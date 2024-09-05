@@ -204,8 +204,11 @@ namespace HearthWatcher.LogReader
 						_logFileExists = true;
 						OnLogFileFound?.Invoke(Info.Name);
 					}
-					using(var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+
+					FileStream? fs = null;
+					try
 					{
+						fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 						fs.Seek(_offset, SeekOrigin.Begin);
 						if(fs.Length == _offset)
 						{
@@ -233,6 +236,17 @@ namespace HearthWatcher.LogReader
 								_offset += Encoding.UTF8.GetByteCount(line + Environment.NewLine);
 							}
 						}
+					}
+					catch {
+						// some kind of error - maybe the log file has disappeared?
+						// stick around until somebody calls Stop()
+						Thread.Sleep(LogWatcher.UpdateDelay);
+						continue;
+					}
+					finally
+					{
+						if(fs is IDisposable dispose)
+							dispose.Dispose();
 					}
 				}
 				Thread.Sleep(LogWatcher.UpdateDelay);
