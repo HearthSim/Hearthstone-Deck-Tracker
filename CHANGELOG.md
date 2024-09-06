@@ -1,3 +1,10 @@
+## **Release v1.32.2 - 2024-09-06**
+**General**:
+- Fixed a silent crash that affected certain devices after playing a few matches.
+
+**Bob's Buddy**:
+- Increased the maximum simulation time when Leapfroggers are present.
+
 ## **Release v1.32.1 - 2024-09-04**
 **Deck Tracker**:
 - Fixed Plagues not being tracked correctly after playing Helya.
