@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private const int StateChangeDelay = 500;
 		private const int MaxTime = 1_500;
 		private const int MaxTimeForComplexBoards = 3_000;
+		private const int MaxTimeForLeapfrogger = 5_000;
 		private const int MinimumSimulationsToReportSentry = 2500;
 		private const int LichKingDelay = 2000;
 
@@ -823,7 +824,29 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				var start = DateTime.Now;
 
-				int timeAlloted = _input.Player.Side.Count >= 6 || _input.Opponent.Side.Count >= 6 ? MaxTimeForComplexBoards : MaxTime;
+				var timeAlloted = MaxTime;
+
+				bool IsLeapfroggerCombo(IEnumerable<Minion>? side)
+				{
+					if(side == null)
+						return false;
+					var list = side.ToList();
+					return list.Count() >= 3 && list.Any(x => x.cardID == NonCollectible.Neutral.Leapfrogger);
+				}
+
+				if(
+					IsLeapfroggerCombo(_input.Player.Side) ||
+					IsLeapfroggerCombo(_input.PlayerTeammate?.Side) ||
+					IsLeapfroggerCombo(_input.Opponent.Side) ||
+					IsLeapfroggerCombo(_input.OpponentTeammate?.Side)
+				)
+				{
+					timeAlloted = MaxTimeForLeapfrogger;
+				}
+				else if(_input.Player.Side.Count >= 6 || _input.Opponent.Side.Count >= 6)
+				{
+					timeAlloted = MaxTimeForComplexBoards;
+				}
 				Output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount, timeAlloted);
 				DoNotReport = false;
 
