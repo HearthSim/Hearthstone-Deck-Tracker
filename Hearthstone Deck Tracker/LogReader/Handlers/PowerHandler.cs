@@ -439,6 +439,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Paladin.ImmortalPrelate:
 								AddKnownCardId(gameState, Collectible.Paladin.ImmortalPrelate);
 								break;
+							case Collectible.Neutral.Explodineer:
 							case Collectible.Warrior.Wrenchcalibur:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SeaforiumBomber_BombToken);
 								break;

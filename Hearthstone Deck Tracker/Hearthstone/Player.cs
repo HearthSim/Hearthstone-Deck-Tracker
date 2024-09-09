@@ -409,7 +409,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 												|| (x.Info.GuessedCardState == GuessedCardState.Guessed
 												&& (x.CardId == NonCollectible.Deathknight.DistressedKvaldir_FrostPlagueToken ||
 													x.CardId == NonCollectible.Deathknight.DistressedKvaldir_BloodPlagueToken ||
-													x.CardId == NonCollectible.Deathknight.DistressedKvaldir_UnholyPlagueToken)
+													x.CardId == NonCollectible.Deathknight.DistressedKvaldir_UnholyPlagueToken ||
+													x.CardId == NonCollectible.Neutral.Incindius_EruptionToken ||
+													x.CardId == NonCollectible.Neutral.SeaforiumBomber_BombToken)
 										))))
 								.GroupBy(e => new {
 									CardId = e.Info.WasTransformed ? e.Info.OriginalCardId : e.CardId,
