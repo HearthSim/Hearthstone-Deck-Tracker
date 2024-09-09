@@ -23,7 +23,13 @@ public class ActiveEffects
 
 		if(effect == null) return;
 
-		// TODO: Make sure only 1 enchant is added for both players
+		var effects = GetTargetEffectsList(effect, controlledByPlayer);
+
+		if(effect.UniqueEffect && effects.Any(e => e.CardId == effect.CardId))
+		{
+			return;
+		}
+
 		if(effect.EffectTarget == EffectTarget.Both)
 		{
 			_playerEffects.Add(effect);
@@ -31,8 +37,6 @@ public class ActiveEffects
 			NotifyEffectsChanged();
 			return;
 		}
-
-		var effects = GetTargetEffectsList(effect, controlledByPlayer);
 
 		effects.Add(effect);
 
@@ -45,7 +49,6 @@ public class ActiveEffects
 
 		if (sampleEffect == null) return;
 
-		// TODO: Make sure only 1 enchant is added for both players
 		if(sampleEffect.EffectTarget == EffectTarget.Both)
 		{
 			_playerEffects.RemoveAll(e => e.EntityId == sourceEntity.Id);

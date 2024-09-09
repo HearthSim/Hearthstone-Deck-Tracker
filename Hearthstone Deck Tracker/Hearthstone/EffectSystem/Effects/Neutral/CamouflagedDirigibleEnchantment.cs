@@ -11,6 +11,7 @@ public class CamouflagedDirigibleEnchantment : EntityBasedEffect
 	{
 	}
 
+	public override bool UniqueEffect => true;
 	public override EffectDuration EffectDuration => EffectDuration.NextTurn;
 	public override EffectTag EffectTag => EffectTag.MinionModification;
 }

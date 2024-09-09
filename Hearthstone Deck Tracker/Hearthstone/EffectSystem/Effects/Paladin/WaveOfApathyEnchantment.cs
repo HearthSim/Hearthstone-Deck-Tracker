@@ -11,6 +11,7 @@ public class WaveOfApathyEnchantment : EntityBasedEffect
 	{
 	}
 
+	public override bool UniqueEffect => true;
 	public override EffectTarget EffectTarget => EffectTarget.Enemy;
 
 	public override EffectDuration EffectDuration => EffectDuration.NextTurn;

@@ -20,6 +20,7 @@ public abstract class EntityBasedEffect : IShowInGlobalEffectList
 
 	public virtual bool ShowNumberInPlay => true;
 	public virtual EffectTarget EffectTarget => EffectTarget.Self;
+	public virtual bool UniqueEffect => false;
 
 	[Required]
 	public abstract EffectDuration EffectDuration { get; }
