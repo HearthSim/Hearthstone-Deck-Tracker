@@ -1,3 +1,9 @@
+## **Release v1.33.0 - 2024-09-10**
+**Updated for Hearthstone 30.4.0**
+
+**Overlay**:
+- Fixed some active effects appearing having an unnecessary counter (e.g. Tar Slick).
+
 ## **Release v1.32.2 - 2024-09-06**
 **General**:
 - Fixed a silent crash that affected certain devices after playing a few matches.
