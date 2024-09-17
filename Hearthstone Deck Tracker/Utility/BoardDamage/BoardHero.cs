@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		private readonly BoardCard _hero;
 		private readonly BoardCard? _weapon;
 
-		public BoardHero(Entity hero, Entity weapon, bool activeTurn)
+		public BoardHero(Entity hero, Entity? weapon, bool activeTurn)
 		{
 			_hero = new BoardCard(hero, activeTurn);
 			// hero gains windfury with weapon, doubling attack get base attack
@@ -46,16 +46,23 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		{
 			if(Include)
 			{
-				// weapon is equipped
 				if(_weapon != null)
 				{
-					// windfury weapon, with 2 or more charges,
-					// and hero hasn't attacked yet this turn.
-					if(_weapon.Windfury && _weapon.Health >= 2 && _hero.AttacksThisTurn == 0)
+					if((_hero.Windfury || _weapon.Windfury) && _weapon.Health >= 2 && _hero.AttacksThisTurn == 0)
 					{
-						// double the hero attack value
 						return _baseAttack * 2;
 					}
+
+					if(_hero.Windfury && !_weapon.Windfury && _weapon.Health == 1)
+					{
+						return _baseAttack * 2 - _weapon.Attack;
+					}
+
+				}
+				// Hero got windfury from other means (Inara, Sand Art Elemental)
+				else if(_hero.Windfury && _hero.AttacksThisTurn == 0)
+				{
+					return _baseAttack * 2;
 				}
 			}
 			// otherwise normal hero attack is correct

@@ -112,5 +112,37 @@ namespace HDTTests.BoardDamage
 				true);
 			Assert.AreEqual(4, hero.Attack);
 		}
+
+		[TestMethod]
+		public void HeroGotWindfuryFromMinion()
+		{
+			var hero = new BoardHero(
+				_hero.Attack(1).Windfury().ToEntity(),
+				null,
+				true
+			);
+			Assert.AreEqual(hero.Attack, 2);
+		}
+
+		[TestMethod]
+		public void WindfuryHeroAttackedOnce()
+		{
+			var hero = new BoardHero(
+				_hero.Attack(1).Windfury().AttacksThisTurn(1).ToEntity(),
+				null,
+				true);
+			Assert.AreEqual(1, hero.Attack);
+		}
+
+		[TestMethod]
+		public void HeroGotWindfuryFromMinionAndHasSingleChargeWeapon()
+		{
+			var hero = new BoardHero(
+				_hero.Attack(7).Windfury().ToEntity(),
+				_weapon.Attack(6).Damage(1).ToEntity(),
+				true
+			);
+			Assert.AreEqual(8, hero.Attack);
+		}
 	}
 }

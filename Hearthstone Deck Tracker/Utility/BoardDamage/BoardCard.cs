@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			Silenced = e.GetTag(SILENCED) == 1;
 			Charge = e.GetTag(CHARGE) == 1;
 			Windfury = e.GetTag(WINDFURY) == 1;
-			MegaWindfury = (e.CardId == HearthDb.CardIds.NonCollectible.Neutral.MimironsHead_V07Tr0NToken || e.CardId == HearthDb.CardIds.Collectible.Shaman.WalkingMountain);
+			MegaWindfury = e.GetTag(MEGA_WINDFURY) == 1 || e.GetTag(WINDFURY) == 3;
 			AttacksThisTurn = e.GetTag(NUM_ATTACKS_THIS_TURN);
 			_dormant = e.GetTag(DORMANT) == 1;
 			_isTitan = e.GetTag(TITAN) == 1;
@@ -126,6 +126,10 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			{
 				// newly played card could be given charge
 				return Charge && AttacksThisTurn == 0;
+			}
+			if(AttacksThisTurn == AttacksPerTurn)
+			{
+				return false;
 			}
 			// sometimes cards seem to be in wrong zone while in play,
 			// these cards don't become exhausted, so check attacks.

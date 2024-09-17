@@ -102,6 +102,12 @@ namespace HDTTests.BoardDamage
 			return this;
 		}
 
+		public EntityBuilder MegaWindfury()
+		{
+			_instance.SetTag(GameTag.WINDFURY, 3);
+			return this;
+		}
+
 		public EntityBuilder InPlay()
 		{
 			_instance.SetTag(GameTag.ZONE, (int)Zone.PLAY);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using NuGet;
 using static HearthDb.Enums.GameTag;
 
 #endregion
@@ -36,10 +37,20 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 
 		public int Damage => Cards.Where(x => x.Include).Sum(x => x.Attack);
 
-		public Entity GetWeapon(List<Entity> list)
+		public Entity? GetWeapon(List<Entity> list)
 		{
 			var weapons = list.Where(x => x.IsWeapon).ToList();
-			return weapons.Count == 1 ? weapons[0] : list.FirstOrDefault(x => x.HasTag(JUST_PLAYED) && x.GetTag(JUST_PLAYED) == 1);
+			if (weapons.IsEmpty())
+			{
+				return null;
+			}
+
+			if(weapons.Count == 1)
+			{
+				return weapons[0];
+			}
+
+			return list.FirstOrDefault(x => x.HasTag(JUST_PLAYED) && x.GetTag(JUST_PLAYED) == 1);
 		}
 
 		public override string ToString() => $"(H:{Hero?.Health ?? 0} A:{Damage})";

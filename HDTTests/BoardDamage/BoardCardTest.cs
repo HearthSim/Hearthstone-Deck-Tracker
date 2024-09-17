@@ -181,7 +181,7 @@ namespace HDTTests.BoardDamage
 		[DataRow(CardIds.Collectible.Shaman.WalkingMountain, DisplayName = "Walking Mountain")]
 		public void Attack_MegaWindfury(string cardId)
 		{
-			var eb = new EntityBuilder(cardId, 4, 8).Windfury().Charge().InPlay();
+			var eb = new EntityBuilder(cardId, 4, 8).MegaWindfury().Charge().InPlay();
 
 			Assert.AreEqual(16, eb.ToBoardCard().Attack);
 			Assert.AreEqual(16, eb.Exhausted().ToBoardCard(false).Attack);
