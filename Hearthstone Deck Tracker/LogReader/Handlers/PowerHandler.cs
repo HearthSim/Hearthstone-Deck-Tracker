@@ -174,6 +174,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					_tagChangeHandler.InvokeQueuedActions(game);
 				gameState.CurrentEntityHasCardId = !string.IsNullOrEmpty(cardId);
 				gameState.CurrentEntityZone = zone;
+
+				// For tourists, a different entity of the Tourist card is created by the TouristEnchantment, and that entity is REMOVEDFROMGAME.
+				// we can predict, then, that there is a real entity of that cardId on the opponents deck.
+				if(zone == Zone.REMOVEDFROMGAME && gameState.CurrentBlock != null)
+				{
+					Entity? actionStartingEntity = null;
+					if(game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out actionStartingEntity))
+					{
+						if(
+							actionStartingEntity.CardId == NonCollectible.Neutral.TouristVfxEnchantmentEnchantment
+							&& actionStartingEntity.IsControlledBy(game.Opponent.Id)
+						)
+						{
+							game.Opponent.PredictUniqueCardInDeck(cardId, false);
+							Core.UpdateOpponentCards();
+						}
+					}
+
+				}
+
 				return;
 			}
 			else if(UpdatingEntityRegex.IsMatch(logLine))
