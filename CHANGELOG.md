@@ -1,25 +1,27 @@
 ## **Release v1.33.0 - 2024-09-10**
 **Updated for Hearthstone 30.4.0**
 
-**Overlay**:
+**Hearthstone**:
 - Fixed some active effects appearing having an unnecessary counter (e.g. Tar Slick).
 
 ## **Release v1.32.2 - 2024-09-06**
 **General**:
 - Fixed a silent crash that affected certain devices after playing a few matches.
 
-**Bob's Buddy**:
+**Battlegrounds**:
 - Increased the maximum simulation time when Leapfroggers are present.
 
 ## **Release v1.32.1 - 2024-09-04**
-**Deck Tracker**:
+**Overlay**:
+- New Overlay Masking Feature: Introduced a mask that automatically hides the tracker overlay when a specific game UI element is focused. This feature ensures the tracker is more seamlessly integrated with the game interface, reducing clutter and enhancing immersion.
+
+**Hearthstone**:
+- New Active Effects Indicator: Added a visual indicator to the overlay to show when game effects are present.
+- Show exact card counts, even when there's more than 9 cards in the deck.
 - Fixed Plagues not being tracked correctly after playing Helya.
 - Fixed Plagues not being removed from the deck list when playing Steamcleaner.
-- Show exact card counts, even when there's more than 9 cards in the deck.
 
-**Overlay:**
-- New Active Effects Indicator: Added a visual indicator to the overlay to show when game effects are present.
-- New Overlay Masking Feature: Introduced a mask that automatically hides the tracker overlay when a specific game UI element is focused. This feature ensures the tracker is more seamlessly integrated with the game interface, reducing clutter and enhancing immersion.
+**Battlegrounds:**
 - Automatically show Tavern Tier 7 in the Battlegrounds minion browser when Pagle's Fishing Rod or Thorim's Hero Power is offered.
 - Fixed Brann Bronzebeard having a golden star in the Battlegrounds minion browser.
 - Fixed minions from Tavern Tier 7 not appearing when filtering for a specific minion type.
@@ -35,26 +37,24 @@
 - Fixed an issue where the "Always show Tavern Tier 7" setting for Battlegrounds was disabled.
 - Fixed Rylak Metalhead's card text being outdated in the Battlegrounds minion browser.
 
-**Bob's Buddy**:
+**Battlegrounds**:
 - Fixed a simulation issue when Flourishing Frostling triggers Moss of the Schloss.
 - Fixed a simulation crash when the Boom Controller trinket was present.
 
 ## **Release v1.31.3 - 2024-08-27**
-**Bob's Buddy**:
+**Battlegrounds**:
 - Fixed a major simulation issue with the Bronze Timepiece trinket.
 - Fixed trinkets from Souvenir Stand not being incorporated into the simulations.
 
 ## **Release v1.31.1 - 2024-08-25**
-**Overlay**:
+**Battlegrounds**:
 - Automatically show Tavern Tier 7 in the Battlegrounds minion browser when you have Pagle's Fishing Rod.
 - Added a setting to always show Tavern Tier 7 in the Battlegrounds minion browser.\
   *You'll find this setting under Options > Overlay > Battlegrounds > Always show Tavern Tier 7.*
-
-**Bob's Buddy**:
-- Fixed a simulation crash that could cause the odds to spin forever.
 - Added support for the Blood Golem Sticker trinket.
+- Fixed a simulation crash that could cause the odds to spin forever.
 
-**Twitch**:
+**Streaming**:
 - Fixed hero powers not being hoverable on the Twitch Extension.
 - Added full trinket support in an upcoming version of the Twitch Extension.\
   *Until then, your viewers can hover the weapon slot to see the latest trinket.*
@@ -67,11 +67,11 @@
 - Added golden cards to the Battlegrounds minion browser: hover over the cards for a little longer to see the golden version.
 - Slightly reduced the number of games shown in the session recap from 10 to 8 to free up some vertical screen space.
 
-**Bob's Buddy**:
+**Battlegrounds**:
 - Added over 70 implementations for the new trinkets and new or updated cards.\
   *We'll be monitoring the simulation accuracy and will likely issue another update within the coming days.*
 
-**Twitch**:
+**Streaming**:
 - Added basic trinket support to the Twitch Extension so that viewers can hover one of the trinkets on the stream.\
   *We're working on an update to the extension so that viewers can hover both trinkets as you'd expect.*
 
@@ -79,11 +79,9 @@
 **Updated for Hearthstone 30.0.3**
 
 ## **Release v1.30.2 - 2024-08-05**
-**Arena**:
-- Fixed Arena deck with unknown cards being stuck in a broken state after an expansion release.
-
-**Overlay**:
+**Hearthstone**:
 - Fixed the Mulligan Guide popup in the bottom right corner not appearing correctly.
+- Fixed Arena decks with unknown cards being stuck in a broken state after an expansion release.
 
 ## **Release v1.30.1 - 2024-08-02**
 **Deck Tracker**:
@@ -163,7 +161,7 @@ This issue is resolved for now as this update contains the new cards, but we'll 
 **Updated for Hearthstone 29.6.0**
 
 **Fixes**:
-- Fixed an issue where constructed counters would be shown in Battlegrounds.
+- Fixed an issue where counters from traditional Hearthstone would be shown in Battlegrounds.
 
 ## **Release v1.29.1 - 2024-06-11**
 **New**:
