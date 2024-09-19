@@ -166,6 +166,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					game.Entities.Add(id, entity);
 
+					if(gameState.CurrentBlock != null && zone == Zone.DECK)
+					{
+						gameState.CurrentBlock.EntitiesCreatedInDeck.Add((entity, new HashSet<int>()));
+					}
+
 					if(gameState.CurrentBlock != null && (entity.CardId?.ToUpper().Contains("HERO") ?? false))
 						gameState.CurrentBlock.HasFullEntityHeroPackets = true;
 				}
@@ -368,15 +373,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(actionStartingCardId == NonCollectible.Rogue.ValeeratheHollow_ShadowReflectionToken)
 					{
 						actionStartingCardId = cardId;
-					}
-					if(blockType == "TRIGGER" && actionStartingCardId == Collectible.Neutral.AugmentedElekk)
-					{
-						if(gameState.CurrentBlock?.Parent != null)
-						{
-							actionStartingCardId = gameState.CurrentBlock.Parent.CardId;
-							blockType = gameState.CurrentBlock.Parent.Type;
-							target = gameState.CurrentBlock.Parent.Target;
-						}
 					}
 					if(blockType == "TRIGGER")
 					{
@@ -628,6 +624,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Rogue.MetalDetector:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+							case Collectible.Neutral.AugmentedElekk:
+								if (gameState.CurrentBlock?.Parent != null)
+								{
+									var (entity, ids) = gameState.CurrentBlock.Parent.EntitiesCreatedInDeck
+										.LastOrDefault(
+											x => !x.ids.Contains(gameState.CurrentBlock.SourceEntityId)
+										);
+									if(entity.CardId != null)
+									{
+										ids.Add(gameState.CurrentBlock.SourceEntityId);
+										AddKnownCardId(gameState, entity.CardId);
+									}
+								}
 								break;
 						}
 					}

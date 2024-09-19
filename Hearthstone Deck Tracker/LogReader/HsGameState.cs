@@ -110,6 +110,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public Entity? EntityDiscardedByArchivist { get; set; }
 
+		public List<(Entity entity, HashSet<int> ids)> EntitiesCreatedInDeck { get; } = new();
+
 		public Block(Block? parent, int blockId, string? type, string? cardId, string? target)
 		{
 			Parent = parent;
