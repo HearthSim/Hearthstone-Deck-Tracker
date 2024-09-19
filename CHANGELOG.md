@@ -1,3 +1,10 @@
+## **Release v1.33.1 - 2024-09-19**
+
+**Hearthstone**:
+- Show the tourist in the opponent's deck list when they play a tourist card.
+- Fixed the attack counter sometimes ignoring Windfury and Mega-Windfury.
+- Fixed the deck list not correctly updating for plagues with Augmented Elekk.
+
 ## **Release v1.33.0 - 2024-09-10**
 **Updated for Hearthstone 30.4.0**
 
