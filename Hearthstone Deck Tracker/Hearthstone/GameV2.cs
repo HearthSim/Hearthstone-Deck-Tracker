@@ -23,6 +23,7 @@ using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using HSReplay;
@@ -642,5 +643,78 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public bool BattlegroundsBuddiesEnabled => GameEntity?.GetTag(GameTag.BACON_BUDDY_ENABLED) > 0;
+
+		private List<BattlegroundsTrinketPickState> BattlegroundsTrinketPickStates { get; } = new();
+
+		public BattlegroundsTrinketPickParams? SnapshotOfferedTrinkets(IHsChoice choice)
+		{
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+			if(availableRaces == null)
+				return null;
+
+			var hero = Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
+			var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
+			var heroCard = heroCardId != null ? Database.GetCardFromId(heroCardId) : null;
+			if(heroCard == null)
+				return null;
+
+			if(!Entities.TryGetValue(choice.SourceEntityId, out var sourceEntity))
+				return null;
+
+			var offeredTrinkets = choice.OfferedEntityIds
+				.Select(id => Entities.TryGetValue(id, out var entity) ? entity : null)
+				.WhereNotNull()
+				.Select(entity => new BattlegroundsTrinketPickParams.OfferedTrinket()
+				{
+					TrinketDbfId = entity.Card.DbfId,
+					ExtraData = entity.Tags.TryGetValue(GameTag.TAG_SCRIPT_DATA_NUM_1, out var value) ? value : 0,
+				})
+				.ToArray();
+			if(offeredTrinkets.Length == 0)
+				return null;
+
+			var parameters = new BattlegroundsTrinketPickParams()
+			{
+				HeroDbfId = heroCard.DbfId,
+				HeroPowerDbfIds = Core.Game.Player.PastHeroPowers.Select(x => Database.GetCardFromId(x)?.DbfId).Where(x => x.HasValue).Cast<int>().ToArray(),
+				Turn = Core.Game.GetTurnNumber(),
+				SourceDbfId = sourceEntity.Card.DbfId,
+				MinionTypes = availableRaces.Cast<int>().ToArray(),
+				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
+				LanguageCode = Config.Instance.SelectedLanguage,
+				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
+				OfferedTrinkets = offeredTrinkets,
+			};
+
+			BattlegroundsTrinketPickStates.Add(new BattlegroundsTrinketPickState(choice.Id, parameters));
+
+			return parameters;
+		}
+
+		public void SnapshotChosenTrinket(IHsCompletedChoice choice)
+		{
+			if(BattlegroundsTrinketPickStates.Count == 0)
+				return;
+			var state = BattlegroundsTrinketPickStates.Last();
+			if(state.ChoiceId != choice.Id)
+				return;
+
+			if(choice.ChosenEntityIds.Count() != 1 || !Entities.TryGetValue(choice.ChosenEntityIds.Single(), out var chosen))
+				return;
+
+			state.PickTrinket(chosen);
+		}
+
+		public List<BattlegroundsTrinketPickFeedbackParams> GetTrinketPickingFeedback(int finalPlacement)
+		{
+			return BattlegroundsTrinketPickStates
+				.Select(x => x.ChosenTrinketDbfId is int dbfId ? x.Params.WithFeedback(
+					finalPlacement,
+					dbfId,
+					false
+				) : null)
+				.WhereNotNull()
+				.ToList();
+		}
 	}
 }

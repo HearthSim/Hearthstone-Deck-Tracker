@@ -882,7 +882,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.HideBattlegroundsHeroPanel();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
 					var finalPlacement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0;
-					CaptureBattlegroundsHeroPickingFeedback(finalPlacement);
+					CaptureBattlegroundsFeedback(finalPlacement);
 					HSReplayNetClientAnalytics.OnBattlegroundsMatchEnds(
 						hero?.CardId,
 						finalPlacement,
@@ -1161,16 +1161,17 @@ namespace Hearthstone_Deck_Tracker
 					.Select(id => _game.Entities.TryGetValue(id, out var e) ? e : null)
 					.WhereNotNull().ToList() ?? new List<Entity>();
 
+				// trinket picking
 				if(
 					_game.Entities.TryGetValue(choice.SourceEntityId, out var source) &&
 					source.GetTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) > 0 &&
 					offeredEntities.All(x => x.IsBattlegroundsTrinket)
 				)
 				{
-					var offered = offeredEntities.Where(x => x.IsBattlegroundsTrinket).ToList();
-					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(_game.Player.Trinkets.Concat(offered).Select(x => x.Card.Id));
+					HandleBattlegroundsTrinketChoice(choice);
 				}
-				if(offeredEntities.All(x => x.IsHeroPower))
+				// hero power choice
+				else if(offeredEntities.All(x => x.IsHeroPower))
 				{
 					var offered = offeredEntities.Where(x => x.IsHeroPower).ToList();
 					Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(
@@ -1178,6 +1179,19 @@ namespace Hearthstone_Deck_Tracker
 					);
 				}
 			}
+		}
+
+		public void HandleBattlegroundsTrinketChoice(IHsChoice choice)
+		{
+
+			var offeredEntities = choice.OfferedEntityIds?
+				.Select(id => _game.Entities.TryGetValue(id, out var e) ? e : null)
+				.WhereNotNull().ToList() ?? new List<Entity>();
+
+			var offered = offeredEntities.Where(x => x.IsBattlegroundsTrinket).ToList();
+			Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(_game.Player.Trinkets.Concat(offered).Select(x => x.Card.Id));
+
+			Core.Game.SnapshotOfferedTrinkets(choice);
 		}
 
 		public void HandlePlayerEntitiesChosen(IHsCompletedChoice choice)
@@ -1217,7 +1231,10 @@ namespace Hearthstone_Deck_Tracker
 					{
 						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 						if((source?.GetTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) ?? 0) > 0)
+						{
 							Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Concat(chosen).Select(x => x.Card.Id));
+							_game.SnapshotChosenTrinket(choice);
+						}
 						Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(
 							_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id)
 						);
@@ -1550,16 +1567,18 @@ namespace Hearthstone_Deck_Tracker
 			return stats;
 		}
 
-		private void CaptureBattlegroundsHeroPickingFeedback(int finalPlacement)
+		private void CaptureBattlegroundsFeedback(int finalPlacement)
 		{
 			if(!Config.Instance.GoogleAnalytics || _game.Spectator)
 				return;
 
-			var parameters = _game.GetBattlegroundsHeroPickFeedbackParams(finalPlacement);
-			if(parameters is null)
-				return;
+			var heroPickFeedback = _game.GetBattlegroundsHeroPickFeedbackParams(finalPlacement);
+			if(heroPickFeedback is not null)
+				ApiWrapper.PostBattlegroundsHeroPickFeedback(heroPickFeedback, isDuos: _game.IsBattlegroundsDuosMatch).Forget();
 
-			ApiWrapper.PostBattlegroundsHeroPickFeedback(parameters, isDuos: _game.IsBattlegroundsDuosMatch).Forget();
+			var trinketFeedback = _game.GetTrinketPickingFeedback(finalPlacement);
+			foreach(var feedback in trinketFeedback)
+				ApiWrapper.PostBattlegroundsTrinketFeedback(feedback).Forget();
 		}
 
 		#region Player
