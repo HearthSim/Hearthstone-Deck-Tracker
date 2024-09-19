@@ -270,6 +270,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				OriginalController = OriginalController,
 				Hidden = Hidden,
 				CostReduction = CostReduction,
+				Forged = Forged,
 				OriginalZone = OriginalZone,
 				OriginalCardId = OriginalCardId,
 				OriginalEntityWasCreated = OriginalEntityWasCreated,
@@ -286,6 +287,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		{
 			get
 			{
+				if(Forged)
+					return CardMark.Forged;
 				if(Hidden)
 					return CardMark.None;
 				if(_entity.IsTheCoin)
@@ -341,6 +344,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public int OriginalController { get; set; }
 		public bool Hidden { get; set; }
 		public int CostReduction { get; set; }
+		public bool Forged { get; set; }
 		public Zone? OriginalZone { get; set; }
 		public string? OriginalCardId { get; private set; }
 		public bool WasTransformed => !string.IsNullOrEmpty(OriginalCardId);
@@ -392,6 +396,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				sb.Append(", storedCardIds=[" + string.Join(", ", StoredCardIds) + "]");
 			if(DeckIndex != 0)
 				sb.Append(", deckIndex=" + DeckIndex);
+			if(Forged)
+				sb.Append(", forged=true");
 			return sb.ToString();
 		}
 	}

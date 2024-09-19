@@ -23,6 +23,9 @@ namespace Hearthstone_Deck_Tracker.Enums
 		DrawnByEntity = 'D',
 
 		[AssetName("/Images/card-icon-keep.png")]
-		Kept = 'K'
+		Kept = 'K',
+
+		[AssetName("/Images/card-icon-forged.png")]
+		Forged = 'F'
 	}
 }

@@ -96,6 +96,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						{
 							var drawerId = entity.Info.GetDrawerId();
 							if(drawerId > 0 && _game.Entities.TryGetValue(drawerId ?? 0, out var drawer))
+							
 								_cardMarks[i].UpdateSourceCard(drawer.Card);
 							else
 								_cardMarks[i].UpdateSourceCard(null);

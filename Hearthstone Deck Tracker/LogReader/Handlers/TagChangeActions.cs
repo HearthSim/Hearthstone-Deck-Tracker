@@ -76,6 +76,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => DamageChange(gameState, id, game, value, prevValue);
 				case ARMOR:
 					return () => ArmorChange(gameState, id, game, value, prevValue);
+				case FORGE_REVEALED:
+					return () => OnForgeRevealed(gameState, id, game, value, prevValue);
 				case LETTUCE_ABILITY_TILE_VISUAL_ALL_VISIBLE:
 				case LETTUCE_ABILITY_TILE_VISUAL_SELF_ONLY:
 				case FAKE_ZONE:
@@ -432,6 +434,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			//We do prevValue - value because armor gets smaller as you lose it and damage gets bigger as you lose life.
 			gameState.GameHandler?.HandleEntityLostArmor(entity, prevValue - value);
+		}
+
+		private void OnForgeRevealed(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			if(entity.IsControlledBy(game.Opponent.Id) && entity.IsInZone(HAND))
+			{
+				entity.Info.Forged = true;
+			}
+
 		}
 
 		private void DamageChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
