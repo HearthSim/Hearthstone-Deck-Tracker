@@ -667,8 +667,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler?.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, currentBlockCardId);
 					else if(controller == game.Opponent.Id)
 						gameState.GameHandler?.HandleOpponentSecretPlayed(entity, cardId, -1, gameState.GetTurnNumber(), (Zone)prevValue, id);
-					if(entity.IsBattlegroundsQuest)
-						gameState.GameHandler?.HandleBattlegroundsPlayerQuestPicked(entity);
 					break;
 				case SETASIDE:
 					if(controller == game.Player.Id)
@@ -679,16 +677,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(gameState.CurrentBlock?.CardId == Collectible.Neutral.GrandArchivist
 							&& gameState.CurrentBlock.EntityDiscardedByArchivist != null)
 							gameState.CurrentBlock.EntityDiscardedByArchivist.CardId = entity.Info.LatestCardId;
-					}
-					break;
-				case REMOVEDFROMGAME:
-					if(controller == game.Player.Id)
-					{
-						if(entity.CardId == NonCollectible.Neutral.DiscoverQuestRewardDnt)
-						{
-							Log.Debug("Quest Picker Removal");
-							gameState.GameHandler?.HandleBattlegroundsPlayerQuestPickerRemoval(entity);
-						}
 					}
 					break;
 				default:

@@ -1764,18 +1764,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void HandleBattlegroundsPlayerQuestPicked(Entity entity)
-		{
-			if(_game.IsBattlegroundsMatch)
-				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
-		}
-
-		public void HandleBattlegroundsPlayerQuestPickerRemoval(Entity entity)
-		{
-			if(_game.IsBattlegroundsMatch)
-				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
-		}
-
 		#endregion
 
 		#region Opponent
