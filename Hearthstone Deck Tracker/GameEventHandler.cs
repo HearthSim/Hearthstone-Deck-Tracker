@@ -2152,15 +2152,17 @@ namespace Hearthstone_Deck_Tracker
 				GameEvents.OnOpponentPlayToHand.Execute(card);
 		}
 
-		public void HandleOpponentHandToDeck(Entity entity, string? cardId, int turn)
+		public void HandleOpponentHandToDeck(Entity entity, string? cardId, IHsGameState gameState)
 		{
 			if(!string.IsNullOrEmpty(cardId) && entity.HasTag(GameTag.IS_USING_TRADE_OPTION))
 			{
 				_game.Opponent.PredictUniqueCardInDeck(cardId!, entity.Info.Created);
 				entity.Info.GuessedCardState = GuessedCardState.None;
 				entity.Info.Hidden = true;
+				if(gameState.CurrentBlock != null)
+					gameState.CurrentBlock.IsTradeableAction = true;
 			}
-			_game.Opponent.HandToDeck(entity, turn);
+			_game.Opponent.HandToDeck(entity, gameState.GetTurnNumber());
 			Core.UpdateOpponentCards();
 			var card = Database.GetCardFromId(cardId);
 			if(card != null)
@@ -2257,7 +2259,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentMulligan(Entity entity, int @from) => HandleOpponentMulligan(entity, @from);
 		void IGameHandler.HandleOpponentGet(Entity entity, int turn, int id) => HandleOpponentGet(entity, turn, id);
 		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string? cardId, int @from, int turn, Zone fromZone, int otherId) => HandleOpponentSecretPlayed(entity, cardId, @from, turn, fromZone, otherId);
-		void IGameHandler.HandleOpponentHandToDeck(Entity entity, string? cardId, int turn) => HandleOpponentHandToDeck(entity, cardId, turn);
+		void IGameHandler.HandleOpponentHandToDeck(Entity entity, string? cardId, IHsGameState gamestate) => HandleOpponentHandToDeck(entity, cardId, gamestate);
 		void IGameHandler.HandleOpponentPlayToHand(Entity entity, string? cardId, int turn, int id) => HandleOpponentPlayToHand(entity, cardId, turn, id);
 		void IGameHandler.HandleOpponentSecretTrigger(Entity entity, string? cardId, int turn, int otherId) => HandleOpponentSecretTrigger(entity, cardId, turn, otherId);
 		void IGameHandler.HandleOpponentDeckDiscard(Entity entity, string? cardId, int turn) => HandleOpponentDeckDiscard(entity, cardId, turn);

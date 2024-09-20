@@ -823,7 +823,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					else if(controller == game.Opponent.Id)
 					{
 						if(!string.IsNullOrEmpty(cardId))
-							gameState.GameHandler?.HandleOpponentHandToDeck(entity, cardId, gameState.GetTurnNumber());
+							gameState.GameHandler?.HandleOpponentHandToDeck(entity, cardId, gameState);
 						if(game.OpponentEntity != null && game.OpponentEntity.GetTag(MULLIGAN_STATE) == (int)Mulligan.DEALING)
 							gameState.GameHandler?.HandleOpponentMulligan(entity, entity.GetTag(ZONE_POSITION));
 					}
@@ -857,7 +857,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						var drawerCardId = gameState.CurrentBlock?.CardId ?? "";
 						int? drawerId = null;
-						if(drawerCardId != "")
+						if(drawerCardId != "" && (gameState.CurrentBlock?.Parent == null || !gameState.CurrentBlock.Parent.IsTradeableAction))
 						{
 							drawerId = game.Entities.FirstOrDefault(x => x.Value.CardId == drawerCardId).Value?.Id;
 						}
