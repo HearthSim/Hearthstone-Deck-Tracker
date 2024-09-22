@@ -1,6 +1,5 @@
 ﻿using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
 
@@ -46,7 +45,6 @@ public class SceneHandler
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 			Core.Overlay.UpdateTier7PreLobbyVisibility();
 			Watchers.BaconWatcher.Stop();
-			Watchers.BigCardWatcher.Stop();
 		}
 		else if(from == Mode.GAMEPLAY)
 		{
@@ -85,7 +83,6 @@ public class SceneHandler
 
 		if(from == Mode.BACON)
 		{
-			Watchers.BigCardWatcher.Run();
 			Core.Overlay.Tier7PreLobbyViewModel.InvalidateUserState();
 		}
 	}
