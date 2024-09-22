@@ -384,6 +384,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_mulliganState = null;
 			_battlegroundsHeroPickStatsParams = null;
 			_battlegroundsHeroPickState = null;
+			BattlegroundsTrinketPickStates.Clear();
 			Metrics = new GameMetrics();
 
 			if(Core._game != null && Core.Overlay != null)
