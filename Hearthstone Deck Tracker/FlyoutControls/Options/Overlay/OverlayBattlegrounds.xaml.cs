@@ -74,7 +74,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowTier7CompStats.IsChecked = Config.Instance.ShowBattlegroundsTier7SessionCompStats;
 			CheckboxShowBattlegroundsHeroPicking.IsChecked = Config.Instance.ShowBattlegroundsHeroPicking;
 			CheckboxShowBattlegroundsQuestPicking.IsChecked = Config.Instance.ShowBattlegroundsQuestPicking;
-			CheckboxShowBattlegroundsQuestPickingComps.IsChecked = Config.Instance.ShowBattlegroundsQuestPickingComps;
 			CheckboxShowBattlegroundsTiers.IsChecked = Config.Instance.ShowBattlegroundsTiers;
 			CheckboxAlwaysShowBattlegroundsTavernTier7.IsChecked = Config.Instance.AlwaysShowBattlegroundsTavernTier7;
 			CheckboxShowBattlegroundsTurnCounter.IsChecked = Config.Instance.ShowBattlegroundsTurnCounter;
@@ -216,22 +215,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.BattlegroundsQuestPickingViewModel.Visibility = Visibility.Collapsed;
-		}
-
-		private void CheckboxShowBattlegroundsQuestPickingComps_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowBattlegroundsQuestPickingComps = true;
-			SaveConfig(true);
-		}
-
-		private void CheckboxShowBattlegroundsQuestPickingComps_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowBattlegroundsQuestPickingComps = false;
-			SaveConfig(true);
 		}
 
 		private void CheckboxShowBattlegroundsTiers_Checked(object sender, RoutedEventArgs e)
