@@ -1,4 +1,4 @@
-## **Release v1.33.1 - 2024-09-19**
+## **Release v1.33.2 - 2024-09-19**
 
 **Hearthstone**:
 - Show the tourist in the opponent's deck list when they play a tourist card.
