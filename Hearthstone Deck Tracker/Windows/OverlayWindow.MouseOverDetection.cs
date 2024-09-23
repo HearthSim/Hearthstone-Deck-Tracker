@@ -20,6 +20,7 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.TrinketPicking;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
@@ -619,7 +620,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return BattlegroundsSession.RenderTransform as ScaleTransform;
 
 			// Todo: This is not great!
-			if(Helper.GetVisualParent<BattlegroundsHeroPicking>(element) != null || Helper.GetVisualParent<BattlegroundsQuestPicking>(element) != null)
+			if(Helper.GetVisualParent<BattlegroundsHeroPicking>(element) != null || Helper.GetVisualParent<BattlegroundsQuestPicking>(element) != null || Helper.GetVisualParent<BattlegroundsTrinketPicking>(element) != null)
 				return BattlegroundsHeroPicking.LayoutTransform as ScaleTransform;
 
 			return element.RenderTransform as ScaleTransform;

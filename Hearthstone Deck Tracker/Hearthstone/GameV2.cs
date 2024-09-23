@@ -706,13 +706,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			state.PickTrinket(chosen);
 		}
 
+		public bool IsTrinketChoiceComplete(int choiceId)
+		{
+			if(BattlegroundsTrinketPickStates.Count == 0)
+				return false;
+			var state = BattlegroundsTrinketPickStates.Last();
+			if(choiceId > state.ChoiceId)
+				return false;
+			if(choiceId < state.ChoiceId)
+				return true;
+
+			return state.ChosenTrinketDbfId != null;
+		}
+
 		public List<BattlegroundsTrinketPickFeedbackParams> GetTrinketPickingFeedback(int finalPlacement)
 		{
 			return BattlegroundsTrinketPickStates
 				.Select(x => x.ChosenTrinketDbfId is int dbfId ? x.Params.WithFeedback(
 					finalPlacement,
 					dbfId,
-					false
+					Metrics.Tier7TrinketOverlayDisplayed
 				) : null)
 				.WhereNotNull()
 				.ToList();

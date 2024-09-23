@@ -242,6 +242,19 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
+		public static async Task<BattlegroundsTrinketPickStats?> GetTier7TrinketPickStats(string token, BattlegroundsTrinketPickParams parameters)
+		{
+			try
+			{
+				return await Client.GetTier7TrinketPickStats(token, parameters);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
 		public static async Task<BattlegroundsHeroPickStats?> GetTier7HeroPickStats(string token, BattlegroundsHeroPickStatsParams parameters)
 		{
 			try

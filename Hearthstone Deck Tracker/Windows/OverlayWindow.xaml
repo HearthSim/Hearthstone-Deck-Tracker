@@ -10,6 +10,7 @@
         xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone"
         xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
         xmlns:battlegroundsSession="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session"
+        xmlns:battlegroundsTrinkets="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.TrinketPicking"
         xmlns:mulligan="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan"
         xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
         xmlns:mercenaries="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries"
@@ -240,6 +241,10 @@
                 <battlegrounds:BattlegroundsQuestPicking
                     x:Name="BattlegroundsQuestPicking"
                     DataContext="{Binding BattlegroundsQuestPickingViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
+                <battlegroundsTrinkets:BattlegroundsTrinketPicking
+                    x:Name="BattlegroundsTrinketPicking"
+                    DataContext="{Binding BattlegroundsTrinketPickingViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                 />
                 <mulligan:ConstructedMulliganGuide
                     x:Name="ConstructedMulliganGuide"

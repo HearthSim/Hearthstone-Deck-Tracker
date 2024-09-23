@@ -459,6 +459,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Game.Player.MulliganCardStats = null;
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
+				Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
 				Core.Overlay.HideBattlegroundsHeroPanel();
 				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 
@@ -879,6 +880,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 					Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
+					Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
 					Core.Overlay.HideBattlegroundsHeroPanel();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
 					var finalPlacement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0;
@@ -1168,7 +1170,7 @@ namespace Hearthstone_Deck_Tracker
 					offeredEntities.All(x => x.IsBattlegroundsTrinket)
 				)
 				{
-					HandleBattlegroundsTrinketChoice(choice);
+					HandleBattlegroundsTrinketChoice(choice).Forget();
 				}
 				// hero power choice
 				else if(offeredEntities.All(x => x.IsHeroPower))
@@ -1181,7 +1183,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void HandleBattlegroundsTrinketChoice(IHsChoice choice)
+		public async Task HandleBattlegroundsTrinketChoice(IHsChoice choice)
 		{
 
 			var offeredEntities = choice.OfferedEntityIds?
@@ -1191,7 +1193,42 @@ namespace Hearthstone_Deck_Tracker
 			var offered = offeredEntities.Where(x => x.IsBattlegroundsTrinket).ToList();
 			Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(_game.Player.Trinkets.Concat(offered).Select(x => x.Card.Id));
 
-			Core.Game.SnapshotOfferedTrinkets(choice);
+			var result = await GetTrinketPickStats(choice);
+
+			if(result != null && !Core.Game.IsTrinketChoiceComplete(choice.Id))
+			{
+				Core.Overlay.BattlegroundsTrinketPickingViewModel.SetTrinketStats(
+					offeredEntities.Select(entity => result.Data.FirstOrDefault(x => x.TrinketDbfId == entity.Card.DbfId))
+				);
+			}
+		}
+
+		private async Task<BattlegroundsTrinketPickStats?> GetTrinketPickStats(IHsChoice choice)
+		{
+			if(Core.Game.Spectator)
+				return null;
+
+			if(!Config.Instance.EnableBattlegroundsTier7Overlay)
+				return null;
+
+			if(Remote.Config.Data?.Tier7?.Disabled ?? false)
+				return null;
+
+			var requestParams = _game.SnapshotOfferedTrinkets(choice);
+			if(requestParams == null)
+			{
+				return null;
+			}
+
+			var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
+			if(!userOwnsTier7 && Tier7Trial.Token == null)
+				return null;
+
+			var result = Tier7Trial.Token != null
+				? await ApiWrapper.GetTier7TrinketPickStats(Tier7Trial.Token, requestParams)
+				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7TrinketPickStats(requestParams));
+
+			return result;
 		}
 
 		public void HandlePlayerEntitiesChosen(IHsCompletedChoice choice)
@@ -1230,6 +1267,7 @@ namespace Hearthstone_Deck_Tracker
 					if(_game.IsBattlegroundsMatch)
 					{
 						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
+						Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
 						if((source?.GetTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) ?? 0) > 0)
 						{
 							Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Concat(chosen).Select(x => x.Card.Id));

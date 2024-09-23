@@ -217,6 +217,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				Core.Overlay.BattlegroundsQuestPickingViewModel.Visibility = Visibility.Collapsed;
 		}
 
+		private void CheckboxAutoShowBattlegroundsTrinketPicking_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoShowBattlegroundsTrinketPicking = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.BattlegroundsTrinketPickingViewModel.StatsVisibility = Visibility.Visible;
+		}
+
+		private void CheckboxAutoShowBattlegroundsTrinketPicking_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoShowBattlegroundsTrinketPicking = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.BattlegroundsTrinketPickingViewModel.StatsVisibility = Visibility.Collapsed;
+		}
+
 		private void CheckboxShowBattlegroundsTiers_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)

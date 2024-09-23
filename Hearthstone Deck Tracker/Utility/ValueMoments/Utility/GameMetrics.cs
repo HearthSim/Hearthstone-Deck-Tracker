@@ -10,6 +10,7 @@
 		public int MercenariesHoverTasksDuringMatch { get; private set; }
 		public bool Tier7HeroOverlayDisplayed { get; set; }
 		public bool Tier7QuestOverlayDisplayed { get; set; }
+		public bool Tier7TrinketOverlayDisplayed { get; set; }
 		public bool Tier7TrialActivated { get; set; }
 		public int? Tier7TrialsRemaining { get; set; }
 

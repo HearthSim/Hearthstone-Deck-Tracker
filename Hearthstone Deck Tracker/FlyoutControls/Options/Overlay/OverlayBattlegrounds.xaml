@@ -22,7 +22,7 @@
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxShowMenuOverlayInBackground_Checked"
                   Unchecked="CheckboxShowMenuOverlayInBackground_Unchecked" />
-        <CheckBox x:Name="CheckboxShowBattlegroundsTiers" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsMinionBrowser}"
+        <CheckBox x:Name="CheckboxShowBattlegroundsTiers" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowMinionBrowser}"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTiers_Checked"
                   Unchecked="CheckboxShowBattlegroundsTiers_Unchecked" Margin="10,5,0,0" />
@@ -31,7 +31,7 @@
                   IsEnabled="{Binding IsChecked, ElementName=CheckboxShowBattlegroundsTiers}"
                   Checked="CheckboxAlwaysShowBattlegroundsTavernTier7_Checked" Unchecked="CheckboxAlwaysShowBattlegroundsTavernTier7_Unchecked"
                   Margin="30,5,0,0" />
-        <CheckBox x:Name="CheckboxShowBattlegroundsTurnCounter" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsTurnCounter}"
+        <CheckBox x:Name="CheckboxShowBattlegroundsTurnCounter" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowTurnCounter}"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTurnCounter_Checked"
                   Unchecked="CheckboxShowBattlegroundsTurnCounter_Unchecked" Margin="10,5,0,0" />
@@ -44,18 +44,22 @@
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxShowTier7PreLobby_Checked" Unchecked="CheckboxShowTier7PreLobby_Unchecked" />
-                <CheckBox x:Name="CheckboxShowBattlegroundsHeroPicking" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsHeroPicking}"
+                <CheckBox x:Name="CheckboxShowBattlegroundsHeroPicking" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowHeroPickingStats}"
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxShowBattlegroundsHeroPicking_Checked" Unchecked="CheckboxShowBattlegroundsHeroPicking_Unchecked"/>
-                <CheckBox x:Name="CheckboxShowTier7CompStats" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsCompStats}"
+                <CheckBox x:Name="CheckboxShowTier7CompStats" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowCompStats}"
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxShowBattlegroundsCompStats_Checked" Unchecked="CheckboxShowBattlegroundsCompStats_Unchecked" />
-                <CheckBox x:Name="CheckboxShowBattlegroundsQuestPicking" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsQuestPicking}"
+                <CheckBox x:Name="CheckboxShowBattlegroundsQuestPicking" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowQuestPickingStats}"
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxShowBattlegroundsQuestPicking_Checked" Unchecked="CheckboxShowBattlegroundsQuestPicking_Unchecked" />
+                <CheckBox x:Name="CheckboxAutoShowBattlegroundsTrinketPicking" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowTrinketPickingStats}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxAutoShowBattlegroundsTrinketPicking_Checked" Unchecked="CheckboxAutoShowBattlegroundsTrinketPicking_Unchecked" />
             </StackPanel>
         </GroupBox>
         <GroupBox Header="{lex:LocTextUpper Options_Overlay_Battlegrounds_Label_BobsBuddy}" Margin="5,10,5,5">

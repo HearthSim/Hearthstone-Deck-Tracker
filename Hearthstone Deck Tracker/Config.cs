@@ -843,7 +843,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowBattlegroundsQuestPicking = true;
 
 		[DefaultValue(true)]
-		public bool ShowBattlegroundsQuestPickingComps = true;
+		public bool AutoShowBattlegroundsTrinketPicking = true;
 
 		[DefaultValue(true)]
 		public bool ShowBattlegroundsTiers = true;

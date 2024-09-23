@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BaconWatcher.Change += OnBaconChange;
 			DeckPickerWatcher.Change += OnDeckPickerChange;
 			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning);
+			ChoicesWatcher.Change += (sender, args) => Core.Overlay.SetChoicesVisible(args.CurrentChoice?.IsVisible ?? false);
 			BigCardWatcher.Change += OnBigCardChange;
 			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
 			BattlegroundsLeaderboardWatcher.Change += (sender, args) => Core.Overlay.SetHoveredBattlegroundsLeaderboardEntityId(args.HoveredEntityId);
@@ -44,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BaconWatcher.Stop();
 			DeckPickerWatcher.Stop();
 			SceneWatcher.Stop();
+			ChoicesWatcher.Stop();
 			BigCardWatcher.Stop();
 			BattlegroundsTeammateBoardStateWatcher.Stop();
 			BattlegroundsLeaderboardWatcher.Stop();
@@ -119,6 +121,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static BaconWatcher BaconWatcher { get; } = new(new HearthMirrorBaconProvider());
 		public static DeckPickerWatcher DeckPickerWatcher { get; } = new(new HearthMirrorDeckPickerProvider());
 		public static SceneWatcher SceneWatcher { get; } = new(new HearthMirrorSceneProvider());
+		public static ChoicesWatcher ChoicesWatcher { get; } = new(new HearthMirrorChoicesProvider());
 
 		public static BigCardStateWatcher BigCardWatcher { get; } = new(new HearthMirrorBigCardProvider());
 		public static BattlegroundsTeammateBoardStateWatcher BattlegroundsTeammateBoardStateWatcher { get; } = new(new HearthMirrorBattlegroundsTeammateBoardStateProvider());
@@ -212,5 +215,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		public int? BattlegroundsLeaderboardHoveredEntityId =>
 			Reflection.Client.GetBattlegroundsLeaderboardHoveredEntityId();
+	}
+
+	public class HearthMirrorChoicesProvider : IChoicesProvider
+	{
+		public CardChoices? CurrentChoice => Reflection.Client.GetCardChoices();
 	}
 }

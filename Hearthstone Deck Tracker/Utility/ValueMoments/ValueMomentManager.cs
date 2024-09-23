@@ -103,6 +103,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 
 			if (battlegroundsAction.Tier7QuestOverlayDisplayed)
 				yield return new ValueMoment(VMName.BGQuestStatsOverlay, !isTrialActivated);
+
+			if(battlegroundsAction.Tier7TrinketOverlayDisplayed)
+				yield return new ValueMoment(VMName.BGTrinketStatsOverlay, !isTrialActivated);
 		}
 
 		private static IEnumerable<ValueMoment> GetEndMatchMercenariesValueMoments(VMAction action)

@@ -441,6 +441,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public static bool AutoShowBattlegroundsTrinketStats
+		{
+			get => Config.Instance.AutoShowBattlegroundsTrinketPicking;
+			set
+			{
+				Config.Instance.AutoShowBattlegroundsTrinketPicking = value;
+				Config.Save();
+			}
+		}
+
 		public static bool AutoShowMulliganGuide
 		{
 			get => Config.Instance.AutoShowMulliganGuide;

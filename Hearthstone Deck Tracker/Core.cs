@@ -383,6 +383,7 @@ namespace Hearthstone_Deck_Tracker
 					Overlay.Tier7PreLobbyViewModel.Reset();
 					Overlay.BattlegroundsHeroPickingViewModel.Reset();
 					Overlay.BattlegroundsQuestPickingViewModel.Reset();
+					Overlay.BattlegroundsTrinketPickingViewModel.Reset();
 					Overlay.HideBattlegroundsHeroPanel();
 					Overlay.ConstructedMulliganGuideViewModel.Reset();
 					Overlay.ConstructedMulliganGuidePreLobbyViewModel.Reset();

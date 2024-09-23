@@ -22,6 +22,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			Rating = rating;
 			Tier7HeroOverlayDisplayed = gameMetrics.Tier7HeroOverlayDisplayed;
 			Tier7QuestOverlayDisplayed = gameMetrics.Tier7QuestOverlayDisplayed;
+			Tier7TrinketOverlayDisplayed = gameMetrics.Tier7TrinketOverlayDisplayed;
 			NumClickBattlegroundsMinionTab = gameMetrics.BattlegroundsMinionsTabClicks;
 			NumClickBattlegroundsMinionsByMinionTypeFilter = gameMetrics.BattlegroundsMinionsByMinionTypeFilterClicks;
 			NumBobsBuddyTerminalCases = gameMetrics.BobsBuddyTerminalCases;
@@ -51,7 +52,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public bool Tier7HeroOverlayDisplayed { get; }
 
 		[JsonIgnore]
-		public bool Tier7QuestOverlayDisplayed { get;  }
+		public bool Tier7QuestOverlayDisplayed { get; }
+
+		[JsonIgnore]
+		public bool Tier7TrinketOverlayDisplayed { get; }
 
 		[JsonProperty("num_click_battlegrounds_minion_tab")]
 		public int NumClickBattlegroundsMinionTab { get;  }
