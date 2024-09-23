@@ -3,10 +3,13 @@ using System.Linq;
 using BobsBuddy;
 using BobsBuddy.Factory;
 using BobsBuddy.HeroPowers;
+using BobsBuddy.Minions.Beast;
 using BobsBuddy.Minions.Mech;
+using BobsBuddy.Minions.Pirate;
 using BobsBuddy.Minions.Undead;
 using BobsBuddy.Simulation;
 using BobsBuddy.Spells;
+using BobsBuddy.Trinkets;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -107,6 +110,27 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						break;
 					case NonCollectible.Neutral.RecurringNightmare_NightmareInside:
 						minion.AdditionalDeathrattles.Add(RecurringNightmare.SummonDeathrattle(true));
+						break;
+					case NonCollectible.Neutral.SkyPirateFlagbearer_FlagbearingEnchantment:
+						minion.AdditionalDeathrattles.Add(Scallywag.Deathrattle(false));
+						break;
+					case NonCollectible.Neutral.SkyPirateFlagbearer_Flagbearing:
+						minion.AdditionalDeathrattles.Add(Scallywag.Deathrattle(true));
+						break;
+					case NonCollectible.Neutral.Leapfrogger_LeapfrogginEnchantment:
+						minion.AdditionalDeathrattles.Add(Leapfrogger.Deathrattle(false));
+						break;
+					case NonCollectible.Neutral.Leapfrogger_Leapfroggin:
+						minion.AdditionalDeathrattles.Add(Leapfrogger.Deathrattle(true));
+						break;
+					case NonCollectible.Neutral.RustyTrident_TridentsTreasureEnchantment:
+						minion.AdditionalDeathrattles.Add(RustyTrident.Deathrattle());
+						break;
+					case NonCollectible.Neutral.HoggyBank_GemInTheBankEnchantment:
+						minion.AdditionalDeathrattles.Add(HoggyBank.Deathrattle());
+						break;
+					case NonCollectible.Neutral.JarredFrostling_FrostyGlobeEnchantment:
+						minion.AdditionalDeathrattles.Add(JarredFrostling.Deathrattle());
 						break;
 					case NonCollectible.Neutral.BloodGem2:
 						var atk = ent.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
