@@ -19,6 +19,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Animations;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -96,8 +97,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 						{
 							var drawerId = entity.Info.GetDrawerId();
 							if(drawerId > 0 && _game.Entities.TryGetValue(drawerId ?? 0, out var drawer))
-							
-								_cardMarks[i].UpdateSourceCard(drawer.Card);
+							{
+								var blacklist = GetDrawBlacklist();
+								if(!blacklist.Contains(drawer.Card.DbfId))
+								{
+									_cardMarks[i].UpdateSourceCard(drawer.Card);
+								}
+							}
 							else
 								_cardMarks[i].UpdateSourceCard(null);
 						}
@@ -203,6 +209,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (Core.Windows.OpponentWindow.Visibility == Visible)
 				Core.Windows.OpponentWindow.Update();
 
+		}
+
+		private List<int> GetDrawBlacklist()
+		{
+			return Remote.Config.Data?.DrawCardBlacklist?.Select(obj => obj.dbf_id).ToList() ?? new List<int>();
 		}
 
 		private void UpdateActiveEffects()

@@ -31,6 +31,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 
 			[JsonProperty("update_info")]
 			public UpdateData? UpdateInfo { get; set; }
+
+			[JsonProperty("draw_card_blacklist")]
+			public List<CardInfo>? DrawCardBlacklist { get; set; }
 		}
 
 		internal class NewsData
@@ -124,6 +127,18 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 		{
 			[JsonProperty("disabled")]
 			public bool Disabled { get; set; }
+		}
+
+		internal class CardInfo
+		{
+			[JsonProperty("dbf_id")]
+			public int dbf_id { get; set; }
+
+			[JsonProperty("name")]
+			public string? name { get; set; }
+
+			[JsonProperty("card_id")]
+			public string? card_id { get; set; }
 		}
 	}
 }
