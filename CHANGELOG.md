@@ -1,3 +1,15 @@
+## **Release v1.34.0 - 2024-09-26**
+**Updated for Hearthstone 30.4.3**
+
+**Hearthstone**:
+- Added card mark for Forged cards in the opponent's hand.
+- Fixed tourists appearing twice in the opponent's deck list.
+
+**Battlegrounds**:
+- Added Battlegrounds Trinket picking stats to the overlay!\
+  *Try this feature for free with your weekly Tier7 trials and subscribe to Tier7 for unlimited access.*
+- Fixed various simulation interactions between Persistent Poet and All minions.
+
 ## **Release v1.33.2 - 2024-09-19**
 
 **Hearthstone**:
