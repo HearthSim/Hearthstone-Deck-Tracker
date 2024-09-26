@@ -48,10 +48,6 @@
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxShowBattlegroundsHeroPicking_Checked" Unchecked="CheckboxShowBattlegroundsHeroPicking_Unchecked"/>
-                <CheckBox x:Name="CheckboxShowTier7CompStats" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowCompStats}"
-                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
-                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
-                          Checked="CheckboxShowBattlegroundsCompStats_Checked" Unchecked="CheckboxShowBattlegroundsCompStats_Unchecked" />
                 <CheckBox x:Name="CheckboxShowBattlegroundsQuestPicking" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowQuestPickingStats}"
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
@@ -60,6 +56,10 @@
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxAutoShowBattlegroundsTrinketPicking_Checked" Unchecked="CheckboxAutoShowBattlegroundsTrinketPicking_Unchecked" />
+                <CheckBox x:Name="CheckboxShowTier7CompStats" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowCompStats}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableTier7}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxShowBattlegroundsCompStats_Checked" Unchecked="CheckboxShowBattlegroundsCompStats_Unchecked" />
             </StackPanel>
         </GroupBox>
         <GroupBox Header="{lex:LocTextUpper Options_Overlay_Battlegrounds_Label_BobsBuddy}" Margin="5,10,5,5">
