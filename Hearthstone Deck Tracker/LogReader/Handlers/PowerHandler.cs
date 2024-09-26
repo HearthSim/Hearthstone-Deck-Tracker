@@ -190,6 +190,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(
 							actionStartingEntity.CardId == NonCollectible.Neutral.TouristVfxEnchantmentEnchantment
 							&& actionStartingEntity.IsControlledBy(game.Opponent.Id)
+							&& game.Opponent.RevealedCards.All(c => c.Id != cardId)
 						)
 						{
 							game.Opponent.PredictUniqueCardInDeck(cardId, false);
