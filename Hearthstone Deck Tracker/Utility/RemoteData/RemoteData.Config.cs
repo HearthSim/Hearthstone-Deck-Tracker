@@ -133,12 +133,6 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 		{
 			[JsonProperty("dbf_id")]
 			public int dbf_id { get; set; }
-
-			[JsonProperty("name")]
-			public string? name { get; set; }
-
-			[JsonProperty("card_id")]
-			public string? card_id { get; set; }
 		}
 	}
 }

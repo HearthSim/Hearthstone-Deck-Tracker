@@ -20,6 +20,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Animations;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System.Collections.Generic;
+using static HearthDb.CardIds;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -84,32 +85,47 @@ namespace Hearthstone_Deck_Tracker.Windows
 						_cardMarks[i].UpdateCardAge(null);
 					if(!Config.Instance.HideOpponentCardMarks)
 					{
-						_cardMarks[i].UpdateIcon(entity.Info.CardMark);
-						if(entity.Info.CardMark == CardMark.Created || entity.Info.CardMark == CardMark.DrawnByEntity)
+						if(entity.HasCardId && !entity.Info.Hidden && entity.Info.CardMark != CardMark.Coin)
 						{
-							var creatorId = entity.Info.GetCreatorId();
-							if(creatorId > 0 && _game.Entities.TryGetValue(creatorId, out var creator))
-								_cardMarks[i].UpdateSourceCard(creator.Card);
-							else
-								_cardMarks[i].UpdateSourceCard(null);
-						}
-						else if(entity.Info.GetDrawerId() != null)
-						{
-							var drawerId = entity.Info.GetDrawerId();
-							if(drawerId > 0 && _game.Entities.TryGetValue(drawerId ?? 0, out var drawer))
+							_cardMarks[i].UpdateSourceCard(entity.Card);
+							if(entity.Info.CardMark == CardMark.Returned)
 							{
-								var blacklist = GetDrawBlacklist();
-								if(!blacklist.Contains(drawer.Card.DbfId))
+								_cardMarks[i].UpdateIcon(entity.Info.CardMark);
+							}
+						}
+						else
+						{
+							_cardMarks[i].UpdateIcon(entity.Info.CardMark);
+							if(entity.Info.CardMark == CardMark.Created)
+							{
+								var creatorId = entity.Info.GetCreatorId();
+								if(creatorId > 0 && _game.Entities.TryGetValue(creatorId, out var creator))
+									_cardMarks[i].UpdateSourceCard(creator.Card);
+								else
+									_cardMarks[i].UpdateSourceCard(null);
+							}
+							else if(entity.Info.GetDrawerId() != null)
+							{
+								var drawerId = entity.Info.GetDrawerId();
+								if(drawerId > 0 && _game.Entities.TryGetValue(drawerId ?? 0, out var drawer))
 								{
-									_cardMarks[i].UpdateSourceCard(drawer.Card);
+									var blacklist = GetDrawBlacklist();
+									if(!blacklist.Contains(drawer.Card.DbfId))
+									{
+										_cardMarks[i].UpdateSourceCard(drawer.Card);
+									}
+									else
+									{
+										_cardMarks[i].UpdateIcon(CardMark.None);
+									}
 								}
+								else
+									_cardMarks[i].UpdateSourceCard(null);
 							}
 							else
 								_cardMarks[i].UpdateSourceCard(null);
+							_cardMarks[i].UpdateCostReduction(entity.Info.CostReduction);
 						}
-						else
-							_cardMarks[i].UpdateSourceCard(null);
-						_cardMarks[i].UpdateCostReduction(entity.Info.CostReduction);
 					}
 					else
 					{

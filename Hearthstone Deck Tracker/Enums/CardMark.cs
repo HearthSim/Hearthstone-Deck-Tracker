@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[AssetName("/Images/card-icon-created.png")]
 		Created = 'C',
 
-		[AssetName("")]
+		[AssetName("/Images/card-icon-drawn.png")]
 		DrawnByEntity = 'D',
 
 		[AssetName("/Images/card-icon-keep.png")]

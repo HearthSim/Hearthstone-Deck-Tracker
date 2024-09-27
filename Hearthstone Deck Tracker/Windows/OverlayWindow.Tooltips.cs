@@ -61,11 +61,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var index = _cardMarks.IndexOf(cardMark.Label);
 				var drawnEntity = _game.Opponent.Hand.FirstOrDefault(x => x.GetTag(GameTag.ZONE_POSITION) == index + 1 && x.Info.GetDrawerId() != null);
 				var entity = _game.Opponent.Hand.FirstOrDefault(x => x.GetTag(GameTag.ZONE_POSITION) == index + 1 && x.HasCardId && !x.Info.Hidden);
+				var creatorEntity = _game.Opponent.Hand.FirstOrDefault(x =>
+					x.GetTag(GameTag.ZONE_POSITION) == index + 1
+					&& x.Info.GetCreatorId() > 0
+					&& _game.Entities.ContainsKey(x.Info.GetCreatorId()));
 				var card = entity?.Card;
 				var creatorCard = _cardMarks[index].SourceCard;
 				if(card != null || creatorCard != null)
 				{
-					if(creatorCard != null || drawnEntity != null)
+					if((creatorEntity != null || drawnEntity != null) && card == null)
 					{
 						var creatorDescription = "Created By ";
 						if(drawnEntity?.Info.GetDrawerId() != null && drawnEntity?.Info.GetDrawerId() > 0)

@@ -150,6 +150,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Images\card-icon-drawn.png" />
     <None Remove="Images\card-icon-forged.png" />
   </ItemGroup>
 
