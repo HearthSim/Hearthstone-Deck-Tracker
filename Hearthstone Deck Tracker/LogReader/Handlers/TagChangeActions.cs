@@ -444,6 +444,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(entity.IsControlledBy(game.Opponent.Id) && entity.IsInZone(HAND))
 			{
 				entity.Info.Forged = true;
+				entity.Info.Hidden = false;
 			}
 
 		}

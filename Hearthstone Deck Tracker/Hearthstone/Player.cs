@@ -607,6 +607,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			entity.Info.Turn = turn;
 			entity.Info.Returned = true;
+			entity.Info.DrawerId = null;
+			entity.Info.Hidden = true;
 			//Log(entity);
 		}
 
