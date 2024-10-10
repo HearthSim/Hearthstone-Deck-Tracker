@@ -90,5 +90,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_PerilsInParadise")]
 		PerilsInParadise = CardSet.ISLAND_VACATION,
+
+		[LocDescription("Enum_ArenaRewardPacks_GreatDarkBeyond")]
+		GreatDarkBeyond = CardSet.SPACE,
 	}
 }

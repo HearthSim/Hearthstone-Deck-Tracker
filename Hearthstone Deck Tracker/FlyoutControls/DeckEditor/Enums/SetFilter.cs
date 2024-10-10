@@ -88,5 +88,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		WHIZBANGS_WORKSHOP = 1897,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_IslandVacation")]
 		ISLAND_VACATION = 1905,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_GreatDarkBeyond")]
+		SPACE = 1935
 	}
 }
