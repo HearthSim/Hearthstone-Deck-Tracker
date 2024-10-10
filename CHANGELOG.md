@@ -1,3 +1,17 @@
+## **Release v1.35.0 - 2024-10-10**
+**Updated for Hearthstone 30.6.0**
+
+**Hearthstone**:
+- Added new-style counters! They will automatically pop up when they're relevant in a game and feature rich tooltips appropriate to the current game state.\
+  *We're still working on making them individually configurable but wanted to share our current progress with you. The old counters are still temporarily available but have been moved to the Advanced options.*
+- Added counters for: Abyssal Curse, Astral Automaton, Chaotic Tendril, C'Thun, Elemental turns in a row, Excavate, Fatigue, Galakrond, Jade Display, Jade Golems, Librams, Played Spell Schools, Played Spells, Pogo Hopper, Damage taken on your turns, Summoned Dragons and Wheel of Death.
+- Added filtering to "Drawn By" card marks in the opponent's hand to cut down on unimportant information (such as non-tutored draws).
+- Added a new icon to the opponents hand to better differentiate a card's identity from the identity of the card that drew it.
+- Fixed an info leak related to forged cards that where shuffled into the opponents deck and drawn again later.
+
+**Battlegrounds**:
+- Add a counter to show the current Blood Gem size.
+
 ## **Release v1.34.0 - 2024-09-26**
 **Updated for Hearthstone 30.4.3**
 
