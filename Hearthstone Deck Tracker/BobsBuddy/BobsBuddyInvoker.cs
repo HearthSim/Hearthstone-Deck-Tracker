@@ -408,11 +408,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				throw new ArgumentException("Hero(es) could not be found. Exiting.");
 			}
 
-			var murky = gamePlayer.Board.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.Murky);
-			var murkyBuff = murky?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
-			inputPlayer.BattlecriesPlayed = murky != null && murkyBuff > 0
-				? murkyBuff / (murky.HasTag(GameTag.PREMIUM) ? 2 : 1) - 1
-				: 0;
 
 			if(!friendly && inputPlayer.Health <= 0)
 			{
@@ -542,6 +537,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);
 
+			inputPlayer.PiratesSummonCounter = playerEntity.GetTag((GameTag)2358);
 
 			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, friendly={friendly}");
 
