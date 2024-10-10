@@ -15,10 +15,21 @@ namespace Hearthstone_Deck_Tracker
 	[ContentProperty("Text")]
 	public class MultiLineTextBlock : FrameworkElement
 	{
-		public static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register("Foreground", typeof(Brush), typeof(MultiLineTextBlock),
-		                                                                                     new FrameworkPropertyMetadata(Brushes.White,
-		                                                                                                                   FrameworkPropertyMetadataOptions
-			                                                                                                                   .AffectsRender));
+		public static readonly DependencyProperty FillProperty = DependencyProperty.Register("Fill", typeof(Brush), typeof(MultiLineTextBlock),
+			new FrameworkPropertyMetadata(Brushes.White,
+				FrameworkPropertyMetadataOptions
+					.AffectsRender));
+
+		public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register("Stroke", typeof(Brush),
+			typeof(MultiLineTextBlock),
+			new FrameworkPropertyMetadata(Brushes.Black,
+				FrameworkPropertyMetadataOptions
+					.AffectsRender));
+		public static readonly DependencyProperty StrokeWidthProperty = DependencyProperty.Register("StrokeWidth", typeof(double),
+			typeof(MultiLineTextBlock),
+			new FrameworkPropertyMetadata(2.0,
+				FrameworkPropertyMetadataOptions
+					.AffectsRender));
 
 		public static readonly DependencyProperty FontFamilyProperty = TextElement.FontFamilyProperty.AddOwner(typeof(MultiLineTextBlock),
 		                                                                                                       new FrameworkPropertyMetadata(
@@ -74,10 +85,10 @@ namespace Hearthstone_Deck_Tracker
 			TextDecorations = new TextDecorationCollection();
 		}
 
-		public Brush Foreground
+		public Brush Fill
 		{
-			get { return (Brush)GetValue(ForegroundProperty); }
-			set { SetValue(ForegroundProperty, value); }
+			get { return (Brush)GetValue(FillProperty); }
+			set { SetValue(FillProperty, value); }
 		}
 
 		public FontFamily FontFamily
@@ -109,6 +120,18 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get { return (FontWeight)GetValue(FontWeightProperty); }
 			set { SetValue(FontWeightProperty, value); }
+		}
+
+		public Brush Stroke
+		{
+			get { return (Brush)GetValue(StrokeProperty); }
+			set { SetValue(StrokeProperty, value); }
+		}
+
+		public double StrokeWidth
+		{
+			get { return (double)GetValue(StrokeWidthProperty); }
+			set { SetValue(StrokeWidthProperty, value); }
 		}
 
 		public string Text
@@ -152,8 +175,9 @@ namespace Hearthstone_Deck_Tracker
 
 			if(_formattedText == null)
 				return;
-			var y = !double.IsNaN(ActualHeight) ? (ActualHeight - _formattedText.Height) / 2 + _formattedText.Height * 0.05 + (_formattedText.Height > FontSize * 1.4 ? -2 : 0) : 0;
-			drawingContext.DrawGeometry(Foreground, new Pen(Brushes.White, 0), _formattedText.BuildGeometry(new Point(0, y)));
+			var y = !double.IsNaN(ActualHeight) ? (ActualHeight - _formattedText.Height) / 2 + _formattedText.Height * 0.05 + (_formattedText.Height > FontSize * 1.9 ? -2 : 0) : 0;
+			drawingContext.DrawGeometry(Stroke, new Pen(Brushes.Black, StrokeWidth) {LineJoin = PenLineJoin.Round}, _formattedText.BuildGeometry(new Point(0, y)));
+			drawingContext.DrawGeometry(Fill, new Pen(Brushes.White, 0), _formattedText.BuildGeometry(new Point(0, y)));
 		}
 
 		protected override Size MeasureOverride(Size availableSize)
@@ -175,7 +199,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var fontSize = FontSize;
 
-			while((_formattedText.Height / (fontSize * 1.3)) > MaxLines && fontSize > 5)
+			while((_formattedText.Height / (fontSize * 1.8)) > MaxLines && fontSize > 5)
 				_formattedText.SetFontSize(fontSize--);
 
 			if((int)fontSize == (int)FontSize && singleLineRatio < 1)
@@ -221,7 +245,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			_formattedText = new FormattedText(Text, CultureInfo.CurrentUICulture, FlowDirection,
-			                                   new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Condensed), FontSize, Brushes.Black, 
+			                                   new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Condensed), FontSize, Brushes.Black,
 											   null, TextFormattingMode.Ideal);
 
 			UpdateFormattedText();

@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.CountersOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <ItemsControl ItemsSource="{Binding VisibleCounters}" x:Name="CountersItemsControl">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="{Binding DataContext.InnerMargin, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            Background="#CC23272A" BorderBrush="#141617" BorderThickness="2" CornerRadius="20" >
+                        <!-- Outer Grid to Contain Both Conditional Grids -->
+                        <Grid x:Name="Counters">
+                            <!-- Default Numeric Counter Grid -->
+                            <Grid SizeChanged="Element_SizeChanged">
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsDisplayValueLong}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsDisplayValueLong}" Value="False">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Height="37" Width="37" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Ellipse.Fill>
+                                        <ImageBrush
+                                            x:Name="ImgBrush"
+                                            ImageSource="{Binding CardAsset.AssetPath}">
+                                            <ImageBrush.Transform>
+                                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="20" CenterY="14" />
+                                            </ImageBrush.Transform>
+                                        </ImageBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <hearthstoneDeckTracker:OutlinedTextBlock
+                                    Grid.Column="1"
+                                    Margin="10,0,10,0"
+                                    Text="{Binding CounterValue}"
+                                    VerticalAlignment="Center"
+                                    TextAlignment="Center"
+                                    FontSize="15"
+                                    TextWrapping="Wrap"
+                                    FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+                                />
+                            </Grid>
+
+                            <!-- Long Text Counter Grid -->
+                            <Grid Height="37" SizeChanged="Element_SizeChanged">
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsDisplayValueLong}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsDisplayValueLong}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+
+                                <Ellipse Height="37" Width="37" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Ellipse.Fill>
+                                        <ImageBrush
+                                            x:Name="ImgBrushLong"
+                                            ImageSource="{Binding CardAsset.AssetPath}">
+                                            <ImageBrush.Transform>
+                                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="20" CenterY="14" />
+                                            </ImageBrush.Transform>
+                                        </ImageBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <hearthstoneDeckTracker:MultiLineTextBlock
+                                    Grid.Column="0"
+                                    Margin="52,0,15,0"
+                                    Text="{Binding CounterValue}"
+                                    VerticalAlignment="Center"
+                                    TextAlignment="Center"
+                                    Width="100"
+                                    TextWrapping="Wrap"
+                                    FontSize="16"
+                                    TextTrimming="None"
+                                    FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+                                />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

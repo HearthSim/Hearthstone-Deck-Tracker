@@ -33,6 +33,8 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -465,6 +467,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(_game.IsBattlegroundsMatch)
 				{
+					_game.PrimaryPlayerId = _game.Player.Id;
 					OpponentDeadForTracker.ShoppingStarted(_game);
 					if(_game.CurrentGameStats != null && turn.Item2 > 1)
 						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShoppingAsync();
@@ -539,6 +542,8 @@ namespace Hearthstone_Deck_Tracker
 			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 			GameEvents.OnGameStart.Execute();
 			LiveDataManager.WatchBoardState();
+
+			_game.CounterManager.Reset();
 
 			Core.Overlay.LinkOpponentDeckDisplay.IsFriendlyMatch = _game.IsFriendlyMatch;
 

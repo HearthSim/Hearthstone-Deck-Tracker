@@ -121,6 +121,18 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Core.Overlay.UpdatePosition();
 		}
 
+		[PredefinedHotKeyAction("Toggle overlay: counters", "Turns both counters on the overlay on or off (if the game is running).")
+		]
+		public static void ToggleOverlayCounters()
+		{
+			if(!Core.Game.IsRunning)
+				return;
+			Config.Instance.HidePlayerCounters = !Config.Instance.HidePlayerCounters;
+			Config.Instance.HidePlayerCounters = Config.Instance.HidePlayerCounters;
+			Config.Save();
+			Core.Overlay.UpdatePosition();
+		}
+
 		[PredefinedHotKeyAction("Toggle My Games panel", "Turns on or off visibility of My Games panel.")]
 		public static void ToggleMyGamesPanel()
 		{

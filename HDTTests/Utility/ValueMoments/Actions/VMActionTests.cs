@@ -79,7 +79,11 @@ namespace HDTTests.Utility.ValueMoments.Actions
 					"analytics_submit_anonymous_data",
 					"show_news_bar",
 					"player_active_effects",
-					"opponent_active_effects"
+					"opponent_active_effects",
+					"player_wotog_counters",
+					"opponent_wotog_counters",
+					"player_counters",
+					"opponent_counters"
 				}},
 				{ "hdt_general_settings_disabled", new []{
 					"overlay_hide_completely",

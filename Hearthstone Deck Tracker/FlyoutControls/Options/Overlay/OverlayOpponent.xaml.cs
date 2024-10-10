@@ -81,6 +81,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxIncludeCreated.IsChecked = Config.Instance.OpponentIncludeCreated;
 			CheckBoxAttack.IsChecked = !Config.Instance.HideOpponentAttackIcon;
 			CheckBoxActiveEffects.IsChecked = !Config.Instance.HideOpponentActiveEffects;
+			CheckBoxCounters.IsChecked = !Config.Instance.HideOpponentCounters;
+			CheckboxEnableWotogs.IsChecked = !Config.Instance.DisableOpponentWotogs;
 			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxCthun.SelectedItem = Config.Instance.OpponentCthunCounter;
 			ComboBoxSpells.ItemsSource = new[] {DisplayMode.Always, DisplayMode.Never};
@@ -323,6 +325,38 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HideOpponentActiveEffects = true;
+			Config.Save();
+		}
+
+		private void CheckBoxCounters_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentCounters = false;
+			Config.Save();
+		}
+
+		private void CheckBoxCounters_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentCounters = true;
+			Config.Save();
+		}
+
+		private void CheckBoxWotogs_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DisableOpponentWotogs = false;
+			Config.Save();
+		}
+
+		private void CheckBoxWotogs_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DisableOpponentWotogs = true;
 			Config.Save();
 		}
 

@@ -147,6 +147,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.Reset(nameof(Config.OpponentActiveEffectsHorizontal));
 			Config.Instance.Reset(nameof(Config.OpponentActiveEffectsVertical));
 
+			Config.Instance.Reset(nameof(Config.PlayerCountersHorizontal));
+			Config.Instance.Reset(nameof(Config.PlayerCountersVertical));
+
+			Config.Instance.Reset(nameof(Config.OpponentCountersHorizontal));
+			Config.Instance.Reset(nameof(Config.OpponentCountersVertical));
+
 			Config.Instance.Reset(nameof(Config.AttackIconPlayerHorizontalPosition));
 			Config.Instance.Reset(nameof(Config.AttackIconPlayerVerticalPosition));
 

@@ -65,6 +65,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
 			CheckBoxCenterDeckVertically.IsChecked = Config.Instance.OverlayCenterPlayerStackPanel;
 			CheckBoxActiveEffects.IsChecked = !Config.Instance.HidePlayerActiveEffects;
+			CheckBoxCounters.IsChecked = !Config.Instance.HidePlayerCounters;
+			CheckboxEnableWotogs.IsChecked = !Config.Instance.DisablePlayerWotogs;
 			CheckBoxAttack.IsChecked = !Config.Instance.HidePlayerAttackIcon;
 			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxCthun.SelectedItem = Config.Instance.PlayerCthunCounter;
@@ -338,6 +340,38 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HidePlayerActiveEffects = true;
+			Config.Save();
+		}
+
+		private void CheckBoxCounters_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerCounters = false;
+			Config.Save();
+		}
+
+		private void CheckBoxCounters_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerCounters = true;
+			Config.Save();
+		}
+
+		private void CheckBoxWotogs_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DisablePlayerWotogs = false;
+			Config.Save();
+		}
+
+		private void CheckBoxWotogs_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DisablePlayerWotogs = true;
 			Config.Save();
 		}
 

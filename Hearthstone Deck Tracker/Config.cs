@@ -404,6 +404,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HideOpponentActiveEffects = false;
 
+		[DefaultValue(false)]
+		public bool HideOpponentCounters = false;
+
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode OpponentCthunCounter = DisplayMode.Auto;
 
@@ -460,6 +463,15 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool HidePlayerActiveEffects = false;
+
+		[DefaultValue(false)]
+		public bool HidePlayerCounters = false;
+
+		[DefaultValue(true)]
+		public bool DisablePlayerWotogs = true;
+
+		[DefaultValue(true)]
+		public bool DisableOpponentWotogs = true;
 
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode PlayerCthunCounter = DisplayMode.Auto;
@@ -1139,17 +1151,29 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool WindowsTopmostIfHsForeground = false;
 
-		[DefaultValue(66.7)]
-		public double PlayerActiveEffectsVertical = 66.7;
+		[DefaultValue(71.6)]
+		public double PlayerActiveEffectsVertical = 71.6;
 
-		[DefaultValue(66.8)]
-		public double PlayerActiveEffectsHorizontal = 66.8;
+		[DefaultValue(66.2)]
+		public double PlayerActiveEffectsHorizontal = 66.2;
 
-		[DefaultValue(68.6)]
-		public double OpponentActiveEffectsVertical = 68.6;
+		[DefaultValue(73.8)]
+		public double OpponentActiveEffectsVertical = 73.8;
 
-		[DefaultValue(66.8)]
-		public double OpponentActiveEffectsHorizontal = 66.8;
+		[DefaultValue(66.2)]
+		public double OpponentActiveEffectsHorizontal = 66.2;
+
+		[DefaultValue(68.4)]
+		public double PlayerCountersVertical = 68.4;
+
+		[DefaultValue(67.7)]
+		public double PlayerCountersHorizontal = 67.7;
+
+		[DefaultValue(70.6)]
+		public double OpponentCountersVertical = 70.6;
+
+		[DefaultValue(67.7)]
+		public double OpponentCountersHorizontal = 67.7;
 
 		[DefaultValue(68.5)]
 		public double WotogIconsPlayerVertical = 68.5;

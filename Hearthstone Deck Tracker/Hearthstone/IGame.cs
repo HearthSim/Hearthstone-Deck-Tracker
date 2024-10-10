@@ -6,6 +6,7 @@ using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Hearthstone_Deck_Tracker.Stats;
@@ -21,6 +22,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		Entity? GameEntity { get; }
 		Entity? PlayerEntity { get; }
 		Entity? OpponentEntity { get; }
+		CounterManager CounterManager { get; }
 		bool IsMulliganDone { get; }
 		bool IsInMenu { get; set; }
 		bool IsUsingPremade { get; set; }

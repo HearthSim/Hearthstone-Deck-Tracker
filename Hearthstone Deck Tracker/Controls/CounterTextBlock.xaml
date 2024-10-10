@@ -5,4 +5,4 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                          mc:Ignorable="d" d:DesignWidth="80" TextWrapping="Wrap"
-                         FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive" Foreground="#3F3424" FontSize="28"/>
+                         FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive" FontSize="28"/>

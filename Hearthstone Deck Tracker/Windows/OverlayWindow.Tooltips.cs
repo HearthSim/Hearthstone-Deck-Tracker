@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using BobsBuddy.Factory;
 using HearthDb.Enums;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -24,6 +26,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public partial class OverlayWindow
 	{
 		#region CardTooltips
+		private const int TooltipDelayMilliseconds = 400;
+		private DateTime? _tooltipHoverStart = null;
 
 		private DateTime? _minionBrowserHoverStart = null;
 		private string? _minionBrowserHoverCardId = null;
@@ -34,6 +38,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var relativePlayerDeckPos = ViewBoxPlayer.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativePlayerActiveEffectsPos = PlayerActiveEffects.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeOpponentActiveEffectsPos = OpponentActiveEffects.PointFromScreen(new Point(pos.X, pos.Y));
+			var relativePlayerCountersPos = PlayerCounters.PointFromScreen(new Point(pos.X, pos.Y));
+			var relativeOpponentCountersPos = OpponentCounters.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativePlayerTopDeckPos = PlayerTopDeckLens.CardList.Items.Count > 0 ? PlayerTopDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
 			var relativePlayerBottomDeckPos = PlayerBottomDeckLens.CardList.Items.Count > 0 ? PlayerBottomDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
 			var relativePlayerSideboardsDeckPos = PlayerSideboards.CardList.Items.Count > 0 ? PlayerSideboards.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
@@ -160,6 +166,97 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Canvas.SetLeft(ToolTipCardBlock, leftOffset);
 				Panel.SetZIndex(ToolTipCardBlock, int.MaxValue);
 				ToolTipCardBlock.Visibility = visibility;
+			}
+			else if(
+				PointInsideControl(relativeOpponentCountersPos, OpponentCounters.ActualWidth,
+					OpponentCounters.ActualHeight) ||
+				PointInsideControl(relativePlayerCountersPos, PlayerCounters.ActualWidth,
+					PlayerCounters.ActualHeight))
+			{
+				if (_tooltipHoverStart == null)
+				{
+					_tooltipHoverStart = DateTime.Now;
+				}
+
+				ToolTipGridCards.Visibility = Hidden;
+				var isOpponent = PointInsideControl(relativeOpponentCountersPos, OpponentCounters.ActualWidth, OpponentCounters.ActualHeight);
+				var relativeCountersPos = relativePlayerCountersPos;
+				var counters = PlayerCounters;
+
+				if (isOpponent)
+				{
+					relativeCountersPos = relativeOpponentCountersPos;
+					counters = OpponentCounters;
+				}
+
+				var counterCards = new ObservableCollection<Hearthstone.Card>();
+				var relativePosX = relativeCountersPos.X * _activeEffectsScale;
+
+				int? counterIndex = null;
+				var counterOffset = 0.0;
+
+				var counterWidths = counters.GetWidths();
+				for(int i = 0; i < counterWidths[i]; i++)
+				{
+					var width = (counterWidths[i] + CountersOverlay.InnerMargin * 2) * _activeEffectsScale;
+						if(relativePosX >= counterOffset && relativePosX <= counterOffset + width)
+						{
+							counterIndex = i;
+							break;
+						}
+
+						counterOffset += width;
+				}
+
+				if(counterIndex == null)
+				{
+					ToolTipGridCards.Visibility = Hidden;
+					return;
+				}
+
+				// get the hovered counter
+				var hoveredCounter = counters.VisibleCounters[(int)counterIndex];
+				if(hoveredCounter == null)
+				{
+					ToolTipGridCards.Visibility = Hidden;
+					return;
+				}
+
+				foreach(var cardId in hoveredCounter.GetCardsToDisplay())
+				{
+					var card = Database.GetCardFromId(cardId);
+					if(card != null)
+						counterCards.Add(card);
+				}
+
+				var counterWidth = counterWidths[(int)counterIndex];
+
+				var yOffset = (counters.ActualHeight + 5) * _activeEffectsScale;
+				var xOffset = (ToolTipGridCards.ActualWidth / 2 - counterWidth / 2) * _activeEffectsScale - counterOffset;
+
+				var maxBottomOffset = Canvas.GetTop(counters) + (counters.ActualHeight + 5 + ToolTipGridCards.ActualHeight) * _activeEffectsScale;
+
+				if (maxBottomOffset > Height)
+					yOffset -= yOffset + (5 + ToolTipGridCards.ActualHeight) * _activeEffectsScale;
+
+				var canvasLeftPosition = Canvas.GetLeft(counters) - xOffset;
+
+				if(canvasLeftPosition < 0)
+					canvasLeftPosition = 0;
+				if(canvasLeftPosition + ToolTipGridCards.ActualWidth > Width)
+					canvasLeftPosition = Width - ToolTipGridCards.ActualWidth;
+
+				Canvas.SetTop(ToolTipGridCards, Canvas.GetTop(counters) + yOffset);
+				Canvas.SetLeft(ToolTipGridCards, canvasLeftPosition);
+				Panel.SetZIndex(ToolTipGridCards, int.MaxValue);
+
+				var elapsed = DateTime.Now - _tooltipHoverStart.Value;
+				if (elapsed.TotalMilliseconds >= TooltipDelayMilliseconds)
+				{
+					ToolTipGridCards.Visibility = Visible;
+					ToolTipGridCards.SetCardIdsFromCards(counterCards);
+					ToolTipGridCards.SetTitle(hoveredCounter.LocalizedName);
+				}
 			}
 			//player card tooltips
 			else if(ListViewPlayer.Visibility == Visible && StackPanelPlayer.Visibility == Visible
@@ -403,8 +500,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					ToolTipCardBlock.SetCardIdFromCard(null);
 					ToolTipCardBlock2.SetCardIdFromCard(null);
+					ToolTipGridCards.SetCardIdsFromCards(null);
+					ToolTipGridCards.Visibility = Hidden;
 					ToolTipCardBlock.Visibility = Hidden;
 					ToolTipCardBlock2.Visibility = Hidden;
+					_tooltipHoverStart = null;
 					_minionBrowserHoverStart = null;
 					_minionBrowserHoverCardId = null;
 					HideAdditionalToolTips();
@@ -414,8 +514,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				ToolTipCardBlock.SetCardIdFromCard(null);
 				ToolTipCardBlock2.SetCardIdFromCard(null);
+				ToolTipGridCards.SetCardIdsFromCards(null);
+				ToolTipGridCards.Visibility = Hidden;
 				ToolTipCardBlock.Visibility = Hidden;
 				ToolTipCardBlock2.Visibility = Hidden;
+				_tooltipHoverStart = null;
 				_minionBrowserHoverStart = null;
 				_minionBrowserHoverCardId = null;
 				HideAdditionalToolTips();

@@ -212,6 +212,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			UpdateActiveEffects();
 
+			UpdateCounters();
+
 			UpdateIcons();
 
 			SetDeckTitle();
@@ -248,6 +250,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
+		private void UpdateCounters()
+		{
+			if(_game.IsInMenu || !_game.IsMulliganDone)
+			{
+				PlayerCounters.Visibility = Collapsed;
+				OpponentCounters.Visibility = Collapsed;
+			}
+			else
+			{
+				PlayerCounters.Visibility = Config.Instance.HidePlayerCounters ? Collapsed : Visible;
+				OpponentCounters.Visibility = Config.Instance.HideOpponentCounters || _game.IsBattlegroundsMatch ? Collapsed : Visible;
+			}
+		}
+
 		private void UpdateIcons()
 		{
 			var inBattlegrounds = _game.IsBattlegroundsMatch;
@@ -274,6 +290,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsPlayer.Visibility = Visible;
 				WotogIconsOpponent.Visibility = Visible;
 			}
+
+			// Deprecated setting for wotog counters
+			if(Config.Instance.DisablePlayerWotogs) WotogIconsPlayer.Visibility = Collapsed;
+			if(Config.Instance.DisableOpponentWotogs) WotogIconsOpponent.Visibility = Collapsed;
 
 			var showPlayerCthunCounter = WotogCounterHelper.ShowPlayerCthunCounter;
 			var showPlayerSpellsCounter = WotogCounterHelper.ShowPlayerSpellsCounter;
@@ -488,6 +508,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(PlayerActiveEffects, Helper.GetScaledXPos(Config.Instance.PlayerActiveEffectsHorizontal / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(OpponentActiveEffects, Height - (OpponentActiveEffects.ActualHeight * _activeEffectsScale + Height * Config.Instance.OpponentActiveEffectsVertical / 100));
 			Canvas.SetLeft(OpponentActiveEffects, Helper.GetScaledXPos(Config.Instance.OpponentActiveEffectsHorizontal / 100, (int)Width, ScreenRatio));
+			Canvas.SetTop(PlayerCounters, Height * Config.Instance.PlayerCountersVertical / 100);
+			Canvas.SetLeft(PlayerCounters, Helper.GetScaledXPos(Config.Instance.PlayerCountersHorizontal / 100, (int)Width, ScreenRatio));
+			Canvas.SetTop(OpponentCounters, Height - (OpponentCounters.ActualHeight * _activeEffectsScale + Height * Config.Instance.OpponentCountersVertical / 100));
+			Canvas.SetLeft(OpponentCounters, Helper.GetScaledXPos(Config.Instance.OpponentCountersHorizontal / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackPlayer, Height * Config.Instance.AttackIconPlayerVerticalPosition / 100);
 			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
@@ -573,6 +597,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				PlayerActiveEffects.RenderTransform = new ScaleTransform(activeEffectsSize, activeEffectsSize);
 				OpponentActiveEffects.RenderTransform = new ScaleTransform(activeEffectsSize, activeEffectsSize);
+
+				PlayerCounters.RenderTransform = new ScaleTransform(activeEffectsSize, activeEffectsSize);
+				OpponentCounters.RenderTransform = new ScaleTransform(activeEffectsSize, activeEffectsSize);
+
+				ToolTipGridCards.RenderTransform = new ScaleTransform(activeEffectsSize, activeEffectsSize);
+
 				_activeEffectsScale = activeEffectsSize;
 			}
 

@@ -25,6 +25,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public Action? FindAction(GameTag tag, IGame game, IHsGameState gameState, int id, int value, int prevValue)
 		{
+			game.CounterManager.HandleTagChange(tag, gameState, id, value, prevValue);
+
 			switch(tag)
 			{
 				case ZONE:

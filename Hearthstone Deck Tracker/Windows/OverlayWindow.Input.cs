@@ -160,6 +160,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
+			if(_selectedUiElement is CountersOverlay counters)
+			{
+				if(counters.Equals(PlayerCounters))
+				{
+					Config.Instance.PlayerCountersVertical += delta.Y / Height;
+					Config.Instance.PlayerCountersHorizontal += delta.X / (Width * ScreenRatio);
+					Canvas.SetTop(_movableElements[counters], Height * Config.Instance.PlayerCountersVertical / 100);
+					Canvas.SetLeft(_movableElements[counters], Helper.GetScaledXPos(Config.Instance.PlayerCountersHorizontal / 100, (int)Width, ScreenRatio));
+					return;
+				}
+				if(counters.Equals(OpponentCounters))
+				{
+					Config.Instance.OpponentCountersVertical -= delta.Y / Height;
+					Config.Instance.OpponentCountersHorizontal += delta.X / (Width * ScreenRatio);
+					Canvas.SetTop(_movableElements[counters], Height - (OpponentCounters.ActualHeight * _activeEffectsScale + Height * Config.Instance.OpponentCountersVertical / 100));
+					Canvas.SetLeft(_movableElements[counters], Helper.GetScaledXPos(Config.Instance.OpponentCountersHorizontal / 100, (int)Width, ScreenRatio));
+				}
+			}
+
 			if (_selectedUiElement is HearthstoneTextBlock timer)
 			{
 				if (timer.Equals(LblPlayerTurnTime))
@@ -231,6 +250,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						_selectedUiElement = element.Key;
 						return;
 					}
+					if(element.Key is CountersOverlay && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
+					{
+						_selectedUiElement = element.Key;
+						return;
+					}
 				}
 			}
 
@@ -266,10 +290,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 						ShowTimers();
 					WotogIconsPlayer.ForceShow(true);
 					WotogIconsOpponent.ForceShow(true);
-
-					PlayerActiveEffects.ForceShowExampleEffects(true);
-					OpponentActiveEffects.ForceShowExampleEffects(false);
 				}
+
+				PlayerActiveEffects.ForceShowExampleEffects(true);
+				OpponentActiveEffects.ForceShowExampleEffects(false);
+
+				PlayerCounters.ForceShowExampleCounters();
+				OpponentCounters.ForceShowExampleCounters();
+
+				// small delay to allow for elements to be added to overlay
+				await Task.Delay(50);
 
 				foreach (var movableElement in _movableElements)
 				{
@@ -283,6 +313,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						if(movableElement.Key == OpponentActiveEffects)
 						{
 							Canvas.SetTop(movableElement.Value, Height - (OpponentActiveEffects.MaxHeight * _activeEffectsScale + Height * Config.Instance.OpponentActiveEffectsVertical / 100));
+							Canvas.SetLeft(movableElement.Value, Canvas.GetLeft(movableElement.Key));
+						}
+						else if(movableElement.Key == OpponentCounters)
+						{
+							Canvas.SetTop(movableElement.Value, Canvas.GetTop(movableElement.Key) - OpponentCounters.ActualHeight * _activeEffectsScale);
 							Canvas.SetLeft(movableElement.Value, Canvas.GetLeft(movableElement.Key));
 						}
 						else
@@ -358,6 +393,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				PlayerActiveEffects.ForceHideExampleEffects();
 				OpponentActiveEffects.ForceHideExampleEffects();
 
+				PlayerCounters.ForceHideExampleCounters();
+				OpponentCounters.ForceHideExampleCounters();
+
 				foreach(var movableElement in _movableElements)
 					movableElement.Value.Visibility = Visibility.Collapsed;
 			}
@@ -389,6 +427,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var width = activeEffects.MaxWidth * _activeEffectsScale;
 				var height =  activeEffects.MaxHeight * _activeEffectsScale;
+
+				return new Size(width, height);
+			}
+			if(element is CountersOverlay counters)
+			{
+				var width = counters.ActualWidth * _activeEffectsScale;
+				var height = counters.ActualHeight * _activeEffectsScale;
 
 				return new Size(width, height);
 			}

@@ -283,11 +283,45 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int BattlegroundsArmorTier => _dbCard?.BattlegroundArmorTier ?? 0;
 
 		public Race? RaceEnum => _dbCard?.Race;
+		public Race? SecondaryRaceEnum => _dbCard?.SecondaryRace;
 
 		public int LettuceCooldown => _dbCard?.Entity.GetTag(GameTag.LETTUCE_COOLDOWN_CONFIG) ?? 0;
 
 		[XmlIgnore]
 		public string? Race { get; set; }
+
+		public bool HasRace(Race race)
+		{
+			if(race == RaceEnum || race == SecondaryRaceEnum)
+				return true;
+			if(race == HearthDb.Enums.Race.BLANK)
+				return false;
+			if(RaceEnum == HearthDb.Enums.Race.ALL || SecondaryRaceEnum == HearthDb.Enums.Race.ALL)
+				return true;
+			return false;
+		}
+
+		public bool IsMech() => HasRace(HearthDb.Enums.Race.MECHANICAL);
+
+		public bool IsDemon() => HasRace(HearthDb.Enums.Race.DEMON);
+
+		public bool IsBeast() => HasRace(HearthDb.Enums.Race.BEAST);
+
+		public bool IsMurloc() => HasRace(HearthDb.Enums.Race.MURLOC);
+
+		public bool IsDragon() => HasRace(HearthDb.Enums.Race.DRAGON);
+
+		public bool IsPirate() => HasRace(HearthDb.Enums.Race.PIRATE);
+
+		public bool IsElemental() => HasRace(HearthDb.Enums.Race.ELEMENTAL);
+
+		public bool IsQuillboar() => HasRace(HearthDb.Enums.Race.QUILBOAR);
+
+		public bool IsUndead() => HasRace(HearthDb.Enums.Race.UNDEAD);
+
+		public bool IsNaga() => HasRace(HearthDb.Enums.Race.NAGA);
+
+		public bool IsEmptyRace() => RaceEnum == HearthDb.Enums.Race.INVALID && SecondaryRaceEnum == HearthDb.Enums.Race.INVALID;
 
 		[XmlIgnore]
 		public string? RaceOrType => Race ?? Type;

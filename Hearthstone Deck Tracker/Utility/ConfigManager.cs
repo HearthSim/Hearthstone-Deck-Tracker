@@ -244,6 +244,25 @@ namespace Hearthstone_Deck_Tracker.Utility
 						converted = true;
 					}
 				}
+
+				if(configVersion <= new Version(1, 34, 0, 0))
+				{
+					if(Math.Abs(Config.Instance.PlayerActiveEffectsVertical - 66.7) < 0.01
+					   && Math.Abs(Config.Instance.PlayerActiveEffectsHorizontal - 66.8) < 0.01)
+					{
+						Config.Instance.Reset(nameof(Config.PlayerActiveEffectsVertical));
+						Config.Instance.Reset(nameof(Config.PlayerActiveEffectsHorizontal));
+						converted = true;
+					}
+
+					if(Math.Abs(Config.Instance.OpponentActiveEffectsVertical - 68.6) < 0.01
+					   && Math.Abs(Config.Instance.OpponentActiveEffectsHorizontal - 66.8) < 0.01)
+					{
+						Config.Instance.Reset(nameof(Config.OpponentActiveEffectsVertical));
+						Config.Instance.Reset(nameof(Config.OpponentActiveEffectsHorizontal));
+						converted = true;
+					}
+				}
 			}
 
 			if(!Config.Instance.DeckPanelOrderLocalPlayer.Contains(DeckPanel.Sideboards))

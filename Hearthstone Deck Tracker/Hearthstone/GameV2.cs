@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
@@ -54,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public BattlegroundsSessionViewModel BattlegroundsSessionViewModel { get; } = new();
 		public GameMetrics Metrics { get; private set; } = new();
 		public ActiveEffects ActiveEffects { get; }
+		public CounterManager CounterManager { get; }
 		public GameV2()
 		{
 			Player = new Player(this, true);
@@ -61,6 +63,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsInMenu = true;
 			SecretsManager = new SecretsManager(this, new RemoteArenaSettings());
 			ActiveEffects = new ActiveEffects();
+			CounterManager = new CounterManager(this);
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
@@ -104,6 +107,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int OpponentSecretCount => Entities.Values.Count(x => x.IsInSecret && x.IsSecret && x.IsControlledBy(Opponent.Id));
 		public int PlayerHandCount => Entities.Values.Count(x => x.IsInHand && x.IsControlledBy(Player.Id));
 
+		public int PrimaryPlayerId { get; set; }
 		public Player Player { get; set; }
 		public Player Opponent { get; set; }
 		public bool IsInMenu { get; set; }
@@ -155,6 +159,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 										|| CurrentGameType == GameType.GT_VS_FRIEND;
 		public bool IsArenaMatch => CurrentGameType == GameType.GT_ARENA;
 		public bool IsFriendlyMatch => CurrentGameType == GameType.GT_VS_FRIEND;
+
+		public bool IsTraditionalHearthstoneMatch => !IsBattlegroundsMatch && !IsMercenariesMatch;
 
 		public Mode CurrentMode
 		{

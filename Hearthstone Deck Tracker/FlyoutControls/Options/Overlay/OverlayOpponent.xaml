@@ -63,109 +63,117 @@
                     VerticalAlignment="Center" Width="205" Value="100"
                     ValueChanged="SliderSecretOpacity_ValueChanged" />
         </DockPanel>
-        <DockPanel Margin="5,5,5,0">
-            <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Cthun}" />
-            <ComboBox x:Name="ComboBoxCthun" HorizontalAlignment="Right"
-                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                      utility:ComboBoxHelper.SelectionChanged="ComboBoxCthun_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
-        <DockPanel Margin="5,5,5,0">
-            <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Yogg}" />
-            <ComboBox x:Name="ComboBoxSpells" HorizontalAlignment="Right"
-                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                      utility:ComboBoxHelper.SelectionChanged="ComboBoxSpells_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
-        <DockPanel Margin="5,5,5,0">
-            <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Jade}" />
-            <ComboBox x:Name="ComboBoxJade" HorizontalAlignment="Right"
-                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                      utility:ComboBoxHelper.SelectionChanged="ComboBoxJade_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
-        <DockPanel Margin="5,5,5,0">
-            <Label Content="{lex:Loc Options_Overlay_Opponent_Label_PogoHopper}" />
-            <ComboBox x:Name="ComboBoxPogoHopper" HorizontalAlignment="Right"
-                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxPogoHopper_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
-        <DockPanel Margin="5,5,5,0">
-            <Label Content="{lex:Loc Options_Overlay_Opponent_Label_Galakrond}" />
-            <ComboBox x:Name="ComboBoxGalakrond" HorizontalAlignment="Right"
-                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxGalakrond_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
-        <DockPanel Margin="5,5,5,0">
-            <Label Content="{lex:Loc Options_Overlay_Opponent_Label_Libram}" />
-            <ComboBox x:Name="ComboBoxLibram" HorizontalAlignment="Right"
-                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxLibram_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
-        <DockPanel Margin="5,5,5,0">
-            <Label Content="{lex:Loc Options_Overlay_Opponent_Label_Spell_Schools}" />
-            <ComboBox x:Name="ComboBoxSpellSchools" HorizontalAlignment="Right"
-                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                      utility:ComboBoxHelper.SelectionChanged="ComboBoxSpellSchools_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
-        <DockPanel Margin="5,5,5,0">
-            <Label Content="{lex:Loc Options_Overlay_Opponent_Label_Abyssal_Curse}" />
-            <ComboBox x:Name="ComboBoxAbyssal" HorizontalAlignment="Right"
-                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxAbyssal_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
-        <DockPanel Margin="5,5,5,0">
-            <Label Content="{lex:Loc Options_Overlay_Opponent_Label_Excavate}" />
-            <ComboBox x:Name="ComboBoxExcavate" HorizontalAlignment="Right"
-                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxExcavate_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
+        <StackPanel Margin="5,5,5,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+            <Label Content="{lex:LocText Options_Overlay_Label_DeprecatedWotogsWarning}" Margin="-5,0,0,0" Foreground="Red" />
+            <CheckBox x:Name="CheckboxEnableWotogs" Content="{lex:LocText Options_Overlay_Checkbox_EnableWotogs}"
+                      Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                      Checked="CheckBoxWotogs_Checked" Unchecked="CheckBoxWotogs_Unchecked" />
+
+            <DockPanel Margin="5,5,5,0" IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableWotogs}">
+                <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Cthun}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                <ComboBox x:Name="ComboBoxCthun" HorizontalAlignment="Right"
+                          Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                          utility:ComboBoxHelper.SelectionChanged="ComboBoxCthun_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="5,5,5,0" IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableWotogs}">
+                <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Yogg}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                <ComboBox x:Name="ComboBoxSpells" HorizontalAlignment="Right"
+                          Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                          utility:ComboBoxHelper.SelectionChanged="ComboBoxSpells_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="5,5,5,0" IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableWotogs}">
+                <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Jade}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                <ComboBox x:Name="ComboBoxJade" HorizontalAlignment="Right"
+                          Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                          utility:ComboBoxHelper.SelectionChanged="ComboBoxJade_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="5,5,5,0" IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableWotogs}">
+                <Label Content="{lex:Loc Options_Overlay_Opponent_Label_PogoHopper}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                <ComboBox x:Name="ComboBoxPogoHopper" HorizontalAlignment="Right"
+                          Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxPogoHopper_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="5,5,5,0" IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableWotogs}">
+                <Label Content="{lex:Loc Options_Overlay_Opponent_Label_Galakrond}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                <ComboBox x:Name="ComboBoxGalakrond" HorizontalAlignment="Right"
+                          Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxGalakrond_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="5,5,5,0" IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableWotogs}">
+                <Label Content="{lex:Loc Options_Overlay_Opponent_Label_Libram}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                <ComboBox x:Name="ComboBoxLibram" HorizontalAlignment="Right"
+                          Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxLibram_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="5,5,5,0" IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableWotogs}">
+                <Label Content="{lex:Loc Options_Overlay_Opponent_Label_Spell_Schools}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                <ComboBox x:Name="ComboBoxSpellSchools" HorizontalAlignment="Right"
+                          Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                          utility:ComboBoxHelper.SelectionChanged="ComboBoxSpellSchools_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="5,5,5,0" IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableWotogs}">
+                <Label Content="{lex:Loc Options_Overlay_Opponent_Label_Abyssal_Curse}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                <ComboBox x:Name="ComboBoxAbyssal" HorizontalAlignment="Right"
+                          Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxAbyssal_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="5,5,5,0" IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableWotogs}">
+                <Label Content="{lex:Loc Options_Overlay_Opponent_Label_Excavate}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                <ComboBox x:Name="ComboBoxExcavate" HorizontalAlignment="Right"
+                          Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxExcavate_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+        </StackPanel>
         <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="{lex:Loc Options_Overlay_General_CheckBox_HideCardAge}"
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxHideOpponentCardAge_Checked"
@@ -184,6 +192,11 @@
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckBoxActiveEffects_Checked"
                   Unchecked="CheckBoxActiveEffects_Unchecked" />
+        <CheckBox x:Name="CheckBoxCounters"
+                  Content="{lex:LocText Options_Overlay_Player_CheckBox_Counters}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxCounters_Checked"
+                  Unchecked="CheckBoxCounters_Unchecked" />
         <CheckBox x:Name="CheckBoxAttack"
                   Content="{lex:LocText Options_Overlay_Opponent_CheckBox_Attack}" HorizontalAlignment="Left"
                   Margin="10,5,0,0" VerticalAlignment="Top"
