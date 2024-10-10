@@ -175,7 +175,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			}
 		}
 
-		public string CardCount => $"{Deck.Cards.Sum(x => x.Count)} / {(Cards.Any(x => x.Id == HearthDb.CardIds.Collectible.Neutral.PrinceRenathal) ? 40 : 30)}";
+		public string CardCount => $"{Deck.Cards.Sum(x => x.Count)} / {(Cards.Any(x => x.Id is HearthDb.CardIds.Collectible.Neutral.PrinceRenathalREVENDRETH or HearthDb.CardIds.Collectible.Neutral.PrinceRenathalInvalid) ? 40 : 30)}";
 
 		public CostFilter SelectedCostFilter
 		{
@@ -425,7 +425,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		private void UpdateCardCountWarning()
 		{
 			var count = Cards.Sum(x => x.Count);
-			if(Cards.Any(x => x.Id == HearthDb.CardIds.Collectible.Neutral.PrinceRenathal))
+			if(Cards.Any(x => x.Id is HearthDb.CardIds.Collectible.Neutral.PrinceRenathalREVENDRETH or HearthDb.CardIds.Collectible.Neutral.PrinceRenathalInvalid))
 			{
 				Warnings &= ~(DeckEditorWarnings.LessThan30Cards | DeckEditorWarnings.MoreThan30Cards);
 				if(count == 40)
