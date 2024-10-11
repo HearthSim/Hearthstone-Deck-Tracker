@@ -33,7 +33,7 @@ public class PlayedSpellSchoolsCounter : NumericCounter
 	{
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
-		return Counter > 2 && OpponentMayHaveRelevantCards(true);
+		return Counter > 1 && OpponentMayHaveRelevantCards(true);
 	}
 
 	public override string[] GetCardsToDisplay()
