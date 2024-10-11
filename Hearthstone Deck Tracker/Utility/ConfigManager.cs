@@ -245,7 +245,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 					}
 				}
 
-				if(configVersion <= new Version(1, 34, 0, 0))
+				if(configVersion < new Version(1, 35, 1, 0))
 				{
 					if(Math.Abs(Config.Instance.PlayerActiveEffectsVertical - 66.7) < 0.01
 					   && Math.Abs(Config.Instance.PlayerActiveEffectsHorizontal - 66.8) < 0.01)
