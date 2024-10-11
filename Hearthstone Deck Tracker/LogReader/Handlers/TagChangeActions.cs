@@ -25,86 +25,122 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public Action? FindAction(GameTag tag, IGame game, IHsGameState gameState, int id, int value, int prevValue)
 		{
-			game.CounterManager.HandleTagChange(tag, gameState, id, value, prevValue);
-
-			switch(tag)
+			return () =>
 			{
-				case ZONE:
-					return () => ZoneChange(gameState, id, game, value, prevValue);
-				case PLAYSTATE:
-					return () => PlaystateChange(gameState, id, game, value);
-				case CARDTYPE:
-					return () => CardTypeChange(gameState, id, game, value);
-				case DEFENDING:
-					return () => DefendingChange(gameState, id, game, value);
-				case ATTACKING:
-					return () => AttackingChange(gameState, id, game, value);
-				case PROPOSED_DEFENDER:
-					return () => ProposedDefenderChange(game, value);
-				case PROPOSED_ATTACKER:
-					return () => ProposedAttackerChange(gameState, id, game, value);
-				case PREDAMAGE:
-					return () => PredamageChange(gameState, id, game, value);
-				case NUM_TURNS_IN_PLAY:
-					return () => NumTurnsInPlayChange(gameState, id, game, value);
-				case CONTROLLER:
-					return () => ControllerChange(gameState, id, game, prevValue, value);
-				case FATIGUE:
-					return () => FatigueChange(gameState, value, game, id);
-				case STEP:
-					return () => StepChange(value, prevValue, gameState, game);
-				case TURN:
-					return () => TurnChange(gameState, game);
-				case STATE:
-					return () => StateChange(value, gameState);
-				case TRANSFORMED_FROM_CARD:
-					return () => TransformedFromCardChange(id, value, game);
-				case CREATOR:
-				case DISPLAYED_CREATOR:
-					return () => CreatorChanged(id, value, game);
-				case WHIZBANG_DECK_ID:
-					return () => WhizbangDeckIdChange(id, value, game);
-				case MULLIGAN_STATE:
-					return () => MulliganStateChange(id, value, game, gameState);
-				case COPIED_FROM_ENTITY_ID:
-					return () => OnCardCopy(id, value, game, gameState);
-				case LINKED_ENTITY:
-					return () => OnLinkedEntity(id, value, game, gameState);
-				case TAG_SCRIPT_DATA_NUM_1:
-					return () => OnTagScriptDataNum1(id, value, game, gameState);
-				case REBORN:
-					return () => OnRebornChange(id, value, game);
-				case DAMAGE:
-					return () => DamageChange(gameState, id, game, value, prevValue);
-				case ARMOR:
-					return () => ArmorChange(gameState, id, game, value, prevValue);
-				case FORGE_REVEALED:
-					return () => OnForgeRevealed(gameState, id, game, value, prevValue);
-				case LETTUCE_ABILITY_TILE_VISUAL_ALL_VISIBLE:
-				case LETTUCE_ABILITY_TILE_VISUAL_SELF_ONLY:
-				case FAKE_ZONE:
-				case FAKE_ZONE_POSITION:
-					return () => gameState.GameHandler?.HandleMercenariesStateChange();
-				case PLAYER_TECH_LEVEL:
-					return () => gameState.GameHandler?.HandleBattlegroundsPlayerTechLevel(id, value);
-				case PLAYER_TRIPLES:
-					return () => gameState.GameHandler?.HandleBattlegroundsPlayerTriples(id, value);
-                case IMMOLATESTAGE:
-                    return () => OnImmolateStateChange(id, value, game);
-				case RESOURCES_USED:
-					return () => OnResourcesUsedChange(id, value, game);
-				case QUEST_REWARD_DATABASE_ID:
-					return () => gameState.GameHandler?.HandleQuestRewardDatabaseId(id, value);
-				case (GameTag)2022:
-					return () => OnBattlegroundsSetupChange(value, prevValue, game, gameState);
-				case (GameTag)3533:
-					return () => OnBattlegroundsCombatSetupChange(value, prevValue, game);
-				case HERO_ENTITY:
-					return () => OnHeroEntityChange(id, value, game);
-				case NEXT_OPPONENT_PLAYER_ID:
-					return () => OnNextOpponentPlayerId(id, value, game);
-			}
-			return null;
+				switch(tag)
+				{
+					case ZONE:
+						ZoneChange(gameState, id, game, value, prevValue);
+						break;
+					case PLAYSTATE:
+						PlaystateChange(gameState, id, game, value);
+						break;
+					case CARDTYPE:
+						CardTypeChange(gameState, id, game, value);
+						break;
+					case DEFENDING:
+						DefendingChange(gameState, id, game, value);
+						break;
+					case ATTACKING:
+						AttackingChange(gameState, id, game, value);
+						break;
+					case PROPOSED_DEFENDER:
+						ProposedDefenderChange(game, value);
+						break;
+					case PROPOSED_ATTACKER:
+						ProposedAttackerChange(gameState, id, game, value);
+						break;
+					case PREDAMAGE:
+						PredamageChange(gameState, id, game, value);
+						break;
+					case NUM_TURNS_IN_PLAY:
+						NumTurnsInPlayChange(gameState, id, game, value);
+						break;
+					case CONTROLLER:
+						ControllerChange(gameState, id, game, prevValue, value);
+						break;
+					case FATIGUE:
+						FatigueChange(gameState, value, game, id);
+						break;
+					case STEP:
+						StepChange(value, prevValue, gameState, game);
+						break;
+					case TURN:
+						TurnChange(gameState, game);
+						break;
+					case STATE:
+						StateChange(value, gameState);
+						break;
+					case TRANSFORMED_FROM_CARD:
+						TransformedFromCardChange(id, value, game);
+						break;
+					case CREATOR:
+					case DISPLAYED_CREATOR:
+						CreatorChanged(id, value, game);
+						break;
+					case WHIZBANG_DECK_ID:
+						WhizbangDeckIdChange(id, value, game);
+						break;
+					case MULLIGAN_STATE:
+						MulliganStateChange(id, value, game, gameState);
+						break;
+					case COPIED_FROM_ENTITY_ID:
+						OnCardCopy(id, value, game, gameState);
+						break;
+					case LINKED_ENTITY:
+						OnLinkedEntity(id, value, game, gameState);
+						break;
+					case TAG_SCRIPT_DATA_NUM_1:
+						OnTagScriptDataNum1(id, value, game, gameState);
+						break;
+					case REBORN:
+						OnRebornChange(id, value, game);
+						break;
+					case DAMAGE:
+						DamageChange(gameState, id, game, value, prevValue);
+						break;
+					case ARMOR:
+						ArmorChange(gameState, id, game, value, prevValue);
+						break;
+					case FORGE_REVEALED:
+						OnForgeRevealed(gameState, id, game, value, prevValue);
+						break;
+					case LETTUCE_ABILITY_TILE_VISUAL_ALL_VISIBLE:
+					case LETTUCE_ABILITY_TILE_VISUAL_SELF_ONLY:
+					case FAKE_ZONE:
+					case FAKE_ZONE_POSITION:
+						gameState.GameHandler?.HandleMercenariesStateChange();
+						break;
+					case PLAYER_TECH_LEVEL:
+						gameState.GameHandler?.HandleBattlegroundsPlayerTechLevel(id, value);
+						break;
+					case PLAYER_TRIPLES:
+						gameState.GameHandler?.HandleBattlegroundsPlayerTriples(id, value);
+						break;
+					case IMMOLATESTAGE:
+						OnImmolateStateChange(id, value, game);
+						break;
+					case RESOURCES_USED:
+						OnResourcesUsedChange(id, value, game);
+						break;
+					case QUEST_REWARD_DATABASE_ID:
+						gameState.GameHandler?.HandleQuestRewardDatabaseId(id, value);
+						break;
+					case (GameTag)2022:
+						OnBattlegroundsSetupChange(value, prevValue, game, gameState);
+						break;
+					case (GameTag)3533:
+						OnBattlegroundsCombatSetupChange(value, prevValue, game);
+						break;
+					case HERO_ENTITY:
+						OnHeroEntityChange(id, value, game);
+						break;
+					case NEXT_OPPONENT_PLAYER_ID:
+						OnNextOpponentPlayerId(id, value, game);
+						break;
+				}
+				game.CounterManager.HandleTagChange(tag, gameState, id, value, prevValue);
+			};
 		}
 
 		private void OnBattlegroundsSetupChange(int value, int prevValue, IGame game, IHsGameState gameState)
