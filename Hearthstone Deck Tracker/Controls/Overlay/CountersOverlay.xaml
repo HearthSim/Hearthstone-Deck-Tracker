@@ -53,7 +53,8 @@
                                     VerticalAlignment="Center"
                                     TextAlignment="Center"
                                     FontSize="15"
-                                    TextWrapping="Wrap"
+                                    TextWrapping="NoWrap"
+                                    TextTrimming="None"
                                     FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
                                 />
                             </Grid>

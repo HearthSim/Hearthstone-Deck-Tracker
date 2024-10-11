@@ -192,7 +192,7 @@ namespace Hearthstone_Deck_Tracker
 			_formattedText.MaxTextHeight = Math.Max(0.0001d, availableSize.Height);
 
 			// return the desired size
-			return new Size(_formattedText.Width, _formattedText.Height + 2);
+			return new Size(_formattedText.Width + 2, _formattedText.Height + 2);
 		}
 
 		protected override Size ArrangeOverride(Size finalSize)
@@ -232,7 +232,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			_formattedText = new FormattedText(Text, CultureInfo.CurrentUICulture, FlowDirection,
-			                                   new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Condensed), FontSize, Brushes.Black, 
+			                                   new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Condensed), FontSize, Brushes.Black,
 											   null, TextFormattingMode.Ideal);
 
 			UpdateFormattedText();
