@@ -77,7 +77,8 @@ public abstract class BaseCounter : INotifyPropertyChanged
 			.Select(Database.GetCardFromId)
 			.Where(card =>
 				card != null &&
-				(card.PlayerClass == playerClass || (!ignoreNeutral && card.CardClass == CardClass.NEUTRAL)))
+				(card.PlayerClass == playerClass || (card.GetTouristVisitClass() == playerClass) ||
+				 !ignoreNeutral && card.CardClass == CardClass.NEUTRAL))
 			.Select(card => card!.Id).ToArray();
 
 		return cardsToDisplay;

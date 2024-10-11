@@ -484,6 +484,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{ GameTag.DEATH_KNIGHT_TOURIST, CardClass.DEATHKNIGHT }
 		};
 
+		[XmlIgnore]
+		private static readonly Dictionary<CardClass, CardClass> TOURIST_VISIT_MAP = new ()
+		{
+			{ CardClass.ROGUE, CardClass.PALADIN },
+			{ CardClass.WARLOCK, CardClass.ROGUE },
+			{ CardClass.DEATHKNIGHT, CardClass.WARLOCK },
+			{ CardClass.SHAMAN, CardClass.DEATHKNIGHT },
+			{ CardClass.DEMONHUNTER, CardClass.SHAMAN },
+			{ CardClass.PRIEST, CardClass.DEMONHUNTER },
+			{ CardClass.HUNTER, CardClass.PRIEST },
+			{ CardClass.WARRIOR, CardClass.HUNTER },
+			{ CardClass.DRUID, CardClass.WARRIOR },
+			{ CardClass.MAGE, CardClass.DRUID },
+		};
+
 		public bool IsTourist => _dbCard?.Entity.GetTag(GameTag.TOURIST) > 0;
 
 		public bool CanBeVisitedByTourist => !IsTourist && CardSet == HearthDb.Enums.CardSet.ISLAND_VACATION;
@@ -498,6 +513,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if (_dbCard?.Entity.GetTag(tag.Key) > 0)
 					return HearthDbConverter.ConvertClass(tag.Value);
 			}
+
+			return null;
+		}
+
+		public string? GetTouristVisitClass()
+		{
+			if(!CanBeVisitedByTourist)
+				return null;
+
+			var cardClass = _dbCard?.Class ?? CardClass.INVALID;
+
+
+			if (TOURIST_VISIT_MAP.TryGetValue(cardClass, out var visitClass))
+				return HearthDbConverter.ConvertClass(visitClass);
 
 			return null;
 		}
