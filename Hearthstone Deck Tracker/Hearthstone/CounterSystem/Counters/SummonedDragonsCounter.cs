@@ -24,7 +24,7 @@ public class SummonedDragonsCounter : NumericCounter
 	{
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
-		return Counter > 3 && OpponentMayHaveRelevantCards();
+		return Counter >= 2 && OpponentMayHaveRelevantCards();
 	}
 
 	public override string[] GetCardsToDisplay()
