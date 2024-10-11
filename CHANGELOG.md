@@ -1,3 +1,11 @@
+## **Release v1.35.1 - 2024-10-11**
+
+**Hearthstone**:
+- Tweaked when to show Summoned Dragons and Spell Schools counters.
+- Added tourist related cards to the counter system.
+- Fixed active effects showing on top of counters.
+- Fixed counter text cropping in some cases.
+
 ## **Release v1.35.0 - 2024-10-10**
 **Updated for Hearthstone 30.6.0**
 
