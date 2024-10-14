@@ -16,8 +16,10 @@ public class PlayedSpellSchoolsCounter : NumericCounter
 	public override string[] RelatedCards => new string[]
 	{
 		HearthDb.CardIds.Collectible.Neutral.Multicaster,
+		HearthDb.CardIds.Collectible.Shaman.SirenSong,
 		HearthDb.CardIds.Collectible.Shaman.CoralKeeper,
 		HearthDb.CardIds.Collectible.Shaman.RazzleDazzler,
+		HearthDb.CardIds.Collectible.Mage.DiscoveryOfMagic,
 		HearthDb.CardIds.Collectible.Mage.InquisitiveCreation,
 		HearthDb.CardIds.Collectible.Mage.WisdomOfNorgannon,
 		HearthDb.CardIds.Collectible.Mage.Sif,
