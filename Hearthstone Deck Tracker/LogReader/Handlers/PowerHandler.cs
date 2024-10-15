@@ -184,8 +184,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				// we can predict, then, that there is a real entity of that cardId on the opponents deck.
 				if(zone == Zone.REMOVEDFROMGAME && gameState.CurrentBlock != null)
 				{
-					Entity? actionStartingEntity = null;
-					if(game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out actionStartingEntity))
+					if(game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out Entity actionStartingEntity))
 					{
 						if(
 							actionStartingEntity.CardId == NonCollectible.Neutral.TouristVfxEnchantmentEnchantment
@@ -234,6 +233,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
+						if(entity.CardId is Collectible.Neutral.PrinceRenathalInvalid or Collectible.Neutral.PrinceRenathalREVENDRETH)
+						{
+							entity.Info.GuessedCardState = GuessedCardState.Revealed;
+							Core.UpdateOpponentCards();
+						}
 						if(entity.Info.DeckIndex < 0 && gameState.CurrentBlock != null && gameState.CurrentBlock.SourceEntityId != 0)
 						{
 							if(game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var source) && source.HasDredge())
