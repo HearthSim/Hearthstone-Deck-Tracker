@@ -233,7 +233,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-						if(entity.CardId is Collectible.Neutral.PrinceRenathalInvalid or Collectible.Neutral.PrinceRenathalREVENDRETH)
+						if(entity.CardId is Collectible.Neutral.PrinceRenathalCore or Collectible.Neutral.PrinceRenathal)
 						{
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
 							Core.UpdateOpponentCards();
