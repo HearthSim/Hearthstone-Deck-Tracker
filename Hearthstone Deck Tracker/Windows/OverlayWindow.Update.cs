@@ -116,6 +116,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 									}
 									else
 									{
+										_cardMarks[i].UpdateSourceCard(null);
 										_cardMarks[i].UpdateIcon(CardMark.None);
 									}
 								}
