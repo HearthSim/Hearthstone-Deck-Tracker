@@ -1,3 +1,15 @@
+## **Release v1.36.0 - 2024-10-23**
+**Hearthstone**:
+- Added tooltips for related cards.\
+  *Hovering over cards in hand or deck now shows their related cards. These tooltips will automatically appear for opponents when relevant.*
+- Added related cards for: \
+  *Return Policy, Hydration Station, Pet Parrot, Product 9, Sasquawk, Stranglethorn Heart, Rewind, Commander Sivara, The Galactic Projection Orb, Tyr, Tyr's Tears, Lady Liadrin, Tess Greymane, Shudderwock, Inventor Boom, Photographer Fizzle, Tidepool Pupil.*
+- Implemented Fizzle's Snapshot to track cards as the opponent plays them.
+- Updated the elemental turn sequence counter card image to a more fitting one.
+- Fixed an issue where cast spells were counted towards "Played Spells" counters.
+- Fixed an issue that counters appeared in inappropriate game modes.
+- Fixed an issue where card marks displayed incorrect icons when drawn by a blacklisted card.
+
 ## **Release v1.35.3 - 2024-10-17**
 **Updated for Hearthstone 30.6.2**
 
