@@ -83,7 +83,9 @@ namespace HDTTests.Utility.ValueMoments.Actions
 					"player_wotog_counters",
 					"opponent_wotog_counters",
 					"player_counters",
-					"opponent_counters"
+					"opponent_counters",
+					"player_related_cards",
+					"opponent_related_cards"
 				}},
 				{ "hdt_general_settings_disabled", new []{
 					"overlay_hide_completely",

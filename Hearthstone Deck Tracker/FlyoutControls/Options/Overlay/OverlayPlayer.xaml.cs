@@ -66,6 +66,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxCenterDeckVertically.IsChecked = Config.Instance.OverlayCenterPlayerStackPanel;
 			CheckBoxActiveEffects.IsChecked = !Config.Instance.HidePlayerActiveEffects;
 			CheckBoxCounters.IsChecked = !Config.Instance.HidePlayerCounters;
+			CheckBoxRelatedCards.IsChecked = !Config.Instance.HidePlayerRelatedCards;
 			CheckboxEnableWotogs.IsChecked = !Config.Instance.DisablePlayerWotogs;
 			CheckBoxAttack.IsChecked = !Config.Instance.HidePlayerAttackIcon;
 			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
@@ -356,6 +357,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HidePlayerCounters = true;
+			Config.Save();
+		}
+
+		private void CheckBoxRelatedCards_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerRelatedCards = false;
+			Config.Save();
+		}
+
+		private void CheckBoxRelatedCards_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerRelatedCards = true;
 			Config.Save();
 		}
 

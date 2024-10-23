@@ -18,6 +18,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
@@ -56,6 +57,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public GameMetrics Metrics { get; private set; } = new();
 		public ActiveEffects ActiveEffects { get; }
 		public CounterManager CounterManager { get; }
+		public RelatedCardsManager RelatedCardsManager { get; }
 		public GameV2()
 		{
 			Player = new Player(this, true);
@@ -64,6 +66,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SecretsManager = new SecretsManager(this, new RemoteArenaSettings());
 			ActiveEffects = new ActiveEffects();
 			CounterManager = new CounterManager(this);
+			RelatedCardsManager = new RelatedCardsManager();
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
@@ -367,6 +370,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Player.Reset();
 			Opponent.Reset();
 			ActiveEffects.Reset();
+			RelatedCardsManager.Reset();
 			if(!_matchInfoCacheInvalid && MatchInfo?.LocalPlayer != null && MatchInfo.OpposingPlayer != null)
 				UpdatePlayers(MatchInfo);
 			ProposedAttacker = 0;

@@ -77,10 +77,20 @@ namespace Hearthstone_Deck_Tracker.Controls
         }
         private IEnumerable<Hearthstone.Card>? _previousCards;
         Storyboard? ExpandAnimation => FindResource("AnimateGrid") as Storyboard;
-        public async void SetCardIdsFromCards(IEnumerable<Hearthstone.Card>? cards)
+        public async void SetCardIdsFromCards(IEnumerable<Hearthstone.Card>? cards, int? maxGridHeight = null)
         {
-	        if (cards == null || (_previousCards != null && _previousCards.SequenceEqual(cards)))
+	        if(cards == null || (_previousCards != null && _previousCards.SequenceEqual(cards)))
+	        {
+		        if((maxGridHeight.HasValue && maxGridHeight != _maxGridHeight)
+		           || (!maxGridHeight.HasValue && GridHeight != _maxGridHeight))
+		        {
+			        _maxGridHeight = maxGridHeight ?? GridHeight;
+			        CardsCollectionChanged(_maxGridHeight);
+			        ExpandAnimation?.Begin();
+		        }
+
 		        return;
+	        }
 
 	        _previousCards = cards;
 
@@ -122,7 +132,7 @@ namespace Hearthstone_Deck_Tracker.Controls
                 Cards.Add(cardWithImage);
             }
 
-            CardsCollectionChanged();
+            CardsCollectionChanged(maxGridHeight);
 
             // Clear the loading image source after all cards are processed
             LoadingImageSource = null;
@@ -132,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 	        ExpandAnimation?.Begin();
         }
 
-        private void CardsCollectionChanged()
+        private void CardsCollectionChanged(int? maxGridHeight = null)
         {
 	        var cardCount = Cards.Count;
 	        if (cardCount == 0)
@@ -150,6 +160,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 	        else
 		        cardHeight = (int)(cardWidth / cardRatio);
 
+	        if (maxGridHeight.HasValue && cardHeight * rows > maxGridHeight.Value)
+	        {
+		        var scaleFactor = (double)maxGridHeight.Value / (cardHeight * rows);
+		        cardWidth = (int)(cardWidth * scaleFactor);
+		        cardHeight = (int)(cardHeight * scaleFactor);
+	        }
+
 	        CardWidth = Math.Min(cardWidth, (int)MaxCardWidth);
 	        CardHeight = Math.Min(cardHeight, (int)MaxCardHeight);
         }
@@ -165,6 +182,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 
         private const double MaxCardWidth = 256 * 0.75;
         private const double MaxCardHeight = 388 * 0.75;
+
+        private int _maxGridHeight = GridHeight;
         public Thickness CardMargin => CalculateCardMargin();
 
         private Thickness CalculateCardMargin()

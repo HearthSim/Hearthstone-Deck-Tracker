@@ -71,47 +71,14 @@ public abstract class BaseCounter : INotifyPropertyChanged
 
 	protected string[] FilterCardsByClassAndFormat(string[] cardIds, string? playerClass, bool ignoreNeutral = false)
 	{
-		var filteredByFormat = FilterCardsByFormat(cardIds);
-
-		var cardsToDisplay = filteredByFormat
+		return cardIds
 			.Select(Database.GetCardFromId)
-			.Where(card =>
-				card != null &&
-				(card.PlayerClass == playerClass || (card.GetTouristVisitClass() == playerClass) ||
-				 !ignoreNeutral && card.CardClass == CardClass.NEUTRAL))
-			.Select(card => card!.Id).ToArray();
-
-		return cardsToDisplay;
+			.FilterCardsByFormat(Game.CurrentFormat)!
+			.FilterCardsByPlayerClass(playerClass, ignoreNeutral)
+			.Select(card => card!.Id)
+			.ToArray();
 	}
 
-	private string[] FilterCardsByFormat(string[] cardIds)
-	{
-		switch(Game.CurrentFormat)
-		{
-			case Format.Classic:
-				return cardIds
-					.Select(Database.GetCardFromId)
-					.Where(card => card != null && Helper.ClassicOnlySets.Contains(card.Set))
-					.Select(card => card!.Id).ToArray();
-			case Format.Wild:
-				return cardIds
-					.Select(Database.GetCardFromId)
-					.Where(card => card != null && !Helper.ClassicOnlySets.Contains(card.Set))
-					.Select(card => card!.Id).ToArray();
-			case Format.Standard:
-				return cardIds
-					.Select(Database.GetCardFromId)
-					.Where(card => card != null && !Helper.WildOnlySets.Contains(card.Set) && !Helper.ClassicOnlySets.Contains(card.Set))
-					.Select(card => card!.Id).ToArray();
-			case Format.Twist:
-				return cardIds
-					.Select(Database.GetCardFromId)
-					.Where(card => card != null && Helper.TwistSets.Contains(card.Set))
-					.Select(card => card!.Id).ToArray();
-			default:
-				return cardIds;
-		}
-	}
 
 	public event EventHandler? CounterChanged;
 

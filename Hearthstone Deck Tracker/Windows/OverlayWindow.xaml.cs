@@ -307,7 +307,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			=> Config.Instance.OverlayCenterPlayerStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
 
 		public double OpponentStackHeight => (Config.Instance.OpponentDeckHeight / 100 * Height) / (Config.Instance.OverlayOpponentScaling / 100);
-		public double OpponentListHeight => OpponentStackHeight - OpponentLabelsHeight;
+		public double OpponentListHeight => OpponentStackHeight - OpponentLabelsHeight - OpponentRelatedCardsDeckLens.ActualHeight;
 
 		public double OpponentLabelsHeight => CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight
 											+ LblOpponentFatigue.ActualHeight + LblWinRateAgainst.ActualHeight + ChancePanelsMargins;

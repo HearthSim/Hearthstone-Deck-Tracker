@@ -279,7 +279,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				GuessedCardState = GuessedCardState,
 				LatestCardId = LatestCardId,
 				StoredCardIds = StoredCardIds,
-				DeckIndex = DeckIndex
+				DeckIndex = DeckIndex,
+				CopyOfCardId = CopyOfCardId
 			};
 		}
 
@@ -355,6 +356,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool? OriginalEntityWasCreated { get; internal set; }
 		public GuessedCardState GuessedCardState { get; set; } = GuessedCardState.None;
 		public List<string> StoredCardIds { get; set; } = new List<string>();
+		public string? CopyOfCardId { get; set; }
 		public int DeckIndex { get; set; }
 		public bool InGraveardAtStartOfGame { get; set; }
 
@@ -400,6 +402,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				sb.Append(", deckIndex=" + DeckIndex);
 			if(Forged)
 				sb.Append(", forged=true");
+			if(CopyOfCardId != null)
+				sb.Append(", copyOf=" + CopyOfCardId);
 			return sb.ToString();
 		}
 	}

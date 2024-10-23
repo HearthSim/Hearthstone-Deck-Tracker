@@ -56,6 +56,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerCreateInSetAside(Entity entity, int getTurnNumber);
 		void HandlePlayerDredge();
 		void HandlePlayerUnknownCardAddedToDeck();
+		void HandlePlayerSecretTrigger(Entity entity, string? cardId, int turn, int otherId);
 
 		#region SecretTriggers
 

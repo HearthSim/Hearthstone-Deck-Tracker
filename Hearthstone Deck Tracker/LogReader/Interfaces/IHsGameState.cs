@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		bool PlayerUsedHeroPower { get; set; }
 		bool FoundSpectatorStart { get; set; }
 		int JoustReveals { get; set; }
-		Dictionary<int, IList<(string, DeckLocation)>> KnownCardIds { get; set; }
+		Dictionary<int, IList<(string, DeckLocation, string?)>> KnownCardIds { get; set; }
 		int LastCardPlayed { get; set; }
 		Stack<string> LastPlagueDrawn { get; set; }
 		bool WasInProgress { get; set; }

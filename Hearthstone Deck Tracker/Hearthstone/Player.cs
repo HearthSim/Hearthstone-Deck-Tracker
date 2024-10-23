@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HSReplay.Requests;
 using HSReplay.Responses;
+using LiveCharts.Helpers;
 using static HearthDb.CardIds;
 
 #endregion
@@ -37,15 +38,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int Id { get; set; }
 		public int Fatigue { get; set; }
 		public bool IsLocalPlayer { get; }
-		public int SpellsPlayedCount { get; private set; }
+		public int SpellsPlayedCount => SpellsPlayedCardIds.Count;
+		public List<string> SpellsPlayedCardIds { get; private set; } = new();
+		public List<string> SpellsPlayedInFriendlyCharacters { get; private set; } = new();
+		public List<string> CardsPlayedThisMatch { get; } = new();
 		public List<string> CardsPlayedThisTurn { get; private set; } = new List<string>();
+		public List<string> CardsPlayedLastTurn { get; private set; } = new();
 		public bool IsPlayingWhizbang { get; set; }
 		public int PogoHopperPlayedCount { get; private set; }
-		public string? LastDiedMinionCardId { get; set; }
+		public string? LastDiedMinionCardId => DeadMinionsCardIds.LastOrDefault();
+		public List<string> DeadMinionsCardIds { get; } = new();
 		public string? LastDrawnCardId { get; set; }
 		public int LibramReductionCount { get; private set; }
 		public HashSet<SpellSchool> PlayedSpellSchools { get; private set; } = new HashSet<SpellSchool>();
 		public int AbyssalCurseCount { get; private set; }
+		public List<string> SecretsTriggeredCardIds { get; } = new();
 
 		public bool HasCoin => Hand.Any(e => e.IsTheCoin);
 		public int HandCount => Hand.Count();
@@ -457,14 +464,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Id = -1;
 			Fatigue = 0;
 			InDeckPredictions.Clear();
-			SpellsPlayedCount = 0;
+			SpellsPlayedCardIds.Clear();
 			PogoHopperPlayedCount = 0;
 			CardsPlayedThisTurn.Clear();
+			CardsPlayedLastTurn.Clear();
+			CardsPlayedThisMatch.Clear();
+			SecretsTriggeredCardIds.Clear();
 			LastDrawnCardId = null;
 			LibramReductionCount = 0;
 			PlayedSpellSchools.Clear();
 			AbyssalCurseCount = 0;
 			PastHeroPowers.Clear();
+			DeadMinionsCardIds.Clear();
 		}
 
 		public void Draw(Entity entity, int turn)
@@ -509,7 +520,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 					break;
 				case (int)CardType.SPELL:
-					SpellsPlayedCount++;
+					if(entity.CardId != null)
+					{
+						SpellsPlayedCardIds.Add(entity.CardId);
+						if(entity.HasTag(GameTag.CARD_TARGET)
+						   && Core.Game.Entities.TryGetValue(entity.GetTag(GameTag.CARD_TARGET), out var target)
+						   && target.IsControlledBy(Id))
+						{
+							SpellsPlayedInFriendlyCharacters.Add(entity.CardId);
+						}
+					}
 					if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var spellSchoolTag))
 						PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
 					break;
@@ -517,13 +537,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Hidden = false;
 			entity.Info.Turn = turn;
 			entity.Info.CostReduction = 0;
+			if(entity.CardId != NonCollectible.Neutral.PhotographerFizzle_FizzlesSnapshotToken)
+			{
+				entity.Info.StoredCardIds.Clear();
+			}
 			if(entity.CardId != null)
+			{
 				CardsPlayedThisTurn.Add(entity.CardId);
+				CardsPlayedThisMatch.Add(entity.CardId);
+			}
 			//Log(entity);
 		}
 
 		public void OnTurnStart()
 		{
+			CardsPlayedLastTurn = CardsPlayedThisTurn.ToList();
 			CardsPlayedThisTurn.Clear();
 		}
 
@@ -609,6 +637,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Returned = true;
 			entity.Info.DrawerId = null;
 			entity.Info.Hidden = true;
+			if(entity.CardId != NonCollectible.Neutral.PhotographerFizzle_FizzlesSnapshotToken)
+			{
+				entity.Info.StoredCardIds.Clear();
+			}
 			//Log(entity);
 		}
 
@@ -652,6 +684,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void SecretTriggered(Entity entity, int turn)
 		{
+			if(entity.CardId != null)
+				SecretsTriggeredCardIds.Add(entity.CardId);
+			//Log(entity);
+		}
+
+		public void OpponentSecretTriggered(Entity entity, int turn)
+		{
 			entity.Info.Turn = turn;
 			_game.SecretsManager.SecretTriggered(entity);
 			//Log(entity);
@@ -668,7 +707,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void SecretPlayedFromHand(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
-			SpellsPlayedCount++;
+			if(entity.CardId != null)
+			{
+				SpellsPlayedCardIds.Add(entity.CardId);
+			}
 			if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var spellSchoolTag))
 				PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
 			//Log(entity);
@@ -677,14 +719,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void QuestPlayedFromHand(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
-			SpellsPlayedCount++;
+			if(entity.CardId != null)
+			{
+				SpellsPlayedCardIds.Add(entity.CardId);
+			}
 			//Log(entity);
 		}
 
 		public void SigilPlayedFromHand(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
-			SpellsPlayedCount++;
+			if(entity.CardId != null)
+			{
+				SpellsPlayedCardIds.Add(entity.CardId);
+			}
 			if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var spellSchoolTag))
 				PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
 			//Log(entity);
@@ -693,7 +741,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void ObjectivePlayedFromHand(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
-			SpellsPlayedCount++;
+			if(entity.CardId != null)
+			{
+				SpellsPlayedCardIds.Add(entity.CardId);
+			}
 			if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var spellSchoolTag))
 				PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
 			//Log(entity);
@@ -703,7 +754,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			entity.Info.Turn = turn;
 			if(entity.IsMinion)
-				LastDiedMinionCardId = cardId;
+				DeadMinionsCardIds.Add(cardId);
 			//Log(entity);
 		}
 

@@ -71,6 +71,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						break;
 				}
 			}
+
+			if(!Config.Instance.HideOpponentRelatedCards)
+			{
+				StackPanelOpponent.Children.Add(OpponentRelatedCardsDeckLens);
+			}
 		}
 
 		public void SetWinRates()
@@ -178,6 +183,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PlayerSideboards.Update(sideboards, reset);
 		}
 
-		public void UpdateOpponentCards(List<Card> cards, bool reset) => ListViewOpponent.Update(cards, reset);
+		public void UpdateOpponentCards(List<Card> cards, List<Card> cardsWithRelatedCards, bool reset)
+		{
+			ListViewOpponent.Update(cards, reset);
+			OpponentRelatedCardsDeckLens.Update(cardsWithRelatedCards.Where(card => cards.All(c => c.Id != card.Id)).ToList(), reset);
+		}
 	}
 }

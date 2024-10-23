@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,14 +10,17 @@ using System.Windows.Media;
 using BobsBuddy.Factory;
 using HearthDb.Enums;
 using HearthMirror;
+using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using NuGet;
 using static System.Windows.Visibility;
 
 #endregion
@@ -32,6 +36,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private DateTime? _minionBrowserHoverStart = null;
 		private string? _minionBrowserHoverCardId = null;
 
+		public  BigCardState? HoveredCard;
+
 		private void UpdateCardTooltip()
 		{
 			var pos = User32.GetMousePos();
@@ -44,6 +50,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var relativePlayerBottomDeckPos = PlayerBottomDeckLens.CardList.Items.Count > 0 ? PlayerBottomDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
 			var relativePlayerSideboardsDeckPos = PlayerSideboards.CardList.Items.Count > 0 ? PlayerSideboards.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
 			var relativeOpponentDeckPos = ViewBoxOpponent.PointFromScreen(new Point(pos.X, pos.Y));
+			var relativeOpponentRelatedCardsPos = OpponentRelatedCardsDeckLens.CardList.Items.Count > 0 ? OpponentRelatedCardsDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
 			var relativeSecretsPos = StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeCardMark = _cardMarks.Select(x => new { Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y)) });
 			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly)
@@ -260,7 +267,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			//player card tooltips
 			else if(ListViewPlayer.Visibility == Visible && StackPanelPlayer.Visibility == Visible
-					&& PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
+					&& PointInsideControl(relativePlayerDeckPos, ViewBoxPlayer.ActualWidth, ViewBoxPlayer.ActualHeight))
 			{
 				//card size = card list height / amount of cards
 				var cardSize = ViewBoxPlayer.ActualHeight / ListViewPlayer.Items.Count;
@@ -283,6 +290,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				SetTooltipPosition(topOffset, BorderStackPanelPlayer);
 
 				ToolTipCardBlock.Visibility = visibility;
+				SetRelatedCardsTooltip(Core.Game.Player, card.Id);
 			}
 			//player top card tooltips
 			else if(PlayerTopDeckLens.Visibility == Visible && StackPanelPlayer.Visibility == Visible
@@ -310,6 +318,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				SetTooltipPosition(topOffset, BorderStackPanelPlayer);
 
 				ToolTipCardBlock.Visibility = visibility;
+				SetRelatedCardsTooltip(Core.Game.Player, card.Id);
 			}
 			//player bottom card tooltips
 			else if(PlayerBottomDeckLens.Visibility == Visible && StackPanelPlayer.Visibility == Visible
@@ -337,6 +346,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				SetTooltipPosition(topOffset, BorderStackPanelPlayer);
 
 				ToolTipCardBlock.Visibility = visibility;
+				SetRelatedCardsTooltip(Core.Game.Player, card.Id);
 			}
 			//player sideboard card tooltips
 			else if(PlayerSideboards.Visibility == Visible && StackPanelPlayer.Visibility == Visible
@@ -366,10 +376,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 				SetTooltipPosition(topOffset, BorderStackPanelPlayer);
 
 				ToolTipCardBlock.Visibility = visibility;
+				SetRelatedCardsTooltip(Core.Game.Player, card.Id);
 			}
 			//opponent card tooltips
 			else if(ListViewOpponent.Visibility == Visible && StackPanelOpponent.Visibility == Visible
-					&& PointInsideControl(relativeOpponentDeckPos, ListViewOpponent.ActualWidth, ListViewOpponent.ActualHeight))
+					&& PointInsideControl(relativeOpponentDeckPos, ViewBoxOpponent.ActualWidth, ViewBoxOpponent.ActualHeight))
 			{
 				//card size = card list height / amount of cards
 				var cardSize = ViewBoxOpponent.ActualHeight / ListViewOpponent.Items.Count;
@@ -390,6 +401,37 @@ namespace Hearthstone_Deck_Tracker.Windows
 				SetTooltipPosition(topOffset, BorderStackPanelOpponent);
 
 				ToolTipCardBlock.Visibility = visibility;
+				SetRelatedCardsTooltip(Core.Game.Opponent, card.Id);
+			}
+			// opponent related cards tooltip
+			else if(OpponentRelatedCardsDeckLens.Visibility == Visible && StackPanelOpponent.Visibility == Visible
+			        && PointInsideControl(relativeOpponentRelatedCardsPos, OpponentRelatedCardsDeckLens.ActualWidth, OpponentRelatedCardsDeckLens.ActualHeight))
+
+			{
+				//card size = card list height / amount of cards
+				var cardSize = OpponentRelatedCardsDeckLens.CardList.ActualHeight / OpponentRelatedCardsDeckLens.CardList.Items.Count;
+				var cardIndex = (int)(relativeOpponentRelatedCardsPos.Y / cardSize);
+
+				if(cardIndex < 0 || cardIndex >= OpponentRelatedCardsDeckLens.CardList.Items.Count)
+					return;
+
+				var card = OpponentRelatedCardsDeckLens.CardList.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card;
+				ToolTipCardBlock.SetCardIdFromCard(card);
+				//offset is affected by scaling
+				var topOffset = Canvas.GetTop(BorderStackPanelOpponent)
+					+ GetListViewOffset(StackPanelOpponent, OpponentRelatedCardsDeckLens)
+					+ OpponentRelatedCardsDeckLens.Container.ActualHeight
+					+ cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100 - ToolTipCardBlock.ActualHeight/2;
+
+				//prevent tooltip from going outside of the overlay
+				if(topOffset + ToolTipCardBlock.ActualHeight > Height)
+					topOffset = Height - ToolTipCardBlock.ActualHeight;
+				topOffset = Math.Max(0, topOffset);
+
+				SetTooltipPosition(topOffset, BorderStackPanelOpponent);
+
+				ToolTipCardBlock.Visibility = visibility;
+				SetRelatedCardsTooltip(Core.Game.Opponent, card.Id);
 			}
 			else if(StackPanelSecrets.Visibility == Visible
 					&& PointInsideControl(relativeSecretsPos, StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
@@ -510,6 +552,59 @@ namespace Hearthstone_Deck_Tracker.Windows
 					HideAdditionalToolTips();
 				}
 			}
+			else if(HoveredCard is { IsHand: true })
+			{
+				// Get related cards from cardId
+				var relatedCards = GetRelatedCards(Core.Game.Player, HoveredCard.Value.CardId, inHand: true, handPosition: HoveredCard.Value.ZonePosition);
+
+				if (_tooltipHoverStart == null)
+				{
+					_tooltipHoverStart = DateTime.Now;
+				}
+
+				var elapsed = DateTime.Now - _tooltipHoverStart.Value;
+				if (relatedCards.Count > 0)
+				{
+					var nonNullableRelatedCards = relatedCards.Where(c => c != null).Cast<Hearthstone.Card>();
+
+					ToolTipGridCards.SetTitle(LocUtil.Get("Related_Cards", useCardLanguage: true));
+					ToolTipGridCards.SetCardIdsFromCards(nonNullableRelatedCards, 470);
+					Canvas.SetTop(ToolTipGridCards, (480 - ToolTipGridCards.ActualHeight) * _activeEffectsScale);
+
+					// find the left of the card
+					double cardTotal = HoveredCard.Value.ZoneSize > 10 ? HoveredCard.Value.ZoneSize : 10;
+					var baseOffsetX = 0.34;
+					var centerPosition = (HoveredCard.Value.ZoneSize + 1) / 2.0;
+					var relativePosition = HoveredCard.Value.ZonePosition - centerPosition;
+					var offsetXScale = HoveredCard.Value.ZoneSize > 3 ? cardTotal / HoveredCard.Value.ZoneSize * 0.037 : 0.098;
+					var offsetX = baseOffsetX + relativePosition * offsetXScale;
+					var correctedOffsetX = Helper.GetScaledXPos(offsetX, (int)Width, ScreenRatio);
+
+					// find the center of the card
+					var cardHeight = 0.5;
+					var cardHeightInPixels = cardHeight * Height;
+					var cardWidth = cardHeightInPixels * 34 / (cardHeight * 100);
+
+					Canvas.SetLeft(ToolTipGridCards,
+						correctedOffsetX + cardWidth / 2 - ToolTipGridCards.ActualWidth / 2 * _activeEffectsScale);
+
+					if(elapsed.TotalMilliseconds >= TooltipDelayMilliseconds)
+					{
+						ToolTipGridCards.Visibility = Config.Instance.HidePlayerRelatedCards ? Collapsed : Visible;
+					}
+					else
+					{
+						ToolTipGridCards.Visibility = Hidden;
+					}
+
+				}
+				else
+				{
+					ToolTipGridCards.Visibility = Hidden;
+					_tooltipHoverStart = null;
+				}
+
+			}
 			else
 			{
 				ToolTipCardBlock.SetCardIdFromCard(null);
@@ -568,10 +663,72 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			Canvas.SetTop(ToolTipCardBlock, yOffset);
 
-			if(Canvas.GetLeft(stackpanel) < Width / 2)
-				Canvas.SetLeft(ToolTipCardBlock, Canvas.GetLeft(stackpanel) + stackpanel.ActualWidth * Config.Instance.OverlayOpponentScaling / 100);
+			if(yOffset + ToolTipGridCards.ActualHeight > Height)
+			{
+				Canvas.SetTop(ToolTipGridCards, Height - ToolTipGridCards.ActualHeight);
+			}
 			else
+			{
+				Canvas.SetTop(ToolTipGridCards, yOffset);
+			}
+
+			if(Canvas.GetLeft(stackpanel) < Width / 2)
+			{
+				Canvas.SetLeft(ToolTipCardBlock, Canvas.GetLeft(stackpanel) + stackpanel.ActualWidth * Config.Instance.OverlayOpponentScaling / 100);
+				Canvas.SetLeft(ToolTipGridCards,
+					(Canvas.GetLeft(stackpanel) + stackpanel.ActualWidth * Config.Instance.OverlayOpponentScaling / 100) + ToolTipCardBlock.ActualWidth);
+			}
+			else
+			{
 				Canvas.SetLeft(ToolTipCardBlock, Canvas.GetLeft(stackpanel) - ToolTipCardBlock.ActualWidth);
+				Canvas.SetLeft(ToolTipGridCards, Canvas.GetLeft(stackpanel) - ToolTipCardBlock.ActualWidth - ToolTipGridCards.ActualWidth * _activeEffectsScale);
+			}
+		}
+
+		private void SetRelatedCardsTooltip(Player player, string cardId)
+		{
+			var relatedCards = GetRelatedCards(player, cardId);
+			if (_tooltipHoverStart == null)
+			{
+				_tooltipHoverStart = DateTime.Now;
+			}
+
+			var elapsed = DateTime.Now - _tooltipHoverStart.Value;
+			if (relatedCards.Count > 0 && elapsed.TotalMilliseconds >= TooltipDelayMilliseconds)
+			{
+				var nonNullableRelatedCards = relatedCards.Where(c => c != null).Cast<Hearthstone.Card>();
+				ToolTipGridCards.SetCardIdsFromCards(nonNullableRelatedCards);
+				ToolTipGridCards.SetTitle(LocUtil.Get("Related_Cards", useCardLanguage: true));
+				ToolTipGridCards.Visibility = Visible;
+			}
+			else
+			{
+				ToolTipGridCards.Visibility = Hidden;
+			}
+		}
+
+		private List<Hearthstone.Card?> GetRelatedCards(Player player, string cardId, bool inHand = false, int? handPosition = null)
+		{
+			var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(cardId).GetRelatedCards(player);
+			// Get related cards from Entity
+			if (relatedCards.IsEmpty())
+			{
+				IEnumerable<Entity> entities;
+				if(inHand)
+				{
+					entities = handPosition != null ? player.Hand.Where(e => e.ZonePosition == handPosition) : player.Hand.Where(e => e.CardId == cardId);
+				}
+				else
+				{
+					entities = player.Deck.Where(e => e.CardId == cardId);
+				}
+				foreach(var entity in entities)
+				{
+					relatedCards.AddRange(entity.Info.StoredCardIds.Select(Database.GetCardFromId));
+				}
+			}
+
+			return relatedCards;
 		}
 
 		public bool PointInsideControl(Point pos, double actualWidth, double actualHeight)

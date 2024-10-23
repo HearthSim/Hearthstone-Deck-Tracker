@@ -133,6 +133,18 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Core.Overlay.UpdatePosition();
 		}
 
+		[PredefinedHotKeyAction("Toggle overlay: Related Cards", "Turns related cards tooltips on the overlay on or off (if the game is running).")
+		]
+		public static void ToggleOverlayRelatedCards()
+		{
+			if(!Core.Game.IsRunning)
+				return;
+			Config.Instance.HidePlayerRelatedCards = !Config.Instance.HidePlayerRelatedCards;
+			Config.Instance.HideOpponentRelatedCards = Config.Instance.HidePlayerRelatedCards;
+			Config.Save();
+			Core.Overlay.UpdatePosition();
+		}
+
 		[PredefinedHotKeyAction("Toggle My Games panel", "Turns on or off visibility of My Games panel.")]
 		public static void ToggleMyGamesPanel()
 		{

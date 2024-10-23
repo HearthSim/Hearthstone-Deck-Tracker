@@ -137,6 +137,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var zone = GameTagHelper.ParseEnum<Zone>(match.Groups["zone"].Value);
 				var guessedCardId = false;
 				var guessedLocation = DeckLocation.Unknown;
+				string? copyOfCardId = null;
 				if(!game.Entities.ContainsKey(id))
 				{
 					if(string.IsNullOrEmpty(cardId) && zone != Zone.SETASIDE)
@@ -146,13 +147,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							var known = gameState.KnownCardIds[blockId.Value].FirstOrDefault();
 							cardId = known.Item1;
+							copyOfCardId = known.Item3;
 							if(!string.IsNullOrEmpty(cardId))
 							{
 								guessedLocation = known.Item2;
 								Log.Info($"Found data for entity={id}: CardId={cardId}, Location={guessedLocation}");
-								gameState.KnownCardIds[blockId.Value].Remove(known);
 								guessedCardId = true;
 							}
+							gameState.KnownCardIds[blockId.Value].Remove(known);
 						}
 					}
 					var entity = new Entity(id) { CardId = cardId };
@@ -164,6 +166,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						var sign = guessedLocation == DeckLocation.Top ? 1 : -1;
 						entity.Info.DeckIndex = sign * newIndex;
 					}
+					entity.Info.CopyOfCardId = copyOfCardId;
+
 					game.Entities.Add(id, entity);
 
 					if(gameState.CurrentBlock != null && zone == Zone.DECK)
@@ -248,7 +252,44 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								gameState.GameHandler?.HandlePlayerDredge();
 							}
 						}
+
+						if(entity.CardId == NonCollectible.Neutral.PhotographerFizzle_FizzlesSnapshotToken
+						   && gameState.CurrentBlock is { CardId: Collectible.Neutral.PhotographerFizzle })
+						{
+							if(entity.IsControlledBy(game.Player.Id))
+								entity.Info.StoredCardIds.AddRange(game.Player.Hand.OrderBy(e => e.ZonePosition).Select(e => e.Card.Id));
+							else if(entity.IsControlledBy(game.Opponent.Id))
+							{
+								entity.Info.StoredCardIds.AddRange(game.Opponent.Hand.OrderBy(e => e.ZonePosition)
+									.Select(e => {
+										if(e.HasCardId && !e.Info.Hidden)
+										{
+											return e.Card.Id;
+										}
+										return e.Id.ToString();
+									}));
+							}
+						}
+
 					}
+
+					var fizzleSnapshots = game.Opponent.PlayerEntities
+						.Where(e => e.CardId == NonCollectible.Neutral.PhotographerFizzle_FizzlesSnapshotToken);
+
+					foreach(var fizzle in fizzleSnapshots)
+					{
+						if(fizzle.Info.StoredCardIds.Contains(entity.Id.ToString()))
+						{
+							var index = fizzle.Info.StoredCardIds.FindIndex(e => e == entity.Id.ToString());
+							if(index != -1)
+							{
+								fizzle.Info.StoredCardIds[index] = entity.Card.Id;
+							}
+						}
+					}
+
+					HandleCopiedCard(game, entity);
+
 					if(type == "CHANGE_ENTITY")
 					{
 						if(!entity.Info.OriginalEntityWasCreated.HasValue)
@@ -629,6 +670,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Rogue.MetalDetector:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+							case Collectible.Mage.CommanderSivara:
+							case Collectible.Neutral.TidepoolPupil:
+								if(
+									gameState.CurrentBlock?.Parent?.CardId != null
+									&& Database.GetCardFromId(gameState.CurrentBlock.Parent.CardId)?.Type == "Spell"
+									&& actionStartingEntity != null
+									)
+								{
+									var maxCards = 3;
+									if(actionStartingEntity.Info.StoredCardIds.Count() < maxCards)
+										actionStartingEntity.Info.StoredCardIds.Add(gameState.CurrentBlock.Parent.CardId);
+								}
 								break;
 							case Collectible.Neutral.AugmentedElekk:
 								if (gameState.CurrentBlock?.Parent != null)
@@ -1031,6 +1085,28 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warrior.TheRyecleaver:
 								AddKnownCardId(gameState, NonCollectible.Warrior.TheRyecleaver_SliceOfBreadToken);
 								break;
+							case NonCollectible.Neutral.PhotographerFizzle_FizzlesSnapshotToken:
+								foreach(var card in actionStartingEntity?.Info.StoredCardIds ?? new List<string>())
+								{
+									// When the opponent plays the "Fizzle" card, a snapshot of the game state is captured.
+									// Some cards are revealed, providing their exact cardId, while others we only know the entityId.
+									// We handle these cases differently based on the information available:
+									//
+									// 1. If the revealed identifier is a number, it represents an entityId
+									//    In this case, we link the created card to the existing entity.
+									//
+									// 2. If the revealed identifier is not a number, it represents a cardId
+									//    Here, we create a new card using the known cardId.
+									if(int.TryParse(card, out _))
+									{
+										AddKnownCardId(gameState, "", copyOfCardId: card);
+									}
+									else
+									{
+										AddKnownCardId(gameState, card);
+									}
+								}
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
@@ -1122,6 +1198,29 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.ResetCurrentEntity();
 		}
 
+		private void HandleCopiedCard(IGame game, Entity entity)
+		{
+			var copyOfCard = game.Opponent.PlayerEntities
+				.FirstOrDefault(e => e.Info.CopyOfCardId == entity.Id.ToString());
+
+			if(copyOfCard != null)
+			{
+				copyOfCard.CardId = entity.CardId;
+			}
+
+			if(entity.Info.CopyOfCardId != null)
+			{
+				var matchingEntity = game.Opponent.PlayerEntities
+					.FirstOrDefault(e => e.Id.ToString() == entity.Info.CopyOfCardId);
+
+				if(matchingEntity != null)
+				{
+					matchingEntity.CardId = entity.CardId;
+					matchingEntity.Info.Hidden = false;
+				}
+			}
+		}
+
 		private static string EnsureValidCardID(string cardId)
 		{
 			if(string.IsNullOrEmpty(cardId))
@@ -1142,7 +1241,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			return !cardIdMatch.Success ? null : cardIdMatch.Groups["cardId"].Value.Trim();
 		}
 
-		private static void AddKnownCardId(IHsGameState gameState, string cardId, int count = 1, DeckLocation location = DeckLocation.Unknown)
+		private static void AddKnownCardId(IHsGameState gameState, string cardId, int count = 1, DeckLocation location = DeckLocation.Unknown, string? copyOfCardId = null)
 		{
 			if(gameState.CurrentBlock == null)
 				return;
@@ -1150,8 +1249,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			for(var i = 0; i < count; i++)
 			{
 				if(!gameState.KnownCardIds.ContainsKey(blockId))
-					gameState.KnownCardIds[blockId] = new List<(string, DeckLocation)>();
-				gameState.KnownCardIds[blockId].Add((cardId, location));
+					gameState.KnownCardIds[blockId] = new List<(string, DeckLocation, string?)>();
+				gameState.KnownCardIds[blockId].Add((cardId, location, copyOfCardId));
 			}
 		}
 

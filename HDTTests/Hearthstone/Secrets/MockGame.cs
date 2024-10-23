@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Hearthstone_Deck_Tracker.Stats;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -28,6 +29,7 @@ namespace HDTTests.Hearthstone.Secrets
 		public Entity PlayerEntity { get; set; }
 		public Entity OpponentEntity { get; set; }
 		public CounterManager CounterManager { get; set; }
+		public RelatedCardsManager RelatedCardsManager { get; set; }
 		public bool IsMulliganDone { get; set; }
 		public bool IsInMenu { get; set; }
 		public bool IsUsingPremade { get; set; }

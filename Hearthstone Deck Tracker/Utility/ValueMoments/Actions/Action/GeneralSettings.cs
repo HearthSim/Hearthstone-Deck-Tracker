@@ -61,5 +61,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("opponent_counters")]
 		public bool OpponentCounters { get => !Config.Instance.HideOpponentCounters; }
+
+		[JsonProperty("player_related_cards")]
+		public bool PlayerRelatedCards { get => !Config.Instance.HidePlayerRelatedCards; }
+
+		[JsonProperty("opponent_related_cards")]
+		public bool OpponentRelatedCards { get => !Config.Instance.HideOpponentRelatedCards; }
 	}
 }

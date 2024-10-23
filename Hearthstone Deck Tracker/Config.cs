@@ -407,6 +407,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HideOpponentCounters = false;
 
+		[DefaultValue(false)]
+		public bool HideOpponentRelatedCards = false;
+
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode OpponentCthunCounter = DisplayMode.Auto;
 
@@ -466,6 +469,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool HidePlayerCounters = false;
+
+		[DefaultValue(false)]
+		public bool HidePlayerRelatedCards = false;
 
 		[DefaultValue(true)]
 		public bool DisablePlayerWotogs = true;

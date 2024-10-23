@@ -73,6 +73,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			;
 
 			Core.Overlay.SetCardOpacityMask(state);
+
+			Core.Overlay.HoveredCard = state;
 		}
 
 		internal static void OnDeckPickerChange(object sender, HearthWatcher.EventArgs.DeckPickerEventArgs args)

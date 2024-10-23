@@ -1747,6 +1747,13 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		public void HandlePlayerSecretTrigger(Entity entity, string? cardId, int turn, int otherId)
+		{
+			if (!entity.IsSecret)
+				return;
+			_game.Player.SecretTriggered(entity, turn);
+		}
+
 		public void HandlePlayerHandDiscard(Entity entity, string cardId, int turn)
 		{
 			if(string.IsNullOrEmpty(cardId))
@@ -2196,7 +2203,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (!entity.IsSecret)
 				return;
-			_game.Opponent.SecretTriggered(entity, turn);
+			_game.Opponent.OpponentSecretTriggered(entity, turn);
 			_game.SecretsManager.RemoveSecret(entity);
 			Core.UpdateOpponentCards();
 			var card = Database.GetCardFromId(cardId);
@@ -2254,6 +2261,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerDraw(Entity entity, string cardId, int turn) => HandlePlayerDraw(entity, cardId, turn);
 		void IGameHandler.HandlePlayerMulligan(Entity entity, string cardId) => HandlePlayerMulligan(entity, cardId);
 		void IGameHandler.HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone, string parentBlockCardId) => HandlePlayerSecretPlayed(entity, cardId, turn, fromZone, parentBlockCardId);
+		void IGameHandler.HandlePlayerSecretTrigger(Entity entity, string? cardId, int turn, int otherId) => HandlePlayerSecretTrigger(entity, cardId, turn, otherId);
 		void IGameHandler.HandlePlayerHandDiscard(Entity entity, string cardId, int turn) => HandlePlayerHandDiscard(entity, cardId, turn);
 		void IGameHandler.HandlePlayerPlay(Entity entity, string cardId, int turn, string parentBlockCardId) => HandlePlayerPlay(entity, cardId, turn, parentBlockCardId);
 		void IGameHandler.HandlePlayerDeckDiscard(Entity entity, string cardId, int turn) => HandlePlayerDeckDiscard(entity, cardId, turn);

@@ -197,6 +197,11 @@
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckBoxCounters_Checked"
                   Unchecked="CheckBoxCounters_Unchecked" />
+        <CheckBox x:Name="CheckBoxRelatedCards"
+                  Content="{lex:LocText Options_Overlay_Player_CheckBox_Related_Cards}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxRelatedCards_Checked"
+                  Unchecked="CheckBoxRelatedCards_Unchecked" />
         <CheckBox x:Name="CheckBoxAttack"
                   Content="{lex:LocText Options_Overlay_Opponent_CheckBox_Attack}" HorizontalAlignment="Left"
                   Margin="10,5,0,0" VerticalAlignment="Top"

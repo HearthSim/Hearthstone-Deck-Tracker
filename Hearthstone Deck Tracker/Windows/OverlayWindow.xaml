@@ -87,6 +87,7 @@
                                 ScrollViewer.CanContentScroll="False">
                             </controls:AnimatedCardList>
                         </Viewbox>
+                        <controls:DeckLens x:Name="OpponentRelatedCardsDeckLens" Label="{lex:Loc Related_Cards}" />
                         <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.CardCounterFrame, Source={StaticResource ThemeManager}}">
                             <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
                             <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
@@ -262,7 +263,7 @@
                                      DataContext="{Binding Tier7PreLobbyViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
 
                     <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
-                <controls:GridCardImages x:Name="ToolTipGridCards" Visibility="Hidden" />
+                <controls:GridCardImages x:Name="ToolTipGridCards" Visibility="Hidden" Panel.ZIndex="11"/>
                 <controls:CardImage x:Name="ToolTipCardBlock" Visibility="Hidden" />
                 <controls:CardImage x:Name="ToolTipCardBlock2" Visibility="Hidden" />
             </Canvas>
