@@ -8,7 +8,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 public class ElementalTurnSequenceCounter : NumericCounter
 {
 	public override string LocalizedName => LocUtil.Get("Counter_ElementalTurnSequence", useCardLanguage: true);
-	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Neutral.Lamplighter;
+	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Neutral.AzeriteGiant;
 
 	public override string[] RelatedCards => new string[]
 	{
@@ -52,7 +52,7 @@ public class ElementalTurnSequenceCounter : NumericCounter
 	{
 		if(!Game.IsTraditionalHearthstoneMatch)
 			return;
-		
+
 		var isCurrentController = IsPlayerCounter ? entity.IsControlledBy(game.Player.Id)
 			: entity.IsControlledBy(game.Opponent.Id);
 
