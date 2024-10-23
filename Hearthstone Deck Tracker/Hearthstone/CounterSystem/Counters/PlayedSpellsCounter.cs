@@ -56,6 +56,9 @@ public class PlayedSpellsCounter : NumericCounter
 		if(value != (int)Zone.PLAY && value != (int)Zone.SECRET)
 			return;
 
+		if(gameState.CurrentBlock?.Type != "PLAY")
+			return;
+
 		if(!entity.IsSpell)
 			return;
 
