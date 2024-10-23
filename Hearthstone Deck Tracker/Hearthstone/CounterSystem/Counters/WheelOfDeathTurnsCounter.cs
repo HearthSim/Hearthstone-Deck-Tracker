@@ -15,7 +15,7 @@ public class WheelOfDeathTurnsCounter : NumericCounter
 
 	public bool IsWheelOfDeathInPlay { get; set; }
 
-	public override bool ShouldShow() => IsWheelOfDeathInPlay;
+	public override bool ShouldShow() => Game.IsTraditionalHearthstoneMatch && IsWheelOfDeathInPlay;
 
 	public override string[] GetCardsToDisplay()
 	{

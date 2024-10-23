@@ -25,6 +25,7 @@ public class FatigueCounter : NumericCounter
 
 	public override bool ShouldShow()
 	{
+		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
 			return Counter > 0 || InPlayerDeckOrKnown(RelatedCards);
 		return Counter > 0;

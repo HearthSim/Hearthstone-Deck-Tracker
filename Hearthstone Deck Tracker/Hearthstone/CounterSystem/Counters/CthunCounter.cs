@@ -19,6 +19,7 @@ public class CtunCounter : StatsCounter
 
 	public override bool ShouldShow()
 	{
+		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
 		return (AttackCounter > 2 || HealthCounter > 2) && OpponentMayHaveRelevantCards();

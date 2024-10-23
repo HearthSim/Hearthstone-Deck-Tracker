@@ -14,7 +14,7 @@ public class BloodGemCounter : StatsCounter
 	{
 	}
 
-	public override bool ShouldShow() => AttackCounter > 3 || HealthCounter > 3;
+	public override bool ShouldShow() => Game.IsBattlegroundsMatch && (AttackCounter > 3 || HealthCounter > 3);
 
 	public override string[] GetCardsToDisplay()
 	{

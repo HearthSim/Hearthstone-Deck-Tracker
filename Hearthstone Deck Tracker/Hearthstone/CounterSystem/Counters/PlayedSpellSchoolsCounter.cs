@@ -33,6 +33,7 @@ public class PlayedSpellSchoolsCounter : NumericCounter
 
 	public override bool ShouldShow()
 	{
+		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
 		return Counter > 1 && OpponentMayHaveRelevantCards(true);

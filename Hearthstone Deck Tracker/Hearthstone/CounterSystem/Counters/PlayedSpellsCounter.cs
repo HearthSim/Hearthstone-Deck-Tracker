@@ -30,6 +30,7 @@ public class PlayedSpellsCounter : NumericCounter
 
 	public override bool ShouldShow()
 	{
+		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
 		return Counter > 7 && OpponentMayHaveRelevantCards(true);

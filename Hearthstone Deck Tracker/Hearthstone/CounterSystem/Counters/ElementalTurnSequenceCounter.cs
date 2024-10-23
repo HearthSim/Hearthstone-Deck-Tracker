@@ -27,6 +27,7 @@ public class ElementalTurnSequenceCounter : NumericCounter
 
 	public override bool ShouldShow()
 	{
+		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
 
@@ -49,6 +50,9 @@ public class ElementalTurnSequenceCounter : NumericCounter
 	private bool PlayedThisTurn { get; set; }
 	public void HandleElementalPlayed(IGame game, IHsGameState gameState, Entity entity)
 	{
+		if(!Game.IsTraditionalHearthstoneMatch)
+			return;
+		
 		var isCurrentController = IsPlayerCounter ? entity.IsControlledBy(game.Player.Id)
 			: entity.IsControlledBy(game.Opponent.Id);
 
