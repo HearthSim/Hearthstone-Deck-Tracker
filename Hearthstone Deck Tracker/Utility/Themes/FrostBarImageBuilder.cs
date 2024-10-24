@@ -1,5 +1,6 @@
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using System;
 
 namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
@@ -9,7 +10,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		{
 		}
 
-		protected override void AddCardImage() => AddCardImage(ImageRect.Move(-1, 0), false);
+		protected override void AddCardImage(Action? onCardImageLoaded) => AddCardImage(ImageRect.Move(-1, 0), false, onCardImageLoaded);
 
 		protected override void AddCountText() => AddCountText(CountTextRect.Move(1, 0));
 

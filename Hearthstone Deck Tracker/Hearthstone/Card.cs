@@ -598,7 +598,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 				try
 				{
-					var image = GetImageBuilder()?.Build() ?? new DrawingBrush();
+					var image = GetImageBuilder()?.Build(() => {
+						// Force background to update when card image becomes available.
+						CardImageCache.Remove(Id);
+						Update();
+					}) ?? new DrawingBrush();
+
 					if (image.CanFreeze)
 						image.Freeze();
 					cardImageObj = new CardImageObject(image, this);

@@ -9,6 +9,10 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HearthDb.Enums;
 using ColorConverter = System.Windows.Media.ColorConverter;
+using Hearthstone_Deck_Tracker.Utility.Assets;
+using System.Threading.Tasks;
+using MahApps.Metro.Controls;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
@@ -90,14 +94,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			HasAllOptionalCountBoxes = OptionalCountBoxes.All(x => File.Exists(Path.Combine(ThemeDir, x.Value.FileName)));
 		}
 
-		public virtual DrawingBrush Build()
+		public virtual DrawingBrush Build(Action? onCardImageLoaded = null)
 		{
 			DrawingGroup = new DrawingGroup();
 
 			if(!HasAllRequired)
 				return new DrawingBrush();
 
-			AddCardImage();
+			AddCardImage(onCardImageLoaded);
 			AddFadeOverlay();
 			if(Math.Abs(Card.Count) > 1 || Card is { Rarity: Rarity.LEGENDARY, BaconCard: false })
 			{
@@ -123,17 +127,50 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			return new DrawingBrush(DrawingGroup);
 		}
 
-		protected virtual void AddCardImage() => AddCardImage(ImageRect, false);
-		protected void AddCardImage(Rect rect, bool offsetByCountBox)
+		protected virtual void AddCardImage(Action? onCardImageLoaded) => AddCardImage(ImageRect, false, onCardImageLoaded);
+		protected void AddCardImage(Rect rect, bool offsetByCountBox, Action? onCardImageLoaded)
 		{
-			var bmp = ImageCache.GetCardImage(Card);
-			if(bmp != null)
+			var bmp = GetCardTile(onCardImageLoaded);
+			if(bmp == null)
+				return;
+			if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card is { Rarity: Rarity.LEGENDARY, BaconCard: false }))
+				AddChild(bmp, rect.Move(ImageOffset, 0));
+			else
+				AddChild(bmp, rect);
+		}
+
+		protected BitmapImage? GetCardTile(Action? onCardImageLoaded)
+		{
+			var downloader = AssetDownloaders.GetCardAssetDownloader(CardAssetType.Tile);
+			if(downloader == null)
+				return null;
+
+			if(!downloader.HasAsset(Card))
 			{
-				if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card is { Rarity: Rarity.LEGENDARY, BaconCard: false }))
-					AddChild(bmp, rect.Move(ImageOffset, 0));
-				else
-					AddChild(bmp, rect);
+				async void download()
+				{
+					try
+					{
+						var success = await downloader!.DownloadAsset(Card);
+						if(success)
+							onCardImageLoaded?.Invoke();
+					}
+					catch(Exception ex)
+					{
+						Log.Error(ex);
+						// Pass. Guess we can't render the image.
+					}
+				};
+				download();
+
+				return new BitmapImage(new Uri(downloader.PlaceholderAssetPath));
 			}
+			var path = downloader.StoragePathFor(Card);
+			var file = new FileInfo(path);
+			if(!file.Exists)
+				return null;
+
+			return new BitmapImage(new Uri(path, UriKind.Absolute));
 		}
 
 		protected virtual void AddFadeOverlay() => AddFadeOverlay(Required[ThemeElement.FadeOverlay].Rectangle, false);

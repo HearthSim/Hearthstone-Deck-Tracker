@@ -1,4 +1,3 @@
-using System.IO;
 ﻿using System.Drawing;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -6,6 +5,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 using HearthDb.Enums;
+using System;
 
 namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
@@ -16,12 +16,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			CreatedIconOffset = -15;
 		}
 
-		protected override void AddCardImage()
+		protected override void AddCardImage(Action? onCardImageLoaded)
 		{
-			var bmp = ImageCache.GetCardBitmap(Card);
+			var bmp = GetCardTile(onCardImageLoaded);
 			if(bmp == null)
 				return;
-			var img = new GaussianBlur(bmp).Process(2);
+			if(bmp.UriSource.AbsolutePath.StartsWith("/Resource"))
+				return;
+			var img = new GaussianBlur(new Bitmap(bmp.UriSource.AbsolutePath)).Process(2);
 			DrawingGroup.Children.Add(new ImageDrawing(img.ToImageSource(), FrameRect));
 		}
 

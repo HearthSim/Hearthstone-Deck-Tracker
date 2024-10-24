@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
@@ -19,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		protected override void AddFadeOverlay() => AddFadeOverlay(_fadeRect, true);
 
-		protected override void AddCardImage() => AddCardImage(_imageRect, true);
+		protected override void AddCardImage(Action? onCardImageLoaded) => AddCardImage(_imageRect, true, onCardImageLoaded);
 
 		protected override void AddCost() => AddCost(_costRect);
 
