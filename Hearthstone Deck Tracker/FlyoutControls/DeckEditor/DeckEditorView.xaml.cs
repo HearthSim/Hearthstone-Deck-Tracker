@@ -10,13 +10,20 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		public DeckEditorView()
 		{
 			InitializeComponent();
-			var viewModel = (DeckEditorViewModel)DataContext;
+		}
+
+		private DeckEditorViewModel GetViewModel()
+		{
+			if(DataContext != null)
+				return (DeckEditorViewModel)DataContext;
+
+			var viewModel = new DeckEditorViewModel();
 			
 			viewModel.PropertyChanged += (sender, args) =>
 			{
 				if(args.PropertyName == "Deck")
 				{
-					var deck = ((DeckEditorViewModel)DataContext).Deck;
+					var deck = viewModel.Deck;
 					DeckSetIcons.Update(deck);
 					ManaCurve.SetDeck(deck);
 				}
@@ -28,14 +35,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 				Keyboard.Focus(TextBoxDbInput);
 				TextBoxDbInput.SelectAll();
 			};
+
+			DataContext = viewModel;
+			return viewModel;
 		}
 
-		public void SetDeck(Deck deck, bool isNewDeck) => ((DeckEditorViewModel)DataContext).SetDeck(deck, isNewDeck);
+		public void SetDeck(Deck deck, bool isNewDeck) => GetViewModel().SetDeck(deck, isNewDeck);
 
-		public void SetCards(IEnumerable<Card> cards) => ((DeckEditorViewModel)DataContext).SetCards(cards);
+		public void SetCards(IEnumerable<Card> cards) => GetViewModel().SetCards(cards);
 
-		public Deck CurrentDeck => ((DeckEditorViewModel)DataContext).Deck;
+		public Deck CurrentDeck => GetViewModel().Deck;
 
-		public void SetDeckName(string name) => ((DeckEditorViewModel)DataContext).DeckName = name;
+		public void SetDeckName(string name) => GetViewModel().DeckName = name;
 	}
 }

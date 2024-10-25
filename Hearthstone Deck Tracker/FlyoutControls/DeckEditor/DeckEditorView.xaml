@@ -14,9 +14,6 @@
              xmlns:deckSetIcons="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckSetIcons"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="700">
-    <UserControl.DataContext>
-        <deckEditor:DeckEditorViewModel/>
-    </UserControl.DataContext>
     <UserControl.Resources>
         <Style TargetType="ListViewItem">
             <Setter Property="Margin" Value="-4,-3,-3,0"/>
