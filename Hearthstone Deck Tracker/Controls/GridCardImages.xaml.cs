@@ -178,10 +178,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 
         private const int MaxColumns = 3;
         public static int GridWidth { get; } = 600;
-        public static int GridHeight { get; } = 800;
+        public static int GridHeight { get; } = 750;
 
-        private const double MaxCardWidth = 256 * 0.75;
-        private const double MaxCardHeight = 388 * 0.75;
+        private const double MaxCardWidth = 256 * 0.7;
+        private const double MaxCardHeight = 388 * 0.7;
 
         private int _maxGridHeight = GridHeight;
         public Thickness CardMargin => CalculateCardMargin();
@@ -189,7 +189,7 @@ namespace Hearthstone_Deck_Tracker.Controls
         private Thickness CalculateCardMargin()
         {
 	        var scaleFactor = CardHeight / BaseCardHeight;
-	        var topBottomMargin = -10 * scaleFactor;
+	        var topBottomMargin = -13 * scaleFactor;
 	        var leftRightMargin = -2 * scaleFactor;
 	        return new Thickness(leftRightMargin, topBottomMargin, leftRightMargin, topBottomMargin);
         }
