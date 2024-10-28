@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility;
@@ -604,6 +605,119 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_tooltipHoverStart = null;
 				}
 
+			}
+			// player secrets/objective zone
+			else if(HoveredCard is { ZonePosition: > 0, IsHand: false, Side: (int)PlayerSide.FRIENDLY })
+			{
+				List<Hearthstone.Card?> relatedCards = new();
+				var entity = Core.Game.Player.Objectives.ElementAtOrDefault(HoveredCard.Value.ZonePosition - 1);
+				if (entity != null && entity.CardId == HoveredCard.Value.CardId)
+					relatedCards.AddRange(entity.Info.StoredCardIds.Select(Database.GetCardFromId));
+
+				if (_tooltipHoverStart == null)
+				{
+					_tooltipHoverStart = DateTime.Now;
+				}
+
+				var elapsed = DateTime.Now - _tooltipHoverStart.Value;
+
+				if(relatedCards.Count > 0)
+				{
+					var nonNullableRelatedCards = relatedCards.Where(c => c != null).Cast<Hearthstone.Card>();
+
+					ToolTipGridCards.SetTitle(LocUtil.Get("Related_Cards", useCardLanguage: true));
+					ToolTipGridCards.SetCardIdsFromCards(nonNullableRelatedCards, 470);
+					Canvas.SetTop(ToolTipGridCards, (480 - ToolTipGridCards.ActualHeight) * _activeEffectsScale);
+
+					// find the left of the card
+					var baseOffsetX = 0.57;
+					var leftOffsetXByLayer =  new [] { 0.0, 0.037, 0.062 };
+					var rightOffsetXByLayer =  new [] { 0.0, 0.034, 0.059 };
+					var relativePosition = HoveredCard.Value.ZonePosition - 1;
+					var isLeftSide = relativePosition % 2 != 0;
+					var layer = (int)Math.Ceiling(relativePosition / 2.0);
+					var offsetX = isLeftSide ? baseOffsetX - leftOffsetXByLayer[layer] : baseOffsetX + rightOffsetXByLayer[layer];
+					var correctedOffsetX = Helper.GetScaledXPos(offsetX, (int)Width, ScreenRatio);
+
+					// find the center of the card
+					var cardHeight = 0.43;
+					var cardHeightInPixels = cardHeight * Height;
+					var cardWidth = cardHeightInPixels * 31 / (cardHeight * 100);
+
+					Canvas.SetLeft(ToolTipGridCards,
+						correctedOffsetX + cardWidth / 2 - ToolTipGridCards.ActualWidth / 2 * _activeEffectsScale);
+
+					if(elapsed.TotalMilliseconds >= TooltipDelayMilliseconds)
+					{
+						ToolTipGridCards.Visibility = Config.Instance.HidePlayerRelatedCards ? Collapsed : Visible;
+					}
+					else
+					{
+						ToolTipGridCards.Visibility = Hidden;
+					}
+				}
+				else
+				{
+					ToolTipGridCards.Visibility = Hidden;
+					_tooltipHoverStart = null;
+				}
+
+			}
+			// opponent secrets/objective zone
+			else if(HoveredCard is { ZonePosition: > 0, IsHand: false } && HoveredCard.Value.Side != (int)PlayerSide.FRIENDLY)
+			{
+				List<Hearthstone.Card?> relatedCards = new();
+				var entity = Core.Game.Opponent.Objectives.ElementAtOrDefault(HoveredCard.Value.ZonePosition - 1);
+				if (entity != null && entity.CardId == HoveredCard.Value.CardId)
+					relatedCards.AddRange(entity.Info.StoredCardIds.Select(Database.GetCardFromId));
+
+				if (_tooltipHoverStart == null)
+				{
+					_tooltipHoverStart = DateTime.Now;
+				}
+
+				var elapsed = DateTime.Now - _tooltipHoverStart.Value;
+
+				if(relatedCards.Count > 0)
+				{
+					var nonNullableRelatedCards = relatedCards.Where(c => c != null).Cast<Hearthstone.Card>();
+
+					ToolTipGridCards.SetTitle(LocUtil.Get("Related_Cards", useCardLanguage: true));
+					ToolTipGridCards.SetCardIdsFromCards(nonNullableRelatedCards, 470);
+					Canvas.SetTop(ToolTipGridCards, Height / 2);
+
+					// find the left of the card
+					var baseOffsetX = 0.57;
+					var leftOffsetXByLayer =  new [] { 0.0, 0.037, 0.062 };
+					var rightOffsetXByLayer =  new [] { 0.0, 0.034, 0.059 };
+					var relativePosition = HoveredCard.Value.ZonePosition - 1;
+					var isLeftSide = relativePosition % 2 != 0;
+					var layer = (int)Math.Ceiling(relativePosition / 2.0);
+					var offsetX = isLeftSide ? baseOffsetX - leftOffsetXByLayer[layer] : baseOffsetX + rightOffsetXByLayer[layer];
+					var correctedOffsetX = Helper.GetScaledXPos(offsetX, (int)Width, ScreenRatio);
+
+					// find the center of the card
+					var cardHeight = 0.43;
+					var cardHeightInPixels = cardHeight * Height;
+					var cardWidth = cardHeightInPixels * 31 / (cardHeight * 100);
+
+					Canvas.SetLeft(ToolTipGridCards,
+						correctedOffsetX + cardWidth / 2 - ToolTipGridCards.ActualWidth / 2 * _activeEffectsScale);
+
+					if(elapsed.TotalMilliseconds >= TooltipDelayMilliseconds)
+					{
+						ToolTipGridCards.Visibility = Config.Instance.HideOpponentRelatedCards ? Collapsed : Visible;
+					}
+					else
+					{
+						ToolTipGridCards.Visibility = Hidden;
+					}
+				}
+				else
+				{
+					ToolTipGridCards.Visibility = Hidden;
+					_tooltipHoverStart = null;
+				}
 			}
 			else
 			{

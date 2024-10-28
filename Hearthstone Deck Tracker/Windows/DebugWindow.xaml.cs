@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				await Task.Delay(500);
 			}
-		}	
+		}
 
 		private void UpdateCards()
 		{
@@ -71,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				new CollectionItem(_game.Player.Deck, "Player Deck"),
 				new CollectionItem(_game.Player.Graveyard, "Player Graveyard"),
 				new CollectionItem(_game.Player.Secrets, "Player Secrets"),
+				new CollectionItem(_game.Player.Objectives, "Player Objectives"),
 				new CollectionItem(_game.Player.RevealedEntities, "Player RevealedEntities"),
 				new CollectionItem(_game.Player.SetAside, "Player SetAside"),
 				new CollectionItem(_game.Opponent.Hand, "Opponent Hand"),
@@ -78,6 +79,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				new CollectionItem(_game.Opponent.Deck, "Opponent Deck"),
 				new CollectionItem(_game.Opponent.Graveyard, "Opponent Graveyard"),
 				new CollectionItem(_game.Opponent.Secrets, "Opponent Secrets"),
+				new CollectionItem(_game.Opponent.Objectives, "Opponent Objectives"),
 				new CollectionItem(_game.Opponent.RevealedEntities, "Opponent RevealedEntities"),
 				new CollectionItem(_game.Opponent.SetAside, "Opponent SetAside")
 			};

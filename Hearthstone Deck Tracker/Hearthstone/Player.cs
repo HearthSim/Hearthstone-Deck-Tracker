@@ -17,6 +17,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HSReplay.Requests;
 using HSReplay.Responses;
 using LiveCharts.Helpers;
+using NuGet;
 using static HearthDb.CardIds;
 
 #endregion
@@ -529,6 +530,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						{
 							SpellsPlayedInFriendlyCharacters.Add(entity.CardId);
 						}
+
+						var activeMistahVistahs = PlayerEntities.Where(e =>
+								e.CardId == NonCollectible.Druid.MistahVistah_ScenicVistaToken
+								&& (e.IsInZone(Zone.PLAY) || e.IsInZone(Zone.SECRET)));
+
+						if(!activeMistahVistahs.IsEmpty())
+						{
+							foreach(var mistahVistah in activeMistahVistahs)
+							{
+								mistahVistah.Info.StoredCardIds.Add(entity.CardId);
+							}
+						}
+						
 					}
 					if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var spellSchoolTag))
 						PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
