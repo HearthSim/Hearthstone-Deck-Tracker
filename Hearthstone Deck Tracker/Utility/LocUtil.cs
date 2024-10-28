@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Microsoft.Win32;
 using WPFLocalizeExtension.Engine;
 
 namespace Hearthstone_Deck_Tracker.Utility
@@ -31,6 +32,51 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(locale.Length > 2)
 				locale = locale.Insert(2, "-");
 			return CultureInfo.GetCultureInfo(locale);
+		}
+
+		public static string GetWindowsDisplayLanguageFromRegistry()
+		{
+			try
+			{
+				const string subKey = @"Control Panel\International\User Profile";
+				const string valueName = "Languages";
+
+				using var key = Registry.CurrentUser.OpenSubKey(subKey);
+				var value = key?.GetValue(valueName);
+				if (value is string[] { Length: > 0 } languages)
+				{
+					return languages[0].Replace("-", string.Empty);
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($@"An error occurred while accesing registry: {ex.Message}");
+			}
+
+			return string.Empty;
+		}
+
+		public static string GetHearthstoneLanguageFromRegistry()
+		{
+			try
+			{
+				const string subKey = @"SOFTWARE\Blizzard Entertainment\Battle.net\Launch Options\WTCG";
+				const string valueName = "LOCALE";
+
+				using var key = Registry.CurrentUser.OpenSubKey(subKey);
+
+				var value = key?.GetValue(valueName);
+				if(value is string locale)
+				{
+					return locale.Replace("-", string.Empty);
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($@"An error occurred while accesing registry: {ex.Message}");
+			}
+
+			return string.Empty;
 		}
 
 		public static void UpdateCultureInfo()

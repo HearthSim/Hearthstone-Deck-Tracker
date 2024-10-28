@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -1374,6 +1375,31 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(Instance.ConfigDir != string.Empty)
 					Directory.CreateDirectory(Instance.ConfigDir);
+
+				var systemLanguage = LocUtil.GetWindowsDisplayLanguageFromRegistry();
+				var gameLanguage = LocUtil.GetHearthstoneLanguageFromRegistry();
+				var supportedGameLanguages = Helper.LanguageDict.Values.Where(x => x != "enGB").ToList();
+
+				if(supportedGameLanguages.Contains(gameLanguage))
+				{
+					Instance.Localization = (Language)Enum.Parse(typeof(Language), gameLanguage);
+					Instance.SelectedLanguage = gameLanguage;
+					HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("game_language", gameLanguage, systemLanguage,
+						gameLanguage);
+				}
+				else if(supportedGameLanguages.Contains(systemLanguage))
+				{
+					Instance.Localization = (Language)Enum.Parse(typeof(Language), systemLanguage);
+					Instance.SelectedLanguage = systemLanguage;
+					HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("system_language", systemLanguage, systemLanguage,
+						gameLanguage);
+				}
+				else
+				{
+					HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("default_language", "enUS", systemLanguage,
+						gameLanguage);
+				}
+
 				Save();
 			}
 #if(!SQUIRREL)

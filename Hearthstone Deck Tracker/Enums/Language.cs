@@ -8,9 +8,13 @@ namespace Hearthstone_Deck_Tracker.Enums
 		enUS,
 		[Description("German")]
 		deDE,
+		[Description("Italian")]
+		itIT,
 		[Description("French")]
 		frFR,
-		[Description("Spanish")]
+		[Description("Spanish (Mexico)")]
+		esMX,
+		[Description("Spanish (Spain)")]
 		esES,
 		[Description("Japanese")]
 		jaJP,
@@ -23,9 +27,11 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[Description("Portuguese (Portugal)")]
 		ptPT,
 		[Description("Ukrainian")]
-		ukUA,		
+		ukUA,
 		[Description("Russian")]
 		ruRU,
+		[Description("Thai")]
+		thTH,
 		[Description("Chinese (Simplified)")]
 		zhCN,
 		[Description("Chinese (Traditional)")]
