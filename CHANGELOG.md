@@ -1,3 +1,11 @@
+## **Release v1.36.1 - 2024-10-29**
+**Updated for Hearthstone 31.0.0**
+
+**Hearthstone**:
+- Added support for cards that will be recasted by Mistah Vistah effect.
+- Added support to new expansion cards.\
+  *Asteroids, Kil'jaeden, Librams, Ingenious Artificer, Ace Wayfinder, Astrobiologist, Space Pirate, Starlight Wanderer, Stranded Spaceman, Askara, Lucky Coment, Spacerock Collector, Planetary Navigator, Foreboding Flame, Infernal Stratagem,  Expedition Sergeant, Unyielding Vindicator, Wakener Of Souls, Dirdra Rebel Captain, Emergency Meeting,  Headhunt, Voronei Recruiter, Velen Leader Of The Exiled, Yrel Beacon Of Hope, Scrounging Shipwright, Starship Schematic, Archimonde, Xortoth Breaker Of Stars, Talgath, Astral Vigilant*
+
 ## **Release v1.36.0 - 2024-10-23**
 **Hearthstone**:
 - Added tooltips for related cards.\
