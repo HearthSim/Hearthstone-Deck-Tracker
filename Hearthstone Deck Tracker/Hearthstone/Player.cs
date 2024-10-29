@@ -471,6 +471,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Fatigue = 0;
 			InDeckPredictions.Clear();
 			SpellsPlayedCards.Clear();
+			SpellsPlayedInFriendlyCharacters.Clear();
 			PogoHopperPlayedCount = 0;
 			CardsPlayedThisTurn.Clear();
 			CardsPlayedLastTurn.Clear();
@@ -547,7 +548,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 								mistahVistah.Info.StoredCardIds.Add(entity.CardId);
 							}
 						}
-						
+
 					}
 					if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var spellSchoolTag))
 						PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
