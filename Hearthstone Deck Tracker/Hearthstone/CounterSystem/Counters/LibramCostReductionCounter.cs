@@ -13,8 +13,13 @@ public class LibramCostReductionCounter : NumericCounter
 
 	public override string[] RelatedCards => new string[]
 	{
-		HearthDb.CardIds.Collectible.Paladin.AldorAttendant,
-		HearthDb.CardIds.Collectible.Paladin.AldorTruthseeker
+		HearthDb.CardIds.Collectible.Paladin.LibramOfWisdom,
+		HearthDb.CardIds.Collectible.Paladin.LibramOfClarity,
+		HearthDb.CardIds.Collectible.Paladin.LibramOfDivinity,
+		HearthDb.CardIds.Collectible.Paladin.LibramOfJustice,
+		HearthDb.CardIds.Collectible.Paladin.LibramOfFaith,
+		HearthDb.CardIds.Collectible.Paladin.LibramOfJudgment,
+		HearthDb.CardIds.Collectible.Paladin.LibramOfHope,
 	};
 
 	public LibramCostReductionCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
@@ -41,7 +46,8 @@ public class LibramCostReductionCounter : NumericCounter
 	private static readonly Dictionary<string, int> EnchantLibramDict = new Dictionary<string, int>
 	{
 		{HearthDb.CardIds.NonCollectible.Neutral.AldorAttendant_AldorAttendantEnchantment, 1},
-		{HearthDb.CardIds.NonCollectible.Neutral.AldorTruthseeker_AldorTruthseekerEnchantment, 2}
+		{HearthDb.CardIds.NonCollectible.Neutral.AldorTruthseeker_AldorTruthseekerEnchantment, 2},
+		{HearthDb.CardIds.NonCollectible.Paladin.InterstellarStarslicer_InterstellarLibramEnchantmentEnchantment, 1},
 	};
 
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)

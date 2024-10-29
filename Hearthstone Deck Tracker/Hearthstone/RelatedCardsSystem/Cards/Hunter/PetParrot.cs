@@ -16,7 +16,7 @@ public class PetParrot: ICardWithRelatedCards
 	public List<Card?> GetRelatedCards(Player player)
 	{
 		var lastCost1 = player.CardsPlayedThisMatch
-									.Select(Database.GetCardFromId)
+									.Select(entity => Database.GetCardFromId(entity.CardId))
 									.LastOrDefault(card => card is { Cost: 1 });
 		return lastCost1 != null ? new List<Card?> { lastCost1 } : new List<Card?>();
 	}

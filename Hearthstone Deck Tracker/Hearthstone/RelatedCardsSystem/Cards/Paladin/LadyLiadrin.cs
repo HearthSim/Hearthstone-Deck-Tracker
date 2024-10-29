@@ -11,6 +11,6 @@ public class LadyLiadrin: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.SpellsPlayedInFriendlyCharacters
-			.Select(Database.GetCardFromId)
+			.Select(entity => Database.GetCardFromId(entity.CardId))
 			.ToList();
 }

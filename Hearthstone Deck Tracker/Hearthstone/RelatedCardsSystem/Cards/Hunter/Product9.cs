@@ -14,9 +14,9 @@ public class Product9: ICardWithRelatedCards
 	}
 
 	public List<Card?> GetRelatedCards(Player player) =>
-		player.SecretsTriggeredCardIds
+		player.SecretsTriggeredCards
+			.Select(entity => Database.GetCardFromId(entity.CardId))
 			.Distinct()
-			.Select(Database.GetCardFromId)
 			.Where(card => card != null)
 			.OrderByDescending(card => card!.Cost)
 			.ToList();

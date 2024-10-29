@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Mage;
+namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Warlock;
 
-public class Rewind: ICardWithRelatedCards
+public class Archimonde: ICardWithRelatedCards
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Mage.Rewind;
+	public string GetCardId() => HearthDb.CardIds.Collectible.Warlock.Archimonde;
 
 	public bool ShouldShowForOpponent(Player opponent)
 	{
@@ -14,10 +14,11 @@ public class Rewind: ICardWithRelatedCards
 	}
 
 	public List<Card?> GetRelatedCards(Player player) =>
-		player.SpellsPlayedCards
+		player.CardsPlayedThisMatch
+			.Where(entity => entity.Info.Created)
 			.Select(entity => Database.GetCardFromId(entity.CardId))
 			.Distinct()
-			.Where(card => card != null && card.Id != HearthDb.CardIds.Collectible.Mage.Rewind)
+			.Where(card => card is not null && card.IsDemon())
 			.OrderByDescending(card => card!.Cost)
 			.ToList();
 }

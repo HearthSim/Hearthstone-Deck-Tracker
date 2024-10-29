@@ -181,7 +181,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard RatTrap = new MultiIdCard(Collectible.Hunter.RatTrap, Collectible.Hunter.RatTrapCore);
 				public static readonly MultiIdCard SnakeTrap = new MultiIdCard(Collectible.Hunter.SnakeTrap, Collectible.Hunter.SnakeTrapCorePlaceholder, Collectible.Hunter.SnakeTrapVanilla);
 				public static readonly MultiIdCard Snipe = new MultiIdCard(Collectible.Hunter.SnipeExpert1, Collectible.Hunter.SnipeVanilla, Collectible.Hunter.SnipeWONDERS);
-				public static readonly MultiIdCard VenomstrikeTrap = new MultiIdCard(Collectible.Hunter.VenomstrikeTrapICECROWN, Collectible.Hunter.VenomstrikeTrapInvalid);
+				public static readonly MultiIdCard VenomstrikeTrap = new MultiIdCard(Collectible.Hunter.VenomstrikeTrap, Collectible.Hunter.VenomstrikeTrapCorePlaceholder);
 				public static readonly MultiIdCard WanderingMonster = new MultiIdCard(Collectible.Hunter.WanderingMonster, Collectible.Hunter.WanderingMonsterCorePlaceholder);
 				public static readonly MultiIdCard Zombeeees = new MultiIdCard(Collectible.Hunter.Zombeeees);
 			}
@@ -194,7 +194,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard Effigy = new MultiIdCard(Collectible.Mage.Effigy);
 				public static readonly MultiIdCard ExplosiveRunes = new MultiIdCard(Collectible.Mage.ExplosiveRunes, Collectible.Mage.ExplosiveRunesCore);
 				public static readonly MultiIdCard FlameWard = new MultiIdCard(Collectible.Mage.FlameWard);
-				public static readonly MultiIdCard FrozenClone = new MultiIdCard(Collectible.Mage.FrozenCloneICECROWN, Collectible.Mage.FrozenCloneInvalid);
+				public static readonly MultiIdCard FrozenClone = new MultiIdCard(Collectible.Mage.FrozenClone, Collectible.Mage.FrozenCloneCorePlaceholder);
 				public static readonly MultiIdCard IceBarrier = new MultiIdCard(Collectible.Mage.IceBarrier, Collectible.Mage.IceBarrierCore, Collectible.Mage.IceBarrierVanilla);
 				public static readonly MultiIdCard IceBlock = new MultiIdCard(Collectible.Mage.IceBlock, Collectible.Mage.IceBlockVanilla);
 				public static readonly MultiIdCard ManaBind = new MultiIdCard(Collectible.Mage.ManaBind);

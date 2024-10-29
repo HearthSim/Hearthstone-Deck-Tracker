@@ -1874,7 +1874,7 @@ namespace Hearthstone_Deck_Tracker
 				_game.ActiveEffects.TryRemoveEffect(entity, true);
 			}
 
-			_game.Player.PlayToGraveyard(entity, cardId, turn);
+			_game.Player.PlayToGraveyard(entity, turn);
 			var card = Database.GetCardFromId(entity.Info.LatestCardId);
 			if(card != null)
 				GameEvents.OnPlayerPlayToGraveyard.Execute(card);
@@ -1891,7 +1891,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			if(cardId != null)
-				_game.Opponent.PlayToGraveyard(entity, cardId, turn);
+				_game.Opponent.PlayToGraveyard(entity, turn);
 			var card = Database.GetCardFromId(entity.Info.LatestCardId);
 			if(card != null)
 				GameEvents.OnOpponentPlayToGraveyard.Execute(card);

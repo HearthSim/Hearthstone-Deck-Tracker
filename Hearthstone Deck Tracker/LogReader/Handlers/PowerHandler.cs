@@ -237,7 +237,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-						if(entity.CardId is Collectible.Neutral.PrinceRenathalCore or Collectible.Neutral.PrinceRenathal)
+						if(entity.CardId is Collectible.Neutral.PrinceRenathalCore or
+						   Collectible.Neutral.PrinceRenathal or
+						   Collectible.Warrior.SporeEmpressMoldara or
+						   NonCollectible.Warrior.SporeEmpressMoldara_ReplicatingSporeToken)
 						{
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
 							Core.UpdateOpponentCards();
@@ -447,11 +450,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warrior.DirehornHatchling:
 								AddKnownCardId(gameState, NonCollectible.Warrior.DirehornHatchling_DirehornMatriarchToken);
 								break;
-							case Collectible.Mage.FrozenCloneICECROWN:
+							case Collectible.Mage.FrozenClone:
+							case Collectible.Mage.FrozenCloneCorePlaceholder:
 								if(target != null)
 									AddKnownCardId(gameState, target, 2);
 								break;
-							case Collectible.Shaman.MoorabiICECROWN:
+							case Collectible.Shaman.Moorabi:
+							case Collectible.Shaman.MoorabiCorePlaceholder:
 							case Collectible.Rogue.SonyaShadowdancer:
 								if(target != null)
 									AddKnownCardId(gameState, target);
@@ -488,13 +493,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Priest.SpiritOfTheDead:
 								if(correspondPlayer == game.Player.Id)
 								{
-									if(game.Player.LastDiedMinionCardId != null)
-										AddKnownCardId(gameState, game.Player.LastDiedMinionCardId);
+									if(game.Player.LastDiedMinionCard?.CardId != null)
+										AddKnownCardId(gameState, game.Player.LastDiedMinionCard.CardId);
 								}
 								else if(correspondPlayer == game.Opponent.Id)
 								{
-									if(game.Opponent.LastDiedMinionCardId != null)
-										AddKnownCardId(gameState, game.Opponent.LastDiedMinionCardId);
+									if(game.Opponent.LastDiedMinionCard?.CardId != null)
+										AddKnownCardId(gameState, game.Opponent.LastDiedMinionCard.CardId);
 								}
 								break;
 							case Collectible.Druid.SecureTheDeck:
@@ -547,8 +552,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								if (actionStartingEntity != null)
 								{
 									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Opponent : game.Player;
-									foreach(var card in player.CardsPlayedThisTurn)
-										AddKnownCardId(gameState, card);
+									foreach(var entity in player.CardsPlayedThisTurn)
+									{
+										if(entity.CardId != null)
+											AddKnownCardId(gameState, entity.CardId);
+									}
 								}
 								break;
 							case Collectible.Rogue.EfficientOctoBot:
@@ -777,7 +785,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.EliseTheTrailblazer:
 								AddKnownCardId(gameState, NonCollectible.Neutral.ElisetheTrailblazer_UngoroPackToken);
 								break;
-							case Collectible.Mage.GhastlyConjurerICECROWN:
+							case Collectible.Mage.GhastlyConjurer:
+							case Collectible.Mage.GhastlyConjurerCorePlaceholder:
 								AddKnownCardId(gameState, Collectible.Mage.MirrorImageLegacy);
 								break;
 							case Collectible.Druid.ThorngrowthSentries:
@@ -1106,6 +1115,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 										AddKnownCardId(gameState, card);
 									}
 								}
+								break;
+							case Collectible.Demonhunter.XortothBreakerOfStars:
+								AddKnownCardId(gameState, NonCollectible.Demonhunter.XortothBreakerofStars_StarOfOriginationToken);
+								AddKnownCardId(gameState, NonCollectible.Demonhunter.XortothBreakerofStars_StarOfConclusionToken);
+								break;
+							case Collectible.Rogue.Talgath:
+								AddKnownCardId(gameState, Collectible.Rogue.BackstabCore);
+								break;
+							case Collectible.Neutral.AstralVigilant:
+								AddKnownCardId(gameState, game.Opponent.CardsPlayedThisMatch
+									.Select(entity => Database.GetCardFromId(entity.CardId))
+									.Where(card => card is { Mechanics: not null } && card.isDraenei())
+									.Select(card => card!.Id)
+									.LastOrDefault()!);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1

@@ -321,6 +321,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool IsNaga() => HasRace(HearthDb.Enums.Race.NAGA);
 
+		public bool isDraenei() => HasRace(HearthDb.Enums.Race.DRAENEI);
+
 		public bool IsEmptyRace() => RaceEnum == HearthDb.Enums.Race.INVALID && SecondaryRaceEnum == HearthDb.Enums.Race.INVALID;
 
 		[XmlIgnore]

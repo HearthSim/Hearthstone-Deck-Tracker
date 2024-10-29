@@ -5,7 +5,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.EffectSystem.Effects.Rogue;
 public class ValeeraTheHollowEnchantment : EntityBasedEffect
 {
 	public override string CardId => HearthDb.CardIds.NonCollectible.Rogue.ValeeratheHollow_VeilOfShadowsEnchantment;
-	protected override string CardIdToShowInUI => HearthDb.CardIds.Collectible.Rogue.ValeeraTheHollowICECROWN;
+	protected override string CardIdToShowInUI => HearthDb.CardIds.Collectible.Rogue.ValeeraTheHollow;
 
 	public ValeeraTheHollowEnchantment(int entityId, bool isControlledByPlayer) : base(entityId, isControlledByPlayer)
 	{
