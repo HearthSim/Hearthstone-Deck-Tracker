@@ -16,7 +16,7 @@ public class HydrationStation: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.DeadMinionsCards
-			.Select(entity => Database.GetCardFromId(entity.CardId))
+			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
 			.Distinct()
 			.Where(card => card is { Mechanics: not null } && card.Mechanics.Contains("Taunt"))
 			.OrderByDescending(card => card!.Cost)

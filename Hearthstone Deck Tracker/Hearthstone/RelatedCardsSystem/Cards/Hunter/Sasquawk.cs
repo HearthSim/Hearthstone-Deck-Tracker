@@ -15,7 +15,7 @@ public class Sasquawk: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.CardsPlayedLastTurn
-			.Select(entity => Database.GetCardFromId(entity.CardId))
+			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
 			.Where(card => card != null)
 			.OrderByDescending(card => card!.Cost)
 			.ToList();

@@ -14,7 +14,7 @@ public class ReturnPolicy: ICardWithRelatedCards
 	}
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.CardsPlayedThisMatch
-			.Select(entity => Database.GetCardFromId(entity.CardId))
+			.Select(entity => Database.GetCardFromId(entity.CardId).HandleZilliax3000(player))
 			.Distinct()
 			.Where(card => card is { Mechanics: not null } && card.Mechanics.Contains("Deathrattle"))
 			.OrderByDescending(card => card!.Cost)

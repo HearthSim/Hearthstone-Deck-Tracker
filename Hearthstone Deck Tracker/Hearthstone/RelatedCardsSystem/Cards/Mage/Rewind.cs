@@ -15,7 +15,7 @@ public class Rewind: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.SpellsPlayedCards
-			.Select(entity => Database.GetCardFromId(entity.CardId))
+			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
 			.Distinct()
 			.Where(card => card != null && card.Id != HearthDb.CardIds.Collectible.Mage.Rewind)
 			.OrderByDescending(card => card!.Cost)

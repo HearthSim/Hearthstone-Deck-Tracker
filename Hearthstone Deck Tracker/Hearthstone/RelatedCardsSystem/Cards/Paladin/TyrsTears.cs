@@ -15,7 +15,7 @@ public class TyrsTears: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.DeadMinionsCards
-			.Select(entity => Database.GetCardFromId(entity.CardId))
+			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
 			.Distinct()
 			.Where(card => card != null && card.IsClass(player.Class))
 			.OrderBy(card => card!.Cost)

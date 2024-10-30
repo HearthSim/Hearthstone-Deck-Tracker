@@ -15,7 +15,7 @@ public class TheGalacticProjectionOrb: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.SpellsPlayedCards
-			.Select(entity => Database.GetCardFromId(entity.CardId))
+			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
 			.Distinct()
 			.Where(card => card != null)
 			.OrderBy(card => card!.Cost)

@@ -15,7 +15,7 @@ public class StranglethornHeart: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.DeadMinionsCards
-			.Select(entity => Database.GetCardFromId(entity.CardId))
+			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
 			.Where(card => card != null && card.IsBeast() && card.Cost > 4)
 			.OrderByDescending(card => card!.Cost)
 			.ToList();

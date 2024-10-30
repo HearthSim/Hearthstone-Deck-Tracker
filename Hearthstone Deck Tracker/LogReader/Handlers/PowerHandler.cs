@@ -1125,7 +1125,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Neutral.AstralVigilant:
 								AddKnownCardId(gameState, game.Opponent.CardsPlayedThisMatch
-									.Select(entity => Database.GetCardFromId(entity.CardId))
+									.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, game.Opponent))
 									.Where(card => card is { Mechanics: not null } && card.isDraenei())
 									.Select(card => card!.Id)
 									.LastOrDefault()!);

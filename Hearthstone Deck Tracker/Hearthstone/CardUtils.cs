@@ -41,4 +41,38 @@ public static class CardUtils
 	{
 		return IsCardFromFormat(card, format) && IsCardFromPlayerClass(card, playerClass, ignoreNeutral);
 	}
+
+	public static Card? HandleZilliax3000(this Card? card, Player player)
+	{
+		if (card is null) return null;
+		if(card.Id.StartsWith(HearthDb.CardIds.Collectible.Neutral.ZilliaxDeluxe3000))
+		{
+			var sideboard = player.PlayerSideboardsDict.FirstOrDefault(sb => sb.OwnerCardId == HearthDb.CardIds.Collectible.Neutral.ZilliaxDeluxe3000);
+			if(sideboard is { Cards.Count: > 0 })
+			{
+				var cosmetic = sideboard.Cards.FirstOrDefault(module => !module.ZilliaxCustomizableFunctionalModule);
+				var modules = sideboard.Cards.Where(module => module.ZilliaxCustomizableFunctionalModule);
+
+				// Clone Zilliax with new cost, attack, health and mechanics
+				card = cosmetic != null ? (Card)cosmetic.Clone() : (Card)card.Clone();
+				List<string> mechanics = new();
+				foreach(var module in modules)
+				{
+					if(module.Mechanics != null) mechanics.AddRange(module.Mechanics);
+				}
+				card.Mechanics = mechanics.ToArray();
+				card.Attack = modules.Sum(module => module.Attack);
+				card.Health = modules.Sum(module => module.Health);
+				card.Cost = modules.Sum(module => module.Cost);
+			}
+		}
+
+		return card;
+	}
+
+	public static Card? GetProcessedCardFromCardId(string? cardId, Player player)
+	{
+		var card = Database.GetCardFromId(cardId);
+		return card?.HandleZilliax3000(player);
+	}
 }

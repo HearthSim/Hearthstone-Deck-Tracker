@@ -15,7 +15,7 @@ public class InventorBoom: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.DeadMinionsCards
-			.Select(entity => Database.GetCardFromId(entity.CardId))
+			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
 			.Distinct()
 			.Where(card => card != null && card.IsMech() && card.Cost > 4)
 			.OrderBy(card => card!.Cost)

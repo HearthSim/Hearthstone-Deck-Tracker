@@ -15,7 +15,7 @@ public class Shudderwock: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.CardsPlayedThisMatch
-			.Select(entity => Database.GetCardFromId(entity.CardId))
+			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
 			.Where(card => card is { Mechanics: not null } && card.Mechanics.Contains("Battlecry"))
 			.ToList();
 }
