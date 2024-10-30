@@ -1321,6 +1321,40 @@ namespace Hearthstone_Deck_Tracker
 				File.Delete(configPath);
 		}
 
+		public static void SetInitialLanguage()
+		{
+			if(Instance.Localization != Language.enUS || Instance.SelectedLanguage != "enUS")
+				return;
+
+			var systemLanguage = LocUtil.GetWindowsDisplayLanguageFromRegistry();
+			var gameLanguage = LocUtil.GetHearthstoneLanguageFromRegistry();
+			var systemRegionName = LocUtil.GetRegionNameFromRegistry();
+
+			var supportedGameLanguages = Helper.LanguageDict.Values.Where(x => x != "enGB").ToList();
+
+			if(supportedGameLanguages.Contains(gameLanguage))
+			{
+				Instance.Localization = (Language)Enum.Parse(typeof(Language), gameLanguage);
+				Instance.SelectedLanguage = gameLanguage;
+				HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("game_language", gameLanguage, systemLanguage,
+					gameLanguage, systemRegionName);
+			}
+			else if(supportedGameLanguages.Contains(systemLanguage))
+			{
+				Instance.Localization = (Language)Enum.Parse(typeof(Language), systemLanguage);
+				Instance.SelectedLanguage = systemLanguage;
+				HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("system_language", systemLanguage, systemLanguage,
+					gameLanguage, systemRegionName);
+			}
+			else
+			{
+				HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("default_language", "enUS", systemLanguage,
+					gameLanguage, systemRegionName);
+			}
+
+			Save();
+		}
+
 		public static void Load()
 		{
 			var foundConfig = false;
@@ -1375,31 +1409,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(Instance.ConfigDir != string.Empty)
 					Directory.CreateDirectory(Instance.ConfigDir);
-
-				var systemLanguage = LocUtil.GetWindowsDisplayLanguageFromRegistry();
-				var gameLanguage = LocUtil.GetHearthstoneLanguageFromRegistry();
-				var supportedGameLanguages = Helper.LanguageDict.Values.Where(x => x != "enGB").ToList();
-
-				if(supportedGameLanguages.Contains(gameLanguage))
-				{
-					Instance.Localization = (Language)Enum.Parse(typeof(Language), gameLanguage);
-					Instance.SelectedLanguage = gameLanguage;
-					HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("game_language", gameLanguage, systemLanguage,
-						gameLanguage);
-				}
-				else if(supportedGameLanguages.Contains(systemLanguage))
-				{
-					Instance.Localization = (Language)Enum.Parse(typeof(Language), systemLanguage);
-					Instance.SelectedLanguage = systemLanguage;
-					HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("system_language", systemLanguage, systemLanguage,
-						gameLanguage);
-				}
-				else
-				{
-					HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("default_language", "enUS", systemLanguage,
-						gameLanguage);
-				}
-
 				Save();
 			}
 #if(!SQUIRREL)

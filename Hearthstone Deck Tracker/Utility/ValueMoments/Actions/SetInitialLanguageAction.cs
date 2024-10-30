@@ -6,13 +6,14 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 {
 	public class SetInitialLanguageAction : VMAction
 	{
-		public SetInitialLanguageAction(string languageSource, string language, string systemLanguage, string gameLanguage)
+		public SetInitialLanguageAction(string languageSource, string language, string systemLanguage, string gameLanguage, string systemRegionName)
 			: base(Franchise.HSConstructed, null, null)
 		{
 			Language = language;
 			LanguageSource = languageSource;
 			SystemLanguage = systemLanguage;
 			GameLanguage = gameLanguage;
+			SystemRegionName = systemRegionName;
 		}
 
 		[JsonProperty("name")]
@@ -35,5 +36,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 
 		[JsonProperty("game_language")]
 		public string GameLanguage { get; }
+
+		[JsonProperty("system_region_name")]
+		public string SystemRegionName { get; }
 	}
 }

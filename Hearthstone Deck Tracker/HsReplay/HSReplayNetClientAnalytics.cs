@@ -142,9 +142,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				TrackAction(new EndMatchMercenariesAction(matchResult, gameType, gameMetrics));
 		}
 
-		public static void OnSetInitialConfigLanguage(string source, string language, string systemLanguage, string gameLanguage)
+		public static void OnSetInitialConfigLanguage(string source, string language, string systemLanguage, string gameLanguage, string systemRegionName)
 		{
-			TrackAction(new SetInitialLanguageAction(source, language, systemLanguage, gameLanguage));
+			TrackAction(new SetInitialLanguageAction(source, language, systemLanguage, gameLanguage, systemRegionName));
 		}
 
 		public static void OnCopyDeck(CopyDeckAction.Action action)

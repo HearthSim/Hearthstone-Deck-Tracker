@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Microsoft.Win32;
 using WPFLocalizeExtension.Engine;
 
@@ -69,6 +70,32 @@ namespace Hearthstone_Deck_Tracker.Utility
 				if(value is string locale)
 				{
 					return locale.Replace("-", string.Empty);
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($@"An error occurred while accesing registry: {ex.Message}");
+			}
+
+			return string.Empty;
+		}
+
+		public static string GetRegionNameFromRegistry()
+		{
+			try
+			{
+				const string subKey = @"Control Panel\International\Geo";
+				const string valueName = "Nation";
+
+				using var key = Registry.CurrentUser.OpenSubKey(subKey);
+
+				if (key != null)
+				{
+					var value = (string)key.GetValue(valueName);
+					var allRegions = CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(x => new RegionInfo(x.ToString()));
+					var regionInfo = allRegions.FirstOrDefault(r => r.GeoId == Int32.Parse(value));
+
+					return regionInfo?.EnglishName ?? string.Empty;
 				}
 			}
 			catch (Exception ex)

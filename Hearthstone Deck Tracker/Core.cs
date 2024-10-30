@@ -75,6 +75,13 @@ namespace Hearthstone_Deck_Tracker
 			ServicePointManager.DefaultConnectionLimit = 10;
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			Config.Load();
+			ConfigManager.Run();
+			if(Config.Instance.GoogleAnalytics)
+				HSReplayNetClientAnalytics.Initialize();
+
+			if(ConfigManager.PreviousVersion == null)
+				Config.SetInitialLanguage();
+
 			Log.Info($"HDT: {Helper.GetCurrentVersion()}, Operating System: {Helper.GetWindowsVersion()}, .NET Framework: {Helper.GetInstalledDotNetVersion()}");
 			var splashScreenWindow = new SplashScreenWindow();
 #if(SQUIRREL)
@@ -125,7 +132,6 @@ namespace Hearthstone_Deck_Tracker
 
 			Reflection.Exception += e => Log.Warn("HearthMirror Exception: " + e);
 
-			ConfigManager.Run();
 			LocUtil.UpdateCultureInfo();
 			var newUser = ConfigManager.PreviousVersion == null;
 			LogConfigUpdater.Run().Forget();
@@ -138,9 +144,6 @@ namespace Hearthstone_Deck_Tracker
 			MainWindow.LoadConfigSettings();
 			MainWindow.Show();
 			splashScreenWindow.Close();
-
-			if(Config.Instance.GoogleAnalytics)
-				HSReplayNetClientAnalytics.Initialize();
 
 			if(Config.Instance.DisplayHsReplayNoteLive && ConfigManager.PreviousVersion != null && ConfigManager.PreviousVersion < new Version(1, 1, 0))
 				MainWindow.FlyoutHsReplayNote.IsOpen = true;
