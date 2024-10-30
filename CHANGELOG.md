@@ -1,3 +1,9 @@
+## **Release v1.36.2 - 2024-10-30**
+**Fixes**:
+- Fixed an issue with setting the initial language configuration.
+- Fixed handling of Zilliax Deluxe 3000 when creating related cards.
+- Fixed an issue where Lady Liadrin related cards were not resetting after a match.
+
 ## **Release v1.36.1 - 2024-10-29**
 **Updated for Hearthstone 31.0.0**
 
