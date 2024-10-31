@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
+using NuGet;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone;
 
@@ -70,9 +74,47 @@ public static class CardUtils
 		return card;
 	}
 
-	public static Card? GetProcessedCardFromCardId(string? cardId, Player player)
+	private static string[] _starshipIds =
 	{
-		var card = Database.GetCardFromId(cardId);
+		HearthDb.CardIds.NonCollectible.Neutral.ArkoniteDefenseCrystal_TheExilesHopeToken,
+		HearthDb.CardIds.NonCollectible.Deathknight.ArkoniteDefenseCrystal_TheSpiritsPassageToken,
+		HearthDb.CardIds.NonCollectible.Demonhunter.ArkoniteDefenseCrystal_TheLegionsBaneToken,
+		HearthDb.CardIds.NonCollectible.Druid.ArkoniteDefenseCrystal_TheCelestialArchiveToken,
+		HearthDb.CardIds.NonCollectible.Hunter.ArkoniteDefenseCrystal_TheAstralCompassToken,
+		HearthDb.CardIds.NonCollectible.Rogue.ArkoniteDefenseCrystal_TheScavengersWillToken,
+		HearthDb.CardIds.NonCollectible.Warlock.ArkoniteDefenseCrystal_TheNethersEyeToken,
+	};
+
+	public static bool IsStarship(string? cardId) => _starshipIds.Contains(cardId);
+
+	private static Card? HandleStarship(this Entity? entity, Player player)
+	{
+		if (entity is null) return null;
+
+		var card = (Card)entity.Card.Clone();
+
+		var starshipPieces = entity.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull().ToArray();
+
+		HashSet<string> mechanics = new();
+		foreach(var piece in starshipPieces)
+		{
+			if(piece.Mechanics != null) mechanics.AddRange(piece.Mechanics);
+		}
+		card.Mechanics = mechanics.ToArray();
+		card.Attack = starshipPieces.Sum(piece => piece.Attack);
+		card.Health = starshipPieces.Sum(piece => piece.Health);
+		card.Cost = Math.Max(10, starshipPieces.Sum(piece => piece.Cost));
+
+		return card;
+	}
+
+	public static Card? GetProcessedCardFromEntity(Entity entity, Player player)
+	{
+		if(IsStarship(entity.CardId))
+		{
+			return HandleStarship(entity, player);
+		}
+		var card = Database.GetCardFromId(entity.CardId);
 		return card?.HandleZilliax3000(player);
 	}
 }

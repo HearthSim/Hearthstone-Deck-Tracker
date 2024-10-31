@@ -105,6 +105,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case FORGE_REVEALED:
 						OnForgeRevealed(gameState, id, game, value, prevValue);
 						break;
+					case PARENT_CARD:
+						OnParentCardChange(gameState, id, game, value, prevValue);
+						break;
 					case LETTUCE_ABILITY_TILE_VISUAL_ALL_VISIBLE:
 					case LETTUCE_ABILITY_TILE_VISUAL_SELF_ONLY:
 					case FAKE_ZONE:
@@ -485,6 +488,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				entity.Info.Hidden = false;
 			}
 
+		}
+
+		private void OnParentCardChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			// when a starship is launched it changes the value to 0, but we want to keep the parent stored cards
+			if(!game.Entities.TryGetValue(value, out var parentEntity))
+				return;
+
+			if(entity.CardId != null)
+				parentEntity.Info.StoredCardIds.Add(entity.CardId);
 		}
 
 		private void DamageChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)

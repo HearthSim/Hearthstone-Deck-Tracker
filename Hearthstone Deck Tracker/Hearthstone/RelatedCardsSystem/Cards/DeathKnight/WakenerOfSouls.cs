@@ -11,7 +11,7 @@ public class WakenerOfSouls: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.DeadMinionsCards
-			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
+			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
 			.Distinct()
 			.Where(card => card is { Mechanics: not null }
 			               && card.Id != HearthDb.CardIds.Collectible.Deathknight.WakenerOfSouls

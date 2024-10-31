@@ -15,7 +15,7 @@ public class VelenLeaderOfTheExiled: ICardWithRelatedCards
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.CardsPlayedThisMatch
-			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
+			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
 			.Where(card => card is { Mechanics: not null } && card.isDraenei() && card.Id != GetCardId() &&
 			               (card.Mechanics.Contains("Battlecry") ||  card.Mechanics.Contains("Deathrattle")))
 			.ToList();

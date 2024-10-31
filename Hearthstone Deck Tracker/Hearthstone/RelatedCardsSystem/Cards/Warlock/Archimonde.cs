@@ -16,7 +16,7 @@ public class Archimonde: ICardWithRelatedCards
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.CardsPlayedThisMatch
 			.Where(entity => entity.Info.Created)
-			.Select(entity => CardUtils.GetProcessedCardFromCardId(entity.CardId, player))
+			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
 			.Distinct()
 			.Where(card => card is not null && card.IsDemon())
 			.OrderByDescending(card => card!.Cost)
