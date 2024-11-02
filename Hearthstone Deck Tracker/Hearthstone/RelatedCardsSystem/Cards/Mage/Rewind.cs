@@ -7,11 +7,7 @@ public class Rewind: ICardWithRelatedCards
 {
 	public string GetCardId() => HearthDb.CardIds.Collectible.Mage.Rewind;
 
-	public bool ShouldShowForOpponent(Player opponent)
-	{
-		var card = Database.GetCardFromId(GetCardId());
-		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentFormat, opponent.Class) && GetRelatedCards(opponent).Count > 1;
-	}
+	public bool ShouldShowForOpponent(Player opponent) => false;
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.SpellsPlayedCards
