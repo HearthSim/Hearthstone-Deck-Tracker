@@ -50,6 +50,11 @@
                               HorizontalAlignment="Center" VerticalAlignment="Center"
                               Margin="{Binding CardMargin, RelativeSource={RelativeSource AncestorType=UserControl}}"
                               >
+                            <Image Source="{Binding LoadingImageSource, TargetNullValue={x:Null}}"
+                                   d:Source="{StaticResource LoadingMinion}"
+                                   Stretch="Uniform"
+                                   RenderOptions.BitmapScalingMode="Fant">
+                            </Image>
                             <Image Source="{Binding CardImagePath}"
                                    Stretch="Uniform"
                                    RenderOptions.BitmapScalingMode="Fant" />

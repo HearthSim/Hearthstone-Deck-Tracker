@@ -14,11 +14,40 @@ namespace Hearthstone_Deck_Tracker.Controls
 {
     public partial class GridCardImages : INotifyPropertyChanged
     {
-        public class CardWithImage
+        public class CardWithImage : INotifyPropertyChanged
         {
-            public Hearthstone.Card? Card { get; set; }
-            public ImageSource? LoadingImageSource { get; set; }
-            public string? CardImagePath { get; set; }
+	        public Hearthstone.Card? Card { set; get; }
+
+            private ImageSource? _loadingImageSource = null;
+            public ImageSource? LoadingImageSource
+            {
+	            get => _loadingImageSource;
+	            set
+	            {
+		            _loadingImageSource = value;
+		            OnPropertyChanged();
+	            }
+            }
+
+            private string? _cardImagePath = null;
+
+            public string? CardImagePath
+            {
+	            get => _cardImagePath;
+	            set
+	            {
+		            _cardImagePath = value;
+		            OnPropertyChanged();
+	            }
+            }
+
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            [NotifyPropertyChangedInvocator]
+            private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+            {
+	            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         private ObservableCollection<CardWithImage> _cards = new ObservableCollection<CardWithImage>();
@@ -28,17 +57,6 @@ namespace Hearthstone_Deck_Tracker.Controls
             set
             {
                 _cards = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private ImageSource? _loadingImageSource = null;
-        public ImageSource? LoadingImageSource
-        {
-            get => _loadingImageSource;
-            set
-            {
-                _loadingImageSource = value;
                 OnPropertyChanged();
             }
         }
@@ -100,19 +118,28 @@ namespace Hearthstone_Deck_Tracker.Controls
             if (downloader == null)
                 return;
 
-            foreach (var card in cards)
+            foreach(var card in cards)
             {
-                var cardWithImage = new CardWithImage
-                {
-                    Card = card,
-                    LoadingImageSource = GetLoadingImagePath(card)
-                };
+	            var cardWithImage = new CardWithImage
+	            {
+		            Card = card,
+		            LoadingImageSource = GetLoadingImagePath(card)
+	            };
 
-                if (!downloader.HasAsset(card))
+	            Cards.Add(cardWithImage);
+            }
+
+            CardsCollectionChanged(maxGridHeight);
+
+            foreach (var cardWithImage in Cards)
+            {
+	            if(cardWithImage.Card == null) continue;
+
+                if (!downloader.HasAsset(cardWithImage.Card))
                 {
                     try
                     {
-                        await downloader.DownloadAsset(card);
+                        await downloader.DownloadAsset(cardWithImage.Card);
                     }
                     catch (ArgumentNullException)
                     {
@@ -122,20 +149,15 @@ namespace Hearthstone_Deck_Tracker.Controls
 
                 try
                 {
-                    cardWithImage.CardImagePath = downloader.StoragePathFor(card);
+                    cardWithImage.CardImagePath = downloader.StoragePathFor(cardWithImage.Card);
+                    cardWithImage.LoadingImageSource = null;
                 }
                 catch (ArgumentNullException)
                 {
                     // Handle exception if needed
                 }
 
-                Cards.Add(cardWithImage);
             }
-
-            CardsCollectionChanged(maxGridHeight);
-
-            // Clear the loading image source after all cards are processed
-            LoadingImageSource = null;
 
             OnPropertyChanged(nameof(CardsGridVisibility));
             OnPropertyChanged(nameof(TitleCornerRadius));
