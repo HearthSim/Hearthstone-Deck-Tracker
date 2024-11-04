@@ -60,9 +60,6 @@ public class TheCeaselessExpanseCounter: NumericCounter
 			case (int)Zone.PLAY when value == (int)Zone.GRAVEYARD && (entity.IsMinion || entity.IsWeapon || entity.IsLocation):
 				Counter++;
 				return;
-			case (int)Zone.SECRET when value == (int)Zone.GRAVEYARD:
-				Counter++;
-				return;
 		}
 
 	}
