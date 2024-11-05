@@ -75,38 +75,6 @@ namespace HDTTests.Hearthstone
 		}
 
 		[TestMethod]
-		public void TestCardBarImages()
-		{
-			foreach(var card in Database.GetActualCards())
-			{
-				if(card.Id == "LOOT_526e")
-				{
-					// Art for this appears to be missing as of 2020-02-26
-					continue;
-				}
-				if(card.Id == "CORE_BOT_451" || card.Id == "CORE_DMF_060")
-				{
-					// Art for this appears to be missing as of 2023-08-22
-					continue;
-				}
-				if(
-					card.Id == "CORE_CS2_024" ||
-					card.Id == "CORE_EX1_316" ||
-					card.Id == "CORE_RLK_063" ||
-					card.Id == "CORE_RLK_086" ||
-					card.Id == "CORE_RLK_122" ||
-					card.Id == "CORE_VAN_EX1_563" ||
-					card.Id == "LEG_RLK_753"
-				)
-				{
-					// Art for these cards appears to be missing as of 2024-03-12
-					continue;
-				}
-				Assert.IsTrue(File.Exists("../../../../Resources/Tiles/" + card.Id + ".png"), card.Id);
-			}
-		}
-
-		[TestMethod]
 		public void DungeonBossTest()
 		{
 			var name = Database.GetHeroNameFromId(CardIds.NonCollectible.Warlock.XolTheUnscathedHeroic);

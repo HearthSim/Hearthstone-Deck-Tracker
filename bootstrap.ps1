@@ -25,4 +25,4 @@ catch {
 }
 
 Invoke-Expression "msbuild Bootstrap/Bootstrap.csproj /p:Configuration=Debug"
-Invoke-Expression "./generate_resources.bat"
+Invoke-Expression "msbuild 'Hearthstone Deck Tracker/Hearthstone Deck Tracker.csproj' /p:Configuration=Debug"

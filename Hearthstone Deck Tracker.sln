@@ -31,11 +31,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HearthWatcher", "HearthWatc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HearthWatcher.Test", "HearthWatcher.Test\HearthWatcher.Test.csproj", "{D081BCA4-14FD-4FBC-B92A-82574AB0478B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourceGenerator", "ResourceGenerator\ResourceGenerator.csproj", "{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}"
-	ProjectSection(ProjectDependencies) = postProject
-		{7CF4E289-B871-4E52-B451-EE7BF1250359} = {7CF4E289-B871-4E52-B451-EE7BF1250359}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap", "Bootstrap\Bootstrap.csproj", "{7CF4E289-B871-4E52-B451-EE7BF1250359}"
 EndProject
 Global
@@ -81,12 +76,6 @@ Global
 		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Release|x86.Build.0 = Release|x86
 		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Squirrel|x86.ActiveCfg = Release|x86
 		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Squirrel|x86.Build.0 = Release|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Debug|x86.ActiveCfg = Debug|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Debug|x86.Build.0 = Debug|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Release|x86.ActiveCfg = Release|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Release|x86.Build.0 = Release|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Squirrel|x86.ActiveCfg = Release|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Squirrel|x86.Build.0 = Release|x86
 		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Debug|x86.ActiveCfg = Debug|x86
 		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Debug|x86.Build.0 = Debug|x86
 		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Release|x86.ActiveCfg = Release|x86

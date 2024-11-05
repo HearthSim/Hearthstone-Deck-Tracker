@@ -145,7 +145,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <GeneratedTiles Include="$(MSBuildProjectDirectory)/../Resources/Generated/Tiles/*.*" />
     <Themes Include="$(MSBuildProjectDirectory)/Images/Themes/**/*.*" />
   </ItemGroup>
 
@@ -199,7 +198,6 @@
   </ItemGroup>
 
   <Target Name="CopyImages" BeforeTargets="PreBuildEvent">
-    <Copy SourceFiles="@(GeneratedTiles)" DestinationFolder="$(OutputPath)/Images/Tiles" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(Themes)" DestinationFolder="$(OutputPath)/Images/Themes/%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
 
