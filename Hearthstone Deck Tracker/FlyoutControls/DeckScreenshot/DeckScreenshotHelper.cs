@@ -18,12 +18,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 		private const int ScreenshotWidth = 219;
 		private const int Dpi = 96;
 
-		public static RenderTargetBitmap Generate(Deck deck, bool cardsOnly)
+		public static async Task<RenderTargetBitmap> Generate(Deck deck, bool cardsOnly)
 		{
 			var height = CardHeight * deck.GetSelectedDeckVersion().Cards.Count;
 			if(!cardsOnly)
 				height += InfoHeight;
 			var control = new DeckView(deck, cardsOnly);
+			await control.Init();
 			control.Measure(new Size(ScreenshotWidth, height));
 			control.Arrange(new Rect(new Size(ScreenshotWidth, height)));
 			control.UpdateLayout();

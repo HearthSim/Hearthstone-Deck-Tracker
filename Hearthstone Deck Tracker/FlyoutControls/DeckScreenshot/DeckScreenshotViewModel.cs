@@ -219,11 +219,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			HSReplayNetClientAnalytics.OnScreenshotDeck(ClickAction.Action.ScreenshotCopyToClipboard);
 		}
 
-		public void UpdateImage()
+		private async void UpdateImage()
 		{
 			if(_deck == null)
 				return;
-			DeckImage = DeckScreenshotHelper.Generate(_deck, CardsOnly);
+			DeckImage = await DeckScreenshotHelper.Generate(_deck, CardsOnly);
 		}
 	}
 }

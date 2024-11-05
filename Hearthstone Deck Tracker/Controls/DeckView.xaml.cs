@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.CardIds.Collectible;
 using static System.Windows.Visibility;
@@ -16,14 +18,21 @@ namespace Hearthstone_Deck_Tracker.Controls
 	public partial class DeckView
 	{
 		private readonly string _allTags;
+		private readonly Deck _deck;
+		private readonly bool _deckOnly;
 
 		public DeckView(Deck deck, bool deckOnly = false)
 		{
 			InitializeComponent();
 			_allTags = deck.TagList.ToLowerInvariant().Replace("-", "");
 			ListViewPlayer.Update(deck.Cards.ToSortedCardList(), true);
+			_deck = deck;
+			_deckOnly = deckOnly;
+		}
 
-			if(deckOnly)
+		public async Task Init()
+		{
+			if(_deckOnly)
 			{
 				DeckTitleContainer.Visibility = Collapsed;
 				DeckFormatPanel.Visibility = Collapsed;
@@ -32,25 +41,28 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 			else
 			{
-				DeckTitlePanel.Background = DeckHeaderBackground(deck.Class);
-				LblDeckTitle.Text = deck.Name;
-				LblDeckTag.Text = GetTagText(deck);
-				LblDeckFormat.Text = GetFormatText(deck);
-				LblDustCost.Text = TotalDust(deck).ToString();
-				ShowFormatIcon(deck);
-				SetIcons.Update(deck);
+				DeckTitlePanel.Background = await DeckHeaderBackground(_deck.Class);
+				LblDeckTitle.Text = _deck.Name;
+				LblDeckTag.Text = GetTagText(_deck);
+				LblDeckFormat.Text = GetFormatText(_deck);
+				LblDustCost.Text = TotalDust(_deck).ToString();
+				ShowFormatIcon(_deck);
+				SetIcons.Update(_deck);
 			}
 		}
 
-		private ImageBrush DeckHeaderBackground(string? deckClass)
+		private async Task<ImageBrush> DeckHeaderBackground(string? deckClass)
 		{
 			var heroId = ClassToID(deckClass);
 			var drawingGroup = new DrawingGroup();
 			var card = Database.GetCardFromId(heroId);
-			if(card == null)
+			if(card == null || AssetDownloaders.cardTileDownloader == null)
 				return new ImageBrush();
-			var img = ImageCache.GetCardImage(card);
-			drawingGroup.Children.Add(new ImageDrawing(img, new Rect(54, 0, 130, 34)));
+			var path = await AssetDownloaders.cardTileDownloader.TryGetStoragePathFor(card);
+			drawingGroup.Children.Add(new ImageDrawing(
+				new BitmapImage(new Uri(path, UriKind.Absolute)),
+				new Rect(54, 0, 130, 34)));
+
 			drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(
 				"Images/Themes/Bars/dark/fade.png", UriKind.Relative)), new Rect(0, 0, 183, 34)));
 

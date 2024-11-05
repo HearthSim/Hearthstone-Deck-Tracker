@@ -124,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 				}
 				catch(IOException)
 				{
-					
+
 				}
 				catch(Exception e)
 				{
@@ -242,10 +242,25 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			return Path.Combine(_storageDestiniation, filename);
 		}
 
+		public async Task<string?> TryGetStoragePathFor(T obj)
+		{
+			try
+			{
+				if(!HasAsset(obj))
+					await DownloadAsset(obj);
+				return !HasAsset(obj) ? null : StoragePathFor(obj);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
 		private int _serializeLRUTracker = 0;
 		private async void SerializeLRUCache()
 		{
-			
+
 			var initialValue = ++_serializeLRUTracker;
 			await Task.Delay(500);
 			if(initialValue == _serializeLRUTracker)
