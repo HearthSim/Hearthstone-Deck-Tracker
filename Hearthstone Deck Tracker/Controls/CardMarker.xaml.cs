@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Attributes;
 using static System.Windows.Visibility;
 
@@ -20,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 {
 	public partial class CardMarker : INotifyPropertyChanged
 	{
-		private static readonly Int32Rect CropRect = new Int32Rect() { Height = 34, Width = 34, X = 55, Y = 0 };
+		private static readonly Int32Rect CropRect = new Int32Rect() { Height = 59, Width = 59, X = 126, Y = 0 };
 
 		private int _cardAge;
 		private Visibility _cardAgeVisibility;
@@ -145,13 +146,20 @@ namespace Hearthstone_Deck_Tracker.Controls
 			CostReductionVisibility = costReduction > 0 ? Visible : Collapsed;
 		}
 
-		public void UpdateSourceCard(Hearthstone.Card? card)
+		public async void UpdateSourceCard(Hearthstone.Card? card)
 		{
 			if(SourceCard == card)
 				return;
 			SourceCard = card;
-			var cardTile = card != null ? ImageCache.GetCardImage(card) : null;
-			SourceCardBitmap = cardTile != null ? new CroppedBitmap(cardTile, CropRect) : null;
+			if(card == null || AssetDownloaders.cardTileDownloader == null)
+			{
+				SourceCardBitmap = null;
+				return;
+			}
+			var path = await AssetDownloaders.cardTileDownloader.TryGetStoragePathFor(card);
+			SourceCardBitmap = path != null
+				? new CroppedBitmap(new BitmapImage(new Uri(path, UriKind.Absolute)), CropRect)
+				: null;
 		}
 
 		[NotifyPropertyChangedInvocator]
