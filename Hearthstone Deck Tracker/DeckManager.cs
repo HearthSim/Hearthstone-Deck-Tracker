@@ -40,10 +40,10 @@ namespace Hearthstone_Deck_Tracker
 			var deck = DeckList.Instance.ActiveDeck;
 			if(deck == null || deck.DeckId == IgnoredDeckId || _waitingForClass || _waitingForUserInput)
 				return;
-			if(string.IsNullOrEmpty(Core.Game.Player.Class))
+			if(string.IsNullOrEmpty(Core.Game.Player.OriginalClass))
 			{
 				_waitingForClass = true;
-				while(string.IsNullOrEmpty(Core.Game.Player.Class))
+				while(string.IsNullOrEmpty(Core.Game.Player.OriginalClass))
 					await Task.Delay(100);
 				_waitingForClass = false;
 			}
@@ -64,7 +64,7 @@ namespace Hearthstone_Deck_Tracker
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
 				Log.Warn("Cards not found in deck: " + string.Join(", ", NotFoundCards.Select(x => $"{x.Name} ({x.Id})")));
 				if(Config.Instance.AutoDeckDetection)
-					await AutoSelectDeck(deck, Core.Game.Player.Class!, Core.Game.CurrentGameMode, Core.Game.CurrentFormat, cardEntites);
+					await AutoSelectDeck(deck, Core.Game.Player.OriginalClass!, Core.Game.CurrentGameMode, Core.Game.CurrentFormat, cardEntites);
 			}
 			else
 				NotFoundCards.Clear();

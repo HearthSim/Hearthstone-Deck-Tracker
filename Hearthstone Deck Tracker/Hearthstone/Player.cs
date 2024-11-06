@@ -35,7 +35,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public string? Name { get; set; }
-		public string? Class { get; set; }
+		public string? OriginalClass { get; set; }
+		public string? CurrentClass { get; set; }
 		public int Id { get; set; }
 		public int Fatigue { get; set; }
 		public bool IsLocalPlayer { get; }
@@ -466,7 +467,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void Reset()
 		{
 			Name = "";
-			Class = "";
+			OriginalClass = "";
+			CurrentClass = "";
 			Id = -1;
 			Fatigue = 0;
 			InDeckPredictions.Clear();

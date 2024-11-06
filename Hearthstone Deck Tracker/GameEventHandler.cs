@@ -392,7 +392,8 @@ namespace Hearthstone_Deck_Tracker
 			var heroName = Database.GetHeroNameFromId(cardId);
 			if(string.IsNullOrEmpty(heroName))
 				return;
-			_game.Opponent.Class = heroName;
+			_game.Opponent.OriginalClass = heroName;
+			_game.Opponent.CurrentClass = heroName;
 			if(_game.CurrentGameStats != null)
 			{
 				_game.CurrentGameStats.OpponentHero = heroName;
@@ -409,7 +410,8 @@ namespace Hearthstone_Deck_Tracker
 			var heroName = Database.GetHeroNameFromId(cardId);
 			if(string.IsNullOrEmpty(heroName))
 				return;
-			_game.Player.Class = heroName;
+			_game.Player.OriginalClass = heroName;
+			_game.Player.CurrentClass = heroName;
 			if(_game.CurrentGameStats != null)
 			{
 				_game.CurrentGameStats.PlayerHero = heroName;
@@ -833,10 +835,10 @@ namespace Hearthstone_Deck_Tracker
 				{
 					try
 					{
-						if(!string.IsNullOrEmpty(_game.Player.Class))
+						if(!string.IsNullOrEmpty(_game.Player.OriginalClass))
 						{
-							DefaultDeckStats.Instance.GetDeckStats(_game.Player.Class)?.AddGameResult(_game.CurrentGameStats);
-							Log.Info($"Assigned current deck to default {_game.Player.Class} deck.");
+							DefaultDeckStats.Instance.GetDeckStats(_game.Player.OriginalClass)?.AddGameResult(_game.CurrentGameStats);
+							Log.Info($"Assigned current deck to default {_game.Player.OriginalClass} deck.");
 						}
 						else
 							Log.Debug("Not assigning a deck, no player class found.");
@@ -1053,12 +1055,12 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(_assignedDeck == null)
 			{
-				var defaultDeck = DefaultDeckStats.Instance.GetDeckStats(_game.Player.Class);
+				var defaultDeck = DefaultDeckStats.Instance.GetDeckStats(_game.Player.OriginalClass);
 				if(defaultDeck != null)
 				{
 					if(_game.CurrentGameStats != null)
 						defaultDeck.Games.Remove(_game.CurrentGameStats);
-					Log.Info($"Local deck stats are disabled for {_game.CurrentGameMode}. Removed game from default {_game.Player.Class}.");
+					Log.Info($"Local deck stats are disabled for {_game.CurrentGameMode}. Removed game from default {_game.Player.OriginalClass}.");
 				}
 			}
 		}
@@ -2015,13 +2017,13 @@ namespace Hearthstone_Deck_Tracker
 					className = className.Substring(0, 1).ToUpper() + className.Substring(1, className.Length - 1).ToLower();
 					if(!Enum.TryParse(className, out heroClass))
 					{
-						if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+						if(!Enum.TryParse(_game.Opponent.OriginalClass, out heroClass))
 							return;
 					}
 				}
 				else
 				{
-					if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+					if(!Enum.TryParse(_game.Opponent.OriginalClass, out heroClass))
 						return;
 				}
 				_game.SecretsManager.NewSecret(entity);
@@ -2135,10 +2137,10 @@ namespace Hearthstone_Deck_Tracker
 			if(!string.IsNullOrEmpty(className))
 			{
 				className = className.Substring(0, 1).ToUpper() + className.Substring(1, className.Length - 1).ToLower();
-				if(!Enum.TryParse(className, out heroClass) && !Enum.TryParse(_game.Opponent.Class, out heroClass))
+				if(!Enum.TryParse(className, out heroClass) && !Enum.TryParse(_game.Opponent.OriginalClass, out heroClass))
 					return;
 			}
-			else if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+			else if(!Enum.TryParse(_game.Opponent.OriginalClass, out heroClass))
 				return;
 			_game.SecretsManager.NewSecret(entity);
 			if(card != null)

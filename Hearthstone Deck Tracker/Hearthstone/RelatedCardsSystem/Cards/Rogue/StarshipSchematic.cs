@@ -25,5 +25,5 @@ public class StarshipSchematic: ICardWithRelatedCards
 	public bool ShouldShowForOpponent(Player opponent) => false;
 
 	public List<Card?> GetRelatedCards(Player player) =>
-		_starshipPieces.Where(card => card != null && !card.IsClass(player.Class)).ToList();
+		_starshipPieces.Where(card => card != null && !card.IsClass(player.CurrentClass)).ToList();
 }

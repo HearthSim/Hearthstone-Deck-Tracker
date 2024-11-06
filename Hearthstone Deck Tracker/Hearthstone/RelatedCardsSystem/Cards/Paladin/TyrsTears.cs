@@ -10,14 +10,14 @@ public class TyrsTears: ICardWithRelatedCards
 	public bool ShouldShowForOpponent(Player opponent)
 	{
 		var card = Database.GetCardFromId(GetCardId());
-		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentFormat, opponent.Class) && GetRelatedCards(opponent).Count > 1;
+		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentFormat, opponent.OriginalClass) && GetRelatedCards(opponent).Count > 1;
 	}
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.DeadMinionsCards
 			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
 			.Distinct()
-			.Where(card => card != null && card.IsClass(player.Class))
+			.Where(card => card != null && card.IsClass(player.CurrentClass))
 			.OrderBy(card => card!.Cost)
 			.ToList();
 }

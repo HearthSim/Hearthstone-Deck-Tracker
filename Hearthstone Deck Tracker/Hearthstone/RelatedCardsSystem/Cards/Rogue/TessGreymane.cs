@@ -15,7 +15,7 @@ public class TessGreymane: ICardWithRelatedCards
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.CardsPlayedThisMatch
 			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
-			.Where(card => card != null && !card.IsClass(player.Class) && !card.IsNeutral)
+			.Where(card => card != null && !card.IsClass(player.CurrentClass) && !card.IsNeutral)
 			.OrderBy(card => card!.Cost)
 			.ToList();
 }

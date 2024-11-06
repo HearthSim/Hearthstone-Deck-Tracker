@@ -67,7 +67,7 @@ public abstract class BaseCounter : INotifyPropertyChanged
 		return knownCards;
 	}
 
-	protected bool OpponentMayHaveRelevantCards(bool ignoreNeutral = false) => FilterCardsByClassAndFormat(RelatedCards, Game.Opponent.Class, ignoreNeutral).Length > 0;
+	protected bool OpponentMayHaveRelevantCards(bool ignoreNeutral = false) => FilterCardsByClassAndFormat(RelatedCards, Game.Opponent.OriginalClass, ignoreNeutral).Length > 0;
 
 	protected string[] FilterCardsByClassAndFormat(string[] cardIds, string? playerClass, bool ignoreNeutral = false)
 	{

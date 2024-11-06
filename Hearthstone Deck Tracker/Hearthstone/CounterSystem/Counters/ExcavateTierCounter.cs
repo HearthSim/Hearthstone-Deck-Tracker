@@ -107,8 +107,8 @@ public class ExcavateTierCounter : NumericCounter
 	public override string[] GetCardsToDisplay()
 	{
 		return IsPlayerCounter ?
-			FilterCardsByClassAndFormat(GetExcavateRewards(), Game.Player.Class) :
-			FilterCardsByClassAndFormat(GetExcavateRewards(), Game.Opponent.Class);
+			FilterCardsByClassAndFormat(GetExcavateRewards(), Game.Player.OriginalClass) :
+			FilterCardsByClassAndFormat(GetExcavateRewards(), Game.Opponent.OriginalClass);
 	}
 
 	public override string ValueToShow() => ExcavateTierLabel;

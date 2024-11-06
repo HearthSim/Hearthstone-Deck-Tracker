@@ -86,12 +86,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			LblWins.Text = $"{selectedDeck.WinLossString} ({selectedDeck.WinPercentString})";
 
-			if(!string.IsNullOrEmpty(_game.Opponent.Class))
+			if(!string.IsNullOrEmpty(_game.Opponent.OriginalClass))
 			{
-				var winsVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == _game.Opponent.Class);
-				var lossesVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == _game.Opponent.Class);
+				var winsVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == _game.Opponent.OriginalClass);
+				var lossesVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == _game.Opponent.OriginalClass);
 				var percent = (winsVs + lossesVs) > 0 ? Math.Round(winsVs * 100.0 / (winsVs + lossesVs), 0).ToString() : "-";
-				LblWinRateAgainst.Text = $"VS {_game.Opponent.Class}: {winsVs}-{lossesVs} ({percent}%)";
+				LblWinRateAgainst.Text = $"VS {_game.Opponent.OriginalClass}: {winsVs}-{lossesVs} ({percent}%)";
 			}
 		}
 

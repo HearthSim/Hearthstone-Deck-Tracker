@@ -190,6 +190,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					game.DuosSetHeroModified(false);
 				}
 			}
+			else if (game.IsTraditionalHearthstoneMatch)
+			{
+				if(!game.Entities.TryGetValue(heroEntityId, out var entity))
+					return;
+
+				var hero = Database.GetCardFromId(entity.CardId);
+
+				var heroName = hero?.GetClasses().FirstOrDefault();
+
+				if(heroName is null) return;
+
+				if(playerEntityId == game.PlayerEntity?.Id)
+				{
+					game.Player.CurrentClass = heroName;
+				}
+				else if(playerEntityId == game.OpponentEntity?.Id)
+				{
+					game.Opponent.CurrentClass = heroName;
+				}
+			}
 		}
 
 		private void OnResourcesUsedChange(int id, int value, IGame game)
@@ -1004,7 +1024,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					await Task.Delay(100);
 				Log.Info("Found PlayerEntity");
 			}
-			if(string.IsNullOrEmpty(game.Player.Class) && id == game.PlayerEntity.GetTag(HERO_ENTITY))
+			if(string.IsNullOrEmpty(game.Player.OriginalClass) && id == game.PlayerEntity.GetTag(HERO_ENTITY))
 			{
 				if(!game.Entities.TryGetValue(id, out var entity))
 					return;
@@ -1019,7 +1039,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					await Task.Delay(100);
 				Log.Info("Found OpponentEntity");
 			}
-			if(string.IsNullOrEmpty(game.Opponent.Class) && id == game.OpponentEntity.GetTag(HERO_ENTITY))
+			if(string.IsNullOrEmpty(game.Opponent.OriginalClass) && id == game.OpponentEntity.GetTag(HERO_ENTITY))
 			{
 				if(!game.Entities.TryGetValue(id, out var entity))
 					return;

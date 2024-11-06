@@ -10,13 +10,13 @@ public class TessGreymaneCore: ICardWithRelatedCards
 	public bool ShouldShowForOpponent(Player opponent)
 	{
 		var card = Database.GetCardFromId(GetCardId());
-		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentFormat, opponent.Class) && GetRelatedCards(opponent).Count > 2;
+		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentFormat, opponent.OriginalClass) && GetRelatedCards(opponent).Count > 2;
 	}
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.CardsPlayedThisMatch
 			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
-			.Where(card => card != null && !card.IsClass(player.Class) && !card.IsNeutral)
+			.Where(card => card != null && !card.IsClass(player.CurrentClass) && !card.IsNeutral)
 			.OrderBy(card => card!.Cost)
 			.ToList();
 }

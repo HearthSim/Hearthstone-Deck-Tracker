@@ -29,7 +29,7 @@ public class TheCeaselessExpanseCounter: NumericCounter
 	{
 		return IsPlayerCounter ?
 			GetCardsInDeckOrKnown(RelatedCards).ToArray() :
-			FilterCardsByClassAndFormat(RelatedCards, Game.Opponent.Class);
+			FilterCardsByClassAndFormat(RelatedCards, Game.Opponent.OriginalClass);
 	}
 
 	public override string ValueToShow() => Counter.ToString();

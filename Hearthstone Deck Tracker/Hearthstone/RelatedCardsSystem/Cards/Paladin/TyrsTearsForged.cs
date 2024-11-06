@@ -13,7 +13,7 @@ public class TyrsTearsForged: ICardWithRelatedCards
 		player.DeadMinionsCards
 			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
 			.Distinct()
-			.Where(card => card != null && card.IsClass(player.Class))
+			.Where(card => card != null && card.IsClass(player.CurrentClass))
 			.OrderBy(card => card!.Cost)
 			.ToList();
 }
