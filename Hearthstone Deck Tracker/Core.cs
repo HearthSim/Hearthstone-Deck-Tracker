@@ -212,8 +212,6 @@ namespace Hearthstone_Deck_Tracker
 
 			HSReplayNetHelper.UpdateAccount().Forget();
 
-			AssetDownloaders.SetupAssetDownloaders();
-
 			if(Config.Instance.BattlegroundsSessionRecapWindowOnStart)
 				Windows.BattlegroundsSessionWindow.Show();
 

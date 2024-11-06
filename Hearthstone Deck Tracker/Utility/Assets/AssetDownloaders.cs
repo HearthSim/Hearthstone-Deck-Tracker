@@ -17,12 +17,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		public static AssetDownloader<Hearthstone.Card>? cardPortraitDownloader;
 		public static AssetDownloader<Hearthstone.Card>? cardTileDownloader;
 		public static AssetDownloader<Hearthstone.Card>? cardImageDownloader;
-		private static bool _initialized = false;
-		public static void SetupAssetDownloaders()
+
+		static AssetDownloaders()
 		{
-			if(_initialized)
-				return;
-			_initialized = true;
 			try
 			{
 				cardPortraitDownloader = new AssetDownloader<Hearthstone.Card>(
