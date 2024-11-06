@@ -29,9 +29,6 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("mulligan_guide")]
 			public MulliganGuideData? MulliganGuide { get; set; }
 
-			[JsonProperty("update_info")]
-			public UpdateData? UpdateInfo { get; set; }
-
 			[JsonProperty("draw_card_blacklist")]
 			public List<CardInfo>? DrawCardBlacklist { get; set; }
 		}
@@ -115,12 +112,6 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 		{
 			[JsonProperty("disabled")]
 			public bool Disabled { get; set; }
-		}
-
-		internal class UpdateData
-		{
-			[JsonProperty("image_update_hearthstone_version")]
-			public int Version { get; set; }
 		}
 
 		internal class MulliganGuideData

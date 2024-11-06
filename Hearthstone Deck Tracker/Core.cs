@@ -28,6 +28,7 @@ using WPFLocalizeExtension.Engine;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System.Linq;
+using System.Net.Http;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
 #endregion
@@ -45,6 +46,10 @@ namespace Hearthstone_Deck_Tracker
 		private static DateTime _startUpTime;
 		private static readonly LogWatcherManager LogWatcherManger = new LogWatcherManager();
 		public static Version? Version { get; set; }
+
+		// Should be global to application. Always use this one instead of
+		// instantiating a new HttpClient.
+		public static readonly HttpClient HttpClient = new();
 
 		internal static GameV2? _game;
 		public static GameV2 Game => _game ??= new GameV2();
@@ -163,7 +168,6 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.CheckForDevUpdates && !Config.Instance.AllowDevUpdates.HasValue)
 					MainWindow.ShowDevUpdatesMessage();
 #endif
-				CheckForHearthstoneUpdate();
 			}
 			DataIssueResolver.Run();
 
@@ -200,7 +204,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 			LogWatcherManger.Start(Game).Forget();
 
-			Remote.Config.Loaded += CheckForCardImageUpdate;
 			Remote.Config.Load();
 			HotKeyManager.Load();
 
@@ -232,44 +235,6 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 		}
 
-		private static void CheckForHearthstoneUpdate()
-		{
-			try
-			{
-				var hearthDbVersion = HearthDb.Info.HearthDbVersion.ToString();
-				if(hearthDbVersion != Config.Instance.HearthdbVersion)
-				{
-					AssetDownloaders.SetupAssetDownloaders();
-					AssetDownloaders.cardImageDownloader?.ClearStorage();
-					Config.Instance.HearthdbVersion = hearthDbVersion;
-					Config.Save();
-				}
-			}
-			catch(Exception ex)
-			{
-				Log.Error($"Could not check for updated HearthDB version: {ex}");
-			}
-		}
-
-		private static void CheckForCardImageUpdate(RemoteData.Config? rConfig)
-		{
-			try
-			{
-				var remoteVersion = rConfig?.UpdateInfo?.Version;
-				if(remoteVersion.HasValue && remoteVersion > Config.Instance.RemoteHearthstoneVersion)
-				{
-					AssetDownloaders.SetupAssetDownloaders();
-					AssetDownloaders.cardImageDownloader?.ClearStorage();
-					Config.Instance.RemoteHearthstoneVersion = remoteVersion.Value;
-					Config.Save();
-				}
-			}
-			catch(Exception ex)
-			{
-				Log.Error($"Could not check for updated remote Hearthstone version: {ex}");
-			}
-		}
-
 		private static async Task ShowRestartRequiredMessageAsync()
 		{
 			MainWindow.ActivateWindow();
@@ -295,6 +260,11 @@ namespace Hearthstone_Deck_Tracker
 					{
 						//game started
 						Helper.VerifyHearthstonePath();
+
+						AssetDownloaders.cardImageDownloader?.ValidateCachedAssets();
+						AssetDownloaders.cardTileDownloader?.ValidateCachedAssets();
+						AssetDownloaders.cardPortraitDownloader?.ValidateCachedAssets();
+
 						var ok = Helper.EnsureClientLogConfig();
 						if(!ok)
 						{
