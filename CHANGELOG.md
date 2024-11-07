@@ -1,3 +1,11 @@
+## **Release v1.36.3 - 2024-11-07**
+**Hearthstone:**
+- Added counter for The Ceaseless Expanse.
+- Fixed handling of Starships when creating related cards.
+- Fixed an issue where Tess Greymane related cards were not taking in consideration player class changing by playing a Hero card.
+- Fixed Rewind showing in the opponent's related cards when it was not relevant.
+- Fixed cards popping in when hovering counters or effects that show a multi-card tooltip.
+
 ## **Release v1.36.2 - 2024-10-30**
 **Fixes**:
 - Fixed an issue with setting the initial language configuration.
