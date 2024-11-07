@@ -1,4 +1,4 @@
-## **Release v1.36.3 - 2024-11-07**
+## **Release v1.36.4 - 2024-11-07**
 **Hearthstone:**
 - Added counter for The Ceaseless Expanse.
 - Fixed handling of Starships when creating related cards.
