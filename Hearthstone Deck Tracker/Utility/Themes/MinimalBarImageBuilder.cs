@@ -6,6 +6,8 @@ using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 using HearthDb.Enums;
 using System;
+using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
@@ -21,9 +23,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var bmp = GetCardTile(onCardImageLoaded);
 			if(bmp == null)
 				return;
-			if(bmp.UriSource.AbsolutePath.StartsWith("/Resource"))
-				return;
-			var img = new GaussianBlur(new Bitmap(bmp.UriSource.AbsolutePath)).Process(2);
+			using var ms = new MemoryStream();
+			BitmapEncoder enc = new BmpBitmapEncoder();
+			enc.Frames.Add(BitmapFrame.Create(bmp));
+			enc.Save(ms);
+			var img = new GaussianBlur(new Bitmap(ms)).Process(2);
 			DrawingGroup.Children.Add(new ImageDrawing(img.ToImageSource(), FrameRect));
 		}
 

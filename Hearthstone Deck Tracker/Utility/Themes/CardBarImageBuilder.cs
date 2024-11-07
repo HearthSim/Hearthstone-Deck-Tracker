@@ -139,7 +139,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 				AddChild(bmp, rect);
 		}
 
-		protected BitmapImage? GetCardTile(Action? onCardImageLoaded)
+		protected BitmapSource? GetCardTile(Action? onCardImageLoaded)
 		{
 			var downloader = AssetDownloaders.cardTileDownloader;
 			if(downloader == null)
@@ -165,6 +165,21 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 					}
 				};
 				LoadAsset();
+			}
+
+			if(bmp != null && Card.BaconCard)
+			{
+				// Battlegrounds cards have more "white" on the left side of
+				// the image. Zoom in to not show that.
+				const double zoom = 1.25;
+				var zoomedHeight = bmp.Height / zoom;
+				var zoomedWidth = bmp.Width / zoom;
+				var crop = new Int32Rect(
+					(int)(bmp.Width - zoomedWidth), // right aligned
+					(int)((bmp.Height - zoomedHeight) / 2), // vertical center
+					(int)zoomedWidth,
+					(int)zoomedHeight);
+				return new CroppedBitmap(bmp, crop);
 			}
 
 			return bmp ?? downloader.PlaceholderAsset;
@@ -331,7 +346,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected void AddChild(string uri, Rect rect)
 			=> DrawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(uri, UriKind.Relative)), rect));
 
-		protected void AddChild(BitmapImage bmp, Rect rect)
+		protected void AddChild(BitmapSource bmp, Rect rect)
 			=> DrawingGroup.Children.Add(new ImageDrawing(bmp, rect));
 
 		protected void AddChild(ThemeElementInfo element)
