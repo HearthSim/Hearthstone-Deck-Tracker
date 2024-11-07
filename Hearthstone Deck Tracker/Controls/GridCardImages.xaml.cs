@@ -131,7 +131,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
             CardsCollectionChanged(maxGridHeight);
 
-            foreach (var cardWithImage in Cards)
+            foreach (var cardWithImage in Cards.ToList())
             {
 	            if(cardWithImage.Card == null) continue;
 
