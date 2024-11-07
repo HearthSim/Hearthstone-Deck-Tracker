@@ -5,7 +5,8 @@ using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using System;
 using System.Windows;
-using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Assets;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 
@@ -266,5 +267,22 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		Anomaly = null;
 		IsThorimRelevant = false;
 		IsPaglesFishingRodRelevant = false;
+	}
+
+	private bool _preloadedCardTiles;
+	public void PreloadCardTiles()
+	{
+		if(_preloadedCardTiles)
+			return;
+		_preloadedCardTiles = true;
+		var downloader = AssetDownloaders.cardTileDownloader;
+		if(downloader == null)
+			return;
+
+		var races = Enum.GetValues(typeof(Race)).Cast<Race>();
+		foreach(var tier in new [] { 1, 2, 3, 4, 5, 6, 7 })
+			foreach(var race in races)
+				foreach(var card in _db.Value.GetCards(tier, race, true))
+					downloader.GetAssetData(card).Forget();
 	}
 }
