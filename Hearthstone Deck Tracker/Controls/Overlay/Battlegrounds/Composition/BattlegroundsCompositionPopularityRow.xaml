@@ -11,7 +11,7 @@
         <Canvas Height="24" Width="38" DockPanel.Dock="Left">
             <Image
                 Opacity="{Binding Opacity}"
-                Source="{Binding CardImage.AssetPath}"
+                Source="{Binding CardImage.Asset}"
                 Height="24"
                 Width="110"
                 Margin="-55,0,0,0"

@@ -2,41 +2,42 @@
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public class CardAssetViewModel : ViewModel
 	{
 		private Hearthstone.Card? _card { get; set; }
-		private AssetDownloader<Hearthstone.Card>? _assetDownloader;
+		private readonly AssetDownloader<Hearthstone.Card, BitmapImage>? _assetDownloader;
 
 		public CardAssetViewModel(Hearthstone.Card? card, CardAssetType type)
 		{
 			_card = card;
 			_assetDownloader = AssetDownloaders.GetCardAssetDownloader(type);
-			_path = _assetDownloader?.PlaceholderAssetPath;
+			_asset = _assetDownloader?.PlaceholderAsset;
 		}
 
-		private string? _path;
-		public string? AssetPath
+		private BitmapImage? _asset;
+		public BitmapImage? Asset
 		{
 			get
 			{
-				if(_path == _assetDownloader?.PlaceholderAssetPath && !_loading)
+				if(_asset == _assetDownloader?.PlaceholderAsset && !_loading)
 					LoadImage().Forget();
-				return _path;
+				return _asset;
 			}
 			private set
 			{
-				if(value != _path)
+				if(value != _asset)
 				{
-					_path = value;
+					_asset = value;
 					OnPropertyChanged();
 				}
 			}
 		}
 
-		private bool _loading = false;
+		private bool _loading;
 		private async Task LoadImage()
 		{
 			if(_assetDownloader == null)
@@ -44,27 +45,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var card = _card;
 			if(card == null)
 			{
-				_path = _assetDownloader?.PlaceholderAssetPath;
+				_asset = _assetDownloader?.PlaceholderAsset;
 				return;
 			}
 			if(_loading)
 				return;
 			_loading = true;
-			try
-			{
-				if(!_assetDownloader.HasAsset(card))
-					await _assetDownloader.DownloadAsset(card);
-				if(card == _card)
-					AssetPath = _assetDownloader.StoragePathFor(card);
-			}
-			catch
-			{
-				AssetPath = _assetDownloader.PlaceholderAssetPath;
-			}
-			finally
-			{
-				_loading = false;
-			}
+			var asset = await _assetDownloader.GetAssetData(card);
+			if(asset != null)
+				Asset = asset;
+			_loading = false;
 		}
 
 		public async Task SetCard(Hearthstone.Card card)

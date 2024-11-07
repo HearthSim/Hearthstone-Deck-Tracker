@@ -141,18 +141,21 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		protected BitmapImage? GetCardTile(Action? onCardImageLoaded)
 		{
-			var downloader = AssetDownloaders.GetCardAssetDownloader(CardAssetType.Tile);
+			var downloader = AssetDownloaders.cardTileDownloader;
 			if(downloader == null)
 				return null;
 
-			if(!downloader.HasAsset(Card))
+			var bmp = downloader.TryGetAssetData(Card);
+			if(bmp == null)
 			{
-				async void download()
+				// HasAsset kicks off the download.
+				// if the download succeeds before we DownloadAsset, DownloadAsset might fail.
+				async void LoadAsset()
 				{
 					try
 					{
-						var success = await downloader!.DownloadAsset(Card);
-						if(success)
+						var data = await downloader!.GetAssetData(Card);
+						if(data != null)
 							onCardImageLoaded?.Invoke();
 					}
 					catch(Exception ex)
@@ -161,16 +164,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 						// Pass. Guess we can't render the image.
 					}
 				};
-				download();
-
-				return new BitmapImage(new Uri(downloader.PlaceholderAssetPath));
+				LoadAsset();
 			}
-			var path = downloader.StoragePathFor(Card);
-			var file = new FileInfo(path);
-			if(!file.Exists)
-				return null;
 
-			return new BitmapImage(new Uri(path, UriKind.Absolute));
+			return bmp ?? downloader.PlaceholderAsset;
 		}
 
 		protected virtual void AddFadeOverlay() => AddFadeOverlay(Required[ThemeElement.FadeOverlay].Rectangle, false);

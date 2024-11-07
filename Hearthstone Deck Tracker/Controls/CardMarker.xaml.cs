@@ -156,10 +156,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 				SourceCardBitmap = null;
 				return;
 			}
-			var path = await AssetDownloaders.cardTileDownloader.TryGetStoragePathFor(card);
-			SourceCardBitmap = path != null
-				? new CroppedBitmap(new BitmapImage(new Uri(path, UriKind.Absolute)), CropRect)
-				: null;
+
+			var bmp = await AssetDownloaders.cardTileDownloader.GetAssetData(card);
+			SourceCardBitmap = bmp != null ? new CroppedBitmap(bmp, CropRect) : null;
 		}
 
 		[NotifyPropertyChangedInvocator]

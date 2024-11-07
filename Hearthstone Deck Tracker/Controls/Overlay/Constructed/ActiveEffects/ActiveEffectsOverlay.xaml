@@ -68,7 +68,7 @@
                                                 <Rectangle.Fill>
                                                     <ImageBrush
                                                         x:Name="ImgBrush"
-                                                        ImageSource="{Binding Effect.CardAsset.AssetPath}">
+                                                        ImageSource="{Binding Effect.CardAsset.Asset}">
                                                         <ImageBrush.Transform>
                                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="20" CenterY="14" />
                                                         </ImageBrush.Transform>

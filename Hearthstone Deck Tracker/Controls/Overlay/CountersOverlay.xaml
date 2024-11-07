@@ -39,7 +39,7 @@
                                     <Ellipse.Fill>
                                         <ImageBrush
                                             x:Name="ImgBrush"
-                                            ImageSource="{Binding CardAsset.AssetPath}">
+                                            ImageSource="{Binding CardAsset.Asset}">
                                             <ImageBrush.Transform>
                                                 <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="20" CenterY="14" />
                                             </ImageBrush.Transform>
@@ -78,7 +78,7 @@
                                     <Ellipse.Fill>
                                         <ImageBrush
                                             x:Name="ImgBrushLong"
-                                            ImageSource="{Binding CardAsset.AssetPath}">
+                                            ImageSource="{Binding CardAsset.Asset}">
                                             <ImageBrush.Transform>
                                                 <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="20" CenterY="14" />
                                             </ImageBrush.Transform>

@@ -32,7 +32,7 @@
             <Ellipse Width="80" Height="104" Fill="#221717" Margin="10,0,0,0" HorizontalAlignment="Left"/>
             <Grid Width="100" Height="100" HorizontalAlignment="Left" Margin="0,2">
 
-            <Image Source="{Binding CardPortrait.AssetPath}" Height="110" Width="110" Margin="-5,-5,0,0" RenderOptions.BitmapScalingMode="Fant">
+            <Image Source="{Binding CardPortrait.Asset}" Height="110" Width="110" Margin="-5,-5,0,0" RenderOptions.BitmapScalingMode="Fant">
                     <Image.Clip>
                         <EllipseGeometry Center="55,55" RadiusX="35" RadiusY="47"/>
                     </Image.Clip>

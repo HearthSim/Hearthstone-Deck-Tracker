@@ -30,7 +30,7 @@
                 <Image
                     Canvas.Left="-35"
                     Canvas.Top="5"
-                    Source="{Binding CardImage.AssetPath}"
+                    Source="{Binding CardImage.Asset}"
                     Height="34"
                     Width="145"
                     Margin="-10,-5,0,0"

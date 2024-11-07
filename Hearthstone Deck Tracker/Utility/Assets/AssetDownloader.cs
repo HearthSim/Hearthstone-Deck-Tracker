@@ -6,55 +6,99 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 namespace Hearthstone_Deck_Tracker.Utility.Assets
 {
-	public class AssetDownloader<T>
+	public class AssetDownloader<T, U>
 	{
 		private readonly string _storageDestination;
 		private readonly Func<T, string> _getUrl;
 		private readonly Func<T, string> _getFilename;
-		private readonly Dictionary<string, Task<bool>> _inProcessDownloads = new();
-		private readonly long? _maxSize;
-		private readonly LRUCache _lruCache;
-		private readonly Dictionary<string, LRUCache.Entry> _lruLookup = new();
-		private readonly HashSet<string> _validated = new();
+		private readonly Dictionary<string, Task<bool>> _inProgressDownloads = new();
+		private readonly long? _maxCacheSize;
+		private readonly Func<byte[], U> _dataConverter;
+		private readonly LRUCache<U> _lruCache;
+		private readonly Dictionary<string, LRUCache<U>.Entry> _lruLookup = new();
 
 		private string CacheFilePath => Path.Combine(_storageDestination, "Cache.xml");
-		public string PlaceholderAssetPath { get; }
+
+		private readonly string _placeholderAssetPath;
+		private U? _placeholderAsset;
+		public U? PlaceholderAsset
+		{
+			get
+			{
+				if(_placeholderAsset == null)
+				{
+					try
+					{
+						byte[] bytes;
+						if(_placeholderAssetPath.StartsWith("pack://application"))
+						{
+							var stream = Application.GetResourceStream( new Uri(_placeholderAssetPath));
+							if(stream == null)
+								return default;
+							using var ms = new MemoryStream();
+							stream.Stream.CopyTo(ms);
+							bytes = ms.ToArray();
+						}
+						else
+						{
+							bytes = File.ReadAllBytes(_placeholderAssetPath);
+						}
+						_placeholderAsset = _dataConverter(bytes);
+					}
+					catch
+					{
+						return default;
+					}
+				}
+
+				return _placeholderAsset;
+			}
+		}
 
 		/// <exception cref="ArgumentException">Thrown when directory cannot be accessed or created.</exception>
 		/// <param name="storageDestination">Destination for assets to be stored.</param>
 
-		public AssetDownloader(string storageDestination, Func<T, string> urlConverter, Func<T, string> fileNameConverter, long? maxSize = null, string? placeholderAsset = null)
+		public AssetDownloader(
+			string storageDestination,
+			Func<T, string> urlConverter,
+			Func<T, string> fileNameConverter,
+			Func<byte[], U> dataConverter,
+			long? maxCacheSize = null,
+			string? placeholderAsset = null)
 		{
 			_storageDestination = storageDestination;
 			_getFilename = fileNameConverter;
 			_getUrl = urlConverter;
-			_maxSize = maxSize;
+			_maxCacheSize = maxCacheSize;
+			_dataConverter = dataConverter;
 
 			_lruCache = TryLoadCache();
 			foreach (var entry in _lruCache)
 				_lruLookup[entry.File] = entry;
 
 			TryCreateDirectory(_storageDestination);
-			PlaceholderAssetPath = placeholderAsset ?? "pack://application:,,,/Resources/faceless_manipulator.png";
+			_placeholderAssetPath = placeholderAsset ?? "pack://application:,,,/Resources/faceless_manipulator.png";
 		}
 
-		private LRUCache TryLoadCache()
+		private LRUCache<U> TryLoadCache()
 		{
 			try
 			{
 				if(File.Exists(CacheFilePath))
-					return XmlManager<LRUCache>.Load(CacheFilePath);
+					return XmlManager<LRUCache<U>>.Load(CacheFilePath);
 			}
 			catch(Exception e)
 			{
 				Log.Error(e);
 			}
 
-			return new LRUCache();
+			return new LRUCache<U>();
 		}
 
 		public void ClearStorage()
@@ -64,9 +108,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			SerializeLRUCache();
 		}
 
-		public void ValidateCachedAssets()
+		public void InvalidateCachedAssets()
 		{
-			_validated.Clear();
+			foreach(var entry in _lruCache)
+				entry.Validated = false;
 		}
 
 		void TryCreateDirectory(string path)
@@ -113,7 +158,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 		}
 
-		private void TryDeleteFile(LRUCache.Entry entry)
+		private void TryDeleteFile(LRUCache<U>.Entry entry)
 		{
 			try
 			{
@@ -134,8 +179,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		{
 			try
 			{
-				if(_lruCache.Count > _maxSize)
-					_lruCache.GetRange((int)_maxSize.Value, _lruCache.Count - (int)_maxSize.Value).ForEach(TryDeleteFile);
+				if(_lruCache.Count > _maxCacheSize)
+					_lruCache.GetRange((int)_maxCacheSize.Value, _lruCache.Count - (int)_maxCacheSize.Value).ForEach(TryDeleteFile);
 
 				SerializeLRUCache();
 			}
@@ -146,21 +191,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		}
 
 		/// <exception cref="ArgumentNullException">Thrown if obj is null</exception>
-		public Task<bool> DownloadAsset(T obj, bool isCacheUpdate = false)
+		private Task<bool> DownloadAsset(T obj)
 		{
 			if(obj == null)
 				throw new ArgumentNullException();
-			ManageLRUCache();
 			var filename = _getFilename(obj);
-			if(_inProcessDownloads.TryGetValue(filename, out var inProgressDownload))
+			ManageLRUCache();
+			if(_inProgressDownloads.TryGetValue(filename, out var inProgressDownload))
 				return inProgressDownload;
-			_validated.Add(filename);
-			_inProcessDownloads[filename] = DownloadFileAsync(obj, isCacheUpdate);
-			return _inProcessDownloads[filename];
+			_inProgressDownloads[filename] = DownloadFileAsync(obj);
+			return _inProgressDownloads[filename];
 		}
 
 		/// <exception cref="ArgumentNullException">Thrown if obj is null</exception>
-		private async Task<bool> DownloadFileAsync(T obj, bool isCacheUpdate)
+		private async Task<bool> DownloadFileAsync(T obj)
 		{
 			if(obj == null)
 				throw new ArgumentNullException();
@@ -176,35 +220,43 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 				if(response.StatusCode == HttpStatusCode.NotModified)
 				{
 					//Log.Debug($"{filename} not modified");
-					if(entry == null)
-						return false;
-					entry.Stale = false;
-					SerializeLRUCache();
 					return true;
 				}
 
 				if(response.StatusCode != HttpStatusCode.OK)
 				{
-					Log.Error($"Failed to download {filename}: {response.StatusCode}");
+					Log.Error(
+						$"Failed to download {filename}: {response.StatusCode}");
 					return false;
 				}
 
-				using var fs = new FileStream(StoragePathFor(obj), FileMode.Create);
-				await response.Content.CopyToAsync(fs);
+				var bytes = await response.Content.ReadAsByteArrayAsync();
+				try
+				{
+					using var fs = new FileStream(StoragePathFor(obj), FileMode.Create);
+					await fs.WriteAsync(bytes, 0, bytes.Length);
+				}
+				catch(Exception e)
+				{
+					Log.Error($"Unable to write {filename}: {e.Message}");
+				}
 
-				_inProcessDownloads.Remove(filename);
+				var data = _dataConverter(bytes);
+
 				var etag = response.Headers.ETag.Tag;
 				if(entry == null)
 				{
-					entry = new LRUCache.Entry(filename, etag);
+					entry = new LRUCache<U>.Entry(filename, etag);
 					_lruCache.Add(entry);
 					_lruLookup[filename] = entry;
 				}
 				else
 				{
 					entry.ETag = etag;
-					entry.Stale = false;
 				}
+
+				entry.Validated = true;
+				entry.Data = data;
 
 				SerializeLRUCache();
 				return true;
@@ -214,54 +266,80 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 				Log.Error($"Unable to download {filename}: {e.Message}");
 				return false;
 			}
-			catch(IOException e)
+			catch(Exception e)
 			{
-				// Writing most likely failed because it was already in use.
-				// We will mark the entry as stale and force an update next time.
-				if(isCacheUpdate
-				   && _lruLookup.TryGetValue(filename, out var entry))
-				{
-					entry.Stale = true;
-					//Log.Debug($"Unable to write {filename}, marking stale");
-					return true;
-				}
-				Log.Error($"Unable to write {filename}: {e.Message}");
+				Log.Error(
+					$"Unknown Error while trying to download {filename}: {e.Message}");
 				return false;
+			}
+			finally
+			{
+				_inProgressDownloads.Remove(filename);
+			}
+		}
+
+		public async Task<U?> GetAssetData(T obj)
+		{
+			if(obj == null)
+				return default;
+			var filename = _getFilename(obj);
+			if(!_lruLookup.TryGetValue(filename, out var entry))
+			{
+				var success = await DownloadAsset(obj);
+				if(!success)
+					return default;
+				if(!_lruLookup.TryGetValue(filename, out entry))
+					return default;
+			}
+
+			if(!entry.Validated)
+			{
+				DownloadAsset(obj).Forget();
+				entry.Validated = true;
+			}
+
+			if(entry.Data != null)
+				return entry.Data;
+
+			// Probably fine to do sync for now, the file we are dealing with
+			// are pretty small. This keeps us from reading the same file
+			// multiple times without any extra logic.
+			return LoadAssetFromDiskSync(obj);
+		}
+
+		public U? TryGetAssetData(T obj)
+		{
+			if(!_lruLookup.TryGetValue(_getFilename(obj), out var entry))
+				return default;
+			return entry.Data ?? LoadAssetFromDiskSync(obj);
+		}
+
+		private U? LoadAssetFromDiskSync(T obj)
+		{
+			var filename = _getFilename(obj);
+			try
+			{
+				var bytes = File.ReadAllBytes(StoragePathFor(obj));
+				var data = _dataConverter(bytes);
+				if(_lruLookup.TryGetValue(filename, out var entry))
+					entry.Data = data;
+				return data;
 			}
 			catch(Exception e)
 			{
-				Log.Error($"Unknown Error while trying to download {filename}: {e.Message}");
-				return false;
-			}
-		}
-
-
-		public bool HasAsset(T obj)
-		{
-			if(obj == null)
-				return false;
-			var filename = _getFilename(obj);
-			if(!_lruLookup.TryGetValue(filename, out var entry))
-				return false;
-
-			// We validate images once per session / when _validated is cleared
-			// (usually on Hearthstone start)
-			if(!_validated.Contains(filename))
-			{
-				DownloadAsset(obj, true);
-				_validated.Add(filename);
-				if(entry.Stale)
+				Log.Error($"Unable to read {_getFilename(obj)}: {e.Message}");
+				if(_lruLookup.TryGetValue(filename, out var entry))
 				{
-					// Pretend we don't have the asset to force an update.
-					// DownloadAsset will overwrite the current file.
-					return false;
+					_lruCache.Remove(entry);
+					_lruLookup.Remove(filename);
 				}
+
+				return default;
 			}
-			return true;
 		}
 
 		/// <exception cref="ArgumentNullException">Thrown if obj is null</exception>
-		public string StoragePathFor(T obj)
+		private string StoragePathFor(T obj)
 		{
 			if(obj == null)
 				throw new ArgumentNullException();
@@ -274,21 +352,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			return Path.Combine(_storageDestination, filename);
 		}
 
-		public async Task<string?> TryGetStoragePathFor(T obj)
-		{
-			try
-			{
-				if(!HasAsset(obj))
-					await DownloadAsset(obj);
-				return !HasAsset(obj) ? null : StoragePathFor(obj);
-			}
-			catch(Exception e)
-			{
-				Log.Error(e);
-				return null;
-			}
-		}
-
 		private int _serializeLRUTracker = 0;
 		private async void SerializeLRUCache()
 		{
@@ -298,7 +361,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			if(initialValue == _serializeLRUTracker)
 			{
 				_serializeLRUTracker = 0;
-				XmlManager<LRUCache>.Save(CacheFilePath, _lruCache);
+				XmlManager<LRUCache<U>>.Save(CacheFilePath, _lruCache);
 			}
 		}
 	}
@@ -306,7 +369,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 
 [XmlType("LRUCache")]
 [XmlRoot("LRUCache")]
-public class LRUCache : List<LRUCache.Entry>
+public class LRUCache<T> : List<LRUCache<T>.Entry>
 {
 	public class Entry
 	{
@@ -316,10 +379,11 @@ public class LRUCache : List<LRUCache.Entry>
 		[XmlAttribute("etag")]
 		public string ETag { get; set; } = "";
 
-		[XmlAttribute("stale")]
-		public bool Stale { get; set; }
+		[XmlIgnore]
+		public T? Data { get; set; }
 
-		public bool ShouldSerializeStale() => Stale;
+		[XmlIgnore]
+		public bool Validated { get; set; }
 
 		public Entry(string file, string eTag)
 		{

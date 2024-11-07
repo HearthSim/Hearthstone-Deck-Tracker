@@ -525,9 +525,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 								{
 									if(hovered >= TimeSpan.FromMilliseconds(250))
 									{
-										var downloader = AssetDownloaders.cardImageDownloader;
-										if(downloader != null && !downloader.HasAsset(goldenCard))
-											downloader.DownloadAsset(goldenCard);
+										// preload golden card image
+										AssetDownloaders.cardImageDownloader?.GetAssetData(goldenCard);
 									}
 
 									ToolTipCardBlock2.Visibility = Hidden;

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Media.Imaging;
+using MahApps.Metro.Controls;
 
 namespace Hearthstone_Deck_Tracker.Utility.Assets
 {
@@ -14,19 +16,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 
 	public static class AssetDownloaders
 	{
-		public static AssetDownloader<Hearthstone.Card>? cardPortraitDownloader;
-		public static AssetDownloader<Hearthstone.Card>? cardTileDownloader;
-		public static AssetDownloader<Hearthstone.Card>? cardImageDownloader;
+		public static AssetDownloader<Hearthstone.Card, BitmapImage>? cardPortraitDownloader;
+		public static AssetDownloader<Hearthstone.Card, BitmapImage>? cardTileDownloader;
+		public static AssetDownloader<Hearthstone.Card, BitmapImage>? cardImageDownloader;
 
 		static AssetDownloaders()
 		{
 			try
 			{
-				cardPortraitDownloader = new AssetDownloader<Hearthstone.Card>(
+				cardPortraitDownloader = new AssetDownloader<Hearthstone.Card, BitmapImage>(
 					Path.Combine(Config.AppDataPath, "Images", "CardPortraits"),
 					(Hearthstone.Card card) => $"https://art.hearthstonejson.com/v1/256x/{card.Id}.jpg",
 					(Hearthstone.Card card) => $"{card.Id}.jpg",
-					maxSize: 500,
+					Helper.BitmapImageFromBytes,
+					maxCacheSize: 500,
 					placeholderAsset: "pack://application:,,,/Resources/faceless_manipulator.png"
 				);
 			}
@@ -37,11 +40,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 
 			try
 			{
-				cardTileDownloader = new AssetDownloader<Hearthstone.Card>(
+				cardTileDownloader = new AssetDownloader<Hearthstone.Card, BitmapImage>(
 					Path.Combine(Config.AppDataPath, "Images", "CardTiles"),
 					(Hearthstone.Card card) => $"https://art.hearthstonejson.com/v1/tiles/{card.Id}.jpg",
 					(Hearthstone.Card card) => $"{card.Id}.jpg",
-					maxSize: 10_000, // About 2KB per tile. Caching up to 20MB.
+					Helper.BitmapImageFromBytes,
+					maxCacheSize: 10_000, // About 2KB per tile. Caching up to 20MB.
 					placeholderAsset: "pack://application:,,,/Resources/card-tile-placeholder.jpg"
 				);
 			}
@@ -52,13 +56,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 
 			try
 			{
-				cardImageDownloader = new AssetDownloader<Hearthstone.Card>(
+				cardImageDownloader = new AssetDownloader<Hearthstone.Card, BitmapImage>(
 					Path.Combine(Config.AppDataPath, "Images", "CardImages"),
 					card => $"https://art.hearthstonejson.com/v1/{(card.BaconCard ? "bgs" : "render")}/latest" +
 					        $"/{Config.Instance.SelectedLanguage}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}" +
 					        $"/{card.Id}{(card.BaconTriple ? "_triple" : "")}.png",
 					card => $"{card.Id}{(card.BaconTriple ? "_triple" : "")}.png",
-					maxSize: 200,
+					Helper.BitmapImageFromBytes,
+					maxCacheSize: 200,
 					placeholderAsset: "pack://application:,,,/Resources/faceless_manipulator.png"
 				);
 				ConfigWrapper.CardImageConfigs.CardResolutionChanged += () => cardImageDownloader.ClearStorage();
@@ -70,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		}
 
 
-		public static AssetDownloader<Hearthstone.Card>? GetCardAssetDownloader(CardAssetType type)
+		public static AssetDownloader<Hearthstone.Card, BitmapImage>? GetCardAssetDownloader(CardAssetType type)
 		{
 			switch(type)
 			{

@@ -22,7 +22,7 @@
                 </Style>
             </Canvas.Resources>
             <Ellipse Width="270" Height="270" Fill="#00FF00" Canvas.Top="-10" Canvas.Left="-8" Visibility="{Binding ActiveIndicatorVisibility}"/>
-            <Image Width="415" Source="{Binding AssetPath, TargetNullValue={x:Null}}" Canvas.Top="-47" Canvas.Left="-81" RenderOptions.BitmapScalingMode="Fant">
+            <Image Width="415" Source="{Binding Asset, TargetNullValue={x:Null}}" Canvas.Top="-47" Canvas.Left="-81" RenderOptions.BitmapScalingMode="Fant">
                 <Image.Clip>
                     <EllipseGeometry RadiusX="100" RadiusY="100" Center="221,178"/>
                 </Image.Clip>

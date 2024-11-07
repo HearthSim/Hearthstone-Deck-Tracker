@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 
@@ -33,13 +34,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		private string? _cardImagePath = null;
-		public string? CardImagePath
+		private BitmapImage? _cardAsset = null;
+		public BitmapImage? CardAsset
 		{
-			get => _cardImagePath;
+			get => _cardAsset;
 			set
 			{
-				_cardImagePath = value;
+				_cardAsset = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(QuestionmarkVisibility));
 			}
@@ -58,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public double IconScaling => Math.Min(1, ActualHeight / 500);
 
-		public Visibility QuestionmarkVisibility => CardImagePath == null || !ShowQuestionmark ? Visibility.Collapsed : Visibility.Visible;
+		public Visibility QuestionmarkVisibility => CardAsset == null || !ShowQuestionmark ? Visibility.Collapsed : Visibility.Visible;
 
 		private bool _showQuestionmark = false;
 		public bool ShowQuestionmark
@@ -121,40 +122,29 @@ namespace Hearthstone_Deck_Tracker.Controls
 			CardId = newCardId;
 			if(card == null || string.IsNullOrEmpty(newCardId))
 			{
-				CardImagePath = null;
+				CardAsset = null;
 				LoadingImageSource = null;
 				return;
 			}
 			var downloader = AssetDownloaders.cardImageDownloader;
 			if(downloader == null)
 				return;
-			var hasAsset = downloader.HasAsset(card);
-			if(!hasAsset)
+
+			var asset = downloader.TryGetAssetData(card);
+			if(asset == null)
 			{
-				CardImagePath = null;
+				CardAsset = null;
 				LoadingImageSource = GetLoadingImagePath(card);
 				ExpandAnimation?.Begin();
-				try
-				{
-					await downloader.DownloadAsset(card);
-				}
-				catch(ArgumentNullException)
-				{
-					return;
-				}
+				asset = await downloader.GetAssetData(card);
 			}
+
 			if(newCardId != CardId)
 				return;
-			try
-			{
-				CardImagePath = downloader.StoragePathFor(card);
-				LoadingImageSource = null;
-				if (hasAsset)
-					ExpandAnimation?.Begin();
-			}
-			catch(ArgumentNullException)
-			{
-			}
+			CardAsset = asset;
+			if (LoadingImageSource == null)
+				ExpandAnimation?.Begin();
+			LoadingImageSource = null;
 		}
 
 		private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)

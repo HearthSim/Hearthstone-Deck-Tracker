@@ -38,6 +38,7 @@ using System.Security.Cryptography.X509Certificates;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 
 #endregion
@@ -984,6 +985,17 @@ namespace Hearthstone_Deck_Tracker
 
 				return card;
 			});
+		}
+
+		public static BitmapImage BitmapImageFromBytes(byte[] bytes)
+		{
+			using var ms = new MemoryStream(bytes);
+			var bmp = new BitmapImage();
+			bmp.BeginInit();
+			bmp.CacheOption = BitmapCacheOption.OnLoad; // Immediately free stream
+			bmp.StreamSource = ms;
+			bmp.EndInit();
+			return bmp;
 		}
 	}
 }

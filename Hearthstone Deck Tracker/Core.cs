@@ -259,9 +259,9 @@ namespace Hearthstone_Deck_Tracker
 						//game started
 						Helper.VerifyHearthstonePath();
 
-						AssetDownloaders.cardImageDownloader?.ValidateCachedAssets();
-						AssetDownloaders.cardTileDownloader?.ValidateCachedAssets();
-						AssetDownloaders.cardPortraitDownloader?.ValidateCachedAssets();
+						AssetDownloaders.cardImageDownloader?.InvalidateCachedAssets();
+						AssetDownloaders.cardTileDownloader?.InvalidateCachedAssets();
+						AssetDownloaders.cardPortraitDownloader?.InvalidateCachedAssets();
 
 						var ok = Helper.EnsureClientLogConfig();
 						if(!ok)

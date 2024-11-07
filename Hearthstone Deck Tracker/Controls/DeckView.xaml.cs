@@ -58,10 +58,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			var card = Database.GetCardFromId(heroId);
 			if(card == null || AssetDownloaders.cardTileDownloader == null)
 				return new ImageBrush();
-			var path = await AssetDownloaders.cardTileDownloader.TryGetStoragePathFor(card);
-			drawingGroup.Children.Add(new ImageDrawing(
-				new BitmapImage(new Uri(path, UriKind.Absolute)),
-				new Rect(54, 0, 130, 34)));
+			var bmp = await AssetDownloaders.cardTileDownloader.GetAssetData(card);
+			drawingGroup.Children.Add(new ImageDrawing(bmp, new Rect(54, 0, 130, 34)));
 
 			drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(
 				"Images/Themes/Bars/dark/fade.png", UriKind.Relative)), new Rect(0, 0, 183, 34)));

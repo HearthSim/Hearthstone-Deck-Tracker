@@ -55,7 +55,7 @@
                                    Stretch="Uniform"
                                    RenderOptions.BitmapScalingMode="Fant">
                             </Image>
-                            <Image Source="{Binding CardImagePath}"
+                            <Image Source="{Binding CardImage}"
                                    Stretch="Uniform"
                                    RenderOptions.BitmapScalingMode="Fant" />
                         </Grid>

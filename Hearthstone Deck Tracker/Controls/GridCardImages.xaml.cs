@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 
@@ -29,14 +31,14 @@ namespace Hearthstone_Deck_Tracker.Controls
 	            }
             }
 
-            private string? _cardImagePath = null;
+            private BitmapImage? _cardImage = null;
 
-            public string? CardImagePath
+            public BitmapImage? CardImage
             {
-	            get => _cardImagePath;
+	            get => _cardImage;
 	            set
 	            {
-		            _cardImagePath = value;
+		            _cardImage = value;
 		            OnPropertyChanged();
 	            }
             }
@@ -120,10 +122,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 
             foreach(var card in cards)
             {
+	            var cardImage = downloader.TryGetAssetData(card);
 	            var cardWithImage = new CardWithImage
 	            {
 		            Card = card,
-		            LoadingImageSource = GetLoadingImagePath(card)
+		            CardImage = cardImage,
+		            LoadingImageSource = cardImage != null ? GetLoadingImagePath(card) : null,
 	            };
 
 	            Cards.Add(cardWithImage);
@@ -131,33 +135,16 @@ namespace Hearthstone_Deck_Tracker.Controls
 
             CardsCollectionChanged(maxGridHeight);
 
-            foreach (var cardWithImage in Cards.ToList())
-            {
-	            if(cardWithImage.Card == null) continue;
-
-                if (!downloader.HasAsset(cardWithImage.Card))
-                {
-                    try
-                    {
-                        await downloader.DownloadAsset(cardWithImage.Card);
-                    }
-                    catch (ArgumentNullException)
-                    {
-                        continue;
-                    }
-                }
-
-                try
-                {
-                    cardWithImage.CardImagePath = downloader.StoragePathFor(cardWithImage.Card);
-                    cardWithImage.LoadingImageSource = null;
-                }
-                catch (ArgumentNullException)
-                {
-                    // Handle exception if needed
-                }
-
-            }
+            // Load images for any cards that we don't already have
+            await Task.WhenAll(Cards.Where(x => x.CardImage == null).ToList()
+	            .Select(async (cardwithImage) =>
+	            {
+		            if(cardwithImage.Card != null)
+		            {
+			            cardwithImage.CardImage = await downloader.GetAssetData(cardwithImage.Card);
+			            cardwithImage.LoadingImageSource = null;
+		            }
+	            }));
 
             OnPropertyChanged(nameof(CardsGridVisibility));
             OnPropertyChanged(nameof(TitleCornerRadius));
