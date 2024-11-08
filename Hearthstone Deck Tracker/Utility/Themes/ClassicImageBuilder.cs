@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		protected override void AddFadeOverlay() => AddFadeOverlay(_fadeRect, true);
 
-		protected override void AddCardImage(Action? onCardImageLoaded) => AddCardImage(_imageRect, true, onCardImageLoaded);
+		protected override void AddCardImage(Action<bool>? onCardImageLoaded) => AddCardImage(_imageRect, true, onCardImageLoaded);
 
 		protected override void AddCost() => AddCost(_costRect);
 

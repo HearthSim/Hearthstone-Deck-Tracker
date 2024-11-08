@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
@@ -584,6 +585,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return ThemeManager.GetBarImageBuilder(this);
 		}
 
+		private int _backgroundImageTries = 0;
 		public DrawingBrush Background
 		{
 			get
@@ -598,10 +600,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 				try
 				{
-					var image = GetImageBuilder()?.Build(() => {
-						// Force background to update when card image becomes available.
+					var image = GetImageBuilder()?.Build(async (success) => {
+						// This only gets invoked if the image was not available
+						// in memory or on disk.
+						if(_backgroundImageTries > 3)
+							return;
+						_backgroundImageTries++;
+
+						// Ensure the Background_get call completed before
+						// remove the entry from cache.
+						await Task.Yield();
 						CardImageCache.Remove(Id);
-						Update();
+
+						if(success)
+						{
+							// Force background to update when card image becomes available.
+							// If loading the art was not sucessful we don't
+							// force an update, but just try again next time.
+							Update();
+						}
 					}) ?? new DrawingBrush();
 
 					if (image.CanFreeze)

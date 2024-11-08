@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			CreatedIconOffset = -15;
 		}
 
-		protected override void AddCardImage(Action? onCardImageLoaded)
+		protected override void AddCardImage(Action<bool>? onCardImageLoaded)
 		{
 			var bmp = GetCardTile(onCardImageLoaded);
 			if(bmp == null)

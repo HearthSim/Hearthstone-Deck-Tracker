@@ -10,7 +10,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		{
 		}
 
-		protected override void AddCardImage(Action? onCardImageLoaded) => AddCardImage(ImageRect.Move(-1, 0), false, onCardImageLoaded);
+		protected override void AddCardImage(Action<bool>? onCardImageLoaded) => AddCardImage(ImageRect.Move(-1, 0), false, onCardImageLoaded);
 
 		protected override void AddCountText() => AddCountText(CountTextRect.Move(1, 0));
 

@@ -10,8 +10,6 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HearthDb.Enums;
 using ColorConverter = System.Windows.Media.ColorConverter;
 using Hearthstone_Deck_Tracker.Utility.Assets;
-using System.Threading.Tasks;
-using MahApps.Metro.Controls;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Utility.Themes
@@ -94,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			HasAllOptionalCountBoxes = OptionalCountBoxes.All(x => File.Exists(Path.Combine(ThemeDir, x.Value.FileName)));
 		}
 
-		public virtual DrawingBrush Build(Action? onCardImageLoaded = null)
+		public virtual DrawingBrush Build(Action<bool>? onCardImageLoaded = null)
 		{
 			DrawingGroup = new DrawingGroup();
 
@@ -127,8 +125,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			return new DrawingBrush(DrawingGroup);
 		}
 
-		protected virtual void AddCardImage(Action? onCardImageLoaded) => AddCardImage(ImageRect, false, onCardImageLoaded);
-		protected void AddCardImage(Rect rect, bool offsetByCountBox, Action? onCardImageLoaded)
+		protected virtual void AddCardImage(Action<bool>? onCardImageLoaded) => AddCardImage(ImageRect, false, onCardImageLoaded);
+		protected void AddCardImage(Rect rect, bool offsetByCountBox, Action<bool>? onCardImageLoaded)
 		{
 			var bmp = GetCardTile(onCardImageLoaded);
 			if(bmp == null)
@@ -139,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 				AddChild(bmp, rect);
 		}
 
-		protected BitmapSource? GetCardTile(Action? onCardImageLoaded)
+		protected BitmapSource? GetCardTile(Action<bool>? onCardImageLoaded)
 		{
 			var downloader = AssetDownloaders.cardTileDownloader;
 			if(downloader == null)
@@ -155,12 +153,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 					try
 					{
 						var data = await downloader!.GetAssetData(Card);
-						if(data != null)
-							onCardImageLoaded?.Invoke();
+						onCardImageLoaded?.Invoke(data != null);
 					}
 					catch(Exception ex)
 					{
 						Log.Error(ex);
+						onCardImageLoaded?.Invoke(false);
 						// Pass. Guess we can't render the image.
 					}
 				};
