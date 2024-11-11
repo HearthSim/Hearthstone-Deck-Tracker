@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
-using Newtonsoft.Json;
 using Squirrel;
 
 namespace Hearthstone_Deck_Tracker.Utility.Updating
@@ -19,7 +18,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 	{
 
 		private static bool _useChinaMirror = CultureInfo.CurrentCulture.Name == "zh-CN";
-		private static ReleaseUrls? _releaseUrls;
 		private static TimeSpan _updateCheckDelay = new TimeSpan(0, 20, 0);
 		private static bool ShouldCheckForUpdates()
 			=> Config.Instance.CheckForUpdates && DateTime.Now - _lastUpdateCheck >= _updateCheckDelay;
@@ -53,37 +51,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		private static async Task<string?> GetReleaseUrl(string release)
-		{
-			if(_releaseUrls != null)
-				return _releaseUrls.GetReleaseUrl(release);
-			var file = Path.Combine(Config.AppDataPath, "releases.json");
-			string fileContent;
-			try
-			{
-				Log.Info("Downloading releases file");
-				using(var wc = new WebClient())
-					await wc.DownloadFileTaskAsync("https://hsdecktracker.net/releases.json", file);
-			}
-			catch(Exception ex)
-			{
-				Log.Error(ex);
-			}
-			using(var sr = new StreamReader(file))
-				fileContent = sr.ReadToEnd();
-			_releaseUrls = JsonConvert.DeserializeObject<ReleaseUrls>(fileContent);
-			var url = _releaseUrls.GetReleaseUrl(release);
-			Log.Info($"using '{release}' release: {url}");
-			return url;
-		}
+		private const string DevReleaseUrl = "https://github.com/HearthSim/HDT-dev-builds";
+		private const string LiveReleaseUrl = "https://github.com/HearthSim/HDT-Releases";
+		private const string LiveAsiaReleaseUrl = "https://hdt-downloads-asia.s3-accelerate.dualstack.amazonaws.com";
 
 		private static async Task<UpdateManager> GetUpdateManager(bool dev)
 		{
 			if(dev)
-				return await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("dev"));
+				return await UpdateManager.GitHubUpdateManager(DevReleaseUrl);
 			if(_useChinaMirror)
-				return new UpdateManager(await GetReleaseUrl("live-china"));
-			return await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("live"), prerelease: Config.Instance.CheckForBetaUpdates);
+				return new UpdateManager(LiveAsiaReleaseUrl);
+			return await UpdateManager.GitHubUpdateManager(LiveReleaseUrl, prerelease: Config.Instance.CheckForBetaUpdates);
 		}
 
 		public static async Task StartupUpdateCheck(SplashScreenWindow splashScreenWindow)
