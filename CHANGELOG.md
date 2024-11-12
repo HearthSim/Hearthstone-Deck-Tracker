@@ -1,3 +1,8 @@
+## **Release v1.37.0 - 2024-11-12**
+**Performance**:
+- Significantly improved downloader size: Card Tile images are now loaded dynamically instead of being included in the initial download.
+- Significantly improved memory usage.
+
 ## **Release v1.36.4 - 2024-11-07**
 **Hearthstone:**
 - Added counter for The Ceaseless Expanse.
