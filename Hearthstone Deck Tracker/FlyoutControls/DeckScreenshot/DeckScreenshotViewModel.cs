@@ -37,6 +37,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 		private string _uploadButtonText = LocUtil.Get(ImgurDefault, true);
 		private Visibility _uploadErrorVisibility = Visibility.Collapsed;
 
+		public bool ImageReady
+		{
+			get => GetProp(false);
+			set => SetProp(value);
+		}
+
 		public bool CardsOnly
 		{
 			get { return _cardsOnly; }
@@ -223,7 +229,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 		{
 			if(_deck == null)
 				return;
+			ImageReady = false;
 			DeckImage = await DeckScreenshotHelper.Generate(_deck, CardsOnly);
+			ImageReady = true;
 		}
 	}
 }

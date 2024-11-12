@@ -1,10 +1,11 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot.DeckScreenshotView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:deckScreenshot="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="200">
     <UserControl.DataContext>
@@ -49,14 +50,14 @@
                 <TextBlock Text="{Binding UploadButtonText}" Margin="4,0,0,0"/>
             </StackPanel>
         </Button>
-        <TextBlock Text="{lex:Loc DeckScreenshot_Text_UploadError}" 
+        <TextBlock Text="{lex:Loc DeckScreenshot_Text_UploadError}"
             TextWrapping="Wrap" DockPanel.Dock="Top" Foreground="Red" Visibility="{Binding UploadErrorVisibility}"/>
         <TextBlock DockPanel.Dock="Top" Visibility="{Binding ImgurUrlVisibility}" Margin="5,0,0,0">
             <Hyperlink NavigateUri="{Binding ImgurUrl, TargetNullValue=''}" RequestNavigate="Hyperlink_OnRequestNavigate">
                 <Run Text="{Binding ImgurUrl}"></Run>
             </Hyperlink>
         </TextBlock>
-        <Button Command="{Binding CopyToClipboardCommand}" 
+        <Button Command="{Binding CopyToClipboardCommand}"
             DockPanel.Dock="Top" Margin="0,5,0,0">
             <StackPanel Orientation="Horizontal">
                 <Rectangle Width="12">
@@ -69,7 +70,10 @@
         </Button>
         <GroupBox Header="{lex:LocTextUpper DeckScreenshot_Preview_Header}" Margin="0,5">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <Image DockPanel.Dock="Left" Width="219" Source="{Binding DeckImage}" RenderOptions.BitmapScalingMode="fant"/>
+                <Grid>
+                    <mah:ProgressRing IsActive="True" Foreground="White" Width="20" Height="20" Visibility="{Binding ImageReady, Converter={StaticResource InverseBoolToVisibility}}"/>
+                    <Image DockPanel.Dock="Left" Width="219" Source="{Binding DeckImage}" RenderOptions.BitmapScalingMode="fant"  Visibility="{Binding ImageReady, Converter={StaticResource BoolToVisibility}}"/>
+                </Grid>
             </ScrollViewer>
         </GroupBox>
     </DockPanel>

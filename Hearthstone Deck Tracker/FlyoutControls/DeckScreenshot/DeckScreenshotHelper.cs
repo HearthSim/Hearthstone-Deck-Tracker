@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -7,6 +8,7 @@ using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
@@ -23,6 +25,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			var height = CardHeight * deck.GetSelectedDeckVersion().Cards.Count;
 			if(!cardsOnly)
 				height += InfoHeight;
+
+			// Wait for all images to be available
+			if(AssetDownloaders.cardTileDownloader != null)
+			{
+				var tasks = deck.Cards
+					.Select(c => AssetDownloaders.cardTileDownloader.GetAssetData(c))
+					// If the tiles are available on disk they will be loaded
+					// synchronously and the task should complete immediately.
+					.Where(x => !x.IsCompleted).ToList();
+
+				if(tasks.Any())
+				{
+					await Task.WhenAll(tasks);
+
+					// For good measure. For some reason some small number of
+					// images isn't always available immediately
+					await Task.Delay(250);
+				}
+			}
+
 			var control = new DeckView(deck, cardsOnly);
 			await control.Init();
 			control.Measure(new Size(ScreenshotWidth, height));
