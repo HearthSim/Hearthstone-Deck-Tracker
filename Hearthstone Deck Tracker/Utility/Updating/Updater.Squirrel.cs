@@ -194,12 +194,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					Log.Info($"Installed version ({current}) is greater than latest release found ({latest}). Not downloading updates.");
 					return false;
 				}
-				if(IsRevisionIncrement(current?.Version, latest?.Version))
-				{
-					Log.Info($"Latest update ({latest}) is revision increment. Updating in background.");
-					if(splashScreenWindow != null)
-						splashScreenWindow.SkipUpdate = true;
-				}
 
 				Log.Info($"Downloading {updateInfo.ReleasesToApply.Count} {(ignoreDelta ? "" : "delta ")}releases, latest={latest?.Version}");
 				if(splashScreenWindow != null)
@@ -294,14 +288,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					Log.Error(ex);
 				return await SquirrelUpdate(mgr, splashScreenWindow, true);
 			}
-		}
-
-		private static bool IsRevisionIncrement(Version? current, Version? latest)
-		{
-			if(current == null || latest == null)
-				return false;
-			return current.Major == latest.Major && current.Minor == latest.Minor && current.Build == latest.Build
-					&& current.Revision < latest.Revision;
 		}
 
 		internal static void StartUpdate()
