@@ -95,7 +95,7 @@ namespace Hearthstone_Deck_Tracker
 				var updateCheck = Updater.StartupUpdateCheck(splashScreenWindow);
 				while(!updateCheck.IsCompleted)
 				{
-					await Task.Delay(500);
+					await Task.Delay(16);
 					if(splashScreenWindow.SkipUpdate)
 						break;
 				}
