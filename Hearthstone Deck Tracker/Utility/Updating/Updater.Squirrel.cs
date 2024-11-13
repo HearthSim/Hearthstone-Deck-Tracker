@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				if(!updated && Config.Instance.CheckForDevUpdates)
 				{
 					using(var mgr = await GetUpdateManager(true))
-						updated = await SquirrelUpdate(mgr, null);
+						updated = await SquirrelUpdate(mgr, splashScreenWindow);
 				}
 
 				if(updated)
