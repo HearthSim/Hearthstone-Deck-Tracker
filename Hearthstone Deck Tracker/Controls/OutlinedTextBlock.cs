@@ -187,7 +187,7 @@ namespace Hearthstone_Deck_Tracker
 			var maxWidth = Math.Min(3579139, Math.Max(0.0001d, availableSize.Width));
 			var ratio = maxWidth / _formattedText.Width;
 			if(ratio < 1 && (TextWrapping == TextWrapping.NoWrap || ratio > 0.8))
-				_formattedText.SetFontSize((int)(FontSize * ratio));
+				_formattedText.SetFontSize(Math.Max(1, (int)FontSize * ratio));
 			_formattedText.MaxTextWidth = maxWidth;
 			_formattedText.MaxTextHeight = Math.Max(0.0001d, availableSize.Height);
 
