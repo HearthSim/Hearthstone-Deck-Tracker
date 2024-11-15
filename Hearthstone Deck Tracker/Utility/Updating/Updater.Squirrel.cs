@@ -125,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					var task = await Task.WhenAny(mgrTask, Task.Delay(UpdateCheckTimeout));
 					if(task != mgrTask)
 					{
-						Log.Warn($"UpdateManager{(dev ? " (dev)" : "")} init took longer than {UpdateCheckTimeout}ms, showing app");
+						Log.Warn($"UpdateManager{(dev ? " (dev)" : "")} init took longer than {UpdateCheckTimeout}ms{(splashScreenWindow.SkipUpdate ? "" : ", showing app")}");
 						splashScreenWindow.SkipUpdate = true;
 					}
 					using var mgr = await mgrTask;
@@ -202,7 +202,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					var task = await Task.WhenAny(updateInfoTask, Task.Delay(UpdateCheckTimeout));
 					if(task != updateInfoTask)
 					{
-						Log.Warn($"Update check took longer than {UpdateCheckTimeout}ms, showing app");
+						Log.Warn($"Update check took longer than {UpdateCheckTimeout}ms{(splashScreenWindow.SkipUpdate ? "" : ", showing app")}");
 						splashScreenWindow.SkipUpdate = true;
 					}
 				}
@@ -258,7 +258,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						splashScreenWindow.Updating(progressPct);
 					else
 					{
-						Log.Warn($"Downloading the update is too slow, showing app");
+						Log.Warn($"Downloading the update is slow{(splashScreenWindow.SkipUpdate ? "" : ", showing app")}");
 						splashScreenWindow.SkipUpdate = true;
 					}
 
@@ -267,7 +267,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					var task = await Task.WhenAny(downloadTask, Task.Delay(TotalDownloadTimeout));
 					if(task != downloadTask)
 					{
-						Log.Warn($"Downloading the update is too slow, showing app");
+						Log.Warn($"Downloading the update is taking longer than {TotalDownloadTimeout}ms{(splashScreenWindow.SkipUpdate ? "" : ", showing app")}");
 						splashScreenWindow.SkipUpdate = true;
 					}
 
