@@ -1349,6 +1349,8 @@ namespace Hearthstone_Deck_Tracker
 			Save();
 		}
 
+		public static bool IsLoaded => _config != null;
+
 		public static void Load()
 		{
 			var foundConfig = false;

@@ -63,6 +63,51 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			return await UpdateManager.GitHubUpdateManager(LiveReleaseUrl, prerelease: Config.Instance.CheckForBetaUpdates);
 		}
 
+		public static void SquirrelInit()
+		{
+			// We don't know what url we want to use at this point, and it should
+			// not matter. We only want this instance of the UpdateManager to
+			// manage the local installation. We will instantiate a different one
+			// later on for actual updates.
+			using var initMgr = new UpdateManager("INVALID_PATH");
+
+			RegistryHelper.SetExecutablePath(Path.Combine(initMgr.RootAppDirectory, "Update.exe"));
+			RegistryHelper.SetExecutableArgs("--processStart \"HearthstoneDeckTracker.exe\"");
+
+			// Should be safe, but we really want to make sure not to crash here.
+			try
+			{
+				Config.Load();
+			}
+			catch
+			{
+				// It's fine.
+			}
+
+			SquirrelAwareApp.HandleEvents(
+				v =>
+				{
+					initMgr.CreateShortcutForThisExe();
+					if(Config.Instance.StartWithWindows)
+						RegistryHelper.SetRunKey();
+				},
+				v =>
+				{
+					initMgr.CreateShortcutForThisExe();
+					FixStub();
+					if(Config.Instance.StartWithWindows)
+						RegistryHelper.SetRunKey();
+				},
+				onAppUninstall: v =>
+				{
+					initMgr.RemoveShortcutForThisExe();
+					if(Config.Instance.StartWithWindows)
+						RegistryHelper.DeleteRunKey();
+				},
+				onFirstRun: CleanUpInstallerFile
+				);
+		}
+
 		public static async Task StartupUpdateCheck(SplashScreenWindow splashScreenWindow)
 		{
 			try
@@ -71,33 +116,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				_lastUpdateCheck = DateTime.Now;
 				bool updated;
 				using(var mgr = await GetUpdateManager(false))
-				{
-					RegistryHelper.SetExecutablePath(Path.Combine(mgr.RootAppDirectory, "Update.exe"));
-					RegistryHelper.SetExecutableArgs("--processStart \"HearthstoneDeckTracker.exe\"");
-					SquirrelAwareApp.HandleEvents(
-						v =>
-						{
-							mgr.CreateShortcutForThisExe();
-							if(Config.Instance.StartWithWindows)
-								RegistryHelper.SetRunKey();
-						},
-						v =>
-						{
-							mgr.CreateShortcutForThisExe();
-							FixStub();
-							if(Config.Instance.StartWithWindows)
-								RegistryHelper.SetRunKey();
-						},
-						onAppUninstall: v =>
-						{
-							mgr.RemoveShortcutForThisExe();
-							if(Config.Instance.StartWithWindows)
-								RegistryHelper.DeleteRunKey();
-						},
-						onFirstRun: CleanUpInstallerFile
-						);
 					updated = await SquirrelUpdate(mgr, splashScreenWindow);
-				}
 
 				if(!updated && Config.Instance.CheckForDevUpdates)
 				{

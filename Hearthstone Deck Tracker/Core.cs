@@ -79,7 +79,13 @@ namespace Hearthstone_Deck_Tracker
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 			ServicePointManager.DefaultConnectionLimit = 30;
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-			Config.Load();
+
+			if(!Config.IsLoaded)
+			{
+				// We may load the config earlier as part of squirrel init
+				Config.Load();
+			}
+
 			ConfigManager.Run();
 			if(Config.Instance.GoogleAnalytics)
 				HSReplayNetClientAnalytics.Initialize();
