@@ -233,7 +233,8 @@ namespace Hearthstone_Deck_Tracker
 				HSReplayNetOAuth.AccountData?.IsPremium ?? false,
 				(int)(DateTime.UtcNow - _startUpTime).TotalSeconds,
 				PluginManager.Instance.Plugins.Count,
-				Config.Instance.CleanShutdown
+				Config.Instance.CleanShutdown,
+				splashScreenWindow.SkipUpdate
 			);
 
 			Config.Instance.CleanShutdown = false;
