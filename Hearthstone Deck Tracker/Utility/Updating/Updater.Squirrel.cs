@@ -16,6 +16,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 {
 	internal static partial class Updater
 	{
+		private const int UpdateCheckTimeout     =  2_000;
+		private const int InitialDownloadTimeout =  3_000;
+		private const int TotalDownloadTimeout   = 20_000;
+
 		private static bool _useChinaMirror = CultureInfo.CurrentCulture.Name == "zh-CN";
 		private static TimeSpan _updateCheckDelay = new TimeSpan(0, 20, 0);
 		private static bool ShouldCheckForUpdates()
@@ -114,15 +118,23 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			{
 				Log.Info("Checking for updates");
 				_lastUpdateCheck = DateTime.Now;
-				bool updated;
-				using(var mgr = await GetUpdateManager(false))
-					updated = await SquirrelUpdate(mgr, splashScreenWindow);
 
-				if(!updated && Config.Instance.CheckForDevUpdates)
+				async Task<bool> Update(bool dev)
 				{
-					using(var mgr = await GetUpdateManager(true))
-						updated = await SquirrelUpdate(mgr, splashScreenWindow);
+					var mgrTask = GetUpdateManager(dev);
+					var task = await Task.WhenAny(mgrTask, Task.Delay(UpdateCheckTimeout));
+					if(task != mgrTask)
+					{
+						Log.Warn($"UpdateManager{(dev ? " (dev)" : "")} init took longer than {UpdateCheckTimeout}ms, showing app");
+						splashScreenWindow.SkipUpdate = true;
+					}
+					using var mgr = await mgrTask;
+					return await SquirrelUpdate(mgr, splashScreenWindow);
 				}
+
+				var updated = await Update(false);
+				if(!updated && Config.Instance.CheckForDevUpdates)
+					updated = await Update(true);
 
 				if(updated)
 				{
@@ -175,10 +187,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				Log.Error(ex);
 			}
 		}
-
-		private const int UpdateCheckTimeout     =  2_000;
-		private const int InitialDownloadTimeout =  3_000;
-		private const int TotalDownloadTimeout   = 20_000;
 
 		private static async Task<bool> SquirrelUpdate(UpdateManager mgr, SplashScreenWindow? splashScreenWindow, bool ignoreDelta = false)
 		{
