@@ -86,6 +86,9 @@ namespace Hearthstone_Deck_Tracker
 				Config.Load();
 			}
 
+			var splashScreenWindow = new SplashScreenWindow();
+			splashScreenWindow.ShowConditional();
+
 			ConfigManager.Run();
 			if(Config.Instance.GoogleAnalytics)
 				HSReplayNetClientAnalytics.Initialize();
@@ -94,7 +97,6 @@ namespace Hearthstone_Deck_Tracker
 				Config.SetInitialLanguage();
 
 			Log.Info($"HDT: {Helper.GetCurrentVersion()}, Operating System: {Helper.GetWindowsVersion()}, .NET Framework: {Helper.GetInstalledDotNetVersion()}");
-			var splashScreenWindow = new SplashScreenWindow();
 #if(SQUIRREL)
 			if(Config.Instance.CheckForUpdates)
 			{
@@ -107,7 +109,6 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 #endif
-			splashScreenWindow.ShowConditional();
 			Log.Initialize();
 			Reflection.LogDebugMessage += msg => Log.Debug("HearthMirror RPC[client]: " + msg);
 			Reflection.LogMessage += msg => Log.Info("HearthMirror RPC [client]: " + msg);
