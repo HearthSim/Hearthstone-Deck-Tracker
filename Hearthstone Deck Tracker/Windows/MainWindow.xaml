@@ -200,7 +200,7 @@
                         IsChecked="{Binding CheckForDevUpdates, Source={StaticResource ConfigWrapper}}" />
                 </StatusBarItem>
             </StatusBar>
-            <StatusBar Name="StatusBarUpdate" DockPanel.Dock="Top" Margin="0,1,0,0" Visibility="{Binding Visibility, Source={x:Static utility:Updater.StatusBar}}">
+            <StatusBar Name="StatusBarUpdate" DockPanel.Dock="Top" Margin="0,1,0,0" Visibility="{Binding Visibility, Source={x:Static utility:Updater.Status}}">
                 <StatusBarItem Margin="10,0,0,0" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" FontSize="14">

@@ -12,6 +12,9 @@
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
         Title="SplashScreenWindow" Height="400" Width="400" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ShowInTaskbar="False">
+    <Window.DataContext>
+        <local:SplashScreenWindowViewModel/>
+    </Window.DataContext>
     <Grid>
         <Rectangle Width="300" Height="300">
             <Rectangle.Fill>
@@ -29,10 +32,10 @@
         </Rectangle>
         <Rectangle Height="5" Width="40" Margin="200,200,0,0" Fill="Black"/>
         <Border BorderThickness="5" BorderBrush="Black" Background="White" CornerRadius="15" Margin="0,200,0,0" Width="180" Height="50">
-            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding LoadingString, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}" FontWeight="Medium" Height="40" FontSize="26" VerticalAlignment="Center" TextAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding LoadingString}" FontWeight="Medium" Height="40" FontSize="26" VerticalAlignment="Center" TextAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
         </Border>
         <Border BorderThickness="5" BorderBrush="Black" Background="White" CornerRadius="10" Margin="275,200,0,0" Width="80" Height="30">
-            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding VersionString, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}" Height="26" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding VersionString}" Height="26" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
         </Border>
     </Grid>
 </Window>

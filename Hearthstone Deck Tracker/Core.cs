@@ -100,11 +100,11 @@ namespace Hearthstone_Deck_Tracker
 #if(SQUIRREL)
 			if(Config.Instance.CheckForUpdates)
 			{
-				var updateCheck = Updater.StartupUpdateCheck(splashScreenWindow);
+				var updateCheck = Updater.StartupUpdateCheck();
 				while(!updateCheck.IsCompleted)
 				{
 					await Task.Delay(16);
-					if(splashScreenWindow.SkipUpdate)
+					if(Updater.Status.SkipStartupCheck)
 						break;
 				}
 			}
@@ -234,7 +234,7 @@ namespace Hearthstone_Deck_Tracker
 				(int)(DateTime.UtcNow - _startUpTime).TotalSeconds,
 				PluginManager.Instance.Plugins.Count,
 				Config.Instance.CleanShutdown,
-				splashScreenWindow.SkipUpdate
+				Updater.Status.SkipStartupCheck
 			);
 
 			Config.Instance.CleanShutdown = false;

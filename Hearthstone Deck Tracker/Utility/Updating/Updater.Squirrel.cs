@@ -9,7 +9,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using Hearthstone_Deck_Tracker.Windows;
 using Squirrel;
 
 namespace Hearthstone_Deck_Tracker.Utility.Updating
@@ -34,18 +33,18 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			{
 				bool updated;
 				using(var mgr = await GetUpdateManager(false))
-					updated = await SquirrelUpdate(mgr, null);
+					updated = await SquirrelUpdate(mgr, false);
 
 				if(!updated && Config.Instance.CheckForDevUpdates)
 				{
 					using(var mgr = await GetUpdateManager(true))
-						updated = await SquirrelUpdate(mgr, null);
+						updated = await SquirrelUpdate(mgr, false);
 				}
 
 				if(updated)
 				{
 					_updateCheckDelay = new TimeSpan(1, 0, 0);
-					StatusBar.Visibility = Visibility.Visible;
+					Status.Visibility = Visibility.Visible;
 				}
 			}
 			catch(Exception ex)
@@ -112,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				);
 		}
 
-		public static async Task StartupUpdateCheck(SplashScreenWindow splashScreenWindow)
+		public static async Task StartupUpdateCheck()
 		{
 			try
 			{
@@ -125,11 +124,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					var task = await Task.WhenAny(mgrTask, Task.Delay(UpdateCheckTimeout));
 					if(task != mgrTask)
 					{
-						Log.Warn($"UpdateManager{(dev ? " (dev)" : "")} init took longer than {UpdateCheckTimeout}ms{(splashScreenWindow.SkipUpdate ? "" : ", showing app")}");
-						splashScreenWindow.SkipUpdate = true;
+						Log.Warn($"UpdateManager{(dev ? " (dev)" : "")} init took longer than {UpdateCheckTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
+						Status.SkipStartupCheck = true;
 					}
 					using var mgr = await mgrTask;
-					return await SquirrelUpdate(mgr, splashScreenWindow);
+					return await SquirrelUpdate(mgr, true);
 				}
 
 				var updated = await Update(false);
@@ -138,10 +137,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 				if(updated)
 				{
-					if(splashScreenWindow.SkipUpdate)
+					if(Status.SkipStartupCheck)
 					{
 						Log.Info("Update complete, showing update bar");
-						StatusBar.Visibility = Visibility.Visible;
+						Status.Visibility = Visibility.Visible;
 					}
 					else
 					{
@@ -188,22 +187,25 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		private static async Task<bool> SquirrelUpdate(UpdateManager mgr, SplashScreenWindow? splashScreenWindow, bool ignoreDelta = false)
+		private static async Task<bool> SquirrelUpdate(UpdateManager mgr, bool isStartupCheck, bool ignoreDelta = false)
 		{
 			try
 			{
+				Status.UpdaterState = UpdaterState.Checking;
 				Log.Info($"Checking for updates (ignoreDelta={ignoreDelta})");
 				var updateInfoTask = mgr.CheckForUpdate(ignoreDelta);
 
-				if(splashScreenWindow != null)
+				if(isStartupCheck)
 				{
 					// If it takes more than two seconds to get the update info
 					// i.e. the RELEASES file, just update in the background.
-					var task = await Task.WhenAny(updateInfoTask, Task.Delay(UpdateCheckTimeout));
+					var task = await Task.WhenAny(updateInfoTask,
+						Task.Delay(UpdateCheckTimeout));
 					if(task != updateInfoTask)
 					{
-						Log.Warn($"Update check took longer than {UpdateCheckTimeout}ms{(splashScreenWindow.SkipUpdate ? "" : ", showing app")}");
-						splashScreenWindow.SkipUpdate = true;
+						Log.Warn(
+							$"Update check took longer than {UpdateCheckTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
+						Status.SkipStartupCheck = true;
 					}
 				}
 
@@ -211,68 +213,52 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				if(!updateInfo.ReleasesToApply.Any())
 				{
 					Log.Info("No new update available");
+					Status.UpdaterState = UpdaterState.None;
 					return false;
 				}
 
-				var latest = updateInfo.ReleasesToApply.LastOrDefault()?.Version;
+				var latest = updateInfo.ReleasesToApply.LastOrDefault()
+					?.Version;
 				var current = mgr.CurrentlyInstalledVersion();
 				if(latest <= current)
 				{
-					Log.Info($"Installed version ({current}) is greater than latest release found ({latest}). Not downloading updates.");
+					Log.Info(
+						$"Installed version ({current}) is greater than latest release found ({latest}). Not downloading updates.");
+					Status.UpdaterState = UpdaterState.None;
 					return false;
 				}
 
-				Log.Info($"Downloading {updateInfo.ReleasesToApply.Count} {(ignoreDelta ? "" : "delta ")}releases, latest={latest?.Version}");
-				if(splashScreenWindow != null)
+				Log.Info(
+					$"Downloading {updateInfo.ReleasesToApply.Count} {(ignoreDelta ? "" : "delta ")}releases, latest={latest?.Version}");
+				if(isStartupCheck)
 				{
-					var start = DateTime.Now;
+					Status.OnDownloadProgressChanged(0);
+					var downloadTask = mgr.DownloadReleases(
+						updateInfo.ReleasesToApply,
+						Status.OnDownloadProgressChanged);
 
-					var showProgress = false;
-					var progressPct = 0;
-					void OnProgress(int progress)
+					var task = await Task.WhenAny(downloadTask,
+						Task.Delay(InitialDownloadTimeout));
+					if(task != downloadTask && Status.UpdateProgress < 10)
 					{
-						progressPct = progress;
-						// Only show progress if we detemined the update is fast
-						// enough to avoid a confusing splashscreen that goes from
-						// "updating" to the app, which then shows "update available"
-						// shortly after.
-						if(showProgress)
-							splashScreenWindow.Updating(progress);
-					}
-
-					var downloadTask = mgr.DownloadReleases(updateInfo.ReleasesToApply, OnProgress);
-
-					// If the first 10 percent take longer than 3 seconds show
-					// the app and continue the download in the background.
-					while(DateTime.Now.Subtract(start).TotalMilliseconds < InitialDownloadTimeout)
-					{
-						if(progressPct >= 10)
-						{
-							showProgress = true;
-							break;
-						}
-						await Task.Delay(16);
-					}
-
-					if(showProgress)
-						splashScreenWindow.Updating(progressPct);
-					else
-					{
-						Log.Warn($"Downloading the update is slow{(splashScreenWindow.SkipUpdate ? "" : ", showing app")}");
-						splashScreenWindow.SkipUpdate = true;
+						Log.Warn(
+							$"Downloading the update is slow{(Status.SkipStartupCheck ? "" : ", showing app")}");
+						Status.SkipStartupCheck = true;
 					}
 
 					// If the rest of download takes longer than 20 seconds in
 					// total also show the app and continue in the background.
-					var task = await Task.WhenAny(downloadTask, Task.Delay(TotalDownloadTimeout));
+					task = await Task.WhenAny(downloadTask,
+						Task.Delay(TotalDownloadTimeout));
 					if(task != downloadTask)
 					{
-						Log.Warn($"Downloading the update is taking longer than {TotalDownloadTimeout}ms{(splashScreenWindow.SkipUpdate ? "" : ", showing app")}");
-						splashScreenWindow.SkipUpdate = true;
+						Log.Warn(
+							$"Downloading the update is taking longer than {TotalDownloadTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
+						Status.SkipStartupCheck = true;
 					}
 
 					await downloadTask;
-					splashScreenWindow.Updating(100);
+					Status.OnDownloadProgressChanged(100);
 				}
 				else
 				{
@@ -280,10 +266,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				}
 
 				Log.Info("Applying releases");
-				if(splashScreenWindow != null)
+				if(isStartupCheck)
 				{
-					await mgr.ApplyReleases(updateInfo, splashScreenWindow.Installing);
-					splashScreenWindow.Installing(100);
+					await mgr.ApplyReleases(updateInfo,
+						Status.OnInstallProgressChanged);
+					Status.OnInstallProgressChanged(100);
 				}
 				else
 				{
@@ -291,6 +278,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				}
 
 				await mgr.CreateUninstallerRegistryEntry();
+				Status.UpdaterState = UpdaterState.Installed;
 				Log.Info("Done");
 				return true;
 			}
@@ -301,8 +289,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				{
 					_useChinaMirror = true;
 					Log.Warn("Now using china mirror");
-					return await SquirrelUpdate(mgr, splashScreenWindow, ignoreDelta);
+					return await SquirrelUpdate(mgr, isStartupCheck,
+						ignoreDelta);
 				}
+
 				return false;
 			}
 			catch(Exception ex)
@@ -310,10 +300,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				if(ignoreDelta)
 					return false;
 				if(ex is Win32Exception)
-					Log.Info("Not able to apply deltas, downloading full release");
+					Log.Info(
+						"Not able to apply deltas, downloading full release");
 				else
 					Log.Error(ex);
-				return await SquirrelUpdate(mgr, splashScreenWindow, true);
+				return await SquirrelUpdate(mgr, isStartupCheck, true);
+			}
+			finally
+			{
+				Status.UpdateProgress = 0;
 			}
 		}
 
