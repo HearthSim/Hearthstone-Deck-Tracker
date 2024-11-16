@@ -42,5 +42,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		Dictionary<string, int> PlayerIdsByPlayerName { get; }
 		Dictionary<int, IHsChoice> ChoicesById { get; }
 		Dictionary<int, List<IHsChoice>> ChoicesByTaskList { get; }
+		bool TriangulatePlayed { get; set; }
+
 	}
 }

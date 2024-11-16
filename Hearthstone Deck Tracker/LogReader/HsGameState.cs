@@ -64,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			CurrentBlock = null;
 			_maxBlockId = 0;
 			DredgeCounter = 0;
+			TriangulatePlayed = false;
 		}
 
 		public void SetCurrentEntity(int id)
@@ -92,6 +93,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public Dictionary<int, IHsChoice> ChoicesById { get; } = new();
 		public Dictionary<int, List<IHsChoice>> ChoicesByTaskList { get; } = new();
+		public bool TriangulatePlayed { get; set; }
 	}
 
 	public class Block
