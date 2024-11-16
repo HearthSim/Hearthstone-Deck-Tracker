@@ -1,30 +1,13 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 
-namespace Hearthstone_Deck_Tracker.Utility.Updating
+namespace Hearthstone_Deck_Tracker.Utility.Updating;
+
+public class StatusBarHelper : ViewModel
 {
-	public class StatusBarHelper : INotifyPropertyChanged
+	public Visibility Visibility
 	{
-		private Visibility _visibility = Visibility.Collapsed;
-
-		public Visibility Visibility
-		{
-			get { return _visibility; }
-			set
-			{
-				_visibility = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public event PropertyChangedEventHandler? PropertyChanged;
-
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+		get => GetProp(Visibility.Collapsed);
+		set => SetProp(value);
 	}
 }
