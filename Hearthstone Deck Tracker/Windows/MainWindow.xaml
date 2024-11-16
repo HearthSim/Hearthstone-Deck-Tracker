@@ -200,17 +200,45 @@
                         IsChecked="{Binding CheckForDevUpdates, Source={StaticResource ConfigWrapper}}" />
                 </StatusBarItem>
             </StatusBar>
-            <StatusBar Name="StatusBarUpdate" DockPanel.Dock="Top" Margin="0,1,0,0" Visibility="{Binding Visibility, Source={x:Static utility:Updater.Status}}">
-                <StatusBarItem Margin="10,0,0,0" HorizontalAlignment="Center">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" FontSize="14">
-                            <Run FontWeight="SemiBold" Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_NewUpdateAvailable}"/>
-                            <Run FontWeight="SemiBold">-</Run>
-                            <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkUpdateNow_OnClick">
-                                <Run Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_ClickToUpdate}"/>
-                            </Hyperlink>
-                        </TextBlock>
-                    </StackPanel>
+            <StatusBar DataContext="{x:Static utility:Updater.Status}" DockPanel.Dock="Top" Margin="1,1,1,0" Visibility="{Binding StatusBarVisibility}" Background="{DynamicResource AccentBaseColorBrush}">
+                <StatusBarItem Margin="0,5,0,5" HorizontalAlignment="Center">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding DownloadingUpdateVisibility}">
+                            <TextBlock VerticalAlignment="Center" FontSize="14">
+                                <Run FontWeight="SemiBold" Text="{lex:Loc MainWindow_StatusBarUpdate_Downloading}"/>
+                                <Run FontWeight="SemiBold" Text="{Binding UpdateProgress, StringFormat='{}{0}%'}"/>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding InstallingUpdateVisibility}">
+                            <TextBlock VerticalAlignment="Center" FontSize="14">
+                                <Run FontWeight="SemiBold" Text="{lex:Loc MainWindow_StatusBarUpdate_Installing}"/>
+                                <Run FontWeight="SemiBold" Text="{Binding UpdateProgress, StringFormat='{}{0}%'}"/>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding UpdateInstalledVisibility}">
+                            <TextBlock VerticalAlignment="Center" FontSize="14">
+                                <Run FontWeight="SemiBold" Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_NewUpdateAvailable}"/>
+                                <Run FontWeight="SemiBold">-</Run>
+                                <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkUpdateNow_OnClick">
+                                    <Run Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_ClickToUpdate}"/>
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding UpdateFailedVisibility}">
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_warning}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock VerticalAlignment="Center" FontSize="14" Margin="5,0,0,0">
+                                <Run FontWeight="SemiBold" Text="{lex:Loc MainWindow_StatusBarUpdate_UpdateFailed}"/>
+                                <Run FontWeight="SemiBold">-</Run>
+                                <Hyperlink Foreground="White" FontWeight="Bold" Command="{Binding OpenUrl, Source={StaticResource GlobalCommands}}" CommandParameter="https://hsreplay.net/downloads">
+                                    <Run Text="{lex:Loc MainWindow_StatusBarUpdate_UpdateFailed_Download}"/>
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
                 </StatusBarItem>
             </StatusBar>
             <mainWindowControls:NewsBarView x:Name="NewsBar" DockPanel.Dock="Top"/>

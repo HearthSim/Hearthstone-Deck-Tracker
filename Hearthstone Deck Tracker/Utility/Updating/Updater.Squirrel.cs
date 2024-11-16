@@ -44,11 +44,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				if(updated)
 				{
 					_updateCheckDelay = new TimeSpan(1, 0, 0);
-					Status.Visibility = Visibility.Visible;
+					Status.StatusBarVisibility = Visibility.Visible;
 				}
 			}
 			catch(Exception ex)
 			{
+				Status.OnFailed(ex);
 				Log.Error(ex);
 			}
 		}
@@ -140,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					if(Status.SkipStartupCheck)
 					{
 						Log.Info("Update complete, showing update bar");
-						Status.Visibility = Visibility.Visible;
+						Status.StatusBarVisibility = Visibility.Visible;
 					}
 					else
 					{
@@ -151,6 +152,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 			catch(Exception ex)
 			{
+				Status.OnFailed(ex);
 				Log.Error(ex);
 			}
 		}
@@ -278,7 +280,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				}
 
 				await mgr.CreateUninstallerRegistryEntry();
-				Status.UpdaterState = UpdaterState.Installed;
+				Status.OnInstalled();
 				Log.Info("Done");
 				return true;
 			}
@@ -289,16 +291,19 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				{
 					_useChinaMirror = true;
 					Log.Warn("Now using china mirror");
-					return await SquirrelUpdate(mgr, isStartupCheck,
-						ignoreDelta);
+					return await SquirrelUpdate(mgr, isStartupCheck, ignoreDelta);
 				}
 
+				Status.OnFailed(ex);
 				return false;
 			}
 			catch(Exception ex)
 			{
 				if(ignoreDelta)
+				{
+					Status.OnFailed(ex);
 					return false;
+				}
 				if(ex is Win32Exception)
 					Log.Info(
 						"Not able to apply deltas, downloading full release");

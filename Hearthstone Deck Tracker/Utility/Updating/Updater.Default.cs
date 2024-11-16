@@ -28,7 +28,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			_release = await GetLatestRelease(false);
 			if(_release != null)
 			{
-				StatusBar.Visibility = Visibility.Visible;
+				Status.UpdaterState = UpdaterState.Available;
+				Status.StatusBarVisibility = Visibility.Visible;
 				ShowNewUpdateMessage(false);
 			}
 			else if(Config.Instance.CheckForBetaUpdates)
