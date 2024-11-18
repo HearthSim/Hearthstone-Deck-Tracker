@@ -1,3 +1,16 @@
+## **Release v1.37.1 - 2024-11-18**
+**Hearthstone**:
+- Added support for Triangulate
+- Added counters for Playhouse Giant and cards drawn this turn
+- Fixed disabled card ages still showing a placeholder icon
+
+**Plugins**:
+- Fixed compatibility with some older plugins relying on a deprecated property
+
+**Updater Improvements**:
+- Will no longer block HDT from starting under slow network conditions
+- Errors that occur during updates are now surfaced in the main window
+
 ## **Release v1.37.0 - 2024-11-12**
 **Performance**:
 - Significantly improved downloader size: Card Tile images are now loaded dynamically instead of being included in the initial download.
