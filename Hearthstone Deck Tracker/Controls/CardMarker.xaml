@@ -9,13 +9,13 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="56" d:DesignWidth="32">
     <Canvas LayoutTransform="{Binding ScaleTransform}">
-        <Canvas Width="32" Height="32">
+        <Canvas Width="32" Height="32" Visibility="{Binding CardAgeVisibility}">
             <Canvas.Background>
                <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/card-marker.png"/>
             </Canvas.Background>
             <hearthstoneDeckTracker:HearthstoneTextBlock
                 FontSize="18" Width="32" Height="32" TextAlignment="Center"
-                Text="{Binding CardAge}" Visibility="{Binding CardAgeVisibility}"
+                Text="{Binding CardAge}"
                 d:Text="1"
             />
         </Canvas>
