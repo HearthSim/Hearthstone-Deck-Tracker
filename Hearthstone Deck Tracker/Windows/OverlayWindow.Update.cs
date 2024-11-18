@@ -232,7 +232,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private List<int> GetDrawBlacklist()
 		{
-			return Remote.Config.Data?.DrawCardBlacklist?.Select(obj => obj.dbf_id).ToList() ?? new List<int>();
+			return Remote.Config.Data?.DrawCardBlacklist?.WhereNotNull().Select(obj => obj.DbfId).ToList() ?? new List<int>();
 		}
 
 		private void UpdateActiveEffects()

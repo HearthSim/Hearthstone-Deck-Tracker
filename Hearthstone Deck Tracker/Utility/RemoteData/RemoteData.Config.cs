@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 		internal class CardInfo
 		{
 			[JsonProperty("dbf_id")]
-			public int dbf_id { get; set; }
+			public int DbfId { get; set; }
 		}
 	}
 }
