@@ -847,5 +847,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Core.UpdatePlayerCards(true);
 			}
 		}
+
+		[Obsolete("Use OriginalClass or CurrentClass instead")]
+		public string? Class => OriginalClass;
 	}
 }
