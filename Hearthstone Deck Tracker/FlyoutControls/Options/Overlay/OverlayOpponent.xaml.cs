@@ -102,9 +102,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			ComboBoxAbyssal.SelectedItem = Config.Instance.OpponentAbyssalCurseCounter;
 			ComboBoxExcavate.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxExcavate.SelectedItem = Config.Instance.OpponentExcavateCounter;
-			CheckboxHideOpponentCardAge.IsChecked = Config.Instance.HideOpponentCardAge;
-			CheckboxHideOpponentCardMarks.IsChecked = Config.Instance.HideOpponentCardMarks;
-			CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
+			CheckboxOpponentCardAge.IsChecked = !Config.Instance.HideOpponentCardAge;
+			CheckboxOpponentCardMarks.IsChecked = !Config.Instance.HideOpponentCardMarks;
+			CheckboxShowSecrets.IsChecked = !Config.Instance.HideSecrets;
 
 			ElementSorterOpponent.IsPlayer = false;
 			SetPanel();
@@ -377,15 +377,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Save();
 		}
 
-		private void CheckboxHideOpponentCardAge_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HideOpponentCardAge = false;
-			SaveConfig(true);
-		}
-
-		private void CheckboxHideOpponentCardAge_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxOpponentCardAge_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
@@ -393,15 +385,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 		}
 
-		private void CheckboxHideOpponentCardMarks_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxOpponentCardAge_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.HideOpponentCardMarks = false;
+			Config.Instance.HideOpponentCardAge = false;
 			SaveConfig(true);
 		}
 
-		private void CheckboxHideOpponentCardMarks_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxShowOpponentCardMarks_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
@@ -409,22 +401,30 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 		}
 
-		private void CheckboxHideSecrets_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxShowOpponentCardMarks_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.HideSecrets = true;
-			SaveConfig(false);
-			Core.Overlay.HideSecrets();
+			Config.Instance.HideOpponentCardMarks = false;
+			SaveConfig(true);
 		}
 
-		private void CheckboxHideSecrets_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxShowSecrets_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			Config.Instance.HideSecrets = false;
 			SaveConfig(false);
 			Core.Overlay.ShowSecrets(Core.Game.SecretsManager.GetSecretList());
+		}
+
+		private void CheckboxShowSecrets_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideSecrets = true;
+			SaveConfig(false);
+			Core.Overlay.HideSecrets();
 		}
 
 		private void ComboBoxPogoHopper_SelectionChanged(object sender, SelectionChangedEventArgs e)

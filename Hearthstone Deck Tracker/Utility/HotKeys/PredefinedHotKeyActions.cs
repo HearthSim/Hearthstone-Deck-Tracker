@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			if(!Core.Game.IsRunning)
 				return;
 			Config.Instance.HideSecrets = !Config.Instance.HideSecrets;
-			Core.MainWindow.Options.OptionsOverlayOpponent.CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
+			Core.MainWindow.Options.OptionsOverlayOpponent.CheckboxShowSecrets.IsChecked = !Config.Instance.HideSecrets;
 			Config.Save();
 			if(Config.Instance.HideSecrets)
 				Core.Overlay.HideSecrets();

@@ -174,19 +174,19 @@
                 </ComboBox>
             </DockPanel>
         </StackPanel>
-        <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="{lex:Loc Options_Overlay_General_CheckBox_HideCardAge}"
+        <CheckBox x:Name="CheckboxOpponentCardAge" Content="{lex:Loc Options_Overlay_General_CheckBox_CardAge}"
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxHideOpponentCardAge_Checked"
-                  Unchecked="CheckboxHideOpponentCardAge_Unchecked" />
-        <CheckBox x:Name="CheckboxHideOpponentCardMarks" Content="{lex:Loc Options_Overlay_General_CheckBox_HideCardMarks}"
+                  Checked="CheckboxOpponentCardAge_Checked"
+                  Unchecked="CheckboxOpponentCardAge_Unchecked" />
+        <CheckBox x:Name="CheckboxOpponentCardMarks" Content="{lex:Loc Options_Overlay_General_CheckBox_CardMarks}"
                   Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxHideOpponentCardMarks_Checked"
-                  Unchecked="CheckboxHideOpponentCardMarks_Unchecked"
+                  Checked="CheckboxShowOpponentCardMarks_Checked"
+                  Unchecked="CheckboxShowOpponentCardMarks_Unchecked"
                   HorizontalAlignment="Left" />
-        <CheckBox x:Name="CheckboxHideSecrets" Content="{lex:Loc Options_Overlay_General_CheckBox_HideSecrets}"
+        <CheckBox x:Name="CheckboxShowSecrets" Content="{lex:Loc Options_Overlay_General_CheckBox_PossibleSecrets}"
                   HorizontalAlignment="Left"
-                  VerticalAlignment="Top" Checked="CheckboxHideSecrets_Checked"
-                  Unchecked="CheckboxHideSecrets_Unchecked" Margin="10,5,0,0" />
+                  VerticalAlignment="Top" Checked="CheckboxShowSecrets_Checked"
+                  Unchecked="CheckboxShowSecrets_Unchecked" Margin="10,5,0,0" />
         <CheckBox x:Name="CheckBoxActiveEffects"
                   Content="{lex:LocText Options_Overlay_Opponent_CheckBox_ActiveEffects}" HorizontalAlignment="Left"
                   Margin="10,5,0,0" VerticalAlignment="Top"
