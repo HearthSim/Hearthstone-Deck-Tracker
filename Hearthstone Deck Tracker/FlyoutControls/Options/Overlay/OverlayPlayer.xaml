@@ -39,6 +39,54 @@
                     VerticalAlignment="Center" Width="205" Value="100"
                     ValueChanged="SliderPlayerOpacity_ValueChanged" SmallChange="1" LargeChange="10" />
         </DockPanel>
+
+        <CheckBox x:Name="CheckBoxActiveEffects"
+                  Content="{lex:LocText Options_Overlay_Player_CheckBox_ActiveEffects}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxActiveEffects_Checked"
+                  Unchecked="CheckBoxActiveEffects_Unchecked" />
+        <CheckBox x:Name="CheckBoxCounters"
+                  Content="{lex:LocText Options_Overlay_Player_CheckBox_Counters}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxCounters_Checked"
+                  Unchecked="CheckBoxCounters_Unchecked" />
+        <CheckBox x:Name="CheckBoxRelatedCards"
+                  Content="{lex:LocText Options_Overlay_Player_CheckBox_Related_Cards}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxRelatedCards_Checked"
+                  Unchecked="CheckBoxRelatedCards_Unchecked" />
+        <CheckBox x:Name="CheckBoxAttack"
+                  Content="{lex:LocText Options_Overlay_Player_CheckBox_Attack}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxAttack_Checked"
+                  Unchecked="CheckBoxAttack_Unchecked" />
+        <CheckBox x:Name="CheckBoxCenterDeckVertically"
+                  Content="{lex:LocText Options_Overlay_Player_CheckBox_CenterVertically}" HorizontalAlignment="Left"
+                  ToolTip="{lex:LocText Options_Overlay_Player_CheckBox_CenterVertically_Tooltip}"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxCenterDeckVertically_Checked"
+                  Unchecked="CheckBoxCenterDeckVertically_Unchecked" />
+        <CheckBox x:Name="CheckboxHighlightCardsInHand"
+                  Content="{lex:LocText Options_Overlay_Player_CheckBox_HighlightHand}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxHighlightCardsInHand_Checked"
+                  Unchecked="CheckboxHighlightCardsInHand_Unchecked" />
+        <CheckBox x:Name="CheckboxHighlightLastDrawn"
+                  Content="{lex:LocText Options_Overlay_Player_CheckBox_HighlightDrawn}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxHighlightLastDrawn_Checked"
+                  Unchecked="CheckboxHighlightLastDrawn_Unchecked" />
+        <CheckBox x:Name="CheckboxRemoveCards" Content="{lex:LocText Options_Overlay_Player_CheckBox_RemoveZero}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxRemoveCards_Checked"
+                  Unchecked="CheckboxRemoveCards_Unchecked" />
+        <CheckBox x:Name="CheckboxShowPlayerGet" Content="{lex:LocText Options_Overlay_Player_CheckBox_IncludeCreated}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxShowPlayerGet_Checked"
+                  Unchecked="CheckboxShowPlayerGet_Unchecked" />
+        <hearthstoneDeckTracker:ElementSorter x:Name="ElementSorterPlayer" Margin="10,5,10,10"
+                                              Height="auto" />
+
         <StackPanel Margin="5,5,5,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
             <Label Content="{lex:LocText Options_Overlay_Label_DeprecatedWotogsWarning}" Margin="-5,0,0,0" Foreground="Red" />
             <CheckBox x:Name="CheckboxEnableWotogs" Content="{lex:LocText Options_Overlay_Checkbox_EnableWotogs}"
@@ -150,52 +198,5 @@
                 </ComboBox>
             </DockPanel>
         </StackPanel>
-
-        <CheckBox x:Name="CheckBoxActiveEffects"
-                  Content="{lex:LocText Options_Overlay_Player_CheckBox_ActiveEffects}" HorizontalAlignment="Left"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckBoxActiveEffects_Checked"
-                  Unchecked="CheckBoxActiveEffects_Unchecked" />
-        <CheckBox x:Name="CheckBoxCounters"
-                  Content="{lex:LocText Options_Overlay_Player_CheckBox_Counters}" HorizontalAlignment="Left"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckBoxCounters_Checked"
-                  Unchecked="CheckBoxCounters_Unchecked" />
-        <CheckBox x:Name="CheckBoxRelatedCards"
-                  Content="{lex:LocText Options_Overlay_Player_CheckBox_Related_Cards}" HorizontalAlignment="Left"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckBoxRelatedCards_Checked"
-                  Unchecked="CheckBoxRelatedCards_Unchecked" />
-        <CheckBox x:Name="CheckBoxAttack"
-                  Content="{lex:LocText Options_Overlay_Player_CheckBox_Attack}" HorizontalAlignment="Left"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckBoxAttack_Checked"
-                  Unchecked="CheckBoxAttack_Unchecked" />
-        <CheckBox x:Name="CheckBoxCenterDeckVertically"
-                  Content="{lex:LocText Options_Overlay_Player_CheckBox_CenterVertically}" HorizontalAlignment="Left"
-                  ToolTip="{lex:LocText Options_Overlay_Player_CheckBox_CenterVertically_Tooltip}"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckBoxCenterDeckVertically_Checked"
-                  Unchecked="CheckBoxCenterDeckVertically_Unchecked" />
-        <CheckBox x:Name="CheckboxHighlightCardsInHand"
-                  Content="{lex:LocText Options_Overlay_Player_CheckBox_HighlightHand}" HorizontalAlignment="Left"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxHighlightCardsInHand_Checked"
-                  Unchecked="CheckboxHighlightCardsInHand_Unchecked" />
-        <CheckBox x:Name="CheckboxHighlightLastDrawn"
-                  Content="{lex:LocText Options_Overlay_Player_CheckBox_HighlightDrawn}" HorizontalAlignment="Left"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxHighlightLastDrawn_Checked"
-                  Unchecked="CheckboxHighlightLastDrawn_Unchecked" />
-        <CheckBox x:Name="CheckboxRemoveCards" Content="{lex:LocText Options_Overlay_Player_CheckBox_RemoveZero}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxRemoveCards_Checked"
-                  Unchecked="CheckboxRemoveCards_Unchecked" />
-        <CheckBox x:Name="CheckboxShowPlayerGet" Content="{lex:LocText Options_Overlay_Player_CheckBox_IncludeCreated}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxShowPlayerGet_Checked"
-                  Unchecked="CheckboxShowPlayerGet_Unchecked" />
-        <hearthstoneDeckTracker:ElementSorter x:Name="ElementSorterPlayer" Margin="10,5,10,10"
-                                              Height="auto" />
     </StackPanel>
 </UserControl>
