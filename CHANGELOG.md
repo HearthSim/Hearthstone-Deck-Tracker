@@ -1,4 +1,4 @@
-## **Release v1.37.1 - 2024-11-18**
+## **Release v1.37.2 - 2024-11-19**
 **Hearthstone**:
 - Added support for Triangulate
 - Added counters for Playhouse Giant and cards drawn this turn
