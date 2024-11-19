@@ -311,7 +311,19 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		{
 			if(!_lruLookup.TryGetValue(_getFilename(obj), out var entry))
 				return default;
-			return entry.Data ?? LoadAssetFromDiskSync(obj);
+			if(entry.Data == null)
+			{
+				// This will populate entry.Data
+				LoadAssetFromDiskSync(obj);
+			}
+
+			if(!entry.Validated)
+			{
+				DownloadAsset(obj).Forget();
+				entry.Validated = true;
+			}
+
+			return entry.Data;
 		}
 
 		private U? LoadAssetFromDiskSync(T obj)
