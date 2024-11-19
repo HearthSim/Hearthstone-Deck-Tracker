@@ -69,47 +69,56 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 		public static void SquirrelInit()
 		{
-			// We don't know what url we want to use at this point, and it should
-			// not matter. We only want this instance of the UpdateManager to
-			// manage the local installation. We will instantiate a different one
-			// later on for actual updates.
-			using var initMgr = new UpdateManager("INVALID_PATH");
-
-			RegistryHelper.SetExecutablePath(Path.Combine(initMgr.RootAppDirectory, "Update.exe"));
-			RegistryHelper.SetExecutableArgs("--processStart \"HearthstoneDeckTracker.exe\"");
-
-			// Should be safe, but we really want to make sure not to crash here.
 			try
 			{
-				Config.Load();
-			}
-			catch
-			{
-				// It's fine.
-			}
+				// We don't know what url we want to use at this point, and it should
+				// not matter. We only want this instance of the UpdateManager to
+				// manage the local installation. We will instantiate a different one
+				// later on for actual updates.
+				using var initMgr = new UpdateManager("INVALID_PATH");
 
-			SquirrelAwareApp.HandleEvents(
-				v =>
+				RegistryHelper.SetExecutablePath(Path.Combine(initMgr.RootAppDirectory, "Update.exe"));
+				RegistryHelper.SetExecutableArgs("--processStart \"HearthstoneDeckTracker.exe\"");
+
+				// Should be safe, but we really want to make sure not to crash here.
+				try
 				{
-					initMgr.CreateShortcutForThisExe();
-					if(Config.Instance.StartWithWindows)
-						RegistryHelper.SetRunKey();
-				},
-				v =>
+					Config.Load();
+				}
+				catch
 				{
-					initMgr.CreateShortcutForThisExe();
-					FixStub();
-					if(Config.Instance.StartWithWindows)
-						RegistryHelper.SetRunKey();
-				},
-				onAppUninstall: v =>
-				{
-					initMgr.RemoveShortcutForThisExe();
-					if(Config.Instance.StartWithWindows)
-						RegistryHelper.DeleteRunKey();
-				},
-				onFirstRun: CleanUpInstallerFile
+					// It's fine.
+				}
+
+				SquirrelAwareApp.HandleEvents(
+					v =>
+					{
+						initMgr.CreateShortcutForThisExe();
+						if(Config.Instance.StartWithWindows)
+							RegistryHelper.SetRunKey();
+					},
+					v =>
+					{
+						initMgr.CreateShortcutForThisExe();
+						FixStub();
+						if(Config.Instance.StartWithWindows)
+							RegistryHelper.SetRunKey();
+					},
+					onAppUninstall: v =>
+					{
+						initMgr.RemoveShortcutForThisExe();
+						if(Config.Instance.StartWithWindows)
+							RegistryHelper.DeleteRunKey();
+					},
+					onFirstRun: CleanUpInstallerFile
 				);
+			}
+			catch(Exception ex)
+			{
+				// This isn't good, and most likely means something about
+				// the installation is wrong, but HDT should work regardless.
+				Log.Error(ex);
+			}
 		}
 
 		public static async Task StartupUpdateCheck()
