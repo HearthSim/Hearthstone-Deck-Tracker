@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker.Stats;
 using HSReplay;
 using System.Collections.Generic;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Utility.Arena;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -158,6 +159,29 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					friendly.Wins = game.ArenaWins;
 				if(game.ArenaLosses > 0)
 					friendly.Losses = game.ArenaLosses;
+
+				var draft = ArenaLastDrafts.Instance.Drafts.FirstOrDefault(d => d.DeckId == game.HsDeckId);
+				if(draft != null && ValidateArenaDraft(friendly.DeckList, draft))
+				{
+					friendly.ArenaDraft =
+						new UploadMetaData.ArenaDraft
+						{
+							StartTime = draft.StartTime,
+							// we use groupBy to be safer against picks being duplicated on xml file
+							// and avoid a duplicate key error
+							Picks = draft.Picks
+								.GroupBy(pick => pick.Slot)
+								.Select(group => new UploadMetaData.ArenaPick
+										{
+											Pick = group.Last().Slot,
+											Chosen = group.Last().Picked,
+											Offered = group.Last().Choices,
+											TimeOnChoice = group.Last().TimeOnChoice,
+											OverlayVisible = false,
+										}
+								).ToArray()
+						};
+				}
 			}
 			else if(game.GameMode == GameMode.Brawl)
 			{
@@ -173,6 +197,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				friendly,
 				opposing
 			};
+		}
+
+		// we already check the deckId, this is an extra confirmation that the draft is for that deck
+		private static bool ValidateArenaDraft(string[] deckList, ArenaLastDrafts.DraftItem draft)
+		{
+			var pickedCards = draft.Picks
+				.Where(pick => pick.Picked != null && !pick.Picked.StartsWith("HERO"))
+				.Select(pick => pick.Picked).ToList();
+			return pickedCards.All(deckList.Contains);
 		}
 	}
 

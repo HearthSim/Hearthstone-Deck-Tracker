@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using HearthDb.Enums;
 using HearthMirror;
 using HearthMirror.Enums;
@@ -6,6 +8,7 @@ using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
+using Hearthstone_Deck_Tracker.Utility.Arena;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HearthWatcher;
 using HearthWatcher.Providers;
@@ -16,6 +19,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		static Watchers()
 		{
+			ArenaWatcher.OnChoicesChanged += OnChoiceChanged;
+			ArenaWatcher.OnCardPicked += OnCardPicked;
 			ArenaWatcher.OnCompleteDeck += (sender, args) => DeckManager.AutoImportArena(Config.Instance.SelectedArenaImportingBehaviour ?? ArenaImportingBehaviour.AutoImportSave, args.Info);
 			DungeonRunWatcher.DungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set, false);
 			DungeonRunWatcher.DungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo, false);
@@ -49,6 +54,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BigCardWatcher.Stop();
 			BattlegroundsTeammateBoardStateWatcher.Stop();
 			BattlegroundsLeaderboardWatcher.Stop();
+		}
+
+		private static readonly Dictionary<int, (string[] choices, string pickStartTime)> _currentArenaDraftInfo = new();
+
+		internal static void OnChoiceChanged(object sender, HearthWatcher.EventArgs.ChoicesChangedEventArgs args)
+		{
+
+			var newChoices = args.Choices.Select(c => c.Id).ToArray();
+			var pickStartTime = DateTime.Now.ToString("o");
+
+			_currentArenaDraftInfo[args.Slot] = (newChoices, pickStartTime);
+		}
+
+		internal static void OnCardPicked(object sender, HearthWatcher.EventArgs.CardPickedEventArgs args)
+		{
+			if(!_currentArenaDraftInfo.TryGetValue(args.Slot, out var draftInfo) ||
+			   draftInfo.choices == null || draftInfo.choices.Length == 0 ||
+			   string.IsNullOrEmpty(draftInfo.pickStartTime))
+			{
+				return;
+			}
+			var pickTime = DateTime.Now.ToString("o");
+			ArenaLastDrafts.Instance.AddPick(
+				draftInfo.pickStartTime,
+				pickTime,
+				args.Picked.Id,
+				draftInfo.choices,
+				args.Slot,
+				overlayVisible: false,
+				args.Deck.Id
+			);
+
 		}
 
 		internal static void OnBaconChange(object sender, HearthWatcher.EventArgs.BaconEventArgs args)
