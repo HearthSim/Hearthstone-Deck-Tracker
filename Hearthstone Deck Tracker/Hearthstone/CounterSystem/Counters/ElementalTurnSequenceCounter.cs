@@ -12,7 +12,6 @@ public class ElementalTurnSequenceCounter : NumericCounter
 
 	public override string[] RelatedCards => new string[]
 	{
-		HearthDb.CardIds.Collectible.Neutral.Lamplighter,
 		HearthDb.CardIds.Collectible.Neutral.AzeriteGiant,
 		HearthDb.CardIds.Collectible.Mage.ElementalAllies,
 		HearthDb.CardIds.Collectible.Mage.OverflowSurger,
@@ -31,10 +30,10 @@ public class ElementalTurnSequenceCounter : NumericCounter
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
 
-		if(Counter > 2 && OpponentMayHaveRelevantCards())
+		if(Counter > 2 && OpponentMayHaveRelevantCards(ignoreNeutral: true))
 			_shownBefore = true;
 
-		return (Counter > 2 && OpponentMayHaveRelevantCards()) || _shownBefore;
+		return (Counter > 2 && OpponentMayHaveRelevantCards(ignoreNeutral: true)) || _shownBefore;
 	}
 
 	public override string[] GetCardsToDisplay()
