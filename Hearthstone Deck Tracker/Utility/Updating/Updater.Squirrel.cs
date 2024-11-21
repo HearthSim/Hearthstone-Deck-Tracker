@@ -1,7 +1,6 @@
 #if(SQUIRREL)
 using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -19,7 +18,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		private const int InitialDownloadTimeout =  3_000;
 		private const int TotalDownloadTimeout   = 20_000;
 
-		private static bool _useChinaMirror = CultureInfo.CurrentCulture.Name == "zh-CN";
 		private static TimeSpan _updateCheckDelay = new TimeSpan(0, 20, 0);
 		private static bool ShouldCheckForUpdates()
 			=> Config.Instance.CheckForUpdates && DateTime.Now - _lastUpdateCheck >= _updateCheckDelay;
@@ -47,6 +45,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					Status.StatusBarVisibility = Visibility.Visible;
 				}
 			}
+			catch(WebException ex)
+			{
+				SquirrelConnection.FindBestRemote();
+				Status.OnFailed(ex);
+				Log.Error(ex);
+			}
 			catch(Exception ex)
 			{
 				Status.OnFailed(ex);
@@ -55,16 +59,18 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		}
 
 		private const string DevReleaseUrl = "https://github.com/HearthSim/HDT-dev-builds";
-		private const string LiveReleaseUrl = "https://github.com/HearthSim/HDT-Releases";
-		private const string LiveAsiaReleaseUrl = "https://hdt-downloads-asia.s3-accelerate.dualstack.amazonaws.com";
 
 		private static async Task<UpdateManager> GetUpdateManager(bool dev)
 		{
 			if(dev)
 				return await UpdateManager.GitHubUpdateManager(DevReleaseUrl);
-			if(_useChinaMirror)
-				return new UpdateManager(LiveAsiaReleaseUrl);
-			return await UpdateManager.GitHubUpdateManager(LiveReleaseUrl, prerelease: Config.Instance.CheckForBetaUpdates);
+
+			var (remote, url) = SquirrelConnection.GetCurrentRemote();
+			return remote switch
+			{
+				SquirrelRemote.Github => await UpdateManager.GitHubUpdateManager(url, prerelease: Config.Instance.CheckForBetaUpdates),
+				_ => new UpdateManager(url)
+			};
 		}
 
 		public static void SquirrelInit()
@@ -125,7 +131,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		{
 			try
 			{
-				Log.Info("Checking for updates");
+				Log.Info($"Checking for updates, using {Config.Instance.SquirrelRemote}");
 				_lastUpdateCheck = DateTime.Now;
 
 				async Task<bool> Update(bool dev)
@@ -136,6 +142,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					{
 						Log.Warn($"UpdateManager{(dev ? " (dev)" : "")} init took longer than {UpdateCheckTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
+						SquirrelConnection.FindBestRemote();
 					}
 					using var mgr = await mgrTask;
 					return await SquirrelUpdate(mgr, true);
@@ -158,6 +165,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						UpdateManager.RestartApp();
 					}
 				}
+			}
+			catch(WebException ex)
+			{
+				SquirrelConnection.FindBestRemote();
+				Status.OnFailed(ex);
+				Log.Error(ex);
 			}
 			catch(Exception ex)
 			{
@@ -217,6 +230,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						Log.Warn(
 							$"Update check took longer than {UpdateCheckTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
+						SquirrelConnection.FindBestRemote();
 					}
 				}
 
@@ -255,6 +269,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						Log.Warn(
 							$"Downloading the update is slow{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
+						SquirrelConnection.FindBestRemote();
 					}
 
 					// If the rest of download takes longer than 20 seconds in
@@ -266,6 +281,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						Log.Warn(
 							$"Downloading the update is taking longer than {TotalDownloadTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
+						SquirrelConnection.FindBestRemote();
 					}
 
 					await downloadTask;
@@ -295,14 +311,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 			catch(WebException ex)
 			{
+				SquirrelConnection.FindBestRemote();
 				Log.Error(ex);
-				if(!_useChinaMirror)
-				{
-					_useChinaMirror = true;
-					Log.Warn("Now using china mirror");
-					return await SquirrelUpdate(mgr, isStartupCheck, ignoreDelta);
-				}
-
 				Status.OnFailed(ex);
 				return false;
 			}

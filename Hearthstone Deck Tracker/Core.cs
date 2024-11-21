@@ -173,6 +173,12 @@ namespace Hearthstone_Deck_Tracker
 					MainWindow.UpdateNotesControl.SetHighlight(ConfigManager.PreviousVersion);
 				}
 
+#if(SQUIRREL)
+				// Once per update, update the remote. We do this in case e.g. GitHub was down and switched
+				// every user to a different remote.
+				SquirrelConnection.FindBestRemote();
+#endif
+
 #if(SQUIRREL && !DEV)
 				if(Config.Instance.CheckForDevUpdates && !Config.Instance.AllowDevUpdates.HasValue)
 					MainWindow.ShowDevUpdatesMessage();

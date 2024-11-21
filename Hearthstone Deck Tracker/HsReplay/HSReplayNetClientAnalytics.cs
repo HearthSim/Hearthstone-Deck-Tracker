@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.Updating;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action;
@@ -182,6 +183,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static void TryTrackToastClick(Franchise franchise, ToastAction.Toast toastNameEnum)
 		{
 			TrackAction(new ToastAction(franchise, toastNameEnum));
+		}
+
+		public static void OnSquirrelRemoteChanged(SquirrelRemote oldValue, SquirrelRemote newValue)
+		{
+			TrackAction(new SquirrelRemoteAction(oldValue, newValue));
 		}
 
 		public static async Task<bool> EnsureOnboarded()
