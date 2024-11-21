@@ -692,7 +692,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var card = InDeckPredictions.FirstOrDefault(x => x.CardId == entity.CardId);
 			if(card != null)
 				card.Turn = turn;
-			else if(entity.CardId != null)
+			// pro gamer uses the joust mechanic to do roshambo, but those aren't cards in the deck
+			else if(entity.CardId != null && entity.CardId != NonCollectible.Neutral.ProGamer_Rock
+			                              && entity.CardId != NonCollectible.Neutral.ProGamer_Paper
+			                              && entity.CardId != NonCollectible.Neutral.ProGamer_Scissors)
 				InDeckPredictions.Add(new PredictedCard(entity.CardId, turn));
 			//Log(entity);
 		}
