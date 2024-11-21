@@ -1,3 +1,6 @@
+## **Release v1.36.1 - 2024-10-29**
+**Updated for Hearthstone 31.0.3**
+
 ## **Release v1.37.2 - 2024-11-19**
 **Hearthstone**:
 - Added support for Triangulate
