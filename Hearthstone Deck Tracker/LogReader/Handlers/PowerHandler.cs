@@ -237,7 +237,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-						if(entity.CardId is Collectible.Neutral.PrinceRenathalCore or
+						if(entity.CardId is Collectible.Neutral.PrinceRenathalCorePlaceholder or
 						   Collectible.Neutral.PrinceRenathal or
 						   Collectible.Warrior.SporeEmpressMoldara or
 						   NonCollectible.Warrior.SporeEmpressMoldara_ReplicatingSporeToken)
