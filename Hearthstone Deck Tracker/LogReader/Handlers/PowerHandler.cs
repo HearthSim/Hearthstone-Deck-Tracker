@@ -713,6 +713,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Rogue.MetalDetector:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
+							case NonCollectible.Paladin.LibramofDivinity_LibramOfDivinityEnchantment:
+								AddKnownCardId(gameState, Collectible.Paladin.LibramOfDivinity);
+								break;
 							case Collectible.Mage.CommanderSivara:
 							case Collectible.Neutral.TidepoolPupil:
 								if(
