@@ -10,9 +10,6 @@ public class HolyCowboyEnchantment : EntityBasedEffect
 	public HolyCowboyEnchantment(int entityId, bool isControlledByPlayer) : base(entityId, isControlledByPlayer)
 	{
 	}
-
-	public override EffectTarget EffectTarget => EffectTarget.Enemy;
-
 	public override EffectDuration EffectDuration => EffectDuration.Conditional;
 	public override EffectTag EffectTag => EffectTag.CostModification;
 }
