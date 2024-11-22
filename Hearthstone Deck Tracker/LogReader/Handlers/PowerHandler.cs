@@ -271,6 +271,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 										}
 										return e.Id.ToString();
 									}));
+								entity.Info.GuessedCardState = GuessedCardState.Guessed;
 							}
 						}
 
