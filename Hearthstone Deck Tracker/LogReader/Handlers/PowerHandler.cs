@@ -717,6 +717,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case NonCollectible.Paladin.LibramofDivinity_LibramOfDivinityEnchantment:
 								AddKnownCardId(gameState, Collectible.Paladin.LibramOfDivinity);
 								break;
+							case NonCollectible.Neutral.Corpsicle_CorpsicleEnchantment:
+								AddKnownCardId(gameState, Collectible.Deathknight.Corpsicle);
+								break;
 							case Collectible.Mage.CommanderSivara:
 							case Collectible.Neutral.TidepoolPupil:
 								if(
