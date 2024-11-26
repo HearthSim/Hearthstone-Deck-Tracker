@@ -30,7 +30,6 @@
                           Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                           Margin="5,5,0,0" Checked="CheckBoxDefaultFont_OnChecked"
                           Unchecked="CheckBoxDefaultFont_OnUnchecked" />
-                <Label Visibility="{Binding RestartLabelVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="Red" Content="{lex:Loc Options_Tracker_General_Label_Restart}" />
             </StackPanel>
         </GroupBox>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_CardTooltips}">
@@ -83,7 +82,7 @@
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                   Checked="CheckBoxClassCardsFirst_Checked"
                   Unchecked="CheckBoxClassCardsFirst_Unchecked" />
-        
+
         <CheckBox x:Name="CheckboxShowMyGamesPanel"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

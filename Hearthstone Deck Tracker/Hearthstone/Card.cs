@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Themes;
 
 #endregion
@@ -33,29 +34,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[NonSerialized]
 		private HearthDb.Card? _dbCard;
 
-		private readonly Regex _overloadRegex = new Regex(@"Overload:.+?\((?<value>(\d+))\)");
+		private readonly Regex _overloadRegex = new(@"Overload:.+?\((?<value>(\d+))\)");
 		private int _count;
 		private string? _englishText;
 		private int _inHandCount;
 		private bool _isCreated;
 		private bool _loaded;
-		private string? _localizedName;
 		private int? _overload;
-		private string? _text;
 		private bool _wasDiscarded;
 		private string? _id;
 		private CardWinrates? _cardWinrates;
 		private bool _isMulliganOption;
 
 		[NonSerialized]
-		private static readonly Dictionary<string, Dictionary<int, CardImageObject>> CardImageCache =
-			new Dictionary<string, Dictionary<int, CardImageObject>>();
+		private static readonly Dictionary<string, Dictionary<int, CardImageObject>> CardImageCache = new();
 
 		[XmlIgnore]
-		public List<string> AlternativeNames = new List<string>();
+		public List<string> AlternativeNames = new();
 
 		[XmlIgnore]
-		public List<string> AlternativeTexts = new List<string>();
+		public List<string> AlternativeTexts = new();
 
 		public string Id
 		{
@@ -102,8 +100,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Count = 1;
 		}
 
-		public Card(string id, string? playerClass, Rarity rarity, string? type, string? name, int cost, string? localizedName, int inHandCount,
-		            int count, string? text, string? englishText, int attack, int health, string? race, string[]? mechanics, int? durability,
+		public Card(string id, string? playerClass, Rarity rarity, string? type, string? name, int cost, int inHandCount,
+		            int count, string? englishText, int attack, int health, string? race, string[]? mechanics, int? durability,
 		            string? artist, string? set, bool baconCard, List<string>? alternativeNames = null, List<string>? alternativeTexts = null, HearthDb.Card? dbCard = null, CardWinrates? cardWinrates = null, bool isMulliganOption = false)
 		{
 			Id = id;
@@ -112,10 +110,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Type = type;
 			Name = name;
 			Cost = cost;
-			LocalizedName = localizedName;
 			InHandCount = inHandCount;
 			Count = count;
-			Text = text;
 			EnglishText = englishText;
 			Attack = attack;
 			Health = health;
@@ -134,9 +130,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsMulliganOption = isMulliganOption;
 		}
 
-		private Locale? _selectedLanguage;
+		private static Locale? _selectedLanguage;
 
-		private Locale SelectedLanguage
+		private static Locale SelectedLanguage
 		{
 			get
 			{
@@ -159,8 +155,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Type = HearthDbConverter.CardTypeConverter(dbCard.Type);
 			Name = dbCard.GetLocName(Locale.enUS);
 			Cost = dbCard.Cost;
-			LocalizedName = dbCard.GetLocName(SelectedLanguage);
-			Text = dbCard.GetLocText(SelectedLanguage);
 			EnglishText = dbCard.GetLocText(Locale.enUS);
 			Attack = dbCard.Attack;
 			Health = dbCard.Health;
@@ -219,14 +213,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int Health { get; set; }
 
 		[XmlIgnore]
-		public string? Text
-		{
-			get { return CleanUpText(_text); }
-			set { _text = value; }
-		}
+		public string Text => CleanUpText(_dbCard?.GetLocText(SelectedLanguage));
 
 		[XmlIgnore]
-		public string FormattedText => CleanUpText(_text, false) ?? "";
+		public string FormattedText => CleanUpText(_dbCard?.GetLocText(SelectedLanguage), false);
 
 		[XmlIgnore]
 		public string? EnglishText
@@ -393,11 +383,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string? Artist { get; set; }
 
 		[XmlIgnore]
-		public string? LocalizedName
-		{
-			get { return string.IsNullOrEmpty(_localizedName) ? Name : _localizedName; }
-			set { _localizedName = value; }
-		}
+		public string? LocalizedName => _dbCard?.GetLocName(SelectedLanguage) ?? Name;
 
 		[XmlIgnore]
 		public int InHandCount
@@ -640,6 +626,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public static void ReloadTileImages()
+		{
+			CardImageCache.Clear();
+			_selectedLanguage = null;
+		}
+
 		internal void Update() => OnPropertyChanged(nameof(Background));
 		internal void UpdateHighlight() => OnPropertyChanged(nameof(Highlight));
 
@@ -657,7 +649,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool Collectible => _dbCard?.Collectible ?? false;
 
-		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, _text, EnglishText, Attack,
+		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, InHandCount, Count, EnglishText, Attack,
 										  Health, Race, Mechanics, Durability, Artist, Set, BaconCard, AlternativeNames, AlternativeTexts, _dbCard);
 
 		public override string ToString() => Name + "(" + Count + ")";
@@ -687,9 +679,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Type = stats.Type;
 			Name = stats.Name;
 			Cost = stats.Cost;
-			LocalizedName = stats.LocalizedName;
 			InHandCount = stats.InHandCount;
-			Text = stats._text;
 			EnglishText = stats.EnglishText;
 			Attack = stats.Attack;
 			Health = stats.Health;

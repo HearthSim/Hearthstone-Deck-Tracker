@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Windows;
@@ -23,7 +24,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 	public partial class TrackerGeneral : INotifyPropertyChanged
 	{
 		private bool _initialized;
-		private Visibility _restartLabelVisibility = Visibility.Collapsed;
 
 		public TrackerGeneral()
 		{
@@ -212,24 +212,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 
-			AssetDownloaders.cardImageDownloader?.ClearStorage();
 
 			var selectedLanguage = Helper.LanguageDict[language];
 
 			Config.Instance.SelectedLanguage = selectedLanguage;
 			Config.Save();
-			RestartLabelVisibility = Visibility.Visible;
-		}
 
-		public Visibility RestartLabelVisibility
-		{
-			get { return _restartLabelVisibility; }
-			set
+			AssetDownloaders.cardImageDownloader?.ClearStorage();
+			Hearthstone.Card.ReloadTileImages();
+			foreach(var c in Card.LoadedCards)
 			{
-				if(_restartLabelVisibility == value)
-					return;
-				_restartLabelVisibility = value;
-				OnPropertyChanged();
+				c.UpdateBackground();
 			}
 		}
 
