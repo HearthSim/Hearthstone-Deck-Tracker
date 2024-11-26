@@ -290,12 +290,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		{
 			get
 			{
-				if(DrawnByEntity)
-					return CardMark.DrawnByEntity;
 				if(Hidden)
+				{
+					if(DrawnByEntity)
+						return CardMark.DrawnByEntity;
 					return Mulliganed ? CardMark.Mulliganed : CardMark.None;
+				}
 				if(Forged)
 					return CardMark.Forged;
+				if(DrawnByEntity)
+					return CardMark.DrawnByEntity;
 				if(_entity.IsTheCoin)
 					return CardMark.Coin;
 				if(Returned)

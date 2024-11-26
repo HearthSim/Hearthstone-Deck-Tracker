@@ -2074,7 +2074,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentDraw(Entity entity, int turn, string? cardId, int? drawerId)
 		{
-			entity.Info.DrawerId = drawerId;
+			var blacklist = Remote.Config.Data?.DrawCardBlacklist?.WhereNotNull().Select(obj => obj.DbfId).ToList() ?? new List<int>();
+			if(drawerId > 0 && _game.Entities.TryGetValue(drawerId ?? 0, out var drawer))
+			{
+				if(!blacklist.Contains(drawer.Card.DbfId))
+				{
+					entity.Info.DrawerId = drawerId;
+				}
+			}
 			_game.Opponent.Draw(entity, turn);
 			GameEvents.OnOpponentDraw.Execute();
 		}
