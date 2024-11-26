@@ -11,7 +11,6 @@ public class FelfireBonfireEnchantment : EntityBasedEffect
 	{
 	}
 
-	public override EffectTarget EffectTarget => EffectTarget.Enemy;
 
 	public override EffectDuration EffectDuration => EffectDuration.Conditional;
 	public override EffectTag EffectTag => EffectTag.CostModification;
