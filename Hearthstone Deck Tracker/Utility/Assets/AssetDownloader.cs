@@ -105,6 +105,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		{
 			TryCleanDirectory(_storageDestination, false);
 			_lruCache.Clear();
+			_lruLookup.Clear();
 			SerializeLRUCache();
 		}
 
