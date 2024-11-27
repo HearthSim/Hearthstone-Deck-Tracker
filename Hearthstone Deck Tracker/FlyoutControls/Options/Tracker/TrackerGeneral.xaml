@@ -9,6 +9,7 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="300">
     <UserControl.Resources>
@@ -16,7 +17,29 @@
         <converters:CardImageSizeBooleanConverter x:Key="CardImageSizeBooleanConverter" />
     </UserControl.Resources>
     <StackPanel>
-        <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_CardTooltips}">
+        <DockPanel Margin="10,5,10,0">
+            <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Language}" HorizontalAlignment="Left"
+                   VerticalAlignment="Top" />
+            <ComboBox x:Name="ComboBoxLanguage" HorizontalAlignment="Right"
+                      VerticalAlignment="Top" Width="150"
+                      utility:ComboBoxHelper.SelectionChanged="ComboBoxLanguage_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <TextBlock Margin="10,5,10,0" TextWrapping="Wrap">
+            <Italic>
+                <Run Text="{lex:Loc Options_Tracker_Appearance_Label_LanguageNote}"/>
+                <LineBreak/>
+                <Hyperlink NavigateUri="https://github.com/HearthSim/HDT-Localization" RequestNavigate="Hyperlink_RequestNavigate">
+                    <Run Text="{lex:Loc Options_Tracker_Appearance_Hyperlink_LanguageNote}"/>
+                </Hyperlink>
+            </Italic>
+        </TextBlock>
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_CardTooltips}" Margin="0,15,0,0">
             <StackPanel>
                 <DockPanel Margin="5,5,5,0">
                     <Slider x:Name="SliderCardImageSize" Margin="0,5,5,0" VerticalAlignment="Center" Value="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}}"

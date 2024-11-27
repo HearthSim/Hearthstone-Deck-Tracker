@@ -3,10 +3,8 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
@@ -31,7 +29,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			ComboboxAccent.ItemsSource = ThemeManager.Accents;
 			ComboboxTheme.ItemsSource = Enum.GetValues(typeof(MetroTheme));
-			ComboBoxLanguage.ItemsSource = Enum.GetValues(typeof(Language));
 			ComboBoxDeckLayout.ItemsSource = Enum.GetValues(typeof(DeckLayout));
 			ComboBoxIconSet.ItemsSource = new[] {IconStyle.Round, IconStyle.Square};
 			ComboBoxClassColors.ItemsSource = Enum.GetValues(typeof(ClassColorScheme));
@@ -40,7 +37,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 			ComboboxTheme.SelectedItem = Config.Instance.AppTheme;
 			ComboboxAccent.SelectedItem = UITheme.CurrentAccent;
-			ComboBoxLanguage.SelectedItem = Config.Instance.Localization;
 
 			ComboBoxIconSet.SelectedItem = Config.Instance.ClassIconStyle;
 			ComboBoxDeckLayout.SelectedItem = Config.Instance.DeckPickerItemLayout;
@@ -183,47 +179,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 			Utility.Themes.ThemeManager.UpdateCards();
 		}
-
-		private void ComboBoxLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.Localization = (Language)ComboBoxLanguage.SelectedItem;
-			Config.Save();
-			LocUtil.UpdateCultureInfo();
-			UpdateUIAfterChangeLanguage();
-			if(Config.Instance.LastSeenHearthstoneLang == null)
-				Helper.UpdateCardLanguage();
-		}
-
-		private void UpdateUIAfterChangeLanguage()
-		{
-			// Options
-			if(Helper.OptionsMain != null)
-				Helper.OptionsMain.ContentHeader = LocUtil.Get("Options_Tracker_Appearance_Header");
-
-			// TrayIcon
-			Core.TrayIcon.MenuItemStartHearthstone.Text = LocUtil.Get("TrayIcon_MenuItemStartHearthstone");
-			Core.TrayIcon.MenuItemUseNoDeck.Text = LocUtil.Get("TrayIcon_MenuItemUseNoDeck");
-			Core.TrayIcon.MenuItemAutoSelect.Text = LocUtil.Get("TrayIcon_MenuItemAutoSelect");
-			Core.TrayIcon.MenuItemClassCardsFirst.Text = LocUtil.Get("TrayIcon_MenuItemClassCardsFirst");
-			Core.TrayIcon.MenuItemShow.Text = LocUtil.Get("TrayIcon_MenuItemShow");
-			Core.TrayIcon.MenuItemExit.Text = LocUtil.Get("TrayIcon_MenuItemExit");
-
-			// My Games Panel
-			Core.MainWindow.DeckCharts.ReloadUI();
-
-			// Deck Picker
-			Core.MainWindow.DeckPickerList.ReloadUI();
-
-			//Overlay Panel
-			Core.MainWindow.Options.OptionsOverlayPlayer.ReloadUI();
-			Core.MainWindow.Options.OptionsOverlayOpponent.ReloadUI();
-
-			// Reload ComboBoxes
-			ComboBoxHelper.Update();
-		}
-
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
 	}
 }

@@ -13,28 +13,6 @@
              d:DesignHeight="700" d:DesignWidth="300">
     <StackPanel>
         <DockPanel Margin="10,5,10,0">
-            <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Language}" HorizontalAlignment="Left"
-                   VerticalAlignment="Top" />
-            <ComboBox x:Name="ComboBoxLanguage" HorizontalAlignment="Right"
-                      VerticalAlignment="Top" Width="150"
-                      utility:ComboBoxHelper.SelectionChanged="ComboBoxLanguage_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </DockPanel>
-        <TextBlock Margin="10,5,10,0" TextWrapping="Wrap">
-            <Italic>
-                <Run Text="{lex:Loc Options_Tracker_Appearance_Label_LanguageNote}"/>
-                <LineBreak/>
-                <Hyperlink NavigateUri="https://github.com/HearthSim/HDT-Localization" RequestNavigate="Hyperlink_RequestNavigate">
-                    <Run Text="{lex:Loc Options_Tracker_Appearance_Hyperlink_LanguageNote}"/>
-                </Hyperlink>
-            </Italic>
-        </TextBlock>
-        <DockPanel Margin="10,5,10,0">
             <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Theme}" HorizontalAlignment="Left"
                    VerticalAlignment="Top" />
             <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Right"
