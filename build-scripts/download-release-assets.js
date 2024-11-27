@@ -90,10 +90,6 @@ async function run() {
 		"HDT-Releases",
 		`HearthstoneDeckTracker-${version}-full.nupkg`
 	);
-	await downloadFile(
-		"Hearthstone-Deck-Tracker",
-		`Hearthstone.Deck.Tracker-${tagName}.zip`
-	);
 	console.log("Done.");
 }
 
