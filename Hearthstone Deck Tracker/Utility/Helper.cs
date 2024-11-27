@@ -39,6 +39,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 
 #endregion
@@ -154,7 +155,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static OptionsMain? OptionsMain { get; set; }
 
-		public static bool UseLatinFont() => LatinLanguages.Contains(Config.Instance.SelectedLanguage) || Config.Instance.NonLatinUseDefaultFont == false;
+		public static bool UseLatinFont() => LatinLanguages.Contains(Helper.GetCardLanguage());
 
 		public static bool HearthstoneDirExists
 		{
@@ -996,6 +997,34 @@ namespace Hearthstone_Deck_Tracker
 			bmp.StreamSource = ms;
 			bmp.EndInit();
 			return bmp;
+		}
+
+		public static string ToCardLanguage(Language lang) => lang switch
+		{
+			Language.ptPT => "ptBR", // Not supported
+			Language.ukUA => "enUS", // Not supported
+			_ => lang.ToString()
+		};
+
+		public static string GetCardLanguage() => Config.Instance.LastSeenHearthstoneLang ?? UpdateCardLanguage();
+
+		public static string UpdateCardLanguage()
+		{
+			var lang = LocUtil.GetHearthstoneLanguageFromRegistry();
+			if(!LanguageDict.Values.Where(x => x != "enGB").Contains(lang))
+				lang = ToCardLanguage(Config.Instance.Localization);
+			if(lang == Config.Instance.LastSeenHearthstoneLang)
+				return lang;
+
+			Config.Instance.LastSeenHearthstoneLang = lang;
+			Config.Save();
+
+			AssetDownloaders.cardImageDownloader?.ClearStorage();
+			Card.ReloadTileImages();
+			foreach(var c in Controls.Card.LoadedCards)
+				c.UpdateBackground();
+
+			return lang;
 		}
 	}
 }

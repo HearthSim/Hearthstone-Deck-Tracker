@@ -20,8 +20,15 @@ public class BattlegroundsGameViewModel : ViewModel
 	private readonly GameItem _gameItem;
 
 	// These are the languages where we'd prefer we show the localized hero name rather than our English-only short version
-	private bool PreferTranslatedCardName =>
-		Config.Instance.SelectedLanguage switch { "jaJP" => true, "koKR" => true, "thTH" => true, "zhCN" => true, "zhTW" => true, _ => false };
+	private bool PreferTranslatedCardName => Helper.GetCardLanguage() switch
+	{
+		"jaJP" => true,
+		"koKR" => true,
+		"thTH" => true,
+		"zhCN" => true,
+		"zhTW" => true,
+		_ => false
+	};
 
 	public BattlegroundsGameViewModel(GameItem gameItem)
 	{

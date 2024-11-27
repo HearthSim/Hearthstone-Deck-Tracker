@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 				cardImageDownloader = new AssetDownloader<Hearthstone.Card, BitmapImage>(
 					Path.Combine(Config.AppDataPath, "Images", "CardImages"),
 					card => $"https://art.hearthstonejson.com/v1/{(card.BaconCard ? "bgs" : "render")}/latest" +
-					        $"/{Config.Instance.SelectedLanguage}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}" +
+					        $"/{Helper.GetCardLanguage()}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}" +
 					        $"/{card.Id}{(card.BaconTriple ? "_triple" : "")}.png",
 					card => $"{card.Id}{(card.BaconTriple ? "_triple" : "")}.png",
 					Helper.BitmapImageFromBytes,

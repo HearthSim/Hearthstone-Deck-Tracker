@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var languages = Helper.LanguageDict.Keys.Where(x => x != "English (Great Britain)").ToList();
 			LanguagesComboBox.ItemsSource = languages;
-			LanguagesComboBox.SelectedIndex = languages.IndexOf(Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key);
+			LanguagesComboBox.SelectedIndex = languages.IndexOf(Helper.LanguageDict.First(x => x.Value == Helper.GetCardLanguage()).Key);
 		}
 
 		private void ButtonCopy_OnClick(object sender, RoutedEventArgs e) => CloseDialog(SelectedLanguage);

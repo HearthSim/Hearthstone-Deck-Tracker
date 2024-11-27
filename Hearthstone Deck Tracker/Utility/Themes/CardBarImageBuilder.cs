@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		{
 			Card = card;
 			ThemeDir = dir;
-			TextTypeFace = Helper.LatinLanguages.Contains(Config.Instance.SelectedLanguage)
+			TextTypeFace = Helper.LatinLanguages.Contains(Helper.GetCardLanguage())
 							   ? NumbersTypeFace : new Typeface(new FontFamily(), FontStyles.Normal, FontWeights.Bold, FontStretches.Condensed);
 			HasAllRequired = Required.All(x => File.Exists(Path.Combine(ThemeDir, x.Value.FileName)));
 			HasAllOptionalFrames = OptionalFrame.All(x => File.Exists(Path.Combine(ThemeDir, x.Value.FileName)));

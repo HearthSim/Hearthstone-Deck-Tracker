@@ -189,7 +189,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 	    var compParams = new BattlegroundsCompStatsParams
 	    {
 		    BattlegroundsRaces = availableRaces.Cast<int>().ToArray(),
-		    LanguageCode = Config.Instance.SelectedLanguage,
+		    LanguageCode = Helper.GetCardLanguage(),
 	    };
 
 	    // Avoid using a trial when we can't get the api params anyway.

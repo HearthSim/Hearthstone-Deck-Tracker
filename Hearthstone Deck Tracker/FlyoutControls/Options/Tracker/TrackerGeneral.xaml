@@ -16,22 +16,6 @@
         <converters:CardImageSizeBooleanConverter x:Key="CardImageSizeBooleanConverter" />
     </UserControl.Resources>
     <StackPanel>
-        <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_CardLanguage}">
-            <StackPanel>
-                <DockPanel Margin="0,5,0,0">
-                    <Label Content="{lex:Loc Options_Tracker_General_Label_Primary}" HorizontalAlignment="Left"
-                           VerticalAlignment="Top" />
-                    <ComboBox x:Name="ComboboxLanguages" HorizontalAlignment="Right"
-                              VerticalAlignment="Top" Width="170"
-                              SelectionChanged="ComboboxLanguages_SelectionChanged" />
-                </DockPanel>
-                <CheckBox Name="CheckBoxDefaultFont" Content="{lex:Loc Options_Tracker_General_CheckBox_Font}"
-                          Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                          Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                          Margin="5,5,0,0" Checked="CheckBoxDefaultFont_OnChecked"
-                          Unchecked="CheckBoxDefaultFont_OnUnchecked" />
-            </StackPanel>
-        </GroupBox>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_CardTooltips}">
             <StackPanel>
                 <DockPanel Margin="5,5,5,0">

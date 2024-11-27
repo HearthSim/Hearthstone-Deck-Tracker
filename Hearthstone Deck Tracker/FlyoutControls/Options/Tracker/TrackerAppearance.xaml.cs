@@ -192,6 +192,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 			LocUtil.UpdateCultureInfo();
 			UpdateUIAfterChangeLanguage();
+			if(Config.Instance.LastSeenHearthstoneLang == null)
+				Helper.UpdateCardLanguage();
 		}
 
 		private void UpdateUIAfterChangeLanguage()

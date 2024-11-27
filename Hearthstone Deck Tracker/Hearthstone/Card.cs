@@ -138,7 +138,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				if(_selectedLanguage.HasValue)
 					return _selectedLanguage.Value;
-				if(!Enum.TryParse(Config.Instance.SelectedLanguage, out Locale lang))
+				if(!Enum.TryParse(Helper.GetCardLanguage(), out Locale lang))
 					lang = Locale.enUS;
 				_selectedLanguage = lang;
 				return _selectedLanguage.Value;

@@ -24,9 +24,11 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using HSReplay;
 using HSReplay.OAuth.Data;
@@ -590,7 +592,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				HeroDbfIds = heroDbfIds,
 				BattlegroundsRaces = availableRaces.Cast<int>().ToArray(),
 				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
-				LanguageCode = Config.Instance.SelectedLanguage,
+				LanguageCode = Helper.GetCardLanguage(),
 				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
 			};
 		}
@@ -692,7 +694,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				SourceDbfId = sourceEntity.Card.DbfId,
 				MinionTypes = availableRaces.Cast<int>().ToArray(),
 				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
-				LanguageCode = Config.Instance.SelectedLanguage,
+				LanguageCode = Helper.GetCardLanguage(),
 				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
 				OfferedTrinkets = offeredTrinkets,
 			};

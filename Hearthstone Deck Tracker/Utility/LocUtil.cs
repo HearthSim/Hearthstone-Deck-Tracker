@@ -113,7 +113,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static string Get(string key, bool upper = false, bool useCardLanguage = false)
 		{
-			var culture = useCardLanguage ? GetCultureInfoFromLocale(Config.Instance.SelectedLanguage) : LocalizeDictionary.Instance.Culture;
+			var culture = useCardLanguage ? GetCultureInfoFromLocale(Helper.GetCardLanguage()) : LocalizeDictionary.Instance.Culture;
 			var cacheKey = culture + key;
 			if(!Cache.TryGetValue(cacheKey, out var str))
 			{

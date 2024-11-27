@@ -145,6 +145,8 @@ namespace Hearthstone_Deck_Tracker
 			Reflection.Exception += e => Log.Warn("HearthMirror Exception: " + e);
 
 			LocUtil.UpdateCultureInfo();
+			Helper.UpdateCardLanguage();
+
 			var newUser = ConfigManager.PreviousVersion == null;
 			LogConfigUpdater.Run().Forget();
 			LogConfigWatcher.Start();
@@ -266,6 +268,8 @@ namespace Hearthstone_Deck_Tracker
 					{
 						//game started
 						Helper.VerifyHearthstonePath();
+
+						Helper.UpdateCardLanguage();
 
 						AssetDownloaders.cardImageDownloader?.InvalidateCachedAssets();
 						AssetDownloaders.cardTileDownloader?.InvalidateCachedAssets();

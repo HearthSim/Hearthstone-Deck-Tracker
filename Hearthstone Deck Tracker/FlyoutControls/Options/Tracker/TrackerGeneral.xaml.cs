@@ -1,17 +1,12 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -37,7 +32,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
-			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys.Where(x => x != "English (Great Britain)");
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
 			ComboBoxDeckDateType.ItemsSource = Enum.GetValues(typeof(DeckDateType));
 			ComboBoxDeckDateType.SelectedItem = Config.Instance.SelectedDateOnDecks;
@@ -47,16 +41,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
 			CheckBoxAutoArchiveArenaDecks.IsChecked = Config.Instance.AutoArchiveArenaDecks;
 
-			if(Config.Instance.NonLatinUseDefaultFont == null)
-			{
-				Config.Instance.NonLatinUseDefaultFont = Helper.IsWindows10();
-				Config.Save();
-			}
-			CheckBoxDefaultFont.IsChecked = Config.Instance.NonLatinUseDefaultFont;
-
-
-			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
-				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
 			_initialized = true;
 		}
 
@@ -136,22 +120,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckBoxClassCardsFirst_Unchecked(object sender, RoutedEventArgs e) => Core.MainWindow.SortClassCardsFirst(false);
 
-		private void CheckBoxDefaultFont_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.NonLatinUseDefaultFont = true;
-			Config.Save();
-		}
-
-		private void CheckBoxDefaultFont_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.NonLatinUseDefaultFont = false;
-			Config.Save();
-		}
-
 		private void ComboBoxDatesOnDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
@@ -203,27 +171,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.DeckPickerCaps = false;
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
-		}
-
-		private void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			var language = ComboboxLanguages.SelectedValue.ToString();
-
-			if(!_initialized)
-				return;
-
-
-			var selectedLanguage = Helper.LanguageDict[language];
-
-			Config.Instance.SelectedLanguage = selectedLanguage;
-			Config.Save();
-
-			AssetDownloaders.cardImageDownloader?.ClearStorage();
-			Hearthstone.Card.ReloadTileImages();
-			foreach(var c in Card.LoadedCards)
-			{
-				c.UpdateBackground();
-			}
 		}
 
 		public event PropertyChangedEventHandler? PropertyChanged;

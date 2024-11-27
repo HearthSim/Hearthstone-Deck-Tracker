@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("franchise")]
 		[JsonConverter(typeof(FranchiseJsonConverter))]
 		public Franchise Franchise { get; }
-		
+
 		[JsonProperty("sub_franchise", NullValueHandling = NullValueHandling.Ignore)]
 		[JsonConverter(typeof(EnumJsonConverter))]
 		public SubFranchise[]? SubFranchise { get; }
@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public int ScreenWidth { get; }
 
 		[JsonProperty("card_language")]
-		public string CardLanguage => Config.Instance.SelectedLanguage.Substring(0, 2);
+		public string CardLanguage => Helper.GetCardLanguage().Substring(0, 2);
 
 		[JsonProperty("appearance_language")]
 		public string AppearanceLanguage => Config.Instance.Localization.ToString().Substring(0, 2);

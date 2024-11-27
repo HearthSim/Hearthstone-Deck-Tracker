@@ -588,6 +588,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool KeepStatsWhenDeletingDeck = true;
 
+		[DefaultValue(null)]
+		public string? LastSeenHearthstoneLang = null;
+
 		[Obsolete]
 		[DefaultValue("")]
 		public string LastDeck = "";
@@ -612,9 +615,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool MinimizeToTray = false;
-
-		[DefaultValue(null)]
-		public bool? NonLatinUseDefaultFont = null;
 
 		[DefaultValue(false)]
 		public bool NoteDialogDelayed = false;
@@ -804,9 +804,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(DeckType.All)]
 		public DeckType SelectedDeckPickerDeckType = DeckType.All;
-
-		[DefaultValue("enUS")]
-		public string SelectedLanguage = "enUS";
 
 		[DefaultValue(1)]
 		public double CardImageSize = 1;
@@ -1317,7 +1314,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void SetInitialLanguage()
 		{
-			if(Instance.Localization != Language.enUS || Instance.SelectedLanguage != "enUS")
+			if(Instance.Localization != Language.enUS)
 				return;
 
 			var systemLanguage = LocUtil.GetWindowsDisplayLanguageFromRegistry();
@@ -1329,14 +1326,12 @@ namespace Hearthstone_Deck_Tracker
 			if(supportedGameLanguages.Contains(gameLanguage))
 			{
 				Instance.Localization = (Language)Enum.Parse(typeof(Language), gameLanguage);
-				Instance.SelectedLanguage = gameLanguage;
 				HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("game_language", gameLanguage, systemLanguage,
 					gameLanguage, systemRegionName);
 			}
 			else if(supportedGameLanguages.Contains(systemLanguage))
 			{
 				Instance.Localization = (Language)Enum.Parse(typeof(Language), systemLanguage);
-				Instance.SelectedLanguage = systemLanguage;
 				HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("system_language", systemLanguage, systemLanguage,
 					gameLanguage, systemRegionName);
 			}
