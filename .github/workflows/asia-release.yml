@@ -26,7 +26,10 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.AWS_ASIA_DEPLOY_ROLE_ARN }}
-          aws-region: ap-northeast-2
+          region: ap-east-1
 
       - name: Publish
-        run: aws s3 sync tmp_asset_downloads "s3://${{ secrets.AWS_S3_BUCKET }}" --acl public-read
+        run: aws s3 sync tmp_asset_downloads "s3://${{ secrets.AWS_S3_BUCKET }}"
+
+      - name: Publish to legacy bucket
+        run: aws s3 sync tmp_asset_downloads "s3://${{ secrets.AWS_LEGACY_S3_BUCKET }}" --acl public-read --region ap-northeast-2
