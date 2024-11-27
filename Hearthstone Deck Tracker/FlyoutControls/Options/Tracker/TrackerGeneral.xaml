@@ -34,7 +34,7 @@
             <Italic>
                 <Run Text="{lex:Loc Options_Tracker_Appearance_Label_LanguageNote}"/>
                 <LineBreak/>
-                <Hyperlink NavigateUri="https://github.com/HearthSim/HDT-Localization" RequestNavigate="Hyperlink_RequestNavigate">
+                <Hyperlink NavigateUri="https://crowdin.com/project/hearthstone-deck-tracker" RequestNavigate="Hyperlink_RequestNavigate">
                     <Run Text="{lex:Loc Options_Tracker_Appearance_Hyperlink_LanguageNote}"/>
                 </Hyperlink>
             </Italic>
