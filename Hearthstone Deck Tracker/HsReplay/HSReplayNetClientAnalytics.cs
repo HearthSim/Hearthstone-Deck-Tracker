@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				OnAppStart();
 		}
 
+		private static readonly Queue<VMAction> _actionBuffer = new();
 		private static void TrackAction(VMAction action)
 		{
 			if(!Config.Instance.GoogleAnalytics)
@@ -51,8 +52,22 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			try
 			{
 #if !DEBUG
-				if(TryGetToken(out var token) && ValueMomentManager.ShouldSendEventToMixPanel(action, action.ValueMoments))
+				if(!ValueMomentManager.ShouldSendEventToMixPanel(action, action.ValueMoments))
+					return;
+				if(TryGetToken(out var token))
+				{
+					while(_actionBuffer.Count > 0)
+					{
+						var buffered = _actionBuffer.Dequeue();
+						Client.Value.TrackEvent(token, buffered.Name, buffered).Forget();
+					}
 					Client.Value.TrackEvent(token, action.Name, action).Forget();
+				}
+				else
+				{
+					// We might not have a token yet if this event was fired before onboarding on first install.
+					_actionBuffer.Enqueue(action);
+				}
 #else
 				Log.Debug($"{action.Name}: {JsonConvert.SerializeObject(action)}");
 #endif
@@ -115,13 +130,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			else
 				TrackAction(new EndMatchHearthstoneAction(heroDbfId, heroName, matchResult, gameMode, gameType, starLevel, gameMetrics));
 		}
-		
+
 		public static void OnBattlegroundsMatchEnds(string? heroCardId, int finalPlacement, GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)
 		{
 			var bgHeroCard = Database.GetCardFromId(heroCardId);
 			if(bgHeroCard == null)
 				return;
-			
+
 			var heroDbfId = bgHeroCard.DbfId;
 			var heroName = bgHeroCard.Name ?? "";
 			var bgsRating = gameStats.BattlegroundsRatingAfter;
@@ -131,7 +146,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			else
 				TrackAction(new EndMatchBattlegroundsAction(heroDbfId, heroName, finalPlacement, gameType, bgsRating, gameMetrics));
 		}
-		
+
 		public static void OnMercenariesMatchEnds(GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)
 		{
 			var matchResult = gameStats.Result;
