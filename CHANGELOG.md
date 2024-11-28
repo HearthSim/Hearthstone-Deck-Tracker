@@ -1,4 +1,20 @@
-## **Release v1.36.1 - 2024-10-29**
+## **Release v1.37.4 - 2024-11-28**
+**Hearthstone**:
+- Added card icons for cards that return to hand at the end of the turn (Corpsicle, Libram of Divinity).
+- Fixed forge icon not appearing when the forged card was drawn by another card.
+- Fixed The Ceaseless Expanse counter not increasing when fracking is played.
+- Fixed some active effects appearing on the wrong side.
+- Fixed Pro gamer's Rock, Paper and Scissors cards appearing in the decklist.
+
+**Updater Improvements**:
+- Improved reliability and download speeds for users in China.
+
+**Language Settings**:
+- The card language setting has been removed. The language used for cards now automatically matches the language of the Hearthstone installation.
+- The UI language setting has been moved to `Options > Tracker > General`.
+
+
+## **Release v1.37.3 - 2024-11-21**
 **Updated for Hearthstone 31.0.3**
 
 ## **Release v1.37.2 - 2024-11-19**
