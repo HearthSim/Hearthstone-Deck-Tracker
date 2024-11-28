@@ -26,7 +26,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.AWS_ASIA_DEPLOY_ROLE_ARN }}
-          region: ap-east-1
+          aws-region: ap-east-1
 
       - name: Publish
         run: aws s3 sync tmp_asset_downloads "s3://${{ secrets.AWS_S3_BUCKET }}"
