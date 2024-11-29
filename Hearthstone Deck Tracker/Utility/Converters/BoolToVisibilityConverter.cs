@@ -9,21 +9,30 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 {
 	internal static class ConverterHelper
 	{
+		/// <summary>
+		/// Takes an array of booleans as values, and an optional array of booleans as parameters.
+		/// A `true` parameter value will signal the value at the same index to be inverted:
+		/// e.g. values = [true, true] and parameters = [true, false] will invert the first value => [false, true]
+		///
+		/// This will return true if all values, after potentially being inverted, are true.
+		/// </summary>
+		/// <param name="values">Array of booleans</param>
+		/// <param name="parameter">Array of flags indicating whether the value should be inverted</param>
+		/// <returns>True if all values are true (accounting for invert flags). False otherwise.</returns>
 		public static bool BoolConverter(object[] values, object parameter)
 		{
-			if(values == null)
-				return false;
-
-			bool GetValue(object obj, bool b = false)
+			var paramBools = parameter as IEnumerable<bool>;
+			var invertFlags = values.Select((_, i) => paramBools?.ElementAtOrDefault(i) ?? false).ToArray();
+			for(var i = 0; i < values.Length; i++)
 			{
-				var val = obj as bool? ?? false;
-				return b ? !val : val;
+				if(values[i] is not bool b)
+					return false;
+				if(invertFlags[i])
+					b = !b;
+				if(!b)
+					return false;
 			}
-
-			var parameters = (parameter as IEnumerable<bool> ?? new List<bool>())
-				.Concat(values.Select(x => false));
-
-			return values.Zip(parameters, GetValue).All(x => x);
+			return true;
 		}
 	}
 
