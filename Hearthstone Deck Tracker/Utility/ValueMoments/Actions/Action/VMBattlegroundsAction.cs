@@ -2,7 +2,6 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using Newtonsoft.Json;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 {
@@ -25,6 +24,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			Tier7TrinketOverlayDisplayed = gameMetrics.Tier7TrinketOverlayDisplayed;
 			NumClickBattlegroundsMinionTab = gameMetrics.BattlegroundsMinionsTabClicks;
 			NumClickBattlegroundsMinionsByMinionTypeFilter = gameMetrics.BattlegroundsMinionsByMinionTypeFilterClicks;
+			NumClickBattlegroundsMinionsInspiration = gameMetrics.BattlegroundsMinionsInspirationClicks;
+			NumClickBattlegroundsInspirationToggle = gameMetrics.BattlegroundsInspirationToggleClicks;
+			NumClickBattlegroundsInspirationMinion = gameMetrics.BattlegroundsInspirationMinionClicks;
 			NumBobsBuddyTerminalCases = gameMetrics.BobsBuddyTerminalCases;
 			if (gameMetrics.Tier7TrialActivated)
 				TrialsActivated = new[] { Tier7OverlayTrial };
@@ -62,6 +64,15 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("num_click_battlegrounds_minions_by_minion_type_filter")]
 		public int NumClickBattlegroundsMinionsByMinionTypeFilter { get;  }
+
+		[JsonProperty("num_click_battlegrounds_minions_inspiration_button")]
+		public int NumClickBattlegroundsMinionsInspiration { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_inspiration_overlay_toggle")]
+		public int NumClickBattlegroundsInspirationToggle { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_inspiration_minion")]
+		public int NumClickBattlegroundsInspirationMinion { get; set; }
 
 		[JsonProperty("num_bobs_buddy_terminal_cases")]
 		public int NumBobsBuddyTerminalCases { get;  }

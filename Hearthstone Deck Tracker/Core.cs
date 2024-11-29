@@ -280,6 +280,7 @@ namespace Hearthstone_Deck_Tracker
 						AssetDownloaders.cardImageDownloader?.InvalidateCachedAssets();
 						AssetDownloaders.cardTileDownloader?.InvalidateCachedAssets();
 						AssetDownloaders.cardPortraitDownloader?.InvalidateCachedAssets();
+						AssetDownloaders.heroImageDownloader?.InvalidateCachedAssets();
 
 						var ok = Helper.EnsureClientLogConfig();
 						if(!ok)

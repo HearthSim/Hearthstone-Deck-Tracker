@@ -17,6 +17,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static string? TimeRemaining => _status?.HoursUntilReset == null ? null
 			: string.Format(LocUtil.Get("BattlegroundsPreLobby_Trial_ResetTimeRemaining_DaysHours"), _status.HoursUntilReset / 24, _status.HoursUntilReset % 24);
 
+		public static event Action? OnTrialActivated;
+
 		static Tier7Trial()
 		{
 			Serializer = new JsonSerializer<TrialData>("tier7_trial", true);
@@ -59,9 +61,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Core.Game.Metrics.Tier7TrialActivated = true;
 
 					var data = new TrialData { Token = Token, GameID = gameId };
-
 					Serializer.Save(data);
 					Core.Game.Metrics.Tier7TrialsRemaining = Math.Max(0, (RemainingTrials ?? 0) - 1);
+
+					OnTrialActivated?.Invoke();
 				}
 
 				return Token;

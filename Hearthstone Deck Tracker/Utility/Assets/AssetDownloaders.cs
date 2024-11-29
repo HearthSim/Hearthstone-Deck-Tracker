@@ -12,6 +12,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		FullImage,
 		Portrait,
 		Tile,
+		Hero,
 	}
 
 	public static class AssetDownloaders
@@ -19,6 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		public static AssetDownloader<Hearthstone.Card, BitmapImage>? cardPortraitDownloader;
 		public static AssetDownloader<Hearthstone.Card, BitmapImage>? cardTileDownloader;
 		public static AssetDownloader<Hearthstone.Card, BitmapImage>? cardImageDownloader;
+		public static AssetDownloader<Hearthstone.Card, BitmapImage>? heroImageDownloader;
 
 		static AssetDownloaders()
 		{
@@ -72,6 +74,22 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			{
 				Log.Error($"Could not create asset downloader to download card images: {e.Message}");
 			}
+
+			try
+			{
+				heroImageDownloader = new AssetDownloader<Hearthstone.Card, BitmapImage>(
+					Path.Combine(Config.AppDataPath, "Images", "Heroes"),
+					card => $"https://art.hearthstonejson.com/v1/heroes/latest/256x/{card.Id}.png",
+					card => $"{card.Id}.png",
+					Helper.BitmapImageFromBytes,
+					maxCacheSize: 200,
+					placeholderAsset: "pack://application:,,,/Resources/faceless_manipulator.png"
+				);
+			}
+			catch(ArgumentException e)
+			{
+				Log.Error($"Could not create asset downloader to download card images: {e.Message}");
+			}
 		}
 
 
@@ -85,6 +103,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 					return cardPortraitDownloader;
 				case CardAssetType.Tile:
 					return cardTileDownloader;
+				case CardAssetType.Hero:
+					return heroImageDownloader;
 				default:
 					throw new NotImplementedException($"CardAssetType {type} is not implemented");
 			}

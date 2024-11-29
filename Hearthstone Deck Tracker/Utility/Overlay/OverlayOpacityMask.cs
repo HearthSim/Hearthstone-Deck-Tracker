@@ -51,8 +51,23 @@ namespace Hearthstone_Deck_Tracker.Utility.Overlay
 	        CreateOpacityMask();
         }
 
+        private bool _disabled = false;
+        public void Disable()
+        {
+	        _disabled = true;
+	        Mask = null;
+        }
+
+        public void Enable()
+        {
+	        _disabled = false;
+	        CreateOpacityMask();
+        }
+
         private void CreateOpacityMask()
         {
+	        if(_disabled)
+		        return;
 	        var fullAreaGeometry = new RectangleGeometry(new Rect(0, 0, 1, 1));
 	        Geometry combinedGeometry = fullAreaGeometry;
 

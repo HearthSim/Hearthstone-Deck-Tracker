@@ -10,10 +10,13 @@
     <SolidColorBrush x:Key="Tier7Orange" Color="#FFB00D"/>
     <SolidColorBrush x:Key="Tier7Black" Color="#141617"/>
     <SolidColorBrush x:Key="Tier7Highlight" Color="#6A9D36"/>
+    <SolidColorBrush x:Key="Tier7YellowButtonBackground" Color="#F1C040"/>
+    <SolidColorBrush x:Key="Tier7YellowButtonBackgroundHover" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="Tier7YellowButtonForeground" Color="#26200F"/>
 
     <Style x:Key="Tier7ButtonStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="Background" Value="#F1C040" />
-        <Setter Property="Foreground" Value="#26200F" />
+        <Setter Property="Background" Value="{StaticResource Tier7YellowButtonBackground}" />
+        <Setter Property="Foreground" Value="{StaticResource Tier7YellowButtonForeground}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="4" />
@@ -22,7 +25,7 @@
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <ControlTemplate.Triggers>
                         <Trigger Property="UIElement.IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="#CCCCCC"/>
+                            <Setter Property="Background" Value="{StaticResource Tier7YellowButtonBackgroundHover}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                     <Border Background="{TemplateBinding Background}" Padding="4">

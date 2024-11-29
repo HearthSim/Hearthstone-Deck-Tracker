@@ -5,6 +5,9 @@
 		public bool ConstructedMulliganGuideOverlayDisplayed { get; set; }
 		public int BattlegroundsMinionsTabClicks { get; private set; }
 		public int BattlegroundsMinionsByMinionTypeFilterClicks { get; private set; }
+		public int BattlegroundsMinionsInspirationClicks { get; set; }
+		public int BattlegroundsInspirationToggleClicks { get; set; }
+		public int BattlegroundsInspirationMinionClicks { get; set; }
 		public int BobsBuddyTerminalCases { get; set; }
 		public int MercenariesHoversOpponentMercToShowAbility { get; private set; }
 		public int MercenariesHoverTasksDuringMatch { get; private set; }

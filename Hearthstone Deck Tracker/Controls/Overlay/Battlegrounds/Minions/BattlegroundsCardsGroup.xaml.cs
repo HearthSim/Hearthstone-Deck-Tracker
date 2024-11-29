@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
@@ -55,6 +54,13 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 		typeof(BattlegroundsCardsGroup)
 	);
 
+	public static readonly DependencyProperty IsInspirationEnabledProperty = DependencyProperty.Register(
+		nameof(IsInspirationEnabled),
+		typeof(bool),
+		typeof(BattlegroundsCardsGroup),
+		new PropertyMetadata()
+	);
+
 	public Command<Race>? ClickMinionTypeCommand
 	{
 		get { return (Command<Race>?)GetValue(ClickFilterCommandProperty); }
@@ -92,6 +98,12 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 			OnPropertyChanged(nameof(Title));
 			OnPropertyChanged(nameof(TitleVisibility));
 		}
+	}
+
+	public bool IsInspirationEnabled
+	{
+		get => (bool)GetValue(IsInspirationEnabledProperty);
+		set => SetValue(IsInspirationEnabledProperty, value);
 	}
 
 	public string Title
@@ -173,6 +185,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 
 	public void UpdateCards(List<Hearthstone.Card> cards)
 	{
+		CardsList.ShowTier7InspirationButton = IsInspirationEnabled;
 		CardsList.Update(cards, true);
 	}
 

@@ -86,6 +86,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool BaconCard;
 
+		public bool IsBaconMinion => BaconCard && TypeEnum == CardType.MINION;
+
 		[XmlIgnore]
 		public bool BaconTriple;
 
@@ -337,6 +339,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int Cost { get; set; }
 
 		public bool HideStats => _dbCard?.Entity.GetTag(GameTag.HIDE_STATS) == 1;
+		public bool HideCost => _dbCard?.Entity.GetTag(GameTag.HIDE_COST) == 1 || (Cost == 0 && (EnglishText?.Contains("Passive") ?? false));
 
 		[XmlIgnore]
 		public bool IsPlayableHeroCard => Type == "Hero" && CardSet != HearthDb.Enums.CardSet.CORE && CardSet != HearthDb.Enums.CardSet.HERO_SKINS;

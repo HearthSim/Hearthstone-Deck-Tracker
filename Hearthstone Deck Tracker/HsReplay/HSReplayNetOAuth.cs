@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -11,7 +13,6 @@ using Hearthstone_Deck_Tracker.Live.Data;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Twitch;
-using HSReplay;
 using HSReplay.OAuth;
 using HSReplay.OAuth.Data;
 using HSReplay.Responses;
@@ -462,6 +463,28 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				var response = await request(Client.Value);
 				Log.Debug(response.ToString());
 				return response;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<HttpResponseMessage?> SendAsyncWithAuth(HttpRequestMessage req)
+		{
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return null;
+				}
+				req.Headers.Accept.ParseAdd("application/json");
+				var authToken = Data.Value.TokenData!;
+				req.Headers.Authorization = new AuthenticationHeaderValue(authToken.TokenType, authToken.AccessToken);
+				req.Headers.UserAgent.ParseAdd(Helper.GetUserAgent());
+				return await Core.HttpClient.SendAsync(req);
 			}
 			catch(Exception e)
 			{

@@ -22,7 +22,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using System.Windows.Controls;
-using HearthMirror;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -32,16 +32,15 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.TrinketPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
-using Hearthstone_Deck_Tracker.Utility.Animations;
-using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Overlay;
 using Hearthstone_Deck_Tracker.Utility.RegionDrawer;
 using HSReplay.Responses;
-using NuGet;
 
 #endregion
 
@@ -90,6 +89,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _mercenariesTaskListButtonBehavior;
 		private OverlayElementBehavior _tier7PreLobbyBehavior;
 		private OverlayElementBehavior _constructedMulliganGuidePreLobbyBehaviour;
+		private OverlayElementBehavior _battlegroundsInspirationBehavior;
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
@@ -100,6 +100,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public BattlegroundsHeroPickingViewModel BattlegroundsHeroPickingViewModel { get; } = new();
 		public BattlegroundsQuestPickingViewModel BattlegroundsQuestPickingViewModel { get; } = new();
 		public BattlegroundsTrinketPickingViewModel BattlegroundsTrinketPickingViewModel { get; } = new();
+		public BattlegroundsInspirationViewModel BattlegroundsInspirationViewModel { get; } = new();
 
 		public ConstructedMulliganGuidePreLobbyViewModel ConstructedMulliganGuidePreLobbyViewModel { get; } = new();
 		public ConstructedMulliganGuideViewModel ConstructedMulliganGuideViewModel { get; } = new();
@@ -269,6 +270,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Distance = 40,
 			};
 
+			_battlegroundsInspirationBehavior = new OverlayElementBehavior(BattlegroundsInspiration)
+			{
+				// Panel is set to 65% width in BattlegroundsInspiration.xaml
+				// If the panel if close to or 80% wide, it should be slightly offset to the left to not cover the timer
+				GetLeft = () => Helper.GetScaledXPos((1 - 0.65)/2, (int)Width, ScreenRatio),
+				GetTop = () => Height * 0.1,
+				GetScaling = () => Height / 1080,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+				Fade = true,
+				Distance = 40,
+				HideCallback = () =>
+				{
+					BtnTier7Inspiration.IsEnabled = BattlegroundsInspirationViewModel.HasBeenActivated;
+				}
+			};
+
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
 				HookMouse();
 			ShowInTaskbar = Config.Instance.ShowInTaskbar;
@@ -289,6 +308,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdatePlayerLayout();
 			UpdateOpponentLayout();
 			GridMain.Visibility = Visible;
+
+			BattlegroundsInspirationViewModel.OnClose += HideBgsInspiration;
+			Tier7Trial.OnTrialActivated += () =>
+			{
+				BattlegroundsMinionsVM.IsInspirationEnabled = _game.IsBattlegroundsSoloMatch;
+			};
 		}
 
 		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
@@ -640,8 +665,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsMinionsVM.AvailableRaces = BattlegroundsUtils.GetAvailableRaces();
 			BattlegroundsMinionsVM.IsDuos = _game.IsBattlegroundsDuosMatch;
 			BattlegroundsMinionsVM.Anomaly = anomalyCardId;
-
 			BattlegroundsMinionsVM.PreloadCardTiles();
+
+
+			var gameId = _game.MetaData.ServerInfo?.GameHandle;
+			var userHasTier7 = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) || Tier7Trial.IsTrialForCurrentGameActive(gameId);
+			BattlegroundsMinionsVM.IsInspirationEnabled = _game.IsBattlegroundsSoloMatch && userHasTier7;
 
 			IEnumerable<string> heroPowers = _game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id);
 			if(!heroPowers.Any() && _game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
@@ -652,6 +681,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsMinionsVM.OnHeroPowers(heroPowers);
 
 			BattlegroundsMinionsPanel.Visibility = Config.Instance.ShowBattlegroundsTiers ? Visible : Collapsed;
+
+			BtnTier7Inspiration.IsEnabled = BattlegroundsInspirationViewModel.HasBeenActivated;
 
 			_bgsTopBarBehavior.Show();
 		}
@@ -668,6 +699,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_bgsTopBarBehavior.Hide();
 			TurnCounter.UpdateTurn(1);
 			HideBobsBuddyPanel();
+
+			BattlegroundsInspirationViewModel.Reset();
+			BtnTier7Inspiration.IsEnabled = false;
 		}
 
 		internal void ShowBattlegroundsHeroPickingStats(
@@ -753,6 +787,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void HideMercenariesTasks()
 		{
 			_mercenariesTaskListBehavior.Hide();
+		}
+
+		public void ShowBgsInspiration()
+		{
+			// Currently only supported for solo mode
+			if(!_game.IsBattlegroundsSoloMatch)
+				return;
+			_battlegroundsInspirationBehavior.Show();
+			OpacityMaskOverlay.Disable();
+			UpdateOpacityMask();
+			BtnTier7Inspiration.IsEnabled = false;
+		}
+
+		private void HideBgsInspiration()
+		{
+			_battlegroundsInspirationBehavior.Hide();
+			OpacityMaskOverlay.Enable();
+			UpdateOpacityMask();
 		}
 
 		public static bool AnimatingXPBar = false;
@@ -990,6 +1042,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void SetChoicesVisible(bool choicesVisible)
 		{
 			BattlegroundsTrinketPickingViewModel.ChoicesVisible = choicesVisible;
+		}
+
+		private void BgsInspirationCover_OnMouseDown(object sender, MouseButtonEventArgs e) => HideBgsInspiration();
+
+		private void BtnBgsInspiration_OnMouseUp(object sender, MouseButtonEventArgs e)
+		{
+			ShowBgsInspiration();
+			_game.Metrics.BattlegroundsInspirationToggleClicks++;
 		}
 	}
 }

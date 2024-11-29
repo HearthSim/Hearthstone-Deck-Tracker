@@ -1,12 +1,12 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.AnimatedCard"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d"
+             d:DesignHeight="34" d:DesignWidth="217">
     <UserControl.Resources>
         <Storyboard x:Key="StoryboardFadeIn" Duration="0:0:1">
             <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Height" From="0" To="34" Duration="0:0:0.5"/>
@@ -35,5 +35,60 @@
         </Grid>
         <Rectangle Name="RectHighlight" Fill="{Binding Highlight}" Height="34" Width="217" RenderOptions.BitmapScalingMode="Fant"
                    Opacity="0" VerticalAlignment="Center" IsHitTestVisible="False" />
+        <Border Name="BtnTier7Inspiration" Width="30" Height="30" Margin="0,2,2,2" Cursor="Hand"
+                MouseUp="BtnBgsInspiration_OnMouseUp" HorizontalAlignment="Right"
+                RenderTransformOrigin="0.5,0.5" CornerRadius="3"
+                BorderBrush="#141617"
+                BorderThickness="1" Visibility="Collapsed">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Opacity" Value="0"/>
+                    <Setter Property="Background" Value="#23272a"/>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=BtnTier7Inspiration}" Value="True">
+                            <Setter Property="Background" Value="#43474a"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=Grid}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0:0.2" BeginTime="0:0:0:0.1" />
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1" Duration="0:0:0:0.5" BeginTime="0:0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="3" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1" Duration="0:0:0:0.5" BeginTime="0:0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="3" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0:0.1" />
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="0.7" Duration="0:0:0:0" />
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="0.7" Duration="0:0:0:0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Rectangle Height="22" Width="22" Margin="4">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource icon_inspiration}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </Border>
     </Grid>
 </UserControl>

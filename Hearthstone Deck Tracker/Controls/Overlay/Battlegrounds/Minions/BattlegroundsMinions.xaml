@@ -43,6 +43,7 @@
                                 MinionType="{Binding MinionType}"
                                 GroupedByMinionType="{Binding GroupedByMinionType}"
                                 Cards="{Binding Cards}"
+                                IsInspirationEnabled="{Binding IsInspirationEnabled}"
                                 ClickMinionTypeCommand="{Binding SetActiveMinionTypeCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
                             />
                         </DataTemplate>

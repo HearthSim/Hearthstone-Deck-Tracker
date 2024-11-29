@@ -475,6 +475,8 @@ namespace Hearthstone_Deck_Tracker
 						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShoppingAsync();
 					Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id));
 					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Select(x => x.Card.Id));
+					if(_game.IsBattlegroundsSoloMatch)
+						Core.Overlay.BattlegroundsInspirationViewModel.OnShoppingStart();
 				}
 				switch(Config.Instance.TurnStartAction)
 				{
@@ -485,6 +487,10 @@ namespace Hearthstone_Deck_Tracker
 							User32.BringHsToForeground();
 							break;
 				}
+			}
+			else if(player == ActivePlayer.Opponent && !_game.IsInMenu && _game.IsBattlegroundsSoloMatch)
+			{
+				Core.Overlay.BattlegroundsInspirationViewModel.OnShoppingEnd();
 			}
 			Core.Overlay.TurnCounter.UpdateTurn(turn.Item2);
 		}
@@ -1452,6 +1458,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Watchers.BattlegroundsLeaderboardWatcher.Run();
 			OpponentDeadForTracker.Reset();
+			Core.Overlay.BattlegroundsInspirationViewModel.Reset();
 
 			IEnumerable<Entity> heroes = new List<Entity>();
 			for(var i = 0; i < 10; i++)

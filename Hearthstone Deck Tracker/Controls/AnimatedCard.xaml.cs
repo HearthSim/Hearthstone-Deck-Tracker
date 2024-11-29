@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using HearthDb.Enums;
 
@@ -11,11 +12,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 	/// </summary>
 	public partial class AnimatedCard
 	{
-		public AnimatedCard(Hearthstone.Card card)
+		public AnimatedCard(Hearthstone.Card card, bool showTier7InspirationBtn = false)
 		{
 			InitializeComponent();
 			DataContext = card;
 			CoinCost.Visibility = Card.TypeEnum == CardType.BATTLEGROUND_SPELL ? Visibility.Visible : Visibility.Collapsed;
+			BtnTier7Inspiration.Visibility = showTier7InspirationBtn ? Visibility.Visible : Visibility.Collapsed;
 			Cost.Text = Card.Cost.ToString();
 			Loaded += (_, _) => UpdateTooltip();
 		}
@@ -70,6 +72,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private void UpdateTooltip()
 		{
 			CardObj.HasTooltip = Config.Instance.WindowCardToolTips && Helper.IsInOverlay(this);
+		}
+
+		private void BtnBgsInspiration_OnMouseUp(object sender, MouseButtonEventArgs e)
+		{
+			Core.Overlay.BattlegroundsInspirationViewModel.SetKeyMinion(Card);
+			Core.Overlay.ShowBgsInspiration();
+			Core.Game.Metrics.BattlegroundsMinionsInspirationClicks++;
 		}
 	}
 }

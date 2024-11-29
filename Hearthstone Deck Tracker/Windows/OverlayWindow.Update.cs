@@ -642,6 +642,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_tier7PreLobbyBehavior.UpdatePosition();
 			_tier7PreLobbyBehavior.UpdateScaling();
 
+			_battlegroundsInspirationBehavior.UpdatePosition();
+			_battlegroundsInspirationBehavior.UpdateScaling();
+
 			_constructedMulliganGuidePreLobbyBehaviour.UpdatePosition();
 			_constructedMulliganGuidePreLobbyBehaviour.UpdateScaling();
 

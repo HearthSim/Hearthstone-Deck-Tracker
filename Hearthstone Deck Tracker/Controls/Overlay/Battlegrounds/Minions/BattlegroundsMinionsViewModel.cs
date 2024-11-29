@@ -69,6 +69,16 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
+	public bool IsInspirationEnabled
+	{
+		get => GetProp(false);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(Groups));
+		}
+	}
+
 	public string? Anomaly
 	{
 		get => GetProp<string?>(null);
@@ -151,6 +161,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 
 		public IEnumerable<Hearthstone.Card> Cards { get; set; } = new List<Hearthstone.Card>();
 
+		public bool IsInspirationEnabled { get; set; }
+
 	}
 
 	public IEnumerable<CardGroup> Groups
@@ -178,6 +190,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						Tier = tier,
 						MinionType = race,
 						Cards = cards.OrderBy(x => x.LocalizedName),
+						IsInspirationEnabled = IsInspirationEnabled,
 					});
 				}
 
@@ -199,6 +212,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						Tier = tier,
 						MinionType = (Race)(-1), // Spells are encoded as a -1 race
 						Cards = spells.OrderBy(x => x.Cost).ThenBy(x => x.LocalizedName),
+						IsInspirationEnabled = IsInspirationEnabled,
 					});
 				}
 
@@ -236,6 +250,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						MinionType = minionType,
 						GroupedByMinionType = true,
 						Cards = cards,
+						IsInspirationEnabled = IsInspirationEnabled,
 					});
 				}
 			}

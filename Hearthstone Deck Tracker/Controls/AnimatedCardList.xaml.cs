@@ -17,6 +17,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			InitializeComponent();
 		}
 
+		public bool ShowTier7InspirationButton { get; set; }
+
 		public void Update(List<Hearthstone.Card> cards, bool reset)
 		{
 			UpdateAsync(cards, reset).Forget();
@@ -60,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 					toRemove.Add(new Tuple<AnimatedCard, bool>(card, newCard == null));
 					if(newCard != null)
 					{
-						var newAnimated = new AnimatedCard(newCard);
+						var newAnimated = new AnimatedCard(newCard, ShowTier7InspirationButton && newCard.IsBaconMinion);
 						_animatedCards.Insert(_animatedCards.IndexOf(card), newAnimated);
 						ItemsControl.Items.Insert(_animatedCards.IndexOf(card), newAnimated);
 						newAnimated.Update(true).Forget();
@@ -70,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				await Task.WhenAll(toRemove.Select(card => RemoveCard(card.Item1, card.Item2)).ToArray());
 				foreach(var card in newCards)
 				{
-					var newCard = new AnimatedCard(card);
+					var newCard = new AnimatedCard(card, ShowTier7InspirationButton && card.IsBaconMinion);
 					_animatedCards.Insert(cards.IndexOf(card), newCard);
 					ItemsControl.Items.Insert(cards.IndexOf(card), newCard);
 					newCard.FadeIn(!reset).Forget();

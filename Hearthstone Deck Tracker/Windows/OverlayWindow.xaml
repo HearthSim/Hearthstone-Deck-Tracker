@@ -20,6 +20,7 @@
         xmlns:heroPicking="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking"
         xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
         xmlns:activeEffects="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects"
+        xmlns:inspiration="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -207,6 +208,13 @@
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTileText7" Margin="-2.5 -11 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" TextAlignment="Center"/>
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTurnText7" Margin="-2 1 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" FontStretch="UltraCondensed" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
 
+                <!-- Allows Inspiration overlay to be dismissible via background click. Should be below all BGs overlay elements -->
+                <Grid Background="Black" Opacity="0.01" Canvas.Top="0" Canvas.Left="0"
+                      Width="{Binding Width, ElementName=CanvasInfo}" Height="{Binding Height, ElementName=CanvasInfo}"
+                      Visibility="{Binding Visibility, ElementName=BattlegroundsInspiration}"
+                      ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                      MouseDown="BgsInspirationCover_OnMouseDown" />
+
                 <StackPanel Name="BattlegroundsSessionStackPanel" Width="auto" Height="auto"
                             Visibility="Collapsed" anim:FadeAnimation.Visibility="Collapsed"
                             anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2">
@@ -218,6 +226,10 @@
                     />
                 </StackPanel>
                 <StackPanel Name="BgsTopBar" Visibility="Collapsed" Orientation="Horizontal" Canvas.Top="0" Canvas.Right="0">
+                    <inspiration:BattlegroundsInspirationOverlayButton
+                        x:Name="BtnTier7Inspiration" IsEnabled="False" MouseUp="BtnBgsInspiration_OnMouseUp"
+                        ext:OverlayExtensions.IsOverlayHitTestVisible="{Binding IsEnabled, RelativeSource={RelativeSource Self}}"
+                    />
                     <overlay:TurnCounter x:Name="TurnCounter" Margin="0,0,2,0"  Height="55" VerticalAlignment="Top" />
                     <minions:BattlegroundsMinions
                         x:Name="BattlegroundsMinionsPanel"
@@ -262,7 +274,13 @@
                 <tier7:Tier7PreLobby x:Name="Tier7PreLobby" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
                                      DataContext="{Binding Tier7PreLobbyViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
 
-                    <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
+                <inspiration:BattlegroundsInspiration
+                    x:Name="BattlegroundsInspiration" Visibility="Collapsed" Canvas.Top="0" Canvas.Left="0"
+                    ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                    DataContext="{Binding BattlegroundsInspirationViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                    />
+
+                <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
                 <controls:GridCardImages x:Name="ToolTipGridCards" Visibility="Hidden" Panel.ZIndex="11"/>
                 <controls:CardImage x:Name="ToolTipCardBlock" Visibility="Hidden" />
                 <controls:CardImage x:Name="ToolTipCardBlock2" Visibility="Hidden" />

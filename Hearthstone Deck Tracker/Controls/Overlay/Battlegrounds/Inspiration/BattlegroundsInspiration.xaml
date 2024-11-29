@@ -1,0 +1,259 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration.BattlegroundsInspiration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:inspiration="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration"
+        xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+        xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com">
+    <UserControl.DataContext>
+        <inspiration:BattlegroundsInspirationViewModel/>
+    </UserControl.DataContext>
+    <!--
+        Max width of this to not cover too much of the screen is 1080 / 3 * 4 * 0.8 = 1152 (i.e. 80% of the center 4:3)
+        Current value (1008) is 65% of the inner 4:3. The OverlayElementBehavior in OverlayWindow.xaml.cs needs to match this.
+    -->
+    <Border Width="936" Height="864" BorderBrush="#4A5256" BorderThickness="1" Background="#2E3235" CornerRadius="5">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="25" ShadowDepth="0" />
+        </Border.Effect>
+        <DockPanel>
+            <Border DockPanel.Dock="Top" BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022" CornerRadius="5,5,0,0">
+                <Grid Margin="6">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <tier7:Tier7Logo Width="26" Height="26" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc BattlegroundsInspiration_Title}" FontSize="16" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding TitleText}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Button Style="{DynamicResource AccentedSquareButtonStyle}" VerticalAlignment="Center" Command="{Binding CloseCommand}" HorizontalAlignment="Right">
+                        <Rectangle Width="16" Height="16" Margin="2">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_close_white}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Button>
+                </Grid>
+            </Border>
+            <Border DockPanel.Dock="Top" BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
+                <Grid Margin="6">
+                    <TextBlock Text="{lex:Loc BattlegroundsInspiration_Description}" Foreground="White" Opacity="0.8" HorizontalAlignment="Left"/>
+                    <TextBlock Text="{Binding MMRText}" Foreground="White" Opacity="0.8" HorizontalAlignment="Right"/>
+                </Grid>
+            </Border>
+            <Grid>
+                <mah:ProgressRing IsActive="True" Foreground="White" Width="40" Height="40"
+                                  Visibility="{Binding IsLoadingData, Converter={StaticResource BoolToVisibility}}"
+                                  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Text="{lex:Loc BattlegroundsInspiration_NoData}" Foreground="White" Opacity="0.8"
+                           Visibility="{Binding HasNoGames, Converter={StaticResource BoolToVisibility}}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <ItemsControl Visibility="{Binding IsLoadingData, Converter={StaticResource InverseBoolToVisibility}}"
+                              ItemsSource="{Binding Games}"
+                              ScrollViewer.CanContentScroll="True"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              VirtualizingPanel.ScrollUnit="Pixel"
+                              VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <ItemsControl.Resources>
+                        <Style TargetType="controls:BattlegroundsMinion">
+                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="ToolTipService.ShowDuration" Value="60000"/>
+                            <Setter Property="ToolTipService.InitialShowDelay" Value="300"/>
+                            <Setter Property="ToolTipService.Placement" Value="Right"/>
+                            <Setter Property="ToolTip">
+                                <Setter.Value>
+                                    <ToolTip VerticalOffset="-40">
+                                        <controls:CardImage />
+                                    </ToolTip>
+                                </Setter.Value>
+                            </Setter>
+                            <EventSetter Event="ToolTipService.ToolTipOpening" Handler="ToolTipService_OnToolTipOpening"/>
+                            <EventSetter Event="ToolTipService.ToolTipClosing" Handler="ToolTipService_OnToolTipClosing"/>
+                            <EventSetter Event="MouseDown" Handler="BattlegroundsMinion_OnMouseDown"/>
+                            <Style.Triggers>
+                                <Trigger Property="controls:BattlegroundsMinion.IsMouseOver" Value="True">
+                                    <Setter Property="controls:BattlegroundsMinion.RenderTransform">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                        <Style TargetType="controls:HeroPower">
+                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="ToolTipService.ShowDuration" Value="60000"/>
+                            <Setter Property="ToolTipService.InitialShowDelay" Value="300"/>
+                            <Setter Property="ToolTipService.Placement" Value="Right"/>
+                            <Setter Property="ToolTip">
+                                <Setter.Value>
+                                    <ToolTip VerticalOffset="-40">
+                                        <controls:CardImage />
+                                    </ToolTip>
+                                </Setter.Value>
+                            </Setter>
+                            <EventSetter Event="ToolTipService.ToolTipOpening" Handler="ToolTipService_OnToolTipOpening"/>
+                            <EventSetter Event="ToolTipService.ToolTipClosing" Handler="ToolTipService_OnToolTipClosing"/>
+                            <EventSetter Event="MouseDown" Handler="HeroPower_OnMouseDown"/>
+                            <Style.Triggers>
+                                <Trigger Property="controls:HeroPower.IsMouseOver" Value="True">
+                                    <Setter Property="controls:HeroPower.RenderTransform">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                        <Style TargetType="controls:Trinket">
+                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            <Setter Property="ToolTipService.ShowDuration" Value="60000"/>
+                            <Setter Property="ToolTipService.InitialShowDelay" Value="300"/>
+                            <Setter Property="ToolTipService.Placement" Value="Right"/>
+                            <Setter Property="ToolTip">
+                                <Setter.Value>
+                                    <ToolTip VerticalOffset="-40">
+                                        <controls:CardImage />
+                                    </ToolTip>
+                                </Setter.Value>
+                            </Setter>
+                            <EventSetter Event="ToolTipService.ToolTipOpening" Handler="ToolTipService_OnToolTipOpening"/>
+                            <EventSetter Event="ToolTipService.ToolTipClosing" Handler="ToolTipService_OnToolTipClosing"/>
+                            <Style.Triggers>
+                                <Trigger Property="controls:Trinket.IsMouseOver" Value="True">
+                                    <Setter Property="controls:Trinket.RenderTransform">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                        <Style TargetType="ToolTip">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                        </Style>
+                    </ItemsControl.Resources>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.Template>
+                        <ControlTemplate>
+                            <ScrollViewer>
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="0,0,0,1" BorderBrush="#4A5256">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Offset="0">
+                                            <GradientStop.Color>
+                                                <Color A="32" R="0" G="0" B="0"/>
+                                            </GradientStop.Color>
+                                        </GradientStop>
+                                        <GradientStop Offset="0.1">
+                                            <GradientStop.Color>
+                                                <Color A="0" R="0" G="0" B="0"/>
+                                            </GradientStop.Color>
+                                        </GradientStop>
+                                        <GradientStop Offset="0.9">
+                                            <GradientStop.Color>
+                                                <Color A="0" R="0" G="0" B="0"/>
+                                            </GradientStop.Color>
+                                        </GradientStop>
+                                        <GradientStop Offset="1">
+                                            <GradientStop.Color>
+                                                <Color A="32" R="0" G="0" B="0"/>
+                                            </GradientStop.Color>
+                                        </GradientStop>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <DockPanel Height="170">
+                                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,15,0">
+                                        <ItemsControl ItemsSource="{Binding Trinkets}" Visibility="Collapsed">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Vertical"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <controls:Trinket DataContext="{Binding}" RenderTransformOrigin="0.3525,0.3525">
+                                                        <controls:Trinket.LayoutTransform>
+                                                            <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+                                                        </controls:Trinket.LayoutTransform>
+                                                    </controls:Trinket>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                        <Grid VerticalAlignment="Center" Margin="0,15,0,0">
+                                            <Image Height="140" Width="140" Source="{Binding HeroImage}" />
+                                            <Image Height="48" Width="48" Source="{StaticResource BgsCrownLarge}" Margin="0,-20,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                            </Image>
+                                            <controls:HeroPower DataContext="{Binding Path=HeroPower}" RenderTransformOrigin="0.3525,0.3525" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="-15,5">
+                                                <controls:HeroPower.LayoutTransform>
+                                                    <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+                                                </controls:HeroPower.LayoutTransform>
+                                            </controls:HeroPower>
+                                        </Grid>
+                                    </StackPanel>
+                                    <Border BorderThickness="1,0,0,0">
+                                        <Border.BorderBrush>
+                                            <SolidColorBrush Color="White" Opacity="0.03"/>
+                                        </Border.BorderBrush>
+                                        <Border.Background>
+                                            <LinearGradientBrush>
+                                                <GradientStop Offset="0">
+                                                    <GradientStop.Color>
+                                                        <Color A="64" R="0" G="0" B="0"/>
+                                                    </GradientStop.Color>
+                                                </GradientStop>
+                                                <GradientStop Offset="0.1">
+                                                    <GradientStop.Color>
+                                                        <Color A="0" R="0" G="0" B="0"/>
+                                                    </GradientStop.Color>
+                                                </GradientStop>
+                                                <GradientStop Offset="0.9">
+                                                    <GradientStop.Color>
+                                                        <Color A="0" R="0" G="0" B="0"/>
+                                                    </GradientStop.Color>
+                                                </GradientStop>
+                                                <GradientStop Offset="1">
+                                                    <GradientStop.Color>
+                                                        <Color A="64" R="0" G="0" B="0"/>
+                                                    </GradientStop.Color>
+                                                </GradientStop>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <StackPanel Width="750" VerticalAlignment="Center">
+                                            <ItemsControl ItemsSource="{Binding Board}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <controls:BattlegroundsMinion DataContext="{Binding}" Margin="-4,0" />
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </Border>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </DockPanel>
+    </Border>
+</UserControl>

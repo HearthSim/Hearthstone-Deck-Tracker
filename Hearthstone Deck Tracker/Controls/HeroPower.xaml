@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.HeroPower"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance controls:HeroPowerViewModel}"
+             d:DesignHeight="256" d:DesignWidth="256">
+    <Viewbox Width="110" Height="110">
+        <Canvas Width="256" Height="256">
+            <Canvas.Resources>
+                <Style TargetType="Image">
+                    <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
+                </Style>
+            </Canvas.Resources>
+
+            <Image HorizontalAlignment="Center" Width="160" Height="160" Source="{Binding CardPortrait.Asset}" d:Source="{StaticResource FacelessManipulator}" Canvas.Top="60" Canvas.Left="48">
+                <Image.Clip>
+                    <EllipseGeometry RadiusX="70" RadiusY="70" Center="80,80"/>
+                </Image.Clip>
+            </Image>
+
+            <Image Source="{StaticResource HeroPowerFrame}" Canvas.Left="3" Canvas.Top="3" Height="250" Width="250"/>
+            <Image Source="{StaticResource CoinCost}" Canvas.Left="88" Canvas.Top="6" Height="80" Width="80" Visibility="{Binding IsCoinCost, Converter={StaticResource BoolToVisibility}}" />
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Cost}" d:Text="0" Fill="White" Width="75" Height="75" FontSize="60" TextAlignment="Center" FontWeight="Bold" StrokeWidth="4" Canvas.Left="90" Canvas.Top="6" />
+        </Canvas>
+    </Viewbox>
+</UserControl>
