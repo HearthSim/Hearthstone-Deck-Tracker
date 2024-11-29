@@ -31,7 +31,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 	{
 		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
 		{
-			return ConverterHelper.BoolConverter(values, parameter) ? Visibility.Visible : parameter ?? Visibility.Collapsed;
+			var hidden = parameter is Visibility v ? v : Visibility.Collapsed;
+			return ConverterHelper.BoolConverter(values, parameter) ? Visibility.Visible : hidden;
 		}
 
 		public object[]? ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -54,7 +55,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 	{
 		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
 		{
-			return ConverterHelper.BoolConverter(values, parameter) ? parameter ?? Visibility.Collapsed : Visibility.Visible;
+			var hidden = parameter is Visibility v ? v : Visibility.Collapsed;
+			return ConverterHelper.BoolConverter(values, parameter) ? hidden : Visibility.Visible;
 		}
 
 		public object[]? ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
