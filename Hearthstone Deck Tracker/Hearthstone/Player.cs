@@ -851,7 +851,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		[Obsolete("Use OriginalClass or CurrentClass instead")]
+		[Obsolete("Use OriginalClass or CurrentClass instead", true)]
 		public string? Class => OriginalClass;
 	}
 }
