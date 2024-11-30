@@ -1194,6 +1194,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("BaseLight")]
 		public string ThemeName = "BaseLight";
 
+		[XmlIgnore]
+		[Obsolete("Use Helper.GetCardLanguage() instead to keep using the card language, or switch to Config.Instance.Localization to start using the UI language", true)]
+		public string SelectedLanguage = "enUS";
+
 		#endregion
 
 		private GameDetailsConfig? _gameDetails;

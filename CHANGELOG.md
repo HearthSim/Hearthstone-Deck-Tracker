@@ -1,3 +1,7 @@
+## Unreleased
+**Plugins**:
+- Fixed compatibility with some older plugins relying on a deprecated property.
+
 ## **Release v1.37.4 - 2024-11-28**
 **Hearthstone**:
 - Added card icons for cards that return to hand at the end of the turn (Corpsicle, Libram of Divinity).
