@@ -1612,6 +1612,58 @@ namespace Hearthstone_Deck_Tracker
 			return stats;
 		}
 
+		private int battlegroundsHeroPickingLatch = 0;
+		private async Task RefreshBattlegroundsHeroPickStats()
+		{
+			var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN))).ToList();
+
+			// refresh the offered heroes
+			_game.SnapshotBattlegroundsOfferedHeroes(heroes);
+			_game.CacheBattlegroundsHeroPickParams();
+
+			var parameters = _game.GetBattlegroundsHeroPickParams();
+			if(parameters == null)
+				return;
+
+			try
+			{
+				var latchOut = ++battlegroundsHeroPickingLatch;
+				BattlegroundsHeroPickStats? battlegroundsHeroPickStats = null;
+				try
+				{
+					battlegroundsHeroPickStats = await GetBattlegroundsHeroPickStats();
+				}
+				catch(Exception)
+				{
+					// pass
+				}
+
+				// another task has updated them since (fast reroll)
+				if(latchOut != battlegroundsHeroPickingLatch)
+					return;
+
+				// the stats are no longer relevant
+				if(_game.GameEntity?.GetTag(STEP) > (int)Step.BEGIN_MULLIGAN || _game.IsInMenu || Core.Overlay.BattlegroundsHeroPickingViewModel.HeroStats == null)
+					return;
+
+				Dictionary<string, string>? toastParams = null;
+				if(battlegroundsHeroPickStats is BattlegroundsHeroPickStats stats)
+				{
+					var heroIds = heroes.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
+					Core.Overlay.ShowBattlegroundsHeroPickingStats(
+						heroIds.Select(dbfId => stats.Data.FirstOrDefault(x => x.HeroDbfId == dbfId)),
+						stats.Toast.Parameters,
+						stats.Toast.MinMmr,
+						stats.Toast.AnomalyAdjusted ?? false
+					);
+				}
+			}
+			finally
+			{
+				battlegroundsHeroPickingLatch--;
+			}
+		}
+
 		private void CaptureBattlegroundsFeedback(int finalPlacement)
 		{
 			if(!Config.Instance.GoogleAnalytics || _game.Spectator)
@@ -2264,6 +2316,14 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		public void HandleBattlegroundsHeroReroll(int id, string cardId)
+		{
+			if(_game.IsBattlegroundsMatch)
+			{
+				RefreshBattlegroundsHeroPickStats().Forget();
+			}
+		}
+
 		#region IGameHandlerImplementation
 
 		void IGameHandler.HandlePlayerBackToHand(Entity entity, string cardId, int turn) => HandlePlayerBackToHand(entity, cardId, turn);
@@ -2310,6 +2370,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerUnknownCardAddedToDeck() => HandlePlayerUnknownCardAddedToDeck();
 		void IGameHandler.HandlePlayerAbyssalCurse(int value) => HandlePlayerAbyssalCurse(value);
 		void IGameHandler.HandleOpponentAbyssalCurse(int value) => HandleOpponentAbyssalCurse(value);
+		void IGameHandler.HandleBattlegroundsHeroReroll(int id, string cardId) => HandleBattlegroundsHeroReroll(id, cardId);
 
 		#endregion IGameHandlerImplementation
 	}

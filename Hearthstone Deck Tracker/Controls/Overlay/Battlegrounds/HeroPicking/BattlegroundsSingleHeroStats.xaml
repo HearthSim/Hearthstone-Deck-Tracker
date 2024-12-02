@@ -18,11 +18,6 @@
             <heroPicking:BattlegroundsHeroHeader DataContext="{Binding BgsHeroHeaderVM}" VerticalAlignment="Top"/>
         </Grid>
 
-        <!-- Compositions -->
-        <Grid Width="236" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Height="72" Visibility="{Binding CompositionsVisibility}">
-            <comp:BattlegroundsCompositionPopularity DataContext="{Binding BgsCompsPopularityVM}" VerticalAlignment="Top"/>
-        </Grid>
-
         <!-- Hero Portrait Container -->
         <Grid Background="#00FF00FF" Margin="0 -237 0 0" Height="285" Visibility="{Binding HeroPowerVisibility}"
               IsHitTestVisible="False"

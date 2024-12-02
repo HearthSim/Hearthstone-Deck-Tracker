@@ -577,7 +577,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void CacheBattlegroundsHeroPickParams()
 		{
 			if(_battlegroundsHeroPickStatsParams != null)
+			{
+				// Already set? Probably a reroll - just update the hero dbf ids
+				var newHeroDbfIds = BattlegroundsHeroPickState.OfferedHeroDbfIds;
+				if(newHeroDbfIds == null)
+					return;
+
+				_battlegroundsHeroPickStatsParams = new BattlegroundsHeroPickStatsParams
+				{
+					HeroDbfIds = newHeroDbfIds,
+					BattlegroundsRaces = _battlegroundsHeroPickStatsParams.BattlegroundsRaces,
+					AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
+					LanguageCode = Helper.GetCardLanguage(),
+					BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
+				};
 				return;
+			}
 
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
 			if(availableRaces == null)

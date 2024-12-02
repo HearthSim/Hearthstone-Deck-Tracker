@@ -105,6 +105,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleMercenariesStateChange();
 		void HandleBattlegroundsPlayerTechLevel(int id, int value);
 		void HandleBattlegroundsPlayerTriples(int id, int value);
+		void HandleBattlegroundsHeroReroll(int id, string cardId);
 		void HandlePlayerAbyssalCurse(int value);
 		void HandleOpponentAbyssalCurse(int value);
 		void HandleQuestRewardDatabaseId(int id, int value);

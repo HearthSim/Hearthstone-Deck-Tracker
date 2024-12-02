@@ -229,7 +229,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						// placeholders and Fantastic Treasure (Marin's hero power)
 						entity.HasTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) ||
 						// Souvenir Stand
-						entity.HasTag(GameTag.BACON_TRINKET)
+						entity.HasTag(GameTag.BACON_TRINKET) ||
+						// Heroes during Battlegrounds reroll
+						entity.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED)
 					)
 						entity.CardId = cardId;
 					entity.Info.LatestCardId = cardId;
@@ -313,6 +315,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							entity.Info.OriginalEntityWasCreated = entity.Info.Created;
 						if(entity.GetTag(GameTag.TRANSFORMED_FROM_CARD) == 46706)
 							gameState.ChameleosReveal = new Tuple<int, string>(entityId, cardId);
+						// Battlegrounds hero reroll
+						if(entity.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) && (game.GameEntity?.GetTag(GameTag.STEP) ?? (int)Step.INVALID) <= (int)Step.BEGIN_MULLIGAN)
+							gameState.GameHandler?.HandleBattlegroundsHeroReroll(entity.Id, cardId);
 					}
 					gameState.SetCurrentEntity(entityId);
 					if(gameState.DeterminedPlayers)
