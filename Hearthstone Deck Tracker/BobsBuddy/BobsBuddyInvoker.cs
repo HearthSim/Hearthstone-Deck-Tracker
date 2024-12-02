@@ -525,7 +525,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			var playerAttached = GetAttachedEntities(playerEntity.Id).ToList();
-			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchant);
+			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.EternalKnight_EternalKnightPlayerEnchantDnt);
 			if(pEternalLegion != null)
 				inputPlayer.EternalKnightCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
 			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
@@ -534,10 +534,19 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var pAncestralAutomaton = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Invalid.AncestralAutomaton_AncestralAutomatonPlayerEnchantDnt);
 			if(pAncestralAutomaton != null)
 				inputPlayer.AncestralAutomatonCounter = pAncestralAutomaton.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			var pBeetle = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.RunedProgenitor_BeetleArmyPlayerEnchantDnt);
+			if(pBeetle != null)
+			{
+				inputPlayer.BeetlesAtkBuff = pBeetle.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+				inputPlayer.BeetlesHealthBuff = pBeetle.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+			}
 
 			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);
 
 			inputPlayer.PiratesSummonCounter = playerEntity.GetTag((GameTag)2358);
+
+			inputPlayer.BattlecryCounter = playerEntity.GetTag((GameTag)3236);
+
 
 			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, friendly={friendly}");
 
