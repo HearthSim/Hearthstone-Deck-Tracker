@@ -35,7 +35,7 @@
                 >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Height="440" Width="266" Margin="37,0">
+                            <Grid Height="568" Width="266" Margin="37,0">
                                 <heroPicking:BattlegroundsSingleHeroStats
                                     SetSelectedHeroDbfIdCommand="{Binding SetSelectedHeroDbfIdCommand, RelativeSource={RelativeSource AncestorType=heroPicking:BattlegroundsHeroPicking}}"
                                 />
