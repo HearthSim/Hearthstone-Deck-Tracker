@@ -1,4 +1,10 @@
-## Unreleased
+## **Release v1.37.5 - 2024-12-03**
+**Updated for Hearthstone 31.2.0**
+
+**Battlegrounds**:
+- Update tier 7 hero picking overlay for hero reroll.\
+  *They might take a time to load*
+
 **Plugins**:
 - Fixed compatibility with some older plugins relying on a deprecated property.
 
