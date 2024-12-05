@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using BobsBuddy.Factory;
+using HearthDb;
 using HearthDb.Enums;
 using HearthMirror;
 using HearthMirror.Objects;
@@ -503,9 +504,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 							_minionBrowserHoverCardId = card.Card.Id;
 						}
 
-						var goldenCardId = MinionFactory.TryGetPremiumIdFromNormal(card.Card.Id);
-
-						if(goldenCardId != card.Card.Id)
+						if(Cards.NormalToTripleCardIds.TryGetValue(card.Card.Id, out var goldenCardId) && goldenCardId != card.Card.Id)
 						{
 							var goldenCard = Database.GetCardFromId(goldenCardId);
 							if(goldenCard != null)
