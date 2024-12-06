@@ -248,7 +248,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 				if(entry == null)
 				{
 					entry = new LRUCache<U>.Entry(filename, etag);
-					_lruCache.Add(entry);
+					_lruCache.Insert(0, entry);
 					_lruLookup[filename] = entry;
 				}
 				else
