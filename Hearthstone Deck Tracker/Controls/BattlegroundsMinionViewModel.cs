@@ -44,7 +44,8 @@ public class BattlegroundsMinionViewModel : ViewModel
 		set => SetProp(value);
 	}
 
-	public bool IsLegendary => Card?.Rarity == Rarity.LEGENDARY;
+	// Battlegrounds Minions never have the legendary Dragon
+	public bool IsLegendary => false; // Card?.Rarity == Rarity.LEGENDARY;
 
 	public bool IsPremium
 	{
