@@ -231,7 +231,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						// Souvenir Stand
 						entity.HasTag(GameTag.BACON_TRINKET) ||
 						// Heroes during Battlegrounds reroll
-						entity.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED)
+						entity.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) ||
+						entity.HasTag(GameTag.BACON_SKIN)
 					)
 						entity.CardId = cardId;
 					entity.Info.LatestCardId = cardId;
