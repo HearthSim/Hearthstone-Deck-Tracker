@@ -701,6 +701,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HideBobsBuddyPanel();
 
 			BattlegroundsInspirationViewModel.Reset();
+			HideBgsInspiration();
 			BtnTier7Inspiration.IsEnabled = false;
 		}
 
