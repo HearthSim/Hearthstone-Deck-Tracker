@@ -551,7 +551,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					HideAdditionalToolTips();
 				}
 			}
-			else if(HoveredCard is { IsHand: true })
+			else if(HoveredCard is { IsHand: true } && Core.Game.IsTraditionalHearthstoneMatch)
 			{
 				// Get related cards from cardId
 				var relatedCards = GetRelatedCards(Core.Game.Player, HoveredCard.Value.CardId, inHand: true, handPosition: HoveredCard.Value.ZonePosition);
