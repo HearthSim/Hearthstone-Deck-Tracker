@@ -1483,7 +1483,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			_game.SnapshotBattlegroundsOfferedHeroes(heroes);
-			_game.CacheBattlegroundsHeroPickParams();
+			_game.CacheBattlegroundsHeroPickParams(false);
 
 			var heroIds = heroes.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
 			if(Config.Instance.HideOverlay)
@@ -1626,11 +1626,7 @@ namespace Hearthstone_Deck_Tracker
 
 			// refresh the offered heroes
 			_game.SnapshotBattlegroundsOfferedHeroes(heroes);
-			_game.CacheBattlegroundsHeroPickParams();
-
-			var parameters = _game.GetBattlegroundsHeroPickParams();
-			if(parameters == null)
-				return;
+			_game.CacheBattlegroundsHeroPickParams(true);
 
 			try
 			{

@@ -574,7 +574,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private BattlegroundsHeroPickStatsParams? _battlegroundsHeroPickStatsParams;
 
-		public void CacheBattlegroundsHeroPickParams()
+		public void CacheBattlegroundsHeroPickParams(bool isReroll)
 		{
 			if(_battlegroundsHeroPickStatsParams != null)
 			{
@@ -590,6 +590,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
 					LanguageCode = Helper.GetCardLanguage(),
 					BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
+					IsReroll = isReroll,
 				};
 				return;
 			}
