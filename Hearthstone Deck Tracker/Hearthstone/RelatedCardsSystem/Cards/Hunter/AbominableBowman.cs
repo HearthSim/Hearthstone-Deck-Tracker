@@ -1,19 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Hunter;
 
-namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Hunter;
-
-public class AbominableBowman: ICardWithRelatedCards
+public class AbominableBowman: ResurrectionCard
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Hunter.AbominableBowman;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Hunter.AbominableBowman;
 
-	public bool ShouldShowForOpponent(Player opponent) => false;
+	protected override bool FilterCard(Card card) => card.IsBeast();
 
-	public List<Card?> GetRelatedCards(Player player) =>
-		player.DeadMinionsCards
-			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
-			.Where(card => card != null && card.IsBeast())
-			.Distinct()
-			.OrderByDescending(card => card!.Cost)
-			.ToList();
+	protected override bool ResurrectsMultipleCards() => false;
 }

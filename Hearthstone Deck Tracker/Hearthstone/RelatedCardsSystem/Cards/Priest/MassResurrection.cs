@@ -1,18 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Priest;
 
-namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Priest;
-
-public class MassResurrection: ICardWithRelatedCards
+public class MassResurrection: ResurrectionCard
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Priest.MassResurrection;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Priest.MassResurrection;
 
-	public bool ShouldShowForOpponent(Player opponent) => false;
+	protected override bool FilterCard(Card card) => true;
 
-	public List<Card?> GetRelatedCards(Player player) =>
-		player.DeadMinionsCards
-			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
-			.Where(card => card != null)
-			.OrderByDescending(card => card!.Cost)
-			.ToList();
+	protected override bool ResurrectsMultipleCards() => true;
 }

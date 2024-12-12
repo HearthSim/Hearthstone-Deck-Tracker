@@ -1,19 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
 
-namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
-
-public class BodyWrapper: ICardWithRelatedCards
+public class BodyWrapper: ResurrectionCard
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Neutral.BodyWrapper;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.BodyWrapper;
 
-	public bool ShouldShowForOpponent(Player opponent) => false;
+	protected override bool FilterCard(Card card) => true;
 
-	public List<Card?> GetRelatedCards(Player player) =>
-		player.DeadMinionsCards
-			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
-			.Where(card => card != null)
-			.Distinct()
-			.OrderByDescending(card => card!.Cost)
-			.ToList();
+	protected override bool ResurrectsMultipleCards() => false;
 }

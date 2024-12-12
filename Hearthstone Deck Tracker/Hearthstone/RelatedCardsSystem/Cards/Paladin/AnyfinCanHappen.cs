@@ -1,18 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Paladin;
 
-namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Paladin;
-
-public class AnyfinCanHappen: ICardWithRelatedCards
+public class AnyfinCanHappen: ResurrectionCard
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Paladin.AnyfinCanHappen;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Paladin.AnyfinCanHappen;
 
-	public bool ShouldShowForOpponent(Player opponent) => false;
+	protected override bool FilterCard(Card card) => true;
 
-	public List<Card?> GetRelatedCards(Player player) =>
-		player.DeadMinionsCards
-			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
-			.Where(card => card != null && card.IsMurloc())
-			.OrderByDescending(card => card!.Cost)
-			.ToList();
+	protected override bool ResurrectsMultipleCards() => true;
 }

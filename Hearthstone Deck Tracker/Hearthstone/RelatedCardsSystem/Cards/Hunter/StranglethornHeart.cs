@@ -1,22 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Hunter;
 
-namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Hunter;
-
-public class StranglethornHeart: ICardWithRelatedCards
+public class StranglethornHeart: ResurrectionCard
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Hunter.StranglethornHeart;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Hunter.StranglethornHeart;
 
-	public bool ShouldShowForOpponent(Player opponent)
-	{
-		var card = Database.GetCardFromId(GetCardId());
-		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentFormat, opponent.OriginalClass) && GetRelatedCards(opponent).Count > 1;
-	}
+	protected override bool FilterCard(Card card) => card.IsBeast() && card.Cost >= 5;
 
-	public List<Card?> GetRelatedCards(Player player) =>
-		player.DeadMinionsCards
-			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
-			.Where(card => card != null && card.IsBeast() && card.Cost > 4)
-			.OrderByDescending(card => card!.Cost)
-			.ToList();
+	protected override bool ResurrectsMultipleCards() => true;
 }
