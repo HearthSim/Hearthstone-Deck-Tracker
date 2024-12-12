@@ -234,8 +234,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				foreach(var cardId in hoveredCounter.GetCardsToDisplay())
 				{
 					var card = Database.GetCardFromId(cardId);
-					if(card != null)
-						counterCards.Add(card);
+					if(card == null) continue;
+
+					card.BaconCard = hoveredCounter.IsBattlegroundsCounter;
+					counterCards.Add(card);
 				}
 
 				var counterWidth = counterWidths[(int)counterIndex];

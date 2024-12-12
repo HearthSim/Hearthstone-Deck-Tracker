@@ -20,6 +20,8 @@ public abstract class BaseCounter : INotifyPropertyChanged
 
 	public abstract string[] RelatedCards { get; }
 
+	public virtual bool IsBattlegroundsCounter => false;
+
 	protected BaseCounter(bool controlledByPlayer, GameV2 game)
 	{
 		IsPlayerCounter = controlledByPlayer;

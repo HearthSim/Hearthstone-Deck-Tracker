@@ -3,10 +3,11 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
-namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
+namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.BgCounters;
 
 public class BloodGemCounter : StatsCounter
 {
+	public override bool IsBattlegroundsCounter => true;
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.BloodGem1;
 	public override string[] RelatedCards => new string[] {};
 
