@@ -1,6 +1,7 @@
 ## Unreleased
 **Hearthstone**:
 - Added related card tooltip to Grand Magister Rommath.
+- Added related card tooltips to many graveyard cards (such as Resurrect).
 
 **Battlegrounds**:
 - Fixed Tier7 hero picking stats not updating when rerolling a skin.
