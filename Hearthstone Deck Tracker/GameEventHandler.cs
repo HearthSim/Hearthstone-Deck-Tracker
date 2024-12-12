@@ -2319,10 +2319,14 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void HandleBattlegroundsHeroReroll(int id, string cardId)
+		public void HandleBattlegroundsHeroReroll(Entity entity, string? oldCardId)
 		{
 			if(_game.IsBattlegroundsMatch)
 			{
+				var dbfId = oldCardId is string cardId ? Database.GetCardFromId(cardId)?.DbfId : null;
+				if(dbfId is int theDbfId)
+					Core.Overlay.InvalidateBattlegroundsHeroPickingStats(theDbfId);
+
 				RefreshBattlegroundsHeroPickStats().Forget();
 			}
 		}
@@ -2373,7 +2377,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerUnknownCardAddedToDeck() => HandlePlayerUnknownCardAddedToDeck();
 		void IGameHandler.HandlePlayerAbyssalCurse(int value) => HandlePlayerAbyssalCurse(value);
 		void IGameHandler.HandleOpponentAbyssalCurse(int value) => HandleOpponentAbyssalCurse(value);
-		void IGameHandler.HandleBattlegroundsHeroReroll(int id, string cardId) => HandleBattlegroundsHeroReroll(id, cardId);
+		void IGameHandler.HandleBattlegroundsHeroReroll(Entity entity, string? oldCardId) => HandleBattlegroundsHeroReroll(entity, oldCardId);
 
 		#endregion IGameHandlerImplementation
 	}

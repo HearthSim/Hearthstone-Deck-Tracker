@@ -224,6 +224,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(!game.Entities.ContainsKey(entityId))
 						game.Entities.Add(entityId, new Entity(entityId));
 					var entity = game.Entities[entityId];
+					var oldCardId = entity.CardId;
 					if(
 						string.IsNullOrEmpty(entity.CardId) ||
 						// placeholders and Fantastic Treasure (Marin's hero power)
@@ -318,7 +319,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							gameState.ChameleosReveal = new Tuple<int, string>(entityId, cardId);
 						// Battlegrounds hero reroll
 						if(entity.IsHero && entity.IsControlledBy(Core.Game.Player.Id) && (game.GameEntity?.GetTag(GameTag.STEP) ?? (int)Step.INVALID) <= (int)Step.BEGIN_MULLIGAN)
-							gameState.GameHandler?.HandleBattlegroundsHeroReroll(entity.Id, cardId);
+							gameState.GameHandler?.HandleBattlegroundsHeroReroll(entity, oldCardId);
 					}
 					gameState.SetCurrentEntity(entityId);
 					if(gameState.DeterminedPlayers)

@@ -120,6 +120,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			StatsVisibility = Config.Instance.ShowBattlegroundsHeroPicking ? Visible : Collapsed;
 		}
 
+		public void InvalidateSingleHeroStats(int dbfId)
+		{
+			HeroStats = HeroStats?.Select(x => x.HeroDbfId == dbfId ? new BattlegroundsSingleHeroViewModel(null, SetPlacementVisible) : x).ToList();
+		}
+
 		private void UpdateMetrics()
 		{
 			if(HeroStats != null && Visibility == Visible && StatsVisibility == Visible)
