@@ -3,6 +3,7 @@
 - Added related card tooltip to Grand Magister Rommath.
 - Added related card tooltips to most cards that resurrect from the Graveyard.\
   *Abominable Bowman, All Fel Breaks Loose, Amulet of Undying, Animate Dead, Anyfin Can Happen, Bloodreaver Gul'dan, Body Wrapper, Bonecaller, Boneshredder, Catrina Muerte, Counterfeit Blade, Da Undatakah, Defense Attorney Nathanos, Eternal Servitude, Habeas Corpses, Hadronox, Infantry Reanimator, Jewel of N'Zoth, Lesser Diamond Spell Stone, Mass Resurrection, N'Zoth, God of the Deep, N'Zoth, The Corruptor, Onyx Bishop, Psychopomp, Raise Dead, Rally!, Resurrect, Revive Pet, Tamsin's Phylactery, Tomb Lurker, Twilight's Call, Unending Swarm, Vectus, Witching Hour, Xyrella, the Devout*
+- Fixed the deck selector switching to the wrong tab after importing a deck.
 
 **Battlegrounds**:
 - Added counters for Beetle stats, Spells played and the the Undead attack bonus.

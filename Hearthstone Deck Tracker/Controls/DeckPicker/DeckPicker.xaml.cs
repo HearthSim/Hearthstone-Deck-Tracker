@@ -644,7 +644,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				return;
 			if(ignoreSelectionChange)
 				_ignoreSelectionChange = true;
-			ListViewDeckType.SelectedIndex = (int)selectedDeckType;
+			ListViewDeckType.SelectedIndex = DeckTypeItems.IndexOf(selectedDeckType);
 			if(ignoreSelectionChange)
 				_ignoreSelectionChange = false;
 		}
