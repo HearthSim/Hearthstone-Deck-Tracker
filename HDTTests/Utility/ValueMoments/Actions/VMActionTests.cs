@@ -66,8 +66,8 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "action_name", "end_match" },
 				{ "domain", "hsreplay.net" },
 				{ "franchise", new [] { "HS-Constructed" } },
-				{ "card_language", "en" },
-				{ "appearance_language", "en" },
+				{ "card_language", "enUS" },
+				{ "appearance_language", "enUS" },
 				{ "hdt_plugins", new string[]{ } },
 				{ "hdt_general_settings_enabled", new []{
 					"upload_my_collection_automatically",

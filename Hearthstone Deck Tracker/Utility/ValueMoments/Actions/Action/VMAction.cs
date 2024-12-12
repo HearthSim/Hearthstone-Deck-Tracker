@@ -94,10 +94,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public int ScreenWidth { get; }
 
 		[JsonProperty("card_language")]
-		public string CardLanguage => Helper.GetCardLanguage().Substring(0, 2);
+		public string CardLanguage => Helper.GetCardLanguage();
 
 		[JsonProperty("appearance_language")]
-		public string AppearanceLanguage => Config.Instance.Localization.ToString().Substring(0, 2);
+		public string AppearanceLanguage => Config.Instance.Localization.ToString();
 
 		[JsonProperty("hdt_plugins")]
 		public string?[] HDTPlugins => PluginManager.Instance.Plugins.Where(x => x.IsEnabled).Select(x => x.Name).ToArray();
