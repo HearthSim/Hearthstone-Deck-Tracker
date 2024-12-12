@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using HearthDb;
 using HearthDb.Enums;
@@ -24,13 +25,40 @@ public class BattlegroundsInspirationViewModel : ViewModel
 {
 	public List<BattlegroundsInspirationGameViewModel>? Games
 	{
-		get => GetProp<List<BattlegroundsInspirationGameViewModel>?>(null);
+		get => GetProp<List<BattlegroundsInspirationGameViewModel>?>(null)?.Skip((Page - 1) * 4).Take(4).ToList();
 		private set
 		{
 			SetProp(value);
 			OnPropertyChanged(nameof(HasNoGames));
 		}
 	}
+
+	public int Page
+	{
+		get => GetProp(1);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(Games));
+			OnPropertyChanged(nameof(PageButtons));
+		}
+	}
+
+	public record PageButton(int Page, bool IsActive);
+
+	private List<int> Pages
+	{
+		get => GetProp<List<int>?>(null) ?? new List<int>();
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(PageButtons));
+		}
+	}
+
+	public List<PageButton> PageButtons => Pages.Select(page => new PageButton(page, page == Page)).ToList();
+
+	public ICommand SetPageCommand => new Command<int>(page => Page = page);
 
 	public string TitleText
 	{
@@ -83,10 +111,16 @@ public class BattlegroundsInspirationViewModel : ViewModel
 		TitleText = title;
 		Games = null;
 		IsLoadingData = true;
+		Page = 1;
+		Pages = new List<int>();
 		try
 		{
 			var data = await MakeRequest(keyDbfIds, boardDbfIds);
-			Games = data?.Data.Games.Take(20).Select(x => new BattlegroundsInspirationGameViewModel(x)).ToList();
+			var games  = data?.Data.Games.Take(20).Select(x => new BattlegroundsInspirationGameViewModel(x)).ToList();
+			Games = games;
+			var pageCount = (int)Math.Ceiling((games?.Count ?? 0) / 4.0);
+			if(pageCount > 1)
+				Pages = Enumerable.Range(1, pageCount).ToList();
 		}
 		catch(Exception e)
 		{
@@ -159,6 +193,7 @@ public class BattlegroundsInspirationViewModel : ViewModel
 	public void Reset()
 	{
 		Games = null;
+		Page = 1;
 		TitleText = "";
 		_isInShopping = true;
 		_lastRequestKeyDbfIds = new List<int>();

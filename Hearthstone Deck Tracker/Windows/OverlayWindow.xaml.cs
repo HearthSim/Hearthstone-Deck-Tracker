@@ -275,7 +275,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				// Panel is set to 65% width in BattlegroundsInspiration.xaml
 				// If the panel if close to or 80% wide, it should be slightly offset to the left to not cover the timer
 				GetLeft = () => Helper.GetScaledXPos((1 - 0.65)/2, (int)Width, ScreenRatio),
-				GetTop = () => Height * 0.1,
+				GetTop = () => Height * 0.13,
 				GetScaling = () => Height / 1080,
 				AnchorSide = Side.Top,
 				EntranceAnimation = AnimationType.Slide,

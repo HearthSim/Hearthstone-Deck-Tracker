@@ -14,7 +14,7 @@
         Max width of this to not cover too much of the screen is 1080 / 3 * 4 * 0.8 = 1152 (i.e. 80% of the center 4:3)
         Current value (1008) is 65% of the inner 4:3. The OverlayElementBehavior in OverlayWindow.xaml.cs needs to match this.
     -->
-    <Border Width="936" Height="864" BorderBrush="#4A5256" BorderThickness="1" Background="#2E3235" CornerRadius="5">
+    <Border Width="936" Height="800" BorderBrush="#4A5256" BorderThickness="1" Background="#2E3235" CornerRadius="5">
         <Border.Effect>
             <DropShadowEffect BlurRadius="25" ShadowDepth="0" />
         </Border.Effect>
@@ -41,6 +41,36 @@
                     <TextBlock Text="{Binding MMRText}" Foreground="White" Opacity="0.8" HorizontalAlignment="Right"/>
                 </Grid>
             </Border>
+            <Border DockPanel.Dock="Bottom" Background="#1C2022" CornerRadius="0,0,5,5" Height="40">
+                <Grid Margin="6">
+                    <ItemsControl ItemsSource="{Binding PageButtons}" HorizontalAlignment="Center">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Margin="4,0" Width="40"
+                                        Command="{Binding Path=DataContext.SetPageCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding Page}">
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource SquareButtonStyle}" TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                    <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}"/>
+                                                    <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <TextBlock Text="{Binding Page}"/>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Border>
             <Grid>
                 <mah:ProgressRing IsActive="True" Foreground="White" Width="40" Height="40"
                                   Visibility="{Binding IsLoadingData, Converter={StaticResource BoolToVisibility}}"
@@ -49,12 +79,7 @@
                            Visibility="{Binding HasNoGames, Converter={StaticResource BoolToVisibility}}"
                            VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <ItemsControl Visibility="{Binding IsLoadingData, Converter={StaticResource InverseBoolToVisibility}}"
-                              ItemsSource="{Binding Games}"
-                              ScrollViewer.CanContentScroll="True"
-                              ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                              VirtualizingPanel.ScrollUnit="Pixel"
-                              VirtualizingStackPanel.VirtualizationMode="Recycling">
+                              ItemsSource="{Binding Games}">
                     <ItemsControl.Resources>
                         <Style TargetType="controls:BattlegroundsMinion">
                             <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
@@ -137,18 +162,6 @@
                             <Setter Property="BorderBrush" Value="Transparent"/>
                         </Style>
                     </ItemsControl.Resources>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.Template>
-                        <ControlTemplate>
-                            <ScrollViewer>
-                                <ItemsPresenter/>
-                            </ScrollViewer>
-                        </ControlTemplate>
-                    </ItemsControl.Template>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border BorderThickness="0,0,0,1" BorderBrush="#4A5256">
