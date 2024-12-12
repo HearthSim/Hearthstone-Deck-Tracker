@@ -675,7 +675,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			IEnumerable<string> heroPowers = _game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id);
 			if(!heroPowers.Any() && _game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
 			{
-				var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(GameTag.BACON_SKIN)));
+				var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(GameTag.BACON_SKIN)) && !x.HasTag(GameTag.BACON_LOCKED_MULLIGAN_HERO));
 				heroPowers = heroes.Select(x => Database.GetCardFromDbfId(x.GetTag(GameTag.HERO_POWER), collectible: false)?.Id ?? "");
 			}
 			BattlegroundsMinionsVM.OnHeroPowers(heroPowers);

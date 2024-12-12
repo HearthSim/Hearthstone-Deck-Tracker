@@ -5,9 +5,10 @@
   *Abominable Bowman, All Fel Breaks Loose, Amulet of Undying, Animate Dead, Anyfin Can Happen, Bloodreaver Gul'dan, Body Wrapper, Bonecaller, Boneshredder, Catrina Muerte, Counterfeit Blade, Da Undatakah, Defense Attorney Nathanos, Eternal Servitude, Habeas Corpses, Hadronox, Infantry Reanimator, Jewel of N'Zoth, Lesser Diamond Spell Stone, Mass Resurrection, N'Zoth, God of the Deep, N'Zoth, The Corruptor, Onyx Bishop, Psychopomp, Raise Dead, Rally!, Resurrect, Revive Pet, Tamsin's Phylactery, Tomb Lurker, Twilight's Call, Unending Swarm, Vectus, Witching Hour, Xyrella, the Devout*
 
 **Battlegrounds**:
-- Added counters for Beetles stats, Spells played and Undead attack bonus.
-- Fixed Tier7 hero picking stats not updating when rerolling a skin.
-- Fixed the last games in the session widget showing the wrong hero when a skin was rerolled.
+- Added counters for Beetle stats, Spells played and the the Undead attack bonus.
+- Fixed the latest games in the session recap showing the wrong hero after rerolling a skin.
+- Fixed Tier7 hero pick stats not updating when rerolling a skin.
+- Fixed Tier7 hero pick stats showing for the locked heroes.
 
 ## **Release v1.37.5 - 2024-12-03**
 **Updated for Hearthstone 31.2.0**

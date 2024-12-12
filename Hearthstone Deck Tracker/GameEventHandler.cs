@@ -1464,7 +1464,7 @@ namespace Hearthstone_Deck_Tracker
 			for(var i = 0; i < 10; i++)
 			{
 				await Task.Delay(500);
-				heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN))).ToList();
+				heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN)) && !x.HasTag(BACON_LOCKED_MULLIGAN_HERO)).ToList();
 				if(heroes.Count() >= 2)
 					break;
 			}
@@ -1622,7 +1622,7 @@ namespace Hearthstone_Deck_Tracker
 		private int battlegroundsHeroPickingLatch = 0;
 		private async Task RefreshBattlegroundsHeroPickStats()
 		{
-			var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN))).ToList();
+			var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN)) && !x.HasTag(BACON_LOCKED_MULLIGAN_HERO)).ToList();
 
 			// refresh the offered heroes
 			_game.SnapshotBattlegroundsOfferedHeroes(heroes);
