@@ -1,7 +1,8 @@
 ## Unreleased
 **Hearthstone**:
 - Added related card tooltip to Grand Magister Rommath.
-- Added related card tooltips to most cards that resurrect from the Graveyard.
+- Added related card tooltips to most cards that resurrect from the Graveyard.\
+  *Abominable Bowman, All Fel Breaks Loose, Amulet of Undying, Animate Dead, Anyfin Can Happen, Bloodreaver Gul'dan, Body Wrapper, Bonecaller, Boneshredder, Catrina Muerte, Counterfeit Blade, Da Undatakah, Defense Attorney Nathanos, Eternal Servitude, Habeas Corpses, Hadronox, Infantry Reanimator, Jewel of N'Zoth, Lesser Diamond Spell Stone, Mass Resurrection, N'Zoth, God of the Deep, N'Zoth, The Corruptor, Onyx Bishop, Psychopomp, Raise Dead, Rally!, Resurrect, Revive Pet, Tamsin's Phylactery, Tomb Lurker, Twilight's Call, Unending Swarm, Vectus, Witching Hour, Xyrella, the Devout*
 
 **Battlegrounds**:
 - Added counters for Beetles stats, Spells played and Undead attack bonus.
@@ -12,8 +13,7 @@
 **Updated for Hearthstone 31.2.0**
 
 **Battlegrounds**:
-- Update Tier7 hero picking overlay for hero reroll.\
-  *They might take a time to load*
+- Updated Tier7 hero picking overlay for hero rerolling.
 
 **Plugins**:
 - Fixed compatibility with some older plugins relying on a deprecated property.
