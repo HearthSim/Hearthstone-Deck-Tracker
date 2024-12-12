@@ -117,4 +117,7 @@ public static class CardUtils
 		var card = Database.GetCardFromId(entity.CardId);
 		return card?.HandleZilliax3000(player);
 	}
+
+	public static bool HasDeathrattle(this Card card) => card.Mechanics?.Contains("Deathrattle") ?? false;
+	public static bool HasTaunt(this Card card) => card.Mechanics?.Contains("Taunt") ?? false;
 }

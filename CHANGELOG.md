@@ -1,7 +1,7 @@
 ## Unreleased
 **Hearthstone**:
 - Added related card tooltip to Grand Magister Rommath.
-- Added related card tooltips to many graveyard cards (such as Resurrect).
+- Added related card tooltips to most cards that resurrect from the Graveyard.
 
 **Battlegrounds**:
 - Added counters for Beetles stats, Spells played and Undead attack bonus.
