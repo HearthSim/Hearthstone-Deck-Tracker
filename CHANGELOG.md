@@ -4,8 +4,9 @@
 - Added related card tooltips to many graveyard cards (such as Resurrect).
 
 **Battlegrounds**:
-- Fixed Tier7 hero picking stats not updating when rerolling a skin.
 - Added counters for Beetles stats, Spells played and Undead attack bonus.
+- Fixed Tier7 hero picking stats not updating when rerolling a skin.
+- Fixed the last games in the session widget showing the wrong hero when a skin was rerolled.
 
 ## **Release v1.37.5 - 2024-12-03**
 **Updated for Hearthstone 31.2.0**
