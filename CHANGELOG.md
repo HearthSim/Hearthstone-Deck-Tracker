@@ -1,8 +1,12 @@
+## Unreleased
+**Battlegrounds**:
+- Fixed Tier7 hero picking stats not updating when rerolling a skin.
+
 ## **Release v1.37.5 - 2024-12-03**
 **Updated for Hearthstone 31.2.0**
 
 **Battlegrounds**:
-- Update tier 7 hero picking overlay for hero reroll.\
+- Update Tier7 hero picking overlay for hero reroll.\
   *They might take a time to load*
 
 **Plugins**:
