@@ -10,5 +10,5 @@ public class WakenerOfSouls: ResurrectionCard
 	                                                 && card.Id != HearthDb.CardIds.Collectible.Deathknight.WakenerOfSouls
 	                                                 && card.Mechanics.Contains("Deathrattle");
 
-	protected override bool ResurrectsMultipleCards() => throw new System.NotImplementedException();
+	protected override bool ResurrectsMultipleCards() => false;
 }
