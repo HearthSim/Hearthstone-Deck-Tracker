@@ -18,7 +18,7 @@ public static class LogConstants
 	public static class PowerTaskList
 	{
 		public static readonly Regex BlockStartRegex =
-			CompileRegex(@".*BLOCK_START.*BlockType=(?<type>(\w+)).*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*player=(?<player>\d).*EffectCardId=(?<effectCardId>(.*))\sEffectIndex=.*Target=(?<target>(.+)).*SubOption=(?<subOption>(.+))");
+			CompileRegex(@".*BLOCK_START.*BlockType=(?<type>(\w+)).*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*player=(?<player>\d).*EffectCardId=(?<effectCardId>(.*))\sEffectIndex=.*Target=(?<target>(.+)).*SubOption=(?<subOption>[^T]+)(?:TriggerKeyword=(?<triggerKeyword>\w+))?");
 
 		public static readonly Regex CardIdRegex = CompileRegex(@"cardId=(?<cardId>(\w+))");
 		public static readonly Regex CreationRegex = CompileRegex(@"FULL_ENTITY - Updating.*id=(?<id>(\d+)).*zone=(?<zone>(\w+)).*CardID=(?<cardId>(\w*))");

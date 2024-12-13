@@ -784,14 +784,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(!game.Entities.TryGetValue(id, out var entity))
 							return;
-						gameState.GameHandler?.HandleOpponentSecretTrigger(entity, cardId, gameState.GetTurnNumber(), id);
-					}
-					else
-					{
-						if(!game.Entities.TryGetValue(id, out var entity))
-							return;
-						if (entity.CardId != null)
-							gameState.GameHandler?.HandlePlayerSecretTrigger(entity, cardId, gameState.GetTurnNumber(), id);
+
+						game.SecretsManager.RemoveSecret(entity);
+						Core.UpdateOpponentCards();
 					}
 					break;
 				case Zone.SETASIDE:

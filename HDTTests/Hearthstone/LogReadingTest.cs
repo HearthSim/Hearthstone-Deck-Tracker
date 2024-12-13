@@ -16,7 +16,6 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestBlockStartSubOption()
 		{
-			//TODO: Fix suboption/triggerKeyword matching - suboption is not used currently
 			var subOptionMatch = LogConstants.PowerTaskList.BlockStartRegex.Match(BlockStartSubOption);
 			Assert.IsTrue(subOptionMatch.Success);
 			Assert.AreEqual("PLAY", subOptionMatch.Groups["type"].Value);
@@ -31,7 +30,8 @@ namespace HDTTests.Hearthstone
 			Assert.AreEqual("79", triggerKeywordMatch.Groups["id"].Value);
 			Assert.AreEqual(string.Empty, triggerKeywordMatch.Groups["Id"].Value);
 			Assert.AreEqual("0 ", triggerKeywordMatch.Groups["target"].Value);
-			Assert.AreEqual("-1 TriggerKeyword=TAG_ONE_TURN_EFFECT", triggerKeywordMatch.Groups["subOption"].Value);
+			Assert.AreEqual("-1 ", triggerKeywordMatch.Groups["subOption"].Value);
+			Assert.AreEqual("TAG_ONE_TURN_EFFECT", triggerKeywordMatch.Groups["triggerKeyword"].Value);
 
 			var triggerTargetEntity = LogConstants.PowerTaskList.BlockStartRegex.Match(BlockStartTargetEntity);
 			Assert.IsTrue(triggerTargetEntity.Success);

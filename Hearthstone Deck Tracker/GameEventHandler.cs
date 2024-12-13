@@ -2317,6 +2317,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (!entity.IsSecret)
 				return;
+			_game.Opponent.SecretTriggered(entity, turn);
 			_game.Opponent.OpponentSecretTriggered(entity, turn);
 			_game.SecretsManager.RemoveSecret(entity);
 			Core.UpdateOpponentCards();

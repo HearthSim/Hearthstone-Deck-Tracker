@@ -440,6 +440,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var cardId = match.Success ? match.Groups["Id"].Value : null;
 				var target = GetTargetCardId(match);
 				var correspondPlayer = match.Success ? int.Parse(match.Groups["player"].Value) : -1;
+				var triggerKeyword = match.Success ? match.Groups["triggerKeyword"].Value : null;
 				gameState.BlockStart(blockType, cardId, target);
 
 				if(match.Success && (blockType == "TRIGGER" || blockType == "POWER"))
@@ -764,6 +765,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									}
 								}
 								break;
+						}
+
+						if(triggerKeyword == "SECRET")
+						{
+							if(actionStartingEntity != null)
+							{
+								if(actionStartingEntity.IsControlledBy(game.Player.Id))
+								{
+									gameState.GameHandler?.HandlePlayerSecretTrigger(actionStartingEntity, cardId,
+										gameState.GetTurnNumber(), actionStartingEntityId);
+								}
+								else
+								{
+									gameState.GameHandler?.HandleOpponentSecretTrigger(actionStartingEntity, cardId,
+										gameState.GetTurnNumber(), actionStartingEntityId);
+								}
+							}
 						}
 					}
 					else //POWER
