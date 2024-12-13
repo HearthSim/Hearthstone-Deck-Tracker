@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
              SizeChanged="UserControl_SizeChanged"
+             Loaded="CardImage_OnLoaded"
+             Unloaded="CardImage_OnUnloaded"
              d:DesignHeight="256" d:DesignWidth="256">
     <UserControl.Resources>
         <Storyboard x:Key="StoryboardExpand">
@@ -22,18 +23,18 @@
         <Grid.RenderTransform>
             <ScaleTransform/>
         </Grid.RenderTransform>
-        <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="CreatedByInfo" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding CreatedByVisibility}" Text="{Binding CreatedByText}" d:Text="Created By" FontSize="16"/>
+        <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="CreatedByInfo" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding CreatedByVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Text="{Binding CreatedByText, RelativeSource={RelativeSource AncestorType=UserControl}}" d:Text="Created By" FontSize="16"/>
         <Image HorizontalAlignment="Center" Margin="0 12 0 0"
               MaxWidth="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
               MaxHeight="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}"
-              Source="{Binding LoadingImageSource, TargetNullValue={x:Null}}"
+              Source="{Binding LoadingImageSource, TargetNullValue={x:Null}, RelativeSource={RelativeSource AncestorType=UserControl}}"
               d:Source="{StaticResource LoadingMinion}"
               RenderOptions.BitmapScalingMode="Fant">
         </Image>
         <Image x:Name="CardImageDisplay" HorizontalAlignment="Center" Margin="0 12 0 0"
               MaxWidth="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
               MaxHeight="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}"
-              Source="{Binding CardAsset, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant">
+              Source="{Binding CardAsset, TargetNullValue={x:Null}, RelativeSource={RelativeSource AncestorType=UserControl}}" RenderOptions.BitmapScalingMode="Fant">
         </Image>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -48,9 +49,9 @@
             </Grid.RowDefinitions>
             <Canvas Grid.Column="1" Grid.Row="1">
                 <Canvas.RenderTransform>
-                    <ScaleTransform ScaleX="{Binding IconScaling}" ScaleY="{Binding IconScaling}"/>
+                    <ScaleTransform ScaleX="{Binding IconScaling, RelativeSource={RelativeSource AncestorType=UserControl}}" ScaleY="{Binding IconScaling, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 </Canvas.RenderTransform>
-                <Grid ClipToBounds="False" Canvas.Top="-20" Canvas.Left="-20" Visibility="{Binding QuestionmarkVisibility}" d:Visibility="Collapsed">
+                <Grid ClipToBounds="False" Canvas.Top="-20" Canvas.Left="-20" Visibility="{Binding QuestionmarkVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" d:Visibility="Collapsed">
                     <Ellipse Width="40" Height="40" Fill="#141617" />
                     <Ellipse Width="36" Height="36" Fill="#23272A" />
                     <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="UnknownIndicator" HorizontalAlignment="Center" VerticalAlignment="Center" Text="?" FontSize="28" />

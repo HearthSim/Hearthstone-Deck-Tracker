@@ -12,6 +12,20 @@ namespace Hearthstone_Deck_Tracker.Controls
 {
 	public partial class CardImage : INotifyPropertyChanged
 	{
+		public static readonly DependencyProperty CardProperty = DependencyProperty.Register(nameof(Card), typeof(Hearthstone.Card), typeof(CardImage), new PropertyMetadata(null, OnCardPropertyChanged));
+
+		private static void OnCardPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if(d is CardImage cardImage)
+				cardImage.SetCardIdFromCard(e.NewValue as Hearthstone.Card);
+		}
+
+		public Hearthstone.Card? Card
+		{
+			get { return (Hearthstone.Card)GetValue(CardProperty); }
+			set { SetValue(CardProperty, value); }
+		}
+
 		private string? _cardId;
 		public string? CardId
 		{
@@ -150,6 +164,17 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			OnPropertyChanged(nameof(IconScaling));
+		}
+
+		private void CardImage_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			if(Card != null)
+				SetCardIdFromCard(Card);
+		}
+
+		private void CardImage_OnUnloaded(object sender, RoutedEventArgs e)
+		{
+			CardId = null;
 		}
 	}
 }

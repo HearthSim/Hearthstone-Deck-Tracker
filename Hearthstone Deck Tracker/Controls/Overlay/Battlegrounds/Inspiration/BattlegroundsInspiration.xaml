@@ -6,7 +6,8 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
         xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
-        xmlns:lex="http://wpflocalizeextension.codeplex.com">
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions">
     <UserControl.DataContext>
         <inspiration:BattlegroundsInspirationViewModel/>
     </UserControl.DataContext>
@@ -84,18 +85,12 @@
                         <Style TargetType="controls:BattlegroundsMinion">
                             <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                             <Setter Property="Cursor" Value="Hand"/>
-                            <Setter Property="ToolTipService.ShowDuration" Value="60000"/>
-                            <Setter Property="ToolTipService.InitialShowDelay" Value="300"/>
                             <Setter Property="ToolTipService.Placement" Value="Right"/>
-                            <Setter Property="ToolTip">
+                            <Setter Property="ext:OverlayExtensions.ToolTip">
                                 <Setter.Value>
-                                    <ToolTip VerticalOffset="-40">
-                                        <controls:CardImage />
-                                    </ToolTip>
+                                    <controls:CardImage Card="{Binding Card}" />
                                 </Setter.Value>
                             </Setter>
-                            <EventSetter Event="ToolTipService.ToolTipOpening" Handler="ToolTipService_OnToolTipOpening"/>
-                            <EventSetter Event="ToolTipService.ToolTipClosing" Handler="ToolTipService_OnToolTipClosing"/>
                             <EventSetter Event="MouseDown" Handler="BattlegroundsMinion_OnMouseDown"/>
                             <Style.Triggers>
                                 <Trigger Property="controls:BattlegroundsMinion.IsMouseOver" Value="True">
@@ -110,18 +105,12 @@
                         <Style TargetType="controls:HeroPower">
                             <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                             <Setter Property="Cursor" Value="Hand"/>
-                            <Setter Property="ToolTipService.ShowDuration" Value="60000"/>
-                            <Setter Property="ToolTipService.InitialShowDelay" Value="300"/>
                             <Setter Property="ToolTipService.Placement" Value="Right"/>
-                            <Setter Property="ToolTip">
+                            <Setter Property="ext:OverlayExtensions.ToolTip">
                                 <Setter.Value>
-                                    <ToolTip VerticalOffset="-40">
-                                        <controls:CardImage />
-                                    </ToolTip>
+                                    <controls:CardImage Card="{Binding Card}" />
                                 </Setter.Value>
                             </Setter>
-                            <EventSetter Event="ToolTipService.ToolTipOpening" Handler="ToolTipService_OnToolTipOpening"/>
-                            <EventSetter Event="ToolTipService.ToolTipClosing" Handler="ToolTipService_OnToolTipClosing"/>
                             <EventSetter Event="MouseDown" Handler="HeroPower_OnMouseDown"/>
                             <Style.Triggers>
                                 <Trigger Property="controls:HeroPower.IsMouseOver" Value="True">
@@ -135,18 +124,12 @@
                         </Style>
                         <Style TargetType="controls:Trinket">
                             <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-                            <Setter Property="ToolTipService.ShowDuration" Value="60000"/>
-                            <Setter Property="ToolTipService.InitialShowDelay" Value="300"/>
                             <Setter Property="ToolTipService.Placement" Value="Right"/>
-                            <Setter Property="ToolTip">
+                            <Setter Property="ext:OverlayExtensions.ToolTip">
                                 <Setter.Value>
-                                    <ToolTip VerticalOffset="-40">
-                                        <controls:CardImage />
-                                    </ToolTip>
+                                    <controls:CardImage Card="{Binding Card}" />
                                 </Setter.Value>
                             </Setter>
-                            <EventSetter Event="ToolTipService.ToolTipOpening" Handler="ToolTipService_OnToolTipOpening"/>
-                            <EventSetter Event="ToolTipService.ToolTipClosing" Handler="ToolTipService_OnToolTipClosing"/>
                             <Style.Triggers>
                                 <Trigger Property="controls:Trinket.IsMouseOver" Value="True">
                                     <Setter Property="controls:Trinket.RenderTransform">
@@ -255,7 +238,7 @@
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <controls:BattlegroundsMinion DataContext="{Binding}" Margin="-4,0" />
+                                                        <controls:BattlegroundsMinion DataContext="{Binding}" Margin="-4,0"/>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>

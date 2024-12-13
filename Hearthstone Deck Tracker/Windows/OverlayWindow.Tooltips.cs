@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using BobsBuddy.Factory;
 using HearthDb;
 using HearthDb.Enums;
 using HearthMirror;
@@ -31,6 +31,112 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class OverlayWindow
 	{
+		private readonly Dictionary<FrameworkElement, FrameworkElement> _activeTooltips = new();
+		private void SetTooltip(FrameworkElement? tooltip, FrameworkElement target)
+		{
+			if(_activeTooltips.TryGetValue(target, out var current))
+			{
+				_activeTooltips.Remove(target);
+				OverlayTooltip.Children.Remove(current);
+			}
+
+			if(tooltip == null)
+				return;
+
+			// The content of OverlayExtensions.ToolTip is not part of the visual tree (OverlayExtensions.ToolTip is
+			// a property, not a framework element), and does therefore not have a DataContext.For bindings to work
+			// correctly we need to set it here to match the target.
+			tooltip.DataContext = target.DataContext;
+
+			_activeTooltips[target] = tooltip;
+			OverlayTooltip.Children.Add(tooltip);
+
+			// Force a layout update so that ActualWidth and ActualHeight are seg
+			tooltip.UpdateLayout();
+
+			// Normalize placement to a direction. We don't support the other, more advanced, placement methods.
+			var placement = ToolTipService.GetPlacement(target) switch
+			{
+				PlacementMode.Top => PlacementMode.Top,
+				PlacementMode.Bottom => PlacementMode.Bottom,
+				PlacementMode.Left => PlacementMode.Left,
+				_ => PlacementMode.Right,
+			};
+
+			var point = target.TransformToAncestor(this).Transform(new Point(0, 0));
+
+			// Correct placement if tooltip would go outside of window
+			switch (placement)
+			{
+				case PlacementMode.Top:
+					if(point.Y - tooltip.ActualHeight < 0)
+						placement = PlacementMode.Bottom;
+					break;
+				case PlacementMode.Bottom:
+					if(point.Y + tooltip.ActualHeight > ActualHeight)
+						placement = PlacementMode.Top;
+					break;
+				case PlacementMode.Left:
+					if(point.X - tooltip.ActualWidth < 0)
+						placement = PlacementMode.Right;
+					break;
+				case PlacementMode.Right:
+					if(point.X + tooltip.ActualWidth > ActualWidth)
+						placement = PlacementMode.Left;
+					break;
+			}
+
+
+			(double x, double y) GetScaledSize(FrameworkElement? element)
+			{
+				if(element == null)
+					return (0, 0);
+				double width = element.ActualWidth, height = element.ActualHeight;
+				while(element != null)
+				{
+					if(element.RenderTransform is ScaleTransform sr)
+					{
+						width *= sr.ScaleX;
+						height *= sr.ScaleY;
+					}
+					if(element.LayoutTransform is ScaleTransform sl)
+					{
+						width *= sl.ScaleX;
+						height *= sl.ScaleY;
+					}
+					element = VisualTreeHelper.GetParent(element) as FrameworkElement;
+				}
+				return (width, height);
+			}
+
+			var (targetWidth, targetHeight) = GetScaledSize(target);
+			var (tooltipWidth, tooltipHeight) = GetScaledSize(tooltip);
+
+			double ClampX(double value) => Math.Max(0, Math.Min(value, ActualWidth - tooltipWidth));
+			double ClampY(double value) => Math.Max(0, Math.Min(value, ActualHeight - tooltipHeight));
+
+			// Actually set position of tooltip
+			switch (placement)
+			{
+				case PlacementMode.Top:
+					Canvas.SetLeft(OverlayTooltip, ClampX(point.X + targetWidth / 2 - tooltipWidth / 2));
+					Canvas.SetTop(OverlayTooltip, ClampY(point.Y - tooltipHeight));
+					break;
+				case PlacementMode.Bottom:
+					Canvas.SetLeft(OverlayTooltip, ClampX(point.X + targetWidth / 2 - tooltipWidth / 2));
+					Canvas.SetTop(OverlayTooltip, ClampY(point.Y + targetHeight));
+					break;
+				case PlacementMode.Left:
+					Canvas.SetLeft(OverlayTooltip, ClampX(point.X - tooltipWidth));
+					Canvas.SetTop(OverlayTooltip, ClampY(point.Y + targetHeight / 2 - tooltipHeight/ 2));
+					break;
+				case PlacementMode.Right:
+					Canvas.SetLeft(OverlayTooltip, ClampX(point.X + targetWidth));
+					Canvas.SetTop(OverlayTooltip, ClampY(point.Y + targetHeight / 2 - tooltipHeight / 2));
+					break;
+			}
+		}
+
 		#region CardTooltips
 		private const int TooltipDelayMilliseconds = 400;
 		private DateTime? _tooltipHoverStart = null;

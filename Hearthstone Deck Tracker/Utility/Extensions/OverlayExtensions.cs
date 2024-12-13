@@ -6,7 +6,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions;
 
 public delegate void MouseIntersectionChangedEventHandler(object sender, bool intersecting);
 
-public class OverlayExtensions : DependencyObject
+public partial class OverlayExtensions : DependencyObject
 {
 	public static Dictionary<FrameworkElement, RoutedEventHandler> UnregisterCallbacks = new Dictionary<FrameworkElement, RoutedEventHandler>();
 

@@ -155,6 +155,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_hoverableElements.Remove(e);
 			};
 
+			OverlayExtensions.OnToolTipChanged += SetTooltip;
+
 			_game = game;
 
 			for(int i = 0; i < MaxBoardSize; i++)
