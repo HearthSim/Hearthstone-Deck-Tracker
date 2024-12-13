@@ -511,8 +511,7 @@ namespace Hearthstone_Deck_Tracker
 			deck.Edited();
 			DeckList.Instance.Decks.Add(deck);
 			DeckList.Save();
-			Core.MainWindow.DeckPickerList.SelectDeckAndAppropriateView(deck);
-			Core.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] { deck });
+			Core.MainWindow.DeckPickerList.SelectDeckAndAppropriateView(deck, forceUpdate: true);
 			Core.MainWindow.SelectDeck(deck, true);
 			if(invokeApi)
 				DeckManagerEvents.OnDeckCreated.Execute(deck);

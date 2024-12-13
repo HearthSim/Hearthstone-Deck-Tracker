@@ -489,7 +489,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			OnSelectedDeckChanged?.Invoke(this, SelectedDecks);
 		}
 
-		public void SelectDeckAndAppropriateView(Deck deck)
+		public void SelectDeckAndAppropriateView(Deck deck, bool forceUpdate = false)
 		{
 			if(deck == null)
 				return;
@@ -546,7 +546,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				Core.MainWindow.SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 			}
 
-			UpdateDecks(false);
+			UpdateDecks(false, forceUpdate: forceUpdate ? new[] { deck } : null);
 			SelectDeck(deck);
 			var dpi = _displayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
 			if(dpi != null)
