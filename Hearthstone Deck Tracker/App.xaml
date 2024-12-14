@@ -97,6 +97,7 @@
                     <utility:GlobalCommands x:Key="GlobalCommands"/>
                     <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
                     <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+                    <converters:NullableToVisibilityConverter x:Key="NullableToVisibility"/>
                     <converters:EnumToVisibilityConverter x:Key="EnumToVisibility"/>
                     <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
                 </ResourceDictionary>

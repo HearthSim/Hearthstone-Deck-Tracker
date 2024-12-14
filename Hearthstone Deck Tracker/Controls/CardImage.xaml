@@ -7,8 +7,6 @@
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
              SizeChanged="UserControl_SizeChanged"
-             Loaded="CardImage_OnLoaded"
-             Unloaded="CardImage_OnUnloaded"
              d:DesignHeight="256" d:DesignWidth="256">
     <UserControl.Resources>
         <Storyboard x:Key="StoryboardExpand">

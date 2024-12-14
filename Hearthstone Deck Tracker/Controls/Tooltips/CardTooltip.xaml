@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Tooltips.CardTooltip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d"
+             d:DesignHeight="256" d:DesignWidth="256">
+    <UserControl.Resources>
+        <controls:CardImageSizeConverter x:Key="CardImageSizeConverter"/>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
+        </Style>
+        <Storyboard x:Key="StoryboardShow">
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.2" />
+        </Storyboard>
+        <Storyboard x:Key="StoryboardShowDelayed">
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.2" BeginTime="0:0:0.8" />
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.2" BeginTime="0:0:0.8" />
+        </Storyboard>
+        <Storyboard x:Key="StoryboardHide">
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="0" Duration="0:0:0" />
+            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="0" Duration="0:0:0" />
+        </Storyboard>
+    </UserControl.Resources>
+    <DockPanel DataContext="{Binding ViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}">
+
+        <!-- Primary Image -->
+        <Grid DockPanel.Dock="{Binding ImageDock}" Visibility="{Binding AssetViewModel, Converter={StaticResource NullableToVisibility}, ConverterParameter={x:Static Visibility.Hidden}}" RenderTransformOrigin="0.5,0.5"
+              MaxWidth="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
+              MaxHeight="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}">
+            <Grid.RenderTransform>
+                <ScaleTransform ScaleX="0" ScaleY="0"/>
+            </Grid.RenderTransform>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource StoryboardShow}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource StoryboardHide}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <hdt:HearthstoneTextBlock Text="{Binding CreatedBy}" Visibility="{Binding CreatedBy, Converter={StaticResource NullableToVisibility}}" HorizontalAlignment="Center" VerticalAlignment="Top" d:Text="Created By" FontSize="16"/>
+            <Image Source="{Binding AssetViewModel.Asset}" HorizontalAlignment="Center" />
+        </Grid>
+
+        <!-- Secondary Image, e.g. Battlegrounds Triple -->
+        <Image DockPanel.Dock="{Binding ImageDock}" Source="{Binding SecondaryAssetViewModel.Asset}" Visibility="{Binding SecondaryAssetViewModel, Converter={StaticResource NullableToVisibility}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <ScaleTransform ScaleX="0" ScaleY="0"/>
+            </Image.RenderTransform>
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource StoryboardShowDelayed}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource StoryboardHide}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+    </DockPanel>
+</UserControl>

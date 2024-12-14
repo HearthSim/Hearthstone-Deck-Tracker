@@ -2,65 +2,66 @@
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public class CardAssetViewModel : ViewModel
 	{
-		private Hearthstone.Card? _card { get; set; }
+		public Hearthstone.Card? Card { get; }
 		private readonly AssetDownloader<Hearthstone.Card, BitmapImage>? _assetDownloader;
 
 		public CardAssetViewModel(Hearthstone.Card? card, CardAssetType type)
 		{
-			_card = card;
+			Card = card;
 			_assetDownloader = AssetDownloaders.GetCardAssetDownloader(type);
-			_asset = _assetDownloader?.PlaceholderAsset;
+			if(card != null)
+				Asset = _assetDownloader?.TryGetAssetData(card);
+
+			if(Asset == null)
+			{
+				if(card != null && type == CardAssetType.FullImage)
+				{
+					Asset = Application.Current.TryFindResource(card.TypeEnum switch
+					{
+						CardType.HERO => "LoadingHero",
+						CardType.MINION => "LoadingMinion",
+						CardType.WEAPON => "LoadingWeapon",
+						_ => "LoadingSpell",
+					}) as ImageSource;
+				}
+				else
+					Asset = _assetDownloader?.PlaceholderAsset;
+			}
 		}
 
-		private BitmapImage? _asset;
-		public BitmapImage? Asset
+		public ImageSource? Asset
 		{
 			get
 			{
-				if(_asset == _assetDownloader?.PlaceholderAsset && !_loading)
-					LoadImage().Forget();
-				return _asset;
+				if(Card == null)
+					return null;
+				var value =  GetProp<ImageSource?>(null);
+				if(value == null)
+					LoadAsset().Forget();
+				return value;
 			}
-			private set
-			{
-				if(value != _asset)
-				{
-					_asset = value;
-					OnPropertyChanged();
-				}
-			}
+			private set => SetProp(value);
 		}
 
 		private bool _loading;
-		private async Task LoadImage()
+		private async Task LoadAsset()
 		{
-			if(_assetDownloader == null)
-				return;
-			var card = _card;
-			if(card == null)
-			{
-				_asset = _assetDownloader?.PlaceholderAsset;
-				return;
-			}
-			if(_loading)
+			if(_loading || Card == null || _assetDownloader == null)
 				return;
 			_loading = true;
-			var asset = await _assetDownloader.GetAssetData(card);
+			var asset = await _assetDownloader.GetAssetData(Card);
 			if(asset != null)
 				Asset = asset;
 			_loading = false;
-		}
-
-		public async Task SetCard(Hearthstone.Card card)
-		{
-			_card = card;
-			await LoadImage();
 		}
 	}
 }

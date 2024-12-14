@@ -7,7 +7,8 @@
         xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
         xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
-        xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions">
+        xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+        xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips">
     <UserControl.DataContext>
         <inspiration:BattlegroundsInspirationViewModel/>
     </UserControl.DataContext>
@@ -88,7 +89,7 @@
                             <Setter Property="ToolTipService.Placement" Value="Right"/>
                             <Setter Property="ext:OverlayExtensions.ToolTip">
                                 <Setter.Value>
-                                    <controls:CardImage Card="{Binding Card}" />
+                                    <tooltips:CardTooltip Card="{Binding Card}" ShowTriple="False" />
                                 </Setter.Value>
                             </Setter>
                             <EventSetter Event="MouseDown" Handler="BattlegroundsMinion_OnMouseDown"/>
@@ -108,7 +109,7 @@
                             <Setter Property="ToolTipService.Placement" Value="Right"/>
                             <Setter Property="ext:OverlayExtensions.ToolTip">
                                 <Setter.Value>
-                                    <controls:CardImage Card="{Binding Card}" />
+                                    <tooltips:CardTooltip Card="{Binding Card}" ShowTriple="False" />
                                 </Setter.Value>
                             </Setter>
                             <EventSetter Event="MouseDown" Handler="HeroPower_OnMouseDown"/>
@@ -127,7 +128,7 @@
                             <Setter Property="ToolTipService.Placement" Value="Right"/>
                             <Setter Property="ext:OverlayExtensions.ToolTip">
                                 <Setter.Value>
-                                    <controls:CardImage Card="{Binding Card}" />
+                                    <tooltips:CardTooltip Card="{Binding Card}" ShowTriple="False" />
                                 </Setter.Value>
                             </Setter>
                             <Style.Triggers>

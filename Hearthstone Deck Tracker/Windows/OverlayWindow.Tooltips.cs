@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects;
+using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -51,8 +52,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_activeTooltips[target] = tooltip;
 			OverlayTooltip.Children.Add(tooltip);
 
-			// Force a layout update so that ActualWidth and ActualHeight are seg
-			tooltip.UpdateLayout();
 
 			// Normalize placement to a direction. We don't support the other, more advanced, placement methods.
 			var placement = ToolTipService.GetPlacement(target) switch
@@ -62,6 +61,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				PlacementMode.Left => PlacementMode.Left,
 				_ => PlacementMode.Right,
 			};
+
+			var placementAwareTooltip = tooltip as IPlacementAware;
+			// Set placement before calculating layout
+			placementAwareTooltip?.SetPlacement(placement);
+
+			// Force a layout update so that ActualWidth and ActualHeight are seg
+			tooltip.UpdateLayout();
 
 			var point = target.TransformToAncestor(this).Transform(new Point(0, 0));
 
@@ -86,6 +92,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					break;
 			}
 
+			// Update placement, since it may have swapped sides. We don't recalculate the size/placement again.
+			// Hopefully the layout of the tooltip should not affect the size when swapping left/right.
+			placementAwareTooltip?.SetPlacement(placement);
 
 			(double x, double y) GetScaledSize(FrameworkElement? element)
 			{
