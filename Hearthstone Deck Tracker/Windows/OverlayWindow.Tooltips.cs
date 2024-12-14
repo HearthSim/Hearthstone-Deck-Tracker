@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -33,7 +34,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public partial class OverlayWindow
 	{
 		private readonly Dictionary<FrameworkElement, FrameworkElement> _activeTooltips = new();
-		private void SetTooltip(FrameworkElement? tooltip, FrameworkElement target)
+		private readonly HashSet<FrameworkElement> _delayedTooltips = new();
+		private async void SetTooltip(FrameworkElement? tooltip, FrameworkElement target)
 		{
 			if(_activeTooltips.TryGetValue(target, out var current))
 			{
@@ -42,7 +44,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			if(tooltip == null)
+			{
+				_delayedTooltips.Remove(target);
 				return;
+			}
+
+			var delay = ToolTipService.GetInitialShowDelay(target);
+			if(delay > 0 && delay != 1000) // 1000 is the default
+			{
+				_delayedTooltips.Add(target);
+				await Task.Delay(delay);
+				if(!_delayedTooltips.Remove(target))
+				{
+					// Already removed. This means SetTooltip was called again with null for the same element.
+					// We no longer want to show it.
+					return;
+				}
+			}
 
 			// The content of OverlayExtensions.ToolTip is not part of the visual tree (OverlayExtensions.ToolTip is
 			// a property, not a framework element), and does therefore not have a DataContext.For bindings to work

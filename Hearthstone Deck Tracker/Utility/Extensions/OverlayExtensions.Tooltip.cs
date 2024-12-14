@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 
 namespace Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -16,7 +15,8 @@ partial class OverlayExtensions
 	/// <summary>
 	/// Renders the value as a ToolTip in the OverlayWindow. Can be configured via <c>ToolTipService</c>.<br/>
 	/// Supported Properties:<br/>
-	/// - <c>ToolTipService.Placement</c> (Left, Top, Bottom, Right) - Default: Right
+	/// - <c>ToolTipService.Placement</c> (Left, Top, Bottom, Right) - Default: Right<br/>
+	/// - <c>ToolTipService.InitialShowDelay</c> Default: 0
 	/// </summary>
 	public static void SetToolTip(DependencyObject obj, FrameworkElement element) => obj.SetValue(ToolTipProperty, element);
 
