@@ -12,11 +12,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 	public class CardAssetViewModel : ViewModel
 	{
 		public Hearthstone.Card? Card { get; }
+		public CardAssetType CardAssetType { get; }
 		private readonly AssetDownloader<Hearthstone.Card, BitmapImage>? _assetDownloader;
 
 		public CardAssetViewModel(Hearthstone.Card? card, CardAssetType type)
 		{
 			Card = card;
+			CardAssetType = type;
 			_assetDownloader = AssetDownloaders.GetCardAssetDownloader(type);
 			if(card != null)
 				Asset = _assetDownloader?.TryGetAssetData(card);
@@ -33,6 +35,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 						_ => "LoadingSpell",
 					}) as ImageSource;
 				}
+				else if(card != null && type == CardAssetType.Hero)
+					Asset = Application.Current.TryFindResource("LoadingHeroFrame") as ImageSource;
 				else
 					Asset = _assetDownloader?.PlaceholderAsset;
 			}

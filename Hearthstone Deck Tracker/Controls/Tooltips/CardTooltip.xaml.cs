@@ -11,8 +11,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Tooltips;
 
 public partial class CardTooltip : IPlacementAware
 {
-	public static readonly DependencyProperty CardProperty = DependencyProperty.Register(nameof(Card), typeof(Hearthstone.Card), typeof(CardTooltip), new PropertyMetadata(null, OnCardPropertyChanged));
-	private static void OnCardPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => (d as CardTooltip)?.UpdateViewModel();
+	private static void Update(DependencyObject d, DependencyPropertyChangedEventArgs e) => (d as CardTooltip)?.UpdateViewModel();
+
+	public static readonly DependencyProperty CardProperty = DependencyProperty.Register(nameof(Card), typeof (Hearthstone.Card), typeof(CardTooltip), new PropertyMetadata(null, Update));
 
 	public Hearthstone.Card? Card
 	{
@@ -20,14 +21,22 @@ public partial class CardTooltip : IPlacementAware
 		set => SetValue(CardProperty, value);
 	}
 
-	public static readonly DependencyProperty ShowTripleProperty = DependencyProperty.Register(nameof(ShowTriple), typeof(bool), typeof(CardTooltip), new PropertyMetadata(false, OnShowTriplePropertyChanged));
-	private static void OnShowTriplePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => (d as CardTooltip)?.UpdateViewModel();
+	public static readonly DependencyProperty ShowTripleProperty = DependencyProperty.Register(nameof(ShowTriple), typeof(bool), typeof(CardTooltip), new PropertyMetadata(false, Update));
 
 	public bool ShowTriple
 	{
 		get => (bool)GetValue(ShowTripleProperty);
 		set => SetValue(ShowTripleProperty, value);
 	}
+
+	public static readonly DependencyProperty CardAssetTypeProperty = DependencyProperty.Register(nameof(CardAssetType), typeof(CardAssetType), typeof(CardTooltip), new PropertyMetadata(CardAssetType.FullImage, Update));
+
+	public CardAssetType CardAssetType
+	{
+		get => (CardAssetType)GetValue(CardAssetTypeProperty);
+		set => SetValue(CardAssetTypeProperty, value);
+	}
+
 
 	public CardTooltip()
 	{
@@ -38,10 +47,10 @@ public partial class CardTooltip : IPlacementAware
 
 	private void UpdateViewModel()
 	{
-		ViewModel.SetCard(Card);
+		ViewModel.SetCard(Card, CardAssetType);
 
 		Hearthstone.Card? secondaryCard = null;
-		if(ShowTriple && Card != null && Cards.NormalToTripleCardIds.TryGetValue(Card.Id, out var tripleId))
+		if(CardAssetType == CardAssetType.FullImage && ShowTriple && Card != null && Cards.NormalToTripleCardIds.TryGetValue(Card.Id, out var tripleId))
 		{
 			secondaryCard = Database.GetCardFromId(tripleId);
 			if(secondaryCard != null)
@@ -50,7 +59,7 @@ public partial class CardTooltip : IPlacementAware
 				secondaryCard.BaconTriple = true;
 			}
 		}
-		ViewModel.SetSecondaryCard(secondaryCard);
+		ViewModel.SetSecondaryCard(secondaryCard, CardAssetType);
 	}
 
 	public void SetPlacement(PlacementMode placement)
@@ -61,10 +70,10 @@ public partial class CardTooltip : IPlacementAware
 
 public class CardTooltipViewModel : ViewModel
 {
-	public void SetCard(Hearthstone.Card? card)
+	public void SetCard(Hearthstone.Card? card, CardAssetType cardAssetType)
 	{
-		if(card?.Id != AssetViewModel?.Card?.Id)
-			AssetViewModel = new CardAssetViewModel(card, CardAssetType.FullImage);
+		if(card?.Id != AssetViewModel?.Card?.Id || cardAssetType != AssetViewModel?.CardAssetType)
+			AssetViewModel = new CardAssetViewModel(card, cardAssetType);
 	}
 
 	public CardAssetViewModel? AssetViewModel
@@ -73,11 +82,11 @@ public class CardTooltipViewModel : ViewModel
 		private set => SetProp(value);
 	}
 
-	public void SetSecondaryCard(Hearthstone.Card? card)
+	public void SetSecondaryCard(Hearthstone.Card? card, CardAssetType cardAssetType)
 	{
 		if(card == null)
 			SecondaryAssetViewModel = null;
-		else if(card.Id != SecondaryAssetViewModel?.Card?.Id)
+		else if(card.Id != SecondaryAssetViewModel?.Card?.Id || cardAssetType != SecondaryAssetViewModel?.CardAssetType)
 			SecondaryAssetViewModel = new CardAssetViewModel(card, CardAssetType.FullImage);
 	}
 
