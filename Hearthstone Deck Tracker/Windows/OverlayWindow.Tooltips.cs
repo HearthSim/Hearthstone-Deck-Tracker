@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private DateTime? _minionBrowserHoverStart = null;
 		private string? _minionBrowserHoverCardId = null;
 
-		public  BigCardState? HoveredCard;
+		public BigCardState? HoveredCard;
 
 		private void UpdateCardTooltip()
 		{

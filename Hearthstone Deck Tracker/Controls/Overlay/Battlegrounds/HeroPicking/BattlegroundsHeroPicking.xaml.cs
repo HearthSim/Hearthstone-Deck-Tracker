@@ -22,7 +22,5 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 				ConfigWrapper.ShowBattlegroundsHeroPicking = newVisibility == Visibility.Visible;
 			}
 		}
-
-		public ICommand SetSelectedHeroDbfIdCommand => new Command<int>(value => ((BattlegroundsHeroPickingViewModel)DataContext).SelectedHeroDbfId = value);
 	}
 }

@@ -53,6 +53,7 @@ public class SceneHandler
 			Watchers.BaconWatcher.Stop();
 			Watchers.BigCardWatcher.Stop();
 			Watchers.ChoicesWatcher.Stop();
+			Watchers.MulliganTooltipWatcher.Stop();
 		}
 	}
 
@@ -81,6 +82,7 @@ public class SceneHandler
 			Watchers.BigCardWatcher.Run();
 			Watchers.ChoicesWatcher.Run();
 			Watchers.BaconWatcher.Run();
+			Watchers.MulliganTooltipWatcher.Run();
 		}
 
 		if(from == Mode.BACON)

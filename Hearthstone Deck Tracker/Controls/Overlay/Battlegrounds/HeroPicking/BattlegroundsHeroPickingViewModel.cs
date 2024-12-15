@@ -78,33 +78,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 
 		public double Scaling { get => GetProp(1.0); set => SetProp(value); }
 
-		public int SelectedHeroDbfId
-		{
-			get => GetProp(0);
-			set
-			{
-				SetProp(value);
-				if(HeroStats == null)
-					return;
-				var selectedHeroIndex = HeroStats.FindIndex(x => x.HeroDbfId == value);
-				if(selectedHeroIndex != -1)
-				{
-					var direction = (selectedHeroIndex >= HeroStats.Count / 2) ? -1 : 1;
-					for(var i = 0; i < HeroStats.Count; i++)
-						HeroStats[i].SetHiddenByHeroPower(
-							i == selectedHeroIndex + direction || (
-								Core.Game.BattlegroundsBuddiesEnabled && i == selectedHeroIndex + 2 * direction
-							)
-						);
-				}
-				else
-				{
-					for(var i = 0; i < HeroStats.Count; i++)
-						HeroStats[i].SetHiddenByHeroPower(false);
-				}
-			}
-		}
-
 		public void SetHeroStats(
 			IEnumerable<BattlegroundsHeroPickStats.BattlegroundsSingleHeroPickStats> stats,
 			Dictionary<string, string>? parameters,

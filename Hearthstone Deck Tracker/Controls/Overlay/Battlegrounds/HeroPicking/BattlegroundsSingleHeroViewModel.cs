@@ -26,13 +26,5 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 			// Hide the "No composition data" message in Duos (unless we start having Comp data there).
 			CompositionsVisibility = Core.Game.IsBattlegroundsDuosMatch && BgsCompsPopularityVM == null ? Collapsed : Visible;
 		}
-
-		/// <summary>
-		/// When the hero power of a neighboring hero hovers this one we hide
-		/// the stats header and armor tier.
-		/// </summary>
-		public Visibility HeroPowerVisibility { get => GetProp(Visible); set => SetProp(value); }
-
-		public void SetHiddenByHeroPower(bool hidden) => HeroPowerVisibility = (hidden ? Collapsed : Visible);
 	}
 }

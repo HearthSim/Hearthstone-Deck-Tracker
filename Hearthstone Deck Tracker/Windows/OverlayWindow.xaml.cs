@@ -610,6 +610,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
+		public void SetHeroPickingTooltipMask(int zoneSize, int zonePosition, bool tooltipOnRight, int numCards)
+		{
+			OpacityMaskOverlay.RemoveMaskedRegion("HeroPickingTooltip");
+
+			if(zoneSize == 0)
+				return;
+
+			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
+
+			var rects = regionDrawer.DrawBgHeroPickingTooltipRegion(zoneSize, zonePosition, tooltipOnRight, numCards);
+			foreach(var rect in rects)
+				OpacityMaskOverlay.AddMaskedRegion("HeroPickingTooltip", rect);
+
+			UpdateOpacityMask();
+		}
+
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{

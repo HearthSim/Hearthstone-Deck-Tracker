@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BigCardWatcher.Change += OnBigCardChange;
 			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
 			BattlegroundsLeaderboardWatcher.Change += (sender, args) => Core.Overlay.SetHoveredBattlegroundsLeaderboardEntityId(args.HoveredEntityId);
+			MulliganTooltipWatcher.Change += OnMulliganTooltipChange;
 		}
 
 		internal static void Stop()
@@ -54,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BigCardWatcher.Stop();
 			BattlegroundsTeammateBoardStateWatcher.Stop();
 			BattlegroundsLeaderboardWatcher.Stop();
+			MulliganTooltipWatcher.Stop();
 		}
 
 		private static readonly Dictionary<int, (string[] choices, string pickStartTime)> _currentArenaDraftInfo = new();
@@ -114,6 +116,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Core.Overlay.HoveredCard = state;
 		}
 
+		internal static void OnMulliganTooltipChange(object sender, HearthWatcher.EventArgs.MulliganTooltipArgs args)
+		{
+			Core.Overlay.SetHeroPickingTooltipMask(
+				args.ZoneSize, args.ZonePosition, args.IsTooltipOnRight, args.TooltipCards.Length
+			);
+		}
+
 		internal static void OnDeckPickerChange(object sender, HearthWatcher.EventArgs.DeckPickerEventArgs args)
 		{
 			Core.Overlay.SetDeckPickerState(args.SelectedFormatType, args.DecksOnPage, args.IsModalOpen);
@@ -161,10 +170,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static DeckPickerWatcher DeckPickerWatcher { get; } = new(new HearthMirrorDeckPickerProvider());
 		public static SceneWatcher SceneWatcher { get; } = new(new HearthMirrorSceneProvider());
 		public static ChoicesWatcher ChoicesWatcher { get; } = new(new HearthMirrorChoicesProvider());
-
 		public static BigCardStateWatcher BigCardWatcher { get; } = new(new HearthMirrorBigCardProvider());
 		public static BattlegroundsTeammateBoardStateWatcher BattlegroundsTeammateBoardStateWatcher { get; } = new(new HearthMirrorBattlegroundsTeammateBoardStateProvider());
 		public static BattlegroundsLeaderboardWatcher BattlegroundsLeaderboardWatcher { get; } = new(new HearthMirrorBattlegroundsLeaderboardProvider());
+		public static MulliganTooltipWatcher MulliganTooltipWatcher { get; } = new(new HearthMirrorMulliganTooltipProvider());
 	}
 
 	public class GameDataProvider : IGameDataProvider
@@ -259,5 +268,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorChoicesProvider : IChoicesProvider
 	{
 		public CardChoices? CurrentChoice => Reflection.Client.GetCardChoices();
+	}
+
+	public class HearthMirrorMulliganTooltipProvider : IMulliganTooltipProvider
+	{
+		public MulliganTooltipState? State => Reflection.Client.GetMulliganTooltipState();
 	}
 }

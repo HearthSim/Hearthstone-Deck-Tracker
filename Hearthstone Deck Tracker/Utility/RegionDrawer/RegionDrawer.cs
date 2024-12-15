@@ -36,6 +36,11 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 		private const double TrinketToToolTipOffsetX = 0.2;
 		private const double TrinketAspectRatio = 25 / (TrinketHeight * 100);
 
+		private const double BgHeroPickHeroWidth = 0.1725;
+		private const double BgHeroPickHeroXSpacing = 0.0635;
+		private const double BgHeroPickTooltipHeight = 0.32;
+		private const double BgHeroPickTooltipAspectRatio = 25 / (BgHeroPickTooltipHeight * 100);
+
 		private double Height { get; }
 		private double Width { get; }
 		private double ScreenRatio { get; }
@@ -53,6 +58,7 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 
 			var heightInPixels = cardHeight * heightScaling * BaseHeight;
 			var widthInPixels = heightInPixels * aspectRatio;
+			//var widthInPixels = cardHeight * heightScaling * BaseHeight * aspectRatio;
 
 			var normalizedHeight = heightInPixels / Height;
 			var normalizedWidth = widthInPixels / Width;
@@ -305,6 +311,31 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 				var rectAttachedCard = DrawCardRegion(offsetX + 0.19, offsetY + 0.015, TrinketHeight, TrinketAspectRatio);
 				regions.Add(rectAttachedCard);
 			}
+
+			return regions;
+		}
+
+		public List<Rect> DrawBgHeroPickingTooltipRegion(int zoneSize, int zonePosition, bool tooltipOnRight, int numCards)
+		{
+			var regions = new List<Rect>();
+
+			// At this time we're only confident about the layout if the zone contains exactly 4 targets
+			// (as is the case for Battlegrounds Hero Picking)
+			if(zoneSize != 4)
+				return regions;
+
+			var totalWidth = zoneSize * BgHeroPickHeroWidth + (zoneSize - 1) * BgHeroPickHeroXSpacing;
+			var leftEdge = 0.50 - totalWidth / 2; //0.065;
+
+			var zoneIndex = Math.Max(zonePosition - 1, 0);
+			var heroX = leftEdge + zoneIndex * (BgHeroPickHeroWidth + BgHeroPickHeroXSpacing); //* 0.2365;
+			var heroY = 0.29;
+
+			var offsetX = heroX + (tooltipOnRight ? 0.135 : -0.16);
+			var offsetY = heroY - 0.075;
+
+			var rectCard = DrawHeroPowerRegion(offsetX, offsetY, 0.39);
+			regions.Add(rectCard);
 
 			return regions;
 		}

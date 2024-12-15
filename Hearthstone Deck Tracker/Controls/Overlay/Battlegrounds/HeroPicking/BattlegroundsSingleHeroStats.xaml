@@ -14,15 +14,14 @@
              d:DesignHeight="568" d:DesignWidth="266">
     <DockPanel Width="266">
 
-        <Grid Visibility="{Binding HeroPowerVisibility}" DockPanel.Dock="Top" >
+        <Grid DockPanel.Dock="Top" >
             <heroPicking:BattlegroundsHeroHeader DataContext="{Binding BgsHeroHeaderVM}" VerticalAlignment="Top"/>
         </Grid>
 
         <!-- Hero Portrait Container -->
-        <Grid Background="#00FF00FF" Margin="0 -237 0 0" Height="285" Visibility="{Binding HeroPowerVisibility}"
+        <Grid Background="#00FF00FF" Margin="0 -237 0 0" Height="285"
               IsHitTestVisible="False"
-              extensions:OverlayExtensions.IsOverlayHoverVisible="True"
-              extensions:OverlayExtensions.OverlayMouseIntersectionChanged="Hero_MouseIntersectionChanged">
+              extensions:OverlayExtensions.IsOverlayHoverVisible="True">
         </Grid>
     </DockPanel>
 </UserControl>

@@ -9,8 +9,9 @@
 - Added counters for Beetle stats, Spells played and the Undead attack bonus.
 - Fixed the latest games in the session recap showing the wrong hero after rerolling a skin.
 - Fixed Sleeping Sea Glass appearing in the available minion list in Duos
-- Fixed Tier7 hero pick stats not updating when rerolling a skin.
-- Fixed Tier7 hero pick stats showing for the locked heroes.
+- Fixed the Tier7 hero picking stats not updating when rerolling a skin.
+- Fixed the Tier7 hero picking stats flickering when hovering over a hero.
+- Fixed the Tier7 hero picking stats showing for locked heroes.
 
 ## **Release v1.37.5 - 2024-12-03**
 **Updated for Hearthstone 31.2.0**
