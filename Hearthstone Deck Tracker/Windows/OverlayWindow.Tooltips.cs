@@ -87,33 +87,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			// Force a layout update so that ActualWidth and ActualHeight are seg
 			tooltip.UpdateLayout();
 
-			var point = target.TransformToAncestor(this).Transform(new Point(0, 0));
-
-			// Correct placement if tooltip would go outside of window
-			switch (placement)
-			{
-				case PlacementMode.Top:
-					if(point.Y - tooltip.ActualHeight < 0)
-						placement = PlacementMode.Bottom;
-					break;
-				case PlacementMode.Bottom:
-					if(point.Y + tooltip.ActualHeight > ActualHeight)
-						placement = PlacementMode.Top;
-					break;
-				case PlacementMode.Left:
-					if(point.X - tooltip.ActualWidth < 0)
-						placement = PlacementMode.Right;
-					break;
-				case PlacementMode.Right:
-					if(point.X + tooltip.ActualWidth > ActualWidth)
-						placement = PlacementMode.Left;
-					break;
-			}
-
-			// Update placement, since it may have swapped sides. We don't recalculate the size/placement again.
-			// Hopefully the layout of the tooltip should not affect the size when swapping left/right.
-			placementAwareTooltip?.SetPlacement(placement);
-
 			(double x, double y) GetScaledSize(FrameworkElement? element)
 			{
 				if(element == null)
@@ -138,6 +111,33 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var (targetWidth, targetHeight) = GetScaledSize(target);
 			var (tooltipWidth, tooltipHeight) = GetScaledSize(tooltip);
+
+			var point = target.TransformToAncestor(this).Transform(new Point(0, 0));
+
+			// Correct placement if tooltip would go outside of window
+			switch (placement)
+			{
+				case PlacementMode.Top:
+					if(point.Y - tooltipHeight < 0)
+						placement = PlacementMode.Bottom;
+					break;
+				case PlacementMode.Bottom:
+					if(point.Y + targetHeight + tooltipHeight > ActualHeight)
+						placement = PlacementMode.Top;
+					break;
+				case PlacementMode.Left:
+					if(point.X - tooltipWidth < 0)
+						placement = PlacementMode.Right;
+					break;
+				case PlacementMode.Right:
+					if(point.X + targetWidth + tooltipWidth > ActualWidth)
+						placement = PlacementMode.Left;
+					break;
+			}
+
+			// Update placement, since it may have swapped sides. We don't recalculate the size/placement again.
+			// Hopefully the layout of the tooltip should not affect the size when swapping left/right.
+			placementAwareTooltip?.SetPlacement(placement);
 
 			double ClampX(double value) => Math.Max(0, Math.Min(value, ActualWidth - tooltipWidth));
 			double ClampY(double value) => Math.Max(0, Math.Min(value, ActualHeight - tooltipHeight));
