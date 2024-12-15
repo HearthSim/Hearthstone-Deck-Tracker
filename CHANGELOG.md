@@ -6,7 +6,7 @@
 - Fixed the deck selector switching to the wrong tab after importing a deck.
 
 **Battlegrounds**:
-- Added counters for Beetle stats, Spells played and the the Undead attack bonus.
+- Added counters for Beetle stats, Spells played and the Undead attack bonus.
 - Fixed the latest games in the session recap showing the wrong hero after rerolling a skin.
 - Fixed Tier7 hero pick stats not updating when rerolling a skin.
 - Fixed Tier7 hero pick stats showing for the locked heroes.
