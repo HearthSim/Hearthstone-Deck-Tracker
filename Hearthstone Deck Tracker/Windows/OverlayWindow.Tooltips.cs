@@ -117,6 +117,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var (targetWidth, targetHeight) = GetScaledSize(feTarget);
 			var (tooltipWidth, tooltipHeight) = GetScaledSize(tooltip);
 
+			tooltipWidth += ToolTipService.GetHorizontalOffset(target);
+			tooltipHeight += ToolTipService.GetVerticalOffset(target);
+
 			var point = feTarget.TransformToAncestor(this).Transform(new Point(0, 0));
 
 			// Correct placement if tooltip would go outside of window

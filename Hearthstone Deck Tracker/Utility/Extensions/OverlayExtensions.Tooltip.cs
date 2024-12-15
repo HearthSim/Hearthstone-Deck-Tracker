@@ -17,7 +17,9 @@ partial class OverlayExtensions
 	/// Renders the value as a ToolTip in the OverlayWindow. Can be configured via <c>ToolTipService</c>.<br/>
 	/// Supported Properties:<br/>
 	/// - <c>ToolTipService.Placement</c> (Left, Top, Bottom, Right) - Default: Right<br/>
-	/// - <c>ToolTipService.InitialShowDelay</c> Default: 0
+	/// - <c>ToolTipService.InitialShowDelay</c> Default: 0<br/>
+	/// - <c>ToolTipService.HorizontalOffset</c> Default: 0<br/>
+	/// - <c>ToolTipService.VerticalOffset</c> Default: 0
 	/// </summary>
 	public static void SetToolTip(DependencyObject obj, DependencyObject element) => obj.SetValue(ToolTipProperty, element);
 
