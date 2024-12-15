@@ -8,6 +8,7 @@
 **Battlegrounds**:
 - Added counters for Beetle stats, Spells played and the Undead attack bonus.
 - Fixed the latest games in the session recap showing the wrong hero after rerolling a skin.
+- Fixed Sleeping Sea Glass appearing in the available minion list in Duos
 - Fixed Tier7 hero pick stats not updating when rerolling a skin.
 - Fixed Tier7 hero pick stats showing for the locked heroes.
 

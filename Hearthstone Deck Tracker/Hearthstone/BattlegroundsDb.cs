@@ -10,10 +10,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class BattlegroundsDb
 	{
-		private Dictionary<int, Dictionary<Race, List<Card>>> _cardsByTier = new();
-		private Dictionary<int, Dictionary<Race, List<Card>>> _duosExclusiveCardsByTier = new();
-		private Dictionary<int, List<Card>> _spellsByTier = new();
-		private Dictionary<int, List<Card>> _duosExclusiveSpellsByTier = new();
+		private readonly Dictionary<int, Dictionary<Race, List<Card>>> _cardsByTier = new();
+		private readonly Dictionary<int, Dictionary<Race, List<Card>>> _solosExclusiveCardsByTier = new();
+		private readonly Dictionary<int, Dictionary<Race, List<Card>>> _duosExclusiveCardsByTier = new();
+		private readonly Dictionary<int, List<Card>> _spellsByTier = new();
+		private readonly Dictionary<int, List<Card>> _solosExclusiveSpellsByTier = new();
+		private readonly Dictionary<int, List<Card>> _duosExclusiveSpellsByTier = new();
 
 		public HashSet<Race> Races { get; } = new();
 
@@ -31,17 +33,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				foreach(var tagOverride in tagOverrides)
 					overrides[tagOverride.DbfId] = new Tuple<GameTag, int>(tagOverride.Tag, tagOverride.Value);
 			}
-			Func<HearthDb.Card, GameTag, int> getTag = (HearthDb.Card card, GameTag tag) =>
+
+			int GetTag(HearthDb.Card card, GameTag tag)
 			{
-				if(overrides.TryGetValue(card.DbfId, out var tagOverride) && tagOverride.Item1 == tag)
-					return tagOverride.Item2;
+				if(overrides.TryGetValue(card.DbfId, out var tagOverride) && tagOverride.Item1 == tag) return tagOverride.Item2;
 				return card.Entity.GetTag(tag);
-			};
+			}
 
 			var baconCards = Cards.All.Values
 				.Where(x =>
-					getTag(x, GameTag.TECH_LEVEL) > 0
-					&& getTag(x, GameTag.IS_BACON_POOL_MINION) > 0
+					GetTag(x, GameTag.TECH_LEVEL) > 0
+					&& GetTag(x, GameTag.IS_BACON_POOL_MINION) > 0
 				);
 
 			Races.Clear();
@@ -49,59 +51,50 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Races.Add(race);
 
 			_cardsByTier.Clear();
+			_solosExclusiveCardsByTier.Clear();
 			_duosExclusiveCardsByTier.Clear();
 			foreach(var card in baconCards)
 			{
-				var tier = getTag(card, GameTag.TECH_LEVEL);
-				if(getTag(card, GameTag.IS_BACON_DUOS_EXCLUSIVE) > 0)
+				var tier = GetTag(card, GameTag.TECH_LEVEL);
+				var duosExclusive = GetTag(card, GameTag.IS_BACON_DUOS_EXCLUSIVE);
+				// the game doesn't actually set this ever to a negative value, but we use that as a sentinel
+				// value to hide Solos-exclusive cards in Duos
+				var targetDict = (
+					duosExclusive > 0 ? _duosExclusiveCardsByTier :
+					duosExclusive < 0 ? _solosExclusiveCardsByTier :
+					_cardsByTier
+				);
+				if(!targetDict.ContainsKey(tier))
+					targetDict[tier] = new Dictionary<Race, List<Card>>();
+				foreach(var race in new HashSet<Race>(GetRaces(card)))
 				{
-					if(!_duosExclusiveCardsByTier.ContainsKey(tier))
-						_duosExclusiveCardsByTier[tier] = new Dictionary<Race, List<Card>>();
-
-					foreach(var race in new HashSet<Race>(GetRaces(card)))
-					{
-						if(!_duosExclusiveCardsByTier[tier].ContainsKey(race))
-							_duosExclusiveCardsByTier[tier][race] = new List<Card>();
-						_duosExclusiveCardsByTier[tier][race].Add(new Card(card, true));
-					}
-				}
-				else
-				{
-					if(!_cardsByTier.ContainsKey(tier))
-						_cardsByTier[tier] = new Dictionary<Race, List<Card>>();
-
-					foreach(var race in new HashSet<Race>(GetRaces(card)))
-					{
-						if(!_cardsByTier[tier].ContainsKey(race))
-							_cardsByTier[tier][race] = new List<Card>();
-						_cardsByTier[tier][race].Add(new Card(card, true));
-					}
+					if(!targetDict[tier].ContainsKey(race))
+						targetDict[tier][race] = new List<Card>();
+					targetDict[tier][race].Add(new Card(card, true));
 				}
 			}
 
 			_spellsByTier.Clear();
 			_duosExclusiveSpellsByTier.Clear();
+			_duosExclusiveCardsByTier.Clear();
 			var baconSpells = Cards.All.Values
 				.Where(x => (
-					getTag(x, GameTag.TECH_LEVEL) > 0
+					GetTag(x, GameTag.TECH_LEVEL) > 0
 					&& x.Type == CardType.BATTLEGROUND_SPELL
-					&& getTag(x, GameTag.IS_BACON_POOL_SPELL) == 1
+					&& GetTag(x, GameTag.IS_BACON_POOL_SPELL) == 1
 				));
 			foreach(var card in baconSpells)
 			{
-				var tier = getTag(card, GameTag.TECH_LEVEL);
-				if(getTag(card, GameTag.IS_BACON_DUOS_EXCLUSIVE) > 0)
-				{
-					if(!_duosExclusiveSpellsByTier.ContainsKey(tier))
-						_duosExclusiveSpellsByTier[tier] = new List<Card>();
-					_duosExclusiveSpellsByTier[tier].Add(new Card(card, true));
-				}
-				else
-				{
-					if(!_spellsByTier.ContainsKey(tier))
-						_spellsByTier[tier] = new List<Card>();
-					_spellsByTier[tier].Add(new Card(card, true));
-				}
+				var tier = GetTag(card, GameTag.TECH_LEVEL);
+				var duosExclusive = GetTag(card, GameTag.IS_BACON_DUOS_EXCLUSIVE);
+				var targetDict = (
+					duosExclusive > 0 ? _duosExclusiveSpellsByTier :
+					duosExclusive < 0 ? _solosExclusiveSpellsByTier :
+					_spellsByTier
+				);
+				if(!targetDict.ContainsKey(tier))
+					targetDict[tier] = new List<Card>();
+				targetDict[tier].Add(new Card(card, true));
 			}
 		}
 
@@ -124,40 +117,34 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				yield return card.SecondaryRace;
 		}
 
-		public List<Card> GetCards(int tier, Race race, bool includeDuosExclusive)
+		public List<Card> GetCards(int tier, Race race, bool isDuos)
 		{
-			List<Card> cards = new();
-			if(
+			var cards = (
 				_cardsByTier.TryGetValue(tier, out var cardsByRace) &&
 				cardsByRace.TryGetValue(race, out var defaultCards)
-			)
-				cards = defaultCards;
+			) ? defaultCards : new List<Card>();
 
-			var exclusiveCards = new List<Card>();
-			if(
-				includeDuosExclusive &&
-				_duosExclusiveCardsByTier.TryGetValue(tier, out var duosCardsByRace) &&
-				duosCardsByRace.TryGetValue(race, out var duosCards)
-			)
-				exclusiveCards = duosCards;
+			var exclusiveCardsByTier = isDuos ? _duosExclusiveCardsByTier : _solosExclusiveCardsByTier;
+			var exclusiveCards = (
+				exclusiveCardsByTier.TryGetValue(tier, out var exclusiveCardsByRace) &&
+			    exclusiveCardsByRace.TryGetValue(race, out var theExclusiveCards)
+			) ? theExclusiveCards : new List<Card>();
 
 			return cards.Concat(exclusiveCards).ToList();
 		}
 
-		public List<Card> GetSpells(int tier, bool includeDuosExclusive)
+		public List<Card> GetSpells(int tier, bool isDuos)
 		{
-			List<Card> cards = new();
-			if(_spellsByTier.TryGetValue(tier, out var defaultCards))
-				cards = defaultCards;
+			var spells = (
+				_spellsByTier.TryGetValue(tier, out var defaultSpells)
+					? defaultSpells : new List<Card>()
+			);
 
-			var exclusiveCards = new List<Card>();
-			if(
-				includeDuosExclusive &&
-				_duosExclusiveSpellsByTier.TryGetValue(tier, out var duosCards)
-			)
-				exclusiveCards = duosCards;
+			var exclusiveSpells = (
+				isDuos ? _duosExclusiveSpellsByTier : _solosExclusiveSpellsByTier
+			).TryGetValue(tier, out var theExclusiveSpells) ? theExclusiveSpells : new List<Card>();
 
-			return cards.Concat(exclusiveCards).ToList();
+			return spells.Concat(exclusiveSpells).ToList();
 		}
 	}
 }
