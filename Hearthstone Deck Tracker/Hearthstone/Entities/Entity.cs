@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Newtonsoft.Json;
 using static HearthDb.CardIds.Collectible;
 using static HearthDb.Enums.GameTag;
@@ -280,7 +281,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				LatestCardId = LatestCardId,
 				StoredCardIds = StoredCardIds,
 				DeckIndex = DeckIndex,
-				CopyOfCardId = CopyOfCardId
+				CopyOfCardId = CopyOfCardId,
+				ExtraInfo = ExtraInfo,
 			};
 		}
 
@@ -363,6 +365,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public string? CopyOfCardId { get; set; }
 		public int DeckIndex { get; set; }
 		public bool InGraveardAtStartOfGame { get; set; }
+		public ICardExtraInfo? ExtraInfo { get; set; }
 
 		public string? LatestCardId
 		{
@@ -408,6 +411,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				sb.Append(", forged=true");
 			if(CopyOfCardId != null)
 				sb.Append(", copyOf=" + CopyOfCardId);
+			if(ExtraInfo != null)
+				sb.Append(", extraInfo=" + ExtraInfo.CardNameSuffix);
 			return sb.ToString();
 		}
 	}

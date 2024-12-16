@@ -11,6 +11,7 @@ using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -97,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var createdCardsInDeck =
 				Deck.Where(x => x.HasCardId && (x.Info.Created || x.Info.Stolen) && !x.Info.Hidden)
-					.GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded})
+					.GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded, ce.Info.ExtraInfo})
 					.Select(g =>
 					{
 						var card = Database.GetCardFromId(g.Key.CardId);
@@ -106,6 +107,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						card.Count = g.Count();
 						card.IsCreated = g.Key.Created;
 						card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId);
+						card.ExtraInfo = g.Key.ExtraInfo?.Clone() as ICardExtraInfo;
 						return card;
 					}).WhereNotNull();
 
@@ -210,7 +212,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var createdCardsInDeck =
 				RevealedEntities.Where(x => x.Info.OriginalController == Id && x.IsInDeck && x.HasCardId && (x.Info.Created || x.Info.Stolen) && !x.Info.Hidden)
-					.GroupBy(ce => new { ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded })
+					.GroupBy(ce => new { ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded, ce.Info.ExtraInfo })
 					.Select(g =>
 					{
 						var card = Database.GetCardFromId(g.Key.CardId);
@@ -219,6 +221,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						card.Count = g.Count();
 						card.IsCreated = g.Key.Created;
 						card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId);
+						card.ExtraInfo = g.Key.ExtraInfo?.Clone() as ICardExtraInfo;
 						return card;
 					}).WhereNotNull();
 			var originalCardsInDeck = KnownOpponentDeck?.Cards
@@ -276,7 +279,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}).WhereNotNull();
 
 		public IEnumerable<Card> KnownCardsInDeck
-			=> Deck.Where(x => x.HasCardId).GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen)}).Select(g =>
+			=> Deck.Where(x => x.HasCardId).GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.ExtraInfo}).Select(g =>
 			{
 				var card = Database.GetCardFromId(g.Key.CardId);
 				if(card == null)
@@ -284,6 +287,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				card.Count = g.Count();
 				card.IsCreated = g.Key.Created;
 				card.Jousted = true;
+				card.ExtraInfo = g.Key.ExtraInfo?.Clone() as ICardExtraInfo;
 				return card;
 			}).WhereNotNull().ToList();
 
@@ -431,7 +435,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 									CardId = e.Info.WasTransformed ? e.Info.OriginalCardId : e.CardId,
 									Hidden = (e.IsInHand || e.IsInDeck || (e.IsInSetAside && e.Info.GuessedCardState == GuessedCardState.Guessed)) && e.IsControlledBy(Id),
 									Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id),
-									Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded
+									Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded,
+									e.Info.ExtraInfo
 								})
 								.Select(g =>
 								{
@@ -444,6 +449,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 									card.Jousted = g.Key.Hidden;
 									card.IsCreated = g.Key.Created;
 									card.WasDiscarded = g.Key.Discarded;
+									card.ExtraInfo = g.Key.ExtraInfo?.Clone() as ICardExtraInfo;
 									return card;
 								}).WhereNotNull()
 								.Concat(GetPredictedCardsInDeck(true)).ToSortedCardList();

@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -42,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool _loaded;
 		private int? _overload;
 		private bool _wasDiscarded;
+		private ICardExtraInfo? _extraInfo;
 		private string? _id;
 		private CardWinrates? _cardWinrates;
 		private bool _isMulliganOption;
@@ -424,6 +426,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
+		public ICardExtraInfo? ExtraInfo
+		{
+			get { return _extraInfo; }
+			set
+			{
+				_extraInfo = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public string GetPlayerClass => PlayerClass ?? "Neutral";
 
 		public bool IsClass(string? playerClass)
@@ -728,6 +741,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool BaconCard { get; }
 		public CardWinrates? CardWinrates { get;  }
 		public bool IsMulliganOption { get; }
+		public ICardExtraInfo? ExtraInfo { get; }
+
 
 		public CardImageObject(DrawingBrush image, Card card) : this(card)
 		{
@@ -747,6 +762,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BaconCard = card.BaconCard;
 			CardWinrates = card.CardWinrates;
 			IsMulliganOption = card.IsMulliganOption;
+			ExtraInfo = card.ExtraInfo?.Clone() as ICardExtraInfo;
 		}
 
 		public override bool Equals(object obj)
@@ -758,7 +774,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		protected bool Equals(CardImageObject other)
 			=> Count == other.Count && Cost == other.Cost && Jousted == other.Jousted && ColoredFrame == other.ColoredFrame && ColoredGem == other.ColoredGem
 				&& string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash && Created == other.Created && BaconCard == other.BaconCard
-				&& (CardWinrates?.Equals(other.CardWinrates) ?? CardWinrates.HasValue == other.CardWinrates.HasValue) && IsMulliganOption == other.IsMulliganOption;
+				&& (CardWinrates?.Equals(other.CardWinrates) ?? CardWinrates.HasValue == other.CardWinrates.HasValue) && IsMulliganOption == other.IsMulliganOption
+				&& ExtraInfo?.CardNameSuffix == other.ExtraInfo?.CardNameSuffix;
 
 		public override int GetHashCode()
 		{
@@ -775,6 +792,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				hashCode = (hashCode * 397) ^ (BaconCard.GetHashCode() + 1);
 				hashCode = (hashCode * 397) ^ (CardWinrates?.GetHashCode() ?? 1);
 				hashCode = (hashCode * 397) ^ (IsMulliganOption.GetHashCode() + 1);
+				hashCode = (hashCode * 397) ^ (ExtraInfo?.CardNameSuffix?.GetHashCode() ?? 1);
 				return hashCode;
 			}
 		}

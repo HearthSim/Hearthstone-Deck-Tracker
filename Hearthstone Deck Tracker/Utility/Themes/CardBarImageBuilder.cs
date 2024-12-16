@@ -333,7 +333,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		}
 
 		protected void AddCardName(Rect rect)
-			=> AddText(Card.LocalizedName, TextFontSize, rect, Card.ColorPlayer, TextTypeFace);
+		{
+			var text = Card.LocalizedName;
+			if(Card.ExtraInfo?.CardNameSuffix != null)
+				text = $"{Card.LocalizedName}  {Card.ExtraInfo.CardNameSuffix}";
+			AddText(text, TextFontSize, rect, Card.ColorPlayer, TextTypeFace);
+		}
 
 		protected virtual void AddText(object? obj, double size, Rect rect, Brush fill, Typeface typeface, double strokeThickness = 2.0, bool centered = false)
 		{

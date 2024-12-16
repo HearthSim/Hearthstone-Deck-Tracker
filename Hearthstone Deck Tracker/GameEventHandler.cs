@@ -33,6 +33,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
@@ -443,14 +444,16 @@ namespace Hearthstone_Deck_Tracker
 			Log.Info($"--- {player} turn {turn.Item2} ---");
 			if(player == ActivePlayer.Player)
 			{
+				HandleOpponentEndOfTurn(turn.Item2 - 1);
 				_game.Player.OnTurnStart();
-				HandleThaurissanCostReduction();
 				_game.SecretsManager.HandlePlayerTurnStart();
 			}
 			else if (player == ActivePlayer.Opponent)
 			{
+				HandlePlayerEndOfTurn(turn.Item2 - 1);
 				_game.Opponent.OnTurnStart();
 				_game.SecretsManager.HandleOpponentTurnStart();
+
 			}
 			GameEvents.OnTurnStart.Execute(player);
 			if(_turnQueue.Count > 0)
@@ -495,6 +498,17 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.TurnCounter.UpdateTurn(turn.Item2);
 		}
 
+		private void HandlePlayerEndOfTurn(int turn)
+		{
+			HandleIncindiusEndOfTurn(isOpponent: false, turn);
+		}
+
+		private void HandleOpponentEndOfTurn(int turn)
+		{
+			HandleThaurissanCostReduction();
+			HandleIncindiusEndOfTurn(isOpponent: true, turn);
+		}
+
 		private void HandleThaurissanCostReduction()
 		{
 			var thaurissans = _game.Opponent.Board.Where(x =>
@@ -504,6 +518,43 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			HandleOpponentHandCostReduction(thaurissans.Count);
+		}
+
+		private void HandleIncindiusEndOfTurn(bool isOpponent, int turn)
+		{
+			var player = isOpponent ? _game.Opponent : _game.Player;
+			var incindiusEntities = player.Board.Where(x =>
+				x.CardId is HearthDb.CardIds.Collectible.Neutral.Incindius
+				&& !x.HasTag(SILENCED)).ToList();
+			if(!incindiusEntities.Any())
+				return;
+
+			var eruptions = player.Deck.Where(x =>
+				x.CardId is HearthDb.CardIds.NonCollectible.Neutral.Incindius_EruptionToken).ToArray();
+
+			foreach(var _ in incindiusEntities)
+			{
+				foreach(var entity in eruptions)
+				{
+					if(entity.Info.ExtraInfo is IncindiusCounter counter)
+					{
+						counter.Counter += 1;
+					}
+					else
+					{
+						entity.Info.ExtraInfo = new IncindiusCounter(turn);
+					}
+				}
+			}
+
+			if(isOpponent)
+			{
+				Core.UpdateOpponentCards();
+			}
+			else
+			{
+				Core.UpdatePlayerCards();
+			}
 		}
 
 		private DateTime _lastGameStartTimestamp = DateTime.MinValue;

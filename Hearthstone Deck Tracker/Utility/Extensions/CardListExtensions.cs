@@ -20,7 +20,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 			return orderedCards
 				.ThenBy(x => x.Cost)
 				.ThenBy(x => x.LocalizedName)
-				.ToArray().ToList();
+				.ThenByDescending(x => x.ExtraInfo?.CardNameSuffix)
+				.ToList();
 		}
 
 		public static List<Card> ToDiffCardList(this IEnumerable<Card> cards, List<Card> newCards)

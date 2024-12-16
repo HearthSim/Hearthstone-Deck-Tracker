@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -48,6 +49,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 					}
 					else if(existing.Card.IsCreated != card.IsCreated)
 						existing.Update(false).Forget();
+					else if(existing.Card.ExtraInfo?.CardNameSuffix != card.ExtraInfo?.CardNameSuffix)
+					{
+						existing.Card.ExtraInfo = card.ExtraInfo?.Clone() as ICardExtraInfo;
+						existing.Update(true).Forget();
+					}
 				}
 				var toUpdate = new List<AnimatedCard>();
 				foreach(var aCard in _animatedCards)
@@ -95,8 +101,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private bool AreEqualForList(Hearthstone.Card c1, Hearthstone.Card c2)
 		{
 			return c1.Id == c2.Id && c1.Jousted == c2.Jousted && c1.IsCreated == c2.IsCreated
-				   && (!Config.Instance.HighlightDiscarded || c1.WasDiscarded == c2.WasDiscarded)
-				   && c1.DeckListIndex == c2.DeckListIndex;
+			       && (!Config.Instance.HighlightDiscarded || c1.WasDiscarded == c2.WasDiscarded)
+			       && c1.DeckListIndex == c2.DeckListIndex && Equals(c1.ExtraInfo, c2.ExtraInfo);
 		}
 	}
 }
