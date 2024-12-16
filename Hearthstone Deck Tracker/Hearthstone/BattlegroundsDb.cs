@@ -75,8 +75,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 
 			_spellsByTier.Clear();
+			_solosExclusiveSpellsByTier.Clear();
 			_duosExclusiveSpellsByTier.Clear();
-			_duosExclusiveCardsByTier.Clear();
 			var baconSpells = Cards.All.Values
 				.Where(x => (
 					GetTag(x, GameTag.TECH_LEVEL) > 0
