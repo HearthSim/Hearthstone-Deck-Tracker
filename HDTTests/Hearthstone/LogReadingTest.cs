@@ -30,7 +30,7 @@ namespace HDTTests.Hearthstone
 			Assert.AreEqual("79", triggerKeywordMatch.Groups["id"].Value);
 			Assert.AreEqual(string.Empty, triggerKeywordMatch.Groups["Id"].Value);
 			Assert.AreEqual("0 ", triggerKeywordMatch.Groups["target"].Value);
-			Assert.AreEqual("-1 ", triggerKeywordMatch.Groups["subOption"].Value);
+			Assert.AreEqual("-1", triggerKeywordMatch.Groups["subOption"].Value);
 			Assert.AreEqual("TAG_ONE_TURN_EFFECT", triggerKeywordMatch.Groups["triggerKeyword"].Value);
 
 			var triggerTargetEntity = LogConstants.PowerTaskList.BlockStartRegex.Match(BlockStartTargetEntity);
