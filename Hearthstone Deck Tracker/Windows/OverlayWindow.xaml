@@ -185,10 +185,6 @@
                     <Image Source="/HearthstoneDeckTracker;component/Images/board_damage.png"/>
                     <local:HearthstoneTextBlock x:Name="TextBlockPlayerAttack" FontSize="24" Width="75" Height="75" Text="0" TextAlignment="Center" Margin="0,3,0,0"/>
                 </Grid>
-                <overlay:CountersOverlay Visibility="Visible" x:Name="OpponentCounters" IsPlayer="false" Panel.ZIndex="10"/>
-                <overlay:CountersOverlay Visibility="Visible" x:Name="PlayerCounters" IsPlayer="true" Panel.ZIndex="10"/>
-                <activeEffects:ActiveEffectsOverlay Visibility="Visible" x:Name="OpponentActiveEffects" IsPlayer="false" Panel.ZIndex="10"/>
-                <activeEffects:ActiveEffectsOverlay Visibility="Visible" x:Name="PlayerActiveEffects" IsPlayer="true" Panel.ZIndex="10"/>
                 <overlay:WotogCounter x:Name="WotogIconsPlayer" Canvas.Top="200" Canvas.Right="450"/>
                 <overlay:WotogCounter x:Name="WotogIconsOpponent" Canvas.Top="300" Canvas.Right="450"/>
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTileText0" Margin="2 -13 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" TextAlignment="Center"/>
@@ -274,6 +270,11 @@
                 <tier7:Tier7PreLobby x:Name="Tier7PreLobby" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
                                      DataContext="{Binding Tier7PreLobbyViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
 
+                <overlay:CountersOverlay Visibility="Visible" x:Name="OpponentCounters" IsPlayer="false" />
+                <overlay:CountersOverlay Visibility="Visible" x:Name="PlayerCounters" IsPlayer="true" />
+                <activeEffects:ActiveEffectsOverlay Visibility="Visible" x:Name="OpponentActiveEffects" IsPlayer="false" />
+                <activeEffects:ActiveEffectsOverlay Visibility="Visible" x:Name="PlayerActiveEffects" IsPlayer="true" />
+
                 <inspiration:BattlegroundsInspiration
                     x:Name="BattlegroundsInspiration" Visibility="Collapsed" Canvas.Top="0" Canvas.Left="0"
                     ext:OverlayExtensions.IsOverlayHitTestVisible="True"
@@ -281,7 +282,7 @@
                     />
 
                 <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
-                <controls:GridCardImages x:Name="ToolTipGridCards" Visibility="Hidden" Panel.ZIndex="11"/>
+                <controls:GridCardImages x:Name="ToolTipGridCards" Visibility="Hidden" />
                 <controls:CardImage x:Name="ToolTipCardBlock" Visibility="Hidden" />
                 <controls:CardImage x:Name="ToolTipCardBlock2" Visibility="Hidden" />
                 <Grid Name="OverlayTooltip" IsHitTestVisible="False">
