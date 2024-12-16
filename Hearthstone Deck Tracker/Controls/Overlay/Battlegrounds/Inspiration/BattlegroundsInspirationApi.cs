@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
 		[property: JsonProperty("key_card_dbf_ids")] IEnumerable<int> KeyCardDbfIds)
 	{
 		[JsonProperty("game_type")]
-		public int GameType { get; } = (int)BnetGameType.BGT_BATTLEGROUNDS;
+		public int GameType { get; init; } = (int)BnetGameType.BGT_UNKNOWN;
 
 		[JsonProperty("lineup_dbf_ids")]
 		public IEnumerable<int> LineupDbfIds { get; init; } = new int[] { };

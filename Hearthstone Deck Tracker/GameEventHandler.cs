@@ -478,8 +478,7 @@ namespace Hearthstone_Deck_Tracker
 						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShoppingAsync();
 					Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id));
 					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Select(x => x.Card.Id));
-					if(_game.IsBattlegroundsSoloMatch)
-						Core.Overlay.BattlegroundsInspirationViewModel.OnShoppingStart();
+					Core.Overlay.BattlegroundsInspirationViewModel.OnShoppingStart();
 				}
 				switch(Config.Instance.TurnStartAction)
 				{

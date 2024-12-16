@@ -150,6 +150,7 @@ public class BattlegroundsInspirationViewModel : ViewModel
 		// Assemble payload before interacting with trial system
 		var reqData = new InspirationApiRequestData(races, minionDbfIds)
 		{
+			GameType = (int)HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, Core.Game.CurrentFormat),
 			LineupDbfIds = boardDbfIds,
 		};
 

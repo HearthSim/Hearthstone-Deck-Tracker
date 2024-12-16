@@ -314,7 +314,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsInspirationViewModel.OnClose += HideBgsInspiration;
 			Tier7Trial.OnTrialActivated += () =>
 			{
-				BattlegroundsMinionsVM.IsInspirationEnabled = _game.IsBattlegroundsSoloMatch;
+				BattlegroundsMinionsVM.IsInspirationEnabled = _game.IsBattlegroundsMatch;
 			};
 		}
 
@@ -688,7 +688,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var gameId = _game.MetaData.ServerInfo?.GameHandle;
 			var userHasTier7 = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) || Tier7Trial.IsTrialForCurrentGameActive(gameId);
-			BattlegroundsMinionsVM.IsInspirationEnabled = _game.IsBattlegroundsSoloMatch && userHasTier7;
+			BattlegroundsMinionsVM.IsInspirationEnabled = _game.IsBattlegroundsMatch && userHasTier7;
 
 			IEnumerable<string> heroPowers = _game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id);
 			if(!heroPowers.Any() && _game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
@@ -815,8 +815,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void ShowBgsInspiration()
 		{
-			// Currently only supported for solo mode
-			if(!_game.IsBattlegroundsSoloMatch)
+			if(!_game.IsBattlegroundsMatch)
 				return;
 			_battlegroundsInspirationBehavior.Show();
 			OpacityMaskOverlay.Disable();
