@@ -33,9 +33,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class OverlayWindow
 	{
-		private readonly Dictionary<FrameworkElement, FrameworkElement> _activeTooltips = new();
-		private readonly HashSet<FrameworkElement> _delayedTooltips = new();
-		private async void SetTooltip(FrameworkElement? tooltip, FrameworkElement target)
+		private readonly Dictionary<DependencyObject, FrameworkElement> _activeTooltips = new();
+		private readonly HashSet<DependencyObject> _delayedTooltips = new();
+		private async void SetTooltip(FrameworkElement? tooltip, DependencyObject target)
 		{
 			if(_activeTooltips.TryGetValue(target, out var current))
 			{
@@ -62,10 +62,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
+			var feTarget = target as FrameworkElement ?? Helper.GetLogicalParent<FrameworkElement>(target);
+			if(feTarget == null)
+				return;
+
+
 			// The content of OverlayExtensions.ToolTip is not part of the visual tree (OverlayExtensions.ToolTip is
 			// a property, not a framework element), and does therefore not have a DataContext.For bindings to work
 			// correctly we need to set it here to match the target.
-			tooltip.DataContext = target.DataContext;
+			tooltip.DataContext = target is FrameworkContentElement fce ? fce.DataContext : feTarget.DataContext;
 
 			_activeTooltips[target] = tooltip;
 			OverlayTooltip.Children.Add(tooltip);
@@ -104,15 +109,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 						width *= sl.ScaleX;
 						height *= sl.ScaleY;
 					}
-					element = VisualTreeHelper.GetParent(element) as FrameworkElement;
+					element = LogicalTreeHelper.GetParent(element) as FrameworkElement;
 				}
 				return (width, height);
 			}
 
-			var (targetWidth, targetHeight) = GetScaledSize(target);
+			var (targetWidth, targetHeight) = GetScaledSize(feTarget);
 			var (tooltipWidth, tooltipHeight) = GetScaledSize(tooltip);
 
-			var point = target.TransformToAncestor(this).Transform(new Point(0, 0));
+			var point = feTarget.TransformToAncestor(this).Transform(new Point(0, 0));
 
 			// Correct placement if tooltip would go outside of window
 			switch (placement)

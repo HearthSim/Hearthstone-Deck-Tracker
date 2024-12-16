@@ -464,6 +464,16 @@ namespace Hearthstone_Deck_Tracker
 			return (T)(object)parent;
 		}
 
+		public static T? GetLogicalParent<T>(DependencyObject current)
+		{
+			var parent = LogicalTreeHelper.GetParent(current);
+			while(parent != null && !(parent is T))
+				parent = LogicalTreeHelper.GetParent(parent);
+			if(parent == null)
+				return default;
+			return (T)(object)parent;
+		}
+
 		public static bool IsWindows10()
 		{
 			try

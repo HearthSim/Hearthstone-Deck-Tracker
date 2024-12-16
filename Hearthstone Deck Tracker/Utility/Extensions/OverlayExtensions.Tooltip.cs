@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Windows;
 
 namespace Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -18,52 +19,53 @@ partial class OverlayExtensions
 	/// - <c>ToolTipService.Placement</c> (Left, Top, Bottom, Right) - Default: Right<br/>
 	/// - <c>ToolTipService.InitialShowDelay</c> Default: 0
 	/// </summary>
-	public static void SetToolTip(DependencyObject obj, FrameworkElement element) => obj.SetValue(ToolTipProperty, element);
+	public static void SetToolTip(DependencyObject obj, DependencyObject element) => obj.SetValue(ToolTipProperty, element);
 
-	private static readonly Dictionary<FrameworkElement, bool> _elementIsInOverlay = new ();
+	private static readonly Dictionary<DependencyObject, bool> _elementIsInOverlay = new ();
 
-	private static bool IsInOverlay(FrameworkElement element)
+	private static bool IsInOverlay(DependencyObject d)
 	{
-		if(!_elementIsInOverlay.TryGetValue(element, out var val))
+		if(!_elementIsInOverlay.TryGetValue(d, out var val))
 		{
-			val = Helper.GetVisualParent<Window>(element) is OverlayWindow;
-			_elementIsInOverlay[element] = val;
+			var visual = d as Visual ?? Helper.GetLogicalParent<Visual>(d);
+			val = visual != null && Helper.GetVisualParent<Window>(visual) is OverlayWindow;
+			_elementIsInOverlay[d] = val;
 		}
 		return val;
 	}
 
-	public static event Action<FrameworkElement?, FrameworkElement>? OnToolTipChanged;
+	public static event Action<FrameworkElement?, DependencyObject>? OnToolTipChanged;
 
 	private static void ShowTooltip(object sender, MouseEventArgs _)
 	{
-		if(sender is FrameworkElement element && IsInOverlay(element))
-			OnToolTipChanged?.Invoke(GetToolTip(element), element);
+		if(sender is DependencyObject d && IsInOverlay(d))
+			OnToolTipChanged?.Invoke(GetToolTip(d), d);
 	}
 
 	private static void HideTooltip(object sender, MouseEventArgs _)
 	{
-		if(sender is FrameworkElement element && IsInOverlay(element))
-			OnToolTipChanged?.Invoke(null, element);
+		if(sender is DependencyObject d && IsInOverlay(d))
+			OnToolTipChanged?.Invoke(null, d);
 	}
 
 	private static void OnToolTipChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
 	{
-		if(d is not FrameworkElement element)
+		if(d is not IInputElement inputElement)
 			return;
 
-		if(e is { OldValue: FrameworkElement, NewValue: FrameworkElement })
+		if(e is { OldValue: IInputElement, NewValue: IInputElement })
 			return;
 
-		if(e.NewValue is FrameworkElement)
+		if(e.NewValue is IInputElement)
 		{
-			element.MouseEnter += ShowTooltip;
-			element.MouseLeave += HideTooltip;
+			inputElement.MouseEnter += ShowTooltip;
+			inputElement.MouseLeave += HideTooltip;
 		}
 		else
 		{
-			element.MouseEnter -= ShowTooltip;
-			element.MouseLeave -= HideTooltip;
-			OnToolTipChanged?.Invoke(null, element);
+			inputElement.MouseEnter -= ShowTooltip;
+			inputElement.MouseLeave -= HideTooltip;
+			OnToolTipChanged?.Invoke(null, d);
 		}
 	}
 }
