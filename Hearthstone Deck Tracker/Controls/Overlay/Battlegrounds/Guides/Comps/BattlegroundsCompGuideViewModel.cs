@@ -147,16 +147,16 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		CardAsset = new(CardToShowInUi, Utility.Assets.CardAssetType.Portrait);
 		DifficultyText = CompGuide.Difficulty switch
 		{
-			1 => "Easy",
+			1 => "Hard",
 			2 => "Medium",
-			3 => "Hard",
+			3 => "Easy",
 			_ => "Unknown"
 		};
 		DifficultyColor = CompGuide.Difficulty switch
 		{
-			1 => "#49634b",
+			1 => "#7f303e",
 			2 => "#917b43",
-			3 => "#7f303e",
+			3 => "#49634b",
 			_ => "#404040"
 		};
 
