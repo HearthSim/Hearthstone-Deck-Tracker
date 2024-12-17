@@ -127,7 +127,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static string GetAge(DateTime since)
 		{
-			var duration = DateTime.Now - since;
+			// convert to local time as this is a no-op when called on times that are already DateTime.Kind = Local
+			var duration = DateTime.Now - since.ToLocalTime();
 			int time;
 			string str;
 			if(duration.TotalDays >= 2)
