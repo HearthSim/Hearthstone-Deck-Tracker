@@ -7,9 +7,14 @@
 - Fixed the deck selector switching to the wrong tab after importing a deck.
 
 **Battlegrounds**:
+- Added free Comp Guides to the overlay, written by none other than Jeef!\
+  *These correspond to the Comp Guides we recently added to HSReplay.net, presented so they're easy to browse and read inbetween turns.*
+- New Tier7 feature: Click on any minion in the minion browser to see how top players include that card in their lineups.\
+  *You'll also find a button on the new Comp Guides to see typical final boards for that Comp.*
+- New Tier7 feature: Added additional filtering and a tier preview to the (new) Comp Guides tab.
 - Added counters for Beetle stats, Spells played and the Undead attack bonus.
 - Fixed the latest games in the session recap showing the wrong hero after rerolling a skin.
-- Fixed Sleeping Sea Glass appearing in the available minion list in Duos
+- Fixed Sleeping Sea Glass appearing in the available minion list in Duos.
 - Fixed the Tier7 hero picking stats not updating when rerolling a skin.
 - Fixed the Tier7 hero picking stats flickering when hovering over a hero.
 - Fixed the Tier7 hero picking stats showing for locked heroes.
