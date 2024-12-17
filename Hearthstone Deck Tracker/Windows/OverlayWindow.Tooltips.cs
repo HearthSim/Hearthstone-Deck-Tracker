@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						width *= sl.ScaleX;
 						height *= sl.ScaleY;
 					}
-					element = LogicalTreeHelper.GetParent(element) as FrameworkElement;
+					element = VisualTreeHelper.GetParent(element) as FrameworkElement;
 				}
 				return (width, height);
 			}
