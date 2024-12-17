@@ -6,15 +6,18 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
              xmlns:bgs="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              mc:Ignorable="d"
-             Width="53" Height="53"
              Cursor="Hand"
              MouseEnter="UserControl_MouseEnter"
              MouseLeave="UserControl_MouseLeave"
-             MouseUp="UserControl_MouseUp"
-             d:DesignHeight="53" d:DesignWidth="53">
+             MouseUp="UserControl_MouseUp">
     <Grid>
-        <Image Name="Glow" Visibility="Collapsed" d:Visibility="Visible" Source="/HearthstoneDeckTracker;component/Resources/tier-glow.png" Width="53" Height="53" />
-        <bgs:BattlegroundsTier Tier="{Binding Tier, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}" d:Tier="6" Opacity="{Binding IconOpacity, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}"/>
-        <Image Name="ImageTierRemove" Visibility="Collapsed" Source="/HearthstoneDeckTracker;component/Resources/tier-x.png" Width="48" Height="48" RenderOptions.BitmapScalingMode="Fant" />
+        <Image Name="Glow" Visibility="Collapsed" d:Visibility="Visible" Source="/HearthstoneDeckTracker;component/Resources/tier-glow.png" />
+        <Grid RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <ScaleTransform ScaleX="0.905" ScaleY="0.905"/>
+            </Grid.RenderTransform>
+            <bgs:BattlegroundsTier Width="{Binding Width, RelativeSource={RelativeSource AncestorType=UserControl}}" Height="{Binding Height, RelativeSource={RelativeSource AncestorType=UserControl}}" Tier="{Binding Tier, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}" d:Tier="6" Opacity="{Binding IconOpacity, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}"/>
+            <Image Name="ImageTierRemove" Visibility="Collapsed" Source="/HearthstoneDeckTracker;component/Resources/tier-x.png" RenderOptions.BitmapScalingMode="Fant" />
+        </Grid>
     </Grid>
 </UserControl>

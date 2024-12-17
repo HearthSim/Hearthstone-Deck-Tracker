@@ -22,11 +22,16 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			Tier7HeroOverlayDisplayed = gameMetrics.Tier7HeroOverlayDisplayed;
 			Tier7QuestOverlayDisplayed = gameMetrics.Tier7QuestOverlayDisplayed;
 			Tier7TrinketOverlayDisplayed = gameMetrics.Tier7TrinketOverlayDisplayed;
-			NumClickBattlegroundsMinionTab = gameMetrics.BattlegroundsMinionsTabClicks;
+			NumClickBattlegroundsMinionTiers = gameMetrics.BattlegroundsMinionTiersClicks;
 			NumClickBattlegroundsMinionsByMinionTypeFilter = gameMetrics.BattlegroundsMinionsByMinionTypeFilterClicks;
 			NumClickBattlegroundsMinionsInspiration = gameMetrics.BattlegroundsMinionsInspirationClicks;
 			NumClickBattlegroundsInspirationToggle = gameMetrics.BattlegroundsInspirationToggleClicks;
 			NumClickBattlegroundsInspirationMinion = gameMetrics.BattlegroundsInspirationMinionClicks;
+			NumClickBattlegroundsCompGuides = gameMetrics.BattlegroundsCompGuidesClicks;
+			NumClickBattlegroundsCompGuidesMinionHovers = gameMetrics.BattlegroundsCompGuidesMinionHovers;
+			NumClickBattlegroundsTopTab = gameMetrics.BattlegroundsTopTabClicks;
+			NumClickBattlegroundsCompsTab = gameMetrics.BattlegroundsCompsTabClicks;
+			NumClickBattlegroundsCompGuidesInspiration = gameMetrics.BattlegroundsCompGuidesInspirationClicks;
 			NumBobsBuddyTerminalCases = gameMetrics.BobsBuddyTerminalCases;
 			if (gameMetrics.Tier7TrialActivated)
 				TrialsActivated = new[] { Tier7OverlayTrial };
@@ -59,8 +64,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonIgnore]
 		public bool Tier7TrinketOverlayDisplayed { get; }
 
-		[JsonProperty("num_click_battlegrounds_minion_tab")]
-		public int NumClickBattlegroundsMinionTab { get;  }
+		[JsonProperty("num_click_battlegrounds_minion_tiers")]
+		public int NumClickBattlegroundsMinionTiers { get;  }
 
 		[JsonProperty("num_click_battlegrounds_minions_by_minion_type_filter")]
 		public int NumClickBattlegroundsMinionsByMinionTypeFilter { get;  }
@@ -73,6 +78,21 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("num_click_battlegrounds_inspiration_minion")]
 		public int NumClickBattlegroundsInspirationMinion { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_comp_guides")]
+		public int NumClickBattlegroundsCompGuides { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_comp_guides_minion_hovers")]
+		public int NumClickBattlegroundsCompGuidesMinionHovers { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_top_tab")]
+		public int NumClickBattlegroundsTopTab { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_comps_tab")]
+		public int NumClickBattlegroundsCompsTab { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_comp_guides_inspiration")]
+		public int NumClickBattlegroundsCompGuidesInspiration { get; set; }
 
 		[JsonProperty("num_bobs_buddy_terminal_cases")]
 		public int NumBobsBuddyTerminalCases { get;  }

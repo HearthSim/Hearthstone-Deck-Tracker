@@ -114,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		Storyboard? ExpandAnimation => FindResource("StoryboardExpand") as Storyboard;
 
-		public async void SetCardIdFromCard(Hearthstone.Card? card)
+		public async void SetCardIdFromCard(Hearthstone.Card? card, CardAssetType type = CardAssetType.FullImage)
 		{
 			var newCardId = card?.Id;
 			if(newCardId == CardId)
@@ -126,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				LoadingImageSource = null;
 				return;
 			}
-			var downloader = AssetDownloaders.cardImageDownloader;
+			var downloader = AssetDownloaders.GetCardAssetDownloader(type);
 			if(downloader == null)
 				return;
 

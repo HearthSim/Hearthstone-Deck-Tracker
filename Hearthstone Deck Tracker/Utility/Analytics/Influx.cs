@@ -354,6 +354,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
+		public static void OnGetBattlegroundsCompositionGuidesError(string reason, string message)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_bgs_composition_guides_error")
+				.Tag("reason", Regex.Escape(reason))
+				.Field("message", Regex.Escape(message))
+				.Build()
+			);
+		}
+
 		public static void OnMulliganGuideDeckSerializationError(string reason, string message)
 		{
 			if(!Config.Instance.GoogleAnalytics)

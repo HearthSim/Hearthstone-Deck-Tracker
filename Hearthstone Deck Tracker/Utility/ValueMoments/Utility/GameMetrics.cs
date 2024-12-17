@@ -3,11 +3,16 @@
 	public class GameMetrics
 	{
 		public bool ConstructedMulliganGuideOverlayDisplayed { get; set; }
-		public int BattlegroundsMinionsTabClicks { get; private set; }
+		public int BattlegroundsMinionTiersClicks { get; private set; }
 		public int BattlegroundsMinionsByMinionTypeFilterClicks { get; private set; }
 		public int BattlegroundsMinionsInspirationClicks { get; set; }
 		public int BattlegroundsInspirationToggleClicks { get; set; }
 		public int BattlegroundsInspirationMinionClicks { get; set; }
+		public int BattlegroundsCompGuidesClicks { get; set; }
+		public int BattlegroundsCompGuidesMinionHovers { get; set; }
+		public int BattlegroundsTopTabClicks { get; set; }
+		public int BattlegroundsCompsTabClicks { get; set; }
+		public int BattlegroundsCompGuidesInspirationClicks { get; set; }
 		public int BobsBuddyTerminalCases { get; set; }
 		public int MercenariesHoversOpponentMercToShowAbility { get; private set; }
 		public int MercenariesHoverTasksDuringMatch { get; private set; }
@@ -17,9 +22,9 @@
 		public bool Tier7TrialActivated { get; set; }
 		public int? Tier7TrialsRemaining { get; set; }
 
-		public void IncrementBattlegroundsMinionsTabClick()
+		public void IncrementBattlegroundsMinionsTiersClick()
 		{
-			BattlegroundsMinionsTabClicks += 1;
+			BattlegroundsMinionTiersClicks += 1;
 		}
 
 		public void IncrementBattlegroundsMinionsByMinionTypeClick()

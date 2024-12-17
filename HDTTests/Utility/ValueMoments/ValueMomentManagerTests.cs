@@ -17,7 +17,7 @@ namespace HDTTests.Utility.ValueMoments
 	[TestClass]
 	public class ValueMomentManagerTests
 	{
-		
+
 		[TestInitialize]
 		public void TestInitialize()
 		{
@@ -35,7 +35,7 @@ namespace HDTTests.Utility.ValueMoments
 			Assert.IsNotNull(valueMoment);
 			Assert.IsTrue(valueMoment.IsFree);
 		}
-		
+
 		[TestMethod]
 		public void GetValueMoments_ReturnsShareDeckValueMoment()
 		{
@@ -156,7 +156,7 @@ namespace HDTTests.Utility.ValueMoments
 
 			Assert.IsNotNull(valueMoment);
 			Assert.IsTrue(valueMoment.IsFree);
-		
+
 			action = new EndMatchBattlegroundsAction(123, "foo", 1, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
 
 			Assert.IsTrue(action.BattlegroundsSettings.SessionRecapBetweenGames);
@@ -168,14 +168,14 @@ namespace HDTTests.Utility.ValueMoments
 			Assert.IsNotNull(valueMoment);
 			Assert.IsTrue(valueMoment.IsFree);
 		}
-		
+
 		[TestMethod]
 		public void GetValueMoments_ReturnsBGMinionBrowserValueMoment()
 		{
 			var gameMetrics = new GameMetrics();
-			gameMetrics.IncrementBattlegroundsMinionsTabClick();
+			gameMetrics.IncrementBattlegroundsMinionsTiersClick();
 			var action = new EndMatchBattlegroundsAction(123, "foo", 1, GameType.GT_BATTLEGROUNDS, 5000, gameMetrics);
-			
+
 			var valueMoment = ValueMomentManager.GetValueMoments(action).FirstOrDefault(
 				vm => vm.Name == ValueMoment.VMName.BGMinionBrowser
 			);
@@ -183,12 +183,12 @@ namespace HDTTests.Utility.ValueMoments
 			Assert.IsNotNull(valueMoment);
 			Assert.IsTrue(valueMoment.IsFree);
 		}
-		
+
 		[TestMethod]
 		public void GetValueMoments_ReturnsBGMinionBrowserValueMomentSpectate()
 		{
 			var gameMetrics = new GameMetrics();
-			gameMetrics.IncrementBattlegroundsMinionsTabClick();
+			gameMetrics.IncrementBattlegroundsMinionsTiersClick();
 			var action = new EndSpectateMatchBattlegroundsAction(123, "foo", 1, GameType.GT_BATTLEGROUNDS, 5000, gameMetrics);
 
 			var valueMoment = ValueMomentManager.GetValueMoments(action).FirstOrDefault(
@@ -198,7 +198,7 @@ namespace HDTTests.Utility.ValueMoments
 			Assert.IsNotNull(valueMoment);
 			Assert.IsTrue(valueMoment.IsFree);
 		}
-		
+
 		[TestMethod]
 		public void GetValueMoments_ReturnsMercOpponentAbilitiesValueMoment()
 		{
@@ -213,7 +213,7 @@ namespace HDTTests.Utility.ValueMoments
 			Assert.IsNotNull(valueMoment);
 			Assert.IsTrue(valueMoment.IsFree);
 		}
-		
+
 		[TestMethod]
 		public void GetValueMoments_ReturnsMercFriendlyTasksValueMoment()
 		{
@@ -228,7 +228,7 @@ namespace HDTTests.Utility.ValueMoments
 			Assert.IsNotNull(valueMoment);
 			Assert.IsTrue(valueMoment.IsFree);
 		}
-		
+
 		[TestMethod]
 		public void GetValueMoments_ReturnsMercFriendlyTasksValueMomentSpectate()
 		{
@@ -262,7 +262,7 @@ namespace HDTTests.Utility.ValueMoments
 			DailyEventsCount.Instance.Clear(action.Id);
 			// Recreate action to update daily occurrences
 			action = new CopyDeckAction(Franchise.HSConstructed, CopyDeckAction.Action.CopyAll);
-			
+
 			Assert.IsTrue(ValueMomentManager.ShouldSendEventToMixPanel(action, new List<ValueMoment>()));
 		}
 

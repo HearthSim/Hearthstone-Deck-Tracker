@@ -6,31 +6,49 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
              xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
+             extensions:OverlayExtensions.IsOverlayHitTestVisible="True"
              x:Name="Container"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter"/>
+    </UserControl.Resources>
     <StackPanel>
-        <Border BorderBrush="#141617" BorderThickness="1" Background="#23272a">
-            <ItemsControl Name="TierIcons" ItemsSource="{Binding TierButtons}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:BattlegroundsTierButton
-                            Tier="{Binding Tier}"
-                            Active="{Binding Active}"
-                            Available="{Binding Available}"
-                            Faded="{Binding Faded}"
-                            ClickTierCommand="{Binding SetActiveTierCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
-                        />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </Border>
-        <ScrollViewer x:Name="MinionScrollViewer" HorizontalAlignment="Right" Margin="0,0,6,0" VerticalScrollBarVisibility="Auto"
+        <ItemsControl Name="TierIcons" ItemsSource="{Binding TierButtons}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:BattlegroundsTierButton
+                        Tier="{Binding Tier}"
+                        Active="{Binding Active}"
+                        Available="{Binding Available}"
+                        Faded="{Binding Faded}"
+                        Width="{Binding Size}"
+                        Height="{Binding Size}"
+                        ClickTierCommand="{Binding SetActiveTierCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
+                    />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ScrollViewer x:Name="MinionScrollViewer" HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto"
                       ext:OverlayExtensions.IsOverlayHitTestVisible="True">
+            <ScrollViewer.Style>
+                <Style TargetType="ScrollViewer">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ActiveTier, Converter={StaticResource NotNullToBooleanConverter}}" Value="True">
+                            <Setter Property="Margin" Value="0,7,0,1"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ActiveTier, Converter={StaticResource NotNullToBooleanConverter}}" Value="False">
+                            <Setter Property="Margin" Value="0,0,0,0"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ScrollViewer.Style>
             <StackPanel>
                 <ItemsControl
                     x:Name="GroupsControl"

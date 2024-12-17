@@ -239,7 +239,7 @@
                                                 </ItemsControl.ItemsPanel>
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <controls:BattlegroundsMinion DataContext="{Binding}" Margin="-4,0"/>
+                                                        <controls:BattlegroundsMinion DataContext="{Binding}" Margin="-4,0" Width="110" Height="110"/>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>

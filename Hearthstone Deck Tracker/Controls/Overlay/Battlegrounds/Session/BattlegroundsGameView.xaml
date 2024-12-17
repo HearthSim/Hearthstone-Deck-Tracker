@@ -129,6 +129,8 @@
                     >
                         <StackPanel.Resources>
                             <Style TargetType="controls:BattlegroundsMinion">
+                                <Setter Property="Width" Value="110"/>
+                                <Setter Property="Height" Value="110"/>
                                 <Setter Property="Margin" Value="0,15,-10,15"/>
                             </Style>
                         </StackPanel.Resources>

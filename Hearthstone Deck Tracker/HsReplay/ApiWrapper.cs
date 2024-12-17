@@ -342,5 +342,18 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				return null;
 			}
 		}
+
+		public static async Task<BattlegroundsCompsGuidesData?> GetCompsGuides(string gameLanguage)
+		{
+			try
+			{
+				return await Client.GetCompsGuides(gameLanguage);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
 	}
 }

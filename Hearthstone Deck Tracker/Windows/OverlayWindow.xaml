@@ -21,6 +21,7 @@
         xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
         xmlns:activeEffects="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects"
         xmlns:inspiration="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration"
+        xmlns:guides="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -226,11 +227,8 @@
                         x:Name="BtnTier7Inspiration" IsEnabled="False" MouseUp="BtnBgsInspiration_OnMouseUp"
                         ext:OverlayExtensions.IsOverlayHitTestVisible="{Binding IsEnabled, RelativeSource={RelativeSource Self}}"
                     />
-                    <overlay:TurnCounter x:Name="TurnCounter" Margin="0,0,2,0"  Height="55" VerticalAlignment="Top" />
-                    <minions:BattlegroundsMinions
-                        x:Name="BattlegroundsMinionsPanel"
-                        DataContext="{Binding BattlegroundsMinionsVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
-                    />
+                    <overlay:TurnCounter x:Name="TurnCounter"  Height="49" VerticalAlignment="Top" />
+                    <guides:GuidesTabs x:Name="GuidesTabs" VerticalAlignment="Top" />
                 </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
                 <StackPanel Width="1000" Name="BgsOpponentInfoContainer" Canvas.Top="0" Canvas.Right="0">

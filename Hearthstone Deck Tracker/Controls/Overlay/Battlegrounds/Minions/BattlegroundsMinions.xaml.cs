@@ -32,7 +32,7 @@ public partial class BattlegroundsMinions : UserControl
 	public ICommand SetActiveTierCommand => new Command<int>(value =>
 	{
 		((BattlegroundsMinionsViewModel)DataContext).ActiveTier = ((BattlegroundsMinionsViewModel)DataContext).ActiveTier == value ? null : value;
-		Core.Game.Metrics.IncrementBattlegroundsMinionsTabClick();
+		Core.Game.Metrics.IncrementBattlegroundsMinionsTiersClick();
 	});
 
 	public ICommand SetActiveMinionTypeCommand => new Command<Race>(value =>

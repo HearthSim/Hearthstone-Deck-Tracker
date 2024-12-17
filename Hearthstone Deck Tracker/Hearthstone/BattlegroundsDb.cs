@@ -133,6 +133,35 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return cards.Concat(exclusiveCards).ToList();
 		}
 
+		public List<Card> GetCardsByRaces(IEnumerable<Race> races, bool isDuos)
+		{
+			var cards = new List<Card>();
+
+			foreach (var tier in _cardsByTier.Values)
+			{
+				foreach (var race in races)
+				{
+					if (tier.TryGetValue(race, out var tierCards))
+					{
+						cards.AddRange(tierCards);
+					}
+				}
+			}
+
+			foreach (var tier in isDuos ? _duosExclusiveCardsByTier.Values : _solosExclusiveCardsByTier.Values)
+			{
+				foreach (var race in races)
+				{
+					if (tier.TryGetValue(race, out var exclusiveCards))
+					{
+						cards.AddRange(exclusiveCards);
+					}
+				}
+			}
+
+			return cards;
+		}
+
 		public List<Card> GetSpells(int tier, bool isDuos)
 		{
 			var spells = (

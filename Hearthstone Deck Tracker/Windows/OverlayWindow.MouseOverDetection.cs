@@ -598,6 +598,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var scaleTransform = GetScaleTransform(element);
 			var scaleX = scaleTransform?.ScaleX ?? 1;
 			var scaleY = scaleTransform?.ScaleY ?? 1;
+
+			var parent = VisualTreeHelper.GetParent(element) as FrameworkElement;
+			while(parent != null)
+			{
+				var parentScaleTransform = GetScaleTransform(parent);
+				scaleX *= parentScaleTransform?.ScaleX ?? 1;
+				scaleY *= parentScaleTransform?.ScaleY ?? 1;
+				parent = VisualTreeHelper.GetParent(parent) as FrameworkElement;
+			}
+
 			try
 			{
 				var point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
@@ -614,7 +624,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private ScaleTransform? GetScaleTransform(FrameworkElement element)
 		{
 			// Only TierIcons are marked as clickable but a wrapper is scaled by the OverlayElementBehavior
-			if(element == BattlegroundsMinionsPanel.TierIcons || element == BattlegroundsMinionsPanel.MinionScrollViewer)
+			if(element == GuidesTabs.BattlegroundsMinionsPanel.TierIcons || element == GuidesTabs.BattlegroundsMinionsPanel.MinionScrollViewer)
 				return BgsTopBar.RenderTransform as ScaleTransform;
 			if(element == BattlegroundsSession.BattlegroundsSessionPanelTopGroup || element is BattlegroundsGameView)
 				return BattlegroundsSession.RenderTransform as ScaleTransform;

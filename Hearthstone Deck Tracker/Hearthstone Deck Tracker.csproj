@@ -125,6 +125,12 @@
     <Compile Update="Controls\BattlegroundsMinionViewModel.cs">
       <DependentUpon>BattlegroundsMinion.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Controls\HeroPowerViewModel.cs">
+      <DependentUpon>HeroPower.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\BattlegroundsMinionViewModel.cs">
+      <DependentUpon>BattlegroundsMinion.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -202,11 +208,41 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\HeroPower.xaml">
+		<Generator>MSBuild:Compile</Generator>
+		<XamlRuntime>Wpf</XamlRuntime>
+		<SubType>Designer</SubType>
+	</Page>
+    <Page Update="Controls\Trinket.xaml">
+		<Generator>MSBuild:Compile</Generator>
+		<XamlRuntime>Wpf</XamlRuntime>
+		<SubType>Designer</SubType>
+	</Page>
+    <Page Update="Controls\Overlay\Battlegrounds\Guides\Comps\CompsGuides.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\HeroPower.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\Trinket.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Overlay\Battlegrounds\Guides\HeroesGuides.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Overlay\Battlegrounds\Guides\MinionsGuides.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Overlay\Battlegrounds\Guides\Comps\CompsGuides.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>

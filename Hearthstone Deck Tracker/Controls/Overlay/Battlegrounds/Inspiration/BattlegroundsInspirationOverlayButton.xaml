@@ -5,7 +5,7 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings">
-    <Border Width="55" Height="55" Margin="0,0,2,0" Cursor="Hand"
+    <Border Width="49" Height="49" Margin="0,0,2,0" Cursor="Hand"
             RenderTransformOrigin="0.5,0.5" CornerRadius="0,0,3,3" VerticalAlignment="Top" Opacity="0"
             BorderBrush="#141617" BorderThickness="1,0,1,1">
         <Border.Style>
@@ -50,7 +50,7 @@
                 </Style.Triggers>
             </Style>
         </Border.Style>
-        <Rectangle Height="35" Width="35" Margin="10">
+        <Rectangle Height="29" Width="29" Margin="10">
             <Rectangle.Fill>
                 <VisualBrush Visual="{StaticResource icon_inspiration}" />
             </Rectangle.Fill>

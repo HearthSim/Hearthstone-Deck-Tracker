@@ -82,4 +82,36 @@
         <Setter Property="Placement" Value="Top"/>
         <Setter Property="VerticalOffset" Value="-4"/>
     </Style>
+
+    <Style x:Key="BgsLeftTooltipStyle" TargetType="ToolTip">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border Background="{StaticResource Tier7Black}"
+                            BorderBrush="{StaticResource Tier7Orange}"
+                            BorderThickness="1"
+                            Padding="8"
+                            MaxWidth="230"
+                            Margin="10,0,0,0">
+                        <ContentPresenter Content="{TemplateBinding Content}">
+                            <ContentPresenter.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="TextAlignment" Value="Center" />
+                                    <Setter Property="FontSize" Value="14" />
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                                <DataTemplate DataType="{x:Type System:String}">
+                                    <TextBlock Text="{Binding}" />
+                                </DataTemplate>
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Placement" Value="Left" />
+    </Style>
 </ResourceDictionary>

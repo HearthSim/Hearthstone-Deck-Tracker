@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.GuidesTabs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
+             xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
+             xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
+             xmlns:comps="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
+             mc:Ignorable="d"
+             Width="249"
+             d:DesignHeight="249" d:DesignWidth="249">
+
+    <UserControl.Resources>
+        <converters:IsNullConverter x:Key="IsNullConverter" />
+        <!-- Style for TabItems -->
+        <Style TargetType="TabItem">
+            <Setter Property="Background" Value="#141617" />
+            <Setter Property="BorderBrush" Value="#3f4346" />
+            <Setter Property="BorderThickness" Value="1,0,0,0" />
+            <Setter Property="Width" Value="124.5" />
+            <Setter Property="Height" Value="49" />
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="TabItem_PreviewMouseLeftButtonDown"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                        >
+                            <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#2C3135" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#23272A" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="BorderThickness" Value="1,0,0,1" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TabControl">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <!-- Tab Panel -->
+                            <TabPanel Grid.Row="0"
+                                      IsItemsHost="True"
+                                      Background="#2C3135"
+                                      Panel.ZIndex="1"
+                                      Cursor="Hand"
+                                      Width="249"/>
+                            <!-- Tab Content -->
+                            <Border Grid.Row="1" Background="#23272A" CornerRadius="0,0,0,3" BorderBrush="#3f4346"
+                                    BorderThickness="1,0,0,1">
+                                <ContentPresenter ContentSource="SelectedContent"/>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedItem, Converter={StaticResource IsNullConverter}, RelativeSource={RelativeSource AncestorType=TabControl}}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding SelectedItem, Converter={StaticResource IsNullConverter}, RelativeSource={RelativeSource AncestorType=TabControl}}" Value="False">
+                                                <Setter Property="Padding" Value="9"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <TabControl extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
+        <TabItem Header="Minions">
+            <TabItem.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Width="83"
+                          Height="49">
+                        <Rectangle Fill="White" Height="23" Width="18.2">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Visual="{DynamicResource icon_minion}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Grid>
+                </DataTemplate>
+            </TabItem.HeaderTemplate>
+                <minions:BattlegroundsMinions
+                    x:Name="BattlegroundsMinionsPanel"
+                    DataContext="{Binding BattlegroundsMinionsVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
+        </TabItem>
+        <TabItem Header="Comps">
+            <TabItem.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Width="83"
+                          Height="49">
+                        <Rectangle Fill="White" Height="23" Width="31">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Visual="{DynamicResource icon_comp}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Grid>
+                </DataTemplate>
+            </TabItem.HeaderTemplate>
+            <comps:CompsGuides x:Name="BattlegroundsCompsGuides" />
+        </TabItem>
+    </TabControl>
+</UserControl>

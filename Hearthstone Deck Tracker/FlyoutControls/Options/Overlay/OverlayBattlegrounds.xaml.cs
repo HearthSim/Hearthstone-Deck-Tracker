@@ -244,7 +244,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsTiers = true;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.BattlegroundsMinionsPanel.Visibility = Visibility.Visible;
+				Core.Overlay.GuidesTabs.Visibility = Visibility.Visible;
 		}
 
 		private void CheckboxShowBattlegroundsTiers_Unchecked(object sender, RoutedEventArgs e)
@@ -254,7 +254,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsTiers = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.BattlegroundsMinionsPanel.Visibility = Visibility.Collapsed;
+				Core.Overlay.GuidesTabs.Visibility = Visibility.Collapsed;
 		}
 
 		private void CheckboxAlwaysShowBattlegroundsTavernTier7_Checked(object sender, RoutedEventArgs e)

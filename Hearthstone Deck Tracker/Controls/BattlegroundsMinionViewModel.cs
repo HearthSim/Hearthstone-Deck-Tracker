@@ -1,5 +1,4 @@
 ﻿using System.Windows.Media;
-using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
@@ -106,5 +105,22 @@ public class BattlegroundsMinionViewModel : ViewModel
 	{
 		get => GetProp<CardAssetViewModel?>(null);
 		private set => SetProp(value);
+	}
+
+	public int Tier
+	{
+		get => GetProp(1);
+		set
+		{
+
+			SetProp(value);
+			HasTier = true;
+		}
+	}
+
+	public bool HasTier
+	{
+		get => GetProp(false);
+		set => SetProp(value);
 	}
 }

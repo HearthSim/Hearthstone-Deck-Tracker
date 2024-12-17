@@ -127,6 +127,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		public bool Active { get; set; }
 		public bool Available { get; set; }
 		public bool Faded { get; set; }
+
+		public int Size { get; set; }
 	}
 
 	public List<int> AvailableTiers => BattlegroundsUtils.GetAvailableTiers(Anomaly).ToList();
@@ -136,7 +138,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		get
 		{
 			var tiers = Enumerable.Range(1, 6).ToList();
-			if(AvailableTiers.Contains(7) || ShowTavernTier7)
+			var shouldShowTier7 = AvailableTiers.Contains(7) || ShowTavernTier7;
+			if(shouldShowTier7)
 				tiers.Add(7);
 			return tiers.Select(x => new TierButton()
 			{
@@ -144,6 +147,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 				Active = x == ActiveTier,
 				Available = AvailableTiers.Contains(x),
 				Faded = ActiveTier != null && ActiveTier != x,
+				Size = shouldShowTier7 ? 33 : 38
 			}).ToList();
 		}
 	}

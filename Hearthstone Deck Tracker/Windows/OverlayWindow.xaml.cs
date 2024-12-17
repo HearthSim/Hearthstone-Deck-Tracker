@@ -34,6 +34,8 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.TrinketPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
@@ -95,6 +97,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int ExperienceFadeDelay = 6000;
 		public OverlayOpacityMask OpacityMaskOverlay { get; } = new();
 
+		public BattlegroundsCompsGuidesViewModel BattlegroundsCompsGuidesVM { get; } = new();
 		public BattlegroundsMinionsViewModel BattlegroundsMinionsVM { get; } = new();
 		public BattlegroundsSessionViewModel BattlegroundsSessionViewModelVM => Core.Game.BattlegroundsSessionViewModel;
 		public BattlegroundsHeroPickingViewModel BattlegroundsHeroPickingViewModel { get; } = new();
@@ -698,9 +701,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			BattlegroundsMinionsVM.OnHeroPowers(heroPowers);
 
-			BattlegroundsMinionsPanel.Visibility = Config.Instance.ShowBattlegroundsTiers ? Visible : Collapsed;
+			GuidesTabs.BattlegroundsMinionsPanel.Visibility = Config.Instance.ShowBattlegroundsTiers ? Visible : Collapsed;
 
 			BtnTier7Inspiration.IsEnabled = BattlegroundsInspirationViewModel.HasBeenActivated;
+
+			BattlegroundsCompsGuidesVM.Update();
 
 			_bgsTopBarBehavior.Show();
 		}

@@ -66,8 +66,18 @@ public class BattlegroundsInspirationViewModel : ViewModel
 		set => SetProp(value);
 	}
 
+	public int MmrPercentile
+	{
+		get => GetProp(5);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(MMRText));
+		}
+	}
+
 	[LocalizedProp]
-	public string MMRText => string.Format(LocUtil.Get("BattlegroundsInspiration_Description_MMR"), 5);
+	public string MMRText => string.Format(LocUtil.Get("BattlegroundsInspiration_Description_MMR"), MmrPercentile);
 
 	public bool IsLoadingData
 	{
@@ -111,6 +121,7 @@ public class BattlegroundsInspirationViewModel : ViewModel
 		TitleText = title;
 		Games = null;
 		IsLoadingData = true;
+		MmrPercentile = Core.Game.IsBattlegroundsDuosMatch ? 10 : 5;
 		Page = 1;
 		Pages = new List<int>();
 		try

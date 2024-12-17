@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			)
 				yield return new ValueMoment(VMName.BGSessionRecap, ValueMoment.VMKind.Free);
 
-			if (battlegroundsAction.NumClickBattlegroundsMinionTab > 0)
+			if (battlegroundsAction.NumClickBattlegroundsMinionTiers > 0)
 				yield return new ValueMoment(VMName.BGMinionBrowser, ValueMoment.VMKind.Free);
 
 			if (battlegroundsAction.NumClickBattlegroundsMinionsByMinionTypeFilter > 0)
