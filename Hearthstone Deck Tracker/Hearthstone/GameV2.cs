@@ -714,6 +714,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				LanguageCode = Helper.GetCardLanguage(),
 				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
 				OfferedTrinkets = offeredTrinkets,
+				GameType = (int)HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, Core.Game.CurrentFormat)
 			};
 
 			BattlegroundsTrinketPickStates.Add(new BattlegroundsTrinketPickState(choice.Id, parameters));
