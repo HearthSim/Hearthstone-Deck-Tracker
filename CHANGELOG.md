@@ -1,4 +1,6 @@
-## Unreleased
+## **Release v1.38.0 - 2024-12-17**
+**Updated for Hearthstone 31.2.2**
+
 **Hearthstone**:
 - Added indicator for Incindius' Eruption buffs.
 - Added related card tooltip to Grand Magister Rommath.
