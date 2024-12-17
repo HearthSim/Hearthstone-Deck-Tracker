@@ -53,7 +53,9 @@
         </Grid>
 
         <!-- Secondary Image, e.g. Battlegrounds Triple -->
-        <Image DockPanel.Dock="{Binding ImageDock}" Source="{Binding SecondaryAssetViewModel.Asset}" Visibility="{Binding SecondaryAssetViewModel, Converter={StaticResource NullableToVisibility}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+        <Image DockPanel.Dock="{Binding ImageDock}" Source="{Binding SecondaryAssetViewModel.Asset}" Visibility="{Binding SecondaryAssetViewModel, Converter={StaticResource NullableToVisibility}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5"
+              MaxWidth="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
+              MaxHeight="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}">
             <Image.RenderTransform>
                 <ScaleTransform ScaleX="0" ScaleY="0"/>
             </Image.RenderTransform>
