@@ -16,7 +16,6 @@ using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects;
 using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -245,77 +244,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					ToolTipCardBlock.Visibility = Hidden;
 				}
-			}
-			// player or opponent active effects tooltip
-			else if (
-				PointInsideControl(relativeOpponentActiveEffectsPos, OpponentActiveEffects.ActualWidth, OpponentActiveEffects.ActualHeight) ||
-				PointInsideControl(relativePlayerActiveEffectsPos, PlayerActiveEffects.ActualWidth, PlayerActiveEffects.ActualHeight))
-			{
-				var isOpponent = PointInsideControl(relativeOpponentActiveEffectsPos, OpponentActiveEffects.ActualWidth, OpponentActiveEffects.ActualHeight);
-				var relativeActiveEffectsPos = relativePlayerActiveEffectsPos;
-				var activeEffects = PlayerActiveEffects;
-
-				if (isOpponent)
-				{
-					relativeActiveEffectsPos = relativeOpponentActiveEffectsPos;
-					activeEffects = OpponentActiveEffects;
-				}
-
-				var outerMargin = ActiveEffectsOverlay.OuterMargin * _activeEffectsScale;
-				var effectSize = (ActiveEffectsOverlay.EffectSize + ActiveEffectsOverlay.InnerMargin * 2) * _activeEffectsScale;
-				var width = activeEffects.ActualWidth * _activeEffectsScale;
-				var height = activeEffects.ActualHeight * _activeEffectsScale;
-				var poxX = relativeActiveEffectsPos.X * _activeEffectsScale;
-				var poxY = relativeActiveEffectsPos.Y * _activeEffectsScale;
-
-				var columns = (int)(width / effectSize);
-
-				// Check if the position is within the outer margin
-				if (poxX < outerMargin || poxX > width - outerMargin ||
-				    poxY < outerMargin || poxY > height - outerMargin)
-				{
-					ToolTipCardBlock.Visibility = Hidden;
-					return;
-				}
-
-				// Adjust the position by subtracting the outer margin
-				var adjustedPosX = poxX - outerMargin;
-				var adjustedPosY = poxY - outerMargin;
-
-				var effectIndexX = (int)(adjustedPosX / effectSize);
-				var effectIndexY =  (int)(adjustedPosY / effectSize);
-				var effectIndex = effectIndexY * columns + effectIndexX;
-
-				if (isOpponent)
-				{
-					var totalCells = columns * (int)(height / effectSize);
-					var rows = totalCells / columns;
-					var row = effectIndex / columns;
-					var col = effectIndex % columns;
-					var mirroredRow = rows - row - 1;
-					effectIndex = mirroredRow * columns + col;
-				}
-
-				if(effectIndex < 0 || effectIndex >= activeEffects.VisibleEffects.Count)
-				{
-					ToolTipCardBlock.Visibility = Hidden;
-					return;
-				}
-
-				var effect = activeEffects.VisibleEffects[effectIndex];
-				ToolTipCardBlock.SetCardIdFromCard(effect.Effect.CardToShowInUI);
-				var leftOffset = Canvas.GetLeft(activeEffects) + effectIndexX * effectSize + effectSize;
-				var maxLeftOffset = Canvas.GetLeft(activeEffects) + columns * effectSize;
-
-				// Swap the side of the tooltip if it would go outside the overlay
-				if (maxLeftOffset + ToolTipCardBlock.ActualWidth > Width)
-					leftOffset -= ToolTipCardBlock.ActualWidth + effectSize / columns;
-
-				var yOffset = effectIndexY * effectSize + effectSize / 2 - ToolTipCardBlock.ActualHeight / 2 + outerMargin / 2;
-				Canvas.SetTop(ToolTipCardBlock, Canvas.GetTop(activeEffects) + yOffset);
-				Canvas.SetLeft(ToolTipCardBlock, leftOffset);
-				Panel.SetZIndex(ToolTipCardBlock, int.MaxValue);
-				ToolTipCardBlock.Visibility = visibility;
 			}
 			else if(
 				PointInsideControl(relativeOpponentCountersPos, OpponentCounters.ActualWidth,

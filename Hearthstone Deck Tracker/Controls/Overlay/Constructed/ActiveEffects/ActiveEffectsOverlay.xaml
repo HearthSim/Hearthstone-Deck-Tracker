@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              >
     <Grid>
@@ -30,7 +32,8 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                              <Grid Width="{Binding DataContext.EffectSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              <Grid extensions:OverlayExtensions.IsOverlayHoverVisible="True"
+                                    Width="{Binding DataContext.EffectSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     Height="{Binding DataContext.EffectSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     Margin="{Binding DataContext.InnerMargin, RelativeSource={RelativeSource AncestorType=UserControl}}">
                                   <Grid.Style>
@@ -50,6 +53,9 @@
                                   <Grid.Effect>
                                         <DropShadowEffect Color="{Binding ShadowColor}" BlurRadius="24" ShadowDepth="1"/>
                                     </Grid.Effect>
+                                  <extensions:OverlayExtensions.ToolTip>
+                                      <tooltips:CardTooltip Card="{Binding Effect.CardToShowInUI}"/>
+                                  </extensions:OverlayExtensions.ToolTip>
                                     <Border BorderThickness="3" CornerRadius="8">
                                         <Border.BorderBrush>
                                             <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
