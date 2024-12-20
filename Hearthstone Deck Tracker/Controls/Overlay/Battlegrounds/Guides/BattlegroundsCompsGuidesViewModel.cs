@@ -8,11 +8,9 @@ using System.Windows.Media;
 using HearthDb.Enums;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
-using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
@@ -240,4 +238,11 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 
 	public Visibility Tier7FeatureVisibility => CompsByTier != null ? Visibility.Visible : Visibility.Collapsed;
 	public Visibility BaseFeatureVisibility => CompsByTier == null ? Visibility.Visible : Visibility.Collapsed;
+
+	public void Reset()
+	{
+		Comps = null;
+		CompsByTier = null;
+		SelectedComp = null;
+	}
 }

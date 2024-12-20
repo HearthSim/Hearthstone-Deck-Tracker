@@ -1,3 +1,10 @@
+## Unrelased
+**Hearthstone**:
+- Fixed some Year of the Wolf sets not being considered as Wild.
+
+**Battlegrounds**:
+- Fixed the Comp Guides showing outdated information when HDT was kept running for a long time.
+
 ## **Release v1.38.0 - 2024-12-17**
 **Updated for Hearthstone 31.2.2**
 

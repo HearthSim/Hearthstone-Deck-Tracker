@@ -377,6 +377,7 @@ namespace Hearthstone_Deck_Tracker
 					Overlay.HideBattlegroundsHeroPanel();
 					Overlay.ConstructedMulliganGuideViewModel.Reset();
 					Overlay.ConstructedMulliganGuidePreLobbyViewModel.Reset();
+					Overlay.BattlegroundsCompsGuidesVM.Reset();
 					Overlay.HideMulliganToast(false);
 
 					TrayIcon.MenuItemStartHearthstone.Visible = true;
