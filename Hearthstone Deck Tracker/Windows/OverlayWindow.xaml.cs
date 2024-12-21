@@ -705,7 +705,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			BtnTier7Inspiration.IsEnabled = BattlegroundsInspirationViewModel.HasBeenActivated;
 
-			BattlegroundsCompsGuidesVM.Update();
+			BattlegroundsCompsGuidesVM.OnMatchStart();
 
 			_bgsTopBarBehavior.Show();
 		}
@@ -719,6 +719,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void HideBgsTopBar()
 		{
 			BattlegroundsMinionsVM.Reset();
+			BattlegroundsCompsGuidesVM.OnMatchEnd();
 			_bgsTopBarBehavior.Hide();
 			TurnCounter.UpdateTurn(1);
 			HideBobsBuddyPanel();

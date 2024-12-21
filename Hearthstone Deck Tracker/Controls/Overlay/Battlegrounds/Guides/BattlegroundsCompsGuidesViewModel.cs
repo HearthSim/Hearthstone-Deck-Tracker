@@ -71,7 +71,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 
 	private readonly SemaphoreSlim _updateCompGuidesSemaphore = new (1, 1);
 
-	public async void Update()
+	public async void OnMatchStart()
 	{
 		if(Core.Game.Spectator)
 			await Task.Delay(1500);
@@ -79,7 +79,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		try
 		{
 			await _updateCompGuidesSemaphore.WaitAsync();
-			await UpdateCompsGuidesIfNeeded();
+			await UpdateCompGuides();
 		}
 		finally
 		{
@@ -87,18 +87,18 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		}
 	}
 
-	private async Task UpdateCompsGuidesIfNeeded()
+	private async Task UpdateCompGuides()
 	{
-		CompsByTier = null;
+		// Always refresh the comp guides
+		await TrySetCompsGuides();
 
-		// Ensures data was already fetched and no more API calls are needed
-		if(Comps != null && Comps.Any())
+		// Update Tier7 version if we have Comp data
+		// Note: This may be called even if the previous call was unsuccessful,
+		// e.g. because we still had the Comp guides cached from a previous match.
+		if(Comps != null)
 		{
 			await TrySetTier7View();
-			return;
 		}
-
-		await TrySetCompsGuides();
 	}
 
 	private async Task TrySetCompsGuides()
@@ -123,9 +123,12 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		if(battlegroundsCompGuides is not null)
 		{
 			Comps = battlegroundsCompGuides;
-
-			await TrySetTier7View();
 		}
+	}
+
+	public void OnMatchEnd()
+	{
+		CompsByTier = null;
 	}
 
 	public class TieredComps
