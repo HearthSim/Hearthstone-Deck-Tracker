@@ -3,6 +3,7 @@
 - Fixed some Year of the Wolf sets not being considered as Wild.
 
 **Battlegrounds**:
+- Fixed the Tier7 version of the Comp Guides not filtering correctly for "All" minions.
 - Fixed the Comp Guides showing outdated information when HDT was kept running for a long time.
 
 ## **Release v1.38.0 - 2024-12-17**

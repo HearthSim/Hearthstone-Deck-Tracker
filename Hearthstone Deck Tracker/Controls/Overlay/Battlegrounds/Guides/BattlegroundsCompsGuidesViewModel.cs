@@ -212,7 +212,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 
 			if(availableRaces != null)
 			{
-				var currentRaces = new HashSet<Race>(availableRaces) { Race.INVALID };
+				var currentRaces = new HashSet<Race>(availableRaces.Concat(new [] { Race.ALL, Race.INVALID }));
 				var availableCards = _db.Value.GetCardsByRaces(currentRaces, false);
 				var availableCardIds = new HashSet<int>(availableCards.Select(card => card.DbfId));
 				filteredComps = Comps.Where(comp =>
