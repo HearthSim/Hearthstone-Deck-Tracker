@@ -1,4 +1,4 @@
-## Unrelased
+## **Release v1.38.1 - 2024-12-25**
 **Hearthstone**:
 - Fixed some Year of the Wolf sets not being considered as Wild.
 
