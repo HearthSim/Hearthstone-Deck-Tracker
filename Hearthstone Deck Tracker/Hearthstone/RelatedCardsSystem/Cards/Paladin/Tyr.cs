@@ -7,11 +7,7 @@ public class Tyr: ICardWithRelatedCards
 {
 	public string GetCardId() => HearthDb.CardIds.Collectible.Paladin.Tyr;
 
-	public bool ShouldShowForOpponent(Player opponent)
-	{
-		var card = Database.GetCardFromId(GetCardId());
-		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentFormat, opponent.OriginalClass) && GetRelatedCards(opponent).Count > 0;
-	}
+	public bool ShouldShowForOpponent(Player opponent) => false;
 
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.DeadMinionsCards

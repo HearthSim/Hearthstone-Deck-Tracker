@@ -8,7 +8,7 @@ public abstract class ResurrectionCard: ICardWithRelatedCards
 	public abstract string GetCardId();
 
 	/// Don't usually show these cards for the opponent, because minions typically die all the time.
-	public bool ShouldShowForOpponent(Player opponent) => false;
+	public virtual bool ShouldShowForOpponent(Player opponent) => false;
 
 	protected abstract bool FilterCard(Card card);
 
