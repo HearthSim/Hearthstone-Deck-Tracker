@@ -1,5 +1,6 @@
 ## **Unreleased**
 **Hearthstone**:
+- Fixed Eruptions created by Triangulate not displaying the correct damage buff.
 - Fixed some related cards appearing when they are not relevant.
 
 **Battlegrounds**:

@@ -138,6 +138,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var guessedCardId = false;
 				var guessedLocation = DeckLocation.Unknown;
 				string? copyOfCardId = null;
+				EntityInfo? entityInfo = null;
 				if(!game.Entities.ContainsKey(id))
 				{
 					if(string.IsNullOrEmpty(cardId) && zone != Zone.SETASIDE)
@@ -148,6 +149,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							var known = gameState.KnownCardIds[blockId.Value].FirstOrDefault();
 							cardId = known.Item1;
 							copyOfCardId = known.Item3;
+							entityInfo = known.Item4;
 							if(!string.IsNullOrEmpty(cardId))
 							{
 								guessedLocation = known.Item2;
@@ -157,7 +159,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							gameState.KnownCardIds[blockId.Value].Remove(known);
 						}
 					}
-					var entity = new Entity(id) { CardId = cardId };
+					var entity = new Entity(id) { CardId = cardId};
+					if(entityInfo != null)
+					{
+						entity.Info.Forged = entityInfo.Forged;
+						entity.Info.CostReduction = entityInfo.CostReduction;
+						entity.Info.ExtraInfo = entityInfo.ExtraInfo;
+						entity.Info.StoredCardIds = entityInfo.StoredCardIds;
+					}
+
 					if(guessedCardId)
 						entity.Info.GuessedCardState = GuessedCardState.Guessed;
 					if(guessedLocation != DeckLocation.Unknown)
@@ -283,7 +293,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							if(entity.IsControlledBy(game.Player.Id))
 							{
-								AddKnownCardId(gameState, entity.CardId, count: 3);
+								AddKnownCardId(gameState, entity.CardId, count: 3, info: entity.Info);
 							}
 							else if(entity.IsControlledBy(game.Opponent.Id))
 							{
@@ -358,7 +368,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(cardId != null)
 						{
 							RemoveKnownCardId(gameState, 3);
-							AddKnownCardId(gameState, cardId, count: 3);
+							AddKnownCardId(gameState, cardId, count: 3, info: gameEntity.Info);
 						}
 						gameState.TriangulatePlayed = false;
 					}
@@ -1316,7 +1326,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			return !cardIdMatch.Success ? null : cardIdMatch.Groups["cardId"].Value.Trim();
 		}
 
-		private static void AddKnownCardId(IHsGameState gameState, string cardId, int count = 1, DeckLocation location = DeckLocation.Unknown, string? copyOfCardId = null)
+		private static void AddKnownCardId(IHsGameState gameState, string cardId, int count = 1, DeckLocation location = DeckLocation.Unknown, string? copyOfCardId = null, EntityInfo? info = null)
 		{
 			if(gameState.CurrentBlock == null)
 				return;
@@ -1324,8 +1334,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			for(var i = 0; i < count; i++)
 			{
 				if(!gameState.KnownCardIds.ContainsKey(blockId))
-					gameState.KnownCardIds[blockId] = new List<(string, DeckLocation, string?)>();
-				gameState.KnownCardIds[blockId].Add((cardId, location, copyOfCardId));
+					gameState.KnownCardIds[blockId] = new List<(string, DeckLocation, string?, EntityInfo?)>();
+				gameState.KnownCardIds[blockId].Add((cardId, location, copyOfCardId, info));
 			}
 		}
 

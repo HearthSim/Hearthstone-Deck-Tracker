@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool PlayerUsedHeroPower { get; set; }
 		public bool FoundSpectatorStart { get; set; }
 		public int JoustReveals { get; set; }
-		public Dictionary<int, IList<(string, DeckLocation, string?)>> KnownCardIds { get; set; } = new();
+		public Dictionary<int, IList<(string, DeckLocation, string?, EntityInfo?)>> KnownCardIds { get; set; } = new();
 		public int LastCardPlayed { get; set; }
 		public Stack<string> LastPlagueDrawn { get; set; } = new();
 		public bool WasInProgress { get; set; }
