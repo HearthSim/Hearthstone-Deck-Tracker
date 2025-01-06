@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
@@ -20,13 +21,8 @@ public class BeetlesSizeCounter : StatsCounter
 		HearthDb.CardIds.NonCollectible.Neutral.NestSwarmer
 	};
 
-	private readonly string[] _goldenVersions = {
-		HearthDb.CardIds.NonCollectible.Neutral.BuzzingVermin_BuzzingVermin,
-		HearthDb.CardIds.NonCollectible.Neutral.ForestRover_ForestRover,
-		HearthDb.CardIds.NonCollectible.Neutral.TurquoiseSkitterer_TurquoiseSkitterer,
-		HearthDb.CardIds.NonCollectible.Neutral.RunedProgenitor_RunedProgenitor,
-		HearthDb.CardIds.NonCollectible.Neutral.NestSwarmer_NestSwarmer
-	};
+	private IEnumerable<string> RelatedCardsWithTriples => RelatedCards.Concat(RelatedCards.Select(HearthDb.Cards.TryGetTripleId));
+
 
 	private readonly int _beetleBaseAttack =
 		Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Neutral.BoonofBeetles_BeetleToken1)?.Attack ?? 1;
@@ -40,7 +36,7 @@ public class BeetlesSizeCounter : StatsCounter
 
 	public override bool ShouldShow() => Game.IsBattlegroundsMatch
 	                                     && (AttackCounter > _beetleBaseAttack || HealthCounter > _beetleBaseHealth)
-	                                     && Game.Player.Board.Any(e => RelatedCards.Concat(_goldenVersions).Any(rc => e.CardId == rc));
+	                                     && Game.Player.Board.Any(e => RelatedCardsWithTriples.Any(rc => e.CardId == rc));
 
 	public override string[] GetCardsToDisplay() => RelatedCards;
 
