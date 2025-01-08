@@ -506,7 +506,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			public CustomMouseEventArgs(MouseDevice mouse, int timestamp) : base(mouse, timestamp) { }
 		}
 
-		private FrameworkElement? _currentlyHoveredElement;
 		private HashSet<FrameworkElement> _mouseOverElements = new();
 
 		private void UpdateHoverable()
@@ -517,32 +516,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var mouseOverElements = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, cursorPos)).ToList();
 
-			// pick an arbitrary one as the primary hover target
-			var hoveredElement = mouseOverElements.FirstOrDefault(x => x.IsHitTestVisible);
-			if(hoveredElement != _currentlyHoveredElement)
-			{
-				if(_currentlyHoveredElement != null)
-				{
-					if(hoveredElement != _currentlyHoveredElement)
-					{
-						_currentlyHoveredElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseLeaveEvent });
-						_currentlyHoveredElement = null;
-					}
-				}
-				if(hoveredElement != null)
-				{
-					hoveredElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseEnterEvent });
-					_currentlyHoveredElement = hoveredElement;
-				}
-			}
-
 			// for every element, if it was not hovered, emit a MouseEnter event
 			foreach(var mouseOverElement in mouseOverElements)
 			{
 				if(!_mouseOverElements.Contains(mouseOverElement))
 				{
-					var handler = (MouseIntersectionChangedEventHandler)mouseOverElement.GetValue(OverlayExtensions.OverlayMouseIntersectionChangedProperty);
-					handler?.Invoke(mouseOverElement, true);
+					mouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseEnterEvent });
 				}
 			}
 
@@ -551,8 +530,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if(!mouseOverElements.Contains(previousMouseOverElement))
 				{
-					var handler = (MouseIntersectionChangedEventHandler)previousMouseOverElement.GetValue(OverlayExtensions.OverlayMouseIntersectionChangedProperty);
-					handler?.Invoke(previousMouseOverElement, false);
+					previousMouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseLeaveEvent });
 				}
 			}
 

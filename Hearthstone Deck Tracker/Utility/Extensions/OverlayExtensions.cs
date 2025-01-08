@@ -105,25 +105,4 @@ public partial class OverlayExtensions : DependencyObject
 	}
 
 	#endregion
-
-	#region OverlayHoverChanged
-
-	public static readonly DependencyProperty OverlayMouseIntersectionChangedProperty =
-		DependencyProperty.RegisterAttached(
-			name: "OverlayMouseIntersectionChanged",
-			propertyType: typeof(MouseIntersectionChangedEventHandler),
-			ownerType: typeof(OverlayExtensions)
-		);
-
-	public static bool GetOverlayMouseIntersectionChanged(DependencyObject obj)
-	{
-		return (bool)obj.GetValue(OverlayMouseIntersectionChangedProperty);
-	}
-
-	public static void SetOverlayMouseIntersectionChanged(DependencyObject obj, MouseIntersectionChangedEventHandler value)
-	{
-		obj.SetValue(OverlayMouseIntersectionChangedProperty, value);
-	}
-
-	#endregion
 }
