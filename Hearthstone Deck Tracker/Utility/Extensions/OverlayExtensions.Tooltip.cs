@@ -68,6 +68,7 @@ partial class OverlayExtensions
 			inputElement.MouseEnter -= ShowTooltip;
 			inputElement.MouseLeave -= HideTooltip;
 			OnToolTipChanged?.Invoke(null, d);
+			_elementIsInOverlay.Remove(d);
 		}
 	}
 }
