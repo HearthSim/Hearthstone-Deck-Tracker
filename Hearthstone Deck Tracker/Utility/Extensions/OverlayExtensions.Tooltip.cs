@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,37 +26,63 @@ partial class OverlayExtensions
 	public static void SetToolTip(DependencyObject obj, DependencyObject element) => obj.SetValue(ToolTipProperty, element);
 
 	private static readonly Dictionary<DependencyObject, bool> _elementIsInOverlay = new ();
+	private static readonly HashSet<DependencyObject> _waitingOnVisualTree = new ();
 
-	private static bool IsInOverlay(DependencyObject d)
+	private static async Task<bool> IsInOverlay(DependencyObject d)
 	{
 		if(!_elementIsInOverlay.TryGetValue(d, out var val))
 		{
-			var visual = d as Visual ?? Helper.GetLogicalParent<Visual>(d);
-			val = visual != null && Helper.GetVisualParent<Window>(visual) is OverlayWindow;
+			val = await GetParentWindow(d) is OverlayWindow;
 			_elementIsInOverlay[d] = val;
 		}
 		return val;
 	}
 
+	private static async Task<Window?> GetParentWindow(DependencyObject d)
+	{
+		var visual = d as Visual ?? Helper.GetLogicalParent<Visual>(d);
+		if(visual == null)
+			return null;
+		var window = Helper.GetVisualParent<Window>(visual);
+		if(window != null)
+			return window;
+
+		_waitingOnVisualTree.Add(visual);
+		while(window == null)
+		{
+			// This is not great. In theory the visual tree should be constructed by the time element.Loaded is invoked,
+			// or at least when window.Loaded is invoked. Neither seems to be the case. Using the dispatcher here with
+			// a low priority invoke seems to come with the same issues where it still can't find the window on the first
+			// try. Might as well just use a time delay.
+			await Task.Delay(10);
+
+			if(!_waitingOnVisualTree.Contains(visual))
+				break;
+			window = Helper.GetVisualParent<Window>(visual);
+		}
+		_waitingOnVisualTree.Remove(visual);
+		return window;
+	}
+
 	public static event Action<FrameworkElement?, DependencyObject>? OnToolTipChanged;
 
-	private static void ShowTooltip(object sender, MouseEventArgs _)
+	private static async void ShowTooltip(object sender, MouseEventArgs _)
 	{
-		if(sender is DependencyObject d && IsInOverlay(d))
+		if(sender is DependencyObject d && await IsInOverlay(d))
 			OnToolTipChanged?.Invoke(GetToolTip(d), d);
 	}
 
-	private static void HideTooltip(object sender, MouseEventArgs _)
+	private static async void HideTooltip(object sender, MouseEventArgs _)
 	{
-		if(sender is DependencyObject d && IsInOverlay(d))
+		if(sender is DependencyObject d && await IsInOverlay(d))
 			OnToolTipChanged?.Invoke(null, d);
 	}
 
-	private static void OnElementLoaded(object sender, RoutedEventArgs e)
+	private static async void OnElementLoaded(object sender, RoutedEventArgs e)
 	{
 		if(sender is not FrameworkElement element)
 			return;
-		if(IsInOverlay(element) || element.ToolTip is not null)
+		if(await IsInOverlay(element) || element.ToolTip is not null)
 			return;
 		// For anything not in the overlay, if we don't already have a normal ToolTip, set this as the ToolTip!
 		ToolTipService.SetInitialShowDelay(element, 300);
@@ -66,6 +93,12 @@ partial class OverlayExtensions
 			Background = Brushes.Transparent,
 			BorderBrush = Brushes.Transparent
 		};
+	}
+
+	private static void OnElementUnloaded(object sender, RoutedEventArgs routedEventArgs)
+	{
+		if(sender is DependencyObject d)
+			_waitingOnVisualTree.Remove(d);
 	}
 
 	private static void OnToolTipChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -82,12 +115,18 @@ partial class OverlayExtensions
 			inputElement.MouseLeave += HideTooltip;
 
 			if(d is FrameworkContentElement fce)
+			{
 				fce.Loaded += OnElementLoaded;
+				fce.Unloaded += OnElementUnloaded;
+			}
 			else
 			{
 				var fe = d as FrameworkElement ?? Helper.GetLogicalParent<FrameworkElement>(d);
 				if(fe != null)
+				{
 					fe.Loaded += OnElementLoaded;
+					fe.Unloaded += OnElementUnloaded;
+				}
 			}
 		}
 		else
@@ -96,12 +135,18 @@ partial class OverlayExtensions
 			inputElement.MouseLeave -= HideTooltip;
 
 			if(d is FrameworkContentElement fce)
+			{
 				fce.Loaded -= OnElementLoaded;
+				fce.Unloaded += OnElementUnloaded;
+			}
 			else
 			{
 				var fe = d as FrameworkElement ?? Helper.GetLogicalParent<FrameworkElement>(d);
 				if(fe != null)
+				{
 					fe.Loaded -= OnElementLoaded;
+					fe.Unloaded += OnElementUnloaded;
+				}
 			}
 
 			OnToolTipChanged?.Invoke(null, d);
