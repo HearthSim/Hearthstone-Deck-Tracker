@@ -3,9 +3,9 @@ using System.Windows;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 
-public partial class CompsGuides
+public partial class CompGuideList
 {
-	public CompsGuides()
+	public CompGuideList()
 	{
 		InitializeComponent();
 	}

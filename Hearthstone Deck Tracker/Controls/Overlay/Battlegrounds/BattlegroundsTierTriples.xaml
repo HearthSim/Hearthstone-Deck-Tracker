@@ -18,10 +18,9 @@
                     Canvas.Top="{Binding TierTop, FallbackValue=2, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
                     Tier="{Binding Tier, FallbackValue=5, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
                     Opacity="{Binding TierOpacity, FallbackValue=1, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
+                    Width="24"
+                    Height="24"
                 >
-                    <local:BattlegroundsTier.RenderTransform>
-                        <ScaleTransform ScaleX="0.75" ScaleY="0.75" />
-                    </local:BattlegroundsTier.RenderTransform>
                 </local:BattlegroundsTier>
                 <Image
                     Canvas.Left="28"

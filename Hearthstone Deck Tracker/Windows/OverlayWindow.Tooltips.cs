@@ -602,12 +602,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				ToolTipCardBlock.Visibility = Config.Instance.OverlaySecretToolTipsOnly ? Visible : visibility;
 			}
-			else if(BgsTopBar.Visibility == Visible && GuidesTabs.BattlegroundsMinionsPanel.Visibility == Visible && (BattlegroundsMinionsVM.ActiveTier != null || BattlegroundsMinionsVM.ActiveMinionType != null))
+			else if(BgsTopBar.Visibility == Visible && GuidesTabs.ActiveContent.Content is BattlegroundsMinions battlegroundsMinions && (BattlegroundsMinionsVM.ActiveTier != null || BattlegroundsMinionsVM.ActiveMinionType != null))
 			{
 				var found = false;
-				for(var i = 0; i < GuidesTabs.BattlegroundsMinionsPanel.GroupsControl.Items.Count; i++)
+				for(var i = 0; i < battlegroundsMinions.GroupsControl.Items.Count; i++)
 				{
-					var container = GuidesTabs.BattlegroundsMinionsPanel.GroupsControl.ItemContainerGenerator.ContainerFromIndex(i);
+					var container = battlegroundsMinions.GroupsControl.ItemContainerGenerator.ContainerFromIndex(i);
 					if(VisualTreeHelper.GetChildrenCount(container) == 0)
 						continue;
 					var group = (BattlegroundsCardsGroup)VisualTreeHelper.GetChild(container, 0);

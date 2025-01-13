@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
@@ -18,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 
 public class BattlegroundsCompsGuidesViewModel : ViewModel
 {
-	private Lazy<BattlegroundsDb> _db = new();
+	private BattlegroundsDb _db = BattlegroundsDbSingleton.Instance;
 
 	public List<BattlegroundsCompGuideViewModel>? Comps
 	{
@@ -213,7 +214,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			if(availableRaces != null)
 			{
 				var currentRaces = new HashSet<Race>(availableRaces.Concat(new [] { Race.ALL, Race.INVALID }));
-				var availableCards = _db.Value.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch);
+				var availableCards = _db.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch);
 				var availableCardIds = new HashSet<int>(availableCards.Select(card => card.DbfId));
 				filteredComps = Comps.Where(comp =>
 					comp.CoreCards.All(card => card.Card != null && availableCardIds.Contains(card.Card.DbfId))).ToList();

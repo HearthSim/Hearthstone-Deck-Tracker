@@ -701,7 +701,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			BattlegroundsMinionsVM.OnHeroPowers(heroPowers);
 
-			GuidesTabs.BattlegroundsMinionsPanel.Visibility = Config.Instance.ShowBattlegroundsTiers ? Visible : Collapsed;
+			GuidesTabs.Visibility = Config.Instance.ShowBattlegroundsTabs ? Visible : Collapsed;
 
 			BtnTier7Inspiration.IsEnabled = BattlegroundsInspirationViewModel.HasBeenActivated;
 

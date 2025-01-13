@@ -31,8 +31,28 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border BorderThickness="0" Margin="0,-9,0,0" Background="Transparent" Height="39.5">
-                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="9" Height="9">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Visual="{StaticResource guides_back_arrow}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <TextBlock x:Name="BackButtonText"
+                                           Foreground="White"
+                                           Text="{lex:Loc Battlegrounds_CompGuide_Back_Button}"
+                                           VerticalAlignment="Center"
+                                           FontSize="10"
+                                           Margin="5,0,0,0" />
+                            </StackPanel>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BackButtonText" Property="Opacity" Value="1" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="BackButtonText" Property="Opacity" Value="0.6" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -126,15 +146,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Button MouseEnter="Button_OnMouseEnter" MouseLeave="Button_OnMouseLeave" Click="Button_OnClick" Style="{StaticResource StyledBackButton}" Cursor="Hand">
-            <StackPanel Orientation="Horizontal">
-                <Rectangle Width="9" Height="9">
-                    <Rectangle.Fill>
-                        <VisualBrush Visual="{StaticResource guides_back_arrow}" />
-                    </Rectangle.Fill>
-                </Rectangle>
-                <TextBlock  Foreground="White" Text="{lex:Loc Battlegrounds_CompGuide_Back_Button}" VerticalAlignment="Center" FontSize="10" Margin="5,0,0,0" Opacity="{Binding TextOpacity, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-            </StackPanel>
+        <Button Click="Button_OnClick" Style="{StaticResource StyledBackButton}" Cursor="Hand">
         </Button>
         <Border Grid.Row="1" BorderBrush="#4F565B" BorderThickness="1" CornerRadius="3" Background="#292d30">
             <Grid>

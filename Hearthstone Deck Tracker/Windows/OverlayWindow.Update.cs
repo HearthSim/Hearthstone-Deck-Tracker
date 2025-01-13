@@ -607,8 +607,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				_activeEffectsScale = activeEffectsSize;
 			}
 
-			GuidesTabs.BattlegroundsMinionsPanel.MinionScrollViewer.MaxHeight = ((ActualHeight > 54 ? ActualHeight - 54 : ActualHeight) * 0.89) / (_bgsTopBarBehavior.GetScaling?.Invoke() ?? 1.0);
-			GuidesTabs.BattlegroundsCompsGuides.CompsGuidesContainer.MaxHeight = (ActualHeight * 0.89) / (_bgsTopBarBehavior.GetScaling?.Invoke() ?? 1.0);
+			if(GuidesTabs.TabsContent is not null)
+			{
+				GuidesTabs.TabsContent.MaxHeight =  Math.Max(0, (ActualHeight - 54) * 0.95 / _bgsTopBarBehavior.GetScaling?.Invoke() ?? 1.0);
+			}
 		}
 
 		public void ApplyAutoScaling()

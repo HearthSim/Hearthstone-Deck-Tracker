@@ -856,7 +856,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool AutoShowBattlegroundsTrinketPicking = true;
 
 		[DefaultValue(true)]
-		public bool ShowBattlegroundsTiers = true;
+		public bool ShowBattlegroundsTabs = true;
 
 		[DefaultValue(false)]
 		public bool AlwaysShowBattlegroundsTavernTier7 = false;

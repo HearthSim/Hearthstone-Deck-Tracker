@@ -217,7 +217,7 @@
 		<XamlRuntime>Wpf</XamlRuntime>
 		<SubType>Designer</SubType>
 	</Page>
-    <Page Update="Controls\Overlay\Battlegrounds\Guides\Comps\CompsGuides.xaml">
+    <Page Update="Controls\Overlay\Battlegrounds\Guides\Comps\CompGuideList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
@@ -238,11 +238,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\Overlay\Battlegrounds\Guides\MinionsGuides.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <XamlRuntime>Wpf</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Controls\Overlay\Battlegrounds\Guides\Comps\CompsGuides.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>

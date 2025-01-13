@@ -76,66 +76,64 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		return brush;
 	}
 
-	private IEnumerable<Inline> ParseCardsFromText(string text)
+	private IEnumerable<Inline>[] ParseCardsFromText(string text)
 	{
 		if (string.IsNullOrWhiteSpace(text))
 		{
-			yield break;
+			return Array.Empty<IEnumerable<Inline>>();
 		}
 
-		var index = 0;
-
-		while (index < text.Length)
+		var result = new List<IEnumerable<Inline>>();
+		var lines = text.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+		foreach (var line in lines)
 		{
-			var nextIndex = text.IndexOf("[[", index);
-			// If there is no opening tag anymore, return the remaining text
-			if (nextIndex == -1)
+			var inlines = new List<Inline>();
+			var index = 0;
+			while (index < line.Length)
 			{
-				yield return new Run(text.Substring(index));
-				yield break;
+				var nextIndex = line.IndexOf("[[", index);
+				if (nextIndex == -1)
+				{
+					inlines.Add(new Run(line.Substring(index)));
+					break;
+				}
+
+				if (nextIndex > index)
+				{
+					inlines.Add(new Run(line.Substring(index, nextIndex - index)));
+				}
+
+				index = nextIndex + 2;
+				var endIndex = line.IndexOf("]]", index);
+				if (endIndex == -1)
+				{
+					inlines.Add(new Run(line.Substring(nextIndex)));
+					break;
+				}
+
+				var separatorIndex = line.IndexOf("||", index);
+				if (separatorIndex > endIndex)
+				{
+					separatorIndex = -1;
+				}
+
+				var loaded = separatorIndex != -1 ? line.Substring(separatorIndex + 2, endIndex - separatorIndex - 2) : "";
+				var dbfId = separatorIndex != -1
+					? int.TryParse(loaded, out var theDbfId)
+						? theDbfId
+						: null
+					: (int?)null;
+
+				var cardNameTerminator = separatorIndex != -1 ? separatorIndex : endIndex;
+				var length = cardNameTerminator - index;
+				inlines.Add(new ReferencedCardRun(dbfId, line.Substring(index, length)));
+
+				index = endIndex + 2;
 			}
-
-			// If there is text before the next tag, return it
-			if (nextIndex > index)
-			{
-				yield return new Run(text.Substring(index, nextIndex - index));
-			}
-
-			index = nextIndex + 2;
-
-
-			var endIndex = text.IndexOf("]]", index);
-
-			// Edge case: if there is no closing tag, just return the remaining text
-			if (endIndex == -1)
-			{
-				yield return new Run(text.Substring(nextIndex));
-				yield break;
-			}
-
-			// Check if there's a dbf id before the end
-			var separatorIndex = text.IndexOf("||", index);
-
-			// Discard any separators past the end of this card
-			if(separatorIndex > endIndex)
-			{
-				separatorIndex = -1;
-			}
-
-			// Parse the dbf id
-			var loaded = separatorIndex != -1 ? text.Substring(separatorIndex + 2, endIndex - separatorIndex - 2) : "";
-			var dbfId = separatorIndex != -1
-				? int.TryParse(loaded, out var theDbfId)
-					? theDbfId
-					: null
-				: (int?)null;
-
-			var cardNameTerminator = separatorIndex != -1 ? separatorIndex : endIndex;
-			var length = cardNameTerminator - index;
-			yield return new ReferencedCardRun(dbfId, text.Substring(index, length));
-
-			index = endIndex + 2;
+			result.Add(inlines);
 		}
+
+		return result.ToArray();
 	}
 
 	public BattlegroundsCompGuideViewModel(BattlegroundsCompGuide compGuide)
@@ -180,21 +178,9 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 			_ => CreateLinearGradientBrush(Color.FromRgb(112, 112, 112), Color.FromRgb(64, 64, 64))
 		};
 
-		CommonEnablerTags = compGuide.CommonEnablers
-			.Replace("\r\n", "\n")
-			.Replace("\r", "\n")
-			.Split('\n')
-			.Select(ParseCardsFromText)
-			.ToArray();
-
-		WhenToCommitTags = compGuide.WhenToCommit
-			.Replace("\r\n", "\n")
-			.Replace("\r", "\n")
-			.Split('\n')
-			.Select(ParseCardsFromText)
-			.ToArray();
-
-		HowToPlay = ParseCardsFromText(compGuide.HowToPlay);
+		CommonEnablerTags = ParseCardsFromText(compGuide.CommonEnablers);
+		WhenToCommitTags = ParseCardsFromText(compGuide.WhenToCommit);
+		HowToPlay = ParseCardsFromText(compGuide.HowToPlay).FirstOrDefault();
 	}
 
 	[LocalizedProp]
@@ -282,5 +268,5 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		}
 	}
 
-	public IEnumerable<Inline> HowToPlay { get; }
+	public IEnumerable<Inline>? HowToPlay { get; }
 }

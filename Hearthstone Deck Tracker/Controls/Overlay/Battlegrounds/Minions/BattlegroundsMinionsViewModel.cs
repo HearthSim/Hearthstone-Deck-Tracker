@@ -6,13 +6,14 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using System;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Utility.Assets;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 
 public class BattlegroundsMinionsViewModel : ViewModel
 {
-	private Lazy<BattlegroundsDb> _db = new();
+	private readonly BattlegroundsDb _db = BattlegroundsDbSingleton.Instance;
 
 	public IEnumerable<Race>? AvailableRaces
 	{
@@ -28,7 +29,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 
 	public List<Race> UnavailableRaces
 	{
-		get => AvailableRaces is null ? new List<Race>() : _db.Value.Races.Where(x => !AvailableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL).ToList();
+		get => AvailableRaces is null ? new List<Race>() : _db.Races.Where(x => !AvailableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL).ToList();
 	}
 
 	public int? ActiveTier
@@ -178,13 +179,13 @@ public class BattlegroundsMinionsViewModel : ViewModel
 			{
 				var isTierAvailable = AvailableTiers.Contains(tier);
 
-				foreach(var race in _db.Value.Races)
+				foreach(var race in _db.Races)
 				{
 					if(AvailableRaces != null && !AvailableRaces.Contains(race) && race != Race.INVALID
 					   && race != Race.ALL)
 						continue;
 
-					IEnumerable<Hearthstone.Card> cards = _db.Value.GetCards(tier, race, IsDuos);
+					IEnumerable<Hearthstone.Card> cards = _db.GetCards(tier, race, IsDuos);
 
 					if(!cards.Any())
 						continue;
@@ -198,7 +199,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 					});
 				}
 
-				IEnumerable<Hearthstone.Card> spells = _db.Value.GetSpells(tier, IsDuos);
+				IEnumerable<Hearthstone.Card> spells = _db.GetSpells(tier, IsDuos);
 				if(spells.Any())
 				{
 					spells = spells.Select(x =>
@@ -240,9 +241,9 @@ public class BattlegroundsMinionsViewModel : ViewModel
 				foreach(var tierGroup in tiers)
 				{
 					var cards = (int)minionType == -1
-						? _db.Value.GetSpells(tierGroup, IsDuos).OrderBy(x => x.Cost).ThenBy(x => x.LocalizedName).ToList()
-						: _db.Value.GetCards(tierGroup, minionType, IsDuos)
-							.Concat(minionType != Race.ALL && minionType != Race.INVALID ? _db.Value.GetCards(tierGroup, Race.ALL, IsDuos) : new())
+						? _db.GetSpells(tierGroup, IsDuos).OrderBy(x => x.Cost).ThenBy(x => x.LocalizedName).ToList()
+						: _db.GetCards(tierGroup, minionType, IsDuos)
+							.Concat(minionType != Race.ALL && minionType != Race.INVALID ? _db.GetCards(tierGroup, Race.ALL, IsDuos) : new())
 							.OrderBy(x => x.LocalizedName).ToList();
 
 					if(!cards.Any())
@@ -301,7 +302,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		var races = Enum.GetValues(typeof(Race)).Cast<Race>();
 		foreach(var tier in new [] { 1, 2, 3, 4, 5, 6, 7 })
 			foreach(var race in races)
-				foreach(var card in _db.Value.GetCards(tier, race, true))
+				foreach(var card in _db.GetCards(tier, race, true))
 					downloader.GetAssetData(card).Forget();
 	}
 }

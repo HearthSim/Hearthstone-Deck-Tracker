@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -28,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 
 public class BattlegroundsSessionViewModel : ViewModel
 {
-	private readonly Lazy<BattlegroundsDb> _db = new();
+	private readonly BattlegroundsDb _db = BattlegroundsDbSingleton.Instance;
 
 	public ObservableCollection<Race> AvailableMinionTypes { get; } = new();
 	public ObservableCollection<Race> BannedMinionTypes { get; } = new();
@@ -126,7 +127,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	private void UpdateMinionTypes()
 	{
-		var allRaces = _db.Value.Races.Where(x => x != Race.INVALID && x != Race.ALL).ToList();
+		var allRaces = _db.Races.Where(x => x != Race.INVALID && x != Race.ALL).ToList();
 		var availableRaces = BattlegroundsUtils.GetAvailableRaces()?.ToList() ?? allRaces;
 		var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x)).ToList();
 

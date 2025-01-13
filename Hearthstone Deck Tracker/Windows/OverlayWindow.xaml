@@ -222,14 +222,6 @@
                         FinalBoardTooltip="true"
                     />
                 </StackPanel>
-                <StackPanel Name="BgsTopBar" Visibility="Collapsed" Orientation="Horizontal" Canvas.Top="0" Canvas.Right="0">
-                    <inspiration:BattlegroundsInspirationOverlayButton
-                        x:Name="BtnTier7Inspiration" IsEnabled="False" MouseUp="BtnBgsInspiration_OnMouseUp"
-                        ext:OverlayExtensions.IsOverlayHitTestVisible="{Binding IsEnabled, RelativeSource={RelativeSource Self}}"
-                    />
-                    <overlay:TurnCounter x:Name="TurnCounter"  Height="49" VerticalAlignment="Top" />
-                    <guides:GuidesTabs x:Name="GuidesTabs" VerticalAlignment="Top" />
-                </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
                 <StackPanel Width="1000" Name="BgsOpponentInfoContainer" Canvas.Top="0" Canvas.Right="0">
                     <battlegrounds:BattlegroundsOpponentInfo x:Name="BgsOpponentInfo" Visibility="Collapsed"/>
@@ -272,6 +264,15 @@
                 <overlay:CountersOverlay Visibility="Visible" x:Name="PlayerCounters" IsPlayer="true" />
                 <activeEffects:ActiveEffectsOverlay Visibility="Visible" x:Name="OpponentActiveEffects" IsPlayer="false" />
                 <activeEffects:ActiveEffectsOverlay Visibility="Visible" x:Name="PlayerActiveEffects" IsPlayer="true" />
+
+                <StackPanel Name="BgsTopBar" Visibility="Collapsed" Orientation="Horizontal" Canvas.Top="0" Canvas.Right="0">
+                    <inspiration:BattlegroundsInspirationOverlayButton
+                        x:Name="BtnTier7Inspiration" IsEnabled="False" MouseUp="BtnBgsInspiration_OnMouseUp"
+                        ext:OverlayExtensions.IsOverlayHitTestVisible="{Binding IsEnabled, RelativeSource={RelativeSource Self}}"
+                    />
+                    <overlay:TurnCounter x:Name="TurnCounter"  Height="49" VerticalAlignment="Top" />
+                    <guides:GuidesTabs x:Name="GuidesTabs" VerticalAlignment="Top" />
+                </StackPanel>
 
                 <inspiration:BattlegroundsInspiration
                     x:Name="BattlegroundsInspiration" Visibility="Collapsed" Canvas.Top="0" Canvas.Left="0"

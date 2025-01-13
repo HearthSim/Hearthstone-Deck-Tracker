@@ -24,29 +24,6 @@ public partial class CompGuide : INotifyPropertyChanged
 		InitializeComponent();
 	}
 
-	private bool _hoveringButton = false;
-	private bool HoveringButton
-	{
-		get { return _hoveringButton; }
-		set
-		{
-			_hoveringButton = value;
-			OnPropertyChanged(nameof(TextOpacity));
-		}
-	}
-
-	public double TextOpacity => HoveringButton ? 1 : 0.6;
-
-	private void Button_OnMouseEnter(object sender, MouseEventArgs e)
-	{
-		HoveringButton = true;
-	}
-
-	private void Button_OnMouseLeave(object sender, MouseEventArgs e)
-	{
-		HoveringButton = false;
-	}
-
 	public event PropertyChangedEventHandler? PropertyChanged;
 
 	protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

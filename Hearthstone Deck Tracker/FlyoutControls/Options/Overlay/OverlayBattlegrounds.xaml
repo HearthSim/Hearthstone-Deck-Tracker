@@ -22,15 +22,15 @@
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxShowMenuOverlayInBackground_Checked"
                   Unchecked="CheckboxShowMenuOverlayInBackground_Unchecked" />
-        <CheckBox x:Name="CheckboxShowBattlegroundsTiers" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowMinionBrowser}"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTiers_Checked"
-                  Unchecked="CheckboxShowBattlegroundsTiers_Unchecked" Margin="10,5,0,0" />
         <CheckBox x:Name="CheckboxAlwaysShowBattlegroundsTavernTier7" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_AlwaysShowTavernTier7}"
                   HorizontalAlignment="Left" VerticalAlignment="Top"
                   IsEnabled="{Binding IsChecked, ElementName=CheckboxShowBattlegroundsTiers}"
                   Checked="CheckboxAlwaysShowBattlegroundsTavernTier7_Checked" Unchecked="CheckboxAlwaysShowBattlegroundsTavernTier7_Unchecked"
-                  Margin="30,5,0,0" />
+                  Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowBattlegroundsTabs" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowTabsBrowser}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTabs_Checked"
+                  Unchecked="CheckboxShowBattlegroundsTabs_Unchecked" Margin="10,5,0,0" />
         <CheckBox x:Name="CheckboxShowBattlegroundsTurnCounter" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowTurnCounter}"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTurnCounter_Checked"
