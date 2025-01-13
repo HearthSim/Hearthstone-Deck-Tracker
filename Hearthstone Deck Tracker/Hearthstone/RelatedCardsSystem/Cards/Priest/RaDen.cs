@@ -7,12 +7,7 @@ public class RaDen: ICardWithRelatedCards
 {
 	public string GetCardId() => HearthDb.CardIds.Collectible.Priest.RaDen;
 
-	public bool ShouldShowForOpponent(Player opponent)
-	{
-		var card = Database.GetCardFromId(GetCardId());
-		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentFormat, opponent.OriginalClass) && GetRelatedCards(opponent).Count > 1;
-	}
-
+	public bool ShouldShowForOpponent(Player opponent) => false;
 	public List<Card?> GetRelatedCards(Player player) =>
 		player.CardsPlayedThisMatch
 			.Where(entity => entity.Info.Created && entity.CardId != GetCardId())
