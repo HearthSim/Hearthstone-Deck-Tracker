@@ -591,6 +591,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CardsPlayedThisTurn.Clear();
 		}
 
+		public void OnTurnEnd()
+		{
+			CardsPlayedLastTurn = CardsPlayedThisTurn.ToList();
+			CardsPlayedThisTurn.Clear();
+		}
+
 		public void DeckToPlay(Entity entity, int turn)
 		{
 			if(entity.CardId != null)

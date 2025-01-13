@@ -445,13 +445,13 @@ namespace Hearthstone_Deck_Tracker
 			if(player == ActivePlayer.Player)
 			{
 				HandleOpponentEndOfTurn(turn.Item2 - 1);
-				_game.Player.OnTurnStart();
+				_game.Opponent.OnTurnEnd();
 				_game.SecretsManager.HandlePlayerTurnStart();
 			}
 			else if (player == ActivePlayer.Opponent)
 			{
 				HandlePlayerEndOfTurn(turn.Item2 - 1);
-				_game.Opponent.OnTurnStart();
+				_game.Player.OnTurnEnd();
 				_game.SecretsManager.HandleOpponentTurnStart();
 
 			}
