@@ -44,6 +44,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int SpellsPlayedCount => SpellsPlayedCards.Count;
 		public List<Entity> SpellsPlayedCards { get; private set; } = new();
 		public List<Entity> SpellsPlayedInFriendlyCharacters { get; private set; } = new();
+		public List<Entity> SpellsPlayedInOpponentCharacters { get; private set; } = new();
 		public List<Entity> CardsPlayedThisMatch { get; } = new();
 		public List<Entity> CardsPlayedThisTurn { get; private set; } = new List<Entity>();
 		public List<Entity> CardsPlayedLastTurn { get; private set; } = new();
@@ -480,6 +481,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			InDeckPredictions.Clear();
 			SpellsPlayedCards.Clear();
 			SpellsPlayedInFriendlyCharacters.Clear();
+			SpellsPlayedInOpponentCharacters.Clear();
 			PogoHopperPlayedCount = 0;
 			CardsPlayedThisTurn.Clear();
 			CardsPlayedLastTurn.Clear();
@@ -539,10 +541,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					{
 						SpellsPlayedCards.Add(entity);
 						if(entity.HasTag(GameTag.CARD_TARGET)
-						   && Core.Game.Entities.TryGetValue(entity.GetTag(GameTag.CARD_TARGET), out var target)
-						   && target.IsControlledBy(Id))
+						   && Core.Game.Entities.TryGetValue(entity.GetTag(GameTag.CARD_TARGET), out var target))
 						{
-							SpellsPlayedInFriendlyCharacters.Add(entity);
+							if(target.IsControlledBy(Id))
+							{
+								SpellsPlayedInFriendlyCharacters.Add(entity);
+							}
+							else if(target.IsControlledBy(_game.Opponent.Id))
+							{
+								SpellsPlayedInOpponentCharacters.Add(entity);
+							}
 						}
 
 						var activeMistahVistahs = PlayerEntities.Where(e =>
