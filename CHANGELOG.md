@@ -2,6 +2,7 @@
 **Hearthstone**:
 - Fixed Eruptions created by Triangulate not displaying the correct damage buff.
 - Fixed some related cards appearing when they are not relevant.
+- Fixed tooltips for the deck list overlay not working at all when an E.T.C. Band was present and that deck list was hidden.
 
 **Battlegrounds**:
 - Fixed counters not appearing when the corresponding cards are golden.

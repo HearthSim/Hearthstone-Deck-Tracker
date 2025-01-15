@@ -189,11 +189,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var relativeOpponentActiveEffectsPos = OpponentActiveEffects.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativePlayerCountersPos = PlayerCounters.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeOpponentCountersPos = OpponentCounters.PointFromScreen(new Point(pos.X, pos.Y));
-			var relativePlayerTopDeckPos = PlayerTopDeckLens.CardList.Items.Count > 0 ? PlayerTopDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
-			var relativePlayerBottomDeckPos = PlayerBottomDeckLens.CardList.Items.Count > 0 ? PlayerBottomDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
-			var relativePlayerSideboardsDeckPos = PlayerSideboards.CardList.Items.Count > 0 ? PlayerSideboards.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
+			var relativePlayerTopDeckPos = PlayerTopDeckLens.CardList.Items.Count > 0 && PlayerTopDeckLens.CardList.IsVisible ? PlayerTopDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
+			var relativePlayerBottomDeckPos = PlayerBottomDeckLens.CardList.Items.Count > 0 && PlayerBottomDeckLens.CardList.IsVisible ? PlayerBottomDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
+			var relativePlayerSideboardsDeckPos = PlayerSideboards.CardList.Items.Count > 0 && PlayerSideboards.CardList.IsVisible ? PlayerSideboards.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
 			var relativeOpponentDeckPos = ViewBoxOpponent.PointFromScreen(new Point(pos.X, pos.Y));
-			var relativeOpponentRelatedCardsPos = OpponentRelatedCardsDeckLens.CardList.Items.Count > 0 ? OpponentRelatedCardsDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
+			var relativeOpponentRelatedCardsPos = OpponentRelatedCardsDeckLens.CardList.Items.Count > 0 && OpponentRelatedCardsDeckLens.CardList.IsVisible ? OpponentRelatedCardsDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
 			var relativeSecretsPos = StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeCardMark = _cardMarks.Select(x => new { Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y)) });
 			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly)
