@@ -19,7 +19,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 			CoinCost.Visibility = Card.TypeEnum == CardType.BATTLEGROUND_SPELL ? Visibility.Visible : Visibility.Collapsed;
 			BtnTier7Inspiration.Visibility = showTier7InspirationBtn ? Visibility.Visible : Visibility.Collapsed;
 			Cost.Text = Card.Cost.ToString();
-			Loaded += (_, _) => UpdateTooltip();
 		}
 
 		public Hearthstone.Card Card => (Hearthstone.Card)DataContext;
@@ -67,11 +66,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 			sb.Begin();
 			await Task.Delay(sb.Duration.TimeSpan);
 			_runningStoryBoards.Remove(key);
-		}
-
-		private void UpdateTooltip()
-		{
-			CardObj.HasTooltip = Config.Instance.WindowCardToolTips && Helper.IsInOverlay(this);
 		}
 
 		private void BtnBgsInspiration_OnMouseUp(object sender, MouseButtonEventArgs e)

@@ -81,6 +81,21 @@ public abstract class BaseCounter : INotifyPropertyChanged
 			.ToArray();
 	}
 
+	public IEnumerable<Card> CardsToDisplay
+	{
+		get
+		{
+			foreach(var cardId in GetCardsToDisplay())
+			{
+				var card = Database.GetCardFromId(cardId);
+				if(card == null)
+					continue;
+				card.BaconCard = IsBattlegroundsCounter;
+				yield return card;
+			}
+		}
+	}
+
 
 	public event EventHandler? CounterChanged;
 

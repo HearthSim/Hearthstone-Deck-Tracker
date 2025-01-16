@@ -15,9 +15,11 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Themes;
+using NuGet;
 
 #endregion
 
@@ -86,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Rarity Rarity;
 
 		[XmlIgnore]
-		public bool BaconCard;
+		public bool BaconCard { get; set; }
 
 		public bool IsBaconMinion => BaconCard && TypeEnum == CardType.MINION;
 
@@ -95,6 +97,31 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[XmlIgnore]
 		public int DeckListIndex;
+
+		[XmlIgnore]
+		public Player? ControllerPlayer { get; set; }
+
+		public List<Card>? RelatedCards
+		{
+			get
+			{
+				if(ControllerPlayer == null)
+					return null;
+				var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(Id).GetRelatedCards(ControllerPlayer).WhereNotNull().ToList();
+				// Get related cards from Entity
+				if (relatedCards.IsEmpty())
+				{
+					foreach(var entity in ControllerPlayer.Deck)
+						relatedCards.AddRange(entity.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull());
+				}
+
+				if(relatedCards.IsEmpty())
+					return null;
+				return relatedCards;
+			}
+		}
+
+		public void UpdateRelatedCards() => OnPropertyChanged(nameof(RelatedCards));
 
 		[XmlIgnore]
 		public SpellSchool SpellSchool => (SpellSchool?) _dbCard?.SpellSchool ?? SpellSchool.NONE;
@@ -665,8 +692,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool Collectible => _dbCard?.Collectible ?? false;
 
-		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, InHandCount, Count, EnglishText, Attack,
-										  Health, Race, Mechanics, Durability, Artist, Set, BaconCard, AlternativeNames, AlternativeTexts, _dbCard);
+		public object Clone()
+		{
+			return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, InHandCount, Count, EnglishText, Attack,
+				Health, Race, Mechanics, Durability, Artist, Set, BaconCard, AlternativeNames, AlternativeTexts,
+				_dbCard)
+			{
+				ControllerPlayer = ControllerPlayer
+			};
+		}
 
 		public override string ToString() => Name + "(" + Count + ")";
 

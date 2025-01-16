@@ -26,15 +26,12 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using MediaColor = System.Windows.Media.Color;
 using Region = Hearthstone_Deck_Tracker.Enums.Region;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using System.Web;
-using System.Security.Cryptography.X509Certificates;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using System.Windows.Forms;
@@ -1036,6 +1033,26 @@ namespace Hearthstone_Deck_Tracker
 				c.UpdateBackground();
 
 			return lang;
+		}
+
+		public static Vector GetTotalScaleTransform(FrameworkElement? element)
+		{
+			var scale = new Vector(1.0, 1.0);
+			while(element != null)
+			{
+				if(element.RenderTransform is ScaleTransform sr)
+				{
+					scale.X *= sr.ScaleX;
+					scale.Y *= sr.ScaleY;
+				}
+				if(element.LayoutTransform is ScaleTransform sl)
+				{
+					scale.X *= sl.ScaleX;
+					scale.Y *= sl.ScaleY;
+				}
+				element = VisualTreeHelper.GetParent(element) as FrameworkElement;
+			}
+			return scale;
 		}
 	}
 }

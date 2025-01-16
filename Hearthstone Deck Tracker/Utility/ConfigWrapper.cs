@@ -461,7 +461,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
-		public static CardImageConfigs CardImageConfigs	{get;} = new CardImageConfigs();
+		public static Bindable Bindable	{ get; } = new ();
 
 		private static int? ValidateSeason(string value, bool allowEmpty)
 		{
@@ -498,7 +498,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 	}
 
-	public class CardImageConfigs : ViewModel
+	public class Bindable : ViewModel
 	{
 		public event Action? CardResolutionChanged;
 		public double CardImageSize
@@ -521,6 +521,32 @@ namespace Hearthstone_Deck_Tracker.Utility
 			{
 				Config.Instance.HighResolutionCardImages = value;
 				CardResolutionChanged?.Invoke();
+				Config.Save();
+				OnPropertyChanged();
+			}
+		}
+
+		public bool OverlayCardMarkTooltips
+		{
+			get => Config.Instance.OverlayCardMarkToolTips;
+			set
+			{
+				if(Config.Instance.OverlayCardMarkToolTips == value)
+					return;
+				Config.Instance.OverlayCardMarkToolTips = value;
+				Config.Save();
+				OnPropertyChanged();
+			}
+		}
+
+		public bool OverlayCardTooltips
+		{
+			get => Config.Instance.OverlayCardToolTips;
+			set
+			{
+				if(Config.Instance.OverlayCardToolTips == value)
+					return;
+				Config.Instance.OverlayCardToolTips = value;
 				Config.Save();
 				OnPropertyChanged();
 			}

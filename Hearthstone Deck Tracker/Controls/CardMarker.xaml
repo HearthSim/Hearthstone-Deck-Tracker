@@ -4,37 +4,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
              x:Class="Hearthstone_Deck_Tracker.Controls.CardMarker"
              mc:Ignorable="d"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
-             d:DesignHeight="56" d:DesignWidth="32">
-    <Canvas LayoutTransform="{Binding ScaleTransform}">
-        <Canvas Width="32" Height="32" Visibility="{Binding CardAgeVisibility}">
-            <Canvas.Background>
-               <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/card-marker.png"/>
-            </Canvas.Background>
+             ToolTipService.VerticalOffset="20"
+             ToolTipService.Placement="Bottom"
+             ToolTipService.IsEnabled="{Binding Bindable.OverlayCardMarkTooltips, Source={StaticResource ConfigWrapper}}"
+             ext:OverlayExtensions.IsOverlayHoverVisible="True">
+    <ext:OverlayExtensions.ToolTip>
+        <tooltips:CardTooltip Card="{Binding SourceCard}" Text="{Binding TooltipText}"/>
+    </ext:OverlayExtensions.ToolTip>
+    <StackPanel LayoutTransform="{Binding ScaleTransform}">
+        <Grid Width="36" Height="36" Visibility="{Binding CardAgeVisibility}">
+            <Image Width="32" Height="32" Source="/HearthstoneDeckTracker;component/Images/card-marker.png" />
             <hearthstoneDeckTracker:HearthstoneTextBlock
                 FontSize="18" Width="32" Height="32" TextAlignment="Center"
-                Text="{Binding CardAge}"
-                d:Text="1"
+                Text="{Binding CardAge}" d:Text="1"
             />
-        </Canvas>
-        <Border Canvas.Left="4" Canvas.Top="32" BorderThickness="2" CornerRadius="3" BorderBrush="#141617" Visibility="{Binding SourceCardVisibility}">
+            <Image
+                Width="16" Height="16" Margin="18,18,-2,-2"
+                Source="{Binding Icon}" d:Source="/HearthstoneDeckTracker;component/Images/card-icon-created.png"
+                Visibility="{Binding IconVisibility}" d:Visibility="Visible"
+            />
+            <hearthstoneDeckTracker:HearthstoneTextBlock Fill="DodgerBlue" FontSize="13" Width="16" Height="16" TextAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                                         Text="{Binding CostReduction}" d:Text="-1" Visibility="{Binding CostReductionVisibility}"/>
+        </Grid>
+        <Border Margin="4,-2,4,0" BorderThickness="2" CornerRadius="3" BorderBrush="#141617" Visibility="{Binding SourceCardVisibility}" d:Visibility="Visible" Width="24" Height="24">
             <Grid>
-                <Rectangle Width="20" Height="20">
-                    <Rectangle.Fill>
-                        <ImageBrush ImageSource="{Binding SourceCardBitmap}" />
-                    </Rectangle.Fill>
-                </Rectangle>
-                <Image Width="16" Height="16" Margin="-8" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding Icon}" />
+                <Image Source="{Binding SourceCardBitmap}" d:Source="/HearthstoneDeckTracker;component/Resources/faceless_manipulator.png" Width="20" Height="20" />
+                <Image Width="16" Height="16" Margin="-8" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding Icon}" d:Source="/HearthstoneDeckTracker;component/Images/card-icon-created.png" />
             </Grid>
         </Border>
-        <Image
-            Width="16" Height="16" Canvas.Left="18" Canvas.Top="18"
-            Source="{Binding Icon}" d:Source="/HearthstoneDeckTracker;component/Images/card-icon-created.png"
-            Visibility="{Binding IconVisibility}" d:Visibility="Visible"
-        />
-        <hearthstoneDeckTracker:HearthstoneTextBlock Fill="DodgerBlue" FontSize="13" Canvas.Left="17" Canvas.Top="-2"  Width="16" Height="16" TextAlignment="Right"
-                                                     Text="{Binding CostReduction}" Visibility="{Binding CostReductionVisibility}"/>
-    </Canvas>
+    </StackPanel>
 </UserControl>

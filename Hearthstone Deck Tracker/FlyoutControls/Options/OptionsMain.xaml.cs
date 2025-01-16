@@ -21,7 +21,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 	{
 		public readonly OverlayDeckWindows OptionsOverlayDeckWindows = new OverlayDeckWindows();
 		public readonly OverlayGeneral OptionsOverlayGeneral = new OverlayGeneral();
-		public readonly OverlayInteractivity OptionsOverlayInteractivity = new OverlayInteractivity();
 		public readonly OverlayOpponent OptionsOverlayOpponent = new OverlayOpponent();
 		public readonly OverlayPlayer OptionsOverlayPlayer = new OverlayPlayer();
 		public readonly TrackerAppearance OptionsTrackerAppearance = new TrackerAppearance();
@@ -67,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			get => _contentHeader;
 			set
 			{
-				_contentHeader = value; 
+				_contentHeader = value;
 				OnPropertyChanged();
 			}
 		}
@@ -89,7 +88,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsOverlayDeckWindows.Load(game);
 			OptionsOverlayPlayer.Load(game);
 			OptionsOverlayOpponent.Load();
-			OptionsOverlayInteractivity.Load();
 			OptionsTrackerSettings.Load();
 			OptionsTrackerImporting.Load();
 			OptionsTrackerStats.Load();
@@ -130,12 +128,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			ContentHeader = LocUtil.Get("Options_Overlay_Opponent_Header");
 			OptionsContent = OptionsOverlayOpponent;
-		}
-
-		private void TreeViewItemOverlayInteractivity_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentHeader = LocUtil.Get("Options_Overlay_Interactivity_Header");
-			OptionsContent = OptionsOverlayInteractivity;
 		}
 
 		private void TreeViewItemTrackerGeneral_OnSelected(object sender, RoutedEventArgs e)

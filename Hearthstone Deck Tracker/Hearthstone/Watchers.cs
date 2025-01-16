@@ -112,8 +112,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			;
 
 			Core.Overlay.SetCardOpacityMask(state);
-
-			Core.Overlay.HoveredCard = state;
+			Core.Overlay.SetRelatedCardsTrigger(state);
 		}
 
 		internal static void OnMulliganTooltipChange(object sender, HearthWatcher.EventArgs.MulliganTooltipArgs args)

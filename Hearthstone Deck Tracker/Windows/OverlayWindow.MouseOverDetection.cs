@@ -573,11 +573,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(!element.IsVisible)
 				return false;
+			var parent = VisualTreeHelper.GetParent(element) as FrameworkElement;
+			if(parent == null)
+				return false;
+
 			var scaleTransform = GetScaleTransform(element);
 			var scaleX = scaleTransform?.ScaleX ?? 1;
 			var scaleY = scaleTransform?.ScaleY ?? 1;
 
-			var parent = VisualTreeHelper.GetParent(element) as FrameworkElement;
 			while(parent != null)
 			{
 				var parentScaleTransform = GetScaleTransform(parent);

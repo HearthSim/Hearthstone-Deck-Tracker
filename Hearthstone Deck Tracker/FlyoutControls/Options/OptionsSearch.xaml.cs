@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 		{
 			InitializeComponent();
 		}
-		
+
 		private void TextBoxSearchLoaded(object sender, RoutedEventArgs routedEventArgs)
 		{
 			((TextBox) sender).Focus();
@@ -38,7 +38,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			{
 				new UserControlWrapper(Core.MainWindow.Options.OptionsOverlayDeckWindows, nameof(Core.MainWindow.Options.OptionsOverlayDeckWindows)),
 				new UserControlWrapper(Core.MainWindow.Options.OptionsOverlayGeneral, nameof(Core.MainWindow.Options.OptionsOverlayGeneral)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsOverlayInteractivity, nameof(Core.MainWindow.Options.OptionsOverlayInteractivity)),
 				new UserControlWrapper(Core.MainWindow.Options.OptionsOverlayOpponent, nameof(Core.MainWindow.Options.OptionsOverlayOpponent)),
 				new UserControlWrapper(Core.MainWindow.Options.OptionsOverlayPlayer, nameof(Core.MainWindow.Options.OptionsOverlayPlayer)),
 				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerAppearance, nameof(Core.MainWindow.Options.OptionsTrackerAppearance)),

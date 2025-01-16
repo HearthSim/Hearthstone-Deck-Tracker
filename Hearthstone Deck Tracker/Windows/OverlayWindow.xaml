@@ -18,7 +18,6 @@
         xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:heroPicking="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking"
-        xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
         xmlns:activeEffects="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects"
         xmlns:inspiration="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration"
         xmlns:guides="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
@@ -31,10 +30,51 @@
         WindowStyle="None" Topmost="True" Closing="Window_Closing">
     <Window.Resources>
         <themes:ThemeManager x:Key="ThemeManager"/>
+        <Style TargetType="controls:Card">
+            <Setter Property="ext:OverlayExtensions.IsOverlayHoverVisible" Value="True"/>
+            <Setter Property="ToolTipService.IsEnabled" Value="{Binding Bindable.OverlayCardTooltips, Source={StaticResource ConfigWrapper}}"/>
+        </Style>
     </Window.Resources>
     <Grid Name="GridMain" ClipToBounds="True">
         <Border BorderThickness="1" BorderBrush="Transparent">
             <Canvas Name="CanvasInfo" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="832">
+                <Grid Name="RelatedCardsTrigger" Width="{Binding Width}" Height="{Binding Height}" Canvas.Top="{Binding Top}" Canvas.Left="{Binding Left}"
+                      ext:OverlayExtensions.IsOverlayHoverVisible="True" ToolTipService.InitialShowDelay="400" ToolTipService.Placement="{Binding TooltipPlacement}">
+                    <Grid.DataContext>
+                        <windows:CardGridTooltipViewModel/>
+                    </Grid.DataContext>
+                    <ext:OverlayExtensions.ToolTip>
+                        <controls:GridCardImages Title="{lex:Loc Related_Cards}" MaxCardGridHeight="470" Cards="{Binding Cards}" Visibility="{Binding Cards, Converter={StaticResource NullableToVisibility}}">
+                            <controls:GridCardImages.LayoutTransform>
+                                <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+                            </controls:GridCardImages.LayoutTransform>
+                            <controls:GridCardImages.Style>
+                                <Style TargetType="controls:GridCardImages">
+                                    <Setter Property="Opacity" Value="0"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:GridCardImages.Style>
+                        </controls:GridCardImages>
+                    </ext:OverlayExtensions.ToolTip>
+                </Grid>
+
                 <StackPanel Orientation="Horizontal" Canvas.Right="0" Visibility="{Binding Path=BatteryStatusVisualVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                     <Rectangle Width="39" Height="20" Margin="5">
                         <Rectangle.RenderTransform>
@@ -56,7 +96,7 @@
                 <Border Name="BorderStackPanelPlayer" Canvas.Left="604" Canvas.Top="203" Height="{Binding PlayerStackHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                     <StackPanel Name="StackPanelPlayer" Width="218" VerticalAlignment="{Binding PlayerStackPanelAlignment, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                         <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Width="200" TextAlignment="Center" Text="Deck title" TextWrapping="Wrap"/>
-                        <local:HearthstoneTextBlock x:Name="LblWins" FontSize="14" Width="200" TextAlignment="Center" Text="0-0 (0%)"/>
+                        <local:HearthstoneTextBlock x:Name="LblWins" FontSize="14" Width="200" TextAlignment="Center" Text="0-0 ()"/>
                         <controls:DeckLens x:Name="PlayerTopDeckLens" Label="{lex:Loc DeckLens_Label_OnTop}" />
                         <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding PlayerListHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                             <controls:AnimatedCardList x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
@@ -108,16 +148,16 @@
 
                 <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />
 
-                <controls:CardMarker x:Name="Marks0" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks1" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks2" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks3" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks4" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks5" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks6" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks7" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks8" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks9" Width="36" Height="34" />
+                <controls:CardMarker x:Name="Marks0" Width="36" ZonePosition="1" />
+                <controls:CardMarker x:Name="Marks1" Width="36" ZonePosition="2" />
+                <controls:CardMarker x:Name="Marks2" Width="36" ZonePosition="3" />
+                <controls:CardMarker x:Name="Marks3" Width="36" ZonePosition="4" />
+                <controls:CardMarker x:Name="Marks4" Width="36" ZonePosition="5" />
+                <controls:CardMarker x:Name="Marks5" Width="36" ZonePosition="6" />
+                <controls:CardMarker x:Name="Marks6" Width="36" ZonePosition="7" />
+                <controls:CardMarker x:Name="Marks7" Width="36" ZonePosition="8" />
+                <controls:CardMarker x:Name="Marks8" Width="36" ZonePosition="9" />
+                <controls:CardMarker x:Name="Marks9" Width="36" ZonePosition="10" />
                 <StackPanel Canvas.Top="0" Canvas.Right="0">
                     <controls:CardImage x:Name="MercAbility1" Height="{Binding MercAbilityHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                     <controls:CardImage x:Name="MercAbility2" Height="{Binding MercAbilityHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
@@ -168,7 +208,6 @@
                 <Rectangle Name="RectPlayerHand7" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <Rectangle Name="RectPlayerHand8" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <Rectangle Name="RectPlayerHand9" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                <WrapPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical"/>
                 <overlay:ExperienceCounter x:Name="ExperienceCounter" Visibility="Hidden"/>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Name="StackPanelWarning" Visibility="Collapsed">
@@ -281,11 +320,7 @@
                     />
 
                 <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
-                <controls:GridCardImages x:Name="ToolTipGridCards" Visibility="Hidden" />
-                <controls:CardImage x:Name="ToolTipCardBlock" Visibility="Hidden" />
-                <controls:CardImage x:Name="ToolTipCardBlock2" Visibility="Hidden" />
-                <Grid Name="OverlayTooltip" IsHitTestVisible="False">
-                </Grid>
+                <Grid Name="OverlayTooltip" IsHitTestVisible="False"/>
             </Canvas>
         </Border>
     </Grid>

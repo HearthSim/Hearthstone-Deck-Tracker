@@ -3,29 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:hs="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone"
+             xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              Loaded="Card_OnLoaded"
              Unloaded="Card_OnUnloaded"
+             ToolTipService.Placement="Right"
+             ToolTipService.InitialShowDelay="100"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance hs:Card}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Rectangle Fill="{Binding Background}" Height="34" Width="217"
-            ToolTipService.IsEnabled="{Binding HasTooltip, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            ToolTipService.ShowOnDisabled="True"
-            ToolTipService.ShowDuration="60000"
-            ToolTipService.InitialShowDelay="300"
-            ToolTipService.Placement="Right"
-            ToolTipService.ToolTipOpening="Rectangle_ToolTipOpening"
-            ToolTipService.ToolTipClosing="Rectangle_ToolTipClosing">
-        <Rectangle.ToolTip>
-            <ToolTip VerticalOffset="-40">
-                <controls:CardImage x:Name="TooltipCardImage"/>
-            </ToolTip>
-        </Rectangle.ToolTip>
-        <Rectangle.Resources>
-            <Style TargetType="ToolTip">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="Transparent"/>
-            </Style>
-        </Rectangle.Resources>
-    </Rectangle>
+    <extensions:OverlayExtensions.ToolTip>
+        <tooltips:CardTooltip Card="{Binding}" ShowTriple="{Binding BaconCard}" RelatedCards="{Binding RelatedCards}"/>
+    </extensions:OverlayExtensions.ToolTip>
+    <Rectangle Fill="{Binding Background}" Height="34" Width="217" />
 </UserControl>

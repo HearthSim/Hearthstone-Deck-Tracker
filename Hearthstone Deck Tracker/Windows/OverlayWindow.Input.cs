@@ -258,8 +258,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
+			// Can be removed now that we have masking?
 			HideCardsWhenFriendsListOpen(PointFromScreen(_mousePos));
-			GrayOutSecrets(_mousePos);
 		}
 
 		public async Task<bool> UnlockUi(bool battlegroundsMode = false)
@@ -380,8 +380,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					Config.Instance.HidePlayerFatigueCount = false;
 					Config.Instance.HideOpponentFatigueCount = false;
 				}
-				if (!(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook))
-					UnHookMouse();
+				UnHookMouse();
 				if (_secretsTempVisible)
 					HideSecrets();
 				if (_game.IsInMenu)
@@ -457,17 +456,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_mouseInput.Dispose();
 			_mouseInput = null;
 			Log.Info("Disabled mouse hook");
-		}
-
-		private void GrayOutSecrets(Point mousePos)
-		{
-			if (!PointInsideControl(StackPanelSecrets.PointFromScreen(mousePos), StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
-				return;
-
-			if (string.IsNullOrEmpty(ToolTipCardBlock.CardId))
-				return;
-
-			_game.SecretsManager.Toggle(ToolTipCardBlock.CardId!);
 		}
 
 		private async void HideCardsWhenFriendsListOpen(Point clickPos)

@@ -4,6 +4,7 @@ using System;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -32,7 +33,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxHideOverlayInMenu.IsChecked = Config.Instance.HideInMenu;
 			CheckboxHideOverlay.IsChecked = Config.Instance.HideOverlay;
 			CheckboxHideDecksInOverlay.IsChecked = Config.Instance.HideDecksInOverlay;
-			CheckboxOverlaySecretToolTipsOnly.IsChecked = Config.Instance.OverlaySecretToolTipsOnly;
 			CheckboxHideOverlayInSpectator.IsChecked = Config.Instance.HideOverlayInSpectator;
 			CheckboxOverlayCardMarkToolTips.IsChecked = Config.Instance.OverlayCardMarkToolTips;
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
@@ -166,19 +166,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.OverlayCardToolTips = true;
-			CheckboxOverlaySecretToolTipsOnly.IsEnabled = true;
-			SaveConfig(true);
+			ConfigWrapper.Bindable.OverlayCardTooltips = true;
 		}
 
 		private void CheckboxOverlayCardToolTips_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.OverlayCardToolTips = false;
-			CheckboxOverlaySecretToolTipsOnly.IsEnabled = false;
-			CheckboxOverlaySecretToolTipsOnly.IsChecked = false;
-			SaveConfig(true);
+			ConfigWrapper.Bindable.OverlayCardTooltips = false;
 		}
 
 		private void CheckboxHideDecksInOverlay_Checked(object sender, RoutedEventArgs e)
@@ -195,22 +190,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.HideDecksInOverlay = false;
 			SaveConfig(true);
-		}
-
-		private void CheckboxOverlaySecretToolTipsOnly_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OverlaySecretToolTipsOnly = true;
-			Config.Save();
-		}
-
-		private void CheckboxOverlaySecretToolTipsOnly_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OverlaySecretToolTipsOnly = false;
-			Config.Save();
 		}
 
 		private void CheckboxHideOverlayInSpectator_Checked(object sender, RoutedEventArgs e)
@@ -233,16 +212,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.OverlayCardMarkToolTips = true;
-			Config.Save();
+			ConfigWrapper.Bindable.OverlayCardMarkTooltips = true;
 		}
 
 		private void CheckboxOverlayCardMarkToolTips_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.OverlayCardMarkToolTips = false;
-			Config.Save();
+			ConfigWrapper.Bindable.OverlayCardMarkTooltips = false;
 		}
 
 		private void CheckboxHideTimers_Checked(object sender, RoutedEventArgs e)

@@ -348,18 +348,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ExportIncludeVersion = false;
 
-		[DefaultValue(false)]
-		public bool ExtraFeatures = false;
-
-		[DefaultValue(true)]
-		public bool ExtraFeaturesFriendslist = true;
-
-		[DefaultValue(false)]
-		public bool ExtraFeaturesSecrets = false;
-
-		[DefaultValue(false)]
-		public bool ForceMouseHook = false;
-
 		[DefaultValue(true)]
 		public bool GoogleAnalytics = true;
 
@@ -687,9 +675,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool OverlayCenterOpponentStackPanel = false;
-
-		[DefaultValue(false)]
-		public bool OverlaySecretToolTipsOnly = false;
 
 		[DefaultValue(new[] { DeckPanel.Winrate, DeckPanel.Cards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue })]
 		public DeckPanel[] DeckPanelOrderOpponent = { DeckPanel.Winrate, DeckPanel.Cards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue };

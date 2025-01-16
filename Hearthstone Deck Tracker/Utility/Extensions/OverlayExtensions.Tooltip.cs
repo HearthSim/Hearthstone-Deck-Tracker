@@ -11,6 +11,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions;
 
 partial class OverlayExtensions
 {
+	public static readonly DependencyProperty AutoScaleToolTipProperty = DependencyProperty.RegisterAttached("AutoScaleToolTip", typeof(bool), typeof(OverlayExtensions), new PropertyMetadata(false));
+	public static bool GetAutoScaleToolTip(UIElement element) => (bool)element.GetValue(AutoScaleToolTipProperty);
+
+	/// <summary>
+	/// Automatically apply the total scaling of the target element, as well as the scaling of all parent elements
+	/// as a LayoutTransform to the tooltip element
+	/// </summary>
+	public static void SetAutoScaleToolTip(UIElement element, bool value) => element.SetValue(AutoScaleToolTipProperty, value);
+
 	public static readonly DependencyProperty ToolTipProperty = DependencyProperty.RegisterAttached("ToolTip", typeof(FrameworkElement), typeof(OverlayExtensions), new FrameworkPropertyMetadata(null, OnToolTipChange));
 
 	public static FrameworkElement GetToolTip(DependencyObject obj) => (FrameworkElement)obj.GetValue(ToolTipProperty);
@@ -18,6 +27,7 @@ partial class OverlayExtensions
 	/// <summary>
 	/// Renders the value as a ToolTip in the OverlayWindow. Can be configured via <c>ToolTipService</c>.<br/>
 	/// Supported Properties:<br/>
+	/// - <c>ToolTipService.IsEnabled</c> Default: true<br/>
 	/// - <c>ToolTipService.Placement</c> (Left, Top, Bottom, Right) - Default: Right<br/>
 	/// - <c>ToolTipService.InitialShowDelay</c> Default: 0<br/>
 	/// - <c>ToolTipService.HorizontalOffset</c> Default: 0<br/>

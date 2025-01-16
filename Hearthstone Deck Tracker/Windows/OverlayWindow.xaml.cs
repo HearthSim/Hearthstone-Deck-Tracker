@@ -293,8 +293,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			};
 
-			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
-				HookMouse();
 			ShowInTaskbar = Config.Instance.ShowInTaskbar;
 			if(Config.Instance.VisibleOverlay)
 				Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#4C0000FF");
@@ -399,7 +397,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Height = (_customHeight == -1) ? height : _customHeight;
 			CanvasInfo.Width = (_customWidth == -1) ? width : _customWidth;
 			CanvasInfo.Height = (_customHeight == -1) ? height : _customHeight;
-			StackPanelAdditionalTooltips.MaxHeight = Height;
 		}
 
 		private void Window_SourceInitialized_1(object sender, EventArgs e)

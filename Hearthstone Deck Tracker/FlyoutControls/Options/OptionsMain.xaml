@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.OptionsMain"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -9,7 +9,7 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
@@ -32,7 +32,6 @@
                         <TreeViewItem Name="TreeViewItemOverlayOpponent" Header="{lex:LocText Options_Overlay_Opponent_Header}" Selected="TreeViewItemOverlayOpponent_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemOverlayBattlegrounds" Header="{lex:LocText Options_Overlay_Battlegrounds_Header}" Selected="TreeViewItemBattlegroundsOverlay_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemOverlayMercenaries" Header="{lex:LocText Options_Overlay_Mercenaries_Header}" Selected="TreeViewItemMercenariesOverlay_OnSelected"/>
-                        <TreeViewItem Name="TreeViewItemOverlayInteractivity" Header="{lex:LocText Options_Overlay_Interactivity_Header}" Selected="TreeViewItemOverlayInteractivity_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                     </TreeViewItem>
                     <TreeViewItem Header="{lex:LocText Options_Tracker_Header}">
                         <TreeViewItem Name="TreeViewItemTrackerGeneral" Header="{lex:LocText Options_Tracker_General_Header}" Selected="TreeViewItemTrackerGeneral_OnSelected"/>

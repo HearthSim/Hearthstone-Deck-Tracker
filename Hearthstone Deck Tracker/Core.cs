@@ -427,6 +427,7 @@ namespace Hearthstone_Deck_Tracker
 			Card toCard (Entity entity)
 			{
 				var card = (Card)entity.Card.Clone();
+				card.ControllerPlayer = Game.Player;
 				card.DeckListIndex = entity.Info.DeckIndex;
 				return card;
 			}

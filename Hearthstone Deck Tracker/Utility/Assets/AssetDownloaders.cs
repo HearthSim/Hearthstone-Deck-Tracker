@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 					maxCacheSize: 200,
 					placeholderAsset: "pack://application:,,,/Resources/faceless_manipulator.png"
 				);
-				ConfigWrapper.CardImageConfigs.CardResolutionChanged += () => cardImageDownloader.ClearStorage();
+				ConfigWrapper.Bindable.CardResolutionChanged += () => cardImageDownloader.ClearStorage();
 			}
 			catch(ArgumentException e)
 			{

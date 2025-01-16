@@ -35,6 +35,15 @@ public class RelatedCardsManager
 	public IEnumerable<Card> GetCardsOpponentMayHave(Player opponent)
 	{
 		return Cards.Values.Where(card => card.ShouldShowForOpponent(opponent))
-			.Select(card => Database.GetCardFromId(card.GetCardId())).WhereNotNull();
+			.Select(card =>
+			{
+				var c =  Database.GetCardFromId(card.GetCardId());
+				if(c != null)
+				{
+					// Used for related cards tooltip
+					c.ControllerPlayer = opponent;
+				}
+				return c;
+			}).WhereNotNull();
 	}
 }

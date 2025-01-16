@@ -5,19 +5,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using HearthDb.Deckstrings;
 using HearthDb.Enums;
-using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
-using HSReplay.Requests;
-using HSReplay.Responses;
-using LiveCharts.Helpers;
 using NuGet;
 using static HearthDb.CardIds;
 
@@ -83,6 +76,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public IEnumerable<Entity> Board => PlayerEntities.Where(x => x.IsInPlay);
 		public IEnumerable<Entity> Deck => PlayerEntities.Where(x => x.IsInDeck);
 		public IEnumerable<Entity> Graveyard => PlayerEntities.Where(x => x.IsInGraveyard);
+		public IEnumerable<Entity> SecretZone => PlayerEntities.Where(x => x.IsInSecret);
 		public IEnumerable<Entity> Secrets => PlayerEntities.Where(x => x.IsInSecret && x.IsSecret);
 		public IEnumerable<Entity> Quests => PlayerEntities.Where(x => x.IsInSecret && (x.IsQuest || x.IsSideQuest));
 		public IEnumerable<Entity> Trinkets => Board.Where(x => x.IsBattlegroundsTrinket);
@@ -105,6 +99,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						var card = Database.GetCardFromId(g.Key.CardId);
 						if(card == null)
 							return null;
+						card.ControllerPlayer = this;
 						card.Count = g.Count();
 						card.IsCreated = g.Key.Created;
 						card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId);
@@ -150,6 +145,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var card = Database.GetCardFromId(x.Key);
 				if(card == null)
 					return null;
+				card.ControllerPlayer = this;
 				card.Count = x.Count();
 				if(Hand.Any(e => e.CardId == card.Id))
 					card.HighlightInHand = true;
@@ -161,6 +157,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var card = Database.GetCardFromId(c.Key);
 				if(card == null)
 					return null;
+				card.ControllerPlayer = this;
 				card.Count = 0;
 				if(Hand.Any(e => e.CardId == card.Id))
 					card.HighlightInHand = true;
@@ -194,6 +191,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						var card = Database.GetCardFromId(c.Id);
 						if(card == null)
 							continue;
+						card.ControllerPlayer = this;
 						card.Count = c.Count - removedFromSideboardIds.Count(cardId => cardId == c.Id);
 						card.IsCreated = false; // Intentionally do not set cards as created to avoid gift icon
 						card.HighlightInHand = Hand.Any(ce => ce.CardId == card.Id);
@@ -219,6 +217,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						var card = Database.GetCardFromId(g.Key.CardId);
 						if(card == null)
 							return null;
+						card.ControllerPlayer = this;
 						card.Count = g.Count();
 						card.IsCreated = g.Key.Created;
 						card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId);
@@ -248,6 +247,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var card = Database.GetCardFromId(x.Key);
 				if(card == null)
 					return null;
+				card.ControllerPlayer = this;
 				card.Count = x.Count();
 				if(Hand.Any(e => e.CardId == x.Key))
 					card.HighlightInHand = true;
@@ -258,6 +258,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(card == null)
 					return null;
 				card.Count = 0;
+				card.ControllerPlayer = this;
 				if(Hand.Any(e => e.CardId == c.Key))
 					card.HighlightInHand = true;
 				return card;
@@ -269,6 +270,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var card = Database.GetCardFromId(x.CardId);
 			if(card == null)
 				return null;
+			card.ControllerPlayer = this;
 			if (hidden)
 				card.Jousted = true;
 			if (x.IsCreated)
@@ -285,6 +287,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var card = Database.GetCardFromId(g.Key.CardId);
 				if(card == null)
 					return null;
+				card.ControllerPlayer = this;
 				card.Count = g.Count();
 				card.IsCreated = g.Key.Created;
 				card.Jousted = true;
@@ -301,6 +304,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 									var card = Database.GetCardFromId(x.Key.CardId);
 									if(card == null)
 										return null;
+									card.ControllerPlayer = this;
 									card.Count = x.Count();
 									card.IsCreated = x.Key.Stolen;
 									card.HighlightInHand = x.Any(c => c.IsInHand && c.IsControlledBy(Id));
@@ -312,6 +316,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var card = Database.GetCardFromId(x.Key);
 			if(card == null)
 				return null;
+			card.ControllerPlayer = this;
 			card.Count = x.Count();
 			card.IsCreated = true;
 			card.HighlightInHand = true;
@@ -446,6 +451,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 									var card = Database.GetCardFromId(g.Key.CardId);
 									if(card == null)
 										return null;
+									card.ControllerPlayer = this;
 									card.Count = g.Count();
 									card.Jousted = g.Key.Hidden;
 									card.IsCreated = g.Key.Created;

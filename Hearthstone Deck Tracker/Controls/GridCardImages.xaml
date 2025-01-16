@@ -4,64 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <Storyboard x:Key="AnimateGrid">
-            <DoubleAnimation Storyboard.TargetName="CardsGrid" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" To="1" From="0" />
-        </Storyboard>
-    </UserControl.Resources>
-    <Border x:Name="CardsGrid"
-            RenderTransformOrigin="0.5,0.5"
-            Background="#CC2E3235"
-            CornerRadius="10"
-            Opacity="0">
-        <Border.RenderTransform>
-            <ScaleTransform/>
-        </Border.RenderTransform>
-        <Grid MaxWidth="{Binding GridWidth}" MaxHeight="{Binding GridHeight}"
-              HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <!-- Title TextBlock on top -->
-            <Border Background="#1C2022" Grid.Row="0" CornerRadius="{Binding TitleCornerRadius}">
+    <Border Background="#CC2E3235" CornerRadius="10">
+        <DockPanel DataContext="{Binding ViewModel, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}">
+            <Border DockPanel.Dock="Top" Background="#1C2022" CornerRadius="{Binding TitleCornerRadius}">
                 <hearthstoneDeckTracker:HearthstoneTextBlock
-                    FontSize="17" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Text="{Binding Title}"
+                    Text="{Binding Title, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}"
+                    FontSize="17" TextAlignment="Center"
                     Margin="10"
                 />
             </Border>
-
-            <!-- ItemsControl for cards -->
-            <ItemsControl ItemsSource="{Binding Cards}" Grid.Row="1" Margin="5" Visibility="{Binding CardsGridVisibility}">
+            <ItemsControl ItemsSource="{Binding Cards}" Margin="5,0"
+                          MaxWidth="{Binding MaxGridWidth, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}"
+                          MaxHeight="{Binding MaxCardGridHeight, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}"
+                          HorizontalAlignment="Center">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" />
+                        <WrapPanel Orientation="Horizontal" LayoutTransform="{Binding ViewModel.CardScale, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid Width="{Binding DataContext.CardWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                              Height="{Binding DataContext.CardHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                              HorizontalAlignment="Center" VerticalAlignment="Center"
-                              Margin="{Binding CardMargin, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                              >
-                            <Image Source="{Binding LoadingImageSource, TargetNullValue={x:Null}}"
-                                   d:Source="{StaticResource LoadingMinion}"
-                                   Stretch="Uniform"
-                                   RenderOptions.BitmapScalingMode="Fant">
-                            </Image>
-                            <Image Source="{Binding CardImage}"
-                                   Stretch="Uniform"
-                                   RenderOptions.BitmapScalingMode="Fant" />
-                        </Grid>
+                        <Image Source="{Binding Asset}"
+                               Margin="{Binding CardMargin, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}"
+                               Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}"
+                               Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </Grid>
+        </DockPanel>
     </Border>
 </UserControl>
