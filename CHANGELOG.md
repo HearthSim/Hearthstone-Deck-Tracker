@@ -1,11 +1,11 @@
 ## **Unreleased**
 **Hearthstone**:
+- Added related card tooltips to Chatty Macaw, Ra-Den, Tram Heist, Joymancer Jepetto, Mixtape, Fate Splitter. \
+  *We will continue adding more tooltips in the coming updates*
+- Changed when Sasquawk related cards are updated, now it updates when the turn ends so you can have the information to plan your next turn.
 - Fixed Eruptions created by Triangulate not displaying the correct damage buff.
 - Fixed some related cards appearing when they are not relevant.
 - Fixed tooltips for the deck list overlay not working at all when an E.T.C. Band was present and that deck list was hidden.
-- Changed when Sasquawk related cards are updated, now it updates when the turn ends so you can have the information to plan your next turn.
-- Added related card tooltip to Chatty Macaw, Ra-Den, Tram Heist, Joymancer Jepetto, Mixtape, Fate Splitter. \
-  *We will keep adding it to more cards*
 
 **Battlegrounds**:
 - Fixed counters not appearing when the corresponding cards are golden.
