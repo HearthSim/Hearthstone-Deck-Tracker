@@ -44,6 +44,8 @@ public abstract class BaseCounter : INotifyPropertyChanged
 
 	public virtual void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue){}
 
+	public virtual void HandleChoicePicked(IHsCompletedChoice choice){}
+
 	private bool InDeckOrKnown(string cardId)
 	{
 		var contains = DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId);

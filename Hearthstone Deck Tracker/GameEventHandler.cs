@@ -1294,6 +1294,14 @@ namespace Hearthstone_Deck_Tracker
 			return result;
 		}
 
+		public void HandleOpponentEntitiesChosen(IHsCompletedChoice choice)
+		{
+			if(choice.ChoiceType == ChoiceType.GENERAL)
+			{
+				_game.CounterManager.HandleChoicePicked(choice);
+			}
+		}
+
 		public void HandlePlayerEntitiesChosen(IHsCompletedChoice choice)
 		{
 			var chosen = choice.ChosenEntityIds
@@ -1327,6 +1335,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					break;
 				case ChoiceType.GENERAL:
+					_game.CounterManager.HandleChoicePicked(choice);
 					if(_game.IsBattlegroundsMatch)
 					{
 						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
@@ -2408,6 +2417,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentHeroPower(string cardId, int turn) => HandleOpponentHeroPower(cardId, turn);
 		void IGameHandler.HandlePlayerEntityChoices(IHsChoice choice) => HandlePlayerEntityChoices(choice);
 		void IGameHandler.HandlePlayerEntitiesChosen(IHsCompletedChoice choice) => HandlePlayerEntitiesChosen(choice);
+		void IGameHandler.HandleOpponentEntitiesChosen(IHsCompletedChoice choice) => HandleOpponentEntitiesChosen(choice);
 		void IGameHandler.TurnStart(ActivePlayer player, int turnNumber) => TurnStart(player, turnNumber);
 		void IGameHandler.HandleGameStart(DateTime timestamp) => HandleGameStart(timestamp);
 		void IGameHandler.HandleGameEnd(bool stateComplete) => HandleGameEnd(stateComplete);

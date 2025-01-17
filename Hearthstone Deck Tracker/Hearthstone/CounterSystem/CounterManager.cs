@@ -70,6 +70,19 @@ public class CounterManager
 		}
 	}
 
+	public void HandleChoicePicked(IHsCompletedChoice choice)
+	{
+		foreach(var playerCounter in PlayerCounters)
+		{
+			playerCounter.HandleChoicePicked(choice);
+		}
+
+		foreach(var opponentCounter in OpponentCounters)
+		{
+			opponentCounter.HandleChoicePicked(choice);
+		}
+	}
+
 	public void Reset()
 	{
 		PlayerCounters.Clear();

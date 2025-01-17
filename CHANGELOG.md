@@ -4,6 +4,7 @@
 **Hearthstone**:
 - Added related card tooltips to Chatty Macaw, Ra-Den, Tram Heist, Joymancer Jepetto, Mixtape, Fate Splitter. \
   *We will continue adding more tooltips in the coming updates*
+- Added counter for Alien Encounters.
 - Changed when Sasquawk related cards are updated, now it updates when the turn ends so you can have the information to plan your next turn.
 - Fixed Eruptions created by Triangulate not displaying the correct damage buff.
 - Fixed some related cards appearing when they are not relevant.

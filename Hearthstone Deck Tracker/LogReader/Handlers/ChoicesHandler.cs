@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem.Effects.Neutral;
 using static Hearthstone_Deck_Tracker.LogReader.LogConstants.Choices;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers;
@@ -128,6 +129,8 @@ internal class ChoicesHandler
 			gameState.ChoicesById[tc.Id] = choice;
 			if(choice.PlayerId == game.Player.Id)
 				gameState.GameHandler?.HandlePlayerEntitiesChosen(choice);
+			if(choice.PlayerId == game.Opponent.Id)
+				gameState.GameHandler?.HandleOpponentEntitiesChosen(choice);
 		}
 		_tmpChoice = null;
 	}
