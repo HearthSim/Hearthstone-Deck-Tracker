@@ -18,6 +18,9 @@ public class StarshipSchematic: ICardWithRelatedCards
 		Database.GetCardFromId(HearthDb.CardIds.Collectible.Warlock.HeartOfTheLegion),
 		Database.GetCardFromId(HearthDb.CardIds.Collectible.Hunter.Biopod),
 		Database.GetCardFromId(HearthDb.CardIds.Collectible.Hunter.SpecimenClaw),
+		Database.GetCardFromId(HearthDb.CardIds.Collectible.Shaman.MissilePod),
+		Database.GetCardFromId(HearthDb.CardIds.Collectible.Paladin.UltraCapacitor),
+		Database.GetCardFromId(HearthDb.CardIds.Collectible.Warrior.YamatoCannon),
 	};
 
 	public string GetCardId() => HearthDb.CardIds.Collectible.Rogue.StarshipSchematic;

@@ -17,6 +17,9 @@ public class ScroungingShipwright: ICardWithRelatedCards
 		Database.GetCardFromId(HearthDb.CardIds.Collectible.Warlock.HeartOfTheLegion),
 		Database.GetCardFromId(HearthDb.CardIds.Collectible.Hunter.Biopod),
 		Database.GetCardFromId(HearthDb.CardIds.Collectible.Hunter.SpecimenClaw),
+		Database.GetCardFromId(HearthDb.CardIds.Collectible.Shaman.MissilePod),
+		Database.GetCardFromId(HearthDb.CardIds.Collectible.Paladin.UltraCapacitor),
+		Database.GetCardFromId(HearthDb.CardIds.Collectible.Warrior.YamatoCannon),
 	};
 
 	public string GetCardId() => HearthDb.CardIds.Collectible.Rogue.ScroungingShipwright;
@@ -24,6 +27,8 @@ public class ScroungingShipwright: ICardWithRelatedCards
 	public bool ShouldShowForOpponent(Player opponent) => false;
 
 	public List<Card?> GetRelatedCards(Player player) =>
-		_starshipPieces.Where(card => card != null && !card.IsClass(player.CurrentClass)).ToList();
+		_starshipPieces.Where(card => card != null && !card.IsClass(player.CurrentClass))
+			.OrderBy(card => card?.Cost)
+			.ToList();
 }
 

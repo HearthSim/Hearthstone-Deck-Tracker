@@ -515,9 +515,36 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
 
-			// when a starship is launched it changes the value to 0, but we want to keep the parent stored cards
+			// when a starship is launched it sets the value to 0
+			// otherwise it sets to the parent starship id
 			if(!game.Entities.TryGetValue(value, out var parentEntity))
+			{
+
+				// every piece sets the parent to 0, we only need to get 1 of them
+				if(gameState.StarshipLauchBlockIds.Contains(gameState.CurrentBlock?.Id))
+					return;
+
+				if(gameState.CurrentBlock?.Type != "POWER" ||
+				   !(CardUtils.IsStarship(gameState.CurrentBlock?.CardId) || gameState.CurrentBlock?.CardId == Collectible.Neutral.TheExodar))
+					return;
+
+				if(!game.Entities.TryGetValue(prevValue, out var starshipToken))
+					return;
+
+				var player = entity.IsControlledBy(game.Player.Id) ? game.Player : game.Opponent;
+				gameState.StarshipLauchBlockIds.Add(gameState.CurrentBlock?.Id);
+				player.LaunchedStarships.Add(starshipToken.CardId);
+
+				var excludedPieces = new List<string>
+				{
+					NonCollectible.Neutral.LaunchStarship,
+					NonCollectible.Neutral.AbortLaunch,
+				};
+
+				var starshipPieces = starshipToken.Info.StoredCardIds.Where(cardId => !excludedPieces.Contains(cardId));
+				player.LaunchedStarships.AddRange(starshipPieces);
 				return;
+			}
 
 			if(entity.CardId != null)
 				parentEntity.Info.StoredCardIds.Add(entity.CardId);

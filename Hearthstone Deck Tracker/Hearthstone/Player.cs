@@ -41,6 +41,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Entity> CardsPlayedThisMatch { get; } = new();
 		public List<Entity> CardsPlayedThisTurn { get; private set; } = new List<Entity>();
 		public List<Entity> CardsPlayedLastTurn { get; private set; } = new();
+		public List<string?> LaunchedStarships { get; private set; } = new();
 		public bool IsPlayingWhizbang { get; set; }
 		public int PogoHopperPlayedCount { get; private set; }
 		public Entity? LastDiedMinionCard => DeadMinionsCards.LastOrDefault();
@@ -492,6 +493,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CardsPlayedThisTurn.Clear();
 			CardsPlayedLastTurn.Clear();
 			CardsPlayedThisMatch.Clear();
+			LaunchedStarships.Clear();
 			SecretsTriggeredCards.Clear();
 			LastDrawnCardId = null;
 			LibramReductionCount = 0;

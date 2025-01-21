@@ -83,6 +83,7 @@ public static class CardUtils
 		HearthDb.CardIds.NonCollectible.Hunter.ArkoniteDefenseCrystal_TheAstralCompassToken,
 		HearthDb.CardIds.NonCollectible.Rogue.ArkoniteDefenseCrystal_TheScavengersWillToken,
 		HearthDb.CardIds.NonCollectible.Warlock.ArkoniteDefenseCrystal_TheNethersEyeToken,
+		HearthDb.CardIds.NonCollectible.Invalid.BattlecruiserToken,
 	};
 
 	public static bool IsStarship(string? cardId) => _starshipIds.Contains(cardId);

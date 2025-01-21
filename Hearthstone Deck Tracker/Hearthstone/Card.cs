@@ -563,6 +563,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return null;
 		}
 
+		public GameTag? GetFaction()
+		{
+			var factions = new[]
+			{
+				GameTag.KABAL,
+				GameTag.GRIMY_GOONS,
+				GameTag.JADE_LOTUS,
+				GameTag.PROTOSS,
+				GameTag.TERRAN,
+				GameTag.ZERG
+			};
+
+			return factions.FirstOrDefault(faction => _dbCard?.Entity.GetTag(faction) > 0);
+		}
+
 		public bool ZilliaxCustomizableFunctionalModule => _dbCard?.Entity.GetTag(GameTag.ZILLIAX_CUSTOMIZABLE_FUNCTIONALMODULE) > 0;
 
 		public bool ZilliaxCustomizableCosmeticModule => _dbCard?.Entity.GetTag(GameTag.ZILLIAX_CUSTOMIZABLE_COSMETICMODULE) > 0;
