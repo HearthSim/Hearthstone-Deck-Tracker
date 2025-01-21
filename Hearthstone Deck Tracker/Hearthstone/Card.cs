@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.Themes;
 using NuGet;
 
@@ -29,23 +30,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	}
 
 	[Serializable]
-	public class Card : ICloneable, INotifyPropertyChanged
+	public class Card : ViewModel, ICloneable
 	{
 		[NonSerialized]
 		private HearthDb.Card? _dbCard;
 
 		private readonly Regex _overloadRegex = new(@"Overload:.+?\((?<value>(\d+))\)");
-		private int _count;
 		private string? _englishText;
 		private int _inHandCount;
-		private bool _isCreated;
 		private bool _loaded;
 		private int? _overload;
-		private bool _wasDiscarded;
-		private ICardExtraInfo? _extraInfo;
 		private string? _id;
-		private CardWinrates? _cardWinrates;
-		private bool _isMulliganOption;
 
 		[NonSerialized]
 		private static readonly Dictionary<string, Dictionary<int, CardImageObject>> CardImageCache = new();
@@ -116,7 +111,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Card()
 		{
-			Count = 1;
 		}
 
 		public Card(string id, string? playerClass, Rarity rarity, string? type, string? name, int cost, int inHandCount,
@@ -164,7 +158,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			_dbCard = dbCard;
 			Id = dbCard.Id;
-			Count = 1;
 			PlayerClass = HearthDbConverter.ConvertClass(dbCard.Class);
 			Rarity = dbCard.Rarity;
 			Type = HearthDbConverter.CardTypeConverter(dbCard.Type);
@@ -185,11 +178,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public int Count
 		{
-			get { return _count; }
+			get => GetProp(1);
 			set
 			{
-				_count = value;
-				OnPropertyChanged();
+				SetProp(value);
 				OnPropertyChanged(nameof(Background));
 			}
 		}
@@ -197,11 +189,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool IsMulliganOption
 		{
-			get { return _isMulliganOption; }
+			get => GetProp(false);
 			set
 			{
-				_isMulliganOption = value;
-				OnPropertyChanged();
+				SetProp(value);
 				OnPropertyChanged(nameof(Background));
 			}
 		}
@@ -209,11 +200,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public CardWinrates? CardWinrates
 		{
-			get { return _cardWinrates; }
+			get => GetProp<CardWinrates?>(null);
 			set
 			{
-				_cardWinrates = value;
-				OnPropertyChanged();
+				SetProp(value);
 				OnPropertyChanged(nameof(Background));
 			}
 		}
@@ -355,12 +345,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public int InHandCount
 		{
-			get { return _inHandCount; }
-			set
-			{
-				_inHandCount = value;
-				OnPropertyChanged();
-			}
+			get => GetProp(0);
+			set => SetProp(value);
 		}
 
 		[XmlIgnore]
@@ -369,34 +355,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool IsCreated
 		{
-			get { return _isCreated; }
-			set
-			{
-				_isCreated = value;
-				OnPropertyChanged();
-			}
+			get => GetProp(false);
+			set => SetProp(value);
 		}
 
 		[XmlIgnore]
 		public bool WasDiscarded
 		{
-			get { return _wasDiscarded; }
-			set
-			{
-				_wasDiscarded = value;
-				OnPropertyChanged();
-			}
+			get => GetProp(false);
+			set => SetProp(value);
 		}
 
 		[XmlIgnore]
 		public ICardExtraInfo? ExtraInfo
 		{
-			get { return _extraInfo; }
-			set
-			{
-				_extraInfo = value;
-				OnPropertyChanged();
-			}
+			get => GetProp<ICardExtraInfo?>(null);
+			set => SetProp(value);
 		}
 
 		public string GetPlayerClass => PlayerClass ?? "Neutral";
@@ -682,7 +656,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Set = stats.Set;
 			_dbCard = stats._dbCard;
 			_loaded = true;
-			OnPropertyChanged();
 		}
 
 		private static string CleanUpText(string? text, bool replaceTags = true)
@@ -690,14 +663,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if (replaceTags)
 				text = text?.Replace("<b>", "").Replace("</b>", "").Replace("<i>", "").Replace("</i>", "") ?? string.Empty;
 			return text?.Replace("$", "").Replace("#", "").Replace("\\n", "\n").Replace("[x]", "") ?? string.Empty;
-		}
-
-		public event PropertyChangedEventHandler? PropertyChanged;
-
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 
