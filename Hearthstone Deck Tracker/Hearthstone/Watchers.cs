@@ -77,6 +77,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				return;
 			}
+
+			var currentPick = args.Picked.Id;
+
+			var pickedCards = args.Deck.Cards
+				.WhereNotNull()
+				.SelectMany(c => Enumerable.Repeat(c.Id, c.Id == currentPick ? Math.Max(0, c.Count - 1) : c.Count))
+				.ToArray();
+
 			var pickTime = DateTime.Now.ToString("o");
 			ArenaLastDrafts.Instance.AddPick(
 				draftInfo.pickStartTime,
@@ -85,6 +93,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				draftInfo.choices,
 				args.Slot,
 				overlayVisible: false,
+				pickedCards,
 				args.Deck.Id
 			);
 

@@ -52,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 		}
 
 		public async void AddPick(
-			string startTime, string pickedTime, string picked, string[] choices, int slot, bool overlayVisible, long deckId,  bool save = true
+			string startTime, string pickedTime, string picked, string[] choices, int slot, bool overlayVisible, string[] pickedCards, long deckId,  bool save = true
 		)
 		{
 			var playerId = await GetPlayerId();
@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			var end = DateTime.Parse(pickedTime);
 			var timeSpent = end - start;
 
-			currentDraft.Picks.Add(new PickItem(picked, choices, slot, (int)timeSpent.TotalMilliseconds, overlayVisible));
+			currentDraft.Picks.Add(new PickItem(picked, choices, slot, (int)timeSpent.TotalMilliseconds, overlayVisible, pickedCards));
 
 			if(save)
 				Save();
@@ -146,13 +146,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 		public class PickItem
 		{
 
-			public PickItem(string picked, string[] choices, int slot, int timeOnChoice, bool overlayVisible)
+			public PickItem(string picked, string[] choices, int slot, int timeOnChoice, bool overlayVisible, string[] pickedCards)
 			{
 				Picked = picked;
 				Choices = choices;
 				Slot = slot;
 				TimeOnChoice = timeOnChoice;
 				OverlayVisible = overlayVisible;
+				PickedCards = pickedCards;
 			}
 
 			public PickItem() { }
@@ -171,6 +172,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 
 			[XmlElement("OverlayVisible")]
 			public bool OverlayVisible { get; set; }
+
+			[XmlElement("PickedCards")]
+			public string[] PickedCards { get; set; } = { };
 		}
 
 	}
