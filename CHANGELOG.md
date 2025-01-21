@@ -1,4 +1,6 @@
-## **Unreleased**
+## **Release v1.38.2 - 2025-01-21**
+**Updated for Hearthstone 31.4**
+
 **Hearthstone**:
 - Added related card tooltips to Chatty Macaw, Ra-Den, Tram Heist, Joymancer Jepetto, Mixtape, Fate Splitter. \
   *We will continue adding more tooltips in the coming updates*
