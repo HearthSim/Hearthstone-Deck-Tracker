@@ -34,6 +34,18 @@ public class ViewModel : INotifyPropertyChanged
 		OnPropertyChanged(memberName);
 	}
 
+	protected bool TryGetProp<T>(string memberName, out T? value)
+	{
+		if(_data.TryGetValue(memberName, out var v) && v != default)
+		{
+			value = (T?)v;
+			return true;
+		}
+
+		value = default;
+		return false;
+	}
+
 	private readonly List<string> _localizedPropNames;
 	protected ViewModel()
 	{

@@ -146,7 +146,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 			else if(playerDeckSize == 30 || playerDeckSize == 40 || game.IsPVPDungeonMatch || game.IsDungeonMatch == true && game.DeckId != Guid.Empty)
 			{
-				friendly.DeckList = game.PlayerCards.Where(x => x.Id != Database.UnknownCardId).SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
+				friendly.DeckList = game.PlayerCards.Where(x => x.Id != null).SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
 				friendly.Sideboards = game.PlayerSideboards.Select(s =>
 					new UploadMetaData.Sideboard() { Owner = s.OwnerCardId, Cards = s.Cards.SelectMany(c => Enumerable.Repeat(c.Id, c.Count)).ToArray() }
 				).ToList();

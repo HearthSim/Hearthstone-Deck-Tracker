@@ -78,9 +78,9 @@ namespace Hearthstone_Deck_Tracker.Importing
 					}
 
 					var card = Database.GetCardFromName(cardName.Replace("’", "'"), localizedNames);
-					if(string.IsNullOrEmpty(card.Name) || card.Id == Database.UnknownCardId)
+					if(string.IsNullOrEmpty(card?.Name) && card!.IsKnownCard)
 						continue;
-					card.Count = count;
+					card!.Count = count;
 
 					if(deck.Cards.Contains(card))
 					{

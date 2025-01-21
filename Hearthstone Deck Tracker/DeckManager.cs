@@ -614,7 +614,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			playerClass = null;
 			var heroCard = Database.GetCardFromDbfId(dbfId, false);
-			if(heroCard != null && heroCard != Database.UnknownCard && heroCard.PlayerClass != null)
+			if(heroCard is { IsKnownCard: true, PlayerClass: not null })
 				playerClass = heroCard.PlayerClass;
 			return playerClass != null;
 		}

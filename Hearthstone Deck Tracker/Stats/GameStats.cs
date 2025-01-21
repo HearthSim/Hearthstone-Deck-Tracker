@@ -520,7 +520,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public void SetPlayerCards(HearthMirror.Objects.Deck deck, List<Card> revealedCards)
 		{
-			var cards = deck.Cards.Select(c => new Card { Id = c.Id, Count = c.Count });
+			var cards = deck.Cards.Select(c => new Card(c.Id) { Count = c.Count });
 			SetPlayerCards(cards, revealedCards);
 		}
 
@@ -554,7 +554,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public void SetPlayerSideboardsFromDict(Dictionary<string, List<HearthMirror.Objects.Card>> sideboardsDict)
 		{
 			PlayerSideboards = sideboardsDict.Select(s =>
-				new Sideboard(s.Key, s.Value.Select(c => new Card { Id = c.Id, Count = c.Count }).ToList())
+				new Sideboard(s.Key, s.Value.Select(c => new Card(c.Id) { Count = c.Count }).ToList())
 			).ToList();
 		}
 

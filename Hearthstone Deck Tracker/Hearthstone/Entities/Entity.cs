@@ -157,8 +157,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsObjective => HasTag(GameTag.OBJECTIVE);
 
 		[JsonIgnore]
-		public Card Card => _cachedCard ??= Database.GetCardFromId(CardId) ??
-				new Card(string.Empty, null, Rarity.FREE, "unknown", "unknown", 0, 0, 1, "", 0, 0, "unknown", null, 0, "", "", false);
+		public Card Card => _cachedCard ??= new Card(CardId ?? "unknown");
 
 		[JsonIgnore]
 		public int Attack => GetTag(GameTag.ATK);

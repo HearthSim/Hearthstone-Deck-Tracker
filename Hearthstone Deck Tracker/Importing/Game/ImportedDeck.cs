@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 			Deck = deck;
 			matches ??= new List<Deck>();
 			var hero = Database.GetCardFromId(deck.Hero);
-			if(string.IsNullOrEmpty(hero?.PlayerClass) || hero?.Id == Database.UnknownCardId)
+			if(string.IsNullOrEmpty(hero?.PlayerClass))
 			{
 				Log.Error("No hero found for id " + deck.Hero);
 				return;

@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Game.ImportOptions
 			Deck = deck;
 			var tmp = new Deck
 			{
-				Cards = new ObservableCollection<Card>(newDeck.Cards.Select(x => new Card { Id = x.Id, Count = x.Count })),
+				Cards = new ObservableCollection<Card>(newDeck.Cards.Select(x => new Card(x.Id) { Count = x.Count })),
 				Sideboards = newDeck.Sideboards.Select(x => new Sideboard(
 					x.Key,
 					x.Value.Select(c =>
@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Game.ImportOptions
 			}
 			if(MismatchingCards == -1)
 				MismatchingCards = GetMismatchingCards(tmp, deck);
-			
+
 			NewVersion = MismatchingCards == 0 ? new SerializableVersion(0, 0)
 				: (MismatchingCards >= 5 ? SerializableVersion.IncreaseMajor(deck.Version)
 					: SerializableVersion.IncreaseMinor(deck.Version));

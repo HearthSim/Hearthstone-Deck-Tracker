@@ -112,7 +112,7 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 					card.BaconCard = true;
 					return card;
 				}
-			).WhereNotNull().Where(x => x.Id != Database.UnknownCardId).Select(card =>
+			).WhereNotNull().Where(x => x.IsKnownCard).Select(card =>
 				new BattlegroundsMinionViewModel
 				{
 					Attack = card.Attack,
@@ -156,7 +156,7 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 					card.BaconCard = true;
 					return card;
 				}
-			).WhereNotNull().Where(x => x.Id != Database.UnknownCardId).Select(card =>
+			).WhereNotNull().Where(x => x.IsKnownCard).Select(card =>
 				new BattlegroundsMinionViewModel
 				{
 					Attack = card.Attack,

@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 				foreach(var cardId in jsonDeck.CardIds.GroupBy(x => x))
 				{
 					var card = Database.GetCardFromId(cardId.Key);
-					if(card == null || card.Id == Database.UnknownCardId)
+					if(card is not { IsKnownCard: true })
 					{
 						Log.Warn($"Could not find card for {cardId}");
 						continue;

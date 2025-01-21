@@ -360,8 +360,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return true;
 		}
 
-		private bool IsUnknownCard(Entity e) => e?.Card.Id == Database.UnknownCardId;
-
 		private bool IsUnsupportedCard(Entity e) =>
 			e.Card.Id == NonCollectible.Neutral.ProfessorPutricide_Festergut1 || e.Card.Id == NonCollectible.Neutral.ProfessorPutricide_Festergut2
 			|| e.Card.Id == NonCollectible.Neutral.Sneed_PilotedWhirlOTron1 || e.Card.Id == NonCollectible.Neutral.Sneed_PilotedWhirlOTron2;
@@ -391,7 +389,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				throw new ArgumentException(friendly ? "Player" : "Opponent" + " Entity could not be found. Exiting.");
 			}
 
-			if(gamePlayer.Board.Any(IsUnknownCard))
+			if(gamePlayer.Board.Any(x => !x.Card.IsKnownCard))
 			{
 				ErrorState = BobsBuddyErrorState.UnknownCards;
 				throw new ArgumentException("Board has unknown cards. Exiting.");
