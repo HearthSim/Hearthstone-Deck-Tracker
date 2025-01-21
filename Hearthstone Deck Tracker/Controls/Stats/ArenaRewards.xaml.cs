@@ -44,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		private IEnumerable<string> CardNames => _cardNames ??=
 													 Database.GetActualCards().Where(x => _validSets.Any(set => x.CardSet == set))
-																.SelectMany(x => x.AlternativeNames.Concat(new[] {x.LocalizedName}))
+																.Select(x => x.LocalizedName)
 																.WhereNotNull()
 																.OrderBy(x => x.Length).ToList();
 

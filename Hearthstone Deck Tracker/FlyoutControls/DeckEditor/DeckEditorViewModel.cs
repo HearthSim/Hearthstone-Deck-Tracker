@@ -136,15 +136,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 
 		private bool Matches(Card card, string searchStr)
 		{
-			var names = new[] { card.LocalizedName }.Concat(card.AlternativeNames).Where(x => !string.IsNullOrEmpty(x)).Select(x => Helper.RemoveDiacritics(x!, true).ToLowerInvariant());
-			return names.Any(name => name.Contains(searchStr)) || (card.Race?.ToLowerInvariant().Contains(searchStr) ?? false);
+			if(card.LocalizedName != null && Helper.RemoveDiacritics(card.LocalizedName, true).ToLowerInvariant().Contains(searchStr))
+				return true;
+			return card.Race?.ToLowerInvariant().Contains(searchStr) ?? false;
 		}
 
 		private bool FullMatch(Card card, string searchStr)
 		{
 			var words = searchStr.Split(new [] {' '}, StringSplitOptions.RemoveEmptyEntries);
-			var texts = new[] { card.Text }.Concat(card.AlternativeTexts).Where(x => !string.IsNullOrEmpty(x));
-			return texts.Any(t => words.Any(t!.Contains));
+			return words.Any(card.Text.Contains);
 		}
 
 		private string CleanString(string str) => string.IsNullOrEmpty(str) ? string.Empty : Helper.RemoveDiacritics(str, true).ToLowerInvariant();
