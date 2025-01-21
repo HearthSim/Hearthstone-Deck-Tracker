@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[NonSerialized]
 		private HearthDb.Card? _dbCard;
 
-		private readonly Regex _overloadRegex = new(@"Overload:.+?\((?<value>(\d+))\)");
+		private static readonly Regex _overloadRegex = new(@"Overload:.+?\((?<value>(\d+))\)");
 		private string? _englishText;
 		private int _inHandCount;
 		private bool _loaded;
@@ -140,19 +140,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		private static Locale? _selectedLanguage;
-
-		private static Locale SelectedLanguage
-		{
-			get
-			{
-				if(_selectedLanguage.HasValue)
-					return _selectedLanguage.Value;
-				if(!Enum.TryParse(Helper.GetCardLanguage(), out Locale lang))
-					lang = Locale.enUS;
-				_selectedLanguage = lang;
-				return _selectedLanguage.Value;
-			}
-		}
+		private static Locale SelectedLanguage => _selectedLanguage ??= Enum.TryParse(Helper.GetCardLanguage(), out Locale lang) ? lang : Locale.enUS;
 
 		public Card(HearthDb.Card dbCard, bool baconCard = false)
 		{
@@ -317,24 +305,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public int DustCost
+		public int DustCost => Rarity switch
 		{
-			get
-			{
-				switch(Rarity)
-				{
-					case Rarity.COMMON:
-						return 40;
-					case Rarity.RARE:
-						return 100;
-					case Rarity.EPIC:
-						return 400;
-					case Rarity.LEGENDARY:
-						return 1600;
-				}
-				return 0;
-			}
-		}
+			Rarity.COMMON => 40,
+			Rarity.RARE => 100,
+			Rarity.EPIC => 400,
+			Rarity.LEGENDARY => 1600,
+			_ => 0
+		};
 
 		[XmlIgnore]
 		public string? Artist { get; set; }
@@ -384,29 +362,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool IsNeutral => GetPlayerClass == "Neutral" && (_dbCard?.Entity.GetTag(GameTag.MULTIPLE_CLASSES) ?? 0) == 0;
 
-		public List<string> GetClasses()
+		public IEnumerable<string> GetClasses()
 		{
-			List<string> classes = new List<string>();
-
 			var multipleClasses = _dbCard?.Entity.GetTag(GameTag.MULTIPLE_CLASSES) ?? 0;
-			if (multipleClasses == 0u)
+			if(multipleClasses == 0)
 			{
-				classes.Add(GetPlayerClass);
-				return classes;
+				yield return GetPlayerClass;
+				yield break;
 			}
 
-			int cardClass = 1;
-			while (multipleClasses != 0u)
+			var cardClass = 1;
+			while(multipleClasses != 0)
 			{
-				if (1u == (multipleClasses & 1u))
+				if(1 == (multipleClasses & 1))
 				{
 					var className = HearthDbConverter.ConvertClass((CardClass)cardClass);
-					classes.Add(className ?? "Neutral");
+					yield return className ?? "Neutral";
 				}
 				multipleClasses >>= 1;
 				cardClass++;
 			}
-			return classes;
 		}
 
 		[XmlIgnore]
