@@ -1,10 +1,16 @@
+## **Unreleased**
+**Hearthstone**:
+
+- Added counter for Alien Encounters.
+- Added related card tooltips to Starlight Whelp. \
+  *We will continue adding more tooltips in the coming updates*
+
 ## **Release v1.38.2 - 2025-01-21**
 **Updated for Hearthstone 31.4**
 
 **Hearthstone**:
 - Added related card tooltips to Chatty Macaw, Ra-Den, Tram Heist, Joymancer Jepetto, Mixtape, Fate Splitter, Starlight Whelp. \
   *We will continue adding more tooltips in the coming updates*
-- Added counter for Alien Encounters.
 - Changed when Sasquawk related cards are updated, now it updates when the turn ends so you can have the information to plan your next turn.
 - Fixed Eruptions created by Triangulate not displaying the correct damage buff.
 - Fixed some related cards appearing when they are not relevant.
