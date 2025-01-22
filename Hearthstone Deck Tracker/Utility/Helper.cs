@@ -1024,6 +1024,9 @@ namespace Hearthstone_Deck_Tracker
 			var lang = LocUtil.GetHearthstoneLanguageFromRegistry();
 			if(!LanguageDict.Values.Where(x => x != "enGB").Contains(lang))
 				lang = ToCardLanguage(Config.Instance.Localization);
+
+			CardDefsManager.LoadLocale(lang).Forget();
+
 			if(lang == Config.Instance.LastSeenHearthstoneLang)
 				return lang;
 

@@ -4,6 +4,7 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone;
 
@@ -22,6 +23,10 @@ public class BattlegroundsDb
 	{
 		Update(Remote.Config.Data?.BattlegroundsTagOverrides);
 		Remote.Config.Loaded += d => Update(d?.BattlegroundsTagOverrides);
+		CardDefsManager.CardsChanged += () =>
+		{
+			Update(Remote.Config.Data?.BattlegroundsTagOverrides);
+		};
 	}
 
 	private void Update(List<RemoteData.TagOverride>? tagOverrides)

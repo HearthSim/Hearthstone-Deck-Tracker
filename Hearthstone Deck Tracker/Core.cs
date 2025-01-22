@@ -82,6 +82,8 @@ namespace Hearthstone_Deck_Tracker
 			ServicePointManager.DefaultConnectionLimit = 30;
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
+			HearthDb.Config.AutoLoadCardDefs = false; // Needs to be set before accessing HearthDb.Cards
+
 			if(!Config.IsLoaded)
 			{
 				// We may load the config earlier as part of squirrel init
@@ -148,6 +150,21 @@ namespace Hearthstone_Deck_Tracker
 
 			LocUtil.UpdateCultureInfo();
 			Helper.UpdateCardLanguage();
+
+			CardDefsManager.InitialDefsLoaded += () =>
+			{
+				// Defer starting log watchers until we have at least the initial card defs.
+				// Especially if HDT is started in the middle of the game, there maybe edge cases
+				// where reactions to log events unnecessarily fail due to cards being unknown.
+				_ = LogWatcherManger.Start(Game);
+			};
+			CardDefsManager.CardsChanged += () =>
+			{
+				UpdatePlayerCards(true);
+				UpdateOpponentCards(true);
+			};
+			// Load initial card defs
+			CardDefsManager.EnsureLatestCardDefs();
 
 			var newUser = ConfigManager.PreviousVersion == null;
 			LogConfigUpdater.Run().Forget();
@@ -220,7 +237,6 @@ namespace Hearthstone_Deck_Tracker
 				ShowRestartRequiredMessageAsync().Forget();
 				Overlay.ShowRestartRequiredWarning();
 			}
-			LogWatcherManger.Start(Game).Forget();
 
 			Remote.Config.Load();
 			HotKeyManager.Load();
@@ -371,6 +387,8 @@ namespace Hearthstone_Deck_Tracker
 						Remote.LiveSecrets.Load();
 
 						Reflection.StartIpcClient();
+
+						CardDefsManager.EnsureLatestCardDefs();
 					}
 					Overlay.UpdatePosition();
 

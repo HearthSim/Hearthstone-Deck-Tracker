@@ -1,9 +1,7 @@
 ﻿using Hearthstone_Deck_Tracker.Utility.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media.Imaging;
-using MahApps.Metro.Controls;
 
 namespace Hearthstone_Deck_Tracker.Utility.Assets
 {

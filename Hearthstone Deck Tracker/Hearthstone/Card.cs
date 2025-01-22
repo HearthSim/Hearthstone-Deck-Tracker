@@ -2,9 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +11,7 @@ using System.Xml.Serialization;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
@@ -70,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public int Health
 		{
-			get => GetProp<int?>(null) ?? Data?.Attack ?? 0;
+			get => GetProp<int?>(null) ?? Data?.Health ?? 0;
 			set => SetProp(value);
 		}
 
@@ -78,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public int Cost
 		{
-			get => GetProp<int?>(null) ?? Data?.Attack ?? 0;
+			get => GetProp<int?>(null) ?? Data?.Cost ?? 0;
 			set => SetProp(value);
 		}
 
@@ -467,8 +466,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if(Id == null || Name == null)
-					return new DrawingBrush();
 				var cardImageObj = new CardImageObject(this);
 				if(CardImageCache.TryGetValue(Id, out var cache))
 				{
@@ -515,6 +512,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return new DrawingBrush();
 				}
 			}
+		}
+
+		static Card()
+		{
+			CardDefsManager.CardsChanged += ReloadTileImages;
 		}
 
 		public static void ReloadTileImages()

@@ -322,7 +322,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected void AddCost(Rect rect)
 		{
 			if(!Card.HideStats)
-				AddText(Card.Cost, CostFontSize, rect, Card.ColorPlayer, NumbersTypeFace, 3.0, true);
+			{
+				var text = Card.IsKnownCard ? Card.Cost.ToString() : CardDefsManager.HasLoadedInitialBaseDefs ? "?" : "";
+				AddText(text, CostFontSize, rect, Card.ColorPlayer, NumbersTypeFace, 3.0, true);
+			}
 		}
 
 		protected virtual void AddCardName()
@@ -334,9 +337,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		protected void AddCardName(Rect rect)
 		{
-			var text = Card.LocalizedName;
+			var text = Card.IsKnownCard ? Card.LocalizedName : CardDefsManager.HasLoadedInitialBaseDefs ? "???" : "";
 			if(Card.ExtraInfo?.CardNameSuffix != null)
-				text = $"{Card.LocalizedName}  {Card.ExtraInfo.CardNameSuffix}";
+				text = $"{text}  {Card.ExtraInfo.CardNameSuffix}";
 			AddText(text, TextFontSize, rect, Card.ColorPlayer, TextTypeFace);
 		}
 

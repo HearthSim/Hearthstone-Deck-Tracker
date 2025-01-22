@@ -112,7 +112,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		public void InvalidateCachedAssets()
 		{
 			foreach(var entry in _lruCache)
+			{
 				entry.Validated = false;
+				entry.NotModified = false;
+			}
 		}
 
 		void TryCreateDirectory(string path)
@@ -223,6 +226,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 				if(response.StatusCode == HttpStatusCode.NotModified)
 				{
 					//Log.Debug($"{filename} not modified");
+					if(entry != null)
+						entry.NotModified = true;
 					return true;
 				}
 
@@ -258,6 +263,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 					entry.ETag = etag;
 				}
 
+				entry.LastModified = response.Content.Headers.LastModified.ToString();
 				entry.Validated = true;
 				entry.Data = data;
 
@@ -281,7 +287,27 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 		}
 
-		public async Task<U?> GetAssetData(T obj)
+		/// <summary>
+		/// If the data for the requested asset is not cached this will wait for it to be downloaded and return the data.
+		/// If the data is cached (on disk or in memory) this will return the cached version, and check in the background
+		/// whether there is a newer version.
+		/// </summary>
+		/// <param name="awaitValidation">
+		/// Even if we have a cached version: If it has not been validated, treat it like there is no cached version and
+		/// wait for validation. If it still is valid this will return the cached version. Otherwise, the latest version.
+		/// </param>
+		/// <returns>The data for the requested asset, if available</returns>
+		public async Task<U?> GetAssetData(T obj, bool awaitValidation = false)
+		{
+			var asset = await GetAssetEntry(obj, awaitValidation);
+			return asset != null ? asset.Data : default;
+		}
+
+		/// <summary>
+		/// Returns the asset entry, including all metadata. To get only the data use <c>GetAssetData</c>.
+		/// See <c>GetAssetData</c> for more details.
+		/// </summary>
+		public async Task<LRUCache<U>.Entry?> GetAssetEntry(T obj, bool awaitValidation = false)
 		{
 			if(obj == null)
 				return default;
@@ -297,12 +323,21 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 
 			if(!entry.Validated)
 			{
-				DownloadAsset(obj).Forget();
 				entry.Validated = true;
+				var downloadTask = DownloadAsset(obj);
+				if(awaitValidation)
+				{
+					// Log.Debug($"Waiting for {filename} validation");
+					var success = await downloadTask;
+					if(!success)
+						return default;
+					if(!_lruLookup.TryGetValue(filename, out entry))
+						return default;
+				}
 			}
 
 			if(entry.Data != null)
-				return entry.Data;
+				return entry;
 
 			// Probably fine to do sync for now, the file we are dealing with
 			// are pretty small. This keeps us from reading the same file
@@ -310,7 +345,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			return LoadAssetFromDiskSync(obj);
 		}
 
-		public U? TryGetAssetData(T obj)
+		public U? TryGetAssetData(T obj, bool validate = true)
 		{
 			if(!_lruLookup.TryGetValue(_getFilename(obj), out var entry))
 				return default;
@@ -320,7 +355,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 				LoadAssetFromDiskSync(obj);
 			}
 
-			if(!entry.Validated)
+			if(!entry.Validated && validate)
 			{
 				DownloadAsset(obj).Forget();
 				entry.Validated = true;
@@ -329,16 +364,29 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			return entry.Data;
 		}
 
-		private U? LoadAssetFromDiskSync(T obj)
+		public LRUCache<U>.Entry? GetAssetEntryMetadata(T obj)
+		{
+			return _lruLookup.TryGetValue(_getFilename(obj), out var entry) ? entry : null;
+		}
+
+		public LRUCache<U>.Entry CreateEmptyAssetEntry(T obj)
+		{
+			var filename = _getFilename(obj);
+			var entry = new LRUCache<U>.Entry(filename, "");
+			_lruCache.Insert(0, entry);
+			_lruLookup[filename] = entry;
+			return entry;
+		}
+
+		private LRUCache<U>.Entry? LoadAssetFromDiskSync(T obj)
 		{
 			var filename = _getFilename(obj);
 			try
 			{
 				var bytes = File.ReadAllBytes(StoragePathFor(obj));
-				var data = _dataConverter(bytes);
 				if(_lruLookup.TryGetValue(filename, out var entry))
-					entry.Data = data;
-				return data;
+					entry.Data = _dataConverter(bytes);
+				return entry;
 			}
 			catch(Exception e)
 			{
@@ -394,11 +442,17 @@ public class LRUCache<T> : List<LRUCache<T>.Entry>
 		[XmlAttribute("etag")]
 		public string ETag { get; set; } = "";
 
+		[XmlAttribute("lastmodified")]
+		public string LastModified { get; set; } = "";
+
 		[XmlIgnore]
 		public T? Data { get; set; }
 
 		[XmlIgnore]
 		public bool Validated { get; set; }
+
+		[XmlIgnore]
+		public bool NotModified { get; set; }
 
 		public Entry(string file, string eTag)
 		{

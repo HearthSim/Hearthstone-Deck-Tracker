@@ -7,6 +7,7 @@ using HearthMirror;
 using HearthMirror.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using HearthWatcher.EventArgs;
 using static Hearthstone_Deck_Tracker.Enums.Hearthstone.Mode;
@@ -65,8 +66,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(e.IsInQueue)
 			{
 				_game.MetaData.EnqueueTime = DateTime.Now;
-
 				Log.Info($"Now in queue");
+
+				CardDefsManager.EnsureLatestCardDefs();
+
 				if(_game.CurrentMode == DRAFT)
 					_game.CurrentSelectedDeck = DeckImporter.ArenaInfoCache?.Deck;
 				else

@@ -13,18 +13,24 @@ public class ReferencedCardRun : Run
 	public Hearthstone.Card? Card { get; }
 	public CardAssetType AssetType { get; }
 
-	private static Dictionary<int, HearthDb.Card> CardsByDbfId { get; }
+	private static Dictionary<int, HearthDb.Card> _cardsByDbfId = new();
 
 	static ReferencedCardRun()
 	{
+		UpdateCards();
+		CardDefsManager.CardsChanged += UpdateCards;
+	}
+
+	private static void UpdateCards()
+	{
 		var heroes = Cards.All.Values
 			.Where(x => x.Type == CardType.BATTLEGROUND_SPELL || x.Type is CardType.HERO && x.Entity.Tags.Any(t => t.EnumId == (int)GameTag.BACON_HERO_CAN_BE_DRAFTED));
-		CardsByDbfId = Cards.BaconPoolMinions.Values.Concat(heroes).ToDictionary(x => x.DbfId, x => x);
+		_cardsByDbfId = Cards.BaconPoolMinions.Values.Concat(heroes).ToDictionary(x => x.DbfId, x => x);
 	}
 
 	static string ResolveCardNameOrFallback(int? dbfId, string fallback)
 	{
-		if(dbfId is int theDbfId && CardsByDbfId.TryGetValue(theDbfId, out var card))
+		if(dbfId is int theDbfId && _cardsByDbfId.TryGetValue(theDbfId, out var card))
 		{
 			if(!Enum.TryParse(Helper.GetCardLanguage(), out Locale lang))
 				lang = Locale.enUS;
@@ -38,7 +44,7 @@ public class ReferencedCardRun : Run
 	{
 		DataContext = this; // required for tooltip to work
 
-		if(dbfId is int theDbfId && CardsByDbfId.TryGetValue(theDbfId, out var card))
+		if(dbfId is int theDbfId && _cardsByDbfId.TryGetValue(theDbfId, out var card))
 		{
 			Card = new Hearthstone.Card(card)
 			{

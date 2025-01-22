@@ -19,6 +19,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -184,6 +185,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
 				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
+			};
+
+			CardDefsManager.CardsChanged += () =>
+			{
+				Helper.SortCardCollection(ListViewDeck.Items);
 			};
 
 			ErrorManager.ErrorAdded += data =>
