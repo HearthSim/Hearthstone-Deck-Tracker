@@ -36,7 +36,7 @@ public static class CardUtils
 	public static bool IsCardFromPlayerClass(Card? card, string? playerClass, bool ignoreNeutral = false)
 	{
 		return card != null &&
-		       (card.PlayerClass == playerClass || card.GetTouristVisitClass() == playerClass ||
+		       (card.IsClass(playerClass) || card.GetTouristVisitClass() == playerClass ||
 		        (!ignoreNeutral && card.CardClass == CardClass.NEUTRAL));
 	}
 
