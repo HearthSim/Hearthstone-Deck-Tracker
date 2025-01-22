@@ -1,9 +1,10 @@
 ## **Unreleased**
 **Hearthstone**:
 
-- Added counter for Alien Encounters.
+- Added counters to Protoss minions cost reduction and Alien Encounters.
 - Added related card tooltips to Starlight Whelp. \
   *We will continue adding more tooltips in the coming updates*
+- Added active effects to Warp Gate, Shield Battery and Construct Pylons.
 
 ## **Release v1.38.2 - 2025-01-21**
 **Updated for Hearthstone 31.4**
