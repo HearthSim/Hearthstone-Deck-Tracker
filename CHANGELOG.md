@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.38.3 - 2025-01-23**
 **Hearthstone**:
 
 - Added counters to Protoss minions cost reduction and Alien Encounters.
