@@ -9,6 +9,8 @@
              x:Class="Hearthstone_Deck_Tracker.Controls.CardMarker"
              mc:Ignorable="d"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             RenderTransform="{Binding ScaleTransform}"
+             RenderTransformOrigin="0.5,0.5"
              ToolTipService.VerticalOffset="20"
              ToolTipService.Placement="Bottom"
              ToolTipService.IsEnabled="{Binding Bindable.OverlayCardMarkTooltips, Source={StaticResource ConfigWrapper}}"
@@ -16,7 +18,7 @@
     <ext:OverlayExtensions.ToolTip>
         <tooltips:CardTooltip Card="{Binding SourceCard}" Text="{Binding TooltipText}"/>
     </ext:OverlayExtensions.ToolTip>
-    <StackPanel LayoutTransform="{Binding ScaleTransform}">
+    <StackPanel>
         <Grid Width="36" Height="36" Visibility="{Binding CardAgeVisibility}">
             <Image Width="32" Height="32" Source="/HearthstoneDeckTracker;component/Images/card-marker.png" />
             <hearthstoneDeckTracker:HearthstoneTextBlock
