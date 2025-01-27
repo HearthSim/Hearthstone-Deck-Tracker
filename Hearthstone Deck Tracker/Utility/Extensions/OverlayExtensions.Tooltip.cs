@@ -108,7 +108,10 @@ partial class OverlayExtensions
 	private static void OnElementUnloaded(object sender, RoutedEventArgs routedEventArgs)
 	{
 		if(sender is DependencyObject d)
+		{
+			UnregisterToolTip(d);
 			_waitingOnVisualTree.Remove(d);
+		}
 	}
 
 	private static void OnToolTipChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -140,27 +143,33 @@ partial class OverlayExtensions
 			}
 		}
 		else
+			UnregisterToolTip(d);
+	}
+
+	private static void UnregisterToolTip(DependencyObject d)
+	{
+		if(d is not IInputElement inputElement)
+			return;
+		inputElement.MouseEnter -= ShowTooltip;
+		inputElement.MouseLeave -= HideTooltip;
+
+		if(d is FrameworkContentElement fce)
 		{
-			inputElement.MouseEnter -= ShowTooltip;
-			inputElement.MouseLeave -= HideTooltip;
-
-			if(d is FrameworkContentElement fce)
-			{
-				fce.Loaded -= OnElementLoaded;
-				fce.Unloaded += OnElementUnloaded;
-			}
-			else
-			{
-				var fe = d as FrameworkElement ?? Helper.GetLogicalParent<FrameworkElement>(d);
-				if(fe != null)
-				{
-					fe.Loaded -= OnElementLoaded;
-					fe.Unloaded += OnElementUnloaded;
-				}
-			}
-
-			OnToolTipChanged?.Invoke(null, d);
-			_elementIsInOverlay.Remove(d);
+			fce.Loaded -= OnElementLoaded;
+			fce.Unloaded -= OnElementUnloaded;
 		}
+		else
+		{
+			var fe = d as FrameworkElement ?? Helper.GetLogicalParent<FrameworkElement>(d);
+			if(fe != null)
+			{
+				fe.Loaded -= OnElementLoaded;
+				fe.Unloaded -= OnElementUnloaded;
+			}
+		}
+
+		if(_elementIsInOverlay.TryGetValue(d, out var isInOverlay) && isInOverlay)
+			OnToolTipChanged?.Invoke(null, d);
+		_elementIsInOverlay.Remove(d);
 	}
 }
