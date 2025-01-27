@@ -1,6 +1,10 @@
-## **Release v1.38.3 - 2025-01-23**
+## Unreleased
 **Hearthstone**:
 
+- Fixed cards marks in the opponent's hand appearing clipped when the overlay was scaled.
+
+## **Release v1.38.3 - 2025-01-23**
+**Hearthstone**:
 - Added counters to Protoss minions cost reduction and Alien Encounters.
 - Added related card tooltips to Starlight Whelp. \
   *We will continue adding more tooltips in the coming updates*
