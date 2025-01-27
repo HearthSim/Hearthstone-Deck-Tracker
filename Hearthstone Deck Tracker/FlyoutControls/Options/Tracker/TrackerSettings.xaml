@@ -98,9 +98,11 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0"
                   VerticalAlignment="Top" Click="CheckboxShowNewsBar_OnClick" />
         <Button Name="ButtonGamePath" Margin="10,5,10,0" Content="{lex:Loc Options_Tracker_Settings_Button_HearthstonePath}" Click="ButtonGamePath_OnClick"
-                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
+                Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
         <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content="{lex:Loc Options_Tracker_Settings_Button_AppData}" Click="ButtonOpenAppData_OnClick"
-                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
+                Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
         <Button Name="SelectSaveDataPath" Margin="10,5,10,0" Content="{lex:Loc Options_Tracker_Settings_Button_DataPath}"
                 Click="SelectSaveDataPath_Click"
                 Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
