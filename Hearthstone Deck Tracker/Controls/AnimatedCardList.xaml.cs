@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 {
 	public partial class AnimatedCardList
 	{
-		private readonly ObservableCollection<AnimatedCard> _animatedCards = new ObservableCollection<AnimatedCard>();
+		public ObservableCollection<AnimatedCard> AnimatedCards { get; } = new();
 
 		public AnimatedCardList()
 		{
@@ -30,14 +30,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 			try
 			{
 				if(reset)
-				{
-					_animatedCards.Clear();
-					ItemsControl.Items.Clear();
-				}
+					AnimatedCards.Clear();
+
 				var newCards = new List<Hearthstone.Card>();
 				foreach(var card in cards)
 				{
-					var existing = _animatedCards.FirstOrDefault(x => AreEqualForList(x.Card, card));
+					var existing = AnimatedCards.FirstOrDefault(x => AreEqualForList(x.Card, card));
 					if(existing == null)
 						newCards.Add(card);
 					else if(existing.Card.Count != card.Count || existing.Card.HighlightInHand != card.HighlightInHand)
@@ -56,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 					}
 				}
 				var toUpdate = new List<AnimatedCard>();
-				foreach(var aCard in _animatedCards)
+				foreach(var aCard in AnimatedCards)
 				{
 					if(!cards.Any(x => AreEqualForList(x, aCard.Card)))
 						toUpdate.Add(aCard);
@@ -69,8 +67,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 					if(newCard != null)
 					{
 						var newAnimated = new AnimatedCard(newCard, ShowTier7InspirationButton && newCard.IsBaconMinion);
-						_animatedCards.Insert(_animatedCards.IndexOf(card), newAnimated);
-						ItemsControl.Items.Insert(_animatedCards.IndexOf(card), newAnimated);
+						AnimatedCards.Insert(AnimatedCards.IndexOf(card), newAnimated);
 						newAnimated.Update(true).Forget();
 						newCards.Remove(newCard);
 					}
@@ -79,8 +76,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				foreach(var card in newCards)
 				{
 					var newCard = new AnimatedCard(card, ShowTier7InspirationButton && card.IsBaconMinion);
-					_animatedCards.Insert(cards.IndexOf(card), newCard);
-					ItemsControl.Items.Insert(cards.IndexOf(card), newCard);
+					AnimatedCards.Insert(cards.IndexOf(card), newCard);
 					newCard.FadeIn(!reset).Forget();
 				}
 			}
@@ -94,8 +90,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			if(fadeOut)
 				await card.FadeOut(card.Card.Count > 0);
-			_animatedCards.Remove(card);
-			ItemsControl.Items.Remove(card);
+			AnimatedCards.Remove(card);
 		}
 
 		private bool AreEqualForList(Hearthstone.Card c1, Hearthstone.Card c2)
