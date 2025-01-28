@@ -216,7 +216,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorArenaProvider : IArenaProvider
 	{
 		public ArenaInfo? GetArenaInfo() => DeckImporter.FromArena(false);
-		public HearthMirror.Objects.Card[]? GetDraftChoices() => Reflection.Client.GetArenaDraftChoicesV2()?.ToArray();
+		public DraftChoices? GetDraftChoices() => Reflection.Client.GetArenaDraftChoicesV3();
 	}
 
 	public class HearthMirrorFriendlyChallengeProvider : IFriendlyChallengeProvider

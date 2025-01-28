@@ -23,7 +23,7 @@ namespace HearthWatcher.Test
 
 		[TestInitialize]
 		public void Initialize()
-		{       
+		{
 			_choicesChangedCalls = 0;
 			_cardPickedCalls = 0;
 			_completeDeckCalls = 0;
@@ -124,10 +124,14 @@ namespace HearthWatcher.Test
 			Assert.AreEqual(0, _choicesChangedCalls);
 			Assert.AreEqual(0, _cardPickedCalls);
 
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card> { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") },
+				Version = 1
+			};
 			_provider.ArenaInfo = new ArenaInfo() { Deck = new Deck() { Id = 1 }, CurrentSlot = 0 };
-			_provider.DraftChoices = new[] { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") };
 			Thread.Sleep(100);
-			Assert.AreEqual(_provider.DraftChoices, _currentChoices);
+			CollectionAssert.AreEqual(_provider.DraftChoices.Choices, _currentChoices);
 			Assert.AreEqual(1, _choicesChangedCalls);
 			Assert.AreEqual(0, _cardPickedCalls);
 
@@ -137,7 +141,11 @@ namespace HearthWatcher.Test
 			Assert.AreEqual(1, _choicesChangedCalls);
 			Assert.AreEqual(0, _cardPickedCalls);
 
-			_provider.DraftChoices = new[] { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") };
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card>() { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") },
+				Version = 2
+			};
 			Thread.Sleep(100);
 			Assert.AreEqual(1, _cardPickedCalls);
 			Assert.AreEqual("HERO_02", _currentPick.Id);
@@ -146,7 +154,7 @@ namespace HearthWatcher.Test
 			Thread.Sleep(100);
 			Assert.AreEqual(2, _choicesChangedCalls);
 			Assert.AreEqual(1, _cardPickedCalls);
-			Assert.AreEqual(_provider.DraftChoices, _currentChoices);
+			CollectionAssert.AreEqual(_provider.DraftChoices.Choices, _currentChoices);
 		}
 
 		[TestMethod]
@@ -157,9 +165,13 @@ namespace HearthWatcher.Test
 			Assert.AreEqual(0, _cardPickedCalls);
 
 			_provider.ArenaInfo = new ArenaInfo() { Deck = new Deck() { Id = 1 }, CurrentSlot = 0 };
-			_provider.DraftChoices = new[] { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") };
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card> { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") },
+				Version = 1
+			};
 			_watcher.Update();
-			Assert.AreEqual(_provider.DraftChoices, _currentChoices);
+			CollectionAssert.AreEqual(_provider.DraftChoices.Choices, _currentChoices);
 			Assert.AreEqual(1, _choicesChangedCalls);
 			Assert.AreEqual(0, _cardPickedCalls);
 
@@ -169,7 +181,11 @@ namespace HearthWatcher.Test
 			Assert.AreEqual(1, _choicesChangedCalls);
 			Assert.AreEqual(0, _cardPickedCalls);
 
-			_provider.DraftChoices = new[] { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") };
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card>() { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") },
+				Version = 2
+			};
 			_watcher.Update();
 			Assert.AreEqual(1, _cardPickedCalls);
 			Assert.AreEqual("HERO_02", _currentPick.Id);
@@ -178,7 +194,7 @@ namespace HearthWatcher.Test
 			_watcher.Update();
 			Assert.AreEqual(2, _choicesChangedCalls);
 			Assert.AreEqual(1, _cardPickedCalls);
-			Assert.AreEqual(_provider.DraftChoices, _currentChoices);
+			CollectionAssert.AreEqual(_provider.DraftChoices.Choices, _currentChoices);
 		}
 
 		[TestMethod]
@@ -189,10 +205,14 @@ namespace HearthWatcher.Test
 			Assert.AreEqual(0, _cardPickedCalls);
 
 			_provider.ArenaInfo = new ArenaInfo() { Deck = new Deck() { Id = 1 }, CurrentSlot = 0 };
-			_provider.DraftChoices = new[] { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") };
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card> { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") },
+				Version = 1
+			};
 			_watcher.Update();
 			_watcher.Update();
-			Assert.AreEqual(_provider.DraftChoices, _currentChoices);
+			CollectionAssert.AreEqual(_provider.DraftChoices.Choices, _currentChoices);
 			Assert.AreEqual(1, _choicesChangedCalls);
 			Assert.AreEqual(0, _cardPickedCalls);
 
@@ -203,7 +223,12 @@ namespace HearthWatcher.Test
 			Assert.AreEqual(1, _choicesChangedCalls);
 			Assert.AreEqual(0, _cardPickedCalls);
 
-			_provider.DraftChoices = new[] { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") };
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card>() { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") },
+				Version = 2
+			};
+
 			_watcher.Update();
 			_watcher.Update();
 			Assert.AreEqual(1, _cardPickedCalls);
@@ -214,7 +239,7 @@ namespace HearthWatcher.Test
 			_watcher.Update();
 			Assert.AreEqual(2, _choicesChangedCalls);
 			Assert.AreEqual(1, _cardPickedCalls);
-			Assert.AreEqual(_provider.DraftChoices, _currentChoices);
+			CollectionAssert.AreEqual(_provider.DraftChoices.Choices, _currentChoices);
 		}
 
 		[TestMethod]
@@ -223,7 +248,11 @@ namespace HearthWatcher.Test
 			_provider.ArenaInfo = new ArenaInfo() { Deck = new Deck() { Id = 1 }, CurrentSlot = 0 };
 			_watcher.Update();
 			_watcher.Update();
-			_provider.DraftChoices = new[] { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") };
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card> { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") },
+				Version = 1
+			};
 			_watcher.Update();
 			_watcher.Update();
 			_provider.ArenaInfo = new ArenaInfo() { Deck = new Deck() { Id = 1, Hero = "HERO_02" }, CurrentSlot = 1 };
@@ -232,7 +261,11 @@ namespace HearthWatcher.Test
 			_provider.DraftChoices = null;
 			_watcher.Update();
 			_watcher.Update();
-			_provider.DraftChoices = new[] { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") };
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card>() { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") },
+				Version = 2
+			};
 			_watcher.Update();
 			_watcher.Update();
 			Assert.AreEqual(2, _choicesChangedCalls);
@@ -241,19 +274,26 @@ namespace HearthWatcher.Test
 
 
 		[TestMethod]
-		public void Manual_DoubleUpdateBetweenChoiceAndPick()
+		public void SameChoiceOptionsTwoPicksInARow()
 		{
-			// In this case we either have the exact same choices twice or the server was too slow to send
-			// the new choices over the course of two updates
 			_provider.ArenaInfo = new ArenaInfo() { Deck = new Deck() { Id = 1 }, CurrentSlot = 0 };
-			_provider.DraftChoices = new[] { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") };
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card> { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") },
+				Version = 1
+			};
 			_watcher.Update();
 
 			_provider.ArenaInfo = new ArenaInfo() { Deck = new Deck() { Id = 1, Hero = "HERO_02" }, CurrentSlot = 1 };
 			_watcher.Update();
 			Assert.AreEqual(1, _choicesChangedCalls);
-			//We can not tell if the following actually happens: 
-			//_provider.DraftChoices = new[] { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") };
+
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card> { NewCard("HERO_01"), NewCard("HERO_02"), NewCard("HERO_03") },
+				Version = 2
+			};
+
 			_watcher.Update();
 			Assert.AreEqual(2, _choicesChangedCalls);
 			Assert.AreEqual(1, _cardPickedCalls);
@@ -266,7 +306,11 @@ namespace HearthWatcher.Test
 				Deck = new Deck() { Id = 1, Hero = "HERO_02", Cards = new List<Card> { NewCard("AT_001", 29) } },
 				CurrentSlot = 30
 			};
-			_provider.DraftChoices = new[] { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") };
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card>() { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") },
+				Version = 1
+			};
 			_watcher.Update();
 			_watcher.Update();
 			Assert.IsNull(_currentArenaInfo);
@@ -309,16 +353,25 @@ namespace HearthWatcher.Test
 				Deck = new Deck() { Id = 1, Hero = "HERO_02", Cards = new List<Card> { NewCard("AT_001"), NewCard("AT_002", 2) } },
 				CurrentSlot = 4
 			};
-			_provider.DraftChoices = new[] { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") };
+
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card>() { NewCard("AT_001"), NewCard("AT_002"), NewCard("AT_003") },
+				Version = 1
+			};
 			_watcher.Update();
-			Assert.AreEqual(_provider.DraftChoices, _currentChoices);
+			CollectionAssert.AreEqual(_provider.DraftChoices.Choices, _currentChoices);
 			_provider.ArenaInfo = new ArenaInfo {
 				Deck = new Deck() { Id = 1, Hero = "HERO_02", Cards = new List<Card> { NewCard("AT_001"), NewCard("AT_002", 3) } },
 				CurrentSlot = 5
 			};
-			_provider.DraftChoices = new[] { NewCard("AT_004"), NewCard("AT_005"), NewCard("AT_006") };
+			_provider.DraftChoices = new DraftChoices
+			{
+				Choices = new List<Card>() { NewCard("AT_004"), NewCard("AT_005"), NewCard("AT_006") },
+				Version = 2
+			};
 			_watcher.Update();
-			Assert.AreEqual(_provider.DraftChoices, _currentChoices);
+			CollectionAssert.AreEqual(_provider.DraftChoices.Choices, _currentChoices);
 			Assert.AreEqual("AT_002", _currentPick.Id);
 		}
 
@@ -332,8 +385,8 @@ namespace HearthWatcher.Test
 			public ArenaInfo ArenaInfo { get; set; }
 			public ArenaInfo GetArenaInfo() => ArenaInfo;
 
-			public Card[] DraftChoices { get; set; }
-			public Card[] GetDraftChoices() => DraftChoices;
+			public DraftChoices DraftChoices { get; set; }
+			public DraftChoices GetDraftChoices() => DraftChoices;
 
 			public int Delay => 50;
 		}
