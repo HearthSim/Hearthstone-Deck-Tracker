@@ -214,6 +214,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			try
 			{
 				using HttpRequestMessage request = new(HttpMethod.Get, _getUrl(obj));
+				request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+				request.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
 				if(_lruLookup.TryGetValue(filename, out var entry))
 					request.Headers.IfNoneMatch.Add(new EntityTagHeaderValue(entry.ETag));
 				//Log.Debug($"Starting download for {filename} (isCacheUpdate={isCacheUpdate}).");

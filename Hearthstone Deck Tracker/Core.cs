@@ -52,7 +52,8 @@ namespace Hearthstone_Deck_Tracker
 
 		// Should be global to application. Always use this one instead of
 		// instantiating a new HttpClient.
-		public static readonly HttpClient HttpClient = new();
+		public static readonly HttpClient HttpClient = new(new HttpClientHandler
+			{ AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
 
 		internal static GameV2? _game;
 		public static GameV2 Game => _game ??= new GameV2();
