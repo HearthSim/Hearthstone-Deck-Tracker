@@ -867,9 +867,16 @@ namespace Hearthstone_Deck_Tracker
 		{
 			for(var i = 0; i < tries; i++)
 			{
-				var value = func.Invoke();
-				if(value != null)
-					return value;
+				try
+				{
+					var value = func.Invoke();
+					if(value != null)
+						return value;
+				}
+				catch
+				{
+					// Try again!
+				}
 				await Task.Delay(delay);
 			}
 			return default;
