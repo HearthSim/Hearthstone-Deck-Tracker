@@ -3,7 +3,7 @@
 - Fixed cards marks in the opponent's hand appearing clipped when the overlay was scaled.
 
 **Battlegrounds**:
-- Fixed a crash that occured after playing Battlegrounds for a few hours.\
+- Fixed a crash that occurred after playing Battlegrounds for a few hours.\
   *We're aware of another crash that occurs early on in Battlegrounds matches for some players and are working on a fix.*
 
 ## **Release v1.38.3 - 2025-01-23**
