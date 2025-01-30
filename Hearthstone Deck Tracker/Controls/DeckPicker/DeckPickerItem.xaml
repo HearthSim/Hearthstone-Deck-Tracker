@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance deckPicker:DeckPickerItemViewModel}"
+             Content="{Binding DeckPickerItemLayout}"
              d:DesignHeight="300" d:DesignWidth="300">
 
 </UserControl>

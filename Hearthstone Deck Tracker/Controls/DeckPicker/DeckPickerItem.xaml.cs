@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 #endregion
 
@@ -19,27 +20,29 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 	/// <summary>
 	/// Interaction logic for DeckPickerItem.xaml
 	/// </summary>
-	public partial class DeckPickerItem : INotifyPropertyChanged
+	public partial class DeckPickerItem
 	{
-		private const string LocUse = "DeckPicker_Deck_Label_Use";
-		private const string LocActive = "DeckPicker_Deck_Label_Active";
-
-		private static Type _deckPickerItem = typeof(DeckPickerItemLayout1);
-
 		public DeckPickerItem()
 		{
 			InitializeComponent();
-			Deck = (Deck)DataContext;
-			SetLayout();
 		}
+	}
 
-		public DeckPickerItem(Deck deck, Type deckPickerItemLayout)
+	public class DeckPickerItemViewModel : ViewModel
+	{
+
+		private const string LocUse = "DeckPicker_Deck_Label_Use";
+		private const string LocActive = "DeckPicker_Deck_Label_Active";
+
+		private readonly Type _deckPickerItem = typeof(DeckPickerItemLayout1);
+		private FrameworkElement? _deckPickerItemLayout;
+		public FrameworkElement? DeckPickerItemLayout => _deckPickerItemLayout ??= GetLayout();
+
+		public DeckPickerItemViewModel(Deck deck, Type? deckPickerItemLayout = null)
 		{
-			InitializeComponent();
-			DataContext = deck;
 			Deck = deck;
-			_deckPickerItem = deckPickerItemLayout;
-			SetLayout();
+			if (deckPickerItemLayout != null)
+				_deckPickerItem = deckPickerItemLayout;
 		}
 
 		public Deck Deck { get; set; }
@@ -54,9 +57,18 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Visibility HsReplayDataIndicatorVisibility => HsReplayDataManager.Decks.AvailableDecks.Contains(Deck.GetSelectedDeckVersion().ShortId) ? Visibility.Visible : Visibility.Collapsed;
 
-		public event PropertyChangedEventHandler? PropertyChanged;
-
-		public void SetLayout() => Content = Activator.CreateInstance(_deckPickerItem);
+		private FrameworkElement? GetLayout()
+		{
+			if(_deckPickerItem == typeof(DeckPickerItemLayout1))
+				return new DeckPickerItemLayout1();
+			if(_deckPickerItem == typeof(DeckPickerItemLayout2))
+				return new DeckPickerItemLayout2();
+			if(_deckPickerItem == typeof(DeckPickerItemLayoutLegacy))
+				return new DeckPickerItemLayoutLegacy();
+			if(_deckPickerItem == typeof(DeckPickerItemLayoutMinimal))
+				return new DeckPickerItemLayoutMinimal();
+			return null;
+		}
 
 		public string? DataIndicatorTooltip => LocUtil.Get("DeckCharts_Tooltip_Uploaded");
 
@@ -111,12 +123,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			OnPropertyChanged(nameof(HsReplayDataIndicatorVisibility));
 			OnPropertyChanged(nameof(StatsString));
 			Deck.UpdateWildIndicatorVisibility();
-		}
-
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#region sorting properties

@@ -1,9 +1,9 @@
 <controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.DeckSelectionDialog"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                      xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -17,6 +17,11 @@
                     <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
             </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <deckPicker:DeckPickerItem/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <Label Content="{lex:Loc DeckSelectedDialog_Label_SelectDeck}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14"
                FontWeight="Bold" Margin="10,0,0,0" />

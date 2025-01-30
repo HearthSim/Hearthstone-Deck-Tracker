@@ -44,9 +44,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public delegate void SelectedDeckHandler(DeckPicker sender, List<Deck> deck);
 
 		private readonly DeckPickerClassItem _archivedClassItem;
-		private readonly Dictionary<Deck, DeckPickerItem> _cachedDeckPickerItems = new Dictionary<Deck, DeckPickerItem>();
+		private readonly Dictionary<Deck, DeckPickerItemViewModel> _cachedDeckPickerItems = new();
 		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
-		private readonly List<DeckPickerItem> _displayedDecks;
+		private readonly List<DeckPickerItemViewModel> _displayedDecks = new();
 		private bool _clearingClasses;
 		private ObservableCollection<DeckType>? _deckTypeItems;
 		private bool _ignoreSelectionChange;
@@ -65,15 +65,13 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			_archivedClassItem = _classItems.ElementAt((int)HeroClassAll.Archived);
 			_classItems.Remove(_archivedClassItem);
 			ListViewClasses.ItemsSource = _classItems;
-			SelectedClasses = new ObservableCollection<HeroClassAll>();
-			_displayedDecks = new List<DeckPickerItem>();
 		}
 
-		public List<DeckPickerItem> DisplayedDecks => _displayedDecks;
+		public List<DeckPickerItemViewModel> DisplayedDecks => _displayedDecks;
 
-		public List<Deck> SelectedDecks => ListViewDecks.SelectedItems.Cast<DeckPickerItem>().Select(x => x.Deck).ToList();
+		public List<Deck> SelectedDecks => ListViewDecks.SelectedItems.Cast<DeckPickerItemViewModel>().Select(x => x.Deck).ToList();
 
-		public ObservableCollection<HeroClassAll> SelectedClasses { get; }
+		public ObservableCollection<HeroClassAll> SelectedClasses { get; } = new();
 
 		public void ReloadUI()
 		{
@@ -359,7 +357,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			selectedDeck?.StatsUpdated();
 		}
 
-		private DeckPickerItem? GetDeckPickerItemFromCache(Deck deck)
+		private DeckPickerItemViewModel? GetDeckPickerItemFromCache(Deck deck)
 		{
 			if(deck == null)
 				return null;
@@ -381,7 +379,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					layout = typeof(DeckPickerItemLayout1);
 					break;
 			}
-			dpi = new DeckPickerItem(deck, layout);
+			dpi = new DeckPickerItemViewModel(deck, layout);
 			_cachedDeckPickerItems.Add(deck, dpi);
 			return dpi;
 		}
@@ -481,9 +479,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			if(Config.Instance.DeckPickerItemLayout == DeckLayout.Legacy)
 			{
-				foreach(var deck in e.AddedItems.Cast<DeckPickerItem>())
+				foreach(var deck in e.AddedItems.Cast<DeckPickerItemViewModel>())
 					deck.RefreshProperties();
-				foreach(var deck in e.RemovedItems.Cast<DeckPickerItem>())
+				foreach(var deck in e.RemovedItems.Cast<DeckPickerItemViewModel>())
 					deck.RefreshProperties();
 			}
 			OnSelectedDeckChanged?.Invoke(this, SelectedDecks);

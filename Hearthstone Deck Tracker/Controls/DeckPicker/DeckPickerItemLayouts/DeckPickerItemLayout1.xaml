@@ -5,19 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
-             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance deckPicker:DeckPickerItemViewModel}"
              d:DesignHeight="300" d:DesignWidth="300" Height="52">
     <Border BorderBrush="{DynamicResource MenuItemDisabledBrush}" BorderThickness="0,0,0,1">
         <DockPanel>
             <Grid Width="46" Height="46" Margin="5,1,10,0">
-                <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding ClassImage}" RenderOptions.BitmapScalingMode="Fant" />
-                <Rectangle Width="18" Height="14" Visibility="{Binding WildIndicatorVisibility}" Margin="0,2,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
-                           ToolTip="{Binding WildIndicatorTooltip, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}">
+                <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding Deck.ClassImage}" RenderOptions.BitmapScalingMode="Fant" />
+                <Rectangle Width="18" Height="14" Visibility="{Binding Deck.WildIndicatorVisibility}" Margin="0,2,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                           ToolTip="{Binding WildIndicatorTooltip}">
                     <Rectangle.Fill>
                         <VisualBrush Visual="{StaticResource wild_icon}" />
                     </Rectangle.Fill>
@@ -43,34 +43,34 @@
                         </Style>
                     </Border.Style>
                     <TextBlock
-                    Text="{Binding TextUseButton, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
+                    Text="{Binding TextUseButton}"
                     FontSize="13" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,10,0"
                     Foreground="{DynamicResource GrayTextColorBrush}" />
                 </Border>
-                <TextBlock Grid.Row="1" Text="{Binding DateShownOnDeck, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}, Converter={StaticResource DateConverter}}" HorizontalAlignment="Right"
+                <TextBlock Grid.Row="1" Text="{Binding DateShownOnDeck, Converter={StaticResource DateConverter}}" HorizontalAlignment="Right"
                            Foreground="{DynamicResource GrayTextColorBrush}" FontSize="11" Margin="0, 0, 10, 3"
                            Visibility="{Binding Source={x:Static utility:ConfigWrapper.ShowDateOnDeckVisibility}}"
-                               ToolTip="{Binding DateShownOnDeckTooltip, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" />
+                               ToolTip="{Binding DateShownOnDeckTooltip}" />
             </Grid>
-            
+
             <StackPanel Margin="0,5">
                 <DockPanel>
                     <Image DockPanel.Dock="Left" Source="{x:Static utility:ImageCache.Archived}" Width="16"
                            Height="16" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
-                           Visibility="{Binding ArchivedVisibility}"
-                           ToolTip="{Binding ArchivedTooltip, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" />
+                           Visibility="{Binding Deck.ArchivedVisibility}"
+                           ToolTip="{Binding ArchivedTooltip}" />
                     <DockPanel>
-                        <Image Source="{DynamicResource HsReplayIcon}" 
-                               Visibility="{Binding HsReplayDataIndicatorVisibility, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
-                               ToolTip="{Binding DataIndicatorTooltip, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
+                        <Image Source="{DynamicResource HsReplayIcon}"
+                               Visibility="{Binding HsReplayDataIndicatorVisibility}"
+                               ToolTip="{Binding DataIndicatorTooltip}"
                                Width="14" RenderOptions.BitmapScalingMode="Fant"
                                DockPanel.Dock="Left" Margin="0,0,4,0"/>
-                        <TextBlock Text="{Binding NameAndVersion}" Margin="0,0,15,0" DockPanel.Dock="Left"
+                        <TextBlock Text="{Binding Deck.NameAndVersion}" Margin="0,0,15,0" DockPanel.Dock="Left"
                                    FontSize="17" TextTrimming="CharacterEllipsis"
                                    Foreground="{DynamicResource TextBrush}"
-                                   FontWeight="{Binding FontWeightActiveDeck, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" />
-                        <Rectangle Width="10" Height="13" Visibility="{Binding NoteVisibility}" Margin="-10,0,0,0"
-                                   ToolTip="{Binding Note}">
+                                   FontWeight="{Binding FontWeightActiveDeck}" />
+                        <Rectangle Width="10" Height="13" Visibility="{Binding Deck.NoteVisibility}" Margin="-10,0,0,0"
+                                   ToolTip="{Binding Deck.Note}">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_page_bold}" />
                             </Rectangle.Fill>
@@ -81,11 +81,11 @@
                 <DockPanel Margin="0,-2,0,0" Height="19">
                     <Viewbox DockPanel.Dock="Left" MinWidth="70" StretchDirection="DownOnly" Stretch="Fill"
                              HorizontalAlignment="Left">
-                        <TextBlock Text="{Binding StatsString, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" HorizontalAlignment="Left"
+                        <TextBlock Text="{Binding StatsString}" HorizontalAlignment="Left"
                                    Foreground="{DynamicResource GrayTextColorBrush}" FontSize="14" />
                     </Viewbox>
                     <Viewbox Margin="10,0,0,0" StretchDirection="DownOnly" Stretch="Fill" DockPanel.Dock="Left">
-                        <ItemsControl ItemsSource="{Binding Tags}">
+                        <ItemsControl ItemsSource="{Binding Deck.Tags}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <DockPanel />

@@ -3,6 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                      xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -28,6 +29,11 @@
                     <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
             </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <deckPicker:DeckPickerItem/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
     </DockPanel>
 </controls:MetroWindow>

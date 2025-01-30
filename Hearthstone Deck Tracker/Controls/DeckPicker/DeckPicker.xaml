@@ -256,6 +256,11 @@
                 <Setter Property="Padding" Value="0"/>
             </Style>
         </ListView.Resources>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <deckPicker:DeckPickerItem/>
+            </DataTemplate>
+        </ListView.ItemTemplate>
     </ListView>
 
 </DockPanel>

@@ -26,12 +26,12 @@ namespace Hearthstone_Deck_Tracker
 			WindowStartupLocation = WindowStartupLocation.CenterScreen;
 			ListViewDecks.Items.Clear();
 			foreach(var deck in decks.OrderByDescending(d => d.Name))
-				ListViewDecks.Items.Add(new DeckPickerItem(deck, typeof(DeckPickerItemLayoutMinimal)));
+				ListViewDecks.Items.Add(new DeckPickerItemViewModel(deck, typeof(DeckPickerItemLayoutMinimal)));
 		}
 
 		private void ListViewDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(ListViewDecks.SelectedItem is DeckPickerItem item)
+			if(ListViewDecks.SelectedItem is DeckPickerItemViewModel item)
 				SelectedDeck = item.Deck;
 			Close();
 		}
