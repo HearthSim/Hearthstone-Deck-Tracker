@@ -8,23 +8,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 
 public class RelatedCardsManager
 {
-	public readonly Dictionary<string, ICardWithRelatedCards> Cards = new();
+	private Dictionary<string, ICardWithRelatedCards>? _relatedCards;
+	public Dictionary<string, ICardWithRelatedCards> Cards => _relatedCards ??= Initialize();
 
-	private void Initialize()
+	private Dictionary<string, ICardWithRelatedCards> Initialize()
 	{
 		var cards = Assembly.GetAssembly(typeof(ICardWithRelatedCards)).GetTypes()
 			.Where(t => t.IsClass && !t.IsAbstract && typeof(ICardWithRelatedCards).IsAssignableFrom(t));
 
+		var dict = new Dictionary<string, ICardWithRelatedCards>();
 		foreach(var card in cards)
 		{
-			if (Activator.CreateInstance(card) is not ICardWithRelatedCards cardWithRelatedCards) continue;
-			Cards.Add(cardWithRelatedCards.GetCardId(), cardWithRelatedCards);
+			if (Activator.CreateInstance(card) is not ICardWithRelatedCards cardWithRelatedCards)
+				continue;
+			dict[cardWithRelatedCards.GetCardId()] = cardWithRelatedCards;
 		}
-	}
 
-	public void Reset()
-	{
-		if (Cards.Count == 0) Initialize();
+		return dict;
 	}
 
 	public ICardWithRelatedCards GetCardWithRelatedCards(string cardId)

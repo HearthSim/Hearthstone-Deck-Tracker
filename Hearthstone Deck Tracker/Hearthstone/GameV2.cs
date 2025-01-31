@@ -373,7 +373,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Player.Reset();
 			Opponent.Reset();
 			ActiveEffects.Reset();
-			RelatedCardsManager.Reset();
 			if(!_matchInfoCacheInvalid && MatchInfo?.LocalPlayer != null && MatchInfo.OpposingPlayer != null)
 				UpdatePlayers(MatchInfo);
 			ProposedAttacker = 0;
