@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Windows.MainWindowControls.MainWindowMenuView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="600">
     <UserControl.Resources>
         <Style TargetType="Rectangle">
@@ -172,7 +172,7 @@
         </MenuItem>
         <MenuItem Header="HSREPLAY.NET">
             <MenuItem.Resources>
-                <CollectionViewSource x:Key="LatestReplaysCollection" Source="{Binding LatestReplays}"/>
+                <CollectionViewSource x:Key="LatestReplaysCollection" Source="{Binding LatestReplays, IsAsync=True}"/>
             </MenuItem.Resources>
             <MenuItem.Icon>
                 <Rectangle Fill="{DynamicResource TextBrush}" Width="13.5" Height="17">
