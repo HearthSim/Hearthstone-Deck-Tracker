@@ -5,8 +5,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 	public class BattlegroundsSettings
 	{
 
-		[JsonProperty("bg_tabs")]
-		public bool Tabs { get => Config.Instance.ShowBattlegroundsTabs; }
+		[JsonProperty("bg_browser")]
+		public bool Tabs { get => Config.Instance.ShowBattlegroundsBrowser; }
+
+		[JsonProperty("bg_guides")]
+		public bool Guides { get => Config.Instance.ShowBattlegroundsGuides; }
 
 		[JsonProperty("bg_turn_counter")]
 		public bool TurnCounter { get => Config.Instance.ShowBattlegroundsTurnCounter; }

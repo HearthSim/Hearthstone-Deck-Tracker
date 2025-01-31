@@ -129,6 +129,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Core.Overlay.SetHeroPickingTooltipMask(
 				args.ZoneSize, args.ZonePosition, args.IsTooltipOnRight, args.TooltipCards.Length
 			);
+
+			Core.Overlay.SetHeroGuidesTrigger(args.ZoneSize, args.ZonePosition, args.IsTooltipOnRight, args.TooltipCards);
 		}
 
 		internal static void OnDeckPickerChange(object sender, HearthWatcher.EventArgs.DeckPickerEventArgs args)

@@ -620,7 +620,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		private BattlegroundsHeroPickState? _battlegroundsHeroPickState;
-		private BattlegroundsHeroPickState BattlegroundsHeroPickState
+		public BattlegroundsHeroPickState BattlegroundsHeroPickState
 		{
 			get
 			{

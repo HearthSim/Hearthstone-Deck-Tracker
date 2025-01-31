@@ -616,6 +616,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				GuidesTabs.TabsContent.MaxHeight =  Math.Max(0, (ActualHeight - 54) * 0.95 / _bgsTopBarBehavior.GetScaling?.Invoke() ?? 1.0);
 			}
+
+			if(BattlegroundsMinions is not null)
+			{
+				BattlegroundsMinions.MaxHeight =  Math.Max(0, ActualHeight * 0.95 / _bgsTopBarBehavior.GetScaling?.Invoke() ?? 1.0);
+			}
 		}
 
 		public void ApplyAutoScaling()

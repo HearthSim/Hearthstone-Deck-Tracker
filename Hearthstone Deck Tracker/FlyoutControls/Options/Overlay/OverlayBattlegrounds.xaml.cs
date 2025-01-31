@@ -74,7 +74,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowTier7CompStats.IsChecked = Config.Instance.ShowBattlegroundsTier7SessionCompStats;
 			CheckboxShowBattlegroundsHeroPicking.IsChecked = Config.Instance.ShowBattlegroundsHeroPicking;
 			CheckboxShowBattlegroundsQuestPicking.IsChecked = Config.Instance.ShowBattlegroundsQuestPicking;
-			CheckboxShowBattlegroundsTabs.IsChecked = Config.Instance.ShowBattlegroundsTabs;
+			CheckboxShowBattlegroundsGuides.IsChecked = Config.Instance.ShowBattlegroundsGuides;
+			CheckboxShowBattlegroundsBrowser.IsChecked = Config.Instance.ShowBattlegroundsBrowser;
 			CheckboxAlwaysShowBattlegroundsTavernTier7.IsChecked = Config.Instance.AlwaysShowBattlegroundsTavernTier7;
 			CheckboxShowBattlegroundsTurnCounter.IsChecked = Config.Instance.ShowBattlegroundsTurnCounter;
 
@@ -237,24 +238,63 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				Core.Overlay.BattlegroundsTrinketPickingViewModel.StatsVisibility = Visibility.Collapsed;
 		}
 
-		private void CheckboxShowBattlegroundsTabs_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxShowBattlegroundsGuides_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.ShowBattlegroundsTabs = true;
+			Config.Instance.ShowBattlegroundsGuides = true;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
+			{
 				Core.Overlay.GuidesTabs.Visibility = Visibility.Visible;
+				Core.Overlay.BattlegroundsMinions.Visibility = Visibility.Collapsed;
+			}
 		}
 
-		private void CheckboxShowBattlegroundsTabs_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxShowBattlegroundsGuides_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.ShowBattlegroundsTabs = false;
+			Config.Instance.ShowBattlegroundsGuides = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
+			{
 				Core.Overlay.GuidesTabs.Visibility = Visibility.Collapsed;
+				Core.Overlay.BattlegroundsMinions.Visibility = Visibility.Visible;
+			}
+		}
+
+		private void CheckboxShowBattlegroundsBrowser_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsBrowser = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+			{
+				if(Config.Instance.ShowBattlegroundsGuides)
+				{
+					Core.Overlay.BattlegroundsMinions.Visibility = Visibility.Collapsed;
+					Core.Overlay.GuidesTabs.Visibility = Visibility.Visible;
+				} else
+				{
+					Core.Overlay.BattlegroundsMinions.Visibility = Visibility.Visible;
+					Core.Overlay.GuidesTabs.Visibility = Visibility.Collapsed;
+				}
+			}
+		}
+
+		private void CheckboxShowBattlegroundsBrowser_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsBrowser = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+			{
+				Core.Overlay.BattlegroundsMinions.Visibility = Visibility.Collapsed;
+				Core.Overlay.GuidesTabs.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		private void CheckboxAlwaysShowBattlegroundsTavernTier7_Checked(object sender, RoutedEventArgs e)

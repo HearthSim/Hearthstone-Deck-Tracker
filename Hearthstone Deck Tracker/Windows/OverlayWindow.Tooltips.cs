@@ -176,6 +176,38 @@ public partial class OverlayWindow
 		new(0.059, 0.076), // Zone Position 5
 	};
 
+	public void SetHeroGuidesTrigger(int zoneSize, int zonePosition, bool tooltipOnRight, string[] cards)
+	{
+		var vm = (CardGridTooltipViewModel)HeroGuidesTrigger.DataContext;
+		vm.Reset();
+
+		if(zoneSize != 4 || cards.Length == 0)
+			return;
+
+		vm.Cards = cards.Select(Database.GetCardFromId).WhereNotNull().ToList();
+
+		if(vm.Cards == null || vm.Cards.Count == 0)
+			return;
+
+		HeroGuidesTrigger.UpdateLayout();
+		UpdateHoverable();
+
+		var bgHeroPickHeroWidth = 0.165;
+		var bgHeroPickHeroXSpacing = 0.075;
+		var totalWidth = zoneSize * bgHeroPickHeroWidth + (zoneSize - 1) * bgHeroPickHeroXSpacing;
+		var leftEdge = 0.5 - totalWidth / 2;
+
+		var zoneIndex = Math.Max(zonePosition - 1, 0);
+		var heroX =  leftEdge + zoneIndex * (bgHeroPickHeroWidth + bgHeroPickHeroXSpacing - 0.005) - (tooltipOnRight ?  0 : 0.165);
+
+		vm.Scale = Height / 1080;
+		vm.Left = Helper.GetScaledXPos(heroX, (int)Width, ScreenRatio);
+		vm.Top = Height * 0.21;
+		vm.Height = Height * 0.40;
+		vm.Width = Height * 0.47;
+		vm.TooltipPlacement = tooltipOnRight ? PlacementMode.Right : PlacementMode.Left;
+	}
+
 	public void SetRelatedCardsTrigger(BigCardState state)
 	{
 		// Note: To debug behavior here and/or implement new triggers set a translucent
@@ -364,15 +396,21 @@ public class CardGridTooltipViewModel : ViewModel
 		set => SetProp(value);
 	}
 
-	public List<Hearthstone.Card>? Cards
-	{
-		get => GetProp<List<Hearthstone.Card>?>(null);
-		set => SetProp(value);
-	}
-
 	public PlacementMode TooltipPlacement
 	{
 		get => GetProp(PlacementMode.Top);
+		set => SetProp(value);
+	}
+
+	public double TooltipHorizontalOffset
+	{
+		get => GetProp(0.0);
+		set => SetProp(value);
+	}
+
+	public List<Hearthstone.Card>? Cards
+	{
+		get => GetProp<List<Hearthstone.Card>?>(null);
 		set => SetProp(value);
 	}
 
@@ -382,6 +420,7 @@ public class CardGridTooltipViewModel : ViewModel
 		Height = 0;
 		Top = -1;
 		Left = -1;
+		TooltipHorizontalOffset = 0;
 		Cards = null;
 		TooltipPlacement = PlacementMode.Top;
 	}

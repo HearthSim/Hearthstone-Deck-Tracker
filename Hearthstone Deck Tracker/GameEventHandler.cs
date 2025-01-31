@@ -622,6 +622,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsBattlegroundsMatch)
 			{
 				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
+				Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
 			}
 		}
@@ -647,6 +648,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 					Core.Overlay.BattlegroundsSessionViewModelVM.Update();
+					Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 					Watchers.BattlegroundsLeaderboardWatcher.Run();
 					if(_game.IsBattlegroundsDuosMatch)
 						Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
@@ -941,6 +943,7 @@ namespace Hearthstone_Deck_Tracker
 					Tier7Trial.Clear();
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
+					Core.Overlay.BattlegroundsHeroGuideListViewModel.Reset();
 					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 					Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 					Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
@@ -1167,6 +1170,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.HideBattlegroundsHeroPanel();
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 				Core.Overlay.BattlegroundsSessionViewModelVM.HideCompStatsOnError();
+				Core.Overlay.BattlegroundsHeroGuideListViewModel.OnMulliganEnded();
 			}
 			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
 			{
@@ -1531,6 +1535,7 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(500);
 
 			Core.Overlay.BattlegroundsSessionViewModelVM.Update();
+			Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 
 			if(Core.Game.IsBattlegroundsDuosMatch)
 				Watchers.BattlegroundsTeammateBoardStateWatcher.Run();

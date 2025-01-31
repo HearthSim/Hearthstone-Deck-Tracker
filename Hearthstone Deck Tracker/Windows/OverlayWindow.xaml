@@ -21,6 +21,8 @@
         xmlns:activeEffects="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects"
         xmlns:inspiration="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration"
         xmlns:guides="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
+        xmlns:heroes="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes"
+        xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -72,6 +74,43 @@
                                 </Style>
                             </controls:GridCardImages.Style>
                         </controls:GridCardImages>
+                    </ext:OverlayExtensions.ToolTip>
+                </Grid>
+
+                <Grid Name="HeroGuidesTrigger" Width="{Binding Width}" Height="{Binding Height}" Canvas.Top="{Binding Top}" Canvas.Left="{Binding Left}"
+                      ext:OverlayExtensions.IsOverlayHoverVisible="True" ToolTipService.InitialShowDelay="200" ToolTipService.Placement="{Binding TooltipPlacement}" ToolTipService.HorizontalOffset="{Binding TooltipHorizontalOffset}">
+                    <Grid.DataContext>
+                        <windows:CardGridTooltipViewModel/>
+                    </Grid.DataContext>
+                    <ext:OverlayExtensions.ToolTip >
+                        <heroes:HeroGuideTooltip Cards="{Binding Cards}" Visibility="{Binding Cards, Converter={StaticResource NullableToVisibility}}">
+                            <heroes:HeroGuideTooltip.LayoutTransform>
+                                <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+                            </heroes:HeroGuideTooltip.LayoutTransform>
+                            <heroes:HeroGuideTooltip.Style>
+                                <Style TargetType="heroes:HeroGuideTooltip">
+                                    <Setter Property="Opacity" Value="0"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </heroes:HeroGuideTooltip.Style>
+                        </heroes:HeroGuideTooltip>
                     </ext:OverlayExtensions.ToolTip>
                 </Grid>
 
@@ -311,6 +350,14 @@
                     />
                     <overlay:TurnCounter x:Name="TurnCounter"  Height="49" VerticalAlignment="Top" />
                     <guides:GuidesTabs x:Name="GuidesTabs" VerticalAlignment="Top" />
+                    <minions:BattlegroundsMinions
+                        VerticalAlignment="Top"
+                        x:Name="BattlegroundsMinions"
+                        Visibility="Visible"
+                        IsStandAloneMode="True"
+                        ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                        DataContext="{Binding BattlegroundsMinionsVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                    />
                 </StackPanel>
 
                 <inspiration:BattlegroundsInspiration

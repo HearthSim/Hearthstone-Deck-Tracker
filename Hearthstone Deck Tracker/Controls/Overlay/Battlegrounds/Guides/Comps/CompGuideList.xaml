@@ -13,133 +13,138 @@
              mc:Ignorable="d"
              DataContext="{Binding BattlegroundsCompsGuidesVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
              d:DataContext="{d:DesignInstance guides:BattlegroundsCompsGuidesViewModel}">
-    <Grid x:Name="CompsGuidesContainer">
-        <!-- Panel for displaying comps -->
-        <Grid Visibility="{Binding IsCompSelected, Converter={StaticResource InverseBoolToVisibility}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid Margin="0,0,0,9">
-                <hearthstoneDeckTracker:OutlinedTextBlock
-                    Grid.Row="0"
-                    Text="{lex:Loc Battlegrounds_CompGuides_Title}"
-                    FontSize="14"
-                    TextWrapping="NoWrap"
-                    TextTrimming="None"
-                    FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
-                    Visibility="Visible"
-                />
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right">
-                    <Border
-                        Visibility="{Binding Tier7FeatureVisibility}"
-                        Padding="8 4"
-                    >
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <tier7:Tier7Logo Width="12" Height="12" Margin="0,0,4,0" LogoBrush="{StaticResource Tier7Orange}"/>
-                            <TextBlock Text="{lex:Loc Battlegrounds_CompGuides_Tier7_Mode}" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource Tier7Orange}" Margin="0,-1,0,0"/>
-                        </StackPanel>
-                    </Border>
-                    <Border
-                        Visibility="{Binding BaseFeatureVisibility}"
-                        Padding="8 4"
-                        ToolTipService.InitialShowDelay="500"
-                    >
-                    <Border.ToolTip>
-                        <ToolTip VerticalOffset="-8" HorizontalOffset="-8" Style="{StaticResource BgsLeftTooltipStyle}" Content="{lex:Loc Battlegrounds_CompGuides_Tier7_Tooltip}" />
-                    </Border.ToolTip>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock
-                                Text="{lex:Loc Battlegrounds_CompGuides_Free_Mode}"
-                                FontSize="10"
-                                FontWeight="SemiBold"
-                                Foreground="{StaticResource Tier7YellowButtonBackgroundHover}"
-                                VerticalAlignment="Center"/>
-
-                            <Border
-                                Width="12"
-                                Height="12"
-                                Margin="4,2,0,0"
-                                BorderThickness="1"
-                                CornerRadius="10"
-                                BorderBrush="{StaticResource Tier7YellowButtonBackgroundHover}"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
+    <Border Background="#23272A" CornerRadius="0,0,0,3" BorderBrush="#3f4346"
+            BorderThickness="1,0,0,1"
+            Padding="9"
+    >
+        <Grid x:Name="CompsGuidesContainer">
+            <!-- Panel for displaying comps -->
+            <Grid Visibility="{Binding IsCompSelected, Converter={StaticResource InverseBoolToVisibility}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Margin="0,0,0,9">
+                    <hearthstoneDeckTracker:OutlinedTextBlock
+                        Grid.Row="0"
+                        Text="{lex:Loc Battlegrounds_CompGuides_Title}"
+                        FontSize="14"
+                        TextWrapping="NoWrap"
+                        TextTrimming="None"
+                        FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+                        Visibility="Visible"
+                    />
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <Border
+                            Visibility="{Binding Tier7FeatureVisibility}"
+                            Padding="8 4"
+                        >
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <tier7:Tier7Logo Width="12" Height="12" Margin="0,0,4,0" LogoBrush="{StaticResource Tier7Orange}"/>
+                                <TextBlock Text="{lex:Loc Battlegrounds_CompGuides_Tier7_Mode}" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource Tier7Orange}" Margin="0,-1,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border
+                            Visibility="{Binding BaseFeatureVisibility}"
+                            Padding="8 4"
+                            ToolTipService.InitialShowDelay="500"
+                        >
+                        <Border.ToolTip>
+                            <ToolTip VerticalOffset="-8" HorizontalOffset="-8" Style="{StaticResource BgsLeftTooltipStyle}" Content="{lex:Loc Battlegrounds_CompGuides_Tier7_Tooltip}" />
+                        </Border.ToolTip>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <TextBlock
-                                    FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+                                    Text="{lex:Loc Battlegrounds_CompGuides_Free_Mode}"
+                                    FontSize="10"
+                                    FontWeight="SemiBold"
                                     Foreground="{StaticResource Tier7YellowButtonBackgroundHover}"
-                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+
+                                <Border
+                                    Width="12"
+                                    Height="12"
+                                    Margin="4,2,0,0"
+                                    BorderThickness="1"
+                                    CornerRadius="10"
+                                    BorderBrush="{StaticResource Tier7YellowButtonBackgroundHover}"
                                     VerticalAlignment="Center"
-                                    Text="?"
-                                    FontSize="9"/>
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
-            </Grid>
-            <Border Grid.Row="1" BorderBrush="#4F565B" BorderThickness="1" CornerRadius="3" Background="#141617" ClipToBounds="True">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
-                    <StackPanel>
-                        <!-- Base Feature -->
-                        <ItemsControl Margin="0,-1,0,0" AlternationCount="1000" ItemsSource="{Binding Comps}" Visibility="{Binding BaseFeatureVisibility}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <comps:CompButton
-                                        DataContext="{Binding}"
-                                        CompClicked="CompGuide_CompClicked"
-                                        BorderThickness="0,1,0,0"
-                                        BorderBrush="#4A5256" >
-                                    </comps:CompButton>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <!-- Tier7 Feature -->
-                        <ItemsControl  Visibility="{Binding Tier7FeatureVisibility}">
-                            <ItemsControl.Resources>
-                                <CollectionViewSource x:Key="GroupedComps" Source="{Binding CompsByTier}">
-                                    <CollectionViewSource.GroupDescriptions>
-                                        <PropertyGroupDescription PropertyName="Key" />
-                                    </CollectionViewSource.GroupDescriptions>
-                                </CollectionViewSource>
-                            </ItemsControl.Resources>
-                            <ItemsControl.ItemsSource>
-                                <Binding Source="{StaticResource GroupedComps}" />
-                            </ItemsControl.ItemsSource>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <Border VerticalAlignment="Stretch" Background="{Binding Value.TierColor}" Padding="8,2,8,5" HorizontalAlignment="Stretch">
-                                            <Grid>
-                                                <TextBlock
-                                                    TextAlignment="Left"
-                                                    Text="{Binding Value.TierLetter}"
-                                                    FontSize="16"
-                                                    Foreground="White"
-                                                    FontWeight="Black"
-                                                    HorizontalAlignment="Left"
-                                                />
-                                            </Grid>
-                                        </Border>
-                                        <ItemsControl ItemsSource="{Binding Value.Comps}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <comps:CompButton DataContext="{Binding}" CompClicked="CompGuide_CompClicked" BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256"/>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                                    HorizontalAlignment="Center">
+                                    <TextBlock
+                                        FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+                                        Foreground="{StaticResource Tier7YellowButtonBackgroundHover}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="?"
+                                        FontSize="9"/>
+                                </Border>
+                            </StackPanel>
+                        </Border>
                     </StackPanel>
-                </ScrollViewer>
-            </Border>
+                </Grid>
+                <Border Grid.Row="1" BorderBrush="#4F565B" BorderThickness="1" CornerRadius="3" Background="#141617" ClipToBounds="True">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
+                        <StackPanel>
+                            <!-- Base Feature -->
+                            <ItemsControl Margin="0,-1,0,0" AlternationCount="1000" ItemsSource="{Binding Comps}" Visibility="{Binding BaseFeatureVisibility}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <comps:CompButton
+                                            DataContext="{Binding}"
+                                            CompClicked="CompGuide_CompClicked"
+                                            BorderThickness="0,1,0,0"
+                                            BorderBrush="#4A5256" >
+                                        </comps:CompButton>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <!-- Tier7 Feature -->
+                            <ItemsControl  Visibility="{Binding Tier7FeatureVisibility}">
+                                <ItemsControl.Resources>
+                                    <CollectionViewSource x:Key="GroupedComps" Source="{Binding CompsByTier}">
+                                        <CollectionViewSource.GroupDescriptions>
+                                            <PropertyGroupDescription PropertyName="Key" />
+                                        </CollectionViewSource.GroupDescriptions>
+                                    </CollectionViewSource>
+                                </ItemsControl.Resources>
+                                <ItemsControl.ItemsSource>
+                                    <Binding Source="{StaticResource GroupedComps}" />
+                                </ItemsControl.ItemsSource>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Border VerticalAlignment="Stretch" Background="{Binding Value.TierColor}" Padding="8,2,8,5" HorizontalAlignment="Stretch">
+                                                <Grid>
+                                                    <TextBlock
+                                                        TextAlignment="Left"
+                                                        Text="{Binding Value.TierLetter}"
+                                                        FontSize="16"
+                                                        Foreground="White"
+                                                        FontWeight="Black"
+                                                        HorizontalAlignment="Left"
+                                                    />
+                                                </Grid>
+                                            </Border>
+                                            <ItemsControl ItemsSource="{Binding Value.Comps}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <comps:CompButton DataContext="{Binding}" CompClicked="CompGuide_CompClicked" BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256"/>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+            <!-- Detail View -->
+            <comps:CompGuide
+                Visibility="{Binding DataContext.IsCompSelected, Converter={StaticResource BoolToVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                BackButtonClicked="CompGuide_BackButtonClicked"
+                DataContext="{Binding SelectedComp}"
+            />
         </Grid>
-        <!-- Detail View -->
-        <comps:CompGuide
-            Visibility="{Binding DataContext.IsCompSelected, Converter={StaticResource BoolToVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            BackButtonClicked="CompGuide_BackButtonClicked"
-            DataContext="{Binding SelectedComp}"
-        />
-    </Grid>
+    </Border>
 </UserControl>

@@ -36,6 +36,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
@@ -104,6 +105,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public BattlegroundsQuestPickingViewModel BattlegroundsQuestPickingViewModel { get; } = new();
 		public BattlegroundsTrinketPickingViewModel BattlegroundsTrinketPickingViewModel { get; } = new();
 		public BattlegroundsInspirationViewModel BattlegroundsInspirationViewModel { get; } = new();
+
+		public BattlegroundsHeroGuideListViewModel BattlegroundsHeroGuideListViewModel { get; } = new();
 
 		public ConstructedMulliganGuidePreLobbyViewModel ConstructedMulliganGuidePreLobbyViewModel { get; } = new();
 		public ConstructedMulliganGuideViewModel ConstructedMulliganGuideViewModel { get; } = new();
@@ -698,7 +701,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			BattlegroundsMinionsVM.OnHeroPowers(heroPowers);
 
-			GuidesTabs.Visibility = Config.Instance.ShowBattlegroundsTabs ? Visible : Collapsed;
+			if(Config.Instance.ShowBattlegroundsGuides)
+			{
+				GuidesTabs.Visibility = Visible;
+				BattlegroundsMinions.Visibility = Collapsed;
+			} else if (Config.Instance.ShowBattlegroundsBrowser)
+			{
+				GuidesTabs.Visibility = Collapsed;
+				BattlegroundsMinions.Visibility = Visible;
+			} else {
+				GuidesTabs.Visibility = Collapsed;
+				BattlegroundsMinions.Visibility = Collapsed;
+			}
 
 			BtnTier7Inspiration.IsEnabled = BattlegroundsInspirationViewModel.HasBeenActivated;
 

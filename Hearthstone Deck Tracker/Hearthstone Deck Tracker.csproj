@@ -242,6 +242,16 @@
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Controls\Overlay\Battlegrounds\Guides\Heroes\HeroGuideTooltip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Overlay\Battlegrounds\Guides\Heroes\HeroGuide.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
   <Target Name="CopyImages" BeforeTargets="PreBuildEvent">

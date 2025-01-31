@@ -29,8 +29,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			NumClickBattlegroundsInspirationMinion = gameMetrics.BattlegroundsInspirationMinionClicks;
 			NumClickBattlegroundsCompGuides = gameMetrics.BattlegroundsCompGuidesClicks;
 			NumClickBattlegroundsCompGuidesMinionHovers = gameMetrics.BattlegroundsCompGuidesMinionHovers;
-			NumClickBattlegroundsTopTab = gameMetrics.BattlegroundsTopTabClicks;
 			NumClickBattlegroundsCompsTab = gameMetrics.BattlegroundsCompsTabClicks;
+			NumClickBattlegroundsHeroesTab = gameMetrics.BattlegroundsHeroesTabClicks;
+			NumClickBattlegroundsCardsTab = gameMetrics.BattlegroundsCardsTabClicks;
 			NumClickBattlegroundsCompGuidesInspiration = gameMetrics.BattlegroundsCompGuidesInspirationClicks;
 			NumBobsBuddyTerminalCases = gameMetrics.BobsBuddyTerminalCases;
 			if (gameMetrics.Tier7TrialActivated)
@@ -85,11 +86,14 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("num_click_battlegrounds_comp_guides_minion_hovers")]
 		public int NumClickBattlegroundsCompGuidesMinionHovers { get; set; }
 
-		[JsonProperty("num_click_battlegrounds_top_tab")]
-		public int NumClickBattlegroundsTopTab { get; set; }
-
 		[JsonProperty("num_click_battlegrounds_comps_tab")]
 		public int NumClickBattlegroundsCompsTab { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_heroes_tab")]
+		public int NumClickBattlegroundsHeroesTab { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_cards_tab")]
+		public int NumClickBattlegroundsCardsTab { get; set; }
 
 		[JsonProperty("num_click_battlegrounds_comp_guides_inspiration")]
 		public int NumClickBattlegroundsCompGuidesInspiration { get; set; }

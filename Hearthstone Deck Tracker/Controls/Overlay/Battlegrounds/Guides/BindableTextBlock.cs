@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
-namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
+namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 
 public static class TextBlockExtensions
 {

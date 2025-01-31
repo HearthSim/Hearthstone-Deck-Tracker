@@ -13,67 +13,69 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter"/>
+        <Style x:Key="TopBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#23272A" />
+            <Setter Property="CornerRadius" Value="0,0,0,3" />
+            <Setter Property="BorderBrush" Value="#3f4346" />
+            <Setter Property="BorderThickness" Value="1,0,0,1" />
+            <Setter Property="Padding" Value="9" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsStandAloneMode, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                    <Setter Property="Background" Value="#141617" />
+                    <Setter Property="Padding" Value="5,6,5,5" />
+                    <Setter Property="Height" Value="49"/>
+                    <Setter Property="CornerRadius" Value="0" />
+                    <Setter Property="BorderThickness" Value="1,0,0,0" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    <DockPanel>
-        <ItemsControl ItemsSource="{Binding TierButtons}" DockPanel.Dock="Top">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <local:BattlegroundsTierButton
-                        Tier="{Binding Tier}"
-                        Active="{Binding Active}"
-                        Available="{Binding Available}"
-                        Faded="{Binding Faded}"
-                        Width="{Binding Size}"
-                        Height="{Binding Size}"
-                        ClickTierCommand="{Binding SetActiveTierCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
-                    />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <ScrollViewer x:Name="MinionScrollViewer" HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto"
-                      ext:OverlayExtensions.IsOverlayHitTestVisible="True">
-            <ScrollViewer.Style>
-                <Style TargetType="ScrollViewer">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ActiveTier, Converter={StaticResource NotNullToBooleanConverter}}" Value="True">
-                            <Setter Property="Margin" Value="0,7,0,1"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ActiveTier, Converter={StaticResource NotNullToBooleanConverter}}" Value="False">
-                            <Setter Property="Margin" Value="0,0,0,0"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ScrollViewer.Style>
-            <StackPanel>
-                <ItemsControl
-                    x:Name="GroupsControl"
-                    ItemsSource="{Binding Groups}"
-                >
+        <DockPanel>
+            <Border DockPanel.Dock="Top" Style="{StaticResource TopBorderStyle}">
+                <ItemsControl ItemsSource="{Binding TierButtons}" DockPanel.Dock="Top">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:BattlegroundsCardsGroup
+                            <local:BattlegroundsTierButton
                                 Tier="{Binding Tier}"
-                                MinionType="{Binding MinionType}"
-                                GroupedByMinionType="{Binding GroupedByMinionType}"
-                                Cards="{Binding Cards}"
-                                IsInspirationEnabled="{Binding IsInspirationEnabled}"
-                                ClickMinionTypeCommand="{Binding SetActiveMinionTypeCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
+                                Active="{Binding Active}"
+                                Available="{Binding Available}"
+                                Faded="{Binding Faded}"
+                                Width="{Binding Size}"
+                                Height="{Binding Size}"
+                                ClickTierCommand="{Binding SetActiveTierCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
                             />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <local:BattlegroundsMinionTypesBox
-                    HorizontalAlignment="Right"
-                    Visibility="{Binding UnavailableMinionTypesVisibility}"
-                    Title="{lex:Loc Unavailable}"
-                    MinionTypes="{Binding UnavailableRaces}"
-                />
-            </StackPanel>
-        </ScrollViewer>
-    </DockPanel>
+            </Border>
+            <ScrollViewer x:Name="MinionScrollViewer" HorizontalAlignment="Right"
+                          VerticalScrollBarVisibility="Auto"
+                          ext:OverlayExtensions.IsOverlayHitTestVisible="True">
+                <StackPanel>
+                    <ItemsControl
+                        x:Name="GroupsControl"
+                        ItemsSource="{Binding Groups}"
+                    >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:BattlegroundsCardsGroup
+                                    Tier="{Binding Tier}"
+                                    MinionType="{Binding MinionType}"
+                                    GroupedByMinionType="{Binding GroupedByMinionType}"
+                                    Cards="{Binding Cards}"
+                                    IsInspirationEnabled="{Binding IsInspirationEnabled}"
+                                    ClickMinionTypeCommand="{Binding SetActiveMinionTypeCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
+                                />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
 </UserControl>

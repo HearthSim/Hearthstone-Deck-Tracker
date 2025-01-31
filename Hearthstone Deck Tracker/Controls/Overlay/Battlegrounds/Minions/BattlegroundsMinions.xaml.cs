@@ -40,4 +40,14 @@ public partial class BattlegroundsMinions : UserControl
 		((BattlegroundsMinionsViewModel)DataContext).ActiveMinionType = value;
 		Core.Game.Metrics.IncrementBattlegroundsMinionsByMinionTypeClick();
 	});
+
+	public static readonly DependencyProperty StandAloneProperty =
+		DependencyProperty.Register("IsStandAloneMode", typeof(bool), typeof(BattlegroundsMinions),
+			new PropertyMetadata(false));
+
+	public bool IsStandAloneMode
+	{
+		get { return (bool)GetValue(StandAloneProperty); }
+		set { SetValue(StandAloneProperty, value); }
+	}
 }

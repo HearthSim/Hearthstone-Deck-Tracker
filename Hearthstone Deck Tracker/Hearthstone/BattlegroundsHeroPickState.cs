@@ -4,7 +4,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone;
 
-internal class BattlegroundsHeroPickState
+public class BattlegroundsHeroPickState
 {
 	public int? PickedHeroDbfId { get; private set; }
 	public int[]? OfferedHeroDbfIds { get; private set; }

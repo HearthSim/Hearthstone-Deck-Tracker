@@ -7,6 +7,7 @@
              xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
              xmlns:comps="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:heroes="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes"
              mc:Ignorable="d"
              Width="249"
              d:DesignHeight="249" d:DesignWidth="249">
@@ -22,7 +23,7 @@
                         <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                Width="124.5"
+                                Width="83"
                                 Height="49"
                                 BorderBrush="#3f4346"
                         >
@@ -61,7 +62,7 @@
                       Height="49">
                     <Rectangle Fill="White" Height="23" Width="18.2">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Visual="{DynamicResource icon_minion}" />
+                            <VisualBrush Visual="{DynamicResource icon_card}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Grid>
@@ -87,23 +88,45 @@
                     </Rectangle>
                 </Grid>
             </Button>
+
+            <Button Command="{Binding ShowHeroesCommand}">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type heroes:BattlegroundsHeroGuideListViewModel}">
+                                <Setter Property="Background" Value="#23272A" />
+                                <Setter Property="BorderThickness" Value="1,0,0,0" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Grid Width="83"
+                      Height="49">
+                    <Rectangle Fill="White" Height="23" Width="21">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Visual="{DynamicResource icon_hero}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Grid>
+            </Button>
         </StackPanel>
         <Border Visibility="{Binding ActiveViewModel, Converter={StaticResource NullableToVisibility}}"
-                Background="#23272A" CornerRadius="0,0,0,3" BorderBrush="#3f4346"
-                BorderThickness="1,0,0,1"
-                Padding="9"
                 x:Name="TabsContent"
             >
             <ContentControl x:Name="ActiveContent" Content="{Binding ActiveViewModel}">
                 <ContentControl.Resources>
                     <minions:BattlegroundsMinions x:Key="Minions" />
                     <comps:CompGuideList x:Key="Comps" />
+                    <heroes:HeroGuide x:Key="Heroes" />
 
                     <DataTemplate DataType="{x:Type minions:BattlegroundsMinionsViewModel}">
                         <ContentControl Content="{StaticResource Minions}"/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type local:BattlegroundsCompsGuidesViewModel}">
                         <ContentControl Content="{StaticResource Comps}"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type heroes:BattlegroundsHeroGuideListViewModel}">
+                        <ContentControl Content="{StaticResource Heroes}"/>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

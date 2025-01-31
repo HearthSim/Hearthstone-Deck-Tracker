@@ -10,8 +10,9 @@
 		public int BattlegroundsInspirationMinionClicks { get; set; }
 		public int BattlegroundsCompGuidesClicks { get; set; }
 		public int BattlegroundsCompGuidesMinionHovers { get; set; }
-		public int BattlegroundsTopTabClicks { get; set; }
+		public int BattlegroundsCardsTabClicks { get; set; }
 		public int BattlegroundsCompsTabClicks { get; set; }
+		public int BattlegroundsHeroesTabClicks { get; set; }
 		public int BattlegroundsCompGuidesInspirationClicks { get; set; }
 		public int BobsBuddyTerminalCases { get; set; }
 		public int MercenariesHoversOpponentMercToShowAbility { get; private set; }
