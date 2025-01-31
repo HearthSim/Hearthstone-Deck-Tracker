@@ -1,3 +1,14 @@
+## **Release v1.38.5 - 2025-01-31**
+**Battlegrounds**:
+- Added free Hero Guides to the overlay, written by Jeef!\
+  *These correspond to the Hero Guides we recently added to HSReplay.net, presented during Hero Picking and during game so they're easy to read inbetween turns.*
+- Made minor visual refinements to the minion browser interface.
+- Added a setting to disable Comp and Hero Guides.
+  *This will completely disable guides, even Hero Guides during Hero Picking.*
+
+**Performance**:
+- Significantly improved startup time.
+
 ## **Release v1.38.4 - 2025-01-29**
 **Hearthstone**:
 - Fixed cards marks in the opponent's hand appearing clipped when the overlay was scaled.
