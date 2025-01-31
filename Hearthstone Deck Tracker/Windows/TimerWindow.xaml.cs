@@ -18,7 +18,6 @@ namespace Hearthstone_Deck_Tracker
 	public partial class TimerWindow
 	{
 		private readonly Config _config;
-		private bool _appIsClosing;
 
 		public TimerWindow(Config config)
 		{
@@ -59,18 +58,24 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentTurnTime.Text = $"{timerState.OpponentSeconds / 60 % 60:00}:{timerState.OpponentSeconds % 60:00}";
 		}
 
-		protected override void OnClosing(CancelEventArgs e)
+		private void TimerWindow_OnClosing(object sender, CancelEventArgs e)
 		{
-			if(_appIsClosing)
-				return;
-			e.Cancel = true;
-			Hide();
-		}
-
-		internal void Shutdown()
-		{
-			_appIsClosing = true;
-			Close();
+			if(Core.IsShuttingDown)
+			{
+				if(!double.IsNaN(Left))
+					Config.Instance.TimerWindowLeft = (int)Left;
+				if(!double.IsNaN(Top))
+					Config.Instance.TimerWindowTop = (int)Top;
+				if(!double.IsNaN(Height) && Height > 0)
+					Config.Instance.TimerWindowHeight = (int)Height;
+				if(!double.IsNaN(Width) && Width > 0)
+					Config.Instance.TimerWindowWidth = (int)Width;
+			}
+			else
+			{
+				e.Cancel = true;
+				Hide();
+			}
 		}
 
 		private void MetroWindow_Activated(object sender, EventArgs e) => Topmost = true;

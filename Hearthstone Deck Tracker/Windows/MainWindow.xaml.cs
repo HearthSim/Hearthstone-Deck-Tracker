@@ -16,14 +16,9 @@ using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
-using Hearthstone_Deck_Tracker.Live;
-using Hearthstone_Deck_Tracker.Plugins;
-using Hearthstone_Deck_Tracker.Stats;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -111,7 +106,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Log.Error(ex);
 			}
 		}
-		
+
 		private void ComboBoxDeckVersion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized || DeckPickerList.ChangedSelection)
@@ -166,7 +161,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 #region Properties
 
 		private bool _initialized => Core.Initialized;
-		public bool ExitRequestedFromTray;
 
 		private double _heightChangeDueToSearchBox;
 		public const int SearchBoxHeight = 30;
@@ -178,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public Visibility MenuItemReplayClaimAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Visible : Collapsed;
 		public Visibility MenuItemReplayMyAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Collapsed : Visible;
-		
+
 		public Visibility HsReplayButtonVisibility
 		{
 			get
@@ -240,7 +234,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			HSReplayNetHelper.CollectionUploaded += (_, _) =>
 			{
-				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable)); 
+				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
 			};
 
 			HSReplayNetOAuth.LoggedOut += () =>
@@ -301,82 +295,35 @@ namespace Hearthstone_Deck_Tracker.Windows
 				MinimizeToTray();
 		}
 
-		private async void Window_Closing(object sender, CancelEventArgs e)
+		private void Window_Closing(object sender, CancelEventArgs e)
 		{
-
-			if (!ExitRequestedFromTray && Config.Instance.CloseToTray)
+			if(Core.IsShuttingDown)
 			{
-				MinimizeToTray();
-				e.Cancel = true;
+				if(!double.IsNaN(Left))
+					Config.Instance.TrackerWindowLeft = (int)Left;
+				if(!double.IsNaN(Top))
+					Config.Instance.TrackerWindowTop = (int)Top;
+				if(!double.IsNaN(Width) && Width > 0)
+					Config.Instance.WindowWidth = (int)Width;
+
+				var height = Height - _heightChangeDueToSearchBox;
+				if(!double.IsNaN(height) && height > 0)
+					Config.Instance.WindowHeight = (int)height;
+
+				Config.Instance.SelectedTags = Config.Instance.SelectedTags.Distinct().ToList();
+				Config.Instance.SelectedDeckPickerClasses = DeckPickerList.SelectedClasses.ToArray();
 				return;
 			}
 
-			try
+			e.Cancel = true;
+			if (Config.Instance.CloseToTray)
+				MinimizeToTray();
+			else
 			{
-				Log.Info("Shutting down...");
-				Influx.OnAppExit(Helper.GetCurrentVersion());
-				LiveDataManager.Stop();
-				Core.UpdateOverlay = false;
-				Core.Update = false;
-
-				//wait for update to finish, might otherwise crash when overlay gets disposed
-				for(var i = 0; i < 100; i++)
-				{
-					if(Core.CanShutdown)
-						break;
-					await Task.Delay(50);
-				}
-
-				Config.Instance.SelectedTags = Config.Instance.SelectedTags.Distinct().ToList();
-				//Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
-				Config.Instance.SelectedDeckPickerClasses = DeckPickerList.SelectedClasses.ToArray();
-
-				Config.Instance.WindowWidth = (int)Width;
-				Config.Instance.WindowHeight = (int)(Height - _heightChangeDueToSearchBox);
-				Config.Instance.TrackerWindowTop = (int)Top;
-				Config.Instance.TrackerWindowLeft = (int)Left;
-
-				//position of add. windows is NaN if they were never opened.
-				if(!double.IsNaN(Core.Windows.PlayerWindow.Left))
-					Config.Instance.PlayerWindowLeft = (int)Core.Windows.PlayerWindow.Left;
-				if(!double.IsNaN(Core.Windows.PlayerWindow.Top))
-					Config.Instance.PlayerWindowTop = (int)Core.Windows.PlayerWindow.Top;
-				Config.Instance.PlayerWindowHeight = (int)Core.Windows.PlayerWindow.Height;
-
-				if(!double.IsNaN(Core.Windows.OpponentWindow.Left))
-					Config.Instance.OpponentWindowLeft = (int)Core.Windows.OpponentWindow.Left;
-				if(!double.IsNaN(Core.Windows.OpponentWindow.Top))
-					Config.Instance.OpponentWindowTop = (int)Core.Windows.OpponentWindow.Top;
-				Config.Instance.OpponentWindowHeight = (int)Core.Windows.OpponentWindow.Height;
-
-				if(!double.IsNaN(Core.Windows.TimerWindow.Left))
-					Config.Instance.TimerWindowLeft = (int)Core.Windows.TimerWindow.Left;
-				if(!double.IsNaN(Core.Windows.TimerWindow.Top))
-					Config.Instance.TimerWindowTop = (int)Core.Windows.TimerWindow.Top;
-				Config.Instance.TimerWindowHeight = (int)Core.Windows.TimerWindow.Height;
-				Config.Instance.TimerWindowWidth = (int)Core.Windows.TimerWindow.Width;
-
-				Core.TrayIcon.NotifyIcon.Visible = false;
-				Core.Overlay.Close();
-				await Core.StopLogWacher();
-				Core.Windows.TimerWindow.Shutdown();
-				Core.Windows.PlayerWindow.Shutdown();
-				Core.Windows.OpponentWindow.Shutdown();
-				Config.Instance.CleanShutdown = true;
-				Config.Save();
-				DeckList.Save();
-				DeckStatsList.Save();
-				PluginManager.SavePluginsSettings();
-				PluginManager.Instance.UnloadPlugins();
+				// Round trip through Core.Shutdown. This will set IsExiting and close this window again.
+				_ = Core.Shutdown();
 			}
-			catch(Exception)
-			{
-				//doesnt matter
-			}
-			finally
-			{
-				Application.Current.Shutdown();
-			}
+
 		}
 
 		private void BtnOptions_OnClick(object sender, RoutedEventArgs e) => FlyoutOptions.IsOpen = true;
@@ -387,7 +334,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 #endregion
 
 #region GENERAL METHODS
-		
+
 		private void MinimizeToTray()
 		{
 			Core.TrayIcon.NotifyIcon.Visible = true;
@@ -737,7 +684,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(visible)
 				NewUserOnboardingOverlay.Show();
-			else 
+			else
 				NewUserOnboardingOverlay.Hide();
 		}
 	}

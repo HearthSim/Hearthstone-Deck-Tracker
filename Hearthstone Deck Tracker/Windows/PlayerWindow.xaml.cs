@@ -24,7 +24,6 @@ namespace Hearthstone_Deck_Tracker
 	public partial class PlayerWindow : INotifyPropertyChanged
 	{
 		private readonly GameV2 _game;
-		private bool _appIsClosing;
 
 		public PlayerWindow(GameV2 game, List<Card>? forScreenshot = null)
 		{
@@ -170,21 +169,25 @@ namespace Hearthstone_Deck_Tracker
 			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
 		}
 
-		protected override void OnClosing(CancelEventArgs e)
+		private void PlayerWindow_OnClosing(object sender, CancelEventArgs e)
 		{
-			if(_appIsClosing)
-				return;
-			e.Cancel = true;
-			Hide();
+			if(Core.IsShuttingDown)
+			{
+				if(!double.IsNaN(Left))
+					Config.Instance.PlayerWindowLeft = (int)Left;
+				if(!double.IsNaN(Top))
+					Config.Instance.PlayerWindowTop = (int)Top;
+				if(!double.IsNaN(Height) && Height > 0)
+					Config.Instance.PlayerWindowHeight = (int)Height;
+			}
+			else
+			{
+				e.Cancel = true;
+				Hide();
+			}
 		}
 
 		private void PlayerWindow_OnActivated(object sender, EventArgs e) => Topmost = true;
-
-		internal void Shutdown()
-		{
-			_appIsClosing = true;
-			Close();
-		}
 
 		private void PlayerWindow_OnDeactivated(object sender, EventArgs e)
 		{

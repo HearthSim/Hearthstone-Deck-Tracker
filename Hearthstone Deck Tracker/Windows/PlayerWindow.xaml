@@ -13,6 +13,7 @@
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       Activated="PlayerWindow_OnActivated"
                       Icon="{StaticResource AppIcon}"
+                      Closing="PlayerWindow_OnClosing"
                       Loaded="PlayerWindow_OnLoaded"
                       SizeChanged="PlayerWindow_OnSizeChanged"
                       Deactivated="PlayerWindow_OnDeactivated">

@@ -156,21 +156,25 @@ namespace Hearthstone_Deck_Tracker
 
 		private void OpponentWindow_OnSizeChanged(object sender, SizeChangedEventArgs e) => OnPropertyChanged(nameof(OpponentDeckMaxHeight));
 
-		protected override void OnClosing(CancelEventArgs e)
+		private void OpponentWindow_OnClosing(object sender, CancelEventArgs e)
 		{
-			if(_appIsClosing)
-				return;
-			e.Cancel = true;
-			Hide();
+			if(Core.IsShuttingDown)
+			{
+				if(!double.IsNaN(Left))
+					Config.Instance.OpponentWindowLeft = (int)Left;
+				if(!double.IsNaN(Top))
+					Config.Instance.OpponentWindowTop = (int)Top;
+				if(!double.IsNaN(Height) && Height > 0)
+					Config.Instance.OpponentWindowHeight = (int)Height;
+			}
+			else
+			{
+				e.Cancel = true;
+				Hide();
+			}
 		}
 
 		private void OpponentWindow_OnActivated(object sender, EventArgs e) => Topmost = true;
-
-		internal void Shutdown()
-		{
-			_appIsClosing = true;
-			Close();
-		}
 
 		private void OpponentWindow_OnDeactivated(object sender, EventArgs e)
 		{

@@ -94,8 +94,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			try
 			{
 				Process.Start("HDTUpdate.exe", $"{Process.GetCurrentProcess().Id} {url}");
-				Core.MainWindow.Close();
-				Application.Current.Shutdown();
+				await Core.Shutdown();
 			}
 			catch(Exception ex)
 			{

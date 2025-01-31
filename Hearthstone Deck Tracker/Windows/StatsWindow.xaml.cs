@@ -39,17 +39,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Close();
 		}
 
-		protected override void OnClosing(CancelEventArgs e)
+		private void StatsWindow_OnClosing(object sender, CancelEventArgs e)
 		{
-			if(!double.IsNaN(Left))
-				Config.Instance.StatsWindowLeft = (int)Left;
-			if(!double.IsNaN(Top))
-				Config.Instance.StatsWindowTop = (int)Top;
-			Config.Instance.StatsWindowHeight = (int)Height;
-			Config.Instance.StatsWindowWidth = (int)Width;
-			Config.Save();
-			e.Cancel = true;
-			Hide();
+			if(Core.IsShuttingDown)
+			{
+				if(!double.IsNaN(Left))
+					Config.Instance.StatsWindowLeft = (int)Left;
+				if(!double.IsNaN(Top))
+					Config.Instance.StatsWindowTop = (int)Top;
+				if(!double.IsNaN(Height) && Height > 0)
+					Config.Instance.StatsWindowHeight = (int)Height;
+				if(!double.IsNaN(Width) && Width > 0)
+					Config.Instance.StatsWindowWidth = (int)Width;
+			}
+			else
+			{
+				e.Cancel = true;
+				Hide();
+			}
 		}
 	}
 }

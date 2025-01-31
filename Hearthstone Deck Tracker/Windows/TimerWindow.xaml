@@ -9,6 +9,7 @@
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
                       Title="{lex:Loc TimerWindow_Title}" Height="142" Width="150"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                      Closing="TimerWindow_OnClosing"
                       Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
     <controls:MetroWindow.IconTemplate>
         <DataTemplate>

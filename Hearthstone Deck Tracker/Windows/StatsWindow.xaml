@@ -10,6 +10,7 @@
         Icon="{StaticResource AppIcon}"
         BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
         SaveWindowPosition="True"
+        Closing="StatsWindow_OnClosing"
         Title="{lex:Loc StatsWindow_Title}" Height="820" Width="1150">
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl Margin="{Binding TitleBarMargin, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">

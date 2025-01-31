@@ -38,19 +38,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 
 		private void ButtonContinue_OnClick(object sender, RoutedEventArgs e) => Core.MainWindow.FlyoutUpdateNotes.IsOpen = false;
 
-		private void ButtonClose_OnClick(object sender, RoutedEventArgs e)
+		private async void ButtonClose_OnClick(object sender, RoutedEventArgs e)
 		{
 			try
 			{
 				Process.Start(InstallerFile);
-				try
-				{
-					Core.MainWindow.Close();
-				}
-				catch
-				{
-					Application.Current.Shutdown();
-				}
+				await Core.Shutdown();
 			}
 			catch
 			{

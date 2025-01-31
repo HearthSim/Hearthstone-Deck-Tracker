@@ -300,7 +300,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		[PredefinedHotKeyAction("Close HDT", "Closes HDT.")]
 		public static void CloseHdt()
 		{
-			Core.MainWindow.Close();
+			_ = Core.Shutdown();
 		}
 	}
 }

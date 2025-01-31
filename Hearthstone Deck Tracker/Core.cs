@@ -30,6 +30,8 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System.Linq;
 using System.Net.Http;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Live;
+using Hearthstone_Deck_Tracker.Stats;
 
 #endregion
 
@@ -37,15 +39,15 @@ namespace Hearthstone_Deck_Tracker
 {
 	public static class Core
 	{
-		internal const int UpdateDelay = 16;
+		private const int UpdateDelay = 16;
 		private static TrayIcon? _trayIcon;
 		private static OverlayWindow? _overlay;
 		private static Overview? _statsOverview;
 		private static int _updateRequestsPlayer;
 		private static int _updateRequestsOpponent;
 		private static DateTime _startUpTime;
-		private static readonly LogWatcherManager LogWatcherManger = new LogWatcherManager();
-		public static Version? Version { get; set; }
+		private static bool _updateOverlay = true;
+		private static readonly LogWatcherManager LogWatcherManger = new();
 
 		// Should be global to application. Always use this one instead of
 		// instantiating a new HttpClient.
@@ -64,9 +66,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static OverlayWindow Overlay => _overlay ??= new OverlayWindow(Game);
 
-		internal static bool UpdateOverlay { get; set; } = true;
-		internal static bool Update { get; set; }
-		internal static bool CanShutdown { get; set; }
+		public static bool IsShuttingDown { get; private set; }
 
 		internal static event Action<bool>? GameIsRunningChanged;
 
@@ -250,6 +250,49 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 		}
 
+		internal static async Task Shutdown()
+		{
+			try
+			{
+				Log.Info("Shutting down...");
+				Influx.OnAppExit(Helper.GetCurrentVersion());
+				LiveDataManager.Stop();
+				_updateOverlay = false;
+				var logWatcher = StopLogWacher();
+
+				//wait for update to finish, might otherwise crash when overlay gets disposed
+				for(var i = 0; i < 100; i++)
+				{
+					if(IsShuttingDown)
+						break;
+					await Task.Delay(50);
+				}
+
+				await logWatcher;
+
+				Windows.CloseAll();
+				Overlay.Close();
+				MainWindow.Close();
+
+				TrayIcon.NotifyIcon.Visible = false;
+
+				Config.Instance.CleanShutdown = true;
+				Config.Save();
+				DeckList.Save();
+				DeckStatsList.Save();
+				PluginManager.SavePluginsSettings();
+				PluginManager.Instance.UnloadPlugins();
+			}
+			catch(Exception)
+			{
+				// Doesn't matter
+			}
+			finally
+			{
+				Application.Current.Shutdown();
+			}
+		}
+
 		private static async Task ShowRestartRequiredMessageAsync()
 		{
 			MainWindow.ActivateWindow();
@@ -265,7 +308,7 @@ namespace Hearthstone_Deck_Tracker
 				Updater.CheckForUpdates(true);
 #endif
 			var hsForegroundChanged = false;
-			while(UpdateOverlay)
+			while(_updateOverlay)
 			{
 				if(Config.Instance.CheckForUpdates)
 					Updater.CheckForUpdates();
@@ -391,7 +434,7 @@ namespace Hearthstone_Deck_Tracker
 
 				await Task.Delay(UpdateDelay);
 			}
-			CanShutdown = true;
+			IsShuttingDown = true;
 		}
 
 		private static bool _resetting;
@@ -468,6 +511,16 @@ namespace Hearthstone_Deck_Tracker
 			public static TimerWindow TimerWindow => _timerWindow ??= new TimerWindow(Config.Instance);
 			public static StatsWindow StatsWindow => _statsWindow ??= new StatsWindow();
 			public static CapturableOverlayWindow? CapturableOverlay;
+
+			internal static void CloseAll()
+			{
+				_timerWindow?.Close();
+				_playerWindow?.Close();
+				_opponentWindow?.Close();
+				_statsWindow?.Close();
+				_bgsSessionWindow?.Close();
+				CapturableOverlay?.Close();
+			}
 		}
 
 		internal static bool StatsOverviewInitialized => _statsOverview != null;

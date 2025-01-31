@@ -17,6 +17,7 @@
         MaxHeight="269"
         MaxWidth="218"
         Loaded="BattlegroundsSessionWindow_OnLoaded"
+        Closing="BattlegroundsSessionWindow_OnClosing"
         Activated="BattlegroundsSessionWindow_OnActivated"
         Deactivated="BattlegroundsSessionWindow_OnDeactivated">
     <controls:MetroWindow.Resources>

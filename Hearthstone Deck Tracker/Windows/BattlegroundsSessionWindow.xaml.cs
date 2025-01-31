@@ -9,27 +9,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class BattlegroundsSessionWindow
 	{
-		private bool _appIsClosing;
-
 		public BattlegroundsSessionViewModel BattlegroundsSessionViewModelVM => Core.Game.BattlegroundsSessionViewModel;
 
 		public BattlegroundsSessionWindow()
 		{
 			InitializeComponent();
-		}
-
-		protected override void OnClosing(CancelEventArgs e)
-		{
-			if(_appIsClosing)
-				return;
-			e.Cancel = true;
-			Hide();
-		}
-
-		internal void Shutdown()
-		{
-			_appIsClosing = true;
-			Close();
 		}
 
 		private void BattlegroundsSessionWindow_OnActivated(object sender, EventArgs e) => Topmost = true;
@@ -50,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if (Core.Game.Spectator)
 				return;
-			
+
 			UpdateBattlegroundsSessionLayoutHeight();
 		}
 
@@ -69,6 +53,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			MaxHeight = toolbarHeight + BattlegroundsSession.BattlegroundsSessionPanel.ActualHeight * scale;
 			MaxWidth = BattlegroundsSession.BattlegroundsSessionPanel.ActualWidth * scale;
 			UpdateLayout();
+		}
+
+		private void BattlegroundsSessionWindow_OnClosing(object sender, CancelEventArgs e)
+		{
+			if(Core.IsShuttingDown)
+				return;
+			e.Cancel = true;
+			Hide();
 		}
 	}
 }

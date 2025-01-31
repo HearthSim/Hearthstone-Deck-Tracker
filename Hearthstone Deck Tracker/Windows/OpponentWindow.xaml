@@ -11,9 +11,10 @@
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
                       Title="{lex:Loc OpponentWindow_Title}" Height="440" Width="230" MinWidth="230" MaxWidth="230"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                      SizeChanged="OpponentWindow_OnSizeChanged" 
-                      Activated="OpponentWindow_OnActivated" 
+                      SizeChanged="OpponentWindow_OnSizeChanged"
+                      Activated="OpponentWindow_OnActivated"
                       Loaded="OpponentWindow_OnLoaded"
+                      Closing="OpponentWindow_OnClosing"
                       Icon="{StaticResource AppIcon}"
                       Deactivated="OpponentWindow_OnDeactivated">
     <controls:MetroWindow.Resources>
