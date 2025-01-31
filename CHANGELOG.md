@@ -1,4 +1,4 @@
-## **Release v1.38.5 - 2025-01-31**
+## **Release v1.38.6 - 2025-01-31**
 **Battlegrounds**:
 - Added free Hero Guides to the overlay, written by Jeef!\
   *These correspond to the Hero Guides we recently added to HSReplay.net, presented during Hero Picking and during game so they're easy to read inbetween turns.*
