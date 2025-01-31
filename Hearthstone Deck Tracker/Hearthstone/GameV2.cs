@@ -55,7 +55,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private MulliganGuideParams? _mulliganGuideParams;
 		internal QueueEvents QueueEvents { get; }
 
-		public BattlegroundsSessionViewModel BattlegroundsSessionViewModel { get; } = new();
+		private BattlegroundsSessionViewModel? _battlegroundsSessionViewModel;
+		public BattlegroundsSessionViewModel BattlegroundsSessionViewModel => _battlegroundsSessionViewModel ??= new BattlegroundsSessionViewModel();
 		public GameMetrics Metrics { get; private set; } = new();
 		public ActiveEffects ActiveEffects { get; }
 		public CounterManager CounterManager { get; }
