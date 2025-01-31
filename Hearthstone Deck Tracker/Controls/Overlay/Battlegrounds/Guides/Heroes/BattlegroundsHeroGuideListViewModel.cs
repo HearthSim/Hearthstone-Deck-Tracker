@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
@@ -78,6 +79,12 @@ public class BattlegroundsHeroGuideListViewModel : ViewModel
 			return;
 
 		var heroCard = Database.GetCardFromDbfId(heroDbfid.Value, false);
+
+		// The hero ID can be a skin, so we need to get the base hero id.
+		var baseHeroDbfid = heroCard?.BattlegroundsSkinParentId;
+
+		if(baseHeroDbfid is > 0)
+			heroCard = Database.GetCardFromDbfId(baseHeroDbfid.Value, false);
 
 		BattlegroundsHeroGuide? guide = null;
 		if(heroCard == null)

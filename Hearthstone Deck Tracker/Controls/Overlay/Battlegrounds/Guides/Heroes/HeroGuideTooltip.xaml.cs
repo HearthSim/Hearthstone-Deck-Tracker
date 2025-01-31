@@ -112,7 +112,16 @@ public class BattlegroundsHeroGuideTooltipViewModel : ViewModel
 			)
 				return Collapsed;
 
-			return Core.Game.BattlegroundsHeroPickState.OfferedHeroDbfIds.Contains(HoveredHeroDbfid.Value) ? Visible : Collapsed;
+			var offeredHeroDbfIds = Core.Game.BattlegroundsHeroPickState.OfferedHeroDbfIds;
+
+			// The offered hero IDs can be a skins, so we need to get the base hero id.
+			var baseHeroDbfIds = offeredHeroDbfIds.Select(dbfId =>
+			{
+				var heroCard = Database.GetCardFromDbfId(dbfId, false);
+				return heroCard?.BattlegroundsSkinParentId > 0 ? heroCard.BattlegroundsSkinParentId : dbfId;
+			}).ToList();
+
+			return baseHeroDbfIds.Contains(HoveredHeroDbfid.Value) ? Visible : Collapsed;
 		}
 	}
 	public bool IsGuidePublished => PublishedGuide != null && PublishedGuide.Any();
