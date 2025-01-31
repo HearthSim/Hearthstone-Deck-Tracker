@@ -25,7 +25,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private bool _animateTransition;
 		private bool _continueToHighlight;
 
-		private string? _releaseNotes;
 
 		private bool _showHighlight;
 
@@ -34,7 +33,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			InitializeComponent();
 		}
 
-		public string? ReleaseNotes => _releaseNotes ??= GetReleaseNotes();
+		private string? _releaseNotes;
+
+		public string? ReleaseNotes
+		{
+			get => _releaseNotes;
+			set
+			{
+				if(_releaseNotes == value)
+					return;
+				_releaseNotes = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public bool ShowHighlight
 		{
@@ -100,28 +111,27 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
-		private string? GetReleaseNotes()
+		public void LoadReleaseNotes()
 		{
+			if(_releaseNotes != null)
+				return;
 			try
 			{
-				string releaseNotes;
-				using(var stream = Assembly.GetExecutingAssembly()
-					.GetManifestResourceStream("Hearthstone_Deck_Tracker.Resources.CHANGELOG.md"))
-				using(var reader = new StreamReader(stream))
-				{
-					releaseNotes = reader.ReadToEnd();
-				}
+				using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Hearthstone_Deck_Tracker.Resources.CHANGELOG.md");
+				using var reader = new StreamReader(stream);
 
+				var releaseNotes = reader.ReadToEnd();
 				releaseNotes = Regex.Replace(releaseNotes, "\\\\\r", "\r"); // yes, this the right number of slashes...
 				releaseNotes = Regex.Replace(releaseNotes, "\n", "\n\n");
 				releaseNotes = Regex.Replace(releaseNotes, "#(\\d+)",
 					"[#$1](https://github.com/HearthSim/Hearthstone-Deck-Tracker/issues/$1)");
-				return releaseNotes;
+
+				ReleaseNotes = releaseNotes;
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				return null;
+				ReleaseNotes = null;
 			}
 		}
 
