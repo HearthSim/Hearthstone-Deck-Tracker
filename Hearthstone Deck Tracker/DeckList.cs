@@ -36,6 +36,8 @@ namespace Hearthstone_Deck_Tracker
 			LastDeckClass = new List<DeckInfo>();
 		}
 
+		public event Action<Deck?>? ActiveDeckChanged;
+
 		[XmlIgnore]
 		public Deck? ActiveDeck
 		{
@@ -44,17 +46,10 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(Equals(_activeDeck, value))
 					return;
-				var switchedDeck = _activeDeck != null;
 				_activeDeck = value;
-				Core.MainWindow.DeckPickerList.ActiveDeckChanged();
-				Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 				Log.Info("Set active deck to: " + value);
 				Config.Instance.ActiveDeckId = value?.DeckId ?? Guid.Empty;
-				Config.Save();
-				Core.StatsOverview.ConstructedFilters.UpdateActiveDeckOnlyCheckBox();
-				Core.StatsOverview.ConstructedGames.UpdateAddGameButton();
-				if(switchedDeck)
-					Core.StatsOverview.ConstructedSummary.UpdateContent();
+				ActiveDeckChanged?.Invoke(value);
 			}
 		}
 

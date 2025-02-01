@@ -65,6 +65,13 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			_archivedClassItem = _classItems.ElementAt((int)HeroClassAll.Archived);
 			_classItems.Remove(_archivedClassItem);
 			ListViewClasses.ItemsSource = _classItems;
+			DeckList.Instance.ActiveDeckChanged += _ =>
+			{
+				OnPropertyChanged(nameof(ActiveDeck));
+				OnPropertyChanged(nameof(VisibilityNoDeck));
+				UpdateDeckModeToggleButton();
+				RefreshDisplayedDecks();
+			};
 		}
 
 		public List<DeckPickerItemViewModel> DisplayedDecks => _displayedDecks;
@@ -131,9 +138,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public void ActiveDeckChanged()
 		{
-			OnPropertyChanged(nameof(ActiveDeck));
-			OnPropertyChanged(nameof(VisibilityNoDeck));
-			UpdateDeckModeToggleButton();
 		}
 
 		public event SelectedDeckHandler? OnSelectedDeckChanged;

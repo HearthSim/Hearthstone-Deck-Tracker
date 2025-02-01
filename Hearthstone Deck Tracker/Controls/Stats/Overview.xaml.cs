@@ -22,6 +22,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		public Overview()
 		{
 			InitializeComponent();
+			DeckList.Instance.ActiveDeckChanged += deck =>
+			{
+				ConstructedFilters.UpdateActiveDeckOnlyCheckBox();
+				ConstructedGames.UpdateAddGameButton();
+				if(deck != null)
+					ConstructedSummary.UpdateContent();
+			};
 			ArenaFilters.SetUpdateCallback(UpdateCallBack);
 			ConstructedFilters.SetUpdateCallback(UpdateCallBack);
 			ConstructedFilters.CheckBoxDecks.Checked += (sender, args) => ConstructedSummary.UpdateContent();
