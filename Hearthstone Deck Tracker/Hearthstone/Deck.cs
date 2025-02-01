@@ -56,7 +56,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool? _isArenaDeck;
 		private bool? _isDungeonDeck;
 		private bool? _isDuelsDeck;
-		private bool _isSelectedInGui;
 		private DateTime _lastCacheUpdate = DateTime.MinValue;
 		private string _name = string.Empty;
 		private string? _note;
@@ -169,17 +168,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(NameAndVersion));
 				OnPropertyChanged(nameof(WildIndicatorVisibility));
-			}
-		}
-
-		[XmlIgnore]
-		public bool IsSelectedInGui
-		{
-			get { return _isSelectedInGui; }
-			set
-			{
-				_isSelectedInGui = value;
-				OnPropertyChanged(nameof(GetFontWeight));
 			}
 		}
 
@@ -316,9 +304,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[XmlIgnore]
 		public string GetClass => string.IsNullOrEmpty(Class) ? "(No Class Selected)" : "(" + Class + ")";
-
-		[XmlIgnore]
-		public FontWeight GetFontWeight => IsSelectedInGui ? FontWeights.Black : FontWeights.Regular;
 
 		[XmlArray(ElementName = "Tags")]
 		[XmlArrayItem(ElementName = "Tag")]

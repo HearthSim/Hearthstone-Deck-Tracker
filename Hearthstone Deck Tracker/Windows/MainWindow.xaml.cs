@@ -478,10 +478,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else
 			{
 				Core.Game.IsUsingPremade = false;
-
-				if(DeckList.Instance.ActiveDeck != null)
-					DeckList.Instance.ActiveDeck.IsSelectedInGui = false;
-
 				DeckList.Instance.ActiveDeck = null;
 				if(setActive)
 					DeckPickerList.DeselectDeck();
