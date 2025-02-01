@@ -473,6 +473,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					view.SortDescriptions.Add(new SortDescription("WinPercent", Descending));
 					break;
 			}
+
+			// Fallback to ensure consistent order
+			view.SortDescriptions.Add(new SortDescription("LastEdited", Descending));
 		}
 
 		private void ListViewDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
