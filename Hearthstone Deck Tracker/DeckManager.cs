@@ -487,11 +487,35 @@ namespace Hearthstone_Deck_Tracker
 			}
 			Log.Info("Found selected deck: " + selectedDeck.Name);
 			var hsDeck = DeckImporter.FromConstructed(false).FirstOrDefault(x => x.Deck.Id == id)?.Deck ?? DeckImporter.ConstructedDecksCache.FirstOrDefault(x => x.Id == id);
+			bool MatchesHsDeck(Deck d)
+			{
+				if(hsDeck == null)
+					return false;
+				foreach(var c in d.Cards)
+				{
+					if(!hsDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))
+						return false;
+					if(hsDeck.Sideboards.Count != d.Sideboards.Count)
+						return false;
+					foreach(var sb in d.Sideboards)
+					{
+						if(!hsDeck.Sideboards.TryGetValue(sb.OwnerCardId, out var hsSb))
+							return false;
+						foreach(var sbc in sb.Cards)
+						{
+							if(!hsSb.Any(sbc2 => sbc.Id == sbc2.Id && sbc.Count == sbc2.Count))
+								return false;
+						}
+					}
+				}
+				return true;
+			}
+
 			var selectedVersion = selectedDeck.GetSelectedDeckVersion();
-			if(hsDeck != null && !selectedVersion.Cards.All(c => hsDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
+			if(!MatchesHsDeck(selectedVersion))
 			{
 				var nonSelectedVersions = selectedDeck.VersionsIncludingSelf.Where(v => v != selectedVersion.Version).Select(selectedDeck.GetVersion);
-				var version = nonSelectedVersions.FirstOrDefault(v => v.Cards.All(c => hsDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)));
+				var version = nonSelectedVersions.FirstOrDefault(MatchesHsDeck);
 				if(version != null)
 				{
 					selectedDeck.SelectVersion(version);
