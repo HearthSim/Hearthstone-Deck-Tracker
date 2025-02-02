@@ -179,7 +179,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					new MessageDialogs.Settings() { AffirmativeButtonText = "Use existing", NegativeButtonText = "Import anyway" });
 				if(result == MessageDialogResult.Affirmative)
 				{
-					SelectDeck(existing, true);
+					DeckList.Instance.ActiveDeck = existing;
 					return;
 				}
 			}
@@ -206,7 +206,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			arenaDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, arenaDeck);
 			DeckList.Instance.Decks.Add(arenaDeck);
 			DeckPickerList.UpdateDecks();
-			SelectDeck(arenaDeck, true);
+			DeckList.Instance.ActiveDeck = arenaDeck;
 		}
 
 		internal async void ShowImportDialog(bool brawl)

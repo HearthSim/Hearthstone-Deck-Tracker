@@ -59,6 +59,11 @@ namespace Hearthstone_Deck_Tracker
 
 				Height = 34 * ListViewPlayer.Items.Count;
 			}
+
+			DeckList.Instance.ActiveDeckChanged += _ =>
+			{
+				ListViewPlayer.Items.Refresh();
+			};
 		}
 
 		public double PlayerDeckMaxHeight => ActualHeight - PlayerLabelsHeight;

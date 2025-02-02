@@ -168,8 +168,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(NameAndVersion));
 				OnPropertyChanged(nameof(WildIndicatorVisibility));
+				SelectedVersionChanged?.Invoke();
 			}
 		}
+
+		public event Action? SelectedVersionChanged;
 
 		public bool IsArenaDeck
 		{

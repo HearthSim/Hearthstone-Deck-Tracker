@@ -39,15 +39,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private const string LocLink = "DeckPicker_ContextMenu_LinkUrl";
 		private const string LocLinkNew = "DeckPicker_ContextMenu_LinkNewUrl";
 
-		public delegate void DoubleClickHandler(DeckPicker sender, Deck deck);
-
 		public delegate void SelectedDeckHandler(DeckPicker sender, List<Deck> deck);
 
 		private readonly DeckPickerClassItem _archivedClassItem;
 		private readonly Dictionary<Deck, DeckPickerItemViewModel> _cachedDeckPickerItems = new();
 		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
-		private readonly List<DeckPickerItemViewModel> _displayedDecks = new();
-		private bool _clearingClasses;
 		private ObservableCollection<DeckType>? _deckTypeItems;
 		private bool _ignoreSelectionChange;
 		private DateTime _lastActiveDeckPanelClick = DateTime.MinValue;
@@ -65,8 +61,13 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			_archivedClassItem = _classItems.ElementAt((int)HeroClassAll.Archived);
 			_classItems.Remove(_archivedClassItem);
 			ListViewClasses.ItemsSource = _classItems;
-			DeckList.Instance.ActiveDeckChanged += _ =>
+			DeckList.Instance.ActiveDeckChanged += deck =>
 			{
+				if(deck != null)
+					SelectDeckAndAppropriateView(deck, true);
+				else
+					DeselectDeck();
+
 				OnPropertyChanged(nameof(ActiveDeck));
 				OnPropertyChanged(nameof(VisibilityNoDeck));
 				UpdateDeckModeToggleButton();
@@ -74,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			};
 		}
 
-		public List<DeckPickerItemViewModel> DisplayedDecks => _displayedDecks;
+		public ObservableCollection<DeckPickerItemViewModel> DisplayedDecks { get; } = new();
 
 		public List<Deck> SelectedDecks => ListViewDecks.SelectedItems.Cast<DeckPickerItemViewModel>().Select(x => x.Deck).ToList();
 
@@ -136,12 +137,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		public void ActiveDeckChanged()
-		{
-		}
-
 		public event SelectedDeckHandler? OnSelectedDeckChanged;
-		public event DoubleClickHandler? OnDoubleClick;
 
 		private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -234,7 +230,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					SelectPickerClassItem(dpci);
 				}
 
-				if(SelectedClasses.Count == 0 && !_clearingClasses)
+				if(SelectedClasses.Count == 0)
 				{
 					var senderList = (ListView)sender;
 					if(removedAllClassItem == null)
@@ -264,8 +260,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				removedAllClassItem?.OnDelselected();
 			}
 
-			if(Core.MainWindow.IsLoaded)
-				UpdateDecks();
+			UpdateDecks();
 		}
 
 		private void SelectPickerClassItem(DeckPickerClassItem dpci)
@@ -300,28 +295,12 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			return items.FirstOrDefault(x => (x.DataContext as HeroClassAll?) == heroClass);
 		}
 
-		public void SelectClasses(List<HeroClassAll> classes)
-		{
-			_clearingClasses = true;
-			ListViewClasses.SelectedItems.Clear();
-			_clearingClasses = false;
-
-			foreach(var item in ListViewClasses.Items)
-			{
-				var pickerItem = item as DeckPickerClassItem;
-				var heroClass = pickerItem?.DataContext as HeroClassAll?;
-				if(heroClass == null || !classes.Contains(heroClass.Value))
-					continue;
-				ListViewClasses.SelectedItems.Add(pickerItem);
-			}
-		}
-
 		public void SelectClass(HeroClassAll heroClass)
 		{
 			if(!SelectedClasses.Contains(heroClass))
 			{
 				var dpci = PickerClassItemFromEnum(ListViewClasses, heroClass);
-				ListViewClasses.SelectedItems.Add(dpci);
+				ListViewClasses.SelectedItem = dpci;
 			}
 		}
 
@@ -342,23 +321,32 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 			if(forceUpdate == null)
 				forceUpdate = new List<Deck>();
-			foreach(var deck in _displayedDecks.Where(dpi => !decks.Contains(dpi.Deck) || forceUpdate.Contains(dpi.Deck)).ToList())
-				_displayedDecks.Remove(deck);
-			foreach(var deck in decks.Where(d => !_displayedDecks.Select(x => x.Deck).Contains(d)))
+			foreach(var deck in DisplayedDecks.Where(dpi => !decks.Contains(dpi.Deck) || forceUpdate.Contains(dpi.Deck)).ToList())
+				DisplayedDecks.Remove(deck);
+			foreach(var deck in decks.Where(d => !DisplayedDecks.Select(x => x.Deck).Contains(d)))
 			{
 				var dpi = GetDeckPickerItemFromCache(deck);
 				if(dpi != null)
 				{
-					_displayedDecks.Add(dpi);
+					DisplayedDecks.Add(dpi);
 					dpi.RefreshProperties();
 				}
 			}
 			Sort();
-			OnPropertyChanged(nameof(DisplayedDecks));
 			if(selectedDeck != null && reselectActiveDeck && decks.Contains(selectedDeck))
 				SelectDeck(selectedDeck);
 			ActiveDeck?.StatsUpdated();
 			selectedDeck?.StatsUpdated();
+		}
+
+		public void UpdateDeck(Deck deck)
+		{
+			var vm = DisplayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
+			if(vm == null)
+				return;
+			vm.RefreshProperties();
+			Sort(true);
+			ListViewDecks.ScrollIntoView(vm);
 		}
 
 		private DeckPickerItemViewModel? GetDeckPickerItemFromCache(Deck deck)
@@ -440,46 +428,58 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			}
 		}
 
-		public void Sort()
+		private void Sort(bool refresh = false)
 		{
 			var view = (CollectionView)CollectionViewSource.GetDefaultView(DisplayedDecks);
-			view.SortDescriptions.Clear();
+
+			var sorting = new List<SortDescription>();
 			if(Config.Instance.SortDecksFavoritesFirst)
-				view.SortDescriptions.Add(new SortDescription("Favorite", Descending));
+				sorting.Add(new SortDescription("Favorite", Descending));
 
 			if(Config.Instance.SortDecksByClass && Config.Instance.SelectedDeckPickerDeckType != DeckType.Arena
 			   || Config.Instance.SortDecksByClassArena && Config.Instance.SelectedDeckPickerDeckType == DeckType.Arena)
-				view.SortDescriptions.Add(new SortDescription("Class", Ascending));
+				sorting.Add(new SortDescription("Class", Ascending));
 
 			var deckSorting = Config.Instance.SelectedDeckPickerDeckType == DeckType.Arena
 				                  ? Config.Instance.SelectedDeckSortingArena : Config.Instance.SelectedDeckSorting;
 			switch(deckSorting)
 			{
 				case "Most Played":
-					view.SortDescriptions.Add(new SortDescription("NumGames", Descending));
+					sorting.Add(new SortDescription("NumGames", Descending));
 					break;
 				case "Name":
-					view.SortDescriptions.Add(new SortDescription("DeckName", Ascending));
+					sorting.Add(new SortDescription("DeckName", Ascending));
 					break;
 				case "Last Played":
-					view.SortDescriptions.Add(new SortDescription("LastPlayed", Descending));
+					sorting.Add(new SortDescription("LastPlayed", Descending));
 					break;
 				case "Last Played (new first)":
-					view.SortDescriptions.Add(new SortDescription("LastPlayedNewFirst", Descending));
+					sorting.Add(new SortDescription("LastPlayedNewFirst", Descending));
 					break;
 				case "Last Edited":
-					view.SortDescriptions.Add(new SortDescription("LastEdited", Descending));
+					sorting.Add(new SortDescription("LastEdited", Descending));
 					break;
 				case "Tag":
-					view.SortDescriptions.Add(new SortDescription("TagList", Ascending));
+					sorting.Add(new SortDescription("TagList", Ascending));
 					break;
 				case "Win Rate":
-					view.SortDescriptions.Add(new SortDescription("WinPercent", Descending));
+					sorting.Add(new SortDescription("WinPercent", Descending));
 					break;
 			}
 
 			// Fallback to ensure consistent order
-			view.SortDescriptions.Add(new SortDescription("LastEdited", Descending));
+			sorting.Add(new SortDescription("LastEdited", Descending));
+
+			if(view.SortDescriptions.Select(x => x.PropertyName).SequenceEqual(sorting.Select(x => x.PropertyName)))
+			{
+				if(refresh)
+					view.Refresh();
+				return;
+			}
+
+			view.SortDescriptions.Clear();
+			foreach(var s in sorting)
+				view.SortDescriptions.Add(s);
 		}
 
 		private void ListViewDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -494,12 +494,10 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			OnSelectedDeckChanged?.Invoke(this, SelectedDecks);
 		}
 
-		public void SelectDeckAndAppropriateView(Deck deck, bool forceUpdate = false)
+		public async void SelectDeckAndAppropriateView(Deck deck, bool forceUpdate = false)
 		{
-			if(deck == null)
-				return;
 			ClearFromCache(deck);
-			if(Config.Instance.SelectedDeckPickerDeckType != DeckType.All)
+			if((DeckType?)ListViewDeckType.SelectedItem != DeckType.All)
 			{
 				if(deck.IsArenaDeck)
 					SelectDeckType(DeckType.Arena);
@@ -509,7 +507,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					SelectDeckType(DeckType.Duels);
 				else if(deck.IsBrawlDeck)
 					SelectDeckType(DeckType.Brawl);
-				else if(IsConstructedDeck(deck))
+				else if(IsConstructedDeck(deck) && (DeckType?)ListViewDeckType.SelectedItem != DeckType.Wild)
 				{
 					if(deck.StandardViable)
 						SelectDeckType(DeckType.Standard);
@@ -521,7 +519,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 						SelectDeckType(DeckType.Wild);
 				}
 			}
-			if(deck.Archived && !SelectedClasses.Contains(HeroClassAll.Archived))
+			if(deck.Archived)
 				SelectClass(HeroClassAll.Archived);
 			else if(!SelectedClasses.Contains(HeroClassAll.All) && Enum.TryParse(deck.Class, out HeroClassAll deckClass) && !SelectedClasses.Contains(deckClass))
 				SelectClass(deckClass);
@@ -553,17 +551,17 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 			UpdateDecks(false, forceUpdate: forceUpdate ? new[] { deck } : null);
 			SelectDeck(deck);
-			var dpi = _displayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
+			var dpi = DisplayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
 			if(dpi != null)
 				ListViewDecks.ScrollIntoView(dpi);
 		}
 
-		public void SelectDeck(Deck? deck)
+		private void SelectDeck(Deck? deck)
 		{
 			if(deck == null)
 				return;
 			ChangedSelection = true;
-			var dpi = _displayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
+			var dpi = DisplayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
 			if(ListViewDecks.SelectedItem != dpi)
 			{
 				if(dpi == null)
@@ -581,7 +579,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 						SelectDeckType(DeckType.All);
 
 					UpdateDecks();
-					dpi = _displayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
+					dpi = DisplayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
 					if(dpi == null)
 					{
 						ChangedSelection = false;
@@ -602,7 +600,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public void RefreshDisplayedDecks()
 		{
-			foreach(var deckPickerItem in _displayedDecks)
+			foreach(var deckPickerItem in DisplayedDecks)
 				deckPickerItem.RefreshProperties();
 		}
 
@@ -617,12 +615,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private async void ListViewDecks_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
-			if(OnDoubleClick != null)
-			{
-				//wait for doubleclick to be over to not reselect the deck
-				await Task.Delay(SystemInformation.DoubleClickTime);
-				OnDoubleClick(this, SelectedDecks.FirstOrDefault());
-			}
+			//wait for doubleclick to be over to not reselect the deck
+			await Task.Delay(SystemInformation.DoubleClickTime); // Not sure if this is actually needed.
+
+			if(SelectedDecks.FirstOrDefault() is Deck deck)
+				DeckList.Instance.ActiveDeck = deck;
 		}
 
 		private void ListViewDeckType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -645,11 +642,13 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public void SelectDeckType(DeckType selectedDeckType, bool ignoreSelectionChange = false)
 		{
-			if(ListViewDeckType.SelectedIndex == (int)selectedDeckType)
+			var index = DeckTypeItems.IndexOf(selectedDeckType);
+			if(ListViewDeckType.SelectedIndex == index)
 				return;
 			if(ignoreSelectionChange)
 				_ignoreSelectionChange = true;
-			ListViewDeckType.SelectedIndex = DeckTypeItems.IndexOf(selectedDeckType);
+			ListViewDeckType.SelectedIndex = index;
+			Config.Instance.SelectedDeckPickerDeckType = selectedDeckType;
 			if(ignoreSelectionChange)
 				_ignoreSelectionChange = false;
 		}
@@ -744,11 +743,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			var deck = SelectedDecks.FirstOrDefault();
 			if(deck != null)
-			{
-				Core.MainWindow.DeckPickerList.SelectDeck(deck);
-				Core.MainWindow.SelectDeck(deck, true);
-				Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
-			}
+				DeckList.Instance.ActiveDeck = deck;
 		}
 
 		private void RectangleSortIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -757,9 +752,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private void RectangleUseNoDeckIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			if(DeckList.Instance.ActiveDeck == null)
-				Core.MainWindow.SelectLastUsedDeck();
+				DeckList.Instance.ActiveDeck = DeckList.Instance.GetLastUsedDeck();
 			else
-				Core.MainWindow.SelectDeck(null, true);
+				DeckList.Instance.ActiveDeck = null;
 			UpdateDeckModeToggleButton();
 		}
 
@@ -785,6 +780,15 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			if(!SelectedDecks.Any())
 				e.Handled = true;
+		}
+
+		private void DeckPicker_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			UpdateArchivedClassVisibility();
+			SelectClass(Config.Instance.SelectedDeckPickerClasses.FirstOrDefault(x => x != HeroClassAll.Archived)); // Default is "All"
+			SelectDeckType(Config.Instance.SelectedDeckPickerDeckType);
+			if(DeckList.Instance.ActiveDeck != null)
+				SelectDeckAndAppropriateView(DeckList.Instance.ActiveDeck);
 		}
 	}
 }

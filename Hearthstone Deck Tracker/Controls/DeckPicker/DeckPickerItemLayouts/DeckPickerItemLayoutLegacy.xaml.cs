@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -18,15 +19,19 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts
 			InitializeComponent();
 		}
 
+		private DateTime _mouseDown = DateTime.MinValue;
 		private void UseButton_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{
+			_mouseDown = DateTime.Now;
+		}
+
+		private void UseButton_OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
+		{
+			if(DateTime.Now.Subtract(_mouseDown).TotalMilliseconds >= 1000)
+				return;
 			if(DataContext is not DeckPickerItemViewModel { Deck: Deck deck })
 				return;
-			if(deck.Equals(DeckList.Instance.ActiveDeck))
-				return;
-			Core.MainWindow.DeckPickerList.SelectDeck(deck);
-			Core.MainWindow.SelectDeck(deck, true);
-			Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
+			DeckList.Instance.ActiveDeck = deck;
 		}
 	}
 }

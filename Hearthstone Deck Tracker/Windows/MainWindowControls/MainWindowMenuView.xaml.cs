@@ -10,6 +10,10 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public MainWindowMenuView()
 		{
 			InitializeComponent();
+			DeckList.Instance.ActiveDeckChanged += deck =>
+			{
+				SelectedDecks = deck != null ? new List<Deck> { deck } : new List<Deck>();
+			};
 		}
 
 		public IEnumerable<Deck> SelectedDecks

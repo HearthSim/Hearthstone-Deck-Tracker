@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 
 			if(Equals(DeckList.Instance.ActiveDeck, deck))
-				SelectDeck(null, true);
+				DeckList.Instance.ActiveDeck = null;
 
 			if(DeckStatsList.Instance.DeckStats.TryGetValue(deck.DeckId, out var deckStats))
 			{
@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			DeckList.Save();
 			DeckPickerList.UpdateDecks();
-			SelectDeck(null, true);
+			DeckList.Instance.ActiveDeck = null;
 			DeckPickerList.UpdateArchivedClassVisibility();
 		}
 
@@ -137,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					DeckPickerList.UpdateDecks();
 
 					if(archive)
-						SelectDeck(null, true);
+						DeckList.Instance.ActiveDeck = null;
 					else
 						DeckPickerList.SelectDeckAndAppropriateView(deck);
 
@@ -219,7 +219,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckList.Instance.Decks.Add(clone);
 			DeckPickerList.UpdateDecks();
 			DeckList.Save();
-			
+
 			if(!DeckStatsList.Instance.DeckStats.TryGetValue(clone.DeckId, out var newStatsEntry))
 			{
 				newStatsEntry = new DeckStats(clone);

@@ -63,7 +63,7 @@
                     </DockPanel>
                 </DockPanel>
                 <DockPanel Margin="0,-2,0,0" Height="19">
-                    <Border DockPanel.Dock="Left" PreviewMouseDown="UseButton_OnPreviewMouseDown"
+                    <Border DockPanel.Dock="Left" PreviewMouseDown="UseButton_OnPreviewMouseDown" PreviewMouseUp="UseButton_OnPreviewMouseUp"
                             Background="#01000000" Visibility="{Binding Source={ x:Static utility:ConfigWrapper.UseButtonVisiblity}}"
                             Width="50">
                         <Border.Style>

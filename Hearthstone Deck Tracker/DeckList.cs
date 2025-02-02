@@ -44,13 +44,25 @@ namespace Hearthstone_Deck_Tracker
 			get { return _activeDeck; }
 			set
 			{
-				if(Equals(_activeDeck, value))
+				if(Equals(_activeDeck, value) && _activeDeck?.Version == value?.Version)
 					return;
+
+				if(_activeDeck != null)
+					_activeDeck.SelectedVersionChanged -= OnActiveDeckChanged;
+				if(value != null)
+					value.SelectedVersionChanged += OnActiveDeckChanged;
 				_activeDeck = value;
-				Log.Info("Set active deck to: " + value);
-				Config.Instance.ActiveDeckId = value?.DeckId ?? Guid.Empty;
-				ActiveDeckChanged?.Invoke(value);
+				OnActiveDeckChanged();
 			}
+		}
+
+		private void OnActiveDeckChanged()
+		{
+			Log.Info("Set active deck to: " + (ActiveDeck == null ? "null" : $"{ActiveDeck.Name} ({ActiveDeck.SelectedVersion.ShortVersionString})"));
+			Config.Instance.ActiveDeckId = ActiveDeck?.DeckId ?? Guid.Empty;
+			if(ActiveDeck != null)
+				UpdateLastDeckClass(ActiveDeck);
+			ActiveDeckChanged?.Invoke(ActiveDeck);
 		}
 
 		public Deck? ActiveDeckVersion => ActiveDeck?.GetSelectedDeckVersion();
@@ -62,7 +74,29 @@ namespace Hearthstone_Deck_Tracker
 			var deck = Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
 			if(deck != null && deck.Archived)
 				deck = null;
-			_activeDeck = deck;
+			ActiveDeck = deck;
+		}
+
+		public Deck? GetLastUsedDeck()
+		{
+			var lastSelected = LastDeckClass.LastOrDefault();
+			return Decks.FirstOrDefault(d => lastSelected == null || d.DeckId == lastSelected.Id);
+		}
+
+		private void UpdateLastDeckClass(Deck deck)
+		{
+			while(LastDeckClass.Any(ldc => ldc.Class == deck.Class))
+			{
+				var lastSelected = LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
+				if(lastSelected != null)
+					LastDeckClass.Remove(lastSelected);
+				else
+					break;
+			}
+			if(!Core.Initialized)
+				return;
+			LastDeckClass.Add(new DeckInfo { Class = deck.Class, Name = deck.Name, Id = deck.DeckId });
+			Save();
 		}
 
 		private static DeckList Load()

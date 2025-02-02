@@ -440,7 +440,6 @@ namespace Hearthstone_Deck_Tracker
 		private static bool _resetting;
 		public static async Task Reset()
 		{
-
 			if(_resetting)
 			{
 				Log.Warn("Reset already in progress.");
@@ -449,8 +448,6 @@ namespace Hearthstone_Deck_Tracker
 			_resetting = true;
 			var stoppedReader = await LogWatcherManger.Stop();
 			Game.Reset();
-			if(DeckList.Instance.ActiveDeck != null)
-				Game.IsUsingPremade = true;
 			await Task.Delay(1000);
 			if(stoppedReader)
 				LogWatcherManger.Start(Game).Forget();

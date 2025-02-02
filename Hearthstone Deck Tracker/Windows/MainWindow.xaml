@@ -341,7 +341,7 @@
                         <mainWindowControls:CollectionSyncingBannerView Margin="8"/>
                     </controls1:RemovableBanner>
                     <Grid Margin="0,2,0,0">
-                        <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
+                        <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" />
                         <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray"
                                FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"
                                Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />

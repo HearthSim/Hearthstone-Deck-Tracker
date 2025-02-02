@@ -72,6 +72,11 @@ namespace Hearthstone_Deck_Tracker
 			};
 
 			NotifyIcon.BalloonTipClicked += (sender1, e) => { Core.MainWindow.ActivateWindow(); };
+
+			DeckList.Instance.ActiveDeckChanged += deck =>
+			{
+				MenuItemUseNoDeck.Checked = deck == null;
+			};
 		}
 
 		private void AutoDeckDetectionContextMenu() => Core.MainWindow.AutoDeckDetection(!MenuItemAutoSelect.Checked);
@@ -79,9 +84,9 @@ namespace Hearthstone_Deck_Tracker
 		private void UseNoDeckContextMenu()
 		{
 			if(MenuItemUseNoDeck.Checked)
-				Core.MainWindow.SelectLastUsedDeck();
+				DeckList.Instance.ActiveDeck = DeckList.Instance.GetLastUsedDeck();
 			else
-				Core.MainWindow.SelectDeck(null, true);
+				DeckList.Instance.ActiveDeck = null;
 		}
 
 		private void SortClassCardsFirstContextMenu() => Core.MainWindow.SortClassCardsFirst(!MenuItemClassCardsFirst.Checked);

@@ -31,7 +31,7 @@
                 <Grid.Resources>
                     <deckPicker:DateConverter x:Key="DateConverter"></deckPicker:DateConverter>
                 </Grid.Resources>
-                <Border  PreviewMouseDown="UseButton_OnPreviewMouseDown" Background="#01000000"
+                <Border PreviewMouseDown="UseButton_OnPreviewMouseDown" PreviewMouseUp="UseButton_OnPreviewMouseUp" Background="#01000000"
                     Visibility="{Binding Source={ x:Static utility:ConfigWrapper.UseButtonVisiblity}}">
                     <Border.Style>
                         <Style>

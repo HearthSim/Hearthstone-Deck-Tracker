@@ -320,6 +320,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				BattlegroundsMinionsVM.IsInspirationEnabled = _game.IsBattlegroundsMatch;
 			};
+			DeckList.Instance.ActiveDeckChanged += _ =>
+			{
+				Update(false);
+				Core.UpdatePlayerCards(true);
+			};
 		}
 
 		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
@@ -465,6 +470,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Helper.DpiScalingX = presentationsource?.CompositionTarget?.TransformToDevice.M11 ?? 1.0;
 			Helper.DpiScalingY = presentationsource?.CompositionTarget?.TransformToDevice.M22 ?? 1.0;
 
+			Core.UpdatePlayerCards(true);
 			UpdateOpacityMask();
 		}
 		private void UpdateOpacityMask()

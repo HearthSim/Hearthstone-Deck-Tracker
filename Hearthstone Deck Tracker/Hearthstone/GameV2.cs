@@ -1,16 +1,12 @@
 ﻿#region
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using HearthDb.Deckstrings;
 using HearthDb.Enums;
 using HearthMirror.Objects;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Enums;
@@ -24,11 +20,9 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Stats;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using HSReplay;
 using HSReplay.OAuth.Data;
@@ -78,6 +72,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LiveDataManager.OnStreamingChecked += async streaming =>
 			{
 				MetaData.TwitchVodData = await UpdateTwitchVodData(streaming);
+			};
+
+			DeckList.Instance.ActiveDeckChanged += deck =>
+			{
+				IsUsingPremade = deck != null;
+
+				// Only need to reset if currently in a menu.
+				// This effectively restarts the log reader from the beginning of the game.
+				if(IsRunning && !IsInMenu)
+					_ = Core.Reset();
+				else
+					Reset();
 			};
 		}
 

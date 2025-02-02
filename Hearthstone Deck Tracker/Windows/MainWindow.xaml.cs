@@ -43,28 +43,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public async void UseDeck(Deck? selected)
-		{
-			if(selected != null)
-				DeckList.Instance.ActiveDeck = selected;
-			MainWindowMenu.SelectedDecks = selected != null ? new List<Deck> { selected } : new List<Deck>();
-			DeckCharts.SetDeck(selected);
-			HsReplayDeckInfo.SetDeck(selected);
-			await Core.Reset();
-		}
-
-		public void UpdateDeckList(Deck? selected)
-		{
-			var version = selected?.GetSelectedDeckVersion();
-			ListViewDeck.ItemsSource = null;
-			// always update the sideboard to ensure we hide the header if empty
-			PlayerSideboards.Update(version?.Sideboards, true);
-			if(selected == null)
-				return;
-			ListViewDeck.ItemsSource = Helper.ResolveZilliax3000(version?.Cards ?? new(), version?.Sideboards ?? new());
-			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-		}
-
 		public void AutoDeckDetection(bool enable)
 		{
 			if(!_initialized)
@@ -118,22 +96,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(version == null || deck.SelectedVersion == version)
 				return;
 			deck.SelectVersion(version);
-			DeckList.Save();
-			DeckPickerList.UpdateDecks(forceUpdate: new[] {deck});
-			UpdateDeckList(deck);
-			ManaCurveMyDecks.UpdateValues();
-			OnPropertyChanged(nameof(HsReplayButtonVisibility));
-			if(deck.Equals(DeckList.Instance.ActiveDeck))
-				UseDeck(deck);
-			DeckCharts.SetDeck(deck);
-			HsReplayDeckInfo.SetDeck(deck);
-		}
-
-		private void DeckPickerList_OnOnDoubleClick(DeckPicker sender, Deck deck)
-		{
-			if(deck?.Equals(DeckList.Instance.ActiveDeck) ?? true)
-				return;
-			SelectDeck(deck, true);
+			deck.StatsUpdated();
+			DeckPickerList.UpdateDeck(deck);
 		}
 
 		[NotifyPropertyChangedInvocator]
@@ -199,6 +163,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			TagControlEdit.GroupBoxSortingArena.Visibility = Collapsed;
 			SortFilterDecksFlyout.HideStuffToCreateNewTag();
 			FlyoutNotes.ClosingFinished += (sender, args) => DeckNotesEditor.SaveDeck();
+			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
 			WarningFlyout.OnComplete += () =>
 			{
 				FlyoutWarnings.IsOpen = false;
@@ -242,18 +207,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
 				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
 			};
-		}
-
-		public void LoadAndUpdateDecks()
-		{
-			UpdateDeckList(DeckList.Instance.ActiveDeck);
-			SelectDeck(DeckList.Instance.ActiveDeck, true);
-			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
-			DeckPickerList.UpdateDecks();
-			DeckPickerList.UpdateArchivedClassVisibility();
-			DeckPickerList.SelectDeck(DeckList.Instance.ActiveDeck);
-			ManaCurveMyDecks.UpdateValues();
 		}
 
 		private void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -311,7 +264,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 					Config.Instance.WindowHeight = (int)height;
 
 				Config.Instance.SelectedTags = Config.Instance.SelectedTags.Distinct().ToList();
-				Config.Instance.SelectedDeckPickerClasses = DeckPickerList.SelectedClasses.ToArray();
 				return;
 			}
 
@@ -422,44 +374,36 @@ namespace Hearthstone_Deck_Tracker.Windows
 			MainWindowMenu.SelectedDecks = (!decks?.Any() ?? false) && active != null ? new List<Deck> { active } : decks ?? new List<Deck>();
 
 			var deck = decks?.FirstOrDefault() ?? active;
-			SelectDeck(deck, Config.Instance.AutoUseDeck);
-			DeckCharts.SetDeck(deck);
-			HsReplayDeckInfo.SetDeck(deck);
+			UpdateDeck(deck);
 		}
 
-		public void SelectDeck(Deck? deck, bool setActive)
+		private void UpdateDeck(Deck? deck)
 		{
-			if(DeckList.Instance.ActiveDeck != null)
-				DeckPickerList.ClearFromCache(DeckList.Instance.ActiveDeck);
+			if(_displayedDeck != null)
+				_displayedDeck.SelectedVersionChanged -= UpdateDisplayedDeck;
+			if(deck != null)
+				deck.SelectedVersionChanged += UpdateDisplayedDeck;
+
+			_displayedDeck = deck;
+			UpdateDisplayedDeck();
+		}
+
+		private Deck? _displayedDeck;
+		private void UpdateDisplayedDeck()
+		{
+			var deck = _displayedDeck;
+
+			if(Config.Instance.AutoUseDeck)
+				DeckList.Instance.ActiveDeck = deck;
+
 			if(deck != null)
 			{
+				DeckPickerList.ClearFromCache(deck);
+
 				//set up tags
 				TagControlEdit.SetSelectedTags(DeckPickerList.SelectedDecks);
 				DeckPickerList.MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 				DeckPickerList.MenuItemQuickSetTag.Items.Refresh();
-
-				OnPropertyChanged(nameof(HsReplayButtonVisibility));
-
-				//set and save last used deck for class
-				if(setActive)
-				{
-					while(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
-					{
-						var lastSelected = DeckList.Instance.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
-						if(lastSelected != null)
-							DeckList.Instance.LastDeckClass.Remove(lastSelected);
-						else
-							break;
-					}
-					if(Core.Initialized)
-					{
-						DeckList.Instance.LastDeckClass.Add(new DeckInfo { Class = deck.Class, Name = deck.Name, Id = deck.DeckId });
-						DeckList.Save();
-					}
-
-					Log.Info($"Switched to deck: {deck.Name} ({deck.SelectedVersion.ShortVersionString})");
-					Core.TrayIcon.MenuItemUseNoDeck.Checked = false;
-				}
 
 				if(FlyoutDeckScreenshot.IsOpen)
 					DeckScreenshotFlyout.Deck = deck.GetSelectedDeckVersion();
@@ -473,48 +417,29 @@ namespace Hearthstone_Deck_Tracker.Windows
 					else
 						FlyoutDeckHistory.IsOpen = false;
 				}
-
 			}
-			else
+
+			OnPropertyChanged(nameof(HsReplayButtonVisibility));
+
+			var version = deck?.GetSelectedDeckVersion();
+			ListViewDeck.ItemsSource = null;
+			// always update the sideboard to ensure we hide the header if empty
+			PlayerSideboards.Update(version?.Sideboards, true);
+			if(version != null)
 			{
-				Core.Game.IsUsingPremade = false;
-				DeckList.Instance.ActiveDeck = null;
-				if(setActive)
-					DeckPickerList.DeselectDeck();
-
-				Core.TrayIcon.MenuItemUseNoDeck.Checked = true;
+				ListViewDeck.ItemsSource = Helper.ResolveZilliax3000(version.Cards, version.Sideboards);
+				Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			}
 
-			if(setActive)
-				UseDeck(deck);
-			DeckPickerList.SelectDeck(deck);
-			UpdateDeckList(deck);
 			ManaCurveMyDecks.SetDeck(deck);
-			UpdatePanelVersionComboBox(deck);
-			GroupBoxHsReplayDeckInfo.Visibility = deck?.IsArenaDeck == true || deck?.IsDungeonDeck == true || deck?.IsDuelsDeck == true ? Collapsed : Visible;
-			if(setActive)
-			{
-				Core.Overlay.ListViewPlayer.Items.Refresh();
-				Core.Windows.PlayerWindow.ListViewPlayer.Items.Refresh();
-			}
-			DeckManagerEvents.OnDeckSelected.Execute(deck);
-		}
 
-		public void SelectLastUsedDeck()
-		{
-			var lastSelected = DeckList.Instance.LastDeckClass.LastOrDefault();
-			var deck = DeckList.Instance.Decks.FirstOrDefault(d => lastSelected == null || d.DeckId == lastSelected.Id);
-			if(deck == null)
-				return;
-			DeckPickerList.SelectDeck(deck);
-			SelectDeck(deck, true);
-		}
-
-		private void UpdatePanelVersionComboBox(Deck? deck)
-		{
 			ComboBoxDeckVersion.ItemsSource = deck?.VersionsIncludingSelf;
 			ComboBoxDeckVersion.SelectedItem = deck?.SelectedVersion;
-			PanelVersionComboBox.Visibility = deck != null && deck.HasVersions ? Visible : Collapsed;
+			PanelVersionComboBox.Visibility = deck is { HasVersions: true } ? Visible : Collapsed;
+
+			GroupBoxHsReplayDeckInfo.Visibility = deck?.IsArenaDeck == true || deck?.IsDungeonDeck == true || deck?.IsDuelsDeck == true ? Collapsed : Visible;
+			DeckCharts.SetDeck(deck);
+			HsReplayDeckInfo.SetDeck(deck);
 		}
 
 #endregion

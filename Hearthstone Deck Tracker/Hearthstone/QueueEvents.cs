@@ -95,7 +95,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					if(DeckList.Instance.ActiveDeck != null)
 					{
 						Log.Info("Switching to no-deck mode for battlegrounds");
-						Core.MainWindow.SelectDeck(null, true);
+						DeckList.Instance.ActiveDeck = null;
 					}
 				}
 				else if(LettuceModes.Contains(_game.CurrentMode))
@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					if(DeckList.Instance.ActiveDeck != null)
 					{
 						Log.Info("Switching to no-deck mode for mercenaries");
-						Core.MainWindow.SelectDeck(null, true);
+						DeckList.Instance.ActiveDeck = null;
 					}
 				}
 			}
@@ -125,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return;
 			}
 			Log.Info($"Switching to arena deck deck: {selectedDeck.Name}");
-			Core.MainWindow.SelectDeck(selectedDeck, true);
+			DeckList.Instance.ActiveDeck = selectedDeck;
 		}
 
 		private static long? GetSelectedDeckId(Mode mode)

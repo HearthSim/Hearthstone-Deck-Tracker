@@ -33,6 +33,11 @@ namespace Hearthstone_Deck_Tracker
 		public static Guid IgnoredDeckId;
 		public static List<Card> NotFoundCards { get; set; } = new List<Card>();
 
+		static DeckManager()
+		{
+			DeckList.Instance.ActiveDeckChanged += DeckManagerEvents.OnDeckSelected.Execute;
+		}
+
 		internal static void ResetAutoSelectCount() => _autoSelectCount = 0;
 
 		public static async Task DetectCurrentDeck()
@@ -58,7 +63,7 @@ namespace Hearthstone_Deck_Tracker
 					//if autoimport finds a new version of the selected deck, the new version will be set as selected, but not active.
 					//We are still using the old one for these checks AND exclude the selected version from possible targets to switch to,
 					//so if the newly imported version matches all existing entities, use that one.
-					Core.MainWindow.SelectDeck(deck, true);
+					DeckList.Instance.ActiveDeck = deck;
 					return;
 				}
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
@@ -82,13 +87,13 @@ namespace Hearthstone_Deck_Tracker
 			if(mode == GameMode.Battlegrounds)
 			{
 				Log.Info("Switching to no-deck mode for battlegrounds");
-				Core.MainWindow.SelectDeck(null, true);
+				DeckList.Instance.ActiveDeck = null;
 				return;
 			}
 			if(mode == GameMode.Mercenaries)
 			{
 				Log.Info("Switching to no-deck mode for mercenaries");
-				Core.MainWindow.SelectDeck(null, true);
+				DeckList.Instance.ActiveDeck = null;
 				return;
 			}
 			_waitingForDraws++;
@@ -113,7 +118,7 @@ namespace Hearthstone_Deck_Tracker
 				if(cardEntites == null || !AutoSelectDeckVersion(heroClass, mode, currentFormat, cardEntites))
 				{
 					Log.Info("No matching deck found, using no-deck mode");
-					Core.MainWindow.SelectDeck(null, true);
+					DeckList.Instance.ActiveDeck = null;
 				}
 				return;
 			}
@@ -121,7 +126,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var deck = validDecks.Single();
 				Log.Info("Found one matching deck: " + deck);
-				Core.MainWindow.SelectDeck(deck, true);
+				DeckList.Instance.ActiveDeck = deck;
 				_autoSelectCount++;
 				return;
 			}
@@ -132,7 +137,7 @@ namespace Hearthstone_Deck_Tracker
 				if(deck != null)
 				{
 					Log.Info($"Last used {heroClass} deck matches!");
-					Core.MainWindow.SelectDeck(deck, true);
+					DeckList.Instance.ActiveDeck = deck;
 					_autoSelectCount++;
 					return;
 				}
@@ -153,7 +158,7 @@ namespace Hearthstone_Deck_Tracker
 						continue;
 					Log.Info($"Found matching version on {deck.Name}: {version.Version.ShortVersionString}.");
 					deck.SelectVersion(version);
-					Core.MainWindow.SelectDeck(deck, true);
+					DeckList.Instance.ActiveDeck = deck;
 					_autoSelectCount++;
 					return true;
 				}
@@ -182,7 +187,7 @@ namespace Hearthstone_Deck_Tracker
 				if(selectedDeck.Name == "Use no deck")
 				{
 					Log.Info("Auto deck detection disabled.");
-					Core.MainWindow.SelectDeck(null, true);
+					DeckList.Instance.ActiveDeck = null;
 					NotFoundCards.Clear();
 				}
 				else if(selectedDeck.Name == "No match - Keep using active deck")
@@ -194,7 +199,7 @@ namespace Hearthstone_Deck_Tracker
 				else
 				{
 					Log.Info("Selected deck: " + selectedDeck.Name);
-					Core.MainWindow.SelectDeck(selectedDeck, true);
+					DeckList.Instance.ActiveDeck = selectedDeck;
 				}
 			}
 			else
@@ -219,7 +224,7 @@ namespace Hearthstone_Deck_Tracker
 			Core.MainWindow.DeckPickerList.UpdateDecks();
 			Core.MainWindow.UpdateIntroLabelVisibility();
 			if(select)
-				Core.MainWindow.SelectDeck(imported.First(), true);
+				DeckList.Instance.ActiveDeck = imported.First();
 			Core.UpdatePlayerCards(true);
 		}
 
@@ -304,7 +309,6 @@ namespace Hearthstone_Deck_Tracker
 						target.LastEdited = DateTime.Now;
 						target.Versions.Add(oldDeck);
 						target.Version = existing.NewVersion;
-						target.SelectedVersion = existing.NewVersion;
 						target.Cards.Clear();
 						var cards = deck.Deck.Cards.Select(x =>
 						{
@@ -331,6 +335,7 @@ namespace Hearthstone_Deck_Tracker
 
 								target.Sideboards.Add(new Sideboard(sideboard.Key, sideboardCards));
 							}
+						target.SelectedVersion = existing.NewVersion;
 						var clone = (Deck) target.Clone();
 						targetList.Add(clone);
 						importedDecks.Add(clone);
@@ -405,7 +410,7 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var card in cards)
 					matchingHsId.Cards.Add(card);
 				Core.MainWindow.DeckPickerList.UpdateDecks();
-				Core.MainWindow.SelectDeck(matchingHsId, true);
+				DeckList.Instance.ActiveDeck = matchingHsId;
 				return;
 			}
 
@@ -467,7 +472,7 @@ namespace Hearthstone_Deck_Tracker
 						return;
 				}
 				Log.Info("No selected deck found, using no-deck mode");
-				Core.MainWindow.SelectDeck(null, true);
+				DeckList.Instance.ActiveDeck = null;
 				return;
 			}
 
@@ -475,7 +480,7 @@ namespace Hearthstone_Deck_Tracker
 			if(DeckImporter.IsExactlyWhizbang(id, refreshCache: false))
 			{
 				Log.Info("Selected a Whizbang deck, using no-deck mode");
-				Core.MainWindow.SelectDeck(null, true);
+				DeckList.Instance.ActiveDeck = null;
 				return;
 			}
 
@@ -516,7 +521,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var nonSelectedVersions = selectedDeck.VersionsIncludingSelf.Where(v => v != selectedVersion.Version).Select(selectedDeck.GetVersion);
 				var version = nonSelectedVersions.FirstOrDefault(MatchesHsDeck);
-				if(version != null)
+				if(version != null && version.Version != selectedVersion.Version)
 				{
 					selectedDeck.SelectVersion(version);
 					Log.Info("Switching to version: " + version.Version.ShortVersionString);
@@ -527,7 +532,7 @@ namespace Hearthstone_Deck_Tracker
 				Log.Info("Already using the correct deck");
 				return;
 			}
-			Core.MainWindow.SelectDeck(selectedDeck, true);
+			DeckList.Instance.ActiveDeck = selectedDeck;
 		}
 
 		public static void SaveDeck(Deck deck, bool invokeApi = true)
@@ -535,8 +540,7 @@ namespace Hearthstone_Deck_Tracker
 			deck.Edited();
 			DeckList.Instance.Decks.Add(deck);
 			DeckList.Save();
-			Core.MainWindow.DeckPickerList.SelectDeckAndAppropriateView(deck, forceUpdate: true);
-			Core.MainWindow.SelectDeck(deck, true);
+			DeckList.Instance.ActiveDeck = deck;
 			if(invokeApi)
 				DeckManagerEvents.OnDeckCreated.Execute(deck);
 		}
@@ -547,8 +551,8 @@ namespace Hearthstone_Deck_Tracker
 			baseDeck.Versions?.Clear();
 			if(!overwriteCurrent)
 				newVersion.Versions.Add(baseDeck);
-			newVersion.SelectedVersion = newVersion.Version;
 			newVersion.Archived = false;
+			newVersion.SelectedVersion = newVersion.Version;
 			SaveDeck(newVersion, false);
 			DeckManagerEvents.OnDeckUpdated.Execute(newVersion);
 		}
@@ -596,14 +600,14 @@ namespace Hearthstone_Deck_Tracker
 					if(DeckList.Instance.ActiveDeck != null)
 					{
 						Log.Info("Switching to no deck mode");
-						Core.MainWindow.SelectDeck(null, true);
+						DeckList.Instance.ActiveDeck = null;
 					}
 				}
 			}
 			else if(!existingDeck.Equals(DeckList.Instance.ActiveDeck))
 			{
 				Log.Info($"Selecting existing deck: {existingDeck.Name}");
-				Core.MainWindow.SelectDeck(existingDeck, true);
+				DeckList.Instance.ActiveDeck = existingDeck;
 			}
 		}
 
@@ -742,7 +746,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Instance.Decks.Add(deck);
 			DeckList.Save();
 			Core.MainWindow.DeckPickerList.UpdateDecks();
-			Core.MainWindow.SelectDeck(deck, true);
+			DeckList.Instance.ActiveDeck = deck;
 			return deck;
 		}
 	}

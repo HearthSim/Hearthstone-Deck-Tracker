@@ -25,6 +25,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			InitializeComponent();
 			ListboxTags.ItemsSource = Tags;
+
+			OperationSwitch.IsChecked = Config.Instance.TagOperation == TagFilerOperation.And;
+			ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
+			CheckBoxSortByClass.IsChecked = Config.Instance.SortDecksByClass;
+			CheckBoxSortFavorites.IsChecked = Config.Instance.SortDecksFavoritesFirst;
+			ComboboxDeckSortingArena.SelectedItem = Config.Instance.SelectedDeckSortingArena;
+			CheckBoxSortByClassArena.IsChecked = Config.Instance.SortDecksByClassArena;
 		}
 
 		private void NewTag(string tag)

@@ -158,9 +158,9 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public static void ToggleNoDeckMode()
 		{
 			if(DeckList.Instance.ActiveDeck == null)
-				Core.MainWindow.SelectLastUsedDeck();
+				DeckList.Instance.ActiveDeck = DeckList.Instance.GetLastUsedDeck();
 			else
-				Core.MainWindow.SelectDeck(null, true);
+				DeckList.Instance.ActiveDeck = null;
 		}
 
 		[PredefinedHotKeyAction("Edit active deck", "Opens the edit dialog for the active deck (if any) and brings HDT to foreground.")]
@@ -291,10 +291,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		[PredefinedHotKeyAction("Reload deck", "Resets HDT to last game start.")]
 		public static void ReloadDeck()
 		{
-			if(DeckList.Instance.ActiveDeck == null)
-				Core.MainWindow.SelectDeck(null, true);
-			else
-				Core.MainWindow.SelectLastUsedDeck();
+			_ = Core.Reset();
 		}
 
 		[PredefinedHotKeyAction("Close HDT", "Closes HDT.")]

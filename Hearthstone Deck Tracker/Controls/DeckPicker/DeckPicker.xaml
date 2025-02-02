@@ -9,6 +9,7 @@
            lex:LocalizeDictionary.DesignCulture="en"
            lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
            lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+           Loaded="DeckPicker_OnLoaded"
            mc:Ignorable="d"
            d:DesignHeight="500" d:DesignWidth="300">
     <DockPanel.Resources>
