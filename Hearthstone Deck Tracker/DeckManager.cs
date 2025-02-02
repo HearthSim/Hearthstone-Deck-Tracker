@@ -486,7 +486,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			Log.Info("Found selected deck: " + selectedDeck.Name);
-			var hsDeck = DeckImporter.FromConstructed(false).FirstOrDefault(x => x.Deck.Id == id)?.Deck;
+			var hsDeck = DeckImporter.FromConstructed(false).FirstOrDefault(x => x.Deck.Id == id)?.Deck ?? DeckImporter.ConstructedDecksCache.FirstOrDefault(x => x.Id == id);
 			var selectedVersion = selectedDeck.GetSelectedDeckVersion();
 			if(hsDeck != null && !selectedVersion.Cards.All(c => hsDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
 			{

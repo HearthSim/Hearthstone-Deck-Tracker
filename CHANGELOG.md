@@ -1,3 +1,7 @@
+## Unreleased
+**Hearthstone**:
+- Fixed an issue where previous versions of decks were not correctly selected when queueing into a game.
+
 ## **Release v1.38.6 - 2025-01-31**
 **Battlegrounds**:
 - Added free Hero Guides to the overlay, written by Jeef!\
