@@ -1,6 +1,7 @@
 ## Unreleased
 **Hearthstone**:
 - Fixed an issue where previous versions of decks were not correctly selected when queueing into a game.
+- Fixed an issue where changes to e.g. E.T.C.'s Band would affect old versions of a deck, leading to duplicate versions.
 
 ## **Release v1.38.6 - 2025-01-31**
 **Battlegrounds**:

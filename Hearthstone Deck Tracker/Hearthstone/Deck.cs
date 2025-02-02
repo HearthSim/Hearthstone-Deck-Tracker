@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArray(ElementName = "Cards")]
 		[XmlArrayItem(ElementName = "Card", IsNullable = false)]
 		public ObservableCollection<Card> Cards;
-		
+
 		[XmlArray(ElementName = "Sideboards")]
 		[XmlArrayItem(ElementName = "Sideboard", IsNullable = false)]
 		public List<Sideboard> Sideboards;
@@ -113,7 +113,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Cards = new ObservableCollection<Card>();
 			foreach(var card in cards.ToSortedCardList())
 				Cards.Add((Card)card.Clone());
-			Sideboards = sideboards;
+			Sideboards = sideboards.Select(x => (Sideboard)x.Clone()).ToList();
 			MissingCards = missingCards;
 			Tags = new List<string>(tags);
 			Note = note;
@@ -407,7 +407,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public object Clone() => new Deck(Name, Class, Cards, Sideboards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions,
 										  DeckId, HsId, SelectedVersion, _isArenaDeck, ArenaReward);
-		
+
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public FormatType GuessFormatType()
@@ -416,7 +416,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return FormatType.FT_CLASSIC;
 			if (IsTwistDeck)
 				return FormatType.FT_TWIST;
-			if (IsWildDeck) 
+			if (IsWildDeck)
 				return FormatType.FT_WILD;
 			return FormatType.FT_STANDARD;
 		}
@@ -587,7 +587,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void UpdateWildIndicatorVisibility() => OnPropertyChanged(nameof(WildIndicatorVisibility));
 	}
 
-	public class Sideboard
+	public class Sideboard : ICloneable
 	{
 
 		public Sideboard()
@@ -608,5 +608,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArray(ElementName = "Cards")]
 		[XmlArrayItem(ElementName = "Card", IsNullable = false)]
 		public List<Card> Cards { get; set; }
+
+		public object Clone() => new Sideboard(OwnerCardId, Cards.Select(c => (Card)c.Clone()).ToList());
 	}
 }
