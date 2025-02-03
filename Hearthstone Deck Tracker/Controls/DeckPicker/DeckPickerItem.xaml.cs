@@ -129,6 +129,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public string Class => Deck.GetClass;
 
+		public string DeckId => Deck.DeckId.ToString();
+
 		public DateTime LastEdited => Deck.LastEdited;
 
 		public DateTime LastPlayed => Deck.LastPlayed;

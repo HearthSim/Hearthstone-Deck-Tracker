@@ -469,6 +469,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 			// Fallback to ensure consistent order
 			sorting.Add(new SortDescription("LastEdited", Descending));
+			sorting.Add(new SortDescription("DeckId", Descending));
 
 			if(view.SortDescriptions.Select(x => x.PropertyName).SequenceEqual(sorting.Select(x => x.PropertyName)))
 			{
