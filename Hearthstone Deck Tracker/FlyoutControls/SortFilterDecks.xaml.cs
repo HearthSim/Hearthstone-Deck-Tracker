@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -18,8 +19,16 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class SortFilterDecks
 	{
-		public readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
+		public readonly ObservableCollection<Tag> Tags = new();
 		private bool _initialized;
+
+		// Hack to stop using Core.MainWindow -- This is currently only used by the MainWindow and not worth refactoring.
+		public static readonly DependencyProperty MainWindowProperty = DependencyProperty.Register(nameof(MainWindow), typeof(MainWindow), typeof(SortFilterDecks), new PropertyMetadata(default(MainWindow)));
+		public MainWindow MainWindow
+		{
+			get { return (MainWindow)GetValue(MainWindowProperty); }
+			set { SetValue(MainWindowProperty, value); }
+		}
 
 		public SortFilterDecks()
 		{
@@ -40,7 +49,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			DeckList.Instance.AllTags.Add(tag);
 			DeckList.Save();
-			Core.MainWindow.ReloadTags();
+			MainWindow.ReloadTags();
 		}
 
 		private void DeleteTag(string tag)
@@ -53,13 +62,13 @@ namespace Hearthstone_Deck_Tracker
 				deck.Tags.Remove(tag);
 
 			DeckList.Save();
-			Core.MainWindow.ReloadTags();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.ReloadTags();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized || !Core.MainWindow.IsLoaded)
+			if(!_initialized || !MainWindow.IsLoaded)
 				return;
 
 			var selectedValue = ComboboxDeckSorting.SelectedValue as string;
@@ -72,30 +81,30 @@ namespace Hearthstone_Deck_Tracker
 				Config.Save();
 			}
 
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void SortFilterDecksFlyoutOnSelectedTagsChanged()
 		{
 			//only set tags if tags were changed in "My Decks"
-			if(Name == nameof(Core.MainWindow.SortFilterDecksFlyout))
+			if(Name == nameof(MainWindow.SortFilterDecksFlyout))
 			{
 				var tags = Tags.Where(tag => tag.Selected == true).Select(tag => tag.Name).ToList();
 				Config.Instance.SelectedTags = tags;
 				Config.Save();
-				Core.MainWindow.DeckPickerList.UpdateDecks();
+				MainWindow.DeckPickerList.UpdateDecks();
 			}
-			else if(Name == nameof(Core.MainWindow.TagControlEdit))
+			else if(Name == nameof(MainWindow.TagControlEdit))
 			{
 				var tags = Tags.Where(tag => tag.Selected == true).Select(tag => tag.Name).ToList();
 				var ignore = Tags.Where(tag => tag.Selected == null).Select(tag => tag.Name).ToList();
-				foreach(var deck in Core.MainWindow.DeckPickerList.SelectedDecks)
+				foreach(var deck in MainWindow.DeckPickerList.SelectedDecks)
 				{
 					var keep = deck.Tags.Intersect(ignore);
 					deck.Tags = new List<string>(tags.Concat(keep));
 					deck.Edited();
 				}
-				Core.MainWindow.DeckPickerList.UpdateDecks(false);
+				MainWindow.DeckPickerList.UpdateDecks(false);
 				DeckList.Save();
 			}
 		}
@@ -145,7 +154,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Instance.AllTags.RemoveAt(from);
 			DeckList.Instance.AllTags.Insert(to, tagName);
 			DeckList.Save();
-			Core.MainWindow.ReloadTags();
+			MainWindow.ReloadTags();
 			ListboxTags.SelectedIndex = to - 2;
 		}
 
@@ -158,7 +167,7 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.SortDecksByClass = true;
 				Config.Save();
 			}
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void CheckBoxSortByClass_OnUnchecked(object sender, RoutedEventArgs e)
@@ -167,7 +176,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Config.Instance.SortDecksByClass = false;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void CheckBoxSortByClassArena_OnChecked(object sender, RoutedEventArgs e)
@@ -176,7 +185,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Config.Instance.SortDecksByClassArena = true;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void CheckBoxSortByClassArena_OnUnchecked(object sender, RoutedEventArgs e)
@@ -185,12 +194,12 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Config.Instance.SortDecksByClassArena = false;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void SelectorArena_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized || !Core.MainWindow.IsLoaded)
+			if(!_initialized || !MainWindow.IsLoaded)
 				return;
 
 			var selectedValue = ComboboxDeckSortingArena.SelectedValue as string;
@@ -204,7 +213,7 @@ namespace Hearthstone_Deck_Tracker
 				Config.Save();
 			}
 
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		#region Tag
@@ -390,13 +399,13 @@ namespace Hearthstone_Deck_Tracker
 		private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
 		{
 			Config.Instance.TagOperation = TagFilerOperation.And;
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void OperationSwitch_OnUnchecked(object sender, RoutedEventArgs e)
 		{
 			Config.Instance.TagOperation = TagFilerOperation.Or;
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		#endregion
@@ -407,7 +416,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Config.Instance.SortDecksFavoritesFirst = true;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void CheckBoxSortFavorites_OnUnchecked(object sender, RoutedEventArgs e)
@@ -416,7 +425,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Config.Instance.SortDecksFavoritesFirst = false;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			MainWindow.DeckPickerList.UpdateDecks();
 		}
 	}
 }
