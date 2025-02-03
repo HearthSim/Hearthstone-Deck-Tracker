@@ -117,7 +117,7 @@
                 <flyoutControls:DeckPanel x:Name="DeckFlyout" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutSortFilter" Header="{lex:Loc MainWindow_Flyout_SortFilter_Header}" Position="Right" Width="245" Height="auto" Panel.ZIndex="100">
-                <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
+                <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" MainWindow="{Binding RelativeSource={RelativeSource AncestorType=windows:MainWindow}}" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutNotes" Header="{lex:Loc MainWindow_Flyout_Notes_Header}" Position="Right" Width="255" Height="auto"
                          Panel.ZIndex="100">
@@ -125,7 +125,7 @@
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="{lex:Loc MainWindow_Flyout_SetTags_Header}" Position="Right" Width="255"
                          Height="auto" Panel.ZIndex="100">
-                <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
+                <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" MainWindow="{Binding RelativeSource={RelativeSource AncestorType=windows:MainWindow}}"  />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutErrors" Position="Top" Header="{lex:Loc MainWindow_Flyout_Errors_Header}">
                 <error:ErrorList DataContext="{Binding Errors, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}" VerticalAlignment="Center" MaxHeight="400"/>
