@@ -170,21 +170,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var clone = (Deck)deck.CloneWithNewId(false);
 			clone.Archived = false;
 
-			var originalStats = deck.DeckStats;
-
 			DeckList.Instance.Decks.Add(clone);
 			DeckList.Save();
 
-			if(!DeckStatsList.Instance.DeckStats.TryGetValue(clone.DeckId, out var newStatsEntry))
-			{
-				newStatsEntry = new DeckStats(clone);
-				DeckStatsList.Instance.DeckStats.TryAdd(clone.DeckId, newStatsEntry);
-			}
-
 			if(cloneStats)
 			{
-				foreach(var game in originalStats.Games)
-					newStatsEntry.AddGameResult(game.CloneWithNewId());
+				foreach(var game in deck.DeckStats.Games)
+					clone.AddGameResult(game.CloneWithNewId());
 				Log.Info("cloned gamestats");
 			}
 
@@ -214,23 +206,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			clone.ResetVersions();
 			clone.Archived = false;
 
-			var originalStatsEntry = clone.DeckStats;
-
 			DeckList.Instance.Decks.Add(clone);
 			DeckPickerList.UpdateDecks();
 			DeckList.Save();
 
-			if(!DeckStatsList.Instance.DeckStats.TryGetValue(clone.DeckId, out var newStatsEntry))
-			{
-				newStatsEntry = new DeckStats(clone);
-				DeckStatsList.Instance.DeckStats.TryAdd(clone.DeckId, newStatsEntry);
-			}
-
 			//clone game stats
 			if(cloneStats)
 			{
-				foreach(var game in originalStatsEntry.Games)
-					newStatsEntry.AddGameResult(game.CloneWithNewId());
+				foreach(var game in deck.DeckStats.Games)
+					clone.AddGameResult(game.CloneWithNewId());
 				Log.Info("cloned gamestats (version)");
 			}
 

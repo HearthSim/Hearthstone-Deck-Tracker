@@ -58,10 +58,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				save = true;
 			}
 			if(save)
-			{
 				DeckStatsList.Save();
-				Core.MainWindow.DeckPickerList.UpdateDecks();
-			}
 		}
 	}
 }

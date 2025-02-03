@@ -864,7 +864,7 @@ namespace Hearthstone_Deck_Tracker
 						_game.CurrentGameStats.PlayerDeckVersion = selectedDeck.GetSelectedDeckVersion().Version;
 
 					_lastGame = _game.CurrentGameStats;
-					selectedDeck.DeckStats.AddGameResult(_lastGame);
+					selectedDeck.AddGameResult(_lastGame);
 
 					if(Config.Instance.ArenaRewardDialog && (selectedDeck.IsArenaRunCompleted ?? false))
 					{
@@ -895,7 +895,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						if(!string.IsNullOrEmpty(_game.Player.OriginalClass))
 						{
-							DefaultDeckStats.Instance.GetDeckStats(_game.Player.OriginalClass)?.AddGameResult(_game.CurrentGameStats);
+							DefaultDeckStats.Instance.GetDeckStats(_game.Player.OriginalClass)?.Games.Add(_game.CurrentGameStats);
 							Log.Info($"Assigned current deck to default {_game.Player.OriginalClass} deck.");
 						}
 						else
@@ -1090,16 +1090,9 @@ namespace Hearthstone_Deck_Tracker
 				}
 
 				if(_assignedDeck == null)
-				{
-					Log.Info("Saving DefaultDeckStats");
 					DefaultDeckStats.Save();
-				}
 				else
-				{
-					_assignedDeck.StatsUpdated();
-					Log.Info("Saving DeckStats");
 					DeckStatsList.Save();
-				}
 				if(_game.CurrentGameStats != null)
 				{
 					LastGames.Instance.Add(_game.CurrentGameStats);
@@ -1109,7 +1102,7 @@ namespace Hearthstone_Deck_Tracker
 			else if(_assignedDeck != null && _game.CurrentGameStats != null && _assignedDeck.DeckStats.Games.Contains(_game.CurrentGameStats))
 			{
 				//game was not supposed to be recorded, remove from deck again.
-				_assignedDeck.DeckStats.Games.Remove(_game.CurrentGameStats);
+				_assignedDeck.RemoveGameResult(_game.CurrentGameStats);
 				Log.Info($"Local deck stats are disabled for {_game.CurrentGameMode}. Removed game from {_assignedDeck}.");
 			}
 			else if(_assignedDeck == null)

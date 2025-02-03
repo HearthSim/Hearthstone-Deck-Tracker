@@ -57,17 +57,16 @@ namespace Hearthstone_Deck_Tracker.Stats
 				else
 				{
 					var deck = DeckList.Instance.Decks.FirstOrDefault(d => game.DeckId == d.DeckId);
-					deck?.DeckStats.Games.Remove(game);
+					deck?.RemoveGameResult(game);
 				}
 				game.PlayerDeckVersion = targetVersion;
 				game.DeckId = targetDeck.DeckId;
 				game.DeckName = targetDeck.Name;
 				game.DeckNameAndVersion = targetDeck.GetVersion(targetVersion).NameAndVersion;
-				targetDeck.DeckStats.Games.Add(game);
+				targetDeck.AddGameResult(game);
 			}
 			DeckStatsList.Save();
 			DeckList.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		public static async Task DeleteGamesWithDialog(DependencyObject control, params GameStats[] games)
@@ -99,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				{
 					if(deck.DeckStats.Games.Contains(game))
 					{
-						deck.DeckStats.Games.Remove(game);
+						deck.RemoveGameResult(game);
 						Log.Info($"Deleted game {game} from {deck}.");
 						saveDeckStats = true;
 					}
@@ -121,7 +120,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			if(saveDefaultDeckStats)
 				DefaultDeckStats.Save();
 			Log.Info($"Deleted {games.Length} games");
-			Core.MainWindow.DeckPickerList.UpdateDecks();
 			ConstructedStats.Instance.UpdateConstructedStats();
 		}
 	}

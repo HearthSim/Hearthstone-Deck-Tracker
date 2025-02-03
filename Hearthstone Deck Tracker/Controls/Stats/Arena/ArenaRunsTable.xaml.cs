@@ -86,13 +86,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 				return;
 			if(await window.ShowDeleteGameStatsMessage(SelectedGame) != MessageDialogResult.Affirmative)
 				return;
-			if(run.Deck.DeckStats.Games.Contains(SelectedGame))
-			{
-				run.Deck.DeckStats.Games.Remove(SelectedGame);
-				Log.Info("Deleted game " + SelectedGame);
-			}
+
+			run.Deck.RemoveGameResult(SelectedGame);
+			Log.Info("Deleted game " + SelectedGame);
 			DeckStatsList.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
 			ArenaStats.Instance.UpdateArenaStats();
 		}
 

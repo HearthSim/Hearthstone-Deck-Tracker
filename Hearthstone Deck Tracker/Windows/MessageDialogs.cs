@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const string LocSavedFileText = "MessageDialogs_SavedFile_Title";
 		private const string LocSavedFileButtonOk = "MessageDialogs_SavedFile_Button_Ok";
 		private const string LocSavedFileButtonOpen = "MessageDialogs_SavedFile_Button_OpenFolder";
-		
+
 		private const string LocSaveUploadSaved = "MessageDialogs_SaveUpload_Text_Saved";
 		private const string LocSaveUploadUploaded = "MessageDialogs_SaveUpload_Text_Uploaded";
 		private const string LocSaveUploadButtonOk = "MessageDialogs_SaveUpload_Button_Ok";
@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task ShowSavedFileMessage(this MainWindow window, string fileName)
 		{
-			var result = await window.ShowMessageAsync("", 
+			var result = await window.ShowMessageAsync("",
 						LocUtil.Get(LocSavedFileText) + Environment.NewLine + Environment.NewLine + fileName,
 						AffirmativeAndNegative,
 						new Settings
@@ -232,9 +232,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			await window.HideMetroDialogAsync(dialog);
 			if(game == null)
 				return false;
-			deck.DeckStats.AddGameResult(game);
+			deck.AddGameResult(game);
 			DeckStatsList.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] {deck});
 			return true;
 		}
 
@@ -276,7 +275,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(result == null)
 				return false;
 			DeckStatsList.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			var deck = DeckList.Instance.Decks.FirstOrDefault(d => game.DeckId == d.DeckId);
+			deck?.StatsUpdated();
 			return true;
 		}
 

@@ -351,14 +351,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				var enumerator = DeckStatsList.Instance.DeckStats.GetEnumerator();
-				while(enumerator.MoveNext())
-				{
-					if(enumerator.Current.Value.BelongsToDeck(this))
-						return enumerator.Current.Value;
-				}
-				return DeckStatsList.Instance.Add(this);
+				if(!DeckStatsList.Instance.DeckStats.TryGetValue(DeckId, out var stats))
+					stats = DeckStatsList.Instance.Add(this);
+				return stats;
 			}
+		}
+
+		public void AddGameResult(GameStats gameStats)
+		{
+			_cachedGames = null;
+			DeckStats.Games.Add(gameStats);
+			StatsUpdated();
+		}
+
+		public void RemoveGameResult(GameStats gameStats)
+		{
+			_cachedGames = null;
+			var success = DeckStats.Games.Remove(gameStats);
+			if(success)
+				StatsUpdated();
 		}
 
 		[XmlIgnore]
@@ -569,7 +580,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OnPropertyChanged(nameof(VisibilityStats));
 			OnPropertyChanged(nameof(VisibilityNoStats));
 			OnStatsUpdated?.Invoke();
-			Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 		}
 
 		public void UpdateWildIndicatorVisibility() => OnPropertyChanged(nameof(WildIndicatorVisibility));

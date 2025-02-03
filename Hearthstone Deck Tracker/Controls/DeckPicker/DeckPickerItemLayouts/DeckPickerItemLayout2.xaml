@@ -29,7 +29,7 @@
                     <StackPanel.Resources>
                         <deckPicker:DateConverter x:Key="DateConverter"></deckPicker:DateConverter>
                     </StackPanel.Resources>
-                    <TextBlock Text="{Binding StatsString}" HorizontalAlignment="Left"
+                    <TextBlock Text="{Binding Deck.StatsString}" HorizontalAlignment="Left"
                            Foreground="{DynamicResource GrayTextColorBrush}" FontSize="14" />
                     <TextBlock Text="{Binding DateShownOnDeck, Converter={StaticResource DateConverter}}" HorizontalAlignment="Right"
                            Foreground="{DynamicResource GrayTextColorBrush}" FontSize="11" Margin="0, 3, 0, 0"

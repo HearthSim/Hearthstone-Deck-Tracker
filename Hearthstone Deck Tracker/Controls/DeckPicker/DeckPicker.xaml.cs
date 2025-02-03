@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				if(deck != null)
 					SelectDeckAndAppropriateView(deck, true);
 				else
-					DeselectDeck();
+					ListViewDecks.SelectedItem = null;
 
 				OnPropertyChanged(nameof(ActiveDeck));
 				OnPropertyChanged(nameof(VisibilityNoDeck));
@@ -335,8 +335,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			Sort();
 			if(selectedDeck != null && reselectActiveDeck && decks.Contains(selectedDeck))
 				SelectDeck(selectedDeck);
-			ActiveDeck?.StatsUpdated();
-			selectedDeck?.StatsUpdated();
 		}
 
 		public void UpdateDeck(Deck deck)
@@ -588,15 +586,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					}
 				}
 				ListViewDecks.SelectedItem = dpi;
-				deck.StatsUpdated();
 			}
 			ChangedSelection = false;
-		}
-
-		public void DeselectDeck()
-		{
-			ListViewDecks.SelectedItem = null;
-			RefreshDisplayedDecks();
 		}
 
 		public void RefreshDisplayedDecks()

@@ -80,8 +80,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public string? LegacyNoStatsStats => LocUtil.Get("DeckPicker_Deck_Legacy_NoStats_Stats");
 
-		public string? StatsString => Deck?.StatsString;
-
 		public string? DateShownOnDeckTooltip
 		{
 			get
@@ -121,7 +119,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			OnPropertyChanged(nameof(TextUseButton));
 			OnPropertyChanged(nameof(LastPlayed));
 			OnPropertyChanged(nameof(HsReplayDataIndicatorVisibility));
-			OnPropertyChanged(nameof(StatsString));
 			Deck.UpdateWildIndicatorVisibility();
 		}
 
