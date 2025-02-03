@@ -68,8 +68,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public List<Card> PlayerDeck => _game.Player.PlayerCardList;
 
-		public bool ShowToolTip => Config.Instance.WindowCardToolTips;
-
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public void Update()

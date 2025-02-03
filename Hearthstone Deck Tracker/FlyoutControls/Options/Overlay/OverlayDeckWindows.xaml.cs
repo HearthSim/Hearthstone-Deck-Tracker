@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
 using SystemColors = System.Windows.SystemColors;
@@ -185,7 +186,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.WindowCardToolTips = true;
+			ConfigWrapper.Bindable.WindowCardTooltips = true;
 			SaveConfig(false);
 		}
 
@@ -193,7 +194,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.WindowCardToolTips = false;
+			ConfigWrapper.Bindable.WindowCardTooltips = false;
 			SaveConfig(false);
 		}
 

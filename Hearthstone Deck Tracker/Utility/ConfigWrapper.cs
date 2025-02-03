@@ -551,5 +551,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 				OnPropertyChanged();
 			}
 		}
+
+		public bool WindowCardTooltips
+		{
+			get => Config.Instance.WindowCardToolTips;
+			set
+			{
+				if(Config.Instance.WindowCardToolTips == value)
+					return;
+				Config.Instance.WindowCardToolTips = value;
+				Config.Save();
+				OnPropertyChanged();
+			}
+		}
 	}
 }

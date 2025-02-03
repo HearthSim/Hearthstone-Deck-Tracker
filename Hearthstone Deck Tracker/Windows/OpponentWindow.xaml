@@ -19,6 +19,9 @@
                       Deactivated="OpponentWindow_OnDeactivated">
     <controls:MetroWindow.Resources>
         <themes:ThemeManager x:Key="ThemeManager"/>
+        <Style TargetType="controls1:Card">
+            <Setter Property="ToolTipService.IsEnabled" Value="{Binding Bindable.WindowCardTooltips, Source={StaticResource ConfigWrapper}}"/>
+        </Style>
     </controls:MetroWindow.Resources>
     <controls:MetroWindow.IconTemplate>
         <DataTemplate>
@@ -35,7 +38,7 @@
             <Viewbox Name="ViewBoxOpponent" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding OpponentDeckMaxHeight, RelativeSource={RelativeSource AncestorType=local:OpponentWindow}}">
                 <controls1:AnimatedCardList x:Name="ListViewOpponent" Background="Transparent" BorderThickness="0"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
-                            ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="False"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
                             ScrollViewer.CanContentScroll="False">
                     <controls1:AnimatedCardList.ItemContainerStyle>
                         <Style TargetType="controls1:AnimatedCard">
