@@ -12,7 +12,6 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Enums;
@@ -206,6 +205,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
 				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
+			};
+
+			ErrorManager.ErrorAdded += data =>
+			{
+				OnPropertyChanged(nameof(Errors));
+				OnPropertyChanged(nameof(ErrorIconVisibility));
+				OnPropertyChanged(nameof(ErrorCount));
+				if(data.ShowFlyout)
+					FlyoutErrors.IsOpen = true;
+			};
+
+			ErrorManager.ErrorRemoved += _ =>
+			{
+				OnPropertyChanged(nameof(Errors));
+				OnPropertyChanged(nameof(ErrorIconVisibility));
+				OnPropertyChanged(nameof(ErrorCount));
+				if(Errors.Count == 0)
+					FlyoutErrors.IsOpen = false;
 			};
 		}
 
@@ -447,19 +464,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 #region Errors
 
 		public ObservableCollection<Error> Errors => ErrorManager.Errors;
-
 		public Visibility ErrorIconVisibility => ErrorManager.ErrorIconVisibility;
-
 		public string ErrorCount => ErrorManager.Errors.Count > 1 ? $"({ErrorManager.Errors.Count})" : "";
 
 		private void BtnErrors_OnClick(object sender, RoutedEventArgs e) => FlyoutErrors.IsOpen = !FlyoutErrors.IsOpen;
-
-		public void ErrorsPropertyChanged()
-		{
-			OnPropertyChanged(nameof(Errors));
-			OnPropertyChanged(nameof(ErrorIconVisibility));
-			OnPropertyChanged(nameof(ErrorCount));
-		}
 
 #endregion
 
