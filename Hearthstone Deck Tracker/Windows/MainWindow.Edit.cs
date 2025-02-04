@@ -95,64 +95,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Log.Info("Deleted deck: " + deck.Name);
 		}
 
-		internal void ArchiveDecks(IEnumerable<Deck> decks)
-		{
-			foreach(var deck in decks)
-				ArchiveDeck(deck, true, false);
-
-			DeckList.Save();
-			DeckPickerList.UpdateDecks();
-			DeckList.Instance.ActiveDeck = null;
-			DeckPickerList.UpdateArchivedClassVisibility();
-		}
-
-		internal void UnArchiveDecks(IEnumerable<Deck> decks)
-		{
-			foreach(var deck in DeckPickerList.SelectedDecks)
-				ArchiveDeck(deck, false, false);
-
-			DeckList.Save();
-			DeckPickerList.UpdateDecks();
-			DeckPickerList.SelectDeckAndAppropriateView(DeckPickerList.SelectedDecks.FirstOrDefault());
-			DeckPickerList.UpdateArchivedClassVisibility();
-		}
-
-		public void ArchiveDeck(Deck deck, bool archive, bool saveAndUpdate = true)
-		{
-			if(deck == null)
-				return;
-
-			var oldArchived = deck.Archived;
-			if(oldArchived == archive)
-				return;
-
-			deck.Archived = archive;
-			deck.Edited();
-
-			try
-			{
-				if(saveAndUpdate)
-				{
-					DeckList.Save();
-					DeckPickerList.UpdateDecks();
-
-					if(archive)
-						DeckList.Instance.ActiveDeck = null;
-					else
-						DeckPickerList.SelectDeckAndAppropriateView(deck);
-
-					DeckPickerList.UpdateArchivedClassVisibility();
-				}
-
-				var archivedLog = archive ? "archived" : "unarchived";
-				Log.Info($"Successfully {archivedLog} deck: {deck.Name}");
-			}
-			catch(Exception ex)
-			{
-				Log.Error($"Error {(archive ? "archiving" : "unarchiving")} deck {deck.Name}/n{ex}");
-			}
-		}
-
 		internal async void ShowCloneDeckDialog(Deck deck)
 		{
 			if(deck == null)

@@ -146,6 +146,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public static event Action<Deck>? ArchivedChanged;
+		public void Archive(bool archive)
+		{
+			if(Archived == archive)
+				return;
+			Archived = archive;
+			Edited();
+			ArchivedChanged?.Invoke(this);
+		}
+
 		public long HsId { get; set; }
 
 		public string? Note

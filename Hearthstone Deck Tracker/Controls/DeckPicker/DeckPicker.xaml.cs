@@ -81,6 +81,12 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				UpdateDeckModeToggleButton();
 				RefreshDisplayedDecks();
 			};
+
+			Deck.ArchivedChanged += deck =>
+			{
+				SelectDeckAndAppropriateView(deck);
+				UpdateArchivedClassVisibility();
+			};
 		}
 
 		public ObservableCollection<DeckPickerItemViewModel> DisplayedDecks { get; } = new();
@@ -717,8 +723,18 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private void BtnSetDeckUrl_Click(object sender, RoutedEventArgs e) => MainWindow.SetDeckUrl(SelectedDecks.FirstOrDefault());
 		private void BtnUpdateDeck_Click(object sender, RoutedEventArgs e) => MainWindow.UpdateDeckFromWeb(SelectedDecks.FirstOrDefault());
 		private void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e) => MainWindow.OpenDeckUrl(SelectedDecks.FirstOrDefault());
-		private void BtnArchiveDeck_Click(object sender, RoutedEventArgs e) => MainWindow.ArchiveDecks(SelectedDecks);
-		private void BtnUnarchiveDeck_Click(object sender, RoutedEventArgs e) => MainWindow.UnArchiveDecks(SelectedDecks);
+		private void BtnArchiveDeck_Click(object sender, RoutedEventArgs e)
+		{
+			foreach (var deck in SelectedDecks)
+				deck.Archive(true);
+		}
+
+		private void BtnUnarchiveDeck_Click(object sender, RoutedEventArgs e)
+		{
+			foreach (var deck in SelectedDecks)
+				deck.Archive(false);
+		}
+
 		private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e) => MainWindow.ShowDeleteDecksMessage(SelectedDecks);
 		private void BtnCloneDeck_Click(object sender, RoutedEventArgs e) => MainWindow.ShowCloneDeckDialog(SelectedDecks.FirstOrDefault());
 		private void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e) => MainWindow.ShowCloneDeckVersionDialog(SelectedDecks.FirstOrDefault());

@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			get => _decks ?? new List<Deck>();
 			set
 			{
-				_decks = value; 
+				_decks = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(HasSelectedDeck));
 			}
@@ -58,8 +58,16 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public ICommand UpdateFromWebCommand => new Command(() => MainWindow.UpdateDeckFromWeb(Decks.FirstOrDefault()));
 		public ICommand SetDeckUrlCommand => new Command(() => MainWindow.SetDeckUrl(Decks.FirstOrDefault()));
 		public ICommand OpenDeckUrlCommand => new Command(() => MainWindow.OpenDeckUrl(Decks.FirstOrDefault()));
-		public ICommand ArchiveDeckCommand => new Command(() => MainWindow.ArchiveDecks(Decks));
-		public ICommand UnarchiveDeckCommand => new Command(() => MainWindow.UnArchiveDecks(Decks));
+		public ICommand ArchiveDeckCommand => new Command(() =>
+		{
+			foreach(var deck in Decks)
+				deck.Archive(true);
+		});
+		public ICommand UnarchiveDeckCommand => new Command(() =>
+		{
+			foreach(var deck in Decks)
+				deck.Archive(false);
+		});
 		public ICommand DeleteDeckCommand => new Command(() => MainWindow.ShowDeleteDecksMessage(Decks));
 		public ICommand CloneDeckCommand => new Command(() => MainWindow.ShowCloneDeckDialog(Decks.FirstOrDefault()));
 		public ICommand CloneDeckVersionCommand => new Command(() => MainWindow.ShowCloneDeckVersionDialog(Decks.FirstOrDefault()));

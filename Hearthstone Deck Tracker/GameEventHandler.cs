@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
 			SaveAndUpdateStats();
 
 			if(Config.Instance.AutoArchiveArenaDecks && (DeckList.Instance.ActiveDeck?.IsArenaRunCompleted ?? false))
-				Core.MainWindow.ArchiveDeck(DeckList.Instance.ActiveDeck, true);
+				DeckList.Instance.ActiveDeck.Archive(true);
 
 			_game.ResetStoredGameState();
 
@@ -885,7 +885,7 @@ namespace Hearthstone_Deck_Tracker
 					if(_assignedDeck.Archived)
 					{
 						Log.Info("Automatically unarchiving deck " + selectedDeck.Name + " after assigning current game");
-						Core.MainWindow.ArchiveDeck(_assignedDeck, false);
+						_assignedDeck.Archive(false);
 					}
 					_lastGame = null;
 				}
