@@ -83,13 +83,6 @@
                   Checked="CheckBoxAutoUse_OnChecked" Unchecked="CheckBoxAutoUse_OnUnchecked">
             <TextBlock Text="{lex:Loc Options_Tracker_General_CheckBox_AutoUse}" TextWrapping="Wrap"/>
         </CheckBox>
-        <CheckBox x:Name="CheckBoxClassCardsFirst" Margin="10,5,0,0"
-                  Content="{lex:Loc Options_Tracker_General_CheckBox_Sorting}"
-                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                  Checked="CheckBoxClassCardsFirst_Checked"
-                  Unchecked="CheckBoxClassCardsFirst_Unchecked" />
-
         <CheckBox x:Name="CheckboxShowMyGamesPanel"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

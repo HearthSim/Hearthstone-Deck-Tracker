@@ -35,7 +35,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxAutoUse.IsChecked = Config.Instance.AutoUseDeck;
 			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
-			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
 			ComboBoxDeckDateType.ItemsSource = Enum.GetValues(typeof(DeckDateType));
 			ComboBoxDeckDateType.SelectedItem = Config.Instance.SelectedDateOnDecks;
@@ -119,10 +118,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
 		}
-
-		private void CheckBoxClassCardsFirst_Checked(object sender, RoutedEventArgs e) => Core.MainWindow.SortClassCardsFirst(true);
-
-		private void CheckBoxClassCardsFirst_Unchecked(object sender, RoutedEventArgs e) => Core.MainWindow.SortClassCardsFirst(false);
 
 		private void ComboBoxDatesOnDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -225,7 +220,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Core.TrayIcon.MenuItemStartHearthstone.Text = LocUtil.Get("TrayIcon_MenuItemStartHearthstone");
 			Core.TrayIcon.MenuItemUseNoDeck.Text = LocUtil.Get("TrayIcon_MenuItemUseNoDeck");
 			Core.TrayIcon.MenuItemAutoSelect.Text = LocUtil.Get("TrayIcon_MenuItemAutoSelect");
-			Core.TrayIcon.MenuItemClassCardsFirst.Text = LocUtil.Get("TrayIcon_MenuItemClassCardsFirst");
 			Core.TrayIcon.MenuItemShow.Text = LocUtil.Get("TrayIcon_MenuItemShow");
 			Core.TrayIcon.MenuItemExit.Text = LocUtil.Get("TrayIcon_MenuItemExit");
 

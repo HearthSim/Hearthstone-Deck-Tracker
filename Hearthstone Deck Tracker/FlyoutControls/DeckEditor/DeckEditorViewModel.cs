@@ -89,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 				};
 				SelectedDbIndex = 0;
 				SearchText = string.Empty;
-				Helper.SortCardCollection(Cards, false);
+				Helper.SortCardCollection(Cards);
 			}
 		}
 

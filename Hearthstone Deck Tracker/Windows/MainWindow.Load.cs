@@ -55,7 +55,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
 
-			Core.TrayIcon.MenuItemClassCardsFirst.Checked = Config.Instance.CardSortingClassFirst;
 			Core.TrayIcon.MenuItemUseNoDeck.Checked = DeckList.Instance.ActiveDeck == null;
 
 			UpdateMyGamesPanelVisibility();

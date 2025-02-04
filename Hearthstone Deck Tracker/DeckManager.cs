@@ -719,7 +719,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			deck.Cards.Clear();
-			Helper.SortCardCollection(cards, false);
+			Helper.SortCardCollection(cards);
 			foreach(var card in cards)
 				deck.Cards.Add(card);
 			deck.LastEdited = DateTime.Now;

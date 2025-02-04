@@ -42,17 +42,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public void SortClassCardsFirst(bool classFirst)
-		{
-			if(!_initialized)
-				return;
-			Options.OptionsTrackerGeneral.CheckBoxClassCardsFirst.IsChecked = classFirst;
-			Config.Instance.CardSortingClassFirst = classFirst;
-			Config.Save();
-			Helper.SortCardCollection(ListViewDeck.ItemsSource, classFirst);
-			Core.TrayIcon.MenuItemClassCardsFirst.Checked = classFirst;
-		}
-
 		internal void ShowReplayFromFileDialog()
 		{
 			try
@@ -422,7 +411,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(version != null)
 			{
 				ListViewDeck.ItemsSource = Helper.ResolveZilliax3000(version.Cards, version.Sideboards);
-				Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
+				Helper.SortCardCollection(ListViewDeck.Items);
 			}
 
 			ManaCurveMyDecks.SetDeck(deck);

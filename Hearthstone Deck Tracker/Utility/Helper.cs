@@ -225,16 +225,12 @@ namespace Hearthstone_Deck_Tracker
 		public static string RemoveInvalidFileNameChars(string s) => RemoveChars(s, Path.GetInvalidFileNameChars());
 		public static string RemoveChars(string s, char[] c) => new Regex($"[{Regex.Escape(new string(c))}]").Replace(s, "");
 
-		public static void SortCardCollection(IEnumerable collection, bool classFirst)
+		public static void SortCardCollection(IEnumerable collection)
 		{
 			if(collection == null)
 				return;
 			var view1 = (CollectionView)CollectionViewSource.GetDefaultView(collection);
 			view1.SortDescriptions.Clear();
-
-			if(classFirst)
-				view1.SortDescriptions.Add(new SortDescription(nameof(Card.IsClassCard), ListSortDirection.Descending));
-
 			view1.SortDescriptions.Add(new SortDescription(nameof(Card.HideStats), ListSortDirection.Descending));
 			view1.SortDescriptions.Add(new SortDescription(nameof(Card.Cost), ListSortDirection.Ascending));
 			view1.SortDescriptions.Add(new SortDescription(nameof(Card.LocalizedName), ListSortDirection.Ascending));

@@ -20,8 +20,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public MenuItem MenuItemShow { get; }
 
-		public MenuItem MenuItemClassCardsFirst { get; }
-
 		public MenuItem MenuItemAutoSelect { get; }
 
 		public MenuItem MenuItemUseNoDeck { get; }
@@ -53,9 +51,6 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemAutoSelect = new MenuItem(LocUtil.Get("TrayIcon_MenuItemAutoSelect"), (sender, args) => AutoDeckDetectionContextMenu());
 			MenuItemAutoSelect.Checked = ConfigWrapper.Bindable.AutoDeckDetection;
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemAutoSelect);
-
-			MenuItemClassCardsFirst = new MenuItem(LocUtil.Get("TrayIcon_MenuItemClassCardsFirst"), (sender, args) => SortClassCardsFirstContextMenu());
-			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemClassCardsFirst);
 
 			MenuItemShow = new MenuItem(LocUtil.Get("TrayIcon_MenuItemShow"), (sender, args) => Core.MainWindow.ActivateWindow());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemShow);
@@ -98,8 +93,6 @@ namespace Hearthstone_Deck_Tracker
 			else
 				DeckList.Instance.ActiveDeck = null;
 		}
-
-		private void SortClassCardsFirstContextMenu() => Core.MainWindow.SortClassCardsFirst(!MenuItemClassCardsFirst.Checked);
 
 		public void ShowMessage(string text, string title = "Hearthstone Deck Tracker", int duration = 5, ToolTipIcon icon = ToolTipIcon.Info)
 			=> NotifyIcon.ShowBalloonTip(duration, title, text, icon);
