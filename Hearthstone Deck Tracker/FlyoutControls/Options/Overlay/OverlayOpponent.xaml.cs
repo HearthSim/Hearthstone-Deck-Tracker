@@ -116,31 +116,21 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		private void SetPanel()
 		{
-			foreach(var panel in Config.Instance.DeckPanelOrderOpponent)
+			var cfg = Config.Instance;
+			var move = ElementSorterOpponent.MoveItem;
+			foreach(var panel in cfg.DeckPanelOrderOpponent)
 			{
-				switch(panel)
+				var item = panel switch
 				{
-					case Enums.DeckPanel.Winrate:
-						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, Config.Instance.ShowWinRateAgainst,
-																			value => Config.Instance.ShowWinRateAgainst = value, false));
-						break;
-					case Enums.DeckPanel.Cards:
-						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, !Config.Instance.HideOpponentCards,
-																			value => Config.Instance.HideOpponentCards = !value, false));
-						break;
-					case Enums.DeckPanel.CardCounter:
-						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, !Config.Instance.HideOpponentCardCount,
-																			value => Config.Instance.HideOpponentCardCount = !value, false));
-						break;
-					case Enums.DeckPanel.DrawChances:
-						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, !Config.Instance.HideOpponentDrawChances,
-																			value => Config.Instance.HideOpponentDrawChances = !value, false));
-						break;
-					case Enums.DeckPanel.Fatigue:
-						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, !Config.Instance.HideOpponentFatigueCount,
-																			value => Config.Instance.HideOpponentFatigueCount = !value, false));
-						break;
-				}
+					Enums.DeckPanel.Winrate => new ElementSorterItem(panel, cfg.ShowWinRateAgainst, value => cfg.ShowWinRateAgainst = value, false, move),
+					Enums.DeckPanel.Cards => new ElementSorterItem(panel, !cfg.HideOpponentCards, value => cfg.HideOpponentCards = !value, false, move),
+					Enums.DeckPanel.CardCounter => new ElementSorterItem(panel, !cfg.HideOpponentCardCount, value => cfg.HideOpponentCardCount = !value, false, move),
+					Enums.DeckPanel.DrawChances => new ElementSorterItem(panel, !cfg.HideOpponentDrawChances, value => cfg.HideOpponentDrawChances = !value, false, move),
+					Enums.DeckPanel.Fatigue => new ElementSorterItem(panel, !cfg.HideOpponentFatigueCount, value => cfg.HideOpponentFatigueCount = !value, false, move),
+					_ => null
+				};
+				if(item != null)
+					ElementSorterOpponent.AddItem(item);
 			}
 		}
 

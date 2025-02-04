@@ -96,47 +96,25 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		private void SetPanel()
 		{
-			foreach(var panel in Config.Instance.DeckPanelOrderLocalPlayer)
+			var cfg = Config.Instance;
+			var move = ElementSorterPlayer.MoveItem;
+			foreach(var panel in cfg.DeckPanelOrderLocalPlayer)
 			{
-				switch(panel)
+				var item = panel switch
 				{
-					case Enums.DeckPanel.Cards:
-						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerCards,
-																		  value => Config.Instance.HidePlayerCards = !value, true));
-						break;
-					case Enums.DeckPanel.CardsTop:
-						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerCardsTop,
-																		  value => Config.Instance.HidePlayerCardsTop = !value, true));
-						break;
-					case Enums.DeckPanel.CardsBottom:
-						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerCardsBottom,
-																		  value => Config.Instance.HidePlayerCardsBottom = !value, true));
-						break;
-					case Enums.DeckPanel.Sideboards:
-						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerSideboards,
-																		  value => Config.Instance.HidePlayerSideboards = !value, true));
-						break;
-					case Enums.DeckPanel.CardCounter:
-						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerCardCount,
-																		  value => Config.Instance.HidePlayerCardCount = !value, true));
-						break;
-					case Enums.DeckPanel.DrawChances:
-						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HideDrawChances,
-																		  value => Config.Instance.HideDrawChances = !value, true));
-						break;
-					case Enums.DeckPanel.Fatigue:
-						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerFatigueCount,
-																		  value => Config.Instance.HidePlayerFatigueCount = !value, true));
-						break;
-					case Enums.DeckPanel.DeckTitle:
-						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, Config.Instance.ShowDeckTitle,
-																		  value => Config.Instance.ShowDeckTitle = value, true));
-						break;
-					case Enums.DeckPanel.Wins:
-						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, Config.Instance.ShowDeckWins,
-																		  value => Config.Instance.ShowDeckWins = value, true));
-						break;
-				}
+					Enums.DeckPanel.Cards => new ElementSorterItem(panel, !cfg.HidePlayerCards, value => cfg.HidePlayerCards = !value, true, move),
+					Enums.DeckPanel.CardsTop => new ElementSorterItem(panel, !cfg.HidePlayerCardsTop, value => cfg.HidePlayerCardsTop = !value, true, move),
+					Enums.DeckPanel.CardsBottom => new ElementSorterItem(panel, !cfg.HidePlayerCardsBottom, value => cfg.HidePlayerCardsBottom = !value, true, move),
+					Enums.DeckPanel.Sideboards => new ElementSorterItem(panel, !cfg.HidePlayerSideboards, value => cfg.HidePlayerSideboards = !value, true, move),
+					Enums.DeckPanel.CardCounter => new ElementSorterItem(panel, !cfg.HidePlayerCardCount, value => cfg.HidePlayerCardCount = !value, true, move),
+					Enums.DeckPanel.DrawChances => new ElementSorterItem(panel, !cfg.HideDrawChances, value => cfg.HideDrawChances = !value, true, move),
+					Enums.DeckPanel.Fatigue => new ElementSorterItem(panel, !cfg.HidePlayerFatigueCount, value => cfg.HidePlayerFatigueCount = !value, true, move),
+					Enums.DeckPanel.DeckTitle => new ElementSorterItem(panel, cfg.ShowDeckTitle, value => cfg.ShowDeckTitle = value, true, move),
+					Enums.DeckPanel.Wins => new ElementSorterItem(panel, cfg.ShowDeckWins, value => cfg.ShowDeckWins = value, true, move),
+					_ => null
+				};
+				if(item != null)
+					ElementSorterPlayer.AddItem(item);
 			}
 		}
 

@@ -3,6 +3,7 @@
 using System;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility.Animations;
 using static Hearthstone_Deck_Tracker.Enums.SortDirection;
 
 #endregion
@@ -16,16 +17,18 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private readonly bool _initialized;
 		private readonly bool _isPlayerList;
+		private readonly Action<ElementSorterItem, SortDirection> _moveItem;
 		private readonly Action<bool> _setConfigValue;
 		public DeckPanel Panel { get; }
 
-		public ElementSorterItem(DeckPanel panel, bool isChecked, Action<bool> setConfigValue, bool isPlayerList)
+		public ElementSorterItem(DeckPanel panel, bool isChecked, Action<bool> setConfigValue, bool isPlayerList, Action<ElementSorterItem, SortDirection> moveItem)
 		{
 			InitializeComponent();
 			Panel = panel;
 			CheckBox.IsChecked = isChecked;
 			_setConfigValue = setConfigValue;
 			_isPlayerList = isPlayerList;
+			_moveItem = moveItem;
 			_initialized = true;
 		}
 
@@ -33,13 +36,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_isPlayerList)
 			{
-				Core.MainWindow.Options.OptionsOverlayPlayer.ElementSorterPlayer.MoveItem(this, Up);
+				_moveItem(this, Up);
 				Core.Overlay.UpdatePlayerLayout();
 				Core.Windows.PlayerWindow.UpdatePlayerLayout();
 			}
 			else
 			{
-				Core.MainWindow.Options.OptionsOverlayOpponent.ElementSorterOpponent.MoveItem(this, Up);
+				_moveItem(this, Up);
 				Core.Overlay.UpdateOpponentLayout();
 				Core.Windows.OpponentWindow.UpdateOpponentLayout();
 			}
@@ -49,13 +52,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_isPlayerList)
 			{
-				Core.MainWindow.Options.OptionsOverlayPlayer.ElementSorterPlayer.MoveItem(this, Down);
+				_moveItem(this, Down);
 				Core.Overlay.UpdatePlayerLayout();
 				Core.Windows.PlayerWindow.UpdatePlayerLayout();
 			}
 			else
 			{
-				Core.MainWindow.Options.OptionsOverlayOpponent.ElementSorterOpponent.MoveItem(this, Down);
+				_moveItem(this, Down);
 				Core.Overlay.UpdateOpponentLayout();
 				Core.Windows.OpponentWindow.UpdateOpponentLayout();
 			}
