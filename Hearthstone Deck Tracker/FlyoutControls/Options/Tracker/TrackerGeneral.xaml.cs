@@ -33,7 +33,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboBoxLanguage.SelectedItem = Config.Instance.Localization;
 
 			CheckBoxAutoUse.IsChecked = Config.Instance.AutoUseDeck;
-			CheckBoxAutoDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
 			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
@@ -184,24 +183,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		private void CheckBoxAutoDeckDetecion_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AutoDeckDetection = true;
-			Config.Save();
-			Core.MainWindow.AutoDeckDetection(true);
-		}
-
-		private void CheckBoxAutoDeckDetection_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AutoDeckDetection = false;
-			Config.Save();
-			Core.MainWindow.AutoDeckDetection(false);
 		}
 
 		private void CheckboxShowMyGamesPanel_OnChecked(object sender, RoutedEventArgs e)

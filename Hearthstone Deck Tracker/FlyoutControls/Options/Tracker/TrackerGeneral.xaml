@@ -76,7 +76,7 @@
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                   Content="{lex:Loc Options_Tracker_General_CheckBox_AutoDeckDetection}"
-                  Checked="CheckBoxAutoDeckDetecion_OnChecked" Unchecked="CheckBoxAutoDeckDetection_OnUnchecked" />
+                  IsChecked="{Binding Bindable.AutoDeckDetection, Source={StaticResource ConfigWrapper}}"/>
         <CheckBox x:Name="CheckBoxAutoUse" Margin="10,5,0,0"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

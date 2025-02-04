@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Importing.Game;
 using Hearthstone_Deck_Tracker.Importing.Game.ImportOptions;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
@@ -206,9 +207,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Log.Info("Auto deck detection disabled.");
 				Core.MainWindow.ShowMessage("Auto deck selection disabled.", "This can be re-enabled under 'options (advanced) > tracker > general'.").Forget();
-				Config.Instance.AutoDeckDetection = false;
-				Config.Save();
-				Core.MainWindow.AutoDeckDetection(false);
+				ConfigWrapper.Bindable.AutoDeckDetection = false;
 			}
 			_waitingForUserInput = false;
 		}

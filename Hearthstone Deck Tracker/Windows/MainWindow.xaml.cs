@@ -42,16 +42,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public void AutoDeckDetection(bool enable)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AutoDeckDetection = enable;
-			Config.Save();
-			Options.OptionsTrackerGeneral.CheckBoxAutoDeckDetection.IsChecked = enable;
-			Core.TrayIcon.MenuItemAutoSelect.Checked = enable;
-		}
-
 		public void SortClassCardsFirst(bool classFirst)
 		{
 			if(!_initialized)

@@ -51,6 +51,7 @@ namespace Hearthstone_Deck_Tracker
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemUseNoDeck);
 
 			MenuItemAutoSelect = new MenuItem(LocUtil.Get("TrayIcon_MenuItemAutoSelect"), (sender, args) => AutoDeckDetectionContextMenu());
+			MenuItemAutoSelect.Checked = ConfigWrapper.Bindable.AutoDeckDetection;
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemAutoSelect);
 
 			MenuItemClassCardsFirst = new MenuItem(LocUtil.Get("TrayIcon_MenuItemClassCardsFirst"), (sender, args) => SortClassCardsFirstContextMenu());
@@ -77,9 +78,18 @@ namespace Hearthstone_Deck_Tracker
 			{
 				MenuItemUseNoDeck.Checked = deck == null;
 			};
+
+			ConfigWrapper.Bindable.PropertyChanged += (_, args) =>
+			{
+				if(args.PropertyName == nameof(ConfigWrapper.Bindable.AutoDeckDetection))
+					MenuItemAutoSelect.Checked = ConfigWrapper.Bindable.AutoDeckDetection;
+			};
 		}
 
-		private void AutoDeckDetectionContextMenu() => Core.MainWindow.AutoDeckDetection(!MenuItemAutoSelect.Checked);
+		private void AutoDeckDetectionContextMenu()
+		{
+			ConfigWrapper.Bindable.AutoDeckDetection = !ConfigWrapper.Bindable.AutoDeckDetection;
+		}
 
 		private void UseNoDeckContextMenu()
 		{

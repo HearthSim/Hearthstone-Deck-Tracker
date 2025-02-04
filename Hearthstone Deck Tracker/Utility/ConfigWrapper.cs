@@ -564,5 +564,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 				OnPropertyChanged();
 			}
 		}
+
+		public bool AutoDeckDetection
+		{
+			get => Config.Instance.AutoDeckDetection;
+			set
+			{
+				if(Config.Instance.AutoDeckDetection == value)
+					return;
+				Config.Instance.AutoDeckDetection = value;
+				Config.Save();
+				OnPropertyChanged();
+			}
+		}
 	}
 }

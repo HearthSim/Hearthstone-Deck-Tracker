@@ -49,8 +49,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			Options.Load(Core.Game);
 
-			Core.TrayIcon.MenuItemAutoSelect.Checked = Config.Instance.AutoDeckDetection;
-
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
 			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
