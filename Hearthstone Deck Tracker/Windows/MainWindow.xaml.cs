@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Options.OptionsTrackerGeneral.CheckBoxClassCardsFirst.IsChecked = classFirst;
 			Config.Instance.CardSortingClassFirst = classFirst;
 			Config.Save();
-			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, classFirst);
+			Helper.SortCardCollection(ListViewDeck.ItemsSource, classFirst);
 			Core.TrayIcon.MenuItemClassCardsFirst.Checked = classFirst;
 		}
 
@@ -482,7 +482,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					DeckList.Instance.AllTags.Add("Brawl");
 					DeckList.Save();
-					Core.MainWindow?.ReloadTags();
+					ReloadTags();
 				}
 				deck.Tags.Add("Brawl");
 			}
