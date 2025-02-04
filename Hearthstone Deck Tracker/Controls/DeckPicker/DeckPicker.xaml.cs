@@ -25,6 +25,7 @@ using static System.Windows.Visibility;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListView = System.Windows.Controls.ListView;
 using Hearthstone_Deck_Tracker.Windows;
+using MahApps.Metro;
 using DeckType = Hearthstone_Deck_Tracker.Enums.DeckType;
 
 #endregion
@@ -86,6 +87,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			{
 				SelectDeckAndAppropriateView(deck);
 				UpdateArchivedClassVisibility();
+			};
+
+			ThemeManager.IsThemeChanged += (_, _) =>
+			{
+				UpdateDeckModeToggleButton();
 			};
 		}
 
@@ -771,7 +777,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			UpdateDeckModeToggleButton();
 		}
 
-		public void UpdateDeckModeToggleButton()
+		private void UpdateDeckModeToggleButton()
 		{
 			OnPropertyChanged(nameof(BorderDeckModeBackground));
 			OnPropertyChanged(nameof(BorderDeckModeTextBrush));
