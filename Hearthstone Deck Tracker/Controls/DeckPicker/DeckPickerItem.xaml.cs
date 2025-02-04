@@ -49,9 +49,17 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public FontWeight FontWeightActiveDeck => Equals(Deck, DeckList.Instance.ActiveDeck) ? FontWeights.Bold : FontWeights.Regular;
 
-		public FontWeight FontWeightSelected => Equals(Deck, DeckList.Instance.ActiveDeck)
-													? FontWeights.Bold
-													: (Deck != null && Core.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
+		public FontWeight FontWeightSelected => Equals(Deck, DeckList.Instance.ActiveDeck) ? FontWeights.Bold : IsSelected ? FontWeights.SemiBold : FontWeights.Regular;
+
+		public bool IsSelected
+		{
+			get => GetProp(false);
+			set
+			{
+				SetProp(value);
+				OnPropertyChanged(nameof(FontWeightSelected));
+			}
+		}
 
 		public string? TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? LocUtil.Get(LocActive, true) : LocUtil.Get(LocUse, true);
 
@@ -114,7 +122,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public void RefreshProperties()
 		{
-			OnPropertyChanged(nameof(FontWeightSelected));
 			OnPropertyChanged(nameof(FontWeightActiveDeck));
 			OnPropertyChanged(nameof(TextUseButton));
 			OnPropertyChanged(nameof(LastPlayed));

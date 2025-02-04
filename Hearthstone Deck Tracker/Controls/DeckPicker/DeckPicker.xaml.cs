@@ -497,13 +497,10 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private void ListViewDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(Config.Instance.DeckPickerItemLayout == DeckLayout.Legacy)
-			{
-				foreach(var deck in e.AddedItems.Cast<DeckPickerItemViewModel>())
-					deck.RefreshProperties();
-				foreach(var deck in e.RemovedItems.Cast<DeckPickerItemViewModel>())
-					deck.RefreshProperties();
-			}
+			foreach(var deck in e.AddedItems.Cast<DeckPickerItemViewModel>())
+				deck.IsSelected = true;
+			foreach(var deck in e.RemovedItems.Cast<DeckPickerItemViewModel>())
+				deck.IsSelected = false;
 			OnSelectedDeckChanged?.Invoke(this, SelectedDecks);
 		}
 
