@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -252,6 +253,12 @@ namespace Hearthstone_Deck_Tracker
 
 		internal static async Task Shutdown()
 		{
+			await PrepareShutdown();
+			Application.Current.Shutdown();
+		}
+
+		private static async Task PrepareShutdown()
+		{
 			try
 			{
 				Log.Info("Shutting down...");
@@ -283,14 +290,31 @@ namespace Hearthstone_Deck_Tracker
 				PluginManager.SavePluginsSettings();
 				PluginManager.Instance.UnloadPlugins();
 			}
-			catch(Exception)
+			catch(Exception e)
 			{
-				// Doesn't matter
+				Log.Error(e);
 			}
-			finally
+		}
+
+		private static bool _restarting;
+		internal static async void RestartApplication()
+		{
+			if(_restarting)
+				return;
+			_restarting = true;
+			Log.Info("Restarting...");
+
+#if(SQUIRREL)
+			await PrepareShutdown();
+			UpdateManager.RestartApp();
+#else
+			// This event is fired by Application.Shutdown
+			Application.Current.Exit += (_, _) =>
 			{
-				Application.Current.Shutdown();
-			}
+				Process.Start(Application.ResourceAssembly.Location);
+			};
+			await Shutdown();
+#endif
 		}
 
 		private static async Task ShowRestartRequiredMessageAsync()

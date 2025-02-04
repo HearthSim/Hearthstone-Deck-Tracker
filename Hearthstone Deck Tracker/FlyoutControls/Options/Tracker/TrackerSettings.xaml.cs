@@ -154,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.CloseWithHearthstone = false;
 			Config.Save();
 		}
-		
+
 		private void CheckboxStartHearthstoneWithHDT_Checked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
@@ -180,7 +180,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.SaveConfigInAppData = true;
 			XmlManager<Config>.Save(path, Config.Instance);
 			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-			Core.MainWindow.Restart();
+			Core.RestartApplication();
 #endif
 		}
 
@@ -193,7 +193,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.SaveConfigInAppData = false;
 			XmlManager<Config>.Save(path, Config.Instance);
 			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-			Core.MainWindow.Restart();
+			Core.RestartApplication();
 #endif
 		}
 
@@ -205,7 +205,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.SaveDataInAppData = true;
 			Config.Save();
 			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-			Core.MainWindow.Restart();
+			Core.RestartApplication();
 #endif
 		}
 
@@ -217,7 +217,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.SaveDataInAppData = false;
 			Config.Save();
 			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-			Core.MainWindow.Restart();
+			Core.RestartApplication();
 #endif
 		}
 
@@ -276,7 +276,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				if(!saveInAppData)
 				{
 					await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-					Core.MainWindow.Restart();
+					Core.RestartApplication();
 				}
 			}
 #endif
@@ -408,7 +408,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Config.Save();
 
 				await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-				Core.MainWindow.Restart();
+				Core.RestartApplication();
 			}
 		}
 

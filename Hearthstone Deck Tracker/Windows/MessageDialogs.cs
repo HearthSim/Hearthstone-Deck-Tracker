@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					NegativeButtonText = LocUtil.Get(LocRestartButtonLater)
 				});
 			if(result == MessageDialogResult.Affirmative)
-				Core.MainWindow.Restart();
+				Core.RestartApplication();
 		}
 
 		public static async Task ShowMessage(this MetroWindow window, string title, string message) => await window.ShowMessageAsync(title, message);

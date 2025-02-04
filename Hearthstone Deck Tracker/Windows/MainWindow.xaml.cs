@@ -312,19 +312,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ShowInTaskbar = false;
 		}
 
-
-		public void Restart()
-		{
-#if(SQUIRREL)
-			UpdateManager.RestartApp();
-#else
-			Close();
-			Process.Start(Application.ResourceAssembly.Location);
-			if(Application.Current != null)
-				Application.Current.Shutdown();
-#endif
-		}
-
 		public void ActivateWindow()
 		{
 			try
