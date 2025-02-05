@@ -108,10 +108,7 @@ partial class OverlayExtensions
 	private static void OnElementUnloaded(object sender, RoutedEventArgs routedEventArgs)
 	{
 		if(sender is DependencyObject d)
-		{
 			UnregisterToolTip(d);
-			_waitingOnVisualTree.Remove(d);
-		}
 	}
 
 	private static void OnToolTipChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -171,5 +168,6 @@ partial class OverlayExtensions
 		if(_elementIsInOverlay.TryGetValue(d, out var isInOverlay) && isInOverlay)
 			OnToolTipChanged?.Invoke(null, d);
 		_elementIsInOverlay.Remove(d);
+		_waitingOnVisualTree.Remove(d);
 	}
 }
