@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				// Get related cards from Entity
 				if (relatedCards.IsEmpty())
 				{
-					foreach(var entity in ControllerPlayer.Deck)
+					foreach(var entity in ControllerPlayer.Deck.Where(x => x.CardId == Id))
 						relatedCards.AddRange(entity.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull());
 				}
 
