@@ -46,18 +46,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(Config.Instance.MinimizeToTray)
 					MinimizeToTray();
 			}
-
-			Options.Load(Core.Game);
-
-			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
-			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
-
-			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
-
-			Core.TrayIcon.MenuItemUseNoDeck.Checked = DeckList.Instance.ActiveDeck == null;
-
-			UpdateMyGamesPanelVisibility();
 		}
 
 		public void ReloadTags()
@@ -74,6 +62,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Helper.DpiScalingX = presentationsource.CompositionTarget.TransformToDevice.M11;
 				Helper.DpiScalingY = presentationsource.CompositionTarget.TransformToDevice.M22;
 			}
+
+			Options.Load(Core.Game);
+			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
+			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
+			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
+			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
+			Core.TrayIcon.MenuItemUseNoDeck.Checked = DeckList.Instance.ActiveDeck == null;
+			UpdateMyGamesPanelVisibility();
 			UpdateFlyoutAnimationsEnabled();
 		}
 
