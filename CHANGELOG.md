@@ -1,5 +1,8 @@
-## Unreleased
+## **Release v1.38.7 - 2025-02-05**
+**Updated for Hearthstone 31.4.2**
+
 **Hearthstone**:
+- Fixed an issue where related cards were shown wrongly.
 - Fixed an issue where previous versions of decks were not correctly selected when queueing into a game.
 - Fixed an issue where changes to e.g. E.T.C.'s Band would affect old versions of a deck, leading to duplicate versions.
 - Fixed an issue where card tooltips in the Player/Opponent tracker windows were not working.
