@@ -306,7 +306,7 @@ namespace Hearthstone_Deck_Tracker
 
 #if(SQUIRREL)
 			await PrepareShutdown();
-			UpdateManager.RestartApp();
+			Squirrel.UpdateManager.RestartApp();
 #else
 			// This event is fired by Application.Shutdown
 			Application.Current.Exit += (_, _) =>
