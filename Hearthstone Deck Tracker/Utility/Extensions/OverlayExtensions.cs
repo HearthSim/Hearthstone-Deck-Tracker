@@ -4,11 +4,10 @@ using System.Windows;
 
 namespace Hearthstone_Deck_Tracker.Utility.Extensions;
 
-public delegate void MouseIntersectionChangedEventHandler(object sender, bool intersecting);
-
 public partial class OverlayExtensions : DependencyObject
 {
-	public static Dictionary<FrameworkElement, RoutedEventHandler> UnregisterCallbacks = new Dictionary<FrameworkElement, RoutedEventHandler>();
+	private static readonly Dictionary<FrameworkElement, RoutedEventHandler> UnregisterCallbacks = new();
+	private static readonly Dictionary<FrameworkElement, RoutedEventHandler> LoadedCallback = new();
 
 	#region IsOverlayHitTestVisible
 
@@ -77,12 +76,11 @@ public partial class OverlayExtensions : DependencyObject
 
 	private static void OnIsOverlayHoverVisibleChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
 	{
-		if(!(d is FrameworkElement element))
+		if(d is not FrameworkElement element)
 			return;
 		if((bool)e.NewValue)
 		{
-			OnRegisterHoverVisible?.Invoke(element, true);
-			UnregisterCallbacks[element] = (object sender, RoutedEventArgs args) =>
+			UnregisterCallbacks[element] = (_, _) =>
 			{
 				if(UnregisterCallbacks.TryGetValue(element, out var callback))
 				{
@@ -91,14 +89,31 @@ public partial class OverlayExtensions : DependencyObject
 					UnregisterCallbacks.Remove(element);
 				}
 			};
+			LoadedCallback[element] = (_, _) =>
+			{
+				if(LoadedCallback.TryGetValue(element, out var callback))
+				{
+					element.Loaded -= callback;
+					OnRegisterHoverVisible?.Invoke(element, true);
+					LoadedCallback.Remove(element);
+				}
+			};
 			element.Unloaded += UnregisterCallbacks[element];
+			element.Loaded += LoadedCallback[element];
+			OnRegisterHoverVisible?.Invoke(element, true);
 		}
 		else
 		{
-			if(UnregisterCallbacks.TryGetValue(element, out var callback))
+			if(UnregisterCallbacks.TryGetValue(element, out var onUnloaded))
 			{
-				element.Unloaded -= callback;
+				element.Unloaded -= onUnloaded;
 				UnregisterCallbacks.Remove(element);
+			}
+
+			if(LoadedCallback.TryGetValue(element, out var onLoaded))
+			{
+				element.Loaded -= onLoaded;
+				LoadedCallback.Remove(element);
 			}
 			OnRegisterHoverVisible?.Invoke(element, false);
 		}
