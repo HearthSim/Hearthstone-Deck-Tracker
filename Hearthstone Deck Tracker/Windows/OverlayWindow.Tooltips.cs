@@ -73,8 +73,18 @@ public partial class OverlayWindow
 		// correctly we need to set it here to match the target.
 		tooltip.DataContext = target is FrameworkContentElement fce ? fce.DataContext : feTarget.DataContext;
 
+		try
+		{
+			OverlayTooltip.Children.Add(tooltip);
+		}
+		catch(InvalidOperationException e)
+		{
+			// Likely happens if the element is already a child of another element.
+			// Maybe SetTooltip got called twice?
+			Log.Error(e);
+			return;
+		}
 		_activeTooltips[target] = tooltip;
-		OverlayTooltip.Children.Add(tooltip);
 
 
 		// Normalize placement to a direction. We don't support the other, more advanced, placement methods.
