@@ -1,4 +1,4 @@
-## **Release v1.39.1 - 2025-02-06**
+## **Release v1.39.2 - 2025-02-06**
 **General**:
 - Fixed various crashes.
 
