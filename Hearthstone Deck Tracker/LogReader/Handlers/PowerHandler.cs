@@ -758,7 +758,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 										.LastOrDefault(
 											x => !x.ids.Contains(gameState.CurrentBlock.SourceEntityId)
 										);
-									if(entity.CardId != null)
+									if(entity?.CardId != null)
 									{
 										ids.Add(gameState.CurrentBlock.SourceEntityId);
 										AddKnownCardId(gameState, entity.CardId);
