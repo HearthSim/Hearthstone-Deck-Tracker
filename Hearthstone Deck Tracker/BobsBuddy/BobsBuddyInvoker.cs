@@ -389,7 +389,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				throw new ArgumentException(friendly ? "Player" : "Opponent" + " Entity could not be found. Exiting.");
 			}
 
-			if(gamePlayer.Board.Any(x => !x.Card.IsKnownCard))
+			if(gamePlayer.Board.Any(x => !x.Card.IsKnownCard && !string.IsNullOrWhiteSpace(x.CardId)))
 			{
 				ErrorState = BobsBuddyErrorState.UnknownCards;
 				throw new ArgumentException("Board has unknown cards. Exiting.");
