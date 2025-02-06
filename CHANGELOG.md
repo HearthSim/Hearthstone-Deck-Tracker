@@ -1,3 +1,7 @@
+## **Release v1.39.1 - 2025-02-06**
+**General**:
+- Fixed various crashes.
+
 ## **Release v1.39.0 - 2025-02-06**
 **Hearthstone**:
 - Card balance changes (e.g. cost changes) are now downloaded dynamically, without an HDT update.
