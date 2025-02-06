@@ -28,7 +28,9 @@ public static class CardDefsManager
 					using var ms = new MemoryStream(data);
 					return Cards.ParseCardDefs(ms);
 				},
-				maxCacheSize: 3 // base + one language and one for good measure
+				alwaysKeepCached: new HashSet<string> { "base" },
+				maxCacheSize: 2 // two languages besides base
+
 			);
 		}
 		catch(ArgumentException e)

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -22,6 +23,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		private readonly Func<byte[], U> _dataConverter;
 		private readonly LRUCache<U> _lruCache;
 		private readonly Dictionary<string, LRUCache<U>.Entry> _lruLookup = new();
+		private readonly HashSet<string> _alwaysKeepCached;
 
 		private string CacheFilePath => Path.Combine(_storageDestination, "Cache.xml");
 
@@ -70,13 +72,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			Func<T, string> fileNameConverter,
 			Func<byte[], U> dataConverter,
 			long? maxCacheSize = null,
-			string? placeholderAsset = null)
+			string? placeholderAsset = null,
+			HashSet<T>? alwaysKeepCached = null)
 		{
 			_storageDestination = storageDestination;
 			_getFilename = fileNameConverter;
 			_getUrl = urlConverter;
 			_maxCacheSize = maxCacheSize;
 			_dataConverter = dataConverter;
+			_alwaysKeepCached = new HashSet<string>(alwaysKeepCached?.Select(_getFilename) ?? new List<string>());
 
 			_lruCache = TryLoadCache();
 			foreach (var entry in _lruCache)
@@ -183,8 +187,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		{
 			try
 			{
-				if(_lruCache.Count > _maxCacheSize)
-					_lruCache.GetRange((int)_maxCacheSize.Value, _lruCache.Count - (int)_maxCacheSize.Value).ForEach(TryDeleteFile);
+				if(_lruCache.Count <= _maxCacheSize)
+					return;
+				var items = _lruCache.Where(x => !_alwaysKeepCached.Contains(x.File)).ToList();
+				if(items.Count > _maxCacheSize)
+					items.GetRange((int)_maxCacheSize.Value, items.Count - (int)_maxCacheSize.Value).ForEach(TryDeleteFile);
 
 				SerializeLRUCache();
 			}
