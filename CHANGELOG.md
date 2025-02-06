@@ -1,5 +1,5 @@
 ## Unreleased
-**Fixes**:
+**Overlay**:
 - Fixed an issue where card tooltips in the overlay would not always appears as expected.
 
 ## **Release v1.38.9 - 2025-02-05**
