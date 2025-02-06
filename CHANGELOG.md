@@ -1,4 +1,4 @@
-## Unreleased
+## **Release v1.39.0 - 2025-02-06**
 **Hearthstone**:
 - Card balance changes (e.g. cost changes) are now downloaded dynamically, without an HDT update.
 - Improved how unknown cards are handled after a Hearthstone update.\
