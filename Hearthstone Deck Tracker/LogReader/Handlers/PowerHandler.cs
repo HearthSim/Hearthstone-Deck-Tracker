@@ -1364,9 +1364,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var blockId = gameState.CurrentBlock.Id;
 			for(var i = 0; i < count; i++)
 			{
-				if(!gameState.KnownCardIds.ContainsKey(blockId))
-					break;
-				gameState.KnownCardIds[blockId].RemoveAt(gameState.KnownCardIds[blockId].Count - 1);
+				if(gameState.KnownCardIds.TryGetValue(blockId, out var blockCardIds) && blockCardIds.Count > 0)
+					blockCardIds.RemoveAt(blockCardIds.Count - 1);
 			}
 		}
 
