@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private bool HandlePluginExceptions(Exception e)
 		{
-			var plugin = PluginManager.Instance.Plugins.FirstOrDefault(p => e.StackTrace.Contains(p.AssemblyName));
+			var plugin = PluginManager.Instance.Plugins.FirstOrDefault(p => e.Source == p.AssemblyName || e.StackTrace.Contains(p.AssemblyName));
 			if(plugin != null)
 			{
 				var incompatibleExceptions = new[]
