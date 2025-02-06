@@ -1,6 +1,15 @@
 ## Unreleased
+**Hearthstone**:
+- Card balance changes (e.g. cost changes) are now downloaded dynamically, without an HDT update.
+- Improved how unknown cards are handled after a Hearthstone update.\
+  *This change may require some plugins to be updated. If a plugin you use no longer works after this update, please reach out to the author. In most cases it should simply be a matter of recompiling the plugin, without any code changes.*
+
 **Overlay**:
-- Fixed an issue where card tooltips in the overlay would not always appears as expected.
+- Fixed an issue where card tooltips in the overlay would not always appear as expected.
+
+**Performance**:
+- Improved startup time.
+- Improved downloader size.
 
 ## **Release v1.38.9 - 2025-02-05**
 **Updated for Hearthstone 31.4.2**
