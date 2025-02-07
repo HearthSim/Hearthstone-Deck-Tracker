@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using HearthDb;
@@ -108,7 +109,16 @@ public static class CardDefsManager
 			return asset.Data;
 		}
 
-		var bundledLastModified = DateTime.Parse(bundled.LastModified);
+		// The bundled LastModified timestamp should always have the same format, as defined in HearthDb.CardDefsDownloader
+		if(!DateTime.TryParseExact(bundled.LastModified, "yyyy-MM-dd hh:mm:ss tt zzzz", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var bundledLastModified))
+		{
+			if(!DateTime.TryParse(bundled.LastModified, out bundledLastModified)) // Fallback just in case
+			{
+				Log.Info($"Unable to parse bundled LastModified ({bundled.LastModified}), using bundled CardDefs");
+				return await Task.Run(Cards.GetBundledBaseData);
+			}
+		}
+
 		if(!DateTime.TryParse(asset.LastModified, out var assetLastModified) || bundledLastModified > assetLastModified)
 		{
 			Log.Info($"Bundled CardDefs ({bundled.LastModified}) are newer than downloaded CardDefs ({asset.LastModified})");
@@ -129,7 +139,6 @@ public static class CardDefsManager
 
 		Log.Info("Could not load downloaded CardDefs from disk, using bundled instead");
 		return await Task.Run(Cards.GetBundledBaseData);
-
 	}
 
 	private static async Task LoadLocaleIfNeeded()
