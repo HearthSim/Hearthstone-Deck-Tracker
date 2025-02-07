@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!Core.Initialized)
 				return;
 			LastDeckClass.Add(new DeckInfo { Class = deck.Class, Name = deck.Name, Id = deck.DeckId });
-			Save();
+			Save(this);
 		}
 
 		private static DeckList Load()
