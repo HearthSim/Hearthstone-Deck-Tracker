@@ -12,7 +12,6 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static System.Windows.Visibility;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Utility.Toasts;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {

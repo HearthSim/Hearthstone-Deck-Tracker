@@ -25,7 +25,6 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using MahApps.Metro.Controls;
 using Microsoft.Win32;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using MediaColor = System.Windows.Media.Color;
@@ -444,9 +443,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 			return color;
 		}
-
-		public static MetroWindow? GetParentWindow(DependencyObject current) => GetVisualParent<MetroWindow>(current);
-		public static bool IsInOverlay(DependencyObject current) => GetVisualParent<MetroWindow>(current) != null;
 
 		public static T? GetVisualParent<T>(DependencyObject current)
 		{

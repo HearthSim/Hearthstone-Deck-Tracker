@@ -8,6 +8,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -20,8 +21,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			if(games == null)
 				return;
-			var window = Helper.GetParentWindow(parent);
-			if(window == null)
+			if(Window.GetWindow(parent) is not MetroWindow window)
 				return;
 			var heroes = new Dictionary<string, int>();
 			foreach(var game in games)
@@ -74,8 +74,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			games = games.Where(x => x != null).ToArray();
 			if(games.Length == 0)
 				return;
-			var window = Helper.GetParentWindow(control);
-			if(window == null)
+			if(Window.GetWindow(control) is not MetroWindow window)
 				return;
 			if(games.Length == 1 && await window.ShowDeleteGameStatsMessage(games.Single()) != MessageDialogResult.Affirmative)
 				return;

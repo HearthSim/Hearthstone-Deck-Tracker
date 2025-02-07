@@ -10,10 +10,10 @@ using System.Windows.Data;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay;
-using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Windows;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -84,8 +84,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		{
 			if(SelectedGame == null)
 				return;
-			var window = Helper.GetParentWindow(this);
-			if(window == null)
+			if(Window.GetWindow(this) is not MetroWindow window)
 				return;
 			await window.ShowEditGameDialog(SelectedGame);
 			DeckStatsList.Save();
@@ -181,8 +180,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			var deck = DeckList.Instance.ActiveDeck;
 			if(deck == null || deck.IsArenaDeck)
 				return;
-			var dialog = Helper.GetParentWindow(Core.StatsOverview)?.ShowAddGameDialog(deck);
-			if(dialog != null && await dialog)
+			if(Window.GetWindow(Core.StatsOverview) is not MetroWindow window)
+				return;
+			var dialog = window.ShowAddGameDialog(deck);
+			if(await dialog)
 				ConstructedStats.Instance.UpdateGames();
 		}
 	}

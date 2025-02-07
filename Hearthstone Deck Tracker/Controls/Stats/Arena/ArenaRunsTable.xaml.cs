@@ -1,6 +1,5 @@
 #region
 
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,6 +9,7 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -54,8 +54,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
 			if(run == null)
 				return;
-			var window = Helper.GetParentWindow(this);
-			if(window == null)
+			if(Window.GetWindow(this) is not MetroWindow window)
 				return;
 			var addedGame = await window.ShowAddGameDialog(run.Deck);
 			if(addedGame)
@@ -66,8 +65,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		{
 			if(SelectedGame == null)
 				return;
-			var window = Helper.GetParentWindow(this);
-			if(window == null)
+			if(Window.GetWindow(this) is not MetroWindow window)
 				return;
 			var edited = await window.ShowEditGameDialog(SelectedGame);
 			if(edited)
@@ -81,8 +79,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
 			if(run == null)
 				return;
-			var window = Helper.GetParentWindow(this);
-			if(window == null)
+			if(Window.GetWindow(this) is not MetroWindow window)
 				return;
 			if(await window.ShowDeleteGameStatsMessage(SelectedGame) != MessageDialogResult.Affirmative)
 				return;
