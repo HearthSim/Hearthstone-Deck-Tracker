@@ -81,13 +81,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 #endif
 			if(previousVersion < new Version(1, 2, 4))
 				infoControl = new HsReplayStatisticsInfo();
-			if(previousVersion <= new Version(1, 5, 14))
-			{
-				ContentControlHighlight.Content = new CollectionSyncingInfo();
-				ButtonContinue.Visibility = Visibility.Collapsed;
-				_continueToHighlight = true;
-				return;
-			}
 
 			if(infoControl == null)
 				return;
