@@ -109,8 +109,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			ElementSorterOpponent.IsPlayer = false;
 			SetPanel();
 
-			Core.Overlay.UpdateOpponentLayout();
-			Core.Windows.OpponentWindow.UpdateOpponentLayout();
 			_initialized = true;
 		}
 
