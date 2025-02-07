@@ -40,8 +40,6 @@
                     <ImageSource x:Key="ClassIconWarlockRound">Resources/ClassIcons/Round/warlock.png</ImageSource>
                     <ImageSource x:Key="ClassIconWarriorRound">Resources/ClassIcons/Round/warrior.png</ImageSource>
                     <ImageSource x:Key="DustIcon">Resources/dust.png</ImageSource>
-                    <ImageSource x:Key="TwitchExtDecklist">Resources/twitch_ext_decklist.png</ImageSource>
-                    <ImageSource x:Key="TwitchExtSecret">Resources/twitch_ext_secret.png</ImageSource>
                     <ImageSource x:Key="CollectionPromo">Resources/collection_promo.jpg</ImageSource>
                     <ImageSource x:Key="HearthstoneIcon">Resources/hearthstone-icon.png</ImageSource>
                     <ImageSource x:Key="BgsToastBackground">Resources/bgs-toast-background.jpg</ImageSource>
