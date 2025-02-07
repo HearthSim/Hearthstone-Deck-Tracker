@@ -96,6 +96,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		{
 			if(Helper.OptionsMain != null)
 				Helper.OptionsMain.TreeViewItemHSReplayAccount.IsSelected = true;
+			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.FlyoutOptions.IsOpen = true;
 			await HSReplayNetHelper.TryAuthenticate();
 		});

@@ -109,13 +109,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 			get => _showDetails;
 			set
 			{
-				_showDetails = value; 
+				_showDetails = value;
 				OnPropertyChanged();
 			}
 		}
 
 		private void RectangleSettings_OnMouseDown(object sender, MouseButtonEventArgs e)
 		{
+			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.FlyoutOptions.IsOpen = true;
 			Core.MainWindow.Options.TreeViewItemTrackerNotifications.IsSelected = true;
 			Core.MainWindow.ActivateWindow();

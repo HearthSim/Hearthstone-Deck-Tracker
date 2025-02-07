@@ -52,6 +52,7 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemAutoSelect.Checked = ConfigWrapper.Bindable.AutoDeckDetection;
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemAutoSelect);
 
+			// TODO: Find a better way to interact with the MainWindow
 			MenuItemShow = new MenuItem(LocUtil.Get("TrayIcon_MenuItemShow"), (sender, args) => Core.MainWindow.ActivateWindow());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemShow);
 
@@ -63,10 +64,12 @@ namespace Hearthstone_Deck_Tracker
 
 			NotifyIcon.MouseClick += (sender, args) =>
 			{
+			// TODO: Find a better way to interact with the MainWindow
 				if(args.Button == MouseButtons.Left)
 					Core.MainWindow.ActivateWindow();
 			};
 
+			// TODO: Find a better way to interact with the MainWindow
 			NotifyIcon.BalloonTipClicked += (sender1, e) => { Core.MainWindow.ActivateWindow(); };
 
 			DeckList.Instance.ActiveDeckChanged += deck =>

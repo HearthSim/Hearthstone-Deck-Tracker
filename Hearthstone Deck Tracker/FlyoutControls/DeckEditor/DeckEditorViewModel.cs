@@ -276,6 +276,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			}
 			else
 				DeckManager.SaveDeck(Deck);
+
+			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.FlyoutDeckEditor.IsOpen = false;
 		}
 

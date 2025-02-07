@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Windows;
 
 namespace Hearthstone_Deck_Tracker.Controls.Information
 {
@@ -36,7 +37,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 			}
 		}
 
-		private void ButtonContinue_OnClick(object sender, RoutedEventArgs e) => Core.MainWindow.FlyoutUpdateNotes.IsOpen = false;
+		private void ButtonContinue_OnClick(object sender, RoutedEventArgs e)
+		{
+			if(this.ParentMainWindow() is {} window)
+				window.FlyoutUpdateNotes.IsOpen = false;
+		}
 
 		private async void ButtonClose_OnClick(object sender, RoutedEventArgs e)
 		{

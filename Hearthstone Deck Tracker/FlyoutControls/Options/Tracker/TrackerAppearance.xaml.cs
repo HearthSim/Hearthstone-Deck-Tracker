@@ -105,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.UseAnimations = false;
-			Core.MainWindow.UpdateFlyoutAnimationsEnabled();
+			this.ParentMainWindow()?.UpdateFlyoutAnimationsEnabled();
 			Config.Save();
 		}
 
@@ -114,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.UseAnimations = true;
-			Core.MainWindow.UpdateFlyoutAnimationsEnabled();
+			this.ParentMainWindow()?.UpdateFlyoutAnimationsEnabled();
 			Config.Save();
 		}
 

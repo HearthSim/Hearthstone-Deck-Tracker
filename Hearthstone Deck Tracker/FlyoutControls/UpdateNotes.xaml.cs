@@ -120,19 +120,20 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void ButtonClose_Click(object sender, RoutedEventArgs e)
 		{
+			if(this.ParentMainWindow() is not { } window)
+				return;
 			if(_continueToHighlight)
 			{
 				ShowHighlight = true;
-				Core.MainWindow.FlyoutUpdateNotes.IsModal = true;
-				Core.MainWindow.FlyoutUpdateNotes.TitleVisibility = Visibility.Collapsed;
+				window.FlyoutUpdateNotes.IsModal = true;
+				window.FlyoutUpdateNotes.TitleVisibility = Visibility.Collapsed;
 				if(_animateTransition)
 				{
-					Core.MainWindow.FlyoutUpdateNotes.BeginAnimation(HeightProperty,
-						new DoubleAnimation(Core.MainWindow.FlyoutUpdateNotes.ActualHeight, 400, TimeSpan.FromMilliseconds(250)));
+					window.FlyoutUpdateNotes.BeginAnimation(HeightProperty, new DoubleAnimation(window.FlyoutUpdateNotes.ActualHeight, 400, TimeSpan.FromMilliseconds(250)));
 				}
 			}
 			else
-				Core.MainWindow.FlyoutUpdateNotes.IsOpen = false;
+				window.FlyoutUpdateNotes.IsOpen = false;
 		}
 
 		private void ButtonContinue_OnClick(object sender, RoutedEventArgs e)
@@ -143,9 +144,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private void ButtonHSReplaynet_Click(object sender, RoutedEventArgs e)
 		{
 			var url = Helper.BuildHsReplayNetUrl("premium", "updatenotes");
-			if(!Helper.TryOpenUrl(url))
-				Core.MainWindow.ShowMessage("Could not start your browser",
-					"You can find our premium page at https://hsreplay.net/premium/").Forget();
+			if(!Helper.TryOpenUrl(url) && this.ParentMainWindow() is { } window)
+				window.ShowMessage("Could not start your browser", "You can find our premium page at https://hsreplay.net/premium/").Forget();
 		}
 	}
 }

@@ -6,6 +6,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -104,11 +105,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		private async void BtnResetOverlay_Click(object sender, RoutedEventArgs e)
 		{
-			var result =
-				await
-				Core.MainWindow.ShowMessageAsync("Resetting overlay to default",
-				                                 "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
-				                                 MessageDialogStyle.AffirmativeAndNegative);
+			if(this.ParentMainWindow() is not { } window)
+				return;
+			var result = await window.ShowMessageAsync("Resetting overlay to default",
+				"Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
+				MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
 				return;
 

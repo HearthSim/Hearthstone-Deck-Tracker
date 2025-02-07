@@ -28,6 +28,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			if(_deck == null)
 				return;
+			// This may be in StatsWindow, but wants to interact with the MainWindow.
+			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.ShowDeckEditorFlyout(_deck, true);
 			Core.MainWindow.FlyoutStats.IsOpen = false;
 			Core.MainWindow.FlyoutDeck.IsOpen = false;

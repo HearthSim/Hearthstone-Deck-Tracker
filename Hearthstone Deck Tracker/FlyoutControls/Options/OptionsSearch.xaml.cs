@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -34,23 +35,25 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 
 		private List<IOptionWrapper> LoadWrappers()
 		{
+			var optionWrappers = new List<IOptionWrapper>();
+			if(this.ParentMainWindow() is not { } window)
+				return optionWrappers;
 			var optionsMenuItems = new[]
 			{
-				new UserControlWrapper(Core.MainWindow.Options.OptionsOverlayDeckWindows, nameof(Core.MainWindow.Options.OptionsOverlayDeckWindows)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsOverlayGeneral, nameof(Core.MainWindow.Options.OptionsOverlayGeneral)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsOverlayOpponent, nameof(Core.MainWindow.Options.OptionsOverlayOpponent)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsOverlayPlayer, nameof(Core.MainWindow.Options.OptionsOverlayPlayer)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerAppearance, nameof(Core.MainWindow.Options.OptionsTrackerAppearance)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerBackups, nameof(Core.MainWindow.Options.OptionsTrackerBackups)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerGeneral, nameof(Core.MainWindow.Options.OptionsTrackerGeneral)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerHotKeys, nameof(Core.MainWindow.Options.OptionsTrackerHotKeys)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerImporting, nameof(Core.MainWindow.Options.OptionsTrackerImporting)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerNotifications, nameof(Core.MainWindow.Options.OptionsTrackerNotifications)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerPlugins, nameof(Core.MainWindow.Options.OptionsTrackerPlugins)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerSettings, nameof(Core.MainWindow.Options.OptionsTrackerSettings)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerStats, nameof(Core.MainWindow.Options.OptionsTrackerStats))
+				new UserControlWrapper(window.Options.OptionsOverlayDeckWindows, nameof(window.Options.OptionsOverlayDeckWindows)),
+				new UserControlWrapper(window.Options.OptionsOverlayGeneral, nameof(window.Options.OptionsOverlayGeneral)),
+				new UserControlWrapper(window.Options.OptionsOverlayOpponent, nameof(window.Options.OptionsOverlayOpponent)),
+				new UserControlWrapper(window.Options.OptionsOverlayPlayer, nameof(window.Options.OptionsOverlayPlayer)),
+				new UserControlWrapper(window.Options.OptionsTrackerAppearance, nameof(window.Options.OptionsTrackerAppearance)),
+				new UserControlWrapper(window.Options.OptionsTrackerBackups, nameof(window.Options.OptionsTrackerBackups)),
+				new UserControlWrapper(window.Options.OptionsTrackerGeneral, nameof(window.Options.OptionsTrackerGeneral)),
+				new UserControlWrapper(window.Options.OptionsTrackerHotKeys, nameof(window.Options.OptionsTrackerHotKeys)),
+				new UserControlWrapper(window.Options.OptionsTrackerImporting, nameof(window.Options.OptionsTrackerImporting)),
+				new UserControlWrapper(window.Options.OptionsTrackerNotifications, nameof(window.Options.OptionsTrackerNotifications)),
+				new UserControlWrapper(window.Options.OptionsTrackerPlugins, nameof(window.Options.OptionsTrackerPlugins)),
+				new UserControlWrapper(window.Options.OptionsTrackerSettings, nameof(window.Options.OptionsTrackerSettings)),
+				new UserControlWrapper(window.Options.OptionsTrackerStats, nameof(window.Options.OptionsTrackerStats))
 			};
-			var optionWrappers = new List<IOptionWrapper>();
 			foreach(var optionsMenuItem in optionsMenuItems)
 			{
 				var option = Helper.FindLogicalDescendants<DependencyObject>(IsSearchableOption, optionsMenuItem.UserControl);
@@ -106,10 +109,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 
 		private void ListBoxSearchResult_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
+			if(this.ParentMainWindow() is not { } window)
+				return;
 			var selected = (sender as ListBox)?.SelectedItem as IOptionWrapper;
 			if(selected == null)
 				return;
-			var tvis = Helper.FindLogicalChildrenDeep<TreeViewItem>(Core.MainWindow.Options.TreeViewOptions);
+			var tvis = Helper.FindLogicalChildrenDeep<TreeViewItem>(window.Options.TreeViewOptions);
 			var target = tvis.FirstOrDefault(x => x.Name.Contains(selected.MenuItem.Name.Substring(7)));
 			if(target != null)
 			{

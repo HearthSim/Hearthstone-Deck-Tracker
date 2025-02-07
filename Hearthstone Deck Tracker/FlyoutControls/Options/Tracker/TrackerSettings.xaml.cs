@@ -179,7 +179,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			var path = Config.Instance.ConfigPath;
 			Config.Instance.SaveConfigInAppData = true;
 			XmlManager<Config>.Save(path, Config.Instance);
-			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+			if(this.ParentMainWindow() is { } window)
+				await window.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Core.RestartApplication();
 #endif
 		}
@@ -192,7 +193,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			var path = Config.Instance.ConfigPath;
 			Config.Instance.SaveConfigInAppData = false;
 			XmlManager<Config>.Save(path, Config.Instance);
-			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+			if(this.ParentMainWindow() is { } window)
+				await window.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Core.RestartApplication();
 #endif
 		}
@@ -204,7 +206,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.SaveDataInAppData = true;
 			Config.Save();
-			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+			if(this.ParentMainWindow() is { } window)
+				await window.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Core.RestartApplication();
 #endif
 		}
@@ -216,7 +219,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.SaveDataInAppData = false;
 			Config.Save();
-			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+			if(this.ParentMainWindow() is { } window)
+				await window.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Core.RestartApplication();
 #endif
 		}
@@ -246,7 +250,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				Config.Instance.HearthstoneDirectory = dialog.SelectedPath;
 				Config.Save();
-				Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
+				if(this.ParentMainWindow() is { } window)
+					window.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
 			}
 		}
 
@@ -275,7 +280,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Config.Save();
 				if(!saveInAppData)
 				{
-					await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+					if(this.ParentMainWindow() is { } window)
+						await window.ShowMessage("Restart required.", "Click ok to restart HDT");
 					Core.RestartApplication();
 				}
 			}
@@ -396,7 +402,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				//Logs directory needs to be a child directory in Hearthstone directory
 				if (!dialog.SelectedPath.StartsWith(Config.Instance.HearthstoneDirectory + @"\"))
 				{
-					await Core.MainWindow.ShowMessage("Invalid argument", "Selected directory not in Hearthstone directory!");
+					if(this.ParentMainWindow() is { } window)
+						await window.ShowMessage("Invalid argument", "Selected directory not in Hearthstone directory!");
 					return;
 				}
 
@@ -407,7 +414,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Config.Instance.HearthstoneLogsDirectoryName = dialog.SelectedPath.Remove(0, Config.Instance.HearthstoneDirectory.Length + 1);
 				Config.Save();
 
-				await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+				if(this.ParentMainWindow() is { } window2)
+					await window2.ShowMessage("Restart required.", "Click ok to restart HDT");
 				Core.RestartApplication();
 			}
 		}

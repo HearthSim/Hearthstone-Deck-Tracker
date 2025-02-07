@@ -55,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			try
 			{
 				await Task.Delay(10000);
+				// TODO: Find a better way to interact with the MainWindow
 				Core.MainWindow.ActivateWindow();
 				while(Core.MainWindow.Visibility != Visibility.Visible || Core.MainWindow.WindowState == WindowState.Minimized)
 					await Task.Delay(100);

@@ -12,6 +12,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 
 		private void Settings_MouseUp(object sender, MouseButtonEventArgs e)
 		{
+			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.ActivateWindow();
 			Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
 			Core.MainWindow.FlyoutOptions.IsOpen = true;

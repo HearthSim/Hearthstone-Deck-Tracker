@@ -206,6 +206,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 			{
 				Log.Info("Auto deck detection disabled.");
+				// TODO: Find a better way to interact with the MainWindow
 				Core.MainWindow.ShowMessage("Auto deck selection disabled.", "This can be re-enabled under 'options (advanced) > tracker > general'.").Forget();
 				ConfigWrapper.Bindable.AutoDeckDetection = false;
 			}
@@ -220,6 +221,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!imported.Any())
 				return;
 			DeckList.Save();
+			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.DeckPickerList.UpdateDecks();
 			Core.MainWindow.UpdateIntroLabelVisibility();
 			if(select)
@@ -408,6 +410,7 @@ namespace Hearthstone_Deck_Tracker
 				}).WhereNotNull();
 				foreach(var card in cards)
 					matchingHsId.Cards.Add(card);
+			// TODO: Find a better way to interact with the MainWindow
 				Core.MainWindow.DeckPickerList.UpdateDecks();
 				DeckList.Instance.ActiveDeck = matchingHsId;
 				return;
@@ -431,9 +434,11 @@ namespace Hearthstone_Deck_Tracker
 			{
 				case ArenaImportingBehaviour.AutoImportSave:
 					Log.Info("...auto saving new arena deck.");
+					// TODO: Find a better way to interact with the MainWindow
 					Core.MainWindow.ImportArenaDeck(deck.Deck);
 					break;
 				case ArenaImportingBehaviour.AutoAsk:
+					// TODO: Find a better way to interact with the MainWindow
 					Core.MainWindow.ShowNewArenaDeckMessageAsync(deck.Deck);
 					break;
 			}
@@ -744,6 +749,7 @@ namespace Hearthstone_Deck_Tracker
 				deck.Cards.Add(loadout);
 			DeckList.Instance.Decks.Add(deck);
 			DeckList.Save();
+			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.DeckPickerList.UpdateDecks();
 			DeckList.Instance.ActiveDeck = deck;
 			return deck;

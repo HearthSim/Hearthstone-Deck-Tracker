@@ -4,6 +4,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using System.Windows.Media.Animation;
+using Hearthstone_Deck_Tracker.Windows;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls
 {
@@ -23,11 +24,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			if(working)
 				return;
-			
+
 			working = true;
 			ButtonGo.IsEnabled = false;
 
-			Core.MainWindow.SetNewUserOnboarding(false);
+			this.ParentMainWindow()?.SetNewUserOnboarding(false);
 
 			Config.Instance.OnboardingSeen = true;
 			Config.Save();

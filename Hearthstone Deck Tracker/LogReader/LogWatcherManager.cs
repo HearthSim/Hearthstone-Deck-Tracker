@@ -64,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private async void OnHearthMirroCheckFailed()
 		{
 			await Stop(true);
+			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.ActivateWindow();
 			while(Core.MainWindow.Visibility != Visibility.Visible || Core.MainWindow.WindowState == WindowState.Minimized)
 				await Task.Delay(100);

@@ -59,15 +59,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		{
 			if(SelectedGame == null)
 				return;
-			if(Config.Instance.StatsInWindow)
+			var window = Window.GetWindow(this);
+			if(window is StatsWindow statsWindow)
 			{
-				Core.Windows.StatsWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
-				Core.Windows.StatsWindow.FlyoutDeck.IsOpen = true;
+				statsWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
+				statsWindow.FlyoutDeck.IsOpen = true;
 			}
-			else
+			else if(window is MainWindow mainWindow)
 			{
-				Core.MainWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
-				Core.MainWindow.FlyoutDeck.IsOpen = true;
+				mainWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
+				mainWindow.FlyoutDeck.IsOpen = true;
 			}
 		}
 
@@ -97,11 +98,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			if(SelectedGame == null)
 				return;
 			var settings = new MessageDialogs.Settings {DefaultText = SelectedGame.Note};
-			string newNote;
-			if(Config.Instance.StatsInWindow)
-				newNote = await Core.Windows.StatsWindow.ShowInputAsync("Note", "", settings);
-			else
-				newNote = await Core.MainWindow.ShowInputAsync("Note", "", settings);
+			string? newNote = null;
+			var window = Window.GetWindow(this);
+			if(window is StatsWindow statsWindow)
+				newNote = await statsWindow.ShowInputAsync("Note", "", settings);
+			else if(window is MainWindow mainWindow)
+				newNote = await mainWindow.ShowInputAsync("Note", "", settings);
 			if(newNote == null)
 				return;
 			SelectedGame.Note = newNote;
@@ -121,8 +123,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			OnPropertyChanged(nameof(RowDetailVisibility));
 			OnPropertyChanged(nameof(ButtonMultiMoveEnabled));
 			OnPropertyChanged(nameof(MultiSelectPanelVisibility));
-			if(Core.MainWindow.FlyoutDeck.IsOpen && SelectedGame != null)
-				Core.MainWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
+			if(this.ParentMainWindow() is {} window && window.FlyoutDeck.IsOpen && SelectedGame != null)
+				window.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
 		}
 
 		private void ButtonMove_OnClick(object sender, RoutedEventArgs e)

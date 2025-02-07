@@ -103,15 +103,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		{
 			if(SelectedGame == null)
 				return;
-			if(Config.Instance.StatsInWindow)
+			var window = Window.GetWindow(this);
+			if(window is StatsWindow statsWindow)
 			{
-				Core.Windows.StatsWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
-				Core.Windows.StatsWindow.FlyoutDeck.IsOpen = true;
+				statsWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
+				statsWindow.FlyoutDeck.IsOpen = true;
 			}
-			else
+			else if(window is MainWindow mainWindow)
 			{
-				Core.MainWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
-				Core.MainWindow.FlyoutDeck.IsOpen = true;
+				mainWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
+				mainWindow.FlyoutDeck.IsOpen = true;
 			}
 		}
 
@@ -133,9 +134,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
 			if(run == null)
 				return;
-			Core.MainWindow.DeckFlyout.SetDeck(run.Deck, false);
-			Core.MainWindow.FlyoutDeck.Header = run.Deck.Name;
-			Core.MainWindow.FlyoutDeck.IsOpen = true;
+			var window = Window.GetWindow(this);
+			if(window is StatsWindow statsWindow)
+			{
+				statsWindow.DeckFlyout.SetDeck(run.Deck, false);
+				statsWindow.FlyoutDeck.Header = run.Deck.Name;
+				statsWindow.FlyoutDeck.IsOpen = true;
+			}
+			else if(window is MainWindow mainWindow)
+			{
+				mainWindow.DeckFlyout.SetDeck(run.Deck, false);
+				mainWindow.FlyoutDeck.Header = run.Deck.Name;
+				mainWindow.FlyoutDeck.IsOpen = true;
+			}
 		}
 	}
 }

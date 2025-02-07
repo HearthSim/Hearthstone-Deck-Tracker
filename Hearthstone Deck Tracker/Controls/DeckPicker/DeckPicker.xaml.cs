@@ -53,14 +53,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private bool _searchBarVisibile;
 		private bool _archivedClassVisible;
 
-		// Hack to stop using Core.MainWindow -- This is currently only used by the MainWindow and not worth refactoring.
-		public static readonly DependencyProperty MainWindowProperty = DependencyProperty.Register(nameof(MainWindow), typeof(MainWindow), typeof(DeckPicker), new PropertyMetadata(default(MainWindow)));
-		public MainWindow MainWindow
-		{
-			get { return (MainWindow)GetValue(MainWindowProperty); }
-			set { SetValue(MainWindowProperty, value); }
-		}
-
 		public DeckPicker()
 		{
 			InitializeComponent();
@@ -562,7 +554,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					Log.Info("Set tags to ALL so the deck shows up");
 				}
 				Config.Save();
-				MainWindow.SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
+				this.ParentMainWindow()?.SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 			}
 
 			UpdateDecks(false, forceUpdate: forceUpdate ? new[] { deck } : null);
@@ -694,11 +686,13 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private void ContextMenu_OnOpened(object sender, RoutedEventArgs e)
 		{
-			var selectedDecks = MainWindow.DeckPickerList.SelectedDecks;
+			if(this.ParentMainWindow() is not { } window)
+				return;
+			var selectedDecks = window.DeckPickerList.SelectedDecks;
 			if(!selectedDecks.Any())
 				return;
-			MainWindow.TagControlEdit.SetSelectedTags(selectedDecks);
-			MenuItemQuickSetTag.ItemsSource = MainWindow.TagControlEdit.Tags;
+			window.TagControlEdit.SetSelectedTags(selectedDecks);
+			MenuItemQuickSetTag.ItemsSource = window.TagControlEdit.Tags;
 			MenuItemMoveDecktoArena.Visibility = selectedDecks.First().IsArenaDeck ? Collapsed : Visible;
 			MenuItemMoveDeckToConstructed.Visibility = selectedDecks.First().IsArenaDeck ? Visible : Collapsed;
 			MenuItemMissingCards.Visibility = selectedDecks.First().MissingCards.Any() ? Visible : Collapsed;
@@ -717,15 +711,15 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		}
 
 
-		private void BtnEditDeck_Click(object sender, RoutedEventArgs e) => MainWindow.ShowDeckEditorFlyout(SelectedDecks.FirstOrDefault(), false);
-		private void BtnNotes_Click(object sender, RoutedEventArgs e) => MainWindow.ShowDeckNotesDialog(SelectedDecks.FirstOrDefault());
-		private void BtnTags_Click(object sender, RoutedEventArgs e) => MainWindow.ShowTagEditDialog(SelectedDecks);
-		private void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e) => MainWindow.MoveDecksToArena(SelectedDecks);
-		private void BtnMoveDeckToConstructed_Click(object sender, RoutedEventArgs e) => MainWindow.MoveDecksToConstructed(SelectedDecks);
-		private void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e) => MainWindow.ShowMissingCardsMessage(SelectedDecks.FirstOrDefault(), false).Forget();
-		private void BtnSetDeckUrl_Click(object sender, RoutedEventArgs e) => MainWindow.SetDeckUrl(SelectedDecks.FirstOrDefault());
-		private void BtnUpdateDeck_Click(object sender, RoutedEventArgs e) => MainWindow.UpdateDeckFromWeb(SelectedDecks.FirstOrDefault());
-		private void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e) => MainWindow.OpenDeckUrl(SelectedDecks.FirstOrDefault());
+		private void BtnEditDeck_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowDeckEditorFlyout(SelectedDecks.FirstOrDefault(), false);
+		private void BtnNotes_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowDeckNotesDialog(SelectedDecks.FirstOrDefault());
+		private void BtnTags_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowTagEditDialog(SelectedDecks);
+		private void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.MoveDecksToArena(SelectedDecks);
+		private void BtnMoveDeckToConstructed_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.MoveDecksToConstructed(SelectedDecks);
+		private void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowMissingCardsMessage(SelectedDecks.FirstOrDefault(), false).Forget();
+		private void BtnSetDeckUrl_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.SetDeckUrl(SelectedDecks.FirstOrDefault());
+		private void BtnUpdateDeck_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.UpdateDeckFromWeb(SelectedDecks.FirstOrDefault());
+		private void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.OpenDeckUrl(SelectedDecks.FirstOrDefault());
 		private void BtnArchiveDeck_Click(object sender, RoutedEventArgs e)
 		{
 			foreach (var deck in SelectedDecks)
@@ -738,13 +732,13 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				deck.Archive(false);
 		}
 
-		private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e) => MainWindow.ShowDeleteDecksMessage(SelectedDecks);
-		private void BtnCloneDeck_Click(object sender, RoutedEventArgs e) => MainWindow.ShowCloneDeckDialog(SelectedDecks.FirstOrDefault());
-		private void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e) => MainWindow.ShowCloneDeckVersionDialog(SelectedDecks.FirstOrDefault());
-		private void BtnName_Click(object sender, RoutedEventArgs e) => MainWindow.ShowEditDeckNameDialog(SelectedDecks.FirstOrDefault());
-		private void BtnExportDeck_Click(object sender, RoutedEventArgs e) => MainWindow.ShowExportFlyout(SelectedDecks.FirstOrDefault());
-		private void BtnScreenshotCards_Click(object sender, RoutedEventArgs e) => MainWindow.ShowScreenshotFlyout();
-		private void MenuItemVersionHistory_OnClick(object sender, RoutedEventArgs e) => MainWindow.ShowDeckHistoryFlyout();
+		private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowDeleteDecksMessage(SelectedDecks);
+		private void BtnCloneDeck_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowCloneDeckDialog(SelectedDecks.FirstOrDefault());
+		private void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowCloneDeckVersionDialog(SelectedDecks.FirstOrDefault());
+		private void BtnName_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowEditDeckNameDialog(SelectedDecks.FirstOrDefault());
+		private void BtnExportDeck_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowExportFlyout(SelectedDecks.FirstOrDefault());
+		private void BtnScreenshotCards_Click(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowScreenshotFlyout();
+		private void MenuItemVersionHistory_OnClick(object sender, RoutedEventArgs e) => this.ParentMainWindow()?.ShowDeckHistoryFlyout();
 
 		private void ActiveDeckPanel_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{
@@ -765,8 +759,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				DeckList.Instance.ActiveDeck = deck;
 		}
 
-		private void RectangleSortIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) =>
-			MainWindow.FlyoutSortFilter.IsOpen = !MainWindow.FlyoutSortFilter.IsOpen;
+		private void RectangleSortIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			if(this.ParentMainWindow() is {} window)
+				window.FlyoutSortFilter.IsOpen = !window.FlyoutSortFilter.IsOpen;
+		}
 
 		private void RectangleUseNoDeckIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
@@ -792,7 +789,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private void ListViewDecks_OnKeyUp(object sender, KeyEventArgs e)
 		{
 			if(e.Key == Key.Delete)
-				MainWindow.ShowDeleteDecksMessage(SelectedDecks);
+				this.ParentMainWindow()?.ShowDeleteDecksMessage(SelectedDecks);
 		}
 
 		private void ListViewDecks_OnPreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)

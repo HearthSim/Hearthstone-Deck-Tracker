@@ -84,6 +84,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async void ShowRestartDialog()
 		{
+			// TODO: Find a better way to interact with the MainWindow
 			var result = await Core.MainWindow.ShowMessageAsync(LocUtil.Get(LocRestartTitle), LocUtil.Get(LocRestartText),
 				AffirmativeAndNegative,
 				new Settings()
@@ -309,6 +310,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(result == MessageDialogResult.Affirmative)
 			{
 				Log.Info("...saving new arena deck.");
+				// TODO: Find a better way to interact with the MainWindow (Should not be needed)
 				Core.MainWindow.ImportArenaDeck(deck);
 			}
 			else

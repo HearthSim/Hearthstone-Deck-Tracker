@@ -29,6 +29,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			Config.Instance.StatsInWindow = false;
 			Config.Save();
+			// TODO: Find a better way to interact with the MainWindow
 			ContentControl.Content = null;
 			Core.MainWindow.StatsFlyoutContentControl.Content = Core.StatsOverview;
 			Core.MainWindow.WindowState = WindowState.Normal;

@@ -420,7 +420,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		/// <summary>
 		/// called when user enters a new game of BG
 		/// </summary>
-		/// 
+		///
 		internal void ResetDisplays()
 		{
 			if(_lastCombatPossibilities != null)
@@ -504,7 +504,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				return;
 			var lastState = State;
 			State = state;
-			
+
 			if(state == BobsBuddyState.Combat || state == BobsBuddyState.CombatPartial)
 			{
 				ClearErrorState();
@@ -565,6 +565,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void Settings_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			e.Handled = true;
+			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
 			Core.MainWindow.FlyoutOptions.IsOpen = true;
 			Core.MainWindow.ActivateWindow();
@@ -590,7 +591,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				(FindResource("StoryboardExpandAverageDamageInstant") as Storyboard)?.Begin();
 			else
 				(FindResource("StoryboardCollapseAverageDamageInstant") as Storyboard)?.Begin();
-		} 
+		}
 
 		private void BottomBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{

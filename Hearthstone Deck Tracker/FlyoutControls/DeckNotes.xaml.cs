@@ -3,7 +3,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Save();
 			_noteChanged = false;
 			BtnSave.IsEnabled = false;
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			this.ParentMainWindow()?.DeckPickerList.UpdateDecks();
 		}
 	}
 }

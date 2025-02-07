@@ -6,9 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Stats;
-using Hearthstone_Deck_Tracker.Utility;
-using MahApps.Metro.Controls.Dialogs;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -291,7 +289,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedStats = (DisplayedStats)ComboboxDisplayedStats.SelectedItem;
 			Config.Save();
-			Core.MainWindow.DisplayFiltersUpdated();
+			this.ParentMainWindow()?.DisplayFiltersUpdated();
 		}
 
 		private void ComboboxGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -300,7 +298,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedMode = (GameMode)ComboboxDisplayedMode.SelectedItem;
 			Config.Save();
-			Core.MainWindow.DisplayFiltersUpdated();
+			this.ParentMainWindow()?.DisplayFiltersUpdated();
 		}
 
 		private void ComboboxDisplayedTimeFrame_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -309,7 +307,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedTimeFrame = (DisplayedTimeFrame)ComboboxDisplayedTimeFrame.SelectedItem;
 			Config.Save();
-			Core.MainWindow.DisplayFiltersUpdated();
+			this.ParentMainWindow()?.DisplayFiltersUpdated();
 			PanelCustomTimeFrame.Visibility = Config.Instance.DisplayedTimeFrame == DisplayedTimeFrame.Custom
 				                                  ? Visibility.Visible : Visibility.Collapsed;
 		}
@@ -320,7 +318,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.CustomDisplayedTimeFrame = DatePickerCustomTimeFrame.SelectedDate;
 			Config.Save();
-			Core.MainWindow.DisplayFiltersUpdated();
+			this.ParentMainWindow()?.DisplayFiltersUpdated();
 		}
 
 		private void CheckboxAskBeforeDiscarding_Checked(object sender, RoutedEventArgs e)

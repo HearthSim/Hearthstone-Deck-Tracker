@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			CheckBatteryStatusAsync();
 		}
 
+		// TODO: Find a better way to interact with the MainWindow
 		public Visual BatteryStatusVisual => (Visual)Core.MainWindow.FindResource(GetBatteryStatusVisualResourceName());
 
 		public Visibility BatteryStatusVisualVisibility

@@ -6,8 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
@@ -412,7 +410,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		private void OverlayHelpButtonClick(object sender, RoutedEventArgs e)
 		{
 			e.Handled = true;
-			Core.MainWindow.Options.TreeViewItemStreamingCapturableOverlay.IsSelected = true;
+			if(this.ParentMainWindow() is {} window)
+				window.Options.TreeViewItemStreamingCapturableOverlay.IsSelected = true;
 		}
 
 		private void CheckboxShowSessionRecap_Checked(object sender, RoutedEventArgs e)
@@ -561,7 +560,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		public ICommand ResetSessionCommand => new Command(async () =>
 		{
-			var result = await Core.MainWindow.ShowMessageAsync(
+			if(this.ParentMainWindow() is not { } window)
+				return;
+			var result = await window.ShowMessageAsync(
 				LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetSession_Title"),
 				LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetSession_Desc"),
 				MessageDialogStyle.AffirmativeAndNegative,
@@ -583,11 +584,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		private async void BtnResetOverlay_Click(object sender, RoutedEventArgs e)
 		{
-			var result =
-				await
-				Core.MainWindow.ShowMessageAsync(LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetPos_Title"),
-												 LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetPos_Title"),
-												 MessageDialogStyle.AffirmativeAndNegative);
+			if(this.ParentMainWindow() is not { } window)
+				return;
+			var result = await window.ShowMessageAsync(
+				LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetPos_Title"),
+				LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetPos_Title"),
+				MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
 				return;
 

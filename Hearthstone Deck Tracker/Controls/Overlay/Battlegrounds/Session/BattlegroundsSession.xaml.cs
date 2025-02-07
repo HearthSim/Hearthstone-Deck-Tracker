@@ -68,6 +68,7 @@ public partial class BattlegroundsSession : INotifyPropertyChanged
 
 	private void BtnOptions_MouseUp(object sender, System.Windows.Input.MouseEventArgs e)
 	{
+		// TODO: Find a better way to interact with the MainWindow
 		Core.MainWindow.ActivateWindow();
 		Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
 		Core.MainWindow.FlyoutOptions.IsOpen = true;

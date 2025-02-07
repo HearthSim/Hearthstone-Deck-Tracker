@@ -218,6 +218,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 
 			// otherwise, show the onboarding flyout
+			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.SetNewUserOnboarding(true);
 			return false;
 		}

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -12,6 +11,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static System.Windows.Visibility;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Windows;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
@@ -152,7 +152,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private void ImportDecks()
 		{
 			DeckManager.ImportDecks(Decks.Where(x => x.Import), _brawl);
-			Core.MainWindow.FlyoutDeckImporting.IsOpen = false;
+			if(this.ParentMainWindow() is { } window)
+				window.FlyoutDeckImporting.IsOpen = false;
 		}
 
 		private async void BtnStartHearthstone_Click(object sender, RoutedEventArgs e)
@@ -166,8 +167,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private void ButtonAutoImport_OnClick(object sender, RoutedEventArgs e)
 		{
-			Core.MainWindow.Options.TreeViewItemTrackerImporting.IsSelected = true;
-			Core.MainWindow.FlyoutOptions.IsOpen = true;
+			if(this.ParentMainWindow() is not { } window)
+				return;
+			window.Options.TreeViewItemTrackerImporting.IsSelected = true;
+			window.FlyoutOptions.IsOpen = true;
 		}
 	}
 }

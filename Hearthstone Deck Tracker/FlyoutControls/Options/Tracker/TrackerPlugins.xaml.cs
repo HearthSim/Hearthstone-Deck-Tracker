@@ -1,17 +1,14 @@
 ﻿#region
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
-using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
@@ -54,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				}
 				catch(Exception)
 				{
-					Core.MainWindow.ShowMessage("Error",
+					this.ParentMainWindow()?.ShowMessage("Error",
 												$"Plugins directory was not found and can not be created. Please manually create a folder called 'Plugins' under {dir}.").Forget();
 				}
 			}
@@ -69,10 +66,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				if(e.Data.GetDataPresent(DataFormats.FileDrop))
 				{
-					
+
 					var plugins = 0;
 					var droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
-					if(droppedFiles == null) 
+					if(droppedFiles == null)
 						return;
 					foreach(var pluginPath in droppedFiles)
 					{
@@ -93,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 							plugins++;
 						}
 					}
-					if(plugins <= 0) 
+					if(plugins <= 0)
 						return;
 					PluginManager.Instance.LoadPlugins(PluginManager.Instance.SyncPlugins());
 				}
@@ -101,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				Core.MainWindow.ShowMessage("Error Importing Plugin", $"Please import manually to {dir}.").Forget();
+				this.ParentMainWindow()?.ShowMessage("Error Importing Plugin", $"Please import manually to {dir}.").Forget();
 			}
 		}
 	}

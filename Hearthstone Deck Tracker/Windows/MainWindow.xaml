@@ -117,7 +117,7 @@
                 <flyoutControls:DeckPanel x:Name="DeckFlyout" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutSortFilter" Header="{lex:Loc MainWindow_Flyout_SortFilter_Header}" Position="Right" Width="245" Height="auto" Panel.ZIndex="100">
-                <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" MainWindow="{Binding RelativeSource={RelativeSource AncestorType=windows:MainWindow}}" />
+                <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutNotes" Header="{lex:Loc MainWindow_Flyout_Notes_Header}" Position="Right" Width="255" Height="auto"
                          Panel.ZIndex="100">
@@ -125,7 +125,7 @@
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="{lex:Loc MainWindow_Flyout_SetTags_Header}" Position="Right" Width="255"
                          Height="auto" Panel.ZIndex="100">
-                <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" MainWindow="{Binding RelativeSource={RelativeSource AncestorType=windows:MainWindow}}"  />
+                <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutErrors" Position="Top" Header="{lex:Loc MainWindow_Flyout_Errors_Header}">
                 <error:ErrorList DataContext="{Binding Errors, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}" VerticalAlignment="Center" MaxHeight="400"/>
@@ -341,7 +341,7 @@
                         <mainWindowControls:CollectionSyncingBannerView Margin="8"/>
                     </controls1:RemovableBanner>
                     <Grid Margin="0,2,0,0">
-                        <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" MainWindow="{Binding RelativeSource={RelativeSource AncestorType=windows:MainWindow}}" />
+                        <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" />
                         <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray"
                                FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"
                                Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />

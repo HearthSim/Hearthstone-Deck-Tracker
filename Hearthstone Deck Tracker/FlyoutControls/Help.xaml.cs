@@ -3,6 +3,7 @@
 using System.Windows;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -24,9 +25,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ButtonUpdateNotes_OnClick(object sender, RoutedEventArgs e)
 		{
-			Core.MainWindow.UpdateNotesControl.LoadReleaseNotes();
-			Core.MainWindow.FlyoutHelp.IsOpen = false;
-			Core.MainWindow.FlyoutUpdateNotes.IsOpen = true;
+			if(this.ParentMainWindow() is not { } window)
+				return;
+			window.UpdateNotesControl.LoadReleaseNotes();
+			window.FlyoutHelp.IsOpen = false;
+			window.FlyoutUpdateNotes.IsOpen = true;
 		}
 	}
 }

@@ -52,7 +52,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ManaCurveMyDecks = true;
-			Core.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Visible;
+			if(this.ParentMainWindow() is {} window)
+				window.ManaCurveMyDecks.Visibility = Visibility.Visible;
 			Config.Save();
 		}
 
@@ -61,7 +62,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ManaCurveMyDecks = false;
-			Core.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Collapsed;
+			if(this.ParentMainWindow() is {} window)
+				window.ManaCurveMyDecks.Visibility = Visibility.Collapsed;
 			Config.Save();
 		}
 
@@ -185,7 +187,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ShowMyGamesPanel = true;
-			Core.MainWindow.UpdateMyGamesPanelVisibility();
+			this.ParentMainWindow()?.UpdateMyGamesPanelVisibility();
 			Config.Save();
 		}
 
@@ -194,7 +196,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ShowMyGamesPanel = false;
-			Core.MainWindow.UpdateMyGamesPanelVisibility();
+			this.ParentMainWindow()?.UpdateMyGamesPanelVisibility();
 			Config.Save();
 		}
 
@@ -223,15 +225,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Core.TrayIcon.MenuItemShow.Text = LocUtil.Get("TrayIcon_MenuItemShow");
 			Core.TrayIcon.MenuItemExit.Text = LocUtil.Get("TrayIcon_MenuItemExit");
 
-			// My Games Panel
-			Core.MainWindow.DeckCharts.ReloadUI();
+			if(this.ParentMainWindow() is { } window)
+			{
+				// My Games Panel
+				window.DeckCharts.ReloadUI();
 
-			// Deck Picker
-			Core.MainWindow.DeckPickerList.ReloadUI();
+				// Deck Picker
+				window.DeckPickerList.ReloadUI();
 
-			//Overlay Panel
-			Core.MainWindow.Options.OptionsOverlayPlayer.ReloadUI();
-			Core.MainWindow.Options.OptionsOverlayOpponent.ReloadUI();
+				//Overlay Panel
+				window.Options.OptionsOverlayPlayer.ReloadUI();
+				window.Options.OptionsOverlayOpponent.ReloadUI();
+			}
 
 			// Reload ComboBoxes
 			ComboBoxHelper.Update();

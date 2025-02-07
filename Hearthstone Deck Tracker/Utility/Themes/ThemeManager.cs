@@ -67,6 +67,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			Core.Overlay.OpponentDeck.ForEach(c => c.UpdateHighlight());
 			Core.Windows.PlayerWindow.PlayerDeck.ForEach(c => c.UpdateHighlight());
 			Core.Windows.OpponentWindow.OpponentDeck.ForEach(c => c.UpdateHighlight());
+			// TODO: Find a better way to interact with the MainWindow
 			foreach(var card in Core.MainWindow.ListViewDeck.Items.Cast<Card>())
 				card.Update();
 			Core.Windows.PlayerWindow.UpdateCardFrames();

@@ -75,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void UpdateFlyoutAnimationsEnabled()
 		{
-			foreach(var flyout in Helper.FindVisualChildren<Flyout>(Core.MainWindow))
+			foreach(var flyout in Helper.FindVisualChildren<Flyout>(this))
 				flyout.AreAnimationsEnabled = Config.Instance.UseAnimations;
 		}
 	}
