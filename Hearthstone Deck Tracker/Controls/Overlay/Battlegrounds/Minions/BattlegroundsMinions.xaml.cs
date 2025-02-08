@@ -1,9 +1,9 @@
-﻿using Hearthstone_Deck_Tracker.Utility;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Commands;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 

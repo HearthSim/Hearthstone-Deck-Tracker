@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;

@@ -6,6 +6,7 @@
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Utility.Overlay"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
              Startup="App_OnStartup"
              DispatcherUnhandledException="App_DispatcherUnhandledException">
     <Application.Resources>
@@ -92,7 +93,7 @@
                 <ResourceDictionary>
                     <overlay:OverlayOpacityMask x:Key="OverlayOpacityMask"/>
                     <utility:ConfigWrapper x:Key="ConfigWrapper"/>
-                    <utility:GlobalCommands x:Key="GlobalCommands"/>
+                    <commands:GlobalCommands x:Key="GlobalCommands"/>
                     <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
                     <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
                     <converters:NullableToVisibilityConverter x:Key="NullableToVisibility"/>

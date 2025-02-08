@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Stats;
 using static System.Windows.Visibility;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls

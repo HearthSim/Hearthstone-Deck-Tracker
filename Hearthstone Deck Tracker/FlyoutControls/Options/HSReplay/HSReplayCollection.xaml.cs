@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 
@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			get => _collectionUpToDate;
 			set
 			{
-				_collectionUpToDate = value; 
+				_collectionUpToDate = value;
 				OnPropertyChanged();
 			}
 		}
@@ -64,7 +64,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			get => _collectionUpdateThrottled;
 			set
 			{
-				_collectionUpdateThrottled = value; 
+				_collectionUpdateThrottled = value;
 				OnPropertyChanged();
 			}
 		}

@@ -1,13 +1,11 @@
 #region
 
-using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;

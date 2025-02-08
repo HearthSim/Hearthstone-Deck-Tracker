@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.HsReplay;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HSReplay.OAuth;
 

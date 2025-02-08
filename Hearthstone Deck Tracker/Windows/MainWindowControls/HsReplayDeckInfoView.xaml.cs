@@ -3,11 +3,11 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Data;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
@@ -69,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			get => _hasDeck;
 			set
 			{
-				_hasDeck = value; 
+				_hasDeck = value;
 				OnPropertyChanged();
 			}
 		}
@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			get => _winrate;
 			set
 			{
-				_winrate = value; 
+				_winrate = value;
 				OnPropertyChanged();
 			}
 		}
@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			get => _matchupData;
 			set
 			{
-				_matchupData = value; 
+				_matchupData = value;
 				OnPropertyChanged();
 			}
 		}
@@ -133,7 +133,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			get => _loading;
 			set
 			{
-				_loading = value; 
+				_loading = value;
 				OnPropertyChanged();
 			}
 		}

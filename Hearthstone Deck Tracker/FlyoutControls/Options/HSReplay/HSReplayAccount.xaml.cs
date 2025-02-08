@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using static System.Windows.Visibility;
@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			get => _logoutButtonEnabled;
 			set
 			{
-				_logoutButtonEnabled = value; 
+				_logoutButtonEnabled = value;
 				OnPropertyChanged();
 			}
 		}
@@ -116,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			get => _claimTokenButtonEnabled;
 			set
 			{
-				_claimTokenButtonEnabled = value; 
+				_claimTokenButtonEnabled = value;
 				OnPropertyChanged();
 			}
 		}

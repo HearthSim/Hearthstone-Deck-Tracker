@@ -1,11 +1,9 @@
 ﻿using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
-using Hearthstone_Deck_Tracker.Utility;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using static Hearthstone_Deck_Tracker.Windows.OverlayWindow;
+using Hearthstone_Deck_Tracker.Commands;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 

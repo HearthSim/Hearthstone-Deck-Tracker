@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;

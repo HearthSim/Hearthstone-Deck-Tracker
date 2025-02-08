@@ -7,10 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
-using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Utility.Twitch;
 using HSReplay.OAuth;
 using HSReplay.OAuth.Data;
 
