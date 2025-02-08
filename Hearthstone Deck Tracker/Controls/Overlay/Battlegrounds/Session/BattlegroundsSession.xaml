@@ -9,6 +9,7 @@
              xmlns:composition="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition"
              xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
              xmlns:animations="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
+             xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -341,12 +342,14 @@
                 Cursor="Hand"
                 MouseEnter="BtnOptions_MouseEnter"
                 MouseLeave="BtnOptions_MouseLeave"
-                MouseUp="BtnOptions_MouseUp"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right"
                 Margin="4"
                 Visibility="{Binding CogBtnVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
             >
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="commands:GlobalCommands.ShowSettings" CommandParameter="Battlegrounds" />
+                </Border.InputBindings>
                 <Rectangle
                     Height="14"
                     Width="14"

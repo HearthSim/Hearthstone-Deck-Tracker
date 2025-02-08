@@ -2,10 +2,8 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
@@ -112,14 +110,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 				_showDetails = value;
 				OnPropertyChanged();
 			}
-		}
-
-		private void RectangleSettings_OnMouseDown(object sender, MouseButtonEventArgs e)
-		{
-			// TODO: Find a better way to interact with the MainWindow
-			Core.MainWindow.FlyoutOptions.IsOpen = true;
-			Core.MainWindow.Options.TreeViewItemTrackerNotifications.IsSelected = true;
-			Core.MainWindow.ActivateWindow();
 		}
 
 		private void PanelSummary_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => ShowDetails = true;

@@ -21,4 +21,6 @@ public static class GlobalCommands
 		Core.MainWindow.ActivateWindow();
 		_ = HSReplayNetHelper.TryAuthenticate();
 	});
+
+	public static ICommand ShowSettings { get; } = new ShowSettingsCommand();
 }

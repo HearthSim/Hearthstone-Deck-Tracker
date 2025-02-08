@@ -73,8 +73,7 @@
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Border>
-                        <Border DockPanel.Dock="Right" Padding="4 3" Margin="0 -3 2 -3" CornerRadius="3"
-                                Cursor="Hand" MouseUp="Settings_MouseUp"
+                        <Border DockPanel.Dock="Right" Padding="4 3" Margin="0 -3 2 -3" CornerRadius="3" Cursor="Hand"
                                 Visibility="{Binding IsMouseOver, ElementName=Tier7Panel, Converter={StaticResource BoolToVisibility}, ConverterParameter=Hidden}">
                             <Border.Style>
                                 <Style TargetType="Border">
@@ -85,6 +84,9 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="commands:GlobalCommands.ShowSettings" CommandParameter="Battlegrounds" />
+                            </Border.InputBindings>
                             <Rectangle Height="14" Width="14">
                                 <Rectangle.Fill>
                                     <VisualBrush Visual="{StaticResource appbar_settings}" />

@@ -66,14 +66,6 @@ public partial class BattlegroundsSession : INotifyPropertyChanged
 		CogBtnVisibility = Visibility.Hidden;
 	}
 
-	private void BtnOptions_MouseUp(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		// TODO: Find a better way to interact with the MainWindow
-		Core.MainWindow.ActivateWindow();
-		Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
-		Core.MainWindow.FlyoutOptions.IsOpen = true;
-	}
-
 	private void BtnOptions_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 	{
 		BtnOptions.Background = (Brush)_bc.ConvertFromString("#22FFFFFF");

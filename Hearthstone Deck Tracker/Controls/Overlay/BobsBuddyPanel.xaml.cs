@@ -562,15 +562,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private void Settings_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			e.Handled = true;
-			// TODO: Find a better way to interact with the MainWindow
-			Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
-			Core.MainWindow.FlyoutOptions.IsOpen = true;
-			Core.MainWindow.ActivateWindow();
-		}
-
 		private bool InCombatPhase => State is BobsBuddyState.Combat or BobsBuddyState.CombatPartial or BobsBuddyState.CombatWithoutSimulation;
 		private bool InShoppingPhase => State is BobsBuddyState.Shopping or BobsBuddyState.ShoppingAfterPartial or BobsBuddyState.GameOver or BobsBuddyState.GameOverAfterPartial;
 		private bool CanMinimize
