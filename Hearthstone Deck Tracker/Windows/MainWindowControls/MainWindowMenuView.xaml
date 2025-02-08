@@ -181,7 +181,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
-            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_HSReplay_Login}" Command="{Binding LoginCommand}" Visibility="{Binding LoginVisibility}"
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_HSReplay_Login}" Command="commands:GlobalCommands.SignInCommand" Visibility="{Binding LoginVisibility}"
                       IsEnabled="{Binding LoginButtonEnabled}"/>
             <Separator Visibility="{Binding LoginVisibility}"/>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_HSReplay_Meta}" Command="{Binding MetaCommand}"/>

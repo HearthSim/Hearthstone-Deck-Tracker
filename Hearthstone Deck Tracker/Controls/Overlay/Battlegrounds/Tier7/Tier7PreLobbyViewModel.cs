@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using HearthMirror;
 using HearthMirror.Objects;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -265,16 +262,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				OnPropertyChanged(nameof(RefreshSubscriptionState));
 			}
 		}
-
-		public ICommand SignInCommand => new Command(() => {
-			HSReplayNetHelper.TryAuthenticate().Forget();
-
-			if(Helper.OptionsMain != null)
-			{
-				Helper.OptionsMain.TreeViewItemHSReplayAccount.IsSelected = true;
-				Core.MainWindow.FlyoutOptions.IsOpen = true;
-			}
-		});
 
 		public ICommand SubscribeNowCommand => new Command(() =>
 		{

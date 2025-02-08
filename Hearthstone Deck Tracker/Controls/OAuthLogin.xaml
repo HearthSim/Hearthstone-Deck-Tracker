@@ -8,8 +8,7 @@
              xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <StackPanel>
-        <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="200"
-                Command="{Binding LoginCommand}">
+        <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="200" Command="commands:GlobalCommands.SignInCommand">
             <Button.Visibility>
                 <MultiBinding Converter="{StaticResource BoolToVisibility}">
                     <MultiBinding.ConverterParameter>

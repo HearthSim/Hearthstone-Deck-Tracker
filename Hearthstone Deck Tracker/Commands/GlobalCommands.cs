@@ -13,4 +13,12 @@ public static class GlobalCommands
 		if(game != null)
 			_ = ReplayLauncher.ShowReplay(game, true);
 	});
+
+	public static ICommand SignInCommand { get; } = new Command(() =>
+	{
+		Core.MainWindow.Options.TreeViewItemHSReplayAccount.IsSelected = true;
+		Core.MainWindow.FlyoutOptions.IsOpen = true;
+		Core.MainWindow.ActivateWindow();
+		_ = HSReplayNetHelper.TryAuthenticate();
+	});
 }

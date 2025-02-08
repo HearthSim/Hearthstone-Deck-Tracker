@@ -42,12 +42,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 										|| ScopeConsideredLoggedIn != null
 										&& HSReplayNetOAuth.IsAuthenticatedFor(ScopeConsideredLoggedIn);
 
-		public ICommand LoginCommand
-			=> new Command(() => HSReplayNetHelper.TryAuthenticate(SuccessUrl, ErrorUrl).Forget());
-
 		public ICommand TryAgainCommand => new Command(() =>
 		{
-			LoginCommand.Execute(null);
+			GlobalCommands.SignInCommand.Execute(null);
 			ShowTryAgain = false;
 		});
 

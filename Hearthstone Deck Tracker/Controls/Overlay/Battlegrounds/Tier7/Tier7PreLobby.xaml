@@ -1,11 +1,12 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7.Tier7PreLobby"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
              xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -143,7 +144,7 @@
                         <!-- Subscribed? Sign In -->
                         <TextBlock Margin="0 8 0 0" Visibility="{Binding RefreshSubscriptionState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:RefreshSubscriptionState.SignIn}}">
                         <Run Text="{lex:Loc BattlegroundsPreLobby_AlreadySubscribed}"/>
-                        <Hyperlink Command="{Binding SignInCommand}">
+                        <Hyperlink Command="commands:GlobalCommands.SignInCommand">
                             <Run Text="{lex:Loc BattlegroundsPreLobby_SignInToSubscription}"/>
                         </Hyperlink>
                         </TextBlock>

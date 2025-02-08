@@ -93,15 +93,6 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public ICommand DeckHistoryCommand => new Command(() => MainWindow.ShowDeckHistoryFlyout());
 		public ICommand ImportFromDeckString => new Command(() => MainWindow.ImportFromClipboard());
 
-		public ICommand LoginCommand => new Command(async () =>
-		{
-			if(Helper.OptionsMain != null)
-				Helper.OptionsMain.TreeViewItemHSReplayAccount.IsSelected = true;
-			// TODO: Find a better way to interact with the MainWindow
-			Core.MainWindow.FlyoutOptions.IsOpen = true;
-			await HSReplayNetHelper.TryAuthenticate();
-		});
-
 		public ICommand MetaCommand => new Command(() => Helper.TryOpenUrl(Helper.BuildHsReplayNetUrl("meta", "menu")));
 
 		public ICommand DecksCommand => new Command(() => Helper.TryOpenUrl(Helper.BuildHsReplayNetUrl("decks", "menu")));
