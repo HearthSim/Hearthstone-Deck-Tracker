@@ -15,6 +15,7 @@
                       xmlns:mainWindowControls="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
                       xmlns:deckHistory="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory"
                       xmlns:deckEditor="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor"
+                      xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -233,7 +234,7 @@
                             <TextBlock VerticalAlignment="Center" FontSize="14" Margin="5,0,0,0">
                                 <Run FontWeight="SemiBold" Text="{lex:Loc MainWindow_StatusBarUpdate_UpdateFailed}"/>
                                 <Run FontWeight="SemiBold">-</Run>
-                                <Hyperlink Foreground="White" FontWeight="Bold" Command="{Binding OpenUrl, Source={StaticResource GlobalCommands}}" CommandParameter="https://hsreplay.net/downloads">
+                                <Hyperlink Foreground="White" FontWeight="Bold" Command="commands:GlobalCommands.OpenUrl" CommandParameter="https://hsreplay.net/downloads">
                                     <Run Text="{lex:Loc MainWindow_StatusBarUpdate_UpdateFailed_Download}"/>
                                 </Hyperlink>
                             </TextBlock>

@@ -93,7 +93,6 @@
                 <ResourceDictionary>
                     <overlay:OverlayOpacityMask x:Key="OverlayOpacityMask"/>
                     <utility:ConfigWrapper x:Key="ConfigWrapper"/>
-                    <commands:GlobalCommands x:Key="GlobalCommands"/>
                     <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
                     <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
                     <converters:NullableToVisibilityConverter x:Key="NullableToVisibility"/>

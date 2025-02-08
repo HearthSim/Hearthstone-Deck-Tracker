@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-             xmlns:s="clr-namespace:System;assembly=mscorlib" 
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <StackPanel>
         <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="200"
@@ -38,14 +39,12 @@
                 <Run Text="{lex:Loc OAuthLogin_ContactUs}"/>
                 <LineBreak/>
                 <Run Text="{lex:Loc OAuthLogin_Twitter}"/>:
-                <Hyperlink Command="{Binding OpenUrl, Source={StaticResource GlobalCommands}}"
-                           CommandParameter="https://twitter.com/HSReplayNet">
+                <Hyperlink Command="commands:GlobalCommands.OpenUrl" CommandParameter="https://twitter.com/HSReplayNet">
                     <Run Text="@HSReplayNet"/>
                 </Hyperlink>
                 <LineBreak/>
                 <Run Text="{lex:Loc OAuthLogin_Email}"/>:
-                <Hyperlink Command="{Binding OpenUrl, Source={StaticResource GlobalCommands}}"
-                           CommandParameter="mailto:contact@hsreplay.net">
+                <Hyperlink Command="commands:GlobalCommands.OpenUrl" CommandParameter="mailto:contact@hsreplay.net">
                     <Run Text="contact@hsreplay.net"/>
                 </Hyperlink>
             </TextBlock>

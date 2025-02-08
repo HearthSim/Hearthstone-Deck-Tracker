@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
+             xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
              mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="600">
     <UserControl.Resources>
@@ -197,7 +197,7 @@
                 </MenuItem.ItemsSource>
                 <MenuItem.ItemContainerStyle>
                     <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Command" Value="{Binding Source={StaticResource GlobalCommands}, Path=OpenReplay}"/>
+                        <Setter Property="Command" Value="commands:GlobalCommands.OpenReplay"/>
                         <Setter Property="CommandParameter" Value="{Binding}"/>
                     </Style>
                 </MenuItem.ItemContainerStyle>
