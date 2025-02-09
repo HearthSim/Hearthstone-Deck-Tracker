@@ -684,14 +684,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(OpponentStackPanelAlignment));
 		}
 
-		public void UpdateCardFrames()
-		{
-			CanvasOpponentChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
-			CanvasOpponentCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
-			CanvasPlayerChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
-			CanvasPlayerCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
-		}
-
 		private void OverlayWindow_OnDeactivated(object sender, EventArgs e) => SetTopmost();
 
 		public void UpdateVisibilities()

@@ -517,6 +517,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		static Card()
 		{
 			CardDefsManager.CardsChanged += ReloadTileImages;
+			ThemeManager.ThemeChanged += ReloadTileImages;
 		}
 
 		public static void ReloadTileImages()

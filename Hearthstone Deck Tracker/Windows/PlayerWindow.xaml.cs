@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Themes;
 using Panel = System.Windows.Controls.Panel;
 using Point = System.Drawing.Point;
 
@@ -63,6 +64,12 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Instance.ActiveDeckChanged += _ =>
 			{
 				ListViewPlayer.Items.Refresh();
+			};
+
+			ThemeManager.ThemeChanged += () =>
+			{
+				CanvasPlayerChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
+				CanvasPlayerCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 			};
 		}
 
@@ -218,12 +225,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Update();
 			UpdatePlayerLayout();
-		}
-
-		public void UpdateCardFrames()
-		{
-			CanvasPlayerChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
-			CanvasPlayerCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 		}
 	}
 }

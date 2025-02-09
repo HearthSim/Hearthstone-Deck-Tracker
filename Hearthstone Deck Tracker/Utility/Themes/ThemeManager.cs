@@ -17,6 +17,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		public static Theme? CurrentTheme { get; private set; }
 
+		public static event Action? ThemeChanged;
+
+		internal static void EmitThemeChanged() => ThemeChanged?.Invoke();
+
 		public static void Run()
 		{
 			LoadThemes(CustomThemeDir);
@@ -56,23 +60,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			if(t == null)
 				return;
 			CurrentTheme = t;
-			UpdateCards();
-		}
-
-		public static void UpdateCards()
-		{
-			Core.UpdatePlayerCards(true);
-			Core.UpdateOpponentCards(true);
-			Core.Overlay.PlayerDeck.ForEach(c => c.UpdateHighlight());
-			Core.Overlay.OpponentDeck.ForEach(c => c.UpdateHighlight());
-			Core.Windows.PlayerWindow.PlayerDeck.ForEach(c => c.UpdateHighlight());
-			Core.Windows.OpponentWindow.OpponentDeck.ForEach(c => c.UpdateHighlight());
-			// TODO: Find a better way to interact with the MainWindow
-			foreach(var card in Core.MainWindow.ListViewDeck.Items.Cast<Card>())
-				card.Update();
-			Core.Windows.PlayerWindow.UpdateCardFrames();
-			Core.Windows.OpponentWindow.UpdateCardFrames();
-			Core.Overlay.UpdateCardFrames();
+			ThemeChanged?.Invoke();
 		}
 
 		public static CardBarImageBuilder? GetBarImageBuilder(Card card)

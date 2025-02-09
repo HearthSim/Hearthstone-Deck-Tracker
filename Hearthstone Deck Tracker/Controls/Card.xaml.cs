@@ -2,6 +2,7 @@
 using System.Windows;
 using HearthDb;
 using Hearthstone_Deck_Tracker.Utility.Assets;
+using Hearthstone_Deck_Tracker.Utility.Themes;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
@@ -18,6 +19,15 @@ namespace Hearthstone_Deck_Tracker.Controls
 				foreach(var card in LoadedCards)
 					card.UpdateBackground();
 			};
+
+			ThemeManager.ThemeChanged += () =>
+			{
+				foreach(var card in LoadedCards)
+				{
+					card.UpdateBackground();
+					card.UpdateHighlight();
+				}
+			};
 		}
 
 		public Card()
@@ -33,6 +43,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public void UpdateBackground()
 		{
 			(DataContext as Hearthstone.Card)?.Update();
+		}
+
+		public void UpdateHighlight()
+		{
+			(DataContext as Hearthstone.Card)?.UpdateHighlight();
 		}
 	}
 }

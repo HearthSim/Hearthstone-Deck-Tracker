@@ -43,6 +43,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Overlay;
 using Hearthstone_Deck_Tracker.Utility.RegionDrawer;
+using Hearthstone_Deck_Tracker.Utility.Themes;
 using HSReplay.Responses;
 
 #endregion
@@ -324,6 +325,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				Update(false);
 				Core.UpdatePlayerCards(true);
+			};
+			ThemeManager.ThemeChanged += () =>
+			{
+				CanvasOpponentChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
+				CanvasOpponentCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
+				CanvasPlayerChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
+				CanvasPlayerCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 			};
 		}
 

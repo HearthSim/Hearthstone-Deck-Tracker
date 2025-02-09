@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.RarityCardFrames = true;
 			Config.Save();
-			Utility.Themes.ThemeManager.UpdateCards();
+			Utility.Themes.ThemeManager.EmitThemeChanged();
 		}
 
 		private void CheckboxCardFrameRarity_OnUnchecked(object sender, RoutedEventArgs e)
@@ -159,7 +159,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.RarityCardFrames = false;
 			Config.Save();
-			Utility.Themes.ThemeManager.UpdateCards();
+			Utility.Themes.ThemeManager.EmitThemeChanged();
 		}
 
 		private void CheckboxCardGemRarity_OnChecked(object sender, RoutedEventArgs e)
@@ -168,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.RarityCardGems = true;
 			Config.Save();
-			Utility.Themes.ThemeManager.UpdateCards();
+			Utility.Themes.ThemeManager.EmitThemeChanged();
 		}
 
 		private void CheckboxCardGemRarity_OnUnchecked(object sender, RoutedEventArgs e)
@@ -177,7 +177,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.RarityCardGems = false;
 			Config.Save();
-			Utility.Themes.ThemeManager.UpdateCards();
+			Utility.Themes.ThemeManager.EmitThemeChanged();
 		}
 	}
 }
