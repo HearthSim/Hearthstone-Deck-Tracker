@@ -13,7 +13,6 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public static T Load(string path)
 		{
-			Log.Debug("Loading file: " + path);
 			T instance;
 			using(TextReader reader = new StreamReader(path))
 			{
@@ -21,7 +20,6 @@ namespace Hearthstone_Deck_Tracker
 				instance = (T)xml.Deserialize(reader);
 			}
 
-			Log.Debug("File loaded: " + path);
 			return instance;
 		}
 
@@ -38,7 +36,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void Save(string path, object obj)
 		{
-			Log.Debug("Saving file: " + path);
 			var tempFile = path + ".tmp";
 			try
 			{
@@ -51,7 +48,6 @@ namespace Hearthstone_Deck_Tracker
 				{
 					File.Move(tempFile, path);
 				}
-				Log.Debug("File saved: " + path);
 			}
 			catch(Exception e)
 			{
