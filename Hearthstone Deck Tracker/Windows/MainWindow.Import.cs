@@ -205,7 +205,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 			arenaDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, arenaDeck);
 			DeckList.Instance.Decks.Add(arenaDeck);
-			DeckPickerList.UpdateDecks();
 			DeckList.Instance.ActiveDeck = arenaDeck;
 		}
 

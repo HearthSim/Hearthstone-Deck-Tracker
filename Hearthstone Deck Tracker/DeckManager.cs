@@ -410,8 +410,6 @@ namespace Hearthstone_Deck_Tracker
 				}).WhereNotNull();
 				foreach(var card in cards)
 					matchingHsId.Cards.Add(card);
-			// TODO: Find a better way to interact with the MainWindow
-				Core.MainWindow.DeckPickerList.UpdateDecks();
 				DeckList.Instance.ActiveDeck = matchingHsId;
 				return;
 			}
@@ -749,8 +747,6 @@ namespace Hearthstone_Deck_Tracker
 				deck.Cards.Add(loadout);
 			DeckList.Instance.Decks.Add(deck);
 			DeckList.Save();
-			// TODO: Find a better way to interact with the MainWindow
-			Core.MainWindow.DeckPickerList.UpdateDecks();
 			DeckList.Instance.ActiveDeck = deck;
 			return deck;
 		}
