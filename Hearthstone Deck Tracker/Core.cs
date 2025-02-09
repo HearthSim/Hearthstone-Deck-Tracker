@@ -146,6 +146,8 @@ namespace Hearthstone_Deck_Tracker
 				}
 			};
 
+			Reflection.AccessDenied += OnAccessDenied;
+
 			Reflection.Exception += e => Log.Warn("HearthMirror Exception: " + e);
 
 			LocUtil.UpdateCultureInfo();
@@ -268,6 +270,20 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 		}
 
+		private static bool _notifyAccessDenied = true;
+		private static async void OnAccessDenied()
+		{
+			if(!_notifyAccessDenied)
+				return;
+			_notifyAccessDenied = false;
+			Log.Warn("Hearthstone is probably running with elevated permissions. Stopping all watchers.");
+			LogWatcherManger.IsEnabled = false;
+			await LogWatcherManger.Stop(true);
+			Influx.OnUnevenPermissions();
+			_ = MainWindow.ShowMessage(LocUtil.Get("MessageDialogs_Permissions_Title"), LocUtil.Get("MessageDialogs_Permissions_Description"));
+			MainWindow.ActivateWindow();
+		}
+
 		internal static async Task Shutdown()
 		{
 			await PrepareShutdown();
@@ -282,7 +298,7 @@ namespace Hearthstone_Deck_Tracker
 				Influx.OnAppExit(Helper.GetCurrentVersion());
 				LiveDataManager.Stop();
 				_updateOverlay = false;
-				var logWatcher = StopLogWacher();
+				var logWatcher = LogWatcherManger.Stop(true);
 
 				//wait for update to finish, might otherwise crash when overlay gets disposed
 				for(var i = 0; i < 100; i++)
@@ -450,6 +466,8 @@ namespace Hearthstone_Deck_Tracker
 					Log.Info("Exited game");
 					Game.CurrentRegion = Region.UNKNOWN;
 					Log.Info("Reset region");
+					LogWatcherManger.IsEnabled = true;
+					_notifyAccessDenied = true;
 					await Reset();
 					Game.IsInMenu = true;
 					Game.InvalidateMatchInfoCache();
@@ -534,8 +552,6 @@ namespace Hearthstone_Deck_Tracker
 			if(Windows.OpponentWindow.IsVisible)
 				Windows.OpponentWindow.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), reset);
 		}
-
-		internal static async Task StopLogWacher() => await LogWatcherManger.Stop(true);
 
 		public static class Windows
 		{

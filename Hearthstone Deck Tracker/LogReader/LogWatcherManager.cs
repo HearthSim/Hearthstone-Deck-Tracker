@@ -31,6 +31,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private readonly LogWatcher _logWatcher;
 		private bool _stop;
 
+		internal bool IsEnabled { get; set; } = true;
+
 		public static LogWatcherInfo AchievementsLogWatcherInfo => new LogWatcherInfo { Name = "Achievements" };
 		public static LogWatcherInfo PowerLogWatcherInfo => new LogWatcherInfo
 		{
@@ -54,26 +56,15 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_logWatcher.OnNewLines += OnNewLines;
 			_logWatcher.OnLogFileFound += OnLogFileFound;
 			_logWatcher.OnLogLineIgnored += OnLogLineIgnored;
-
-			_loadingScreenHandler.OnHearthMirrorCheckFailed += OnHearthMirroCheckFailed;
 		}
 
 		private void OnLogFileFound(string msg) => Log.Info(msg);
 		private void OnLogLineIgnored(string msg) => Log.Warn(msg);
 
-		private async void OnHearthMirroCheckFailed()
-		{
-			await Stop(true);
-			// TODO: Find a better way to interact with the MainWindow
-			Core.MainWindow.ActivateWindow();
-			while(Core.MainWindow.Visibility != Visibility.Visible || Core.MainWindow.WindowState == WindowState.Minimized)
-				await Task.Delay(100);
-			await Core.MainWindow.ShowMessage("Uneven permissions",
-				"It appears that Hearthstone (Battle.net) and HDT do not have the same permissions.\n\nPlease run both as administrator or local user.\n\nIf you don't know what any of this means, just run HDT as administrator.");
-		}
-
 		public async Task Start(GameV2 game)
 		{
+			if(!IsEnabled)
+				return;
 			if(!Helper.HearthstoneDirExists)
 				await FindHearthstone();
 			InitializeGameState(game);

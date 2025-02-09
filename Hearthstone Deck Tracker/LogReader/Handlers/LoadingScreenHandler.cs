@@ -25,8 +25,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	public class LoadingScreenHandler
 	{
 		private DateTime _lastAutoImport;
-		private bool _checkedMirrorStatus;
-		public event Action? OnHearthMirrorCheckFailed;
 		private List<Mode> ShowExperienceDuringMode = new List<Mode>() { Mode.HUB, Mode.GAME_MODE, Mode.TOURNAMENT, Mode.BACON, Mode.DRAFT, Mode.PVP_DUNGEON_RUN };
 
 		private List<Mode> LettuceModes = new List<Mode>
@@ -78,10 +76,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(game.PreviousMode == Mode.LETTUCE_COLLECTION || game.CurrentMode == Mode.LETTUCE_COLLECTION
 						|| game.PreviousMode == Mode.LETTUCE_PACK_OPENING)
 						CollectionHelpers.Mercenaries.UpdateCollection().Forget();
-
-					if(game.CurrentMode == Mode.HUB)
-						if(!_checkedMirrorStatus)
-							CheckMirrorStatus();
 				}
 
 				if(ShowExperienceDuringMode.Contains(game.CurrentMode))
@@ -120,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 							if(game.CurrentMode == Mode.GAMEPLAY)
 								Core.Overlay.MercenariesTaskListVM.GameNoticeVisibility = Visibility.Visible;
-							else 
+							else
 								Core.Overlay.MercenariesTaskListVM.GameNoticeVisibility = Visibility.Collapsed;
 					}
 					else
@@ -158,26 +152,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				gameState.GameHandler?.HandleGameReconnect(logLine.Time);
 			}
-		}
-
-		private async void CheckMirrorStatus()
-		{
-			_checkedMirrorStatus = true;
-			Status status;
-			while((status = Status.GetStatus()).MirrorStatus == MirrorStatus.ProcNotFound)
-				await Task.Delay(1000);
-			Log.Info($"Mirror status: {status.MirrorStatus}");
-			if(status.MirrorStatus != MirrorStatus.Error)
-				return;
-			Log.Error(status.Exception);
-			if(!(status.Exception is Win32Exception))
-			{
-				Log.Info("Not a Win32Exception - Process probably exited. Checking again later.");
-				_checkedMirrorStatus = false;
-				return;
-			}
-			Influx.OnUnevenPermissions();
-			OnHearthMirrorCheckFailed?.Invoke();
 		}
 
 		private Mode GetMode(string modeString) => Enum.TryParse(modeString, out Mode mode) ? mode : Mode.INVALID;
