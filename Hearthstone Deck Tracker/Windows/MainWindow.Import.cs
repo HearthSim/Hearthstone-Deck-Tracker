@@ -183,29 +183,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 				}
 			}
-			ImportArenaDeck(deck);
-		}
-
-		public void ImportArenaDeck(HearthMirror.Objects.Deck deck)
-		{
-			var arenaDeck = new Deck
-			{
-				Class = Database.GetCardFromId(deck.Hero)?.PlayerClass,
-				HsId = deck.Id,
-				Cards = new ObservableCollection<Card>(deck.Cards.Select(x =>
-				{
-					var card = Database.GetCardFromId(x.Id);
-					if(card == null)
-						return null;
-					card.Count = x.Count;
-					return card;
-				}).WhereNotNull()),
-				LastEdited = DateTime.Now,
-				IsArenaDeck = true
-			};
-			arenaDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, arenaDeck);
-			DeckList.Instance.Decks.Add(arenaDeck);
-			DeckList.Instance.ActiveDeck = arenaDeck;
+			DeckManager.ImportArenaDeck(deck);
 		}
 
 		internal async void ShowImportDialog(bool brawl)

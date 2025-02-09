@@ -310,8 +310,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(result == MessageDialogResult.Affirmative)
 			{
 				Log.Info("...saving new arena deck.");
-				// TODO: Find a better way to interact with the MainWindow (Should not be needed)
-				Core.MainWindow.ImportArenaDeck(deck);
+				DeckManager.ImportArenaDeck(deck);
 			}
 			else
 				Log.Info("...discarded by user.");

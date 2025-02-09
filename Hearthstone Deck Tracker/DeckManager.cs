@@ -432,14 +432,35 @@ namespace Hearthstone_Deck_Tracker
 			{
 				case ArenaImportingBehaviour.AutoImportSave:
 					Log.Info("...auto saving new arena deck.");
-					// TODO: Find a better way to interact with the MainWindow
-					Core.MainWindow.ImportArenaDeck(deck.Deck);
+					ImportArenaDeck(deck.Deck);
 					break;
 				case ArenaImportingBehaviour.AutoAsk:
 					// TODO: Find a better way to interact with the MainWindow
 					Core.MainWindow.ShowNewArenaDeckMessageAsync(deck.Deck);
 					break;
 			}
+		}
+
+		public static void ImportArenaDeck(HearthMirror.Objects.Deck deck)
+		{
+			var arenaDeck = new Deck
+			{
+				Class = Database.GetCardFromId(deck.Hero)?.PlayerClass,
+				HsId = deck.Id,
+				Cards = new ObservableCollection<Card>(deck.Cards.Select(x =>
+				{
+					var card = Database.GetCardFromId(x.Id);
+					if(card == null)
+						return null;
+					card.Count = x.Count;
+					return card;
+				}).WhereNotNull()),
+				LastEdited = DateTime.Now,
+				IsArenaDeck = true
+			};
+			arenaDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, arenaDeck);
+			DeckList.Instance.Decks.Add(arenaDeck);
+			DeckList.Instance.ActiveDeck = arenaDeck;
 		}
 
 		public static void AutoSelectTemplateDeckByDeckTemplateId(IGame game, int deckTemplateId)
