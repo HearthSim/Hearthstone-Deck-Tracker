@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			ArenaWatcher.OnChoicesChanged += OnChoiceChanged;
 			ArenaWatcher.OnCardPicked += OnCardPicked;
-			ArenaWatcher.OnCompleteDeck += (sender, args) => DeckManager.AutoImportArena(Config.Instance.SelectedArenaImportingBehaviour ?? ArenaImportingBehaviour.AutoImportSave, args.Info);
+			ArenaWatcher.OnCompleteDeck += (sender, args) => DeckManager.AutoImportArena(args.Info);
 			DungeonRunWatcher.DungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set, false);
 			DungeonRunWatcher.DungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo, false);
 			PVPDungeonRunWatcher.PVPDungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set, true);

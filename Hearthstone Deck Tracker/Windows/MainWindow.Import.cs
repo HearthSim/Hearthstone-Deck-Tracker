@@ -1,26 +1,16 @@
 ﻿#region
 
 using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media.Animation;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
-using Microsoft.Win32;
-using Point = System.Drawing.Point;
-using HearthDb.Enums;
-using HearthMirror;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
-using Hearthstone_Deck_Tracker.Importing.Game;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
 #endregion
@@ -113,77 +103,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			ShowDeckEditorFlyout(deck, true);
-		}
-
-		public async Task StartArenaImporting()
-		{
-			ProgressDialogController? controller = null;
-			if(!Core.Game.IsRunning)
-			{
-				Log.Info("Waiting for game...");
-				var result = await this.ShowMessageAsync("Importing arena deck", "Start Hearthstone and enter the 'Arena' screen.",
-					MessageDialogStyle.AffirmativeAndNegative,
-					new MessageDialogs.Settings() { AffirmativeButtonText = "Start Hearthstone", NegativeButtonText = "Cancel" });
-				if(result == MessageDialogResult.Negative)
-					return;
-				HearthstoneRunner.StartHearthstone().Forget();
-				controller = await this.ShowProgressAsync("Importing arena deck", "Waiting for Hearthstone...", true);
-				while(!Core.Game.IsRunning)
-				{
-					if(controller.IsCanceled)
-					{
-						await controller.CloseAsync();
-						return;
-					}
-					await Task.Delay(500);
-				}
-			}
-			if(Core.Game.CurrentMode != Mode.DRAFT)
-			{
-				if(controller == null)
-					controller = await this.ShowProgressAsync("Importing arena deck", "", true);
-				controller.SetMessage("Enter the 'Arena' screen.");
-				Log.Info("Waiting for DRAFT screen...");
-				while(Core.Game.CurrentMode != Mode.DRAFT)
-				{
-					if(controller.IsCanceled)
-					{
-						await controller.CloseAsync();
-						return;
-					}
-					await Task.Delay(500);
-				}
-			}
-			var deck = DeckImporter.FromArena()?.Deck;
-			while(deck == null || deck.Cards.Sum(x => x.Count) < 30)
-			{
-				if(controller == null)
-					controller = await this.ShowProgressAsync("Importing arena deck", "", true);
-				if(controller.IsCanceled)
-				{
-					await controller.CloseAsync();
-					return;
-				}
-				controller.SetMessage($"Waiting for complete deck ({deck?.Cards.Sum(x => x.Count) ?? 0}/30 cards)...");
-				await Task.Delay(1000);
-				deck = DeckImporter.FromArena(false)?.Deck;
-			}
-			if(controller != null)
-				await controller.CloseAsync();
-			var recentArenaDecks = DeckList.Instance.Decks.Where(d => d.IsArenaDeck && d.Cards.Sum(x => x.Count) == 30).OrderByDescending(d => d.LastPlayedNewFirst).Take(15);
-			var existing = recentArenaDecks.FirstOrDefault(d => d.Cards.All(c => deck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)));
-			if(existing != null)
-			{
-				var result = await this.ShowMessageAsync("Deck already exists", "You seem to already have this deck.",
-					MessageDialogStyle.AffirmativeAndNegative,
-					new MessageDialogs.Settings() { AffirmativeButtonText = "Use existing", NegativeButtonText = "Import anyway" });
-				if(result == MessageDialogResult.Affirmative)
-				{
-					DeckList.Instance.ActiveDeck = existing;
-					return;
-				}
-			}
-			DeckManager.ImportArenaDeck(deck);
 		}
 
 		internal async void ShowImportDialog(bool brawl)

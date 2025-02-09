@@ -290,34 +290,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return result;
 		}
 
-		private static bool _awaitingMainWindowOpen;
-		public static async void ShowNewArenaDeckMessageAsync(this MetroWindow window, HearthMirror.Objects.Deck deck)
-		{
-			if(_awaitingMainWindowOpen)
-				return;
-			_awaitingMainWindowOpen = true;
-
-			if(window.WindowState == WindowState.Minimized)
-				Core.TrayIcon.ShowMessage("New arena deck detected!");
-
-			while(window.Visibility != Visibility.Visible || window.WindowState == WindowState.Minimized)
-				await Task.Delay(100);
-
-			var result = await window.ShowMessageAsync("New arena deck detected!",
-												 "You can change this behaviour to \"auto save&import\" or \"manual\" in [options > tracker > importing]",
-												 AffirmativeAndNegative, new Settings { AffirmativeButtonText = "Import", NegativeButtonText = "Cancel" });
-
-			if(result == MessageDialogResult.Affirmative)
-			{
-				Log.Info("...saving new arena deck.");
-				DeckManager.ImportArenaDeck(deck);
-			}
-			else
-				Log.Info("...discarded by user.");
-			Core.Game.IgnoredArenaDecks.Add(deck.Id);
-			_awaitingMainWindowOpen = false;
-		}
-
 		internal static async void ShowDevUpdatesMessage(this MetroWindow window)
 		{
 			while(window.Visibility != Visibility.Visible || window.WindowState == WindowState.Minimized)

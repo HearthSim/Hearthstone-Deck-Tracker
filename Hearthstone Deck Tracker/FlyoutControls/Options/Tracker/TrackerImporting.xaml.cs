@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			get => _dungeonEditButtonText;
 			set
 			{
-				_dungeonEditButtonText = value; 
+				_dungeonEditButtonText = value;
 				OnPropertyChanged();
 			}
 		}
@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			get => _dungeonTemplateEditable;
 			set
 			{
-				_dungeonTemplateEditable = value; 
+				_dungeonTemplateEditable = value;
 				OnPropertyChanged();
 			}
 		}
@@ -96,9 +96,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public void Load()
 		{
-			ComboboxArenaImportingBehaviour.ItemsSource = Enum.GetValues(typeof(ArenaImportingBehaviour));
-			if(Config.Instance.SelectedArenaImportingBehaviour.HasValue)
-				ComboboxArenaImportingBehaviour.SelectedItem = Config.Instance.SelectedArenaImportingBehaviour.Value;
 			ComboboxPasteImporting.ItemsSource = Enum.GetValues(typeof(ImportingChoice));
 			ComboboxPasteImporting.SelectedItem = Config.Instance.PasteImportingChoice;
 			CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
@@ -167,7 +164,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			PVPDRTemplateEditable = !PVPDRTemplateEditable;
 		}
 
-		private void TextBoxDungeonTemplate_OnTextChanged(object sender, TextChangedEventArgs e) 
+		private void TextBoxDungeonTemplate_OnTextChanged(object sender, TextChangedEventArgs e)
 			=> TextBlockNamePreviewDungeon.Text = Helper.ParseDeckNameTemplate(TextBoxDungeonTemplate.Text, new Deck() {Class = "ClassName"});
 
 		private void TextBoxPVPDRTemplate_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -184,20 +181,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ArenaTemplateEditable = !ArenaTemplateEditable;
 		}
 
-		private void TextBoxArenaTemplate_OnTextChanged(object sender, TextChangedEventArgs e) 
+		private void TextBoxArenaTemplate_OnTextChanged(object sender, TextChangedEventArgs e)
 			=> TextBlockNamePreviewArena.Text = Helper.ParseDeckNameTemplate(TextBoxArenaTemplate.Text, new Deck() {Class = "ClassName"});
-
-		private void ComboboxArenaImportingBehaviour_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			var selected = ComboboxArenaImportingBehaviour.SelectedItem as ArenaImportingBehaviour?;
-			if(selected != null)
-			{
-				Config.Instance.SelectedArenaImportingBehaviour = selected;
-				Config.Save();
-			}
-		}
 
 		private void CheckBoxDungeonImport_Checked(object sender, RoutedEventArgs e)
 		{

@@ -7,11 +7,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ConfigWarning_ConstructedAutoImportNew")]
 		ConstructedAutoImportNew,
-		
+
 		[LocDescription("Enum_ConfigWarning_ConstructedAutoUpdate")]
 		ConstructedAutoUpdate,
-		
-		[LocDescription("Enum_ConfigWarning_SelectedArenaImportingBehaviour")]
-		SelectedArenaImportingBehaviour 
 	}
 }

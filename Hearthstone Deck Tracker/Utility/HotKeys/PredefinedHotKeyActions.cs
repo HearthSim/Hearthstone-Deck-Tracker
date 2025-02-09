@@ -172,13 +172,6 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Core.MainWindow.ActivateWindow();
 		}
 
-		[PredefinedHotKeyAction("Import from game: arena", "Starts the webimport process with all dialogs.")]
-		public static void ImportFromArena()
-		{
-			Core.MainWindow.StartArenaImporting().Forget();
-			Core.MainWindow.ActivateWindow();
-		}
-
 		[PredefinedHotKeyAction("Import from game: constructed", "Starts the webimport process with all dialogs.")]
 		public static void ImportFromConstructed()
 		{

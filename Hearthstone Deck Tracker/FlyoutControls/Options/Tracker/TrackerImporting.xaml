@@ -22,18 +22,6 @@
         </GroupBox>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Arena}">
             <StackPanel>
-                <DockPanel Margin="10,5,10,0">
-                    <TextBlock DockPanel.Dock="Left" Text="{lex:Loc Options_Tracker_Importing_Label_ArenaBehavior}" VerticalAlignment="Center" />
-                    <ComboBox Name="ComboboxArenaImportingBehaviour" Margin="5,0,0,0"
-                              SelectionChanged="ComboboxArenaImportingBehaviour_OnSelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock
-                                    Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </DockPanel>
                 <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_ArenaTemplates}">
                     <DockPanel>
                         <TextBlock Text="{lex:LocText Key=Options_Tracker_Importing_Label_TemplatesFormat, Suffix=' \{Class}, {Date FORMAT}'}" DockPanel.Dock="Bottom"

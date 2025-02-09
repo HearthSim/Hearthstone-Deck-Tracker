@@ -138,7 +138,6 @@
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_DeckString}" Command="{Binding ImportFromDeckString}" />
             <Separator/>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Constructed}" Command="{Binding ImportFromConstructedCommand}" />
-            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Arena}" Command="{Binding ImportFromArenaCommand}" />
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Brawl}" Command="{Binding ImportFromBrawlCommand}" />
             <Separator/>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other}">

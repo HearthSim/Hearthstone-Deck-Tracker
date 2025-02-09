@@ -360,7 +360,7 @@ namespace Hearthstone_Deck_Tracker
 				case GameMode.Practice:
 					return AutoImportConstructed(select);
 				case GameMode.Arena:
-					AutoImportArena(Config.Instance.SelectedArenaImportingBehaviour ?? ArenaImportingBehaviour.AutoImportSave);
+					AutoImportArena();
 					break;
 			}
 			return false;
@@ -377,7 +377,7 @@ namespace Hearthstone_Deck_Tracker
 			return false;
 		}
 
-		public static void AutoImportArena(ArenaImportingBehaviour behaviour, ArenaInfo? info = null)
+		public static void AutoImportArena(ArenaInfo? info = null)
 		{
 			var deck = info ?? DeckImporter.FromArena();
 			if(deck?.Deck.Cards.Sum(x => x.Count) != 30)
@@ -428,17 +428,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
-			switch(behaviour)
-			{
-				case ArenaImportingBehaviour.AutoImportSave:
-					Log.Info("...auto saving new arena deck.");
-					ImportArenaDeck(deck.Deck);
-					break;
-				case ArenaImportingBehaviour.AutoAsk:
-					// TODO: Find a better way to interact with the MainWindow
-					Core.MainWindow.ShowNewArenaDeckMessageAsync(deck.Deck);
-					break;
-			}
+			ImportArenaDeck(deck.Deck);
 		}
 
 		public static void ImportArenaDeck(HearthMirror.Objects.Deck deck)
@@ -459,6 +449,7 @@ namespace Hearthstone_Deck_Tracker
 				IsArenaDeck = true
 			};
 			arenaDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, arenaDeck);
+			Log.Info($"Saving new arena deck: {arenaDeck.Name} ({arenaDeck.HsId})");
 			DeckList.Instance.Decks.Add(arenaDeck);
 			DeckList.Instance.ActiveDeck = arenaDeck;
 		}

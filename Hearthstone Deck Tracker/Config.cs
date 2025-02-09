@@ -772,9 +772,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(5)]
 		public double SecretsTop = 5;
 
-		[DefaultValue(ArenaImportingBehaviour.AutoImportSave)]
-		public ArenaImportingBehaviour? SelectedArenaImportingBehaviour = ArenaImportingBehaviour.AutoImportSave;
-
 		[DefaultValue(new[] {HeroClassAll.All})]
 		public HeroClassAll[] SelectedDeckPickerClasses = {HeroClassAll.All};
 
@@ -815,9 +812,6 @@ namespace Hearthstone_Deck_Tracker
 		[Obsolete]
 		[DefaultValue(false)]
 		public bool ShowAllDecks = false;
-
-		[DefaultValue(true)]
-		public bool ShowArenaImportMessage = true;
 
 		[DefaultValue(false)]
 		public bool ShowBatteryLife = false;
