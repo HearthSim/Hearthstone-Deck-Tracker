@@ -18,6 +18,8 @@ public class UpdaterStatus : ViewModel
 	public Visibility UpdateInstalledVisibility => UpdaterState == UpdaterState.Available ? Visible : Collapsed;
 	public Visibility UpdateFailedVisibility => UpdaterState == UpdaterState.Failed ? Visible : Collapsed;
 
+	public event Action<UpdaterState>? Changed;
+
 	public UpdaterState UpdaterState
 	{
 		get => GetProp(UpdaterState.None);
@@ -28,6 +30,7 @@ public class UpdaterStatus : ViewModel
 			OnPropertyChanged(nameof(InstallingUpdateVisibility));
 			OnPropertyChanged(nameof(UpdateInstalledVisibility));
 			OnPropertyChanged(nameof(UpdateFailedVisibility));
+			Changed?.Invoke(value);
 		}
 	}
 

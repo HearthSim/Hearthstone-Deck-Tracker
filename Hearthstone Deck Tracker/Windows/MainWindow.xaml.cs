@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -28,10 +27,11 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Windows.MainWindowControls;
 #if(SQUIRREL)
-	using Squirrel;
+using Squirrel;
+#else
+using MahApps.Metro.Controls.Dialogs;
 #endif
 using static System.Windows.Visibility;
-using Application = System.Windows.Application;
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -160,6 +160,27 @@ namespace Hearthstone_Deck_Tracker.Windows
 				FlyoutWarnings.IsOpen = true;
 			};
 			Config.Instance.CheckConfigWarnings();
+
+#if(!SQUIRREL)
+			Updater.Status.Changed += async value =>
+			{
+				if(value != UpdaterState.Available)
+					return;
+				ActivateWindow();
+				var result = await this.ShowMessageAsync(
+					title: Utility.LocUtil.Get("MainWindow_StatusBarUpdate_NewUpdateAvailable"),
+					message: Utility.LocUtil.Get("MainWindow_ShowMessage_UpdateDialog"),
+					style: MessageDialogStyle.AffirmativeAndNegative,
+					settings: new MessageDialogs.Settings
+					{
+						AffirmativeButtonText = Utility.LocUtil.Get("Button_Download"),
+						NegativeButtonText = Utility.LocUtil.Get("Button_Notnow")
+					}
+				);
+				if(result == MessageDialogResult.Affirmative)
+					Updater.StartUpdate();
+			};
+#endif
 
 			HsReplayDataManager.Decks.OnLoaded += () =>
 			{
