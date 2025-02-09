@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			var (remote, url) = SquirrelConnection.GetCurrentRemote();
 			return remote switch
 			{
-				SquirrelRemote.Github => await UpdateManager.GitHubUpdateManager(url, prerelease: Config.Instance.CheckForBetaUpdates),
+				SquirrelRemote.Github => await UpdateManager.GitHubUpdateManager(url),
 				_ => new UpdateManager(url)
 			};
 		}

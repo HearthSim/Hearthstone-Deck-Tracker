@@ -169,9 +169,6 @@ namespace Hearthstone_Deck_Tracker
 		public HsActionType ChallengeAction = HsActionType.Flash;
 
 		[DefaultValue(false)]
-		public bool CheckForBetaUpdates = false;
-
-		[DefaultValue(false)]
 		public bool CheckForDevUpdates = false;
 
 		[DefaultValue(true)]

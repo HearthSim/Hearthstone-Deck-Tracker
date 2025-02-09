@@ -74,12 +74,6 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0"
                   VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked"
                   Unchecked="CheckboxCheckForUpdates_Unchecked" />
-        <CheckBox x:Name="CheckboxCheckForBetaUpdates" Content="{lex:Loc Options_Tracker_Settings_CheckBox_BetaUpdates}"
-                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckboxCheckForBetaUpdates_Checked"
-                  Unchecked="CheckboxCheckForBetaUpdates_Unchecked" />
         <CheckBox x:Name="CheckboxAdvancedWindowSearch" Content="{lex:Loc Options_Tracker_Settings_CheckBox_AdvancedWindowSearch}"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

@@ -40,7 +40,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
 			CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
-			CheckboxCheckForBetaUpdates.IsChecked = Config.Instance.CheckForBetaUpdates;
 			CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
 			CheckboxStartHearthstoneWithHDT.IsChecked = Config.Instance.StartHearthstoneWithHDT;
 			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.UseAnyUnityWindow;
@@ -316,22 +315,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			RegistryHelper.DeleteRunKey();
 			Config.Instance.StartWithWindows = false;
-			Config.Save();
-		}
-
-		private void CheckboxCheckForBetaUpdates_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.CheckForBetaUpdates = true;
-			Config.Save();
-		}
-
-		private void CheckboxCheckForBetaUpdates_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.CheckForBetaUpdates = false;
 			Config.Save();
 		}
 

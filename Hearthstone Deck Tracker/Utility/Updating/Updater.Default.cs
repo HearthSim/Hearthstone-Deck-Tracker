@@ -25,22 +25,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			if(!force && !ShouldCheckForUpdates())
 				return;
 			_lastUpdateCheck = DateTime.Now;
-			_release = await GetLatestRelease(false);
+			_release = await GetLatestRelease();
 			if(_release != null)
 			{
 				Status.UpdaterState = UpdaterState.Available;
 				Status.StatusBarVisibility = Visibility.Visible;
-				ShowNewUpdateMessage(false);
-			}
-			else if(Config.Instance.CheckForBetaUpdates)
-			{
-				_release = await GetLatestRelease(true);
-				if(_release != null)
-					ShowNewUpdateMessage(true);
+				ShowNewUpdateMessage();
 			}
 		}
 
-		private static async void ShowNewUpdateMessage(bool beta)
+		private static async void ShowNewUpdateMessage()
 		{
 			if(_showingUpdateMessage)
 				return;
@@ -59,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				Core.MainWindow.ActivateWindow();
 				while(Core.MainWindow.Visibility != Visibility.Visible || Core.MainWindow.WindowState == WindowState.Minimized)
 					await Task.Delay(100);
-				var updateString = beta ? LocUtil.Get("MainWindow_StatusBarUpdate_NewBETAUpdateAvailable") : LocUtil.Get("MainWindow_StatusBarUpdate_NewUpdateAvailable");
+				var updateString = LocUtil.Get("MainWindow_StatusBarUpdate_NewUpdateAvailable");
 				var result = await Core.MainWindow.ShowMessageAsync(updateString, LocUtil.Get("MainWindow_ShowMessage_UpdateDialog"), MessageDialogStyle.AffirmativeAndNegative, settings);
 
 				if(result == MessageDialogResult.Affirmative)
@@ -80,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		{
 			Log.Info("Starting update...");
 			if(_release == null || DateTime.Now - _lastUpdateCheck > new TimeSpan(0, 10, 0))
-				_release = await GetLatestRelease(Config.Instance.CheckForBetaUpdates);
+				_release = await GetLatestRelease();
 			if(_release == null)
 			{
 				Log.Error("Could not get latest version. Not updating.");
@@ -131,12 +125,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		private static async Task<GitHub.Release?> GetLatestRelease(bool beta)
+		private static async Task<GitHub.Release?> GetLatestRelease()
 		{
 			var currentVersion = Helper.GetCurrentVersion();
 			if(currentVersion == null)
 				return null;
-			return await GitHub.CheckForUpdate("HearthSim", "Hearthstone-Deck-Tracker", currentVersion, beta);
+			return await GitHub.CheckForUpdate("HearthSim", "Hearthstone-Deck-Tracker", currentVersion);
 		}
 	}
 }
