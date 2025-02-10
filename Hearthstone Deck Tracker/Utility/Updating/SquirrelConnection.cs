@@ -137,7 +137,7 @@ public static class SquirrelConnection
 			}
 			catch(Exception e)
 			{
-				Log.Error(e);
+				Log.Error($"Request for {remote} failed: {e}");
 				return new Result { Remote = remote, Exception = e};
 			}
 		});
