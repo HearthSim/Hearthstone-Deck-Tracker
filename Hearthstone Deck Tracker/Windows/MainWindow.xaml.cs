@@ -602,12 +602,5 @@ namespace Hearthstone_Deck_Tracker.Windows
 					|| synced && (Remote.Config.Data?.CollectionBanner?.RemovablePostSync ?? false);
 			}
 		}
-		public void SetNewUserOnboarding(bool visible)
-		{
-			if(visible)
-				NewUserOnboardingOverlay.Show();
-			else
-				NewUserOnboardingOverlay.Hide();
-		}
 	}
 }

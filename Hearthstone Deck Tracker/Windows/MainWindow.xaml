@@ -16,6 +16,8 @@
                       xmlns:deckHistory="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory"
                       xmlns:deckEditor="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor"
                       xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
+                      xmlns:onboarding="clr-namespace:Hearthstone_Deck_Tracker.HsReplay.Onboarding"
+                      xmlns:hsReplay="clr-namespace:Hearthstone_Deck_Tracker.HsReplay"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -350,6 +352,6 @@
                 </DockPanel>
             </DockPanel>
         </DockPanel>
-        <flyoutControls:NewUserOnboarding x:Name="NewUserOnboardingOverlay" Visibility="Collapsed" />
+        <onboarding:NewUserOnboarding DataContext="{Binding Source={x:Static hsReplay:HSReplayNetClientAnalytics.OnboardingViewModel}}" />
     </Grid>
 </controls:MetroWindow>

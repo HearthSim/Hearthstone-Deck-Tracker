@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay.Onboarding;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -29,6 +29,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		private static event Action? OnboardingComplete;
 
+		public static NewUserOnboardingViewModel OnboardingViewModel { get; } = new();
+
 		static HSReplayNetClientAnalytics()
 		{
 			Client = new Lazy<ClientAnalyticsClient>(LoadClient);
@@ -38,6 +40,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			HSReplayNetHelper.Authenticating += OnAuthenticating;
 			HSReplayNetHelper.CollectionUploaded += CollectionUploaded;
+			OnboardingViewModel.Continue += () => RunOnboarding("https://hsreplay.net/hdt/installed/").Forget();
 			OnboardingComplete += () => OnAppStart();
 
 			if(await EnsureOnboarded())
@@ -217,9 +220,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				return true;
 			}
 
-			// otherwise, show the onboarding flyout
-			// TODO: Find a better way to interact with the MainWindow
-			Core.MainWindow.SetNewUserOnboarding(true);
+			// otherwise, show the onboarding screen
+			OnboardingViewModel.IsVisible = true;
 			return false;
 		}
 
