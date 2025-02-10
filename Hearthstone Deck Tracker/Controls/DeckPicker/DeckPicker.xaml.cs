@@ -75,6 +75,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				RefreshDisplayedDecks();
 			};
 
+			DeckList.Instance.Decks.CollectionChanged += DeckListDecksOnCollectionChanged;
+
 			Deck.ArchivedChanged += deck =>
 			{
 				SelectDeckAndAppropriateView(deck);
@@ -86,6 +88,15 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				UpdateDeckModeToggleButton();
 			};
 		}
+
+		private async void DeckListDecksOnCollectionChanged(object sender, object args)
+		{
+			if(await Debounce.WasCalledAgain(100))
+				return;
+			UpdateDecks();
+			UpdateArchivedClassVisibility();
+		}
+
 
 		public ObservableCollection<DeckPickerItemViewModel> DisplayedDecks { get; } = new();
 

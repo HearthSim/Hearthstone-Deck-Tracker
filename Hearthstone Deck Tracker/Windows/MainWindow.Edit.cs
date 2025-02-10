@@ -54,8 +54,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				DeleteDeck(deck, false);
 			DeckStatsList.Save();
 			DeckList.Save();
-			DeckPickerList.UpdateDecks();
-			DeckPickerList.UpdateArchivedClassVisibility();
 			DeckManagerEvents.OnDeckDeleted.Execute(decksList);
 		}
 
@@ -87,11 +85,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			DeckList.Instance.Decks.Remove(deck);
 			if(saveAndUpdate)
-			{
 				DeckList.Save();
-				DeckPickerList.UpdateDecks();
-				DeckPickerList.UpdateArchivedClassVisibility();
-			}
 			Log.Info("Deleted deck: " + deck.Name);
 		}
 
@@ -149,7 +143,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			clone.Archived = false;
 
 			DeckList.Instance.Decks.Add(clone);
-			DeckPickerList.UpdateDecks();
 			DeckList.Save();
 
 			//clone game stats
