@@ -127,8 +127,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		public void UpdateIntroLabelVisibility() => OnPropertyChanged(nameof(IntroductionLabelVisibility));
-
 #endregion
 
 #region Constructor
@@ -229,6 +227,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OnPropertyChanged(nameof(ErrorCount));
 				if(Errors.Count == 0)
 					FlyoutErrors.IsOpen = false;
+			};
+
+			DeckList.Instance.Decks.CollectionChanged += (_, args) =>
+			{
+				if(args.OldItems == null || args.OldItems.Count == 0 || args.NewItems == null || args.NewItems.Count == 0)
+					OnPropertyChanged(nameof(IntroductionLabelVisibility));
 			};
 		}
 

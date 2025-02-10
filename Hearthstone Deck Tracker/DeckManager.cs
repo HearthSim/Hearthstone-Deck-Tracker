@@ -223,7 +223,6 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Save();
 			// TODO: Find a better way to interact with the MainWindow
 			Core.MainWindow.DeckPickerList.UpdateDecks();
-			Core.MainWindow.UpdateIntroLabelVisibility();
 			if(select)
 				DeckList.Instance.ActiveDeck = imported.First();
 			Core.UpdatePlayerCards(true);
