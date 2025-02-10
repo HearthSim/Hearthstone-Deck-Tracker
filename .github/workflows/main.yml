@@ -40,7 +40,6 @@ jobs:
           vstest.console "HDTTests\bin\x86\Release\HDTTests.dll"
 
       - name: Build (Squirrel)
-        if: startsWith(github.ref, 'refs/tags/v')
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
 
       - name: Package
@@ -50,13 +49,13 @@ jobs:
           CERT: ${{ secrets.CERT }}
           CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
 
-      - name: Release (Squirrel)
+      - name: Create Release (Squirrel)
         if: startsWith(github.ref, 'refs/tags/v')
         run: ./build-scripts/github_release.ps1 -type squirrel -packageVersion ${{ steps.version.outputs.packageVersion }}
         env:
           HDT_GITHUB_TOKEN: ${{ secrets.HDT_GITHUB_TOKEN }}
 
-      - name: Release (Portable)
+      - name: Create Release (Portable)
         if: startsWith(github.ref, 'refs/tags/v')
         run: ./build-scripts/github_release.ps1 -type portable -packageVersion ${{ steps.version.outputs.packageVersion }}
         env:
