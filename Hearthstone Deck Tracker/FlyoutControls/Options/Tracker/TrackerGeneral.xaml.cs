@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TrackerCardToolTips = true;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 		private void CheckboxTrackerCardToolTips_Unchecked(object sender, RoutedEventArgs e)
@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TrackerCardToolTips = false;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 		private void CheckboxFullTextSearch_Checked(object sender, RoutedEventArgs e)
@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AutoUseDeck = true;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 		private void CheckBoxAutoUse_OnUnchecked(object sender, RoutedEventArgs e)
@@ -118,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AutoUseDeck = false;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 		private void ComboBoxDatesOnDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -128,7 +128,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.SelectedDateOnDecks = (DeckDateType)ComboBoxDeckDateType.SelectedItem;
 			Config.Instance.ShowDateOnDeck = (Config.Instance.SelectedDateOnDecks != DeckDateType.None) ? true : false;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 		private void ComboBoxDateFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -137,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.SelectedDateFormat = (DateFormat)ComboBoxDateFormat.SelectedItem;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 		private void CheckBoxAutoArchiveArenaDecks_Checked(object sender, RoutedEventArgs e)
@@ -162,7 +162,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DeckPickerCaps = true;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 		private void CheckboxDeckPickerCaps_Unchecked(object sender, RoutedEventArgs e)
@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DeckPickerCaps = false;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 		public event PropertyChangedEventHandler? PropertyChanged;

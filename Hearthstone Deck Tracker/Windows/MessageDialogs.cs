@@ -82,10 +82,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					NegativeButtonText = LocUtil.Get(LocDeleteGameStatsButtonCancel)
 				});
 
-		public static async void ShowRestartDialog()
+		public static async void ShowRestartDialog(this MainWindow window)
 		{
-			// TODO: Find a better way to interact with the MainWindow
-			var result = await Core.MainWindow.ShowMessageAsync(LocUtil.Get(LocRestartTitle), LocUtil.Get(LocRestartText),
+			var result = await window.ShowMessageAsync(LocUtil.Get(LocRestartTitle), LocUtil.Get(LocRestartText),
 				AffirmativeAndNegative,
 				new Settings()
 				{

@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.ClassIconStyle = (IconStyle)ComboBoxIconSet.SelectedItem;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 		private void ComboBoxCardTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DeckPickerItemLayout = (DeckLayout)ComboBoxDeckLayout.SelectedItem;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 
