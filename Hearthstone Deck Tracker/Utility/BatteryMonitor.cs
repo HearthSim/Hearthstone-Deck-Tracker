@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
+using Application = System.Windows.Application;
 
 #endregion
 
@@ -26,8 +27,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			CheckBatteryStatusAsync();
 		}
 
-		// TODO: Find a better way to interact with the MainWindow
-		public Visual BatteryStatusVisual => (Visual)Core.MainWindow.FindResource(GetBatteryStatusVisualResourceName());
+		public Visual? BatteryStatusVisual => Application.Current.TryFindResource(GetBatteryStatusVisualResourceName()) as Visual;
 
 		public Visibility BatteryStatusVisualVisibility
 			=>
