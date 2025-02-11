@@ -27,6 +27,7 @@ using Hearthstone_Deck_Tracker.Utility.Updating;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Windows.MainWindowControls;
+using MahApps.Metro.Controls;
 #if(SQUIRREL)
 using Squirrel;
 #else
@@ -274,6 +275,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(args.OldItems == null || args.OldItems.Count == 0 || args.NewItems == null || args.NewItems.Count == 0)
 					OnPropertyChanged(nameof(IntroductionLabelVisibility));
 			};
+		}
+
+		private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+		{
+			var presentationsource = PresentationSource.FromVisual(this);
+			if(presentationsource != null) // make sure it's connected
+			{
+				Helper.DpiScalingX = presentationsource.CompositionTarget.TransformToDevice.M11;
+				Helper.DpiScalingY = presentationsource.CompositionTarget.TransformToDevice.M22;
+			}
+
+			Options.Load(Core.Game);
+			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
+			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
+			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
+			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
+			Core.TrayIcon.MenuItemUseNoDeck.Checked = DeckList.Instance.ActiveDeck == null;
+			UpdateMyGamesPanelVisibility();
+			UpdateFlyoutAnimationsEnabled();
 		}
 
 		private void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -647,6 +667,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return !synced && (Remote.Config.Data?.CollectionBanner?.RemovablePreSync ?? false)
 					|| synced && (Remote.Config.Data?.CollectionBanner?.RemovablePostSync ?? false);
 			}
+		}
+
+		public void ReloadTags()
+		{
+			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
+			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
+		}
+
+		public void UpdateFlyoutAnimationsEnabled()
+		{
+			foreach(var flyout in Helper.FindVisualChildren<Flyout>(this))
+				flyout.AreAnimationsEnabled = Config.Instance.UseAnimations;
 		}
 	}
 }
