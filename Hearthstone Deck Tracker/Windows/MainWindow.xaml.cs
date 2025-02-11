@@ -142,6 +142,38 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			if(Config.Instance.TrackerWindowTop.HasValue)
+				Top = Config.Instance.TrackerWindowTop.Value;
+			if(Config.Instance.TrackerWindowLeft.HasValue)
+				Left = Config.Instance.TrackerWindowLeft.Value;
+
+			if(Config.Instance.WindowHeight < 0)
+				Config.Instance.Reset("WindowHeight");
+			Height = Config.Instance.WindowHeight;
+			if(Config.Instance.WindowWidth < 0)
+				Config.Instance.Reset("WindowWidth");
+			Width = Config.Instance.WindowWidth;
+			var titleBarCorners = new[]
+			{
+				new System.Drawing.Point((int)Left + 5, (int)Top + 5),
+				new System.Drawing.Point((int)(Left + Width) - 5, (int)Top + 5),
+				new System.Drawing.Point((int)Left + 5, (int)(Top + TitlebarHeight) - 5),
+				new System.Drawing.Point((int)(Left + Width) - 5, (int)(Top + TitlebarHeight) - 5)
+			};
+			if(!Screen.AllScreens.Any(s => titleBarCorners.Any(s.WorkingArea.Contains)))
+			{
+				Top = 100;
+				Left = 100;
+			}
+
+			if(Config.Instance.StartMinimized)
+			{
+				WindowState = WindowState.Minimized;
+				if(Config.Instance.MinimizeToTray)
+					MinimizeToTray();
+			}
+
 			MainWindowMenu.DataContext = new MainWindowMenuViewModel(this);
 			TagControlEdit.StackPanelFilterOptions.Visibility = Collapsed;
 			TagControlEdit.GroupBoxSortingAllConstructed.Visibility = Collapsed;
