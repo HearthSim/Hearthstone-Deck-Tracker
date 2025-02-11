@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -28,13 +29,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			if(_deck == null)
 				return;
-			// This may be in StatsWindow, but wants to interact with the MainWindow.
-			// TODO: Find a better way to interact with the MainWindow
-			Core.MainWindow.ShowDeckEditorFlyout(_deck, true);
-			Core.MainWindow.FlyoutStats.IsOpen = false;
-			Core.MainWindow.FlyoutDeck.IsOpen = false;
+			var window = Window.GetWindow(this);
+			if(window is StatsWindow statsWindow)
+				window = statsWindow.MainWindowParent;
+			if(window is not MainWindow mainWindow)
+				return;
+			mainWindow.ShowDeckEditorFlyout(_deck, true);
+			mainWindow.FlyoutStats.IsOpen = false;
+			mainWindow.FlyoutDeck.IsOpen = false;
 			if(Config.Instance.StatsInWindow)
-				Core.MainWindow.ActivateWindow();
+				mainWindow.ActivateWindow();
 		}
 
 		public void SetDeck(IEnumerable<TrackedCard> cards, bool showImportButton = true)
