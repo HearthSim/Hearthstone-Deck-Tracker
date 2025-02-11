@@ -265,6 +265,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 
 		public bool CanSave => Errors == 0;
 
+		public event Action? DeckSaved;
 		private void SaveDeck()
 		{
 			if(SelectedSaveOperation != null)
@@ -277,8 +278,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			else
 				DeckManager.SaveDeck(Deck);
 
-			// TODO: Find a better way to interact with the MainWindow
-			Core.MainWindow.FlyoutDeckEditor.IsOpen = false;
+			DeckSaved?.Invoke();
 		}
 
 		public DeckEditorErrors Errors

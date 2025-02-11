@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Windows;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 {
@@ -18,7 +19,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 				return (DeckEditorViewModel)DataContext;
 
 			var viewModel = new DeckEditorViewModel();
-			
+			viewModel.DeckSaved += () =>
+			{
+				if(this.ParentMainWindow() is { } window)
+					window.FlyoutDeckEditor.IsOpen = false;
+			};
+
 			viewModel.PropertyChanged += (sender, args) =>
 			{
 				if(args.PropertyName == "Deck")
