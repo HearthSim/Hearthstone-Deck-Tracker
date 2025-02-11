@@ -92,13 +92,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Config.Instance.StatsInWindow = true;
 			Config.Save();
 			StatsFlyoutContentControl.Content = null;
-			Core.Windows.StatsWindow.ContentControl.Content = Core.StatsOverview;
-			Core.Windows.StatsWindow.WindowState = WindowState.Normal;
-			Core.Windows.StatsWindow.Show();
+			StatsWindow.ContentControl.Content = Core.StatsOverview;
+			StatsWindow.WindowState = WindowState.Normal;
+			StatsWindow.Show();
 			Core.StatsOverview.UpdateStats();
 			FlyoutStats.IsOpen = false;
 			await Task.Delay(100);
-			Core.Windows.StatsWindow.Activate();
+			StatsWindow.Activate();
 		}
 
 #region Properties
@@ -126,6 +126,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return Collapsed;
 			}
 		}
+
+		private StatsWindow? _statsWindow;
+		public StatsWindow StatsWindow => _statsWindow ??= new StatsWindow(this);
 
 #endregion
 
@@ -279,6 +282,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(Core.IsShuttingDown)
 			{
+				_statsWindow?.Close();
+
 				if(!double.IsNaN(Left))
 					Config.Instance.TrackerWindowLeft = (int)Left;
 				if(!double.IsNaN(Top))
@@ -346,14 +351,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(Config.Instance.StatsInWindow)
 			{
 				StatsFlyoutContentControl.Content = null;
-				Core.Windows.StatsWindow.ContentControl.Content = Core.StatsOverview;
-				Core.Windows.StatsWindow.WindowState = WindowState.Normal;
-				Core.Windows.StatsWindow.Show();
-				Core.Windows.StatsWindow.Activate();
+				StatsWindow.ContentControl.Content = Core.StatsOverview;
+				StatsWindow.WindowState = WindowState.Normal;
+				StatsWindow.Show();
+				StatsWindow.Activate();
 			}
 			else
 			{
-				Core.Windows.StatsWindow.ContentControl.Content = null;
+				StatsWindow.ContentControl.Content = null;
 				StatsFlyoutContentControl.Content = Core.StatsOverview;
 				FlyoutStats.IsOpen = true;
 			}

@@ -559,13 +559,11 @@ namespace Hearthstone_Deck_Tracker
 			private static OpponentWindow? _opponentWindow;
 			private static BattlegroundsSessionWindow? _bgsSessionWindow;
 			private static TimerWindow? _timerWindow;
-			private static StatsWindow? _statsWindow;
 
 			public static PlayerWindow PlayerWindow => _playerWindow ??= new PlayerWindow(Game);
 			public static OpponentWindow OpponentWindow => _opponentWindow ??= new OpponentWindow(Game);
 			public static BattlegroundsSessionWindow BattlegroundsSessionWindow => _bgsSessionWindow ??= new BattlegroundsSessionWindow();
 			public static TimerWindow TimerWindow => _timerWindow ??= new TimerWindow(Config.Instance);
-			public static StatsWindow StatsWindow => _statsWindow ??= new StatsWindow();
 			public static CapturableOverlayWindow? CapturableOverlay;
 
 			internal static void CloseAll()
@@ -573,7 +571,6 @@ namespace Hearthstone_Deck_Tracker
 				_timerWindow?.Close();
 				_playerWindow?.Close();
 				_opponentWindow?.Close();
-				_statsWindow?.Close();
 				_bgsSessionWindow?.Close();
 				CapturableOverlay?.Close();
 			}

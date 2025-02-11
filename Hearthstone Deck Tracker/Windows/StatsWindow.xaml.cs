@@ -12,9 +12,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 	/// </summary>
 	public partial class StatsWindow
 	{
-		public StatsWindow()
+		internal readonly MainWindow MainWindowParent;
+
+		public StatsWindow(MainWindow mainWindowParent)
 		{
 			InitializeComponent();
+			MainWindowParent = mainWindowParent;
 			Height = Config.Instance.StatsWindowHeight;
 			Width = Config.Instance.StatsWindowWidth;
 			if(Config.Instance.StatsWindowLeft.HasValue)
@@ -29,13 +32,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			Config.Instance.StatsInWindow = false;
 			Config.Save();
-			// TODO: Find a better way to interact with the MainWindow
 			ContentControl.Content = null;
-			Core.MainWindow.StatsFlyoutContentControl.Content = Core.StatsOverview;
-			Core.MainWindow.WindowState = WindowState.Normal;
-			Core.MainWindow.Show();
-			Core.MainWindow.Activate();
-			Core.MainWindow.FlyoutStats.IsOpen = true;
+			MainWindowParent.StatsFlyoutContentControl.Content = Core.StatsOverview;
+			MainWindowParent.WindowState = WindowState.Normal;
+			MainWindowParent.Show();
+			MainWindowParent.Activate();
+			MainWindowParent.FlyoutStats.IsOpen = true;
 			Core.StatsOverview.UpdateStats();
 			Close();
 		}
