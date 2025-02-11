@@ -13,6 +13,7 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -92,10 +93,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Config.Instance.StatsInWindow = true;
 			Config.Save();
 			StatsFlyoutContentControl.Content = null;
-			StatsWindow.ContentControl.Content = Core.StatsOverview;
+			StatsWindow.ContentControl.Content = StatsOverview;
 			StatsWindow.WindowState = WindowState.Normal;
 			StatsWindow.Show();
-			Core.StatsOverview.UpdateStats();
+			StatsOverview.UpdateStats();
 			FlyoutStats.IsOpen = false;
 			await Task.Delay(100);
 			StatsWindow.Activate();
@@ -128,7 +129,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		private StatsWindow? _statsWindow;
-		public StatsWindow StatsWindow => _statsWindow ??= new StatsWindow(this);
+		private StatsWindow StatsWindow => _statsWindow ??= new StatsWindow(this);
+
+		private Overview? _statsOverview;
+		internal bool IsStatsOverviewInitialized => _statsOverview != null;
+		public Overview StatsOverview => _statsOverview ??= new Overview();
 
 #endregion
 
@@ -351,7 +356,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(Config.Instance.StatsInWindow)
 			{
 				StatsFlyoutContentControl.Content = null;
-				StatsWindow.ContentControl.Content = Core.StatsOverview;
+				StatsWindow.ContentControl.Content = StatsOverview;
 				StatsWindow.WindowState = WindowState.Normal;
 				StatsWindow.Show();
 				StatsWindow.Activate();
@@ -359,32 +364,32 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else
 			{
 				StatsWindow.ContentControl.Content = null;
-				StatsFlyoutContentControl.Content = Core.StatsOverview;
+				StatsFlyoutContentControl.Content = StatsOverview;
 				FlyoutStats.IsOpen = true;
 			}
 			if(arena)
 			{
 				if(matches)
-					Core.StatsOverview.TreeViewItemArenaRunsOverview.IsSelected = true;
+					StatsOverview.TreeViewItemArenaRunsOverview.IsSelected = true;
 				else
 				{
-					Core.StatsOverview.TreeViewItemArenaRunsSummary.IsSelected = true;
+					StatsOverview.TreeViewItemArenaRunsSummary.IsSelected = true;
 					HSReplayNetClientAnalytics.OnShowPersonalStats(ClickAction.Action.StatsArena, SubFranchise.Arena);
 				}
-				Core.StatsOverview.ContentControlFilter.Content = Core.StatsOverview.ArenaFilters;
+				StatsOverview.ContentControlFilter.Content = StatsOverview.ArenaFilters;
 			}
 			else
 			{
 				if(matches)
-					Core.StatsOverview.TreeViewItemConstructedGames.IsSelected = true;
+					StatsOverview.TreeViewItemConstructedGames.IsSelected = true;
 				else
 				{
-					Core.StatsOverview.TreeViewItemConstructedSummary.IsSelected = true;
+					StatsOverview.TreeViewItemConstructedSummary.IsSelected = true;
 					HSReplayNetClientAnalytics.OnShowPersonalStats(ClickAction.Action.StatsConstructed, null);
 				}
-				Core.StatsOverview.ContentControlFilter.Content = Core.StatsOverview.ConstructedFilters;
+				StatsOverview.ContentControlFilter.Content = StatsOverview.ConstructedFilters;
 			}
-			Core.StatsOverview.UpdateStats();
+			StatsOverview.UpdateStats();
 		}
 
 		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, List<Deck>? decks)

@@ -43,7 +43,6 @@ namespace Hearthstone_Deck_Tracker
 		private const int UpdateDelay = 16;
 		private static TrayIcon? _trayIcon;
 		private static OverlayWindow? _overlay;
-		private static Overview? _statsOverview;
 		private static int _updateRequestsPlayer;
 		private static int _updateRequestsOpponent;
 		private static DateTime _startUpTime;
@@ -60,7 +59,6 @@ namespace Hearthstone_Deck_Tracker
 		private static MainWindow? _mainWindow;
 		public static MainWindow MainWindow => _mainWindow ??= new MainWindow();
 
-		public static Overview StatsOverview => _statsOverview ??= new Overview();
 
 		public static bool Initialized { get; private set; }
 
@@ -295,7 +293,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				Log.Info("Shutting down...");
-				Influx.OnAppExit(Helper.GetCurrentVersion());
+				Influx.OnAppExit(Helper.GetCurrentVersion(), _mainWindow?.IsStatsOverviewInitialized ?? false);
 				LiveDataManager.Stop();
 				_updateOverlay = false;
 				var logWatcher = LogWatcherManger.Stop(true);
@@ -575,7 +573,5 @@ namespace Hearthstone_Deck_Tracker
 				CapturableOverlay?.Close();
 			}
 		}
-
-		internal static bool StatsOverviewInitialized => _statsOverview != null;
 	}
 }

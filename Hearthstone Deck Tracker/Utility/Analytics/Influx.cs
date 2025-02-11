@@ -55,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(point.Build());
 		}
 
-		public static void OnAppExit(Version version)
+		public static void OnAppExit(Version version, bool statsWindowUsed)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
@@ -63,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			var point = new InfluxPointBuilder("hdt_app_exit")
 				.Tag("version", version.ToVersionString(true))
 				.Tag("new", _new)
-				.Tag("stats_window_used", Core.StatsOverviewInitialized)
+				.Tag("stats_window_used", statsWindowUsed)
 				.Field("session_duration_seconds", (int)sessionDuration);
 #if(SQUIRREL)
 			point.Tag("squirrel", true);

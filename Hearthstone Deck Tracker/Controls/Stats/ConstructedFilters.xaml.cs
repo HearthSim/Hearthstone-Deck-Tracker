@@ -12,6 +12,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -346,7 +347,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			_updateCallback?.Invoke();
-			Core.StatsOverview.ConstructedGames.UpdateAddGameButton();
+			if(this.ParentMainWindow() is {} window)
+				window.StatsOverview.ConstructedGames.UpdateAddGameButton();
 		}
 
 		private void ComboBoxLeague_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

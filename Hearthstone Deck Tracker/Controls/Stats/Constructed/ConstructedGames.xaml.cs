@@ -182,7 +182,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			var deck = DeckList.Instance.ActiveDeck;
 			if(deck == null || deck.IsArenaDeck)
 				return;
-			if(Window.GetWindow(Core.StatsOverview) is not MetroWindow window)
+			if(Window.GetWindow(this) is not MetroWindow window)
 				return;
 			var dialog = window.ShowAddGameDialog(deck);
 			if(await dialog)
