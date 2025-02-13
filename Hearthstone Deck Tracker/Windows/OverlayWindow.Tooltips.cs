@@ -67,6 +67,16 @@ public partial class OverlayWindow
 		if(feTarget == null)
 			return;
 
+		Point targetPos;
+		try
+		{
+			targetPos = feTarget.TransformToAncestor(this).Transform(new Point(0, 0));
+		}
+		catch(InvalidOperationException)
+		{
+			// Element was probably unloaded
+			return;
+		}
 
 		// The content of OverlayExtensions.ToolTip is not part of the visual tree (OverlayExtensions.ToolTip is
 		// a property, not a framework element), and does therefore not have a DataContext.For bindings to work
@@ -119,34 +129,23 @@ public partial class OverlayWindow
 		var offsetY = ToolTipService.GetVerticalOffset(target);
 		tooltipHeight += offsetY;
 
-		Point point;
-		try
-		{
-			point = feTarget.TransformToAncestor(this).Transform(new Point(0, 0));
-		}
-		catch(InvalidOperationException)
-		{
-			// Element was probably unloaded
-			return;
-		}
-
 		// Correct placement if tooltip would go outside of window, and it fit on the other side
 		switch (placement)
 		{
 			case PlacementMode.Top:
-				if(point.Y - tooltipHeight < 0 && point.Y + targetHeight + tooltipHeight <= ActualHeight)
+				if(targetPos.Y - tooltipHeight < 0 && targetPos.Y + targetHeight + tooltipHeight <= ActualHeight)
 					placement = PlacementMode.Bottom;
 				break;
 			case PlacementMode.Bottom:
-				if(point.Y + targetHeight + tooltipHeight > ActualHeight && point.Y - tooltipHeight >= 0)
+				if(targetPos.Y + targetHeight + tooltipHeight > ActualHeight && targetPos.Y - tooltipHeight >= 0)
 					placement = PlacementMode.Top;
 				break;
 			case PlacementMode.Left:
-				if(point.X - tooltipWidth < 0 && point.X + targetWidth + tooltipWidth <= ActualWidth)
+				if(targetPos.X - tooltipWidth < 0 && targetPos.X + targetWidth + tooltipWidth <= ActualWidth)
 					placement = PlacementMode.Right;
 				break;
 			case PlacementMode.Right:
-				if(point.X + targetWidth + tooltipWidth > ActualWidth && point.X - tooltipWidth >= 0)
+				if(targetPos.X + targetWidth + tooltipWidth > ActualWidth && targetPos.X - tooltipWidth >= 0)
 					placement = PlacementMode.Left;
 				break;
 		}
@@ -158,10 +157,10 @@ public partial class OverlayWindow
 
 		var (left, top) = placement switch
 		{
-			PlacementMode.Top => (point.X + targetWidth / 2 - tooltipWidth / 2, point.Y - tooltipHeight),
-			PlacementMode.Bottom => (point.X + targetWidth / 2 - tooltipWidth / 2, point.Y + targetHeight + offsetY),
-			PlacementMode.Left => (point.X - tooltipWidth, point.Y + targetHeight / 2 - tooltipHeight / 2),
-			PlacementMode.Right => (point.X + targetWidth + offsetX, point.Y + targetHeight / 2 - tooltipHeight / 2),
+			PlacementMode.Top => (targetPos.X + targetWidth / 2 - tooltipWidth / 2, targetPos.Y - tooltipHeight),
+			PlacementMode.Bottom => (targetPos.X + targetWidth / 2 - tooltipWidth / 2, targetPos.Y + targetHeight + offsetY),
+			PlacementMode.Left => (targetPos.X - tooltipWidth, targetPos.Y + targetHeight / 2 - tooltipHeight / 2),
+			PlacementMode.Right => (targetPos.X + targetWidth + offsetX, targetPos.Y + targetHeight / 2 - tooltipHeight / 2),
 		};
 
 		var actualLeft = Math.Max(0, Math.Min(left, ActualWidth - tooltipWidth));
