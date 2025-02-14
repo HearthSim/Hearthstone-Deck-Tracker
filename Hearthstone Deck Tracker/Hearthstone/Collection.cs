@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return Cards.Sum(x => x.Value.Sum());
 		}
 
-		private static int GetDbfId(string cardId) => Database.GetCardFromId(cardId)?.DbfId ?? 0;
+		private static int GetDbfId(string cardId) => HearthDb.Cards.CardIdToDbfId.TryGetValue(cardId, out var dbfId) ? dbfId : 0;
 
 		[JsonProperty("collection")]
 		public SortedDictionary<int, int[]> Cards { get; }
@@ -118,13 +118,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			public long Coins { get; }
 
 			[JsonProperty("abilities")]
-			public List<Ability> Abilities { get; } 
+			public List<Ability> Abilities { get; }
 
 			[JsonProperty("equipment")]
-			public List<Ability> Equipment { get; } 
+			public List<Ability> Equipment { get; }
 
 			[JsonProperty("art_variations")]
-			public List<ArtVariation> ArtVariations { get; } 
+			public List<ArtVariation> ArtVariations { get; }
 
 			public class Ability
 			{
