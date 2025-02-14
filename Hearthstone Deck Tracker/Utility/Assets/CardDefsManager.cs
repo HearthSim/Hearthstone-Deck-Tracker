@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HearthDb;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.Updating;
 
 namespace Hearthstone_Deck_Tracker.Utility.Assets;
 
@@ -22,7 +23,12 @@ public static class CardDefsManager
 		{
 			_downloader = new AssetDownloader<string, HearthDb.CardDefs.CardDefs>(
 				Path.Combine(Config.AppDataPath, "CardDefs"),
-				key => $"https://api.hearthstonejson.com/v1/latest/CardDefs.{key}.xml",
+				key => (SquirrelRemote)Config.Instance.SquirrelRemote switch
+				{
+					SquirrelRemote.AwsHongKong =>
+						$"https://hsreplay-assets-hongkong.s3.ap-east-1.amazonaws.com/hearthstonejson/api/v1/latest/CardDefs.{key}.xml",
+					_ => $"https://api.hearthstonejson.com/v1/latest/CardDefs.{key}.xml"
+				},
 				key => $"CardDefs.{key}.xml",
 				data =>
 				{
