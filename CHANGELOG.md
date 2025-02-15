@@ -1,3 +1,9 @@
+## Unreleased
+**Performance**
+- Improved performance.
+- Improved memory usage.
+- Improved reliability of card data updates for users in China.
+
 ## **Release v1.39.2 - 2025-02-06**
 **General**:
 - Fixed various crashes.
