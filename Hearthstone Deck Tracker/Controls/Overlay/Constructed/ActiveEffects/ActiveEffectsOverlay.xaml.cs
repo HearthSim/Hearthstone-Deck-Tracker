@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem.Effects.Rogue;
 
@@ -11,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects;
 
 public partial class ActiveEffectsOverlay : INotifyPropertyChanged
 {
-    public class ActiveEffect
+    public class ActiveEffect : ICardTooltip
     {
         public EntityBasedEffect Effect { get; }
         public int? Count { get; set; }
@@ -27,6 +28,11 @@ public partial class ActiveEffectsOverlay : INotifyPropertyChanged
         public string ShadowColor => Effect.IsControlledByPlayer ? "#c4bcd1" : "#e39d91";
         public string BorderColor => Effect.IsControlledByPlayer ? "#8c7ca3" : "#b83424";
         public string BorderDarkerColor => Effect.IsControlledByPlayer ? "#29293d" : "#671e14";
+
+        public void UpdateTooltip(CardTooltipViewModel viewModel)
+        {
+	        viewModel.Card = Effect.CardToShowInUI;
+        }
     }
 
     private readonly Hearthstone.EffectSystem.ActiveEffects _activeEffects;

@@ -36,11 +36,7 @@
                 </Setter.Value>
             </Setter>
             <Setter Property="ToolTipService.Placement" Value="Left"/>
-            <Setter Property="extensions:OverlayExtensions.ToolTip">
-                <Setter.Value>
-                    <tooltips:CardTooltip d:DataContext="{d:DesignInstance controls:BattlegroundsMinionViewModel}" Card="{Binding Card}" ShowTriple="True" />
-                </Setter.Value>
-            </Setter>
+            <Setter Property="extensions:OverlayExtensions.ToolTip" Value="{x:Type tooltips:CardTooltip}" />
             <Style.Triggers>
                 <Trigger Property="controls:BattlegroundsMinion.IsMouseOver" Value="True">
                     <Setter Property="controls:BattlegroundsMinion.RenderTransform">
@@ -54,11 +50,7 @@
         <Style TargetType="guides:ReferencedCardRun">
             <Setter Property="ToolTipService.Placement" Value="Left"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="extensions:OverlayExtensions.ToolTip">
-                <Setter.Value>
-                    <tooltips:CardTooltip d:DataContext="{d:DesignInstance guides:ReferencedCardRun}" Card="{Binding Card}" CardAssetType="{Binding AssetType}" ShowTriple="True"/>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="extensions:OverlayExtensions.ToolTip" Value="{x:Type tooltips:CardTooltip}" />
         </Style>
         <Style TargetType="ToolTip">
             <Setter Property="Background" Value="Transparent"/>

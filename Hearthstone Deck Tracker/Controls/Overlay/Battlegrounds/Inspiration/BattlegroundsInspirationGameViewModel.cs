@@ -49,6 +49,7 @@ public class BattlegroundsInspirationGameViewModel : ViewModel
 				Attack = x.Attack,
 				Health = x.Health,
 				Card = minion,
+				ShowTripleTooltip = false,
 			};
 		}).WhereNotNull();
 	}

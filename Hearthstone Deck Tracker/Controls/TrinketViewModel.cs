@@ -1,12 +1,11 @@
-﻿using System.Windows.Media;
-using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Controls.Overlay;
+﻿using Hearthstone_Deck_Tracker.Controls.Overlay;
+using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Controls;
 
-public class TrinketViewModel : ViewModel
+public class TrinketViewModel : ViewModel, ICardTooltip
 {
 	public int? Cost
 	{
@@ -34,5 +33,10 @@ public class TrinketViewModel : ViewModel
 	{
 		get => GetProp<CardAssetViewModel?>(null);
 		private set => SetProp(value);
+	}
+
+	public void UpdateTooltip(CardTooltipViewModel viewModel)
+	{
+		viewModel.Card = Card;
 	}
 }

@@ -14,10 +14,8 @@
              ToolTipService.VerticalOffset="20"
              ToolTipService.Placement="Bottom"
              ToolTipService.IsEnabled="{Binding Bindable.OverlayCardMarkTooltips, Source={StaticResource ConfigWrapper}}"
+             ext:OverlayExtensions.ToolTip="{x:Type tooltips:CardTooltip}"
              ext:OverlayExtensions.IsOverlayHoverVisible="True">
-    <ext:OverlayExtensions.ToolTip>
-        <tooltips:CardTooltip Card="{Binding SourceCard}" Text="{Binding TooltipText}"/>
-    </ext:OverlayExtensions.ToolTip>
     <StackPanel>
         <Grid Width="36" Height="36" Visibility="{Binding CardAgeVisibility}">
             <Image Width="32" Height="32" Source="/HearthstoneDeckTracker;component/Images/card-marker.png" />

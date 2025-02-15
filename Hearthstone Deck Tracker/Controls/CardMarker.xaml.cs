@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Attributes;
@@ -17,7 +18,7 @@ using static System.Windows.Visibility;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
-	public partial class CardMarker : INotifyPropertyChanged
+	public partial class CardMarker : INotifyPropertyChanged, ICardTooltip
 	{
 		private static readonly Int32Rect CropRect = new() { Height = 59, Width = 59, X = 126, Y = 0 };
 
@@ -211,6 +212,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public void UpdateTooltip(CardTooltipViewModel viewModel)
+		{
+			viewModel.Card = SourceCard;
+			viewModel.Text = TooltipText;
 		}
 	}
 }

@@ -12,9 +12,7 @@
              ToolTipService.InitialShowDelay="100"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance hs:Card}"
+             extensions:OverlayExtensions.ToolTip="{x:Type tooltips:CardTooltip}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <extensions:OverlayExtensions.ToolTip>
-        <tooltips:CardTooltip Card="{Binding}" ShowTriple="{Binding BaconCard}" RelatedCards="{Binding RelatedCards}"/>
-    </extensions:OverlayExtensions.ToolTip>
     <Rectangle Fill="{Binding Background}" Height="34" Width="217" />
 </UserControl>

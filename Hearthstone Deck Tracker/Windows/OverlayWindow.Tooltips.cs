@@ -26,7 +26,7 @@ public partial class OverlayWindow
 {
 	private readonly Dictionary<DependencyObject, FrameworkElement> _activeTooltips = new();
 	private readonly HashSet<DependencyObject> _delayedTooltips = new();
-	private async void SetTooltip(FrameworkElement? tooltip, DependencyObject target)
+	private async void SetTooltip(Func<FrameworkElement>? getTooltip, DependencyObject target)
 	{
 		if(_activeTooltips.TryGetValue(target, out var current))
 		{
@@ -34,7 +34,7 @@ public partial class OverlayWindow
 			OverlayTooltip.Children.Remove(current);
 		}
 
-		if(tooltip == null)
+		if(getTooltip == null)
 		{
 			_delayedTooltips.Remove(target);
 			return;
@@ -77,6 +77,8 @@ public partial class OverlayWindow
 			// Element was probably unloaded
 			return;
 		}
+
+		var tooltip = getTooltip();
 
 		// The content of OverlayExtensions.ToolTip is not part of the visual tree (OverlayExtensions.ToolTip is
 		// a property, not a framework element), and does therefore not have a DataContext.For bindings to work
@@ -172,6 +174,10 @@ public partial class OverlayWindow
 		Canvas.SetLeft(OverlayTooltip, actualLeft);
 		Canvas.SetTop(OverlayTooltip, actualTop);
 
+		if(target is UIElement uiElement)
+			uiElement.RaiseEvent(new RoutedEventArgs(OverlayExtensions.TooltipLoadedEvent));
+		else if (target is ContentElement contentElement)
+			contentElement.RaiseEvent(new RoutedEventArgs(OverlayExtensions.TooltipLoadedEvent));
 	}
 
 	// Offset form top center secret by zone position.

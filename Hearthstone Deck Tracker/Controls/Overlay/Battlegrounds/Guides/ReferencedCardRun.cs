@@ -4,11 +4,12 @@ using System.Linq;
 using System.Windows.Documents;
 using HearthDb;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 
-public class ReferencedCardRun : Run
+public class ReferencedCardRun : Run, ICardTooltip
 {
 	public Hearthstone.Card? Card { get; }
 	public CardAssetType AssetType { get; }
@@ -114,4 +115,10 @@ public class ReferencedCardRun : Run
 		return result.ToArray();
 	}
 
+	public void UpdateTooltip(CardTooltipViewModel viewModel)
+	{
+		viewModel.Card = Card;
+		viewModel.CardAssetType = AssetType;
+		viewModel.ShowTriple = true;
+	}
 }

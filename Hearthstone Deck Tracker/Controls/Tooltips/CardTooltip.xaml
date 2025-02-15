@@ -7,7 +7,7 @@
              xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              mc:Ignorable="d"
-             IsVisibleChanged="CardTooltip_OnIsVisibleChanged"
+             DataContextChanged="CardTooltip_OnDataContextChanged"
              d:DesignHeight="256" d:DesignWidth="256">
     <UserControl.Resources>
         <controls:CardImageSizeConverter x:Key="CardImageSizeConverter"/>

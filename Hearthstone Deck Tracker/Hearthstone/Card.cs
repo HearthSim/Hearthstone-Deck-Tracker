@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Xml.Serialization;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -29,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	}
 
 	[Serializable]
-	public class Card : ViewModel, ICloneable
+	public class Card : ViewModel, ICloneable, ICardTooltip
 	{
 		public string Id { get; init; }
 
@@ -580,6 +581,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if (replaceTags)
 				text = text?.Replace("<b>", "").Replace("</b>", "").Replace("<i>", "").Replace("</i>", "") ?? string.Empty;
 			return text?.Replace("$", "").Replace("#", "").Replace("\\n", "\n").Replace("[x]", "") ?? string.Empty;
+		}
+
+		public void UpdateTooltip(CardTooltipViewModel viewModel)
+		{
+			viewModel.Card = this;
+			viewModel.ShowTriple = BaconCard;
+			viewModel.RelatedCards = RelatedCards;
 		}
 	}
 

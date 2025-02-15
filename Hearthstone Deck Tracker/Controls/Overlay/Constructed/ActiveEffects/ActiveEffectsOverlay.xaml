@@ -33,6 +33,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                               <Grid extensions:OverlayExtensions.IsOverlayHoverVisible="True"
+                                    extensions:OverlayExtensions.ToolTip="{x:Type tooltips:CardTooltip}"
                                     Width="{Binding DataContext.EffectSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     Height="{Binding DataContext.EffectSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     Margin="{Binding DataContext.InnerMargin, RelativeSource={RelativeSource AncestorType=UserControl}}">
@@ -53,9 +54,6 @@
                                   <Grid.Effect>
                                         <DropShadowEffect Color="{Binding ShadowColor}" BlurRadius="24" ShadowDepth="1"/>
                                     </Grid.Effect>
-                                  <extensions:OverlayExtensions.ToolTip>
-                                      <tooltips:CardTooltip Card="{Binding Effect.CardToShowInUI}"/>
-                                  </extensions:OverlayExtensions.ToolTip>
                                     <Border BorderThickness="3" CornerRadius="8">
                                         <Border.BorderBrush>
                                             <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">

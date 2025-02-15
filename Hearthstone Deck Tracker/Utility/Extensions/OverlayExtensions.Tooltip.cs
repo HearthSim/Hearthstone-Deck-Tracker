@@ -19,9 +19,9 @@ partial class OverlayExtensions
 	/// </summary>
 	public static void SetAutoScaleToolTip(UIElement element, bool value) => element.SetValue(AutoScaleToolTipProperty, value);
 
-	public static readonly DependencyProperty ToolTipProperty = DependencyProperty.RegisterAttached("ToolTip", typeof(FrameworkElement), typeof(OverlayExtensions), new FrameworkPropertyMetadata(null, OnToolTipChange));
+	public static readonly DependencyProperty ToolTipProperty = DependencyProperty.RegisterAttached("ToolTip", typeof(object), typeof(OverlayExtensions), new FrameworkPropertyMetadata(null, OnToolTipChange));
 
-	public static FrameworkElement GetToolTip(DependencyObject obj) => (FrameworkElement)obj.GetValue(ToolTipProperty);
+	public static object? GetToolTip(DependencyObject obj) => obj.GetValue(ToolTipProperty);
 
 	/// <summary>
 	/// Renders the value as a ToolTip in the OverlayWindow. Can be configured via <c>ToolTipService</c>.<br/>
@@ -32,7 +32,21 @@ partial class OverlayExtensions
 	/// - <c>ToolTipService.HorizontalOffset</c> Default: 0<br/>
 	/// - <c>ToolTipService.VerticalOffset</c> Default: 0
 	/// </summary>
-	public static void SetToolTip(DependencyObject obj, DependencyObject element) => obj.SetValue(ToolTipProperty, element);
+	public static void SetToolTip(DependencyObject obj, object tooltip) => obj.SetValue(ToolTipProperty, tooltip);
+
+	public static readonly RoutedEvent TooltipLoadedEvent = EventManager.RegisterRoutedEvent("TooltipLoaded", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(OverlayExtensions));
+
+	public static void AddTooltipLoadedHandler(DependencyObject d, RoutedEventHandler handler)
+	{
+		if(d is UIElement element)
+			element.AddHandler(TooltipLoadedEvent, handler);
+	}
+
+	public static void RemoveTooltipLoadedHandler(DependencyObject d, RoutedEventHandler handler)
+	{
+		if(d is UIElement element)
+			element.RemoveHandler(TooltipLoadedEvent, handler);
+	}
 
 	private static readonly Dictionary<DependencyObject, bool> _elementIsInOverlay = new ();
 
@@ -46,12 +60,26 @@ partial class OverlayExtensions
 		return val;
 	}
 
-	public static event Action<FrameworkElement?, DependencyObject>? OnToolTipChanged;
+	public static event Action<Func<FrameworkElement>?, DependencyObject>? OnToolTipChanged;
+
+	private static Func<FrameworkElement>? ResolveTooltip(DependencyObject element)
+	{
+		var tooltipData = GetToolTip(element);
+		if(tooltipData is FrameworkElement e)
+			return () => e;
+		if(tooltipData is Type type && typeof(FrameworkElement).IsAssignableFrom(type))
+		{
+			// We may not actually render this tooltip for various reasons.
+			// Only instantiate when we know for sure.
+			return () => (FrameworkElement)Activator.CreateInstance(type);
+		}
+		return null;
+	}
 
 	private static void ShowTooltip(object sender, MouseEventArgs _)
 	{
 		if(sender is DependencyObject d && IsInOverlay(d))
-			OnToolTipChanged?.Invoke(GetToolTip(d), d);
+			OnToolTipChanged?.Invoke(ResolveTooltip(d), d);
 	}
 
 	private static void HideTooltip(object sender, MouseEventArgs _)
@@ -69,12 +97,17 @@ partial class OverlayExtensions
 		// For anything not in the overlay, if we don't already have a normal ToolTip, set this as the ToolTip!
 		ToolTipService.SetInitialShowDelay(element, 300);
 		ToolTipService.SetShowDuration(element, 60_000);
-		element.ToolTip = new ToolTip
+		var tooltip = new ToolTip
 		{
-			Content = GetToolTip(element),
 			Background = Brushes.Transparent,
 			BorderBrush = Brushes.Transparent
 		};
+		tooltip.Initialized += (_, _) =>
+		{
+			// Lazy load content
+			tooltip.Content = ResolveTooltip(element)?.Invoke();
+		};
+		element.ToolTip = tooltip;
 	}
 
 	private static void OnElementUnloaded(object sender, RoutedEventArgs routedEventArgs)
@@ -88,10 +121,10 @@ partial class OverlayExtensions
 		if(d is not IInputElement inputElement)
 			return;
 
-		if(e is { OldValue: IInputElement, NewValue: IInputElement })
+		if(e is { OldValue: not null, NewValue: not null })
 			return;
 
-		if(e.NewValue is IInputElement)
+		if(e.NewValue is not null)
 		{
 			inputElement.MouseEnter += ShowTooltip;
 			inputElement.MouseLeave += HideTooltip;

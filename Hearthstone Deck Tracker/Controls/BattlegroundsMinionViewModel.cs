@@ -1,11 +1,12 @@
 ﻿using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
+using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Controls;
 
-public class BattlegroundsMinionViewModel : ViewModel
+public class BattlegroundsMinionViewModel : ViewModel, ICardTooltip
 {
 	public bool HasPoisonous
 	{
@@ -122,5 +123,17 @@ public class BattlegroundsMinionViewModel : ViewModel
 	{
 		get => GetProp(false);
 		set => SetProp(value);
+	}
+
+	public bool ShowTripleTooltip
+	{
+		get => GetProp(true);
+		set => SetProp(value);
+	}
+
+	public void UpdateTooltip(CardTooltipViewModel viewModel)
+	{
+		viewModel.Card = Card;
+		viewModel.ShowTriple = ShowTripleTooltip;
 	}
 }

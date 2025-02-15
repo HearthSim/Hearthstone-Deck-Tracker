@@ -87,11 +87,7 @@
                             <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                             <Setter Property="Cursor" Value="Hand"/>
                             <Setter Property="ToolTipService.Placement" Value="Right"/>
-                            <Setter Property="ext:OverlayExtensions.ToolTip">
-                                <Setter.Value>
-                                    <tooltips:CardTooltip Card="{Binding Card}" ShowTriple="False" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="ext:OverlayExtensions.ToolTip" Value="{x:Type tooltips:CardTooltip}"/>
                             <EventSetter Event="MouseDown" Handler="BattlegroundsMinion_OnMouseDown"/>
                             <Style.Triggers>
                                 <Trigger Property="controls:BattlegroundsMinion.IsMouseOver" Value="True">
@@ -107,11 +103,7 @@
                             <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                             <Setter Property="Cursor" Value="Hand"/>
                             <Setter Property="ToolTipService.Placement" Value="Right"/>
-                            <Setter Property="ext:OverlayExtensions.ToolTip">
-                                <Setter.Value>
-                                    <tooltips:CardTooltip Card="{Binding Card}" ShowTriple="False" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="ext:OverlayExtensions.ToolTip" Value="{x:Type tooltips:CardTooltip}" />
                             <EventSetter Event="MouseDown" Handler="HeroPower_OnMouseDown"/>
                             <Style.Triggers>
                                 <Trigger Property="controls:HeroPower.IsMouseOver" Value="True">
@@ -126,11 +118,7 @@
                         <Style TargetType="controls:Trinket">
                             <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                             <Setter Property="ToolTipService.Placement" Value="Right"/>
-                            <Setter Property="ext:OverlayExtensions.ToolTip">
-                                <Setter.Value>
-                                    <tooltips:CardTooltip Card="{Binding Card}" ShowTriple="False" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="ext:OverlayExtensions.ToolTip" Value="{x:Type tooltips:CardTooltip}" />
                             <Style.Triggers>
                                 <Trigger Property="controls:Trinket.IsMouseOver" Value="True">
                                     <Setter Property="controls:Trinket.RenderTransform">
