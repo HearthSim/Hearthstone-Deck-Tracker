@@ -328,7 +328,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
-		public bool ForceHidden { get; set; }
 		public Visibility WarningVisibility { get; set; }
 		public List<Card> PlayerDeck => _game.Player.PlayerCardList;
 		public List<Card> OpponentDeck => _game.Opponent.OpponentCardList;
@@ -387,12 +386,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			else
 				Hide();
-		}
-
-		public void ForceHide(bool hide)
-		{
-			ForceHidden = hide;
-			UpdatePosition();
 		}
 
 		private void SetRect(int top, int left, int width, int height)

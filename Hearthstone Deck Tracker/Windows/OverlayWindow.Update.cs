@@ -390,7 +390,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 						  || (Config.Instance.HideMenuOverlayInBackground && !isHearthstoneInForeground && _game.IsInMenu)
 						  || (Config.Instance.HideOverlayInSpectator && _game.CurrentGameMode == GameMode.Spectator)
 						  || Config.Instance.HideOverlay
-						  || ForceHidden
 						  || Helper.GameWindowState == WindowState.Minimized));
 
 
