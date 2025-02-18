@@ -285,12 +285,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(null)]
 		public DateTime? CustomDisplayedTimeFrame = null;
 
-		[DefaultValue(-1)]
-		public int CustomHeight = -1;
-
-		[DefaultValue(-1)]
-		public int CustomWidth = -1;
-
 		[DefaultValue(DateFormat.DayMonthYear)]
 		public DateFormat SelectedDateFormat = DateFormat.DayMonthYear;
 
@@ -603,12 +597,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(4)]
 		public int NotificationFadeOutDelay = 4;
-
-		[DefaultValue(0)]
-		public int OffsetX = 0;
-
-		[DefaultValue(0)]
-		public int OffsetY = 0;
 
 		[DefaultValue(false)]
 		public bool OnboardingSeen = false;

@@ -59,15 +59,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int ChancePanelsMargins = 8;
 		private readonly Point[][] _cardMarkPos = new Point[MaxHandSize][];
 		private readonly List<CardMarker> _cardMarks = new List<CardMarker>();
-		private readonly int _customHeight;
-		private readonly int _customWidth;
 		private readonly List<UIElement> _debugBoardObjects = new List<UIElement>();
 		private readonly GameV2 _game;
 		private readonly Dictionary<UIElement, ResizeGrip> _movableElements = new Dictionary<UIElement, ResizeGrip>();
 		private readonly List<FrameworkElement> _clickableElements = new List<FrameworkElement>();
 		private readonly HashSet<FrameworkElement> _hoverableElements = new HashSet<FrameworkElement>();
-		private readonly int _offsetX;
-		private readonly int _offsetY;
 		private readonly List<Rectangle> _playerHand = new List<Rectangle>();
 		private readonly List<Rectangle> _leaderboardIcons = new List<Rectangle>();
 		private readonly List<HearthstoneTextBlock> _leaderboardDeadForText = new List<HearthstoneTextBlock>();
@@ -300,10 +296,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ShowInTaskbar = Config.Instance.ShowInTaskbar;
 			if(Config.Instance.VisibleOverlay)
 				Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#4C0000FF");
-			_offsetX = Config.Instance.OffsetX;
-			_offsetY = Config.Instance.OffsetY;
-			_customWidth = Config.Instance.CustomWidth;
-			_customHeight = Config.Instance.CustomHeight;
 			if(Config.Instance.ShowBatteryLife)
 				EnableBatteryMonitor();
 			InitializeCollections();
@@ -407,12 +399,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(width < 0 || height < 0)
 				return;
-			Top = top + _offsetY;
-			Left = left + _offsetX;
-			Width = (_customWidth == -1) ? width : _customWidth;
-			Height = (_customHeight == -1) ? height : _customHeight;
-			CanvasInfo.Width = (_customWidth == -1) ? width : _customWidth;
-			CanvasInfo.Height = (_customHeight == -1) ? height : _customHeight;
+			Top = top;
+			Left = left;
+			Width = width;
+			Height = height;
+			CanvasInfo.Width = width;
+			CanvasInfo.Height = height;
 		}
 
 		private void Window_SourceInitialized_1(object sender, EventArgs e)
