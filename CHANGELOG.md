@@ -1,4 +1,7 @@
 ## Unreleased
+**Battlegrounds**:
+- Fixed a crash related to downloading card data without requiring an HDT update.
+
 **Performance**
 - Improved performance.
 - Improved memory usage.
