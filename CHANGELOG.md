@@ -1,5 +1,5 @@
 ## **Release v1.40.0 - 2025-02-18**
-**Updated for Hearthstone 30.6.1**
+**Updated for Hearthstone 31.6**
 
 **Battlegrounds**:
 - Fixed a crash related to downloading card data without requiring an HDT update.
