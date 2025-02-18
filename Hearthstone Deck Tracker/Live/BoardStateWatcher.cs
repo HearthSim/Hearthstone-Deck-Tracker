@@ -146,6 +146,16 @@ namespace Hearthstone_Deck_Tracker.Live
 			return player.QuestRewards.FirstOrDefault(x => x.HasTag(GameTag.BACON_IS_HEROPOWER_QUESTREWARD) == heroPower)?.Card.DbfId;
 		}
 
+		private int? BgsSecondHeroPower(Player player)
+		{
+			var entityId = player.Hero?.GetTag(GameTag.ADDITIONAL_HERO_POWER_ENTITY_1) ?? 0;
+			if(entityId == 0)
+				return null;
+
+			var secondHeroPower = player.PlayerEntities.FirstOrDefault(x => x.Id == entityId);
+			return secondHeroPower?.Card.DbfId;
+		}
+
 		private const int TrinketFirstSlot = 1;
 		private const int TrinketSecondSlot = 2;
 		private const int TrinketHeroPowerSlot = 3;
@@ -323,7 +333,8 @@ namespace Hearthstone_Deck_Tracker.Live
 					HeroPower = BgsQuestReward(player, true) ?? BgsTrinket(player, TrinketHeroPowerSlot) ?? DbfId(FindHeroPower(player)),
 					Weapon = playerWeapon != 0 ? playerWeapon :
 						BgsQuestReward(player, false) ??
-						BuddyDbfId(player) ?? 0,
+						BuddyDbfId(player) ??
+						BgsSecondHeroPower(player) ?? 0,
 					FirstTrinket = BgsTrinket(player, TrinketFirstSlot),
 					SecondTrinket = BgsTrinket(player, TrinketSecondSlot),
 					Hand = new BoardStateHand
@@ -340,7 +351,8 @@ namespace Hearthstone_Deck_Tracker.Live
 					HeroPower = BgsQuestReward(opponent, true) ?? BgsTrinket(opponent, TrinketHeroPowerSlot) ?? DbfId(FindHeroPower(opponent)),
 					Weapon = opponentWeapon != 0 ? opponentWeapon :
 						BgsQuestReward(opponent, false) ??
-						BuddyDbfId(opponent) ?? 0,
+						BuddyDbfId(opponent) ??
+						BgsSecondHeroPower(opponent) ?? 0,
 					FirstTrinket = BgsTrinket(opponent, TrinketFirstSlot),
 					SecondTrinket = BgsTrinket(opponent, TrinketSecondSlot),
 					Hand = new BoardStateHand
