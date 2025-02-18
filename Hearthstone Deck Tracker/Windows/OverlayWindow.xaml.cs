@@ -301,7 +301,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			InitializeCollections();
 			GridMain.Visibility = Hidden;
 			if(User32.GetHearthstoneWindow() != IntPtr.Zero)
+			{
+				HookGameWindow();
 				UpdatePosition();
+			}
 			Update(true);
 			UpdateScaling();
 			UpdatePlayerLayout();
@@ -325,6 +328,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				CanvasPlayerChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 				CanvasPlayerCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 			};
+
+			_winEventCallback = OnHearthstoneWindowLocationChange;
 		}
 
 		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
@@ -367,6 +372,37 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 		public bool IsViewingBGsTeammate { get; set; }
+
+		private readonly User32.WinEventCallback _winEventCallback;
+		private void OnHearthstoneWindowLocationChange(IntPtr hwineventhook, uint eventtype, IntPtr hwnd, uint idobject, long idchild, uint dweventthread, uint dwmseventtime)
+		{
+			const uint childIdSelf = 0;
+			if(idobject != childIdSelf)
+				return;
+			UpdatePosition();
+		}
+
+		private IntPtr _windowHook = IntPtr.Zero;
+		internal void HookGameWindow()
+		{
+			if(_windowHook != IntPtr.Zero)
+				return;
+			var thread = User32.GetHearthstoneWindowThread();
+			if(thread.ProcId == 0)
+				return;
+			const uint dwFlagsOutOfContextIgnoreSelf = 0x0000 | 0x001 | 0x002;
+			const uint eventObjectLocationchange = 0x800B;
+			_windowHook = User32.SetWinEventHook(eventObjectLocationchange, eventObjectLocationchange, IntPtr.Zero,
+				_winEventCallback, thread.ProcId, thread.ThreadId, dwFlagsOutOfContextIgnoreSelf);
+		}
+
+		internal void UnhookGameWindow()
+		{
+			if(_windowHook == IntPtr.Zero)
+				return;
+			User32.UnhookWinEvent(_windowHook);
+			_windowHook = IntPtr.Zero;
+		}
 
 		public void ShowOverlay(bool enable)
 		{
@@ -451,6 +487,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
+			UnhookGameWindow();
 			if(_mouseInput != null)
 				UnHookMouse();
 			DisableBatteryMonitor();

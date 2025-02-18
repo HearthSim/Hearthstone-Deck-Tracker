@@ -93,6 +93,16 @@ namespace Hearthstone_Deck_Tracker
 		[DllImport("user32.dll")]
 		public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
+		public delegate void WinEventCallback(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, uint idObject,
+			long idChild, uint idEventThread, uint dwmsEventTime);
+
+		[DllImport("user32.dll")]
+		internal static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc,
+			WinEventCallback pfnWinEventCallback, uint idProcess, uint idThread, uint dwFlags);
+
+		[DllImport("user32.dll")]
+		internal static extern bool UnhookWinEvent(IntPtr hWinEventHook);
+
 		public static void SetWindowExStyle(IntPtr hwnd, int style) => SetWindowLong(hwnd, GwlExstyle, GetWindowLong(hwnd, GwlExstyle) | style);
 
 		public static void RemoveWindowExStyle(IntPtr hwnd, int style) => SetWindowLong(hwnd, GwlExstyle, GetWindowLong(hwnd, GwlExstyle) & ~style);
@@ -175,14 +185,38 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_hsWindow == IntPtr.Zero)
 				return null;
+			var thread = GetHearthstoneWindowThread();
+			if(thread.ProcId == 0)
+				return null;
+			return GetHearthstoneProc(thread.ProcId);
+		}
+
+		public static Process? GetHearthstoneProc(uint procId)
+		{
+			if(procId == 0)
+				return null;
 			try
 			{
-				GetWindowThreadProcessId(_hsWindow, out uint procId);
 				return Process.GetProcessById((int)procId);
 			}
 			catch
 			{
 				return null;
+			}
+		}
+
+		public static (uint ThreadId, uint ProcId) GetHearthstoneWindowThread()
+		{
+			if(_hsWindow == IntPtr.Zero)
+				return (0, 0);
+			try
+			{
+				var threadId = GetWindowThreadProcessId(_hsWindow, out var procId);
+				return (threadId, procId);
+			}
+			catch
+			{
+				return (0, 0);
 			}
 		}
 

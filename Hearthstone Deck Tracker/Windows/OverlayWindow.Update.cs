@@ -381,18 +381,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			WotogIconsOpponent.ExcavateCounterStyle = showOpponentExcavateCounter ? Full : None;
 		}
 
-		public void UpdatePosition()
+		public void UpdateVisibility()
 		{
 			var isHearthstoneInForeground = User32.IsHearthstoneInForeground();
+
 			//hide the overlay depending on options
-			ShowOverlay(
-						!((Config.Instance.HideInBackground && !isHearthstoneInForeground && !_game.IsInMenu)
-						  || (Config.Instance.HideMenuOverlayInBackground && !isHearthstoneInForeground && _game.IsInMenu)
-						  || (Config.Instance.HideOverlayInSpectator && _game.CurrentGameMode == GameMode.Spectator)
-						  || Config.Instance.HideOverlay
-						  || Helper.GameWindowState == WindowState.Minimized));
+			var visible = !((Config.Instance.HideInBackground && !isHearthstoneInForeground && !_game.IsInMenu)
+			                || (Config.Instance.HideMenuOverlayInBackground && !isHearthstoneInForeground && _game.IsInMenu)
+			                || (Config.Instance.HideOverlayInSpectator && _game.CurrentGameMode == GameMode.Spectator)
+			                || Config.Instance.HideOverlay
+			                || Helper.GameWindowState == WindowState.Minimized);
+			var updatePosition = visible && !IsVisible;
+			ShowOverlay(visible);
+			if(updatePosition)
+				UpdatePosition();
+		}
 
-
+		public void UpdatePosition()
+		{
 			var hsRect = User32.GetHearthstoneRect(true);
 
 			//hs window has height 0 if it just launched, screwing things up if the tracker is started before hs is.

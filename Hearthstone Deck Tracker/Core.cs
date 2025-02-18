@@ -403,10 +403,12 @@ namespace Hearthstone_Deck_Tracker
 
 						CardDefsManager.EnsureLatestCardDefs();
 					}
-					Overlay.UpdatePosition();
+					Overlay.UpdateVisibility(); // Always run, this handles the game being in background, etc
 
 					if(!Game.IsRunning)
 					{
+						Overlay.HookGameWindow();
+						Overlay.UpdatePosition(); // Only needs to be called once, HookGameWindow will trigger subsequent position updates.
 						Overlay.Update(true);
 						Windows.CapturableOverlay?.UpdateContentVisibility();
 					}
@@ -450,6 +452,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Game.IsRunning = false;
 					GameIsRunningChanged?.Invoke(false);
+					Overlay.UnhookGameWindow();
 					Overlay.ShowOverlay(false);
 					Overlay.UpdateVisibilities();
 					Watchers.Stop();
