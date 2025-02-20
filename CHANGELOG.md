@@ -1,4 +1,10 @@
-## Unreleased
+## **Release v1.41.0 - 2025-02-20**
+**Battlegrounds**:
+- Add Bob's Buddy support for: \
+  *Cosmic Duality, Bellowing Tyrant, Colossus and Carrier.*\
+\
+*Battlecruiser is not supported yet, we are working on it! It will be available in the next update.*
+
 **Hearthstone**:
 - Add card highlights for cards that will be drawn or summoned.\
   *Hovering over cards in hand or deck now highlight cards in the deck that can be drawn or summoned by the hovered card*
