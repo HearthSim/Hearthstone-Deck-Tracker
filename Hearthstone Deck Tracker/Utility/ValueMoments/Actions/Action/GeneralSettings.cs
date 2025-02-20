@@ -67,5 +67,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("opponent_related_cards")]
 		public bool OpponentRelatedCards { get => !Config.Instance.HideOpponentRelatedCards; }
+
+		[JsonProperty("highlight_deck_synergies")]
+		public bool HighlightDeckSynergies { get => !Config.Instance.HidePlayerHighlightSynergies; }
 	}
 }

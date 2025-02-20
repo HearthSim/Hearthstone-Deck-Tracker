@@ -5,7 +5,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Paladin;
 
 public class LadyLiadrin: ICardWithRelatedCards
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Paladin.LadyLiadrin;
+	public virtual string GetCardId() => HearthDb.CardIds.Collectible.Paladin.LadyLiadrin;
 
 	public bool ShouldShowForOpponent(Player opponent) => false;
 
@@ -13,4 +13,9 @@ public class LadyLiadrin: ICardWithRelatedCards
 		player.SpellsPlayedInFriendlyCharacters
 			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
 			.ToList();
+}
+
+public class LadyLiadrinCore: LadyLiadrin
+{
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Paladin.LadyLiadrinCore;
 }

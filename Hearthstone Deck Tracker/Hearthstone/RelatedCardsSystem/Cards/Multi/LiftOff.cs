@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HearthDb.Enums;
 
-namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
+namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Multi;
 
-public class Starport: ICardWithRelatedCards
+public class LiftOff: ICardWithRelatedCards, ICardWithHighlight
 {
 	private readonly List<Card?> _starshipPieces = new List<Card?>
 	{
@@ -14,9 +15,12 @@ public class Starport: ICardWithRelatedCards
 		Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Invalid.Starport_Medivac2)
 	};
 
-	public string GetCardId() => HearthDb.CardIds.Collectible.Invalid.Starport;
+	public string GetCardId() => HearthDb.CardIds.Collectible.Invalid.LiftOff;
 
 	public bool ShouldShowForOpponent(Player opponent) => false;
 
 	public List<Card?> GetRelatedCards(Player player) => _starshipPieces;
+
+	public HighlightColor ShouldHighlight(Card card) =>
+		HighlightColorHelper.GetHighlightColor(card.GetTag(GameTag.TERRAN) > 0);
 }

@@ -444,6 +444,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HidePlayerRelatedCards = false;
 
+		[DefaultValue(false)]
+		public bool HidePlayerHighlightSynergies = false;
+
 		[DefaultValue(true)]
 		public bool DisablePlayerWotogs = true;
 

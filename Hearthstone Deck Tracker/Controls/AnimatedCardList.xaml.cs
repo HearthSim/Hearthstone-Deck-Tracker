@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -11,7 +12,27 @@ namespace Hearthstone_Deck_Tracker.Controls
 {
 	public partial class AnimatedCardList
 	{
+		private Func<Hearthstone.Card, HighlightColor>? _shouldHighlightCard;
 		public ObservableCollection<AnimatedCard> AnimatedCards { get; } = new();
+
+		public Func<Hearthstone.Card, HighlightColor>? ShouldHighlightCard
+		{
+			get => _shouldHighlightCard;
+			set
+			{
+				if(_shouldHighlightCard == value) return;
+				_shouldHighlightCard = value;
+				foreach (var animatedCard in AnimatedCards)
+				{
+					if(animatedCard.Card.Count <= 0 || animatedCard.Card.Jousted)
+					{
+						animatedCard.ViewModel.Highlight = HighlightColor.None;
+						continue;
+					}
+					animatedCard.ViewModel.Highlight = value?.Invoke(animatedCard.Card) ?? HighlightColor.None;
+				}
+			}
+		}
 
 		public AnimatedCardList()
 		{
@@ -67,6 +88,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 					if(newCard != null)
 					{
 						var newAnimated = new AnimatedCard(newCard, ShowTier7InspirationButton && newCard.IsBaconMinion);
+						newAnimated.ViewModel.Highlight = ShouldHighlightCard?.Invoke(newCard) ?? 0;
 						AnimatedCards.Insert(AnimatedCards.IndexOf(card), newAnimated);
 						newAnimated.Update(true).Forget();
 						newCards.Remove(newCard);
@@ -76,6 +98,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				foreach(var card in newCards)
 				{
 					var newCard = new AnimatedCard(card, ShowTier7InspirationButton && card.IsBaconMinion);
+					newCard.ViewModel.Highlight = ShouldHighlightCard?.Invoke(card) ?? 0;
 					AnimatedCards.Insert(cards.IndexOf(card), newCard);
 					newCard.FadeIn(!reset).Forget();
 				}

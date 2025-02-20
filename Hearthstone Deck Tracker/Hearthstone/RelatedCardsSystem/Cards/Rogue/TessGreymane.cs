@@ -5,7 +5,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Rogue;
 
 public class TessGreymane: ICardWithRelatedCards
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Rogue.TessGreymane;
+	public virtual string GetCardId() => HearthDb.CardIds.Collectible.Rogue.TessGreymane;
 
 	public bool ShouldShowForOpponent(Player opponent)
 	{
@@ -18,4 +18,9 @@ public class TessGreymane: ICardWithRelatedCards
 			.Where(card => card != null && !card.IsClass(player.CurrentClass) && !card.IsNeutral)
 			.OrderBy(card => card!.Cost)
 			.ToList();
+}
+
+public class TessGreymaneCore: TessGreymane
+{
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Rogue.TessGreymaneCore;
 }

@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
@@ -22,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		public Hearthstone.Card Card => (Hearthstone.Card)DataContext;
+		public AnimatedCardViewModel ViewModel { get; } = new();
 
 		public async Task FadeIn(bool fadeIn)
 		{
@@ -73,6 +76,15 @@ namespace Hearthstone_Deck_Tracker.Controls
 			Core.Overlay.BattlegroundsInspirationViewModel.SetKeyMinion(Card);
 			Core.Overlay.ShowBgsInspiration();
 			Core.Game.Metrics.BattlegroundsMinionsInspirationClicks++;
+		}
+	}
+
+	public class AnimatedCardViewModel : ViewModel
+	{
+		public HighlightColor Highlight
+		{
+			get => GetProp(HighlightColor.None);
+			set => SetProp(value);
 		}
 	}
 }

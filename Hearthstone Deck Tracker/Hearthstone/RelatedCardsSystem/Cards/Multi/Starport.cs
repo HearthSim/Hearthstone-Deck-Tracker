@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
+namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Multi;
 
-public class LiftOff: ICardWithRelatedCards
+public class Starport: ICardWithRelatedCards
 {
 	private readonly List<Card?> _starshipPieces = new List<Card?>
 	{
@@ -14,7 +14,7 @@ public class LiftOff: ICardWithRelatedCards
 		Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Invalid.Starport_Medivac2)
 	};
 
-	public string GetCardId() => HearthDb.CardIds.Collectible.Invalid.LiftOff;
+	public string GetCardId() => HearthDb.CardIds.Collectible.Invalid.Starport;
 
 	public bool ShouldShowForOpponent(Player opponent) => false;
 

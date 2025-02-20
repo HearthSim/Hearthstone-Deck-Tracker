@@ -8,3 +8,12 @@ public class AllFelBreaksLoose: ResurrectionCard
 
 	protected override bool ResurrectsMultipleCards() => false;
 }
+
+public class AllFelBreaksLooseInfused: ResurrectionCard
+{
+	public override string GetCardId() => HearthDb.CardIds.NonCollectible.Demonhunter.AllFelBreaksLoose_AllFelBreaksLooseToken;
+
+	protected override bool FilterCard(Card card) => card.IsDemon();
+
+	protected override bool ResurrectsMultipleCards() => true;
+}

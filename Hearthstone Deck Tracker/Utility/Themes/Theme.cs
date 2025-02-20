@@ -11,16 +11,22 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 	public class Theme
 	{
 		private ImageBrush? _highlightImage;
+		private ImageBrush? _highlightImageTeal;
+		private ImageBrush? _highlightImageOrange;
+		private ImageBrush? _highlightImageGreen;
 		public string Name { get; set; }
 		public string Directory { get; set; }
 		public Type BuildType { get; set; }
 		public OverlayTheme OverlayTheme { get; }
 
-		public ImageBrush HighlightImage => _highlightImage ??= GetHighlightImage();
+		public ImageBrush HighlightImage => _highlightImage ??= GetHighlightImage("highlight.png");
+		public ImageBrush HighlightImageTeal => _highlightImageTeal ??= GetHighlightImage("highlight_teal.png");
+		public ImageBrush HighlightImageOrange => _highlightImageOrange ??= GetHighlightImage("highlight_orange.png");
+		public ImageBrush HighlightImageGreen => _highlightImageGreen ??= GetHighlightImage("highlight_green.png");
 
-		private ImageBrush GetHighlightImage()
+		private ImageBrush GetHighlightImage(string filename)
 		{
-			var file = Path.Combine(Directory, "highlight.png");
+			var file = Path.Combine(Directory, filename);
 			if(File.Exists(file))
 				return new ImageBrush(new BitmapImage(new Uri(file, UriKind.Relative)));
 			Log.Warn($"highlight.png for theme '{Name}' does not exist.");

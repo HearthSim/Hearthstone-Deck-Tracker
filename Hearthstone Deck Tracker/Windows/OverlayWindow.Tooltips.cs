@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Tooltips;
@@ -241,8 +242,8 @@ public partial class OverlayWindow
 
 		if(state is { IsHand: true } && Core.Game.IsTraditionalHearthstoneMatch && !Config.Instance.HidePlayerRelatedCards)
 		{
-			var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId).GetRelatedCards(Core.Game.Player);
-			if(!relatedCards.Any())
+			var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId)?.GetRelatedCards(Core.Game.Player);
+			if(relatedCards != null && !relatedCards.Any())
 			{
 				var entity = Core.Game.Player.Hand.FirstOrDefault(e => e.ZonePosition == state.ZonePosition);
 				relatedCards = entity?.Info.StoredCardIds.Select(Database.GetCardFromId).ToList();

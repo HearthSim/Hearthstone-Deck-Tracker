@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:relatedCardsSystem="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem"
              mc:Ignorable="d"
              d:DesignHeight="34" d:DesignWidth="217">
     <UserControl.Resources>
@@ -33,8 +34,79 @@
             <Image Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/HearthstoneDeckTracker;component/Images/coin-cost.png" />
             <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="Cost" Width="34" Height="34" FontSize="17" TextAlignment="Center" FontWeight="Bold" />
         </Grid>
+        <!-- Highlight that flashes when user draws a card -->
         <Rectangle Name="RectHighlight" Fill="{Binding Highlight}" Height="34" Width="217" RenderOptions.BitmapScalingMode="Fant"
                    Opacity="0" VerticalAlignment="Center" IsHitTestVisible="False" />
+
+        <!-- Highlight when user hovers a card -->
+        <Rectangle Height="34" Width="217" RenderOptions.BitmapScalingMode="Fant"
+                   VerticalAlignment="Center" IsHitTestVisible="False" >
+            <Rectangle.Resources>
+                <CubicEase x:Key="Ease" EasingMode="EaseOut"></CubicEase>
+            </Rectangle.Resources>
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Opacity" Value="0"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ViewModel.Highlight, RelativeSource={RelativeSource AncestorType=local:AnimatedCard}}"
+                                     Value="{x:Static relatedCardsSystem:HighlightColor.Teal}">
+                            <Setter Property="Fill" Value="{Binding HighlightImageTeal }"></Setter>
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" BeginTime="0:0:0.2" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}" FillBehavior="Stop"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ViewModel.Highlight, RelativeSource={RelativeSource AncestorType=local:AnimatedCard}}"
+                                     Value="{x:Static relatedCardsSystem:HighlightColor.Orange}">
+                            <Setter Property="Fill" Value="{Binding HighlightImageOrange }"></Setter>
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" BeginTime="0:0:0.2" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}" FillBehavior="Stop"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ViewModel.Highlight, RelativeSource={RelativeSource AncestorType=local:AnimatedCard}}"
+                                     Value="{x:Static relatedCardsSystem:HighlightColor.Green}">
+                            <Setter Property="Fill" Value="{Binding HighlightImageGreen }"></Setter>
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" BeginTime="0:0:0.2" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}" FillBehavior="Stop"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
+
         <Border Name="BtnTier7Inspiration" Width="30" Height="30" Margin="0,2,2,2" Cursor="Hand"
                 MouseUp="BtnBgsInspiration_OnMouseUp" HorizontalAlignment="Right"
                 RenderTransformOrigin="0.5,0.5" CornerRadius="3"

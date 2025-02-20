@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Logging;
+using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -187,6 +191,32 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			ListViewOpponent.Update(cards, reset);
 			OpponentRelatedCardsDeckLens.Update(cardsWithRelatedCards.Where(card => cards.All(c => c.Id != card.Id)).ToList(), reset);
+		}
+
+		public void HighlightPlayerDeckCards(string? highlightSourceCardId)
+		{
+			if(string.IsNullOrEmpty(highlightSourceCardId) || Config.Instance.HidePlayerHighlightSynergies)
+			{
+				ListViewPlayer.ShouldHighlightCard = null;
+				return;
+			}
+
+			var highlightSourceCard = _game.RelatedCardsManager.GetCardWithHighlight(highlightSourceCardId!);
+			ListViewPlayer.ShouldHighlightCard = highlightSourceCard != null ? highlightSourceCard.ShouldHighlight : null;
+		}
+
+		private void ListViewPlayerCard_OnMouseEnter(object sender, MouseEventArgs e)
+		{
+			if(sender is Controls.Card card)
+			{
+				HighlightPlayerDeckCards(card.CardId);
+			}
+
+		}
+
+		private void ListViewPlayerCard_OnMouseLeave(object sender, MouseEventArgs e)
+		{
+			HighlightPlayerDeckCards(null);
 		}
 	}
 }

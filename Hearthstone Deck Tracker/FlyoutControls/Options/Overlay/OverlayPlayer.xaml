@@ -55,6 +55,11 @@
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckBoxRelatedCards_Checked"
                   Unchecked="CheckBoxRelatedCards_Unchecked" />
+        <CheckBox x:Name="CheckBoxHighlightSynergies"
+                  Content="{lex:LocText Options_Overlay_Player_CheckBox_Highlight_Synergies}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxHighlightSynergies_Checked"
+                  Unchecked="CheckBoxHighlightSynergies_Unchecked" />
         <CheckBox x:Name="CheckBoxAttack"
                   Content="{lex:LocText Options_Overlay_Player_CheckBox_Attack}" HorizontalAlignment="Left"
                   Margin="10,5,0,0" VerticalAlignment="Top"

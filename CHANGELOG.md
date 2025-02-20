@@ -1,3 +1,26 @@
+## Unreleased
+**Hearthstone**:
+- Add card highlights for cards that will be drawn or summoned.\
+  *Hovering over cards in hand or deck now highlight cards in the deck that can be drawn or summoned by the hovered card*
+- Added card highlights for: \
+  *Harbinger of Winter, Northern Navigation, Bartend-O-Bot, Blindeye Sharpshooter, Cliff Dive, Dirdra Rebel Captain, GuitarSoloist,
+  RushTheStage, UmpiresGrasp, Arkonite Revelation, Chia Drake, Embrace of Nature,
+  Oaken Summons, Peaceful Piper, Summer Flowerchild, Take to the Skies, Tortollan Traveler,
+  Ungoro Brochure, Costumed Singer, Pendant of Earth, Banjosaur, Barak Kodobane, Bargain Bin,
+  Birdwatching, Fetch!, Master's Call, Messenger Buzzard, Mystery Egg, Ten Gallon Hat,
+  Trusty Fishing Rod, Arcanologist, Blazing Accretion, Mes'Adune the Fractured, Saruun,
+  Under the Sea, Volume Up, Watercolor Artist, Chrono Boost, Lift Off, Nydus Worm, Alarmed Securitybot,
+  Boogie Down, Cardboard Golem, Hi Ho Silverwing, Interstellar Researcher, Libram of Clarity,
+  Pipsi Painthoof, Trinket Artist, Benevolent Banker, Chalk Artist, Creation Protocol, Scale Replica,
+  Thrive in the Shadows, Blink, Dig for Treasure, Elven Minstrel, Pit Stop, Raiding Party,Cactus Cutter,
+  Cosmonaut, Fairy Tale Forest, Flowrider, Hagatha the Fabled, Triangulate, Turbulus, Crane Game, Dirge of Despair,
+  Game Master Nemsy, Loken Jailer of Yogg Saron, Sketch Artist, Movement of Gluttony, Movement of Pride,
+  Blackrock 'n' Roll, Chorus Riff, Quality Assurance, Steam Guardian, Town Crier, Caricature Artist, Cattle Rustler,
+  Colifero the Artist, Ethereal Oracle, Instrument Tech, Magatha Bane of Music, Malygos the Spellweaver,
+  Plucky Paintfin, Therazane, Thunderbringer, Tram Operator, Troubled Mechanic, Weapons Attendant.*\
+\
+  *We will continuing adding more highlights in the coming updates.*
+
 ## **Release v1.40.0 - 2025-02-18**
 **Updated for Hearthstone 31.6**
 

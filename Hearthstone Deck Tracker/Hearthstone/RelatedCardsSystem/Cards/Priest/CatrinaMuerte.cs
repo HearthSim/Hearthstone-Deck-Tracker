@@ -8,3 +8,8 @@ public class CatrinaMuerte: ResurrectionCard
 
 	protected override bool ResurrectsMultipleCards() => false;
 }
+
+public class CatrinaMuerteCore: CatrinaMuerte
+{
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Priest.CatrinaMuerteCore;
+}

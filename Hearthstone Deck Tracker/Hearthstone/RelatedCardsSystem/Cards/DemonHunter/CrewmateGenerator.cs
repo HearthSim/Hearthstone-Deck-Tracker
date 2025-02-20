@@ -4,7 +4,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.DemonHun
 
 public abstract class CrewmateGenerator
 {
-	private readonly List<Card?> _crewmates = new List<Card?> {
+	protected readonly List<Card?> Crewmates = new List<Card?> {
 		Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Demonhunter.VoroneiRecruiter_AdminCrewmateToken),
 		Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Demonhunter.VoroneiRecruiter_EngineCrewmateToken),
 		Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Demonhunter.VoroneiRecruiter_HelmCrewmateToken),
@@ -16,5 +16,5 @@ public abstract class CrewmateGenerator
 	};
 
 	public List<Card?> GetRelatedCards(Player player) =>
-		_crewmates;
+		Crewmates;
 }

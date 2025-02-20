@@ -7,6 +7,7 @@ using HearthMirror.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility.Arena;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -122,6 +123,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			Core.Overlay.SetCardOpacityMask(state);
 			Core.Overlay.SetRelatedCardsTrigger(state);
+
+			if(Core.Game.IsTraditionalHearthstoneMatch)
+			{
+				Core.Overlay.HighlightPlayerDeckCards(state.CardId);
+			}
 		}
 
 		internal static void OnMulliganTooltipChange(object sender, HearthWatcher.EventArgs.MulliganTooltipArgs args)

@@ -514,21 +514,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var mouseOverElements = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, cursorPos)).ToList();
 
-			// for every element, if it was not hovered, emit a MouseEnter event
-			foreach(var mouseOverElement in mouseOverElements)
-			{
-				if(!_mouseOverElements.Contains(mouseOverElement))
-				{
-					mouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseEnterEvent });
-				}
-			}
-
 			// for every previously mouse overed element, if it is no longer hovered, emit a MouseLeaveEvent
 			foreach(var previousMouseOverElement in _mouseOverElements)
 			{
 				if(!mouseOverElements.Contains(previousMouseOverElement))
 				{
 					previousMouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseLeaveEvent });
+				}
+			}
+
+			// for every element, if it was not hovered, emit a MouseEnter event
+			foreach(var mouseOverElement in mouseOverElements)
+			{
+				if(!_mouseOverElements.Contains(mouseOverElement))
+				{
+					mouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseEnterEvent });
 				}
 			}
 

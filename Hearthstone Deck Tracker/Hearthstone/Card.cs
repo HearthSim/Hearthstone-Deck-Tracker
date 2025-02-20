@@ -37,7 +37,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[NonSerialized]
 		private HearthDb.Card? _data;
 		private HearthDb.Card? Data => _data ??= HearthDb.Cards.All.TryGetValue(Id, out var data) ? data : null;
-
 		public bool IsKnownCard => Data != null;
 
 		[NonSerialized]
@@ -106,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				if(ControllerPlayer == null)
 					return null;
-				var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(Id).GetRelatedCards(ControllerPlayer).WhereNotNull().ToList();
+				var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(Id)?.GetRelatedCards(ControllerPlayer).WhereNotNull().ToList() ?? new();
 				// Get related cards from Entity
 				if (relatedCards.IsEmpty())
 				{
@@ -191,6 +190,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int TechLevel => Data?.Entity.GetTag(GameTag.TECH_LEVEL) ?? 0;
 
 		public int BattlegroundsSkinParentId => Data?.Entity.GetTag(GameTag.BACON_SKIN_PARENT_ID) ?? 0;
+		public int GetTag(GameTag gameTag) => Data?.Entity.GetTag(gameTag) ?? 0;
+
 
 		public Race? RaceEnum => Data?.Race;
 		public Race? SecondaryRaceEnum => Data?.SecondaryRace;
@@ -531,6 +532,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		internal void UpdateHighlight() => OnPropertyChanged(nameof(Highlight));
 
 		public ImageBrush Highlight => ThemeManager.CurrentTheme?.HighlightImage ?? new ImageBrush();
+		public ImageBrush HighlightImageTeal => ThemeManager.CurrentTheme?.HighlightImageTeal ?? new ImageBrush();
+		public ImageBrush HighlightImageOrange => ThemeManager.CurrentTheme?.HighlightImageOrange ?? new ImageBrush();
+		public ImageBrush HighlightImageGreen => ThemeManager.CurrentTheme?.HighlightImageGreen ?? new ImageBrush();
 
 		[XmlIgnore]
 		public bool HighlightInHand { get; set; }
