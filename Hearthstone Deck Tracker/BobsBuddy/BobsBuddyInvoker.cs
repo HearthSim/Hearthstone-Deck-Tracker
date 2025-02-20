@@ -206,7 +206,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
 				BobsBuddyDisplay.ResetText();
 
-				if(_input != null && ((_input.Player.HeroPower.CardId == RebornRite && _input.Player.HeroPower.IsActivated) || (_input.Opponent.HeroPower.CardId == RebornRite && _input.Opponent.HeroPower.IsActivated)))
+				if(_input != null &&
+				   (_input.Player.HeroPowers.Any(hp => hp.CardId == RebornRite && hp.IsActivated) ||
+				    _input.Opponent.HeroPowers.Any(hp => hp.CardId == RebornRite && hp.IsActivated))
+				   )
 					await Task.Delay(LichKingDelay);
 
 				await RunAndDisplaySimulationAsync();
@@ -416,32 +419,35 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			inputPlayer.DamageTaken = playerGameHero.GetTag(GameTag.DAMAGE);
 			inputPlayer.Tier = playerGameHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
 
-			var playerHeroPower = gamePlayer.Board.FirstOrDefault(x => x.IsHeroPower);
-			var pHpData = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
-			var pHpData2 = playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
-			if(playerHeroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
+			var playerHeroPowers = gamePlayer.Board.Where(x => x.IsHeroPower).Take(2).ToList();
+			foreach(var heroPower in playerHeroPowers)
 			{
-				var minionsInPlay = gamePlayer.Board.Where(e => e.IsMinion && e.IsControlledBy(gamePlayer.Id)).Select(x => x.Id);
-				var attachedToEntityId = gamePlayer.PlayerEntities
-					.Where(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (!friendly || (x.IsInPlay && friendly)))
-					.Select(x => x.GetTag(GameTag.ATTACHED))
-					.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
-				if(attachedToEntityId > 0)
-					pHpData = attachedToEntityId;
-			}
+				var pHpData = heroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
+				var pHpData2 = heroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
+				if(heroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
+				{
+					var minionsInPlay = gamePlayer.Board.Where(e => e.IsMinion && e.IsControlledBy(gamePlayer.Id)).Select(x => x.Id);
+					var attachedToEntityId = gamePlayer.PlayerEntities
+						.Where(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (!friendly || (x.IsInPlay && friendly)))
+						.Select(x => x.GetTag(GameTag.ATTACHED))
+						.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
+					if(attachedToEntityId > 0)
+						pHpData = attachedToEntityId;
+				}
 
-			if(playerHeroPower?.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop)
-			{
-				var minionsInPlay = gamePlayer.Board.Where(e => e.IsMinion && e.IsControlledBy(gamePlayer.Id)).Select(x => x.Id);
-				var attachedToEntityId = gamePlayer.PlayerEntities
-					.Where(x => x.CardId == NonCollectible.Neutral.FlobbidinousFloop_InTheGloop && (!friendly || (x.IsInPlay && friendly)))
-					.Select(x => x.GetTag(GameTag.ATTACHED))
-					.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
-				if(attachedToEntityId > 0)
-					pHpData = attachedToEntityId;
-			}
+				if(heroPower?.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop)
+				{
+					var minionsInPlay = gamePlayer.Board.Where(e => e.IsMinion && e.IsControlledBy(gamePlayer.Id)).Select(x => x.Id);
+					var attachedToEntityId = gamePlayer.PlayerEntities
+						.Where(x => x.CardId == NonCollectible.Neutral.FlobbidinousFloop_InTheGloop && (!friendly || (x.IsInPlay && friendly)))
+						.Select(x => x.GetTag(GameTag.ATTACHED))
+						.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
+					if(attachedToEntityId > 0)
+						pHpData = attachedToEntityId;
+				}
 
-			inputPlayer.SetHeroPower(playerHeroPower?.CardId ?? "", friendly, WasHeroPowerActivated(playerHeroPower), pHpData, pHpData2);
+				inputPlayer.AddHeroPower(heroPower?.CardId ?? "", friendly, WasHeroPowerActivated(heroPower), pHpData, pHpData2);
+			}
 
 			foreach(var quest in gamePlayer.Quests)
 			{
@@ -731,7 +737,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			try
 			{
 				DebugLog("----- Simulation Input -----");
-				DebugLog($"Player: heroPower={_input.Player.HeroPower.CardId}, used={_input.Player.HeroPower.IsActivated}, data={_input.Player.HeroPower.Data}");
+				DebugLog($"Player: heroPower={_input.Player.HeroPowers[0].CardId}, used={_input.Player.HeroPowers[0].IsActivated}, data={_input.Player.HeroPowers[0].Data}");
+				if(_input.Player.HeroPowers.Count > 1)
+					DebugLog($"Player: extraHeroPower={_input.Player.HeroPowers[1].CardId}, used={_input.Player.HeroPowers[1].IsActivated}, data={_input.Player.HeroPowers[1].Data}");
+
 				DebugLog($"Hand: {string.Join(", ",_input.Player.Hand.Select(x => x.ToString()))}");
 
 				foreach(var minion in _input.Player.Side)
@@ -741,7 +750,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
 
 				DebugLog("---");
-				DebugLog($"Opponent: heroPower={_input.Opponent.HeroPower.CardId}, used={_input.Opponent.HeroPower.IsActivated}, data={_input.Opponent.HeroPower.Data}");
+				if (_input.Opponent.HeroPowers.Any())
+				{
+					DebugLog($"Opponent: heroPower={_input.Opponent.HeroPowers[0].CardId}, used={_input.Opponent.HeroPowers[0].IsActivated}, data={_input.Opponent.HeroPowers[0].Data}");
+					if (_input.Opponent.HeroPowers.Count > 1)
+					{
+						DebugLog($"Opponent: extraHeroPower={_input.Opponent.HeroPowers[1].CardId}, used={_input.Opponent.HeroPowers[1].IsActivated}, data={_input.Opponent.HeroPowers[1].Data}");
+					}
+				}
+
 				DebugLog($"Hand: {string.Join(", ",_input.Opponent.Hand.Select(x => x.ToString()))}");
 				foreach(var minion in _input.Opponent.Side)
 					DebugLog(minion.ToString());
@@ -755,9 +772,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					if(_input.PlayerTeammate != null)
 					{
 						DebugLog("---");
-						DebugLog("PlayerTeammate: heroPower=" + _input.PlayerTeammate.HeroPower.CardId + ", used="
-						         + _input.PlayerTeammate.HeroPower.IsActivated + ", data="
-						         + _input.PlayerTeammate.HeroPower.Data);
+						DebugLog("PlayerTeammate: heroPower=" + _input.PlayerTeammate.HeroPowers[0].CardId + ", used="
+						         + _input.PlayerTeammate.HeroPowers[0].IsActivated + ", data="
+						         + _input.PlayerTeammate.HeroPowers[0].Data);
+						if(_input.PlayerTeammate.HeroPowers.Count > 1)
+							DebugLog("PlayerTeammate: extraHeroPower=" + _input.PlayerTeammate.HeroPowers[1].CardId + ", used="
+							         + _input.PlayerTeammate.HeroPowers[1].IsActivated + ", data="
+							         + _input.PlayerTeammate.HeroPowers[1].Data);
+
 						DebugLog("Hand: " + string.Join(", ", _input.PlayerTeammate.Hand.Select(x => x.ToString())));
 						foreach(var minion in _input.PlayerTeammate.Side)
 							DebugLog(minion.ToString());
@@ -774,9 +796,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					if(_input.OpponentTeammate != null)
 					{
 						DebugLog("---");
-						DebugLog("OpponentTeammate: heroPower=" + _input.OpponentTeammate.HeroPower.CardId + ", used="
-						         + _input.OpponentTeammate.HeroPower.IsActivated + ", data="
-						         + _input.OpponentTeammate.HeroPower.Data);
+						DebugLog("OpponentTeammate: heroPower=" + _input.OpponentTeammate.HeroPowers[0].CardId + ", used="
+						         + _input.OpponentTeammate.HeroPowers[0].IsActivated + ", data="
+						         + _input.OpponentTeammate.HeroPowers[0].Data);
+						if(_input.OpponentTeammate.HeroPowers.Count > 1)
+							DebugLog("OpponentTeammate: extraHeroPower=" + _input.OpponentTeammate.HeroPowers[1].CardId + ", used="
+							         + _input.OpponentTeammate.HeroPowers[1].IsActivated + ", data="
+							         + _input.OpponentTeammate.HeroPowers[1].Data);
 						DebugLog("Hand: " + string.Join(", ", _input.OpponentTeammate.Hand.Select(x => x.ToString())));
 						foreach(var minion in _input.OpponentTeammate.Side)
 							DebugLog(minion.ToString());
@@ -1024,10 +1050,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			|| result == LethalResult.OpponentDied && Output?.theirDeathRate == 0;
 
 		private bool OpposingKelThuzadDied(LethalResult result)
-			=> result == LethalResult.OpponentDied && _input != null && _input.Opponent.HeroPower.CardId == HeroPowerIds.KelThuzad;
+			=> result == LethalResult.OpponentDied && _input != null && (_input?.OpponentTeammate?.HeroPowers.Any(hp => hp.CardId == HeroPowerIds.KelThuzad) ?? false);
 
 		private bool IsOpposingAkazamzarak()
-			=> _input?.Opponent.HeroPower.CardId == HeroPowerIds.Azamarak || _input?.OpponentTeammate?.HeroPower.CardId == HeroPowerIds.Azamarak;
+			=> (_input?.Opponent.HeroPowers.Any(hp => hp.CardId == HeroPowerIds.Azamarak) ?? false)
+			   || (_input?.OpponentTeammate?.HeroPowers.Any(hp => hp.CardId == HeroPowerIds.Azamarak) ?? false);
 
 		private void AlertWithLastInputOutput(string result)
 		{
