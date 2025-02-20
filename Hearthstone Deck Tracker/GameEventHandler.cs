@@ -560,7 +560,6 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleGameStart(DateTime timestamp)
 		{
 			_game.InvalidateMatchInfoCache();
-			Reflection.Reinitialize();
 			if(_game.CurrentGameMode == Practice && !_game.IsInMenu && !_handledGameEnd
 				&& _lastGameStartTimestamp > DateTime.MinValue && timestamp > _lastGameStartTimestamp)
 				HandleAdventureRestart();
