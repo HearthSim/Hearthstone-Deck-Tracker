@@ -1,4 +1,4 @@
-## **Release v1.41.0 - 2025-02-20**
+## **Release v1.41.1 - 2025-02-20**
 **Battlegrounds**:
 - Add Bob's Buddy support for: \
   *Cosmic Duality, Bellowing Tyrant, Colossus and Carrier.*\
