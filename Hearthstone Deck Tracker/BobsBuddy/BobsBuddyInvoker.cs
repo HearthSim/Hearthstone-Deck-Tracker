@@ -777,13 +777,20 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					if(_input.PlayerTeammate != null)
 					{
 						DebugLog("---");
-						DebugLog("PlayerTeammate: heroPower=" + _input.PlayerTeammate.HeroPowers[0].CardId + ", used="
-						         + _input.PlayerTeammate.HeroPowers[0].IsActivated + ", data="
-						         + _input.PlayerTeammate.HeroPowers[0].Data);
-						if(_input.PlayerTeammate.HeroPowers.Count > 1)
-							DebugLog("PlayerTeammate: extraHeroPower=" + _input.PlayerTeammate.HeroPowers[1].CardId + ", used="
-							         + _input.PlayerTeammate.HeroPowers[1].IsActivated + ", data="
-							         + _input.PlayerTeammate.HeroPowers[1].Data);
+						if(_input.PlayerTeammate.HeroPowers.Any())
+						{
+							DebugLog("PlayerTeammate: heroPower=" + _input.PlayerTeammate.HeroPowers[0].CardId
+							                                      + ", used="
+							                                      + _input.PlayerTeammate.HeroPowers[0].IsActivated
+							                                      + ", data="
+							                                      + _input.PlayerTeammate.HeroPowers[0].Data);
+							if(_input.PlayerTeammate.HeroPowers.Count > 1)
+								DebugLog("PlayerTeammate: extraHeroPower=" + _input.PlayerTeammate.HeroPowers[1].CardId
+								                                           + ", used="
+								                                           + _input.PlayerTeammate.HeroPowers[1]
+									                                           .IsActivated + ", data="
+								                                           + _input.PlayerTeammate.HeroPowers[1].Data);
+						}
 
 						DebugLog("Hand: " + string.Join(", ", _input.PlayerTeammate.Hand.Select(x => x.ToString())));
 						foreach(var minion in _input.PlayerTeammate.Side)
@@ -801,13 +808,20 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					if(_input.OpponentTeammate != null)
 					{
 						DebugLog("---");
-						DebugLog("OpponentTeammate: heroPower=" + _input.OpponentTeammate.HeroPowers[0].CardId + ", used="
-						         + _input.OpponentTeammate.HeroPowers[0].IsActivated + ", data="
-						         + _input.OpponentTeammate.HeroPowers[0].Data);
-						if(_input.OpponentTeammate.HeroPowers.Count > 1)
-							DebugLog("OpponentTeammate: extraHeroPower=" + _input.OpponentTeammate.HeroPowers[1].CardId + ", used="
-							         + _input.OpponentTeammate.HeroPowers[1].IsActivated + ", data="
-							         + _input.OpponentTeammate.HeroPowers[1].Data);
+						if(_input.OpponentTeammate.HeroPowers.Any())
+						{
+							DebugLog("OpponentTeammate: heroPower=" + _input.OpponentTeammate.HeroPowers[0].CardId
+							                                        + ", used="
+							                                        + _input.OpponentTeammate.HeroPowers[0].IsActivated
+							                                        + ", data="
+							                                        + _input.OpponentTeammate.HeroPowers[0].Data);
+							if(_input.OpponentTeammate.HeroPowers.Count > 1)
+								DebugLog("OpponentTeammate: extraHeroPower="
+								         + _input.OpponentTeammate.HeroPowers[1].CardId + ", used="
+								         + _input.OpponentTeammate.HeroPowers[1].IsActivated + ", data="
+								         + _input.OpponentTeammate.HeroPowers[1].Data);
+						}
+
 						DebugLog("Hand: " + string.Join(", ", _input.OpponentTeammate.Hand.Select(x => x.ToString())));
 						foreach(var minion in _input.OpponentTeammate.Side)
 							DebugLog(minion.ToString());
