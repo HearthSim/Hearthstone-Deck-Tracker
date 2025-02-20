@@ -737,9 +737,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			try
 			{
 				DebugLog("----- Simulation Input -----");
-				DebugLog($"Player: heroPower={_input.Player.HeroPowers[0].CardId}, used={_input.Player.HeroPowers[0].IsActivated}, data={_input.Player.HeroPowers[0].Data}");
-				if(_input.Player.HeroPowers.Count > 1)
-					DebugLog($"Player: extraHeroPower={_input.Player.HeroPowers[1].CardId}, used={_input.Player.HeroPowers[1].IsActivated}, data={_input.Player.HeroPowers[1].Data}");
+				if(_input.Player.HeroPowers.Any())
+				{
+					DebugLog(
+						$"Player: heroPower={_input.Player.HeroPowers[0].CardId}, used={_input.Player.HeroPowers[0].IsActivated}, data={_input.Player.HeroPowers[0].Data}");
+					if(_input.Player.HeroPowers.Count > 1)
+						DebugLog(
+							$"Player: extraHeroPower={_input.Player.HeroPowers[1].CardId}, used={_input.Player.HeroPowers[1].IsActivated}, data={_input.Player.HeroPowers[1].Data}");
+				}
 
 				DebugLog($"Hand: {string.Join(", ",_input.Player.Hand.Select(x => x.ToString()))}");
 
