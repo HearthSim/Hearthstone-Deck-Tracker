@@ -330,6 +330,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 
 			_winEventCallback = OnHearthstoneWindowLocationChange;
+
+			OpacityMaskOverlay.Changed += OpacityMaskOverlay_OnChanged;
 		}
 
 		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
@@ -501,10 +503,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Helper.DpiScalingY = presentationsource?.CompositionTarget?.TransformToDevice.M22 ?? 1.0;
 
 			Core.UpdatePlayerCards(true);
-			UpdateOpacityMask();
+
+			OpacityMaskOverlay_OnChanged(); // Called once here to init
 		}
 
-		internal void UpdateOpacityMask()
+		private void OpacityMaskOverlay_OnChanged()
 		{
 			OpacityMask = OpacityMaskOverlay.Mask;
 			if(Config.Instance.ShowCapturableOverlay && Config.Instance.MaskCapturableOverlay)
@@ -523,13 +526,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			else
 				OpacityMaskOverlay.RemoveMaskedRegion("FriendsList");
-
-			UpdateOpacityMask();
 		}
 
 		public void SetCardOpacityMask(BigCardState state)
 		{
 			if(IsViewingBGsTeammate) return;
+
+
+			using var _ = OpacityMaskOverlay.StartBatchUpdate();
 
 			var card = Database.GetCardFromId(state.CardId);
 			var isFriendly = state.Side == (int)PlayerSide.FRIENDLY;
@@ -548,15 +552,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
 				}
-
-				UpdateOpacityMask();
 			}
 
-			if (card == null)
-			{
-				UpdateOpacityMask();
+			if(card == null)
 				return;
-			}
 
 			if (card.Type is "Minion" or "Location" or "Battleground_Spell" && !isHand)
 			{
@@ -566,8 +565,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
 				}
-
-				UpdateOpacityMask();
 			}
 
 			if(card.Type == "Spell" && !isHand)
@@ -579,8 +576,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
 				}
-
-				UpdateOpacityMask();
 			}
 
 			if(card.Type == "Battleground_Trinket" && !isHand)
@@ -610,8 +605,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
 				}
-
-				UpdateOpacityMask();
 			}
 
 			if(card.Type == "Hero Power" && !isHand)
@@ -620,8 +613,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var rect = regionDrawer.DrawHeroPowerRegion(isFriendly);
 
 				OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
-
-				UpdateOpacityMask();
 			}
 
 			if(card.Type == "Weapon" && !isHand)
@@ -633,8 +624,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
 				}
-
-				UpdateOpacityMask();
 			}
 
 			if(isHand)
@@ -645,8 +634,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
 				}
-
-				UpdateOpacityMask();
 			}
 		}
 
@@ -660,10 +647,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
 
 			var rects = regionDrawer.DrawBgHeroPickingTooltipRegion(zoneSize, zonePosition, tooltipOnRight, numCards);
+
+			using var _ = OpacityMaskOverlay.StartBatchUpdate();
 			foreach(var rect in rects)
 				OpacityMaskOverlay.AddMaskedRegion("HeroPickingTooltip", rect);
-
-			UpdateOpacityMask();
 		}
 
 		[NotifyPropertyChangedInvocator]
@@ -873,7 +860,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			_battlegroundsInspirationBehavior.Show();
 			OpacityMaskOverlay.Disable();
-			UpdateOpacityMask();
 			BtnTier7Inspiration.IsEnabled = false;
 		}
 
@@ -881,7 +867,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			_battlegroundsInspirationBehavior.Hide();
 			OpacityMaskOverlay.Enable();
-			UpdateOpacityMask();
 		}
 
 		public static bool AnimatingXPBar = false;

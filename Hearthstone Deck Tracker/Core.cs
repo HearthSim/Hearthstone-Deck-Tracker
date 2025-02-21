@@ -414,10 +414,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 
 					if(Overlay.IsVisible)
-					{
-						Overlay.UpdateOpacityMask();
 						Overlay.UpdateBattlegroundsOverlay();
-					}
 
 					TrayIcon.MenuItemStartHearthstone.Visible = false;
 
