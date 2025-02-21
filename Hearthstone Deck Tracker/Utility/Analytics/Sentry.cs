@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			if(testInput.Anomaly != null)
 			{
-				tags["anomaly_card_id"] = testInput.Anomaly.cardID;
+				tags["anomaly_card_id"] = testInput.Anomaly.CardID;
 			}
 
 			var bbEvent = new SentryEvent(msg)

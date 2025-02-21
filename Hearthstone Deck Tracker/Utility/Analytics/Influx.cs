@@ -293,7 +293,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Field("loss_rate", output.lossRate * 100);
 
 			if(anomaly != null)
-				point.Tag("anomaly", anomaly.cardID);
+				point.Tag("anomaly", anomaly.CardID);
 
 			point.Tag("opposing_akazamzarak", isOpposingAkazamzarak.ToString());
 

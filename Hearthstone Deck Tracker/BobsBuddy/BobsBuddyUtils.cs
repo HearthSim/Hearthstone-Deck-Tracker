@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.baseHealth = entity.GetTag(GameTag.HEALTH);
 			minion.taunt = entity.HasTag(GameTag.TAUNT);
 			minion.div = entity.HasTag(GameTag.DIVINE_SHIELD);
-			minion.cleave = MinionFactory.cardIDsWithCleave.Contains(minion.cardID);
+			minion.cleave = MinionFactory.cardIDsWithCleave.Contains(minion.CardID);
 			minion.poisonous = entity.HasTag(GameTag.POISONOUS);
 			minion.venomous = entity.HasTag(GameTag.VENOMOUS);
 			minion.windfury = entity.HasTag(GameTag.WINDFURY);

@@ -881,7 +881,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					if(side == null)
 						return false;
 					var list = side.ToList();
-					return list.Count() >= 3 && list.Any(x => x.cardID == NonCollectible.Neutral.Leapfrogger);
+					return list.Count() >= 3 && list.Any(x => x.CardID == NonCollectible.Neutral.Leapfrogger);
 				}
 
 				if(
@@ -919,7 +919,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					throw;
 				DebugLog($"Unsupported interaction: {ex.Entity?.ToString()}: {ex.Message}");
 				Log.Error(ex);
-				var cardName = Database.GetCardFromId(ex.Entity?.cardID)?.LocalizedName;
+				var cardName = Database.GetCardFromId(ex.Entity?.CardID)?.LocalizedName;
 				var message = (cardName != null ? $"{cardName}: " : "") + ex.Message;
 				BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.UnsupportedInteraction, message);
 				if(ReportErrors)
