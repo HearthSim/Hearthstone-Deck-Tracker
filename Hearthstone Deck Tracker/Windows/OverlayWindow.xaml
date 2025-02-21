@@ -172,6 +172,9 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="False"
                                 ScrollViewer.CanContentScroll="False">
+                                <controls:AnimatedCardList.Resources>
+                                    <Style TargetType="controls:Card" BasedOn="{StaticResource CardStyle}" />
+                                </controls:AnimatedCardList.Resources>
                             </controls:AnimatedCardList>
                         </Viewbox>
                         <controls:DeckLens x:Name="OpponentRelatedCardsDeckLens" Label="{lex:Loc Related_Cards}" />
