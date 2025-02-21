@@ -413,6 +413,12 @@ namespace Hearthstone_Deck_Tracker
 						Windows.CapturableOverlay?.UpdateContentVisibility();
 					}
 
+					if(Overlay.IsVisible)
+					{
+						Overlay.UpdateOpacityMask();
+						Overlay.UpdateBattlegroundsOverlay();
+					}
+
 					TrayIcon.MenuItemStartHearthstone.Visible = false;
 
 					Game.IsRunning = true;

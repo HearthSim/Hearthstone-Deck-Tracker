@@ -378,54 +378,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_leaderboardHoveredEntityId = entityId;
 		}
 
-		private void UpdateBattlegroundsOverlay()
-		{
-			var fadeBgsMinionsList = false;
-			var turn = _game.GetTurnNumber();
-			_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Collapsed);
-			_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Collapsed);
-			if(turn == 0)
-				return;
-			var shouldShowOpponentInfo = false;
-			if(_leaderboardHoveredEntityId is int heroEntityId)
-			{
-				fadeBgsMinionsList = true;
-				_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Visible);
-				_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Visible);
-
-				// check if it's the team mate
-				Core.Game.Entities.TryGetValue(heroEntityId, out var entity);
-				var state = _game.GetBattlegroundsBoardStateFor(heroEntityId);
-				BgsOpponentInfo.Update(heroEntityId, state, turn);
-				shouldShowOpponentInfo = !(entity != null && (
-					entity.IsControlledBy(_game.Player.Id) ||
-					(
-						Core.Game.IsBattlegroundsDuosMatch &&
-						entity.GetTag(GameTag.BACON_DUO_TEAM_ID) == Core.Game.PlayerEntity?.GetTag(GameTag.BACON_DUO_TEAM_ID)
-					)
-				));
-			}
-			if(shouldShowOpponentInfo)
-			{
-				BgsOpponentInfo.Visibility = Visibility.Visible;
-				BgsOpponentInfo.UpdateLayout();
-				_bgsBobsBuddyBehavior.Hide();
-				_bgsPastOpponentBoardBehavior.Show();
-			}
-			else
-			{
-				BgsOpponentInfo.Visibility = Visibility.Collapsed;
-				_bgsPastOpponentBoardBehavior.Hide();
-				BgsOpponentInfo.ClearLastKnownBoard();
-				ShowBobsBuddyPanelDelayed();
-			}
-			// Only fade the minions, if we're out of mulligan
-			if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
-				fadeBgsMinionsList = false;
-			BgsTopBar.Opacity = fadeBgsMinionsList ? 0.3 : 1;
-			BobsBuddyDisplay.Opacity = fadeBgsMinionsList ? 0.3 : 1;
-		}
-
 		private async void ShowBobsBuddyPanelDelayed()
 		{
 			await Task.Delay(300);

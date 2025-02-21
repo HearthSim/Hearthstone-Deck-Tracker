@@ -503,7 +503,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.UpdatePlayerCards(true);
 			UpdateOpacityMask();
 		}
-		private void UpdateOpacityMask()
+
+		internal void UpdateOpacityMask()
 		{
 			OpacityMask = OpacityMaskOverlay.Mask;
 			if(Config.Instance.ShowCapturableOverlay && Config.Instance.MaskCapturableOverlay)
