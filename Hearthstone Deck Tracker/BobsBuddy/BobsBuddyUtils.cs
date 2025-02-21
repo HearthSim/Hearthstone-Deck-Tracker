@@ -28,10 +28,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal const string RebornRite = NonCollectible.Neutral.RebornRitesTavernBrawl;
 
 
-		internal static Minion GetMinionFromEntity(MinionFactory minionFactory, bool player, Entity entity, IEnumerable<Entity> attachedEntities)
+		internal static Minion GetMinionFromEntity(Simulator sim, bool player, Entity entity, IEnumerable<Entity> attachedEntities)
 		{
 			var cardId = entity.Info.LatestCardId ?? "Unknown";
-			var minion = minionFactory.CreateFromCardId(cardId, player);
+			var minion = sim.MinionFactory.CreateFromCardId(cardId, player);
 
 			minion.baseAttack = entity.GetTag(GameTag.ATK);
 			minion.baseHealth = entity.GetTag(GameTag.HEALTH);
@@ -66,9 +66,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				minion.vanillaHealth *= 2;
 			}
 
-			foreach(var ent in attachedEntities)
+			foreach(var attached in attachedEntities)
 			{
-				switch(ent.CardId)
+				switch(attached.CardId)
 				{
 					case ReplicatingMenace_Normal:
 						minion.AdditionalDeathrattles.Add(ReplicatingMenace.Deathrattle(false));
@@ -134,9 +134,21 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						minion.AdditionalDeathrattles.Add(JarredFrostling.Deathrattle());
 						break;
 					case NonCollectible.Neutral.BloodGem2:
-						var atk = ent.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-						var health = ent.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+						var atk = attached.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+						var health = attached.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
 						minion.SetBloodGemStats(atk, health);
+						break;
+					default:
+						if(attached.Card.TypeEnum == CardType.ENCHANTMENT && attached.CardId != null)
+						{
+							var enchantment = sim.EnchantmentFactory.Create(attached.CardId, minion.ControlledByPlayer);
+							if(enchantment != null)
+							{
+								enchantment.ScriptDataNum1 = attached.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+								enchantment.ScriptDataNum2 = attached.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+								minion.AttachEnchantment(enchantment);
+							}
+						}
 						break;
 				}
 			}

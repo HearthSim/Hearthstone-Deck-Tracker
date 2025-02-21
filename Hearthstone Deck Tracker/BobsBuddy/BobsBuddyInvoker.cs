@@ -486,7 +486,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			var playerSide = GetOrderedMinions(gamePlayer.Board)
 				.Where(e => e.IsControlledBy(gamePlayer.Id))
-				.Select(e => GetMinionFromEntity(simulator.MinionFactory, friendly, e, GetAttachedEntities(e.Id)));
+				.Select(e => GetMinionFromEntity(simulator, friendly, e, GetAttachedEntities(e.Id)));
 			foreach(var m in playerSide)
 				inputPlayer.Side.Add(m);
 
@@ -498,7 +498,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				{
 					if(e.IsMinion)
 					{
-						var minionEntity = new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)), null, simulator)
+						var minionEntity = new MinionCardEntity(GetMinionFromEntity(simulator, true, e, GetAttachedEntities(e.Id)), null, simulator)
 						{
 							CanSummon = !e.HasTag(GameTag.LITERALLY_UNPLAYABLE),
 						};
@@ -704,7 +704,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(e.IsMinion)
 				{
 					var attached = GetAttachedEntities(e.Id);
-					yield return new MinionCardEntity(GetMinionFromEntity(simulator.MinionFactory, false, e, attached), null, simulator)
+					yield return new MinionCardEntity(GetMinionFromEntity(simulator, false, e, attached), null, simulator)
 					{
 						CanSummon = !e.HasTag(GameTag.LITERALLY_UNPLAYABLE)
 					};
