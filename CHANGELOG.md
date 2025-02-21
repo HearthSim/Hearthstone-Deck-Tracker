@@ -1,3 +1,9 @@
+## **Release v1.41.3 - 2025-02-21**
+**Battlegrounds**:
+- Add Bob's Buddy support for Battlecruiser.
+- Fixed an issue with opponent's board state not showing.
+- Fixed an issue with hero picking overlay.
+
 ## **Release v1.41.2 - 2025-02-20**
 **Battlegrounds**:
 - Add Bob's Buddy support for: \
