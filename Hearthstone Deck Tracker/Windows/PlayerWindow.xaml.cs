@@ -12,6 +12,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Themes;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Panel = System.Windows.Controls.Panel;
 using Point = System.Drawing.Point;
 
@@ -211,6 +212,34 @@ namespace Hearthstone_Deck_Tracker
 			PlayerTopDeckLens.Update(top, reset);
 			PlayerBottomDeckLens.Update(bottom, reset);
 			PlayerSideboards.Update(sideboards, reset);
+		}
+
+		public void HighlightPlayerDeckCards(string? highlightSourceCardId)
+		{
+			if(string.IsNullOrEmpty(highlightSourceCardId) || Config.Instance.HidePlayerHighlightSynergies)
+			{
+				ListViewPlayer.ShouldHighlightCard = null;
+				return;
+			}
+
+			var highlightSourceCard = _game.RelatedCardsManager.GetCardWithHighlight(highlightSourceCardId!);
+			ListViewPlayer.ShouldHighlightCard = highlightSourceCard != null ? highlightSourceCard.ShouldHighlight : null;
+			PlayerTopDeckLens.CardList.ShouldHighlightCard = highlightSourceCard != null ? highlightSourceCard.ShouldHighlight : null;
+			PlayerBottomDeckLens.CardList.ShouldHighlightCard = highlightSourceCard != null ? highlightSourceCard.ShouldHighlight : null;
+		}
+
+		private void ListViewPlayerCard_OnMouseEnter(object sender, MouseEventArgs mouseEventArgs)
+		{
+			if(sender is Controls.Card card)
+			{
+				HighlightPlayerDeckCards(card.CardId);
+			}
+
+		}
+
+		private void ListViewPlayerCard_OnMouseLeave(object sender, MouseEventArgs mouseEventArgs)
+		{
+			HighlightPlayerDeckCards(null);
 		}
 
 		[NotifyPropertyChangedInvocator]

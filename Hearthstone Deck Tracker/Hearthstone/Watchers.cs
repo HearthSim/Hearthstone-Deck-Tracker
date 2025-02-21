@@ -127,6 +127,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(Core.Game.IsTraditionalHearthstoneMatch)
 			{
 				Core.Overlay.HighlightPlayerDeckCards(state.CardId);
+				if(Core.Windows.PlayerWindow.IsVisible)
+				{
+					Core.Windows.PlayerWindow.HighlightPlayerDeckCards(state.CardId);
+				}
 			}
 		}
 

@@ -6,6 +6,7 @@
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                      xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -19,7 +20,8 @@
                       Deactivated="PlayerWindow_OnDeactivated">
     <controls:MetroWindow.Resources>
         <themes:ThemeManager x:Key="ThemeManager"/>
-        <Style TargetType="controls1:Card">
+        <Style x:Key="CardStyle" TargetType="controls1:Card">
+            <Setter Property="extensions:OverlayExtensions.IsOverlayHoverVisible" Value="True"/>
             <Setter Property="ToolTipService.IsEnabled" Value="{Binding Bindable.WindowCardTooltips, Source={StaticResource ConfigWrapper}}"/>
         </Style>
     </controls:MetroWindow.Resources>
@@ -42,6 +44,12 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                 ScrollViewer.CanContentScroll="False">
+                    <controls1:AnimatedCardList.Resources>
+                        <Style TargetType="controls1:Card" BasedOn="{StaticResource CardStyle}">
+                            <EventSetter Event="MouseEnter" Handler="ListViewPlayerCard_OnMouseEnter" />
+                            <EventSetter Event="MouseLeave" Handler="ListViewPlayerCard_OnMouseLeave" />
+                        </Style>
+                    </controls1:AnimatedCardList.Resources>
                     <controls1:AnimatedCardList.ItemContainerStyle>
                         <Style TargetType="controls1:AnimatedCard">
                             <Setter Property="Margin" Value="0,1,0,0"/>

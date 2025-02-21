@@ -203,6 +203,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var highlightSourceCard = _game.RelatedCardsManager.GetCardWithHighlight(highlightSourceCardId!);
 			ListViewPlayer.ShouldHighlightCard = highlightSourceCard != null ? highlightSourceCard.ShouldHighlight : null;
+			PlayerTopDeckLens.CardList.ShouldHighlightCard = highlightSourceCard != null ? highlightSourceCard.ShouldHighlight : null;
+			PlayerBottomDeckLens.CardList.ShouldHighlightCard = highlightSourceCard != null ? highlightSourceCard.ShouldHighlight : null;
 		}
 
 		private void ListViewPlayerCard_OnMouseEnter(object sender, MouseEventArgs e)
