@@ -219,6 +219,8 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(highlightSourceCardId) || Config.Instance.HidePlayerHighlightSynergies)
 			{
 				ListViewPlayer.ShouldHighlightCard = null;
+				PlayerTopDeckLens.CardList.ShouldHighlightCard = null;
+				PlayerBottomDeckLens.CardList.ShouldHighlightCard = null;
 				return;
 			}
 

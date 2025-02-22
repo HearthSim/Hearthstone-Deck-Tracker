@@ -21,7 +21,6 @@
     <controls:MetroWindow.Resources>
         <themes:ThemeManager x:Key="ThemeManager"/>
         <Style x:Key="CardStyle" TargetType="controls1:Card">
-            <Setter Property="extensions:OverlayExtensions.IsOverlayHoverVisible" Value="True"/>
             <Setter Property="ToolTipService.IsEnabled" Value="{Binding Bindable.WindowCardTooltips, Source={StaticResource ConfigWrapper}}"/>
         </Style>
     </controls:MetroWindow.Resources>
@@ -36,6 +35,12 @@
     </controls:MetroWindow.IconTemplate>
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain" Margin="0,1,0,0">
+            <StackPanel.Resources>
+                <Style TargetType="controls1:Card" BasedOn="{StaticResource CardStyle}">
+                    <EventSetter Event="MouseEnter" Handler="ListViewPlayerCard_OnMouseEnter" />
+                    <EventSetter Event="MouseLeave" Handler="ListViewPlayerCard_OnMouseLeave" />
+                </Style>
+            </StackPanel.Resources>
             <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Width="200" TextAlignment="Center" Text="Deck title" TextWrapping="Wrap"/>
             <local:HearthstoneTextBlock x:Name="LblWins" FontSize="14" Width="200" TextAlignment="Center" Text="0-0 (0%)"/>
             <controls1:DeckLens x:Name="PlayerTopDeckLens" Label="{lex:Loc DeckLens_Label_OnTop}" />
@@ -44,12 +49,6 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                 ScrollViewer.CanContentScroll="False">
-                    <controls1:AnimatedCardList.Resources>
-                        <Style TargetType="controls1:Card" BasedOn="{StaticResource CardStyle}">
-                            <EventSetter Event="MouseEnter" Handler="ListViewPlayerCard_OnMouseEnter" />
-                            <EventSetter Event="MouseLeave" Handler="ListViewPlayerCard_OnMouseLeave" />
-                        </Style>
-                    </controls1:AnimatedCardList.Resources>
                     <controls1:AnimatedCardList.ItemContainerStyle>
                         <Style TargetType="controls1:AnimatedCard">
                             <Setter Property="Margin" Value="0,1,0,0"/>
