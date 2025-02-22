@@ -1,3 +1,7 @@
+## **Release v1.41.4 - 2025-02-21**
+**Hearthstone**:
+- Fixed an issue where opponent's card tooltips were not appearing.
+
 ## **Release v1.41.3 - 2025-02-21**
 **Battlegrounds**:
 - Add Bob's Buddy support for Battlecruiser.
