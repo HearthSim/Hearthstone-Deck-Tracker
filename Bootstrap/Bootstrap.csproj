@@ -19,7 +19,7 @@
     <HearthDbUrl>https://libs.hearthsim.net/hdt/HearthDb.zip</HearthDbUrl>
     <HearthMirrorUrl>https://libs.hearthsim.net/hdt/HearthMirror.zip</HearthMirrorUrl>
     <HSReplayUrl>https://libs.hearthsim.net/hdt/HSReplay.dll</HSReplayUrl>
-    <BobsBuddyUrl>https://libs.hearthsim.net/hdt/BobsBuddy.dll</BobsBuddyUrl>
+    <BobsBuddyUrl>https://libs.hearthsim.net/hdt/BobsBuddy.zip</BobsBuddyUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,6 +51,11 @@
     <Unzip SourceFiles="$(SlnDirectory)/lib/HearthDb.zip" DestinationFolder="$(SlnDirectory)/lib" />
     <Delete Files="$(SlnDirectory)/lib/HearthDb.zip" />
   </Target>
+
+	<Target Name="UnpackBobsBuddyDeps" BeforeTargets="Bootstrap" DependsOnTargets="DownloadDeps">
+		<Unzip SourceFiles="$(SlnDirectory)/lib/BobsBuddy.zip" DestinationFolder="$(SlnDirectory)/lib" />
+		<Delete Files="$(SlnDirectory)/lib/BobsBuddy.zip" />
+	</Target>
 
   <Target Name="CloneHDTLocalization" Condition="!Exists('$(SlnDirectory)/HDT-Localization')" BeforeTargets="Bootstrap">
       <Message Importance="normal" Text="Couldn't find HDT-Localization repo." />

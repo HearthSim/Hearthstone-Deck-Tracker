@@ -180,7 +180,7 @@ Resources/Tiles/
 /lib/HearthMirror.dll
 /lib/HearthMirror.zip
 /lib/HearthDb.*
-/lib/BobsBuddy.dll
+/lib/BobsBuddy.*
 /lib/Newtonsoft.Json.dll
 /lib/System.Reflection.DispatchProxy.dll
 /lib/untapped-scry-dotnet.dll
