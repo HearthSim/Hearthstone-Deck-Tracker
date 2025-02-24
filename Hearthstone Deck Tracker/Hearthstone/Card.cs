@@ -36,7 +36,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[NonSerialized]
 		private HearthDb.Card? _data;
-		private HearthDb.Card? Data => _data ??= HearthDb.Cards.All.TryGetValue(Id, out var data) ? data : null;
+		public HearthDb.Card? Data => _data ??= HearthDb.Cards.All.TryGetValue(Id, out var data) ? data : null;
+
 		public bool IsKnownCard => Data != null;
 
 		[NonSerialized]

@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
+using BobsBuddy.Utils;
 using BobsBuddyPlayer = BobsBuddy.Simulation.Player;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
@@ -380,7 +381,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private void SetupInputPlayer(
 			Simulator simulator,
 			Hearthstone.Player gamePlayer,
-			global::BobsBuddy.Simulation.Player inputPlayer,
+			BobsBuddyPlayer inputPlayer,
 			Entity? playerEntity,
 			bool friendly
 			)
@@ -392,16 +393,48 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				throw new ArgumentException(friendly ? "Player" : "Opponent" + " Entity could not be found. Exiting.");
 			}
 
-			if(gamePlayer.Board.Any(x => !x.Card.IsKnownCard && !string.IsNullOrWhiteSpace(x.CardId)))
+			foreach(var entity in gamePlayer.Board)
 			{
-				ErrorState = BobsBuddyErrorState.UnknownCards;
-				throw new ArgumentException("Board has unknown cards. Exiting.");
-			}
+				if(string.IsNullOrWhiteSpace(entity.CardId))
+					continue;
 
-			if(gamePlayer.Board.Any(IsUnsupportedCard))
-			{
-				ErrorState = BobsBuddyErrorState.UnsupportedCards;
-				throw new ArgumentException("Board has unsupported cards. Exiting.");
+				if(!entity.Card.IsKnownCard)
+				{
+					ErrorState = BobsBuddyErrorState.UnknownCards;
+					throw new ArgumentException("Board has unknown cards. Exiting.");
+				}
+
+				// SupportedCards.VerifyCardIsSupported currently only works with TECH_LEVEL > 0.
+				if(entity.Card.Data != null && entity.IsMinion)
+				{
+					// Results other than "Supported" mean HDT has data about the card via dynamic CardDefs updates
+					// (otherwise we would have exited above), but BobsBuddy has not yet been updated.
+					var result = SupportedCards.VerifyCardIsSupported(entity.Card.Data);
+
+					// Unknown cards have two issues: 1) If they have effects they have not been implemented yet,
+					// and 2) even if they don't have effects, we would be unable to summon instances of the card
+					// with the correct stats during combat.
+					if(result == SupportedCards.Result.UnknownCard)
+					{
+						ErrorState = BobsBuddyErrorState.UnknownCards;
+						throw new ArgumentException("Board has unknown cards. Exiting.");
+					}
+
+					// For the most part we only care about text changes to cards if we previously had an implementation
+					// for a card. While there can in theory be edge cases where a card is changed in a way where the
+					// old text did not need an implementation, but the new text does, this seems very unlikely.
+					if(result == SupportedCards.Result.TextChanged && simulator.MinionFactory.HasImplementationFor(entity.CardId!))
+					{
+						ErrorState = BobsBuddyErrorState.UnknownCards;
+						throw new ArgumentException("Board has cards with changed text. Exiting.");
+					}
+				}
+
+				if(IsUnsupportedCard(entity))
+				{
+					ErrorState = BobsBuddyErrorState.UnsupportedCards;
+					throw new ArgumentException("Board has unsupported cards. Exiting.");
+				}
 			}
 
 			if(playerGameHero == null)
