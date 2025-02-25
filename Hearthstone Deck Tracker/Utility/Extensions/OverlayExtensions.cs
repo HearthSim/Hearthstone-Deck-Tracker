@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -29,20 +28,28 @@ public partial class OverlayExtensions : DependencyObject
 			return;
 		if((bool)e.NewValue)
 		{
-			element.Unloaded += (_, _) =>
-			{
-				if(GetIsOverlayHitTestVisible(element))
-					OnRegisterHitTestVisible?.Invoke(element, false);
-			};
-			element.Loaded += (_, _) =>
-			{
-				if(GetIsOverlayHitTestVisible(element))
-					OnRegisterHitTestVisible?.Invoke(element, true);
-			};
+			element.Unloaded += HitTestVisible_OnElementUnloaded;
+			element.Loaded += HitTestVisible_OnElementLoaded;
 			OnRegisterHitTestVisible?.Invoke(element, true);
 		}
 		else
+		{
+			element.Unloaded -= HitTestVisible_OnElementUnloaded;
+			element.Loaded -= HitTestVisible_OnElementLoaded;
 			OnRegisterHitTestVisible?.Invoke(element, false);
+		}
+	}
+
+	private static void HitTestVisible_OnElementLoaded(object sender, RoutedEventArgs args)
+	{
+		if(sender is FrameworkElement e && GetIsOverlayHitTestVisible(e))
+			OnRegisterHitTestVisible?.Invoke(e, true);
+	}
+
+	private static void HitTestVisible_OnElementUnloaded(object sender, RoutedEventArgs routedEventArgs)
+	{
+		if(sender is FrameworkElement e && GetIsOverlayHitTestVisible(e))
+			OnRegisterHitTestVisible?.Invoke(e, false);
 	}
 
 	#endregion
@@ -70,21 +77,30 @@ public partial class OverlayExtensions : DependencyObject
 			return;
 		if((bool)e.NewValue)
 		{
-			element.Unloaded += (_, _) =>
-			{
-				if(GetIsOverlayHoverVisible(element))
-					OnRegisterHoverVisible?.Invoke(element, false);
-			};
-			element.Loaded += (_, _) =>
-			{
-				if(GetIsOverlayHoverVisible(element))
-					OnRegisterHoverVisible?.Invoke(element, true);
-			};
+			element.Unloaded += HoverVisible_OnElementUnloaded;
+			element.Loaded += HoverVisible_OnElementLoaded;
 			OnRegisterHoverVisible?.Invoke(element, true);
 		}
 		else
+		{
+			element.Unloaded -= HoverVisible_OnElementUnloaded;
+			element.Loaded -= HoverVisible_OnElementLoaded;
 			OnRegisterHoverVisible?.Invoke(element, false);
+		}
 	}
+
+	private static void HoverVisible_OnElementLoaded(object sender, RoutedEventArgs args)
+	{
+		if(sender is FrameworkElement e && GetIsOverlayHoverVisible(e))
+			OnRegisterHoverVisible?.Invoke(e, true);
+	}
+
+	private static void HoverVisible_OnElementUnloaded(object sender, RoutedEventArgs routedEventArgs)
+	{
+		if(sender is FrameworkElement e && GetIsOverlayHoverVisible(e))
+			OnRegisterHoverVisible?.Invoke(e, false);
+	}
+
 
 	#endregion
 }
