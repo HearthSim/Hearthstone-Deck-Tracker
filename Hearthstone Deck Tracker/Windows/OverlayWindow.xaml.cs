@@ -151,13 +151,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OverlayExtensions.OnRegisterHoverVisible += (e, hoverable) =>
 			{
 				if(hoverable)
-				{
 					_hoverableElements.Add(e);
-					RunHoverUpdates();
-				}
 				else
 					_hoverableElements.Remove(e);
 			};
+
+			StartInteractivityUpdates();
 
 			OverlayExtensions.OnToolTipChanged += SetTooltip;
 
@@ -422,7 +421,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				try
 				{
 					Show();
-					RunHoverUpdates();
 				}
 				catch(InvalidOperationException e)
 				{
@@ -498,6 +496,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
+			StopInteractivityUpdates();
 			UnhookGameWindow();
 			if(_mouseInput != null)
 				UnHookMouse();

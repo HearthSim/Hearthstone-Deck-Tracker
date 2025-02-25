@@ -424,31 +424,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return cardWidth;
 		}
 
-		private void UpdateInteractiveElements()
+		private bool _runInteractivityUpdates;
+		private async void StartInteractivityUpdates()
 		{
-			var cursorPos = GetCursorPos();
-			if(cursorPos == null)
+			if(_runInteractivityUpdates)
 				return;
-
-			var clickableHoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, (Point)cursorPos));
-			SetClickthrough(clickableHoveredIndex < 0);
-		}
-
-		const int SixtyHz = 1000 / 60;
-		private bool _runningHoverableUpdates;
-		private async void RunHoverUpdates()
-		{
-			if(_runningHoverableUpdates || _hoverableElements.Count == 0)
-				return;
-			_runningHoverableUpdates = true;
-			while(_hoverableElements.Count > 0 && IsVisible)
+			const int sixtyHz = 1000 / 60;
+			_runInteractivityUpdates = true;
+			while(_runInteractivityUpdates)
 			{
 				UpdateHoverable();
-				await Task.Delay(SixtyHz);
+				await Task.Delay(sixtyHz);
 			}
-			_runningHoverableUpdates = false;
 		}
 
+		private void StopInteractivityUpdates()
+		{
+			_runInteractivityUpdates = false;
+		}
 
 		/// <summary>
 		/// Wrapper for MouseEventArgs, used to check whether an event was triggered by custom hover logic.
@@ -465,6 +458,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var cursorPos = GetCursorPos();
 			if(cursorPos == null)
 				return;
+
+			var hoveringClickable = _clickableElements.Any(e => ElementContains(e, (Point)cursorPos));
+			SetClickthrough(!hoveringClickable);
 
 			var mouseOverElements = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, (Point)cursorPos)).ToList();
 
