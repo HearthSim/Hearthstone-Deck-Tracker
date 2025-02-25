@@ -243,7 +243,7 @@ public partial class OverlayWindow
 		if(state is { IsHand: true } && Core.Game.IsTraditionalHearthstoneMatch && !Config.Instance.HidePlayerRelatedCards)
 		{
 			var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId)?.GetRelatedCards(Core.Game.Player);
-			if(relatedCards != null && !relatedCards.Any())
+			if(relatedCards == null || relatedCards.Count == 0)
 			{
 				var entity = Core.Game.Player.Hand.FirstOrDefault(e => e.ZonePosition == state.ZonePosition);
 				relatedCards = entity?.Info.StoredCardIds.Select(Database.GetCardFromId).ToList();
