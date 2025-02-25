@@ -180,8 +180,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 		*/
 
-		private Point GetCursorPos()
+		private Point? GetCursorPos()
 		{
+			if(!IsVisible)
+				return null;
 			try
 			{
 				var pos = User32.GetMousePos();
@@ -189,7 +191,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			catch(InvalidOperationException)
 			{
-				return new Point(-1, -1);
+				return null;
 			}
 		}
 
@@ -285,7 +287,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			}
 			var relativeCanvas = GetCursorPos();
-			if(relativeCanvas.X == -1 && relativeCanvas.Y == -1)
+			if(relativeCanvas == null)
 				return;
 
 			var opponentHoverTargets = GetBoardHoverTargets(OppBoardItemsControl);
@@ -295,7 +297,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(oppBoard.Count > i)
 				{
 					var ellipse = opponentHoverTargets.ElementAtOrDefault(i);
-					if(ellipse != null && EllipseContains(ellipse, relativeCanvas))
+					if(ellipse != null && EllipseContains(ellipse, (Point)relativeCanvas))
 					{
 						var entity = oppBoard[i];
 						var index = i;
@@ -322,7 +324,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(playerBoard.Count > i)
 				{
 					var ellipse = playerHoverTargets.ElementAtOrDefault(i);
-					if(ellipse != null && EllipseContains(ellipse, relativeCanvas))
+					if(ellipse != null && EllipseContains(ellipse, (Point)relativeCanvas))
 					{
 						var entity = playerBoard[i];
 						var index = i;
@@ -354,7 +356,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var handCount = Math.Min(_game.Player.HandCount, MaxHandSize);
 			for(var i = handCount - 1; i >= 0; i--)
 			{
-				if(RotatedRectContains(_playerHand[i], relativeCanvas))
+				if(RotatedRectContains(_playerHand[i], (Point)relativeCanvas))
 				{
 					var entity = Core.Game.Player.Hand.FirstOrDefault(x => x.GetTag(GameTag.ZONE_POSITION) == i+1);
 					if(entity == null)
@@ -425,10 +427,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void UpdateInteractiveElements()
 		{
 			var cursorPos = GetCursorPos();
-			if(cursorPos.X == -1 && cursorPos.Y == -1)
+			if(cursorPos == null)
 				return;
 
-			var clickableHoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, cursorPos));
+			var clickableHoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, (Point)cursorPos));
 			SetClickthrough(clickableHoveredIndex < 0);
 		}
 
@@ -461,10 +463,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void UpdateHoverable()
 		{
 			var cursorPos = GetCursorPos();
-			if(cursorPos.X == -1 && cursorPos.Y == -1)
+			if(cursorPos == null)
 				return;
 
-			var mouseOverElements = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, cursorPos)).ToList();
+			var mouseOverElements = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, (Point)cursorPos)).ToList();
 
 			// for every previously mouse overed element, if it is no longer hovered, emit a MouseLeaveEvent
 			foreach(var previousMouseOverElement in _mouseOverElements)
