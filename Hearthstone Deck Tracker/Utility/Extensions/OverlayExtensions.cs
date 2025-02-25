@@ -6,9 +6,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions;
 
 public partial class OverlayExtensions : DependencyObject
 {
-	private static readonly Dictionary<FrameworkElement, RoutedEventHandler> UnregisterCallbacks = new();
-	private static readonly Dictionary<FrameworkElement, RoutedEventHandler> LoadedCallback = new();
-
 	#region IsOverlayHitTestVisible
 
 	public static readonly DependencyProperty IsOverlayHitTestVisibleProperty =
@@ -28,31 +25,24 @@ public partial class OverlayExtensions : DependencyObject
 
 	private static void OnIsOverlayHitTestVisibleChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
 	{
-		if(!(d is FrameworkElement element))
+		if(d is not FrameworkElement element)
 			return;
 		if((bool)e.NewValue)
 		{
-			OnRegisterHitTestVisible?.Invoke(element, true);
-			UnregisterCallbacks[element] = (object sender, RoutedEventArgs args) =>
+			element.Unloaded += (_, _) =>
 			{
-				if(UnregisterCallbacks.TryGetValue(element, out var callback))
-				{
-					element.Unloaded -= callback;
+				if(GetIsOverlayHitTestVisible(element))
 					OnRegisterHitTestVisible?.Invoke(element, false);
-					UnregisterCallbacks.Remove(element);
-				}
 			};
-			element.Unloaded += UnregisterCallbacks[element];
+			element.Loaded += (_, _) =>
+			{
+				if(GetIsOverlayHitTestVisible(element))
+					OnRegisterHitTestVisible?.Invoke(element, true);
+			};
+			OnRegisterHitTestVisible?.Invoke(element, true);
 		}
 		else
-		{
-			if(UnregisterCallbacks.TryGetValue(element, out var callback))
-			{
-				element.Unloaded -= callback;
-				UnregisterCallbacks.Remove(element);
-			}
 			OnRegisterHitTestVisible?.Invoke(element, false);
-		}
 	}
 
 	#endregion
@@ -80,43 +70,20 @@ public partial class OverlayExtensions : DependencyObject
 			return;
 		if((bool)e.NewValue)
 		{
-			UnregisterCallbacks[element] = (_, _) =>
+			element.Unloaded += (_, _) =>
 			{
-				if(UnregisterCallbacks.TryGetValue(element, out var callback))
-				{
-					element.Unloaded -= callback;
+				if(GetIsOverlayHoverVisible(element))
 					OnRegisterHoverVisible?.Invoke(element, false);
-					UnregisterCallbacks.Remove(element);
-				}
 			};
-			LoadedCallback[element] = (_, _) =>
+			element.Loaded += (_, _) =>
 			{
-				if(LoadedCallback.TryGetValue(element, out var callback))
-				{
-					element.Loaded -= callback;
+				if(GetIsOverlayHoverVisible(element))
 					OnRegisterHoverVisible?.Invoke(element, true);
-					LoadedCallback.Remove(element);
-				}
 			};
-			element.Unloaded += UnregisterCallbacks[element];
-			element.Loaded += LoadedCallback[element];
 			OnRegisterHoverVisible?.Invoke(element, true);
 		}
 		else
-		{
-			if(UnregisterCallbacks.TryGetValue(element, out var onUnloaded))
-			{
-				element.Unloaded -= onUnloaded;
-				UnregisterCallbacks.Remove(element);
-			}
-
-			if(LoadedCallback.TryGetValue(element, out var onLoaded))
-			{
-				element.Loaded -= onLoaded;
-				LoadedCallback.Remove(element);
-			}
 			OnRegisterHoverVisible?.Invoke(element, false);
-		}
 	}
 
 	#endregion
