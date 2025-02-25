@@ -527,38 +527,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(parent == null)
 				return false;
 
-			var scaleTransform = GetScaleTransform(element);
-			var scaleX = scaleTransform?.ScaleX ?? 1;
-			var scaleY = scaleTransform?.ScaleY ?? 1;
-
-			while(parent != null)
-			{
-				var parentScaleTransform = GetScaleTransform(parent);
-				scaleX *= parentScaleTransform?.ScaleX ?? 1;
-				scaleY *= parentScaleTransform?.ScaleY ?? 1;
-				parent = VisualTreeHelper.GetParent(parent) as FrameworkElement;
-			}
+			var scale = Helper.GetTotalScaleTransform(element);
 
 			try
 			{
 				var point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-				var contains= location.X > point.X && location.X < point.X + element.ActualWidth * scaleX && location.Y > point.Y
-					   && location.Y < point.Y + element.ActualHeight * scaleY;
+				var contains= location.X > point.X && location.X < point.X + element.ActualWidth * scale.X && location.Y > point.Y
+					   && location.Y < point.Y + element.ActualHeight * scale.Y;
 				return contains;
 			}
 			catch(InvalidOperationException)
 			{
 				return false;
 			}
-		}
-
-		private ScaleTransform? GetScaleTransform(FrameworkElement element)
-		{
-			// Todo: This is not great!
-			if(Helper.GetVisualParent<BattlegroundsHeroPicking>(element) != null || Helper.GetVisualParent<BattlegroundsQuestPicking>(element) != null || Helper.GetVisualParent<BattlegroundsTrinketPicking>(element) != null)
-				return BattlegroundsHeroPicking.LayoutTransform as ScaleTransform;
-
-			return element.RenderTransform as ScaleTransform;
 		}
 	}
 }
