@@ -1,3 +1,7 @@
+## **Release v1.41.5 - 2025-02-25**
+**Hearthstone**:
+- Fixed an issue where the related cards for Fizzle Snapshot and Tidepool Pupil were not appearing when the cards were in hand.
+
 ## **Release v1.41.4 - 2025-02-21**
 **Hearthstone**:
 - Fixed an issue where opponent's card tooltips were not appearing.
