@@ -229,13 +229,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public int GetTag(GameTag tag) => Tags.TryGetValue(tag, out var value) ? value : 0;
 
-		public void SetTag(GameTag tag, int value)
-		{
-			if(!Tags.ContainsKey(tag))
-				Tags.Add(tag, value);
-			else
-				Tags[tag] = value;
-		}
+		public void SetTag(GameTag tag, int value) => Tags[tag] = value;
 
 		public void SetCardCount(int count) => Card.Count = count;
 
