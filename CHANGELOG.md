@@ -1,3 +1,9 @@
+## **Unreleased**
+**Updated for Hearthstone 31.6.2**
+
+**Battlegrounds**:
+- Add Bob's Buddy support for Incubation Mutation Anomaly.
+
 ## **Release v1.41.5 - 2025-02-25**
 **Hearthstone**:
 - Fixed an issue where the related cards for Fizzle Snapshot and Tidepool Pupil were not appearing when the cards were in hand.
