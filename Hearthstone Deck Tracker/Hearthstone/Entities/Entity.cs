@@ -174,8 +174,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsSecret => HasTag(GameTag.SECRET);
 
 		public bool IsSpell => GetTag(GameTag.CARDTYPE) == (int)CardType.SPELL;
-		public bool IsDragon => GetTag(GameTag.CARDRACE) == (int)Race.DRAGON;
-
 
 		public bool IsHeroPower => GetTag(GameTag.CARDTYPE) == (int)CardType.HERO_POWER;
 

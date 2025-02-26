@@ -27,12 +27,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public const string SneedsEnchantment = NonCollectible.Neutral.Sneed_Replicate;
 		internal const string RebornRite = NonCollectible.Neutral.RebornRitesTavernBrawl;
 
-
 		internal static Minion GetMinionFromEntity(Simulator sim, bool player, Entity entity, IEnumerable<Entity> attachedEntities)
 		{
 			var cardId = entity.Info.LatestCardId ?? "Unknown";
 			var minion = sim.MinionFactory.CreateFromCardId(cardId, player);
 
+			minion.PrimaryRace = (Race)entity.GetTag(GameTag.CARDRACE);
 			minion.baseAttack = entity.GetTag(GameTag.ATK);
 			minion.baseHealth = entity.GetTag(GameTag.HEALTH);
 			minion.taunt = entity.HasTag(GameTag.TAUNT);
