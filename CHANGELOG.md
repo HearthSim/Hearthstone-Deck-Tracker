@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.41.6 - 2025-02-27**
 **Updated for Hearthstone 31.6.2**
 
 **Battlegrounds**:
