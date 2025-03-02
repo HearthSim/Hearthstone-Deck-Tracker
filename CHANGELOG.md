@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed Sasquawk related cards appearing when they are not relevant.
+
 ## **Release v1.41.6 - 2025-02-27**
 **Updated for Hearthstone 31.6.2**
 
