@@ -704,9 +704,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case REMOVEDFROMGAME:
 					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
-				default:
-					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
-					break;
 			}
 		}
 
@@ -795,9 +792,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							gameState.CurrentBlock.EntityDiscardedByArchivist.CardId = entity.Info.LatestCardId;
 					}
 					break;
-				default:
-					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
-					break;
 			}
 		}
 
@@ -823,9 +817,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							return;
 						gameState.GameHandler?.HandleOpponentSecretRemove(entity, cardId, gameState.GetTurnNumber());
 					}
-					break;
-				default:
-					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 					break;
 			}
 		}
@@ -862,9 +853,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler?.HandleOpponentRemoveFromPlay(entity, gameState.GetTurnNumber());
 					break;
 				case PLAY:
-					break;
-				default:
-					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 					break;
 			}
 		}
@@ -934,9 +922,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(game.OpponentEntity != null && game.OpponentEntity.GetTag(MULLIGAN_STATE) == (int)Mulligan.DEALING)
 							gameState.GameHandler?.HandleOpponentMulligan(entity, entity.GetTag(ZONE_POSITION));
 					}
-					break;
-				default:
-					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 					break;
 			}
 		}
@@ -1029,9 +1014,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler?.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, currentBlockCardId);
 					else if(controller == game.Opponent.Id)
 						gameState.GameHandler?.HandleOpponentSecretPlayed(entity, cardId, -1, gameState.GetTurnNumber(), (Zone)prevValue, id);
-					break;
-				default:
-					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 					break;
 			}
 		}
