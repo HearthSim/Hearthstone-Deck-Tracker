@@ -19,7 +19,11 @@
             <Grid.RenderTransform>
                 <ScaleTransform ScaleX="0.905" ScaleY="0.905"/>
             </Grid.RenderTransform>
-            <bgs:BattlegroundsTier Width="{Binding Width, RelativeSource={RelativeSource AncestorType=UserControl}}" Height="{Binding Height, RelativeSource={RelativeSource AncestorType=UserControl}}" Tier="{Binding Tier, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}" d:Tier="6" Opacity="{Binding IconOpacity, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}"/>
+            <bgs:BattlegroundsTier d:Tier="6" Cursor="Hand"
+                Width="{Binding Width, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Height="{Binding Height, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Tier="{Binding Tier, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}"
+                Opacity="{Binding IconOpacity, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}" />
             <Image Name="ImageTierRemove" Visibility="Collapsed" Source="/HearthstoneDeckTracker;component/Resources/tier-x.png" RenderOptions.BitmapScalingMode="Fant" />
         </Grid>
     </Grid>

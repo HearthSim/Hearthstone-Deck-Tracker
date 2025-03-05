@@ -19,14 +19,7 @@
             </StackPanel>
         </Border>
         <Border Background="#23272A" BorderBrush="#141617" BorderThickness="2" Margin="2,-2,2,5" Padding="1">
-            <local:AnimatedCardList x:Name="CardList" Background="Transparent" BorderThickness="0"
-                ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="217"
-                ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                ScrollViewer.CanContentScroll="False">
-                <local:AnimatedCardList.LayoutTransform>
-                    <ScaleTransform ScaleX="0.96" ScaleY="0.96" CenterX="0.5" CenterY="0.5"/>
-                </local:AnimatedCardList.LayoutTransform>
-            </local:AnimatedCardList>
+            <local:AnimatedCardList x:Name="CardList" Width="209"/>
         </Border>
     </StackPanel>
 </UserControl>

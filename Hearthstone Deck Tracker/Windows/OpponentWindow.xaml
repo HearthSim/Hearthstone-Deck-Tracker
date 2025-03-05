@@ -6,6 +6,7 @@
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                      xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -19,7 +20,7 @@
                       Deactivated="OpponentWindow_OnDeactivated">
     <controls:MetroWindow.Resources>
         <themes:ThemeManager x:Key="ThemeManager"/>
-        <Style TargetType="controls1:Card">
+        <Style TargetType="controls1:CardTile">
             <Setter Property="ToolTipService.IsEnabled" Value="{Binding Bindable.WindowCardTooltips, Source={StaticResource ConfigWrapper}}"/>
         </Style>
     </controls:MetroWindow.Resources>
@@ -33,20 +34,15 @@
         </DataTemplate>
     </controls:MetroWindow.IconTemplate>
     <Grid Name="WindowGrid">
-        <StackPanel Name="StackPanelMain" Margin="0,1,0,0">
+        <StackPanel Name="StackPanelMain" Margin="0,1,0,0" utility:CardListHelper.AutoScaleCardTiles="True">
             <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="15" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
-            <Viewbox Name="ViewBoxOpponent" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding OpponentDeckMaxHeight, RelativeSource={RelativeSource AncestorType=local:OpponentWindow}}">
-                <controls1:AnimatedCardList x:Name="ListViewOpponent" Background="Transparent" BorderThickness="0"
-                            ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
-                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                            ScrollViewer.CanContentScroll="False">
-                    <controls1:AnimatedCardList.ItemContainerStyle>
-                        <Style TargetType="controls1:AnimatedCard">
-                            <Setter Property="Margin" Value="0,1,0,0"/>
-                        </Style>
-                    </controls1:AnimatedCardList.ItemContainerStyle>
-                </controls1:AnimatedCardList>
-            </Viewbox>
+            <controls1:AnimatedCardList x:Name="ListViewOpponent" Width="221">
+                <controls1:AnimatedCardList.Resources>
+                    <Style TargetType="controls1:AnimatedCard">
+                        <Setter Property="Margin" Value="0,1,0,0"/>
+                    </Style>
+                </controls1:AnimatedCardList.Resources>
+            </controls1:AnimatedCardList>
             <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.CardCounterFrame, Source={StaticResource ThemeManager}}">
                 <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25"/>
                 <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25"/>

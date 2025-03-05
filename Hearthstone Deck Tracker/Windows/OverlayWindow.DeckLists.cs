@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						StackPanelPlayer.Children.Add(LblWins);
 						break;
 					case DeckPanel.Cards:
-						StackPanelPlayer.Children.Add(ViewBoxPlayer);
+						StackPanelPlayer.Children.Add(ListViewPlayer);
 						break;
 					case DeckPanel.CardsTop:
 						StackPanelPlayer.Children.Add(PlayerTopDeckLens);
@@ -71,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						StackPanelOpponent.Children.Add(LblWinRateAgainst);
 						break;
 					case DeckPanel.Cards:
-						StackPanelOpponent.Children.Add(ViewBoxOpponent);
+						StackPanelOpponent.Children.Add(ListViewOpponent);
 						break;
 				}
 			}
@@ -179,18 +179,26 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
 		}
 
-		public void UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom, List<Sideboard> sideboards)
+		public async Task UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom, List<Sideboard> sideboards)
 		{
-			ListViewPlayer.Update(cards, reset);
-			PlayerTopDeckLens.Update(top, reset);
-			PlayerBottomDeckLens.Update(bottom, reset);
-			PlayerSideboards.Update(sideboards, reset);
+			var updates = new[]
+			{
+				ListViewPlayer.Update(cards, reset),
+				PlayerTopDeckLens.Update(top, reset),
+				PlayerBottomDeckLens.Update(bottom, reset),
+				PlayerSideboards.Update(sideboards, reset),
+			};
+			await Task.WhenAll(updates);
 		}
 
-		public void UpdateOpponentCards(List<Card> cards, List<Card> cardsWithRelatedCards, bool reset)
+		public async Task UpdateOpponentCards(List<Card> cards, List<Card> cardsWithRelatedCards, bool reset)
 		{
-			ListViewOpponent.Update(cards, reset);
-			OpponentRelatedCardsDeckLens.Update(cardsWithRelatedCards.Where(card => cards.All(c => c.Id != card.Id)).ToList(), reset);
+			var updates = new[]
+			{
+				ListViewOpponent.Update(cards, reset),
+				OpponentRelatedCardsDeckLens.Update(cardsWithRelatedCards.Where(card => cards.All(c => c.Id != card.Id)).ToList(), reset),
+			};
+			await Task.WhenAll(updates);
 		}
 
 		public void HighlightPlayerDeckCards(string? highlightSourceCardId)
@@ -211,9 +219,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void ListViewPlayerCard_OnMouseEnter(object sender, MouseEventArgs e)
 		{
-			if(sender is Controls.Card card)
+			if(sender is CardTile { DataContext: CardTileViewModel vm })
 			{
-				HighlightPlayerDeckCards(card.CardId);
+				HighlightPlayerDeckCards(vm.Card.Id);
 			}
 
 		}

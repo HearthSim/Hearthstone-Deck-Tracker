@@ -65,14 +65,7 @@
                         />
                     </DockPanel>
                 </Border>
-                <Grid ClipToBounds="True" Margin="5">
-                    <Grid.Resources>
-                        <Style TargetType="controls:Card">
-                            <Setter Property="ToolTipService.HorizontalOffset" Value="-33"/>
-                        </Style>
-                    </Grid.Resources>
-                    <controls:AnimatedCardList x:Name="CardsList" Margin="-33,0,0,0"/>
-                </Grid>
+                <controls:AnimatedCardList x:Name="CardsList"/>
             </StackPanel>
         </Grid>
     </Border>

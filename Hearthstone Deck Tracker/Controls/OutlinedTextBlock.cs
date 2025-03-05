@@ -256,6 +256,7 @@ namespace Hearthstone_Deck_Tracker
 			outlinedTextBlock.InvalidateVisual();
 			outlinedTextBlock._cachedGeometry.Clear();
 			outlinedTextBlock._measureCache.Clear();
+			outlinedTextBlock._fontSize = (int)outlinedTextBlock.FontSize;
 		}
 
 		private static void OnFormattedTextUpdated(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -267,6 +268,7 @@ namespace Hearthstone_Deck_Tracker
 			outlinedTextBlock.InvalidateVisual();
 			outlinedTextBlock._cachedGeometry.Clear();
 			outlinedTextBlock._measureCache.Clear();
+			outlinedTextBlock._fontSize = (int)outlinedTextBlock.FontSize;
 		}
 
 		private void EnsureFormattedText()

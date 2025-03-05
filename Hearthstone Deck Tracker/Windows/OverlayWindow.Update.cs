@@ -69,8 +69,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if (refresh)
 			{
-				ListViewPlayer.Items.Refresh();
-				ListViewOpponent.Items.Refresh();
 				SetTopmost();
 				UpdateVisibilities();
 			}
@@ -184,9 +182,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Collapsed : Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Collapsed : Visible;
-			PlayerTopDeckLens.Visibility = Config.Instance.HidePlayerCardsTop ? Collapsed : Visible;
-			PlayerBottomDeckLens.Visibility = Config.Instance.HidePlayerCardsBottom ? Collapsed : Visible;
-			PlayerSideboards.Visibility = Config.Instance.HidePlayerSideboards ? Collapsed : Visible;
 
 			var gameStarted = !_game.IsInMenu && _game.SetupDone && _game.Player.PlayerEntities.Any();
 			SetCardCount(_game.Player.HandCount, !gameStarted ? 30 : _game.Player.DeckCount);
@@ -409,10 +404,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var prevWidth = Width;
 			var prevHeight = Height;
 			SetRect(hsRect.Top, hsRect.Left, hsRect.Width, hsRect.Height);
-			if(Width != prevWidth)
-				OnPropertyChanged(nameof(BoardWidth));
-			if(Height != prevHeight)
+			if(Width != prevWidth || Height != prevHeight)
 			{
+				OnPropertyChanged(nameof(BoardWidth));
 				OnPropertyChanged(nameof(BoardHeight));
 				OnPropertyChanged(nameof(MinionWidth));
 				OnPropertyChanged(nameof(CardWidth));
@@ -583,7 +577,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			Canvas.SetLeft(LinkOpponentDeckDisplay, Width * Config.Instance.OpponentDeckLeft / 100);
 
-			var OpponentStackVisibleHeight = (CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + ViewBoxOpponent.ActualHeight + OpponentRelatedCardsDeckLens.ActualHeight)* Config.Instance.OverlayOpponentScaling / 100;
+			var OpponentStackVisibleHeight = (CanvasOpponentCount
+				.ActualHeight + CanvasOpponentChance.ActualHeight + ListViewOpponent
+				.ActualHeight + OpponentRelatedCardsDeckLens.ActualHeight)* Config.Instance.OverlayOpponentScaling / 100;
 
 			if(BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 10 + LinkOpponentDeckDisplay.ActualHeight < Height)
 			{
@@ -618,9 +614,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void UpdateElementSizes()
 		{
 			OnPropertyChanged(nameof(PlayerStackHeight));
-			OnPropertyChanged(nameof(PlayerListHeight));
 			OnPropertyChanged(nameof(OpponentStackHeight));
-			OnPropertyChanged(nameof(OpponentListHeight));
 			OnPropertyChanged(nameof(BattlegroundsTileHeight));
 			OnPropertyChanged(nameof(BattlegroundsTileWidth));
 

@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public class CardAssetViewModel : ViewModel
 	{
-		public Hearthstone.Card? Card { get; }
+		public Hearthstone.Card? Card { get; init; }
 		public CardAssetType CardAssetType { get; }
 		private readonly AssetDownloader<Hearthstone.Card, BitmapImage>? _assetDownloader;
 

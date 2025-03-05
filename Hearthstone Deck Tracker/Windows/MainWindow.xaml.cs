@@ -249,7 +249,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			CardDefsManager.CardsChanged += () =>
 			{
-				Helper.SortCardCollection(ListViewDeck.Items);
+				UpdateDisplayedDeck();
 			};
 
 			ErrorManager.ErrorAdded += data =>
@@ -498,14 +498,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(HsReplayButtonVisibility));
 
 			var version = deck?.GetSelectedDeckVersion();
-			ListViewDeck.ItemsSource = null;
 			// always update the sideboard to ensure we hide the header if empty
 			PlayerSideboards.Update(version?.Sideboards, true);
 			if(version != null)
-			{
-				ListViewDeck.ItemsSource = Helper.ResolveZilliax3000(version.Cards, version.Sideboards);
-				Helper.SortCardCollection(ListViewDeck.Items);
-			}
+				ListViewDeck.Update(Helper.ResolveZilliax3000(version.Cards, version.Sideboards).ToSortedCardList(), true);
 
 			ManaCurveMyDecks.SetDeck(deck);
 

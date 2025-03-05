@@ -4,14 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Utility.Themes;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Panel = System.Windows.Controls.Panel;
 using Point = System.Drawing.Point;
@@ -23,11 +22,11 @@ namespace Hearthstone_Deck_Tracker
 	/// <summary>
 	/// Interaction logic for PlayerWindow.xaml
 	/// </summary>
-	public partial class PlayerWindow : INotifyPropertyChanged
+	public partial class PlayerWindow
 	{
 		private readonly GameV2 _game;
 
-		public PlayerWindow(GameV2 game, List<Card>? forScreenshot = null)
+		public PlayerWindow(GameV2 game, List<Hearthstone.Card>? forScreenshot = null)
 		{
 			InitializeComponent();
 			_game = game;
@@ -59,38 +58,29 @@ namespace Hearthstone_Deck_Tracker
 				LblDeckTitle.Visibility = Visibility.Collapsed;
 				ListViewPlayer.Update(forScreenshot, true);
 
-				Height = 34 * ListViewPlayer.Items.Count;
+				var items = ListViewPlayer.AnimatedCards;
+				var margins = items.Aggregate(0.0, (c, n) => c + n.Margin.Top + n.Margin.Bottom);
+				Height = ListViewPlayer.ViewModel.MaxHeightCard * items.Count + margins;
 			}
 
 			DeckList.Instance.ActiveDeckChanged += _ =>
 			{
-				ListViewPlayer.Items.Refresh();
+				ListViewPlayer.ItemsControl.Items.Refresh();
 			};
 
-			ThemeManager.ThemeChanged += () =>
+
 			{
 				CanvasPlayerChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 				CanvasPlayerCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 			};
 		}
 
-		public double PlayerDeckMaxHeight => ActualHeight - PlayerLabelsHeight;
-
-		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
-			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + 42 + PlayerTopDeckLens.ActualHeight + PlayerBottomDeckLens.ActualHeight + PlayerSideboards.ActualHeight;
-
-		public List<Card> PlayerDeck => _game.Player.PlayerCardList;
-
-		public event PropertyChangedEventHandler? PropertyChanged;
-
 		public void Update()
 		{
 			CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			CanvasPlayerCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+			LblPlayerFatigue.Visibility = Config.Instance.HidePlayerFatigueCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
-			PlayerTopDeckLens.Visibility = Config.Instance.HidePlayerCardsTop ? Visibility.Collapsed : Visibility.Visible;
-			PlayerBottomDeckLens.Visibility = Config.Instance.HidePlayerCardsBottom ? Visibility.Collapsed : Visibility.Visible;
-			PlayerSideboards.Visibility = Config.Instance.HidePlayerSideboards ? Visibility.Collapsed : Visibility.Visible;
 
 			LblWins.Visibility = Config.Instance.ShowDeckWins && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
@@ -117,7 +107,7 @@ namespace Hearthstone_Deck_Tracker
 				switch(item)
 				{
 					case DeckPanel.Cards:
-						StackPanelMain.Children.Add(ViewBoxPlayer);
+						StackPanelMain.Children.Add(ListViewPlayer);
 						break;
 					case DeckPanel.CardsTop:
 						StackPanelMain.Children.Add(PlayerTopDeckLens);
@@ -145,7 +135,6 @@ namespace Hearthstone_Deck_Tracker
 						break;
 				}
 			}
-			OnPropertyChanged(nameof(PlayerDeckMaxHeight));
 		}
 
 		public void SetCardCount(int cardCount, int cardsLeftInDeck)
@@ -206,12 +195,16 @@ namespace Hearthstone_Deck_Tracker
 				Topmost = false;
 		}
 
-		public void UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom, List<Sideboard> sideboards)
+		public async Task UpdatePlayerCards(List<Hearthstone.Card> cards, bool reset, List<Hearthstone.Card> top, List<Hearthstone.Card> bottom, List<Sideboard> sideboards)
 		{
-			ListViewPlayer.Update(cards, reset);
-			PlayerTopDeckLens.Update(top, reset);
-			PlayerBottomDeckLens.Update(bottom, reset);
-			PlayerSideboards.Update(sideboards, reset);
+			var updates = new[]
+			{
+				ListViewPlayer.Update(cards, reset),
+				PlayerTopDeckLens.Update(top, reset),
+				PlayerBottomDeckLens.Update(bottom, reset),
+				PlayerSideboards.Update(sideboards, reset),
+			};
+			await Task.WhenAll(updates);
 		}
 
 		public void HighlightPlayerDeckCards(string? highlightSourceCardId)
@@ -232,25 +225,16 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ListViewPlayerCard_OnMouseEnter(object sender, MouseEventArgs mouseEventArgs)
 		{
-			if(sender is Controls.Card card)
+			if(sender is CardTile { DataContext: CardTileViewModel vm })
 			{
-				HighlightPlayerDeckCards(card.CardId);
+				HighlightPlayerDeckCards(vm.Card.Id);
 			}
-
 		}
 
 		private void ListViewPlayerCard_OnMouseLeave(object sender, MouseEventArgs mouseEventArgs)
 		{
 			HighlightPlayerDeckCards(null);
 		}
-
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		private void PlayerWindow_OnSizeChanged(object sender, SizeChangedEventArgs e) => OnPropertyChanged(nameof(PlayerDeckMaxHeight));
 
 		private void PlayerWindow_OnLoaded(object sender, RoutedEventArgs e)
 		{

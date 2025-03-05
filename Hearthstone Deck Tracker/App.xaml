@@ -81,6 +81,8 @@
                     <ImageSource x:Key="NewUserOnboardingBackground">Resources/onboarding-background.jpg</ImageSource>
                     <ImageSource x:Key="Tier7PreLobbySmall">Resources/Tier7/PreLobby-Small.png</ImageSource>
                     <ImageSource x:Key="Tier7PreLobbyLarge">Resources/Tier7/PreLobby-Large.png</ImageSource>
+                    <ImageSource x:Key="LegendaryStar">Resources/star.png</ImageSource>
+                    <ImageSource x:Key="IconCreated">Resources/icon-created.png</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

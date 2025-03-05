@@ -59,8 +59,6 @@ namespace Hearthstone_Deck_Tracker
 			};
 		}
 
-		public List<Card> OpponentDeck => _game.Opponent.OpponentCardList;
-
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public void Update()
@@ -91,7 +89,7 @@ namespace Hearthstone_Deck_Tracker
 				switch(item)
 				{
 					case DeckPanel.Cards:
-						StackPanelMain.Children.Add(ViewBoxOpponent);
+						StackPanelMain.Children.Add(ListViewOpponent);
 						break;
 					case DeckPanel.DrawChances:
 						StackPanelMain.Children.Add(CanvasOpponentChance);

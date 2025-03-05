@@ -547,16 +547,25 @@ namespace Hearthstone_Deck_Tracker
 
 		internal static void ClearCachedHearthstoneBuild() => _hearthstoneBuild = null;
 
-		public static IEnumerable<T> FindVisualChildren<T>(DependencyObject? depObj) where T : DependencyObject
+		/// <summary>
+		/// Find all visual children of type T within the object.
+		/// </summary>
+		/// <param name="depObj">Element to search</param>
+		/// <param name="findNested">Whether this continues to search for further nested child elements of type T within an instance of type T. (Default: false)</param>
+		public static IEnumerable<T> FindVisualChildren<T>(DependencyObject? depObj, bool findNested = false) where T : DependencyObject
 		{
 			if(depObj == null)
 				yield break;
 			for(var i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
 			{
-				var child = VisualTreeHelper.GetChild(depObj, i) as T;
-				if(child != null)
-					yield return child;
-				foreach(var childOfChild in FindVisualChildren<T>(child))
+				var child = VisualTreeHelper.GetChild(depObj, i);
+				if(child is T tChild)
+				{
+					yield return tChild;
+					if(!findNested)
+						continue;
+				}
+				foreach(var childOfChild in FindVisualChildren<T>(child, findNested))
 					yield return childOfChild;
 			}
 		}

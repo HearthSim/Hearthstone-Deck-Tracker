@@ -156,15 +156,12 @@
             </DockPanel>
             <!-- Card List -->
             <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill">
-                <controls1:AnimatedCardList x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="False"
-                                    ScrollViewer.CanContentScroll="False">
-                    <controls1:AnimatedCardList.ItemContainerStyle>
+                <controls1:AnimatedCardList x:Name="ListViewPlayer">
+                    <controls1:AnimatedCardList.Resources>
                         <Style TargetType="controls1:AnimatedCard">
                             <Setter Property="Margin" Value="0,1,0,0"/>
                         </Style>
-                    </controls1:AnimatedCardList.ItemContainerStyle>
+                    </controls1:AnimatedCardList.Resources>
                 </controls1:AnimatedCardList>
             </Viewbox>
         </DockPanel>

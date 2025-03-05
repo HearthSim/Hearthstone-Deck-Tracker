@@ -273,33 +273,7 @@
                             Orientation="Vertical"
                             HorizontalAlignment="Center"
                         >
-                            <ListView x:Name="ListViewDeck" Background="#696969"
-                                    Foreground="White" FontWeight="Bold" BorderThickness="1" FontFamily="Arial"
-                                    HorizontalAlignment="Center">
-                                <ListView.Resources>
-                                    <Style TargetType="GridViewColumnHeader">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </Style>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="Margin" Value="-4,-3,-3,0"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter Property="BorderBrush" Value="Blue" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ListView.Resources>
-                                <ListView.Template>
-                                    <ControlTemplate>
-                                        <ItemsPresenter />
-                                    </ControlTemplate>
-                                </ListView.Template>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <controls1:Card/>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                            <controls1:AnimatedCardList x:Name="ListViewDeck" Width="217"/>
                             <controls1:DeckSideboards x:Name="PlayerSideboards" />
                         </StackPanel>
                     </ScrollViewer>

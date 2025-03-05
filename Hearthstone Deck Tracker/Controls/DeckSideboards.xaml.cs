@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -14,11 +15,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 			InitializeComponent();
 		}
 
-		public async void Update(List<Sideboard>? sideboards, bool reset)
+		public async Task Update(List<Sideboard>? sideboards, bool reset)
 		{
 			if(sideboards == null || sideboards.Count == 0 || sideboards.All(s => s.Cards.Count == 0))
 			{
-				Container.Visibility = Visibility.Collapsed;
+				Visibility = Visibility.Collapsed;
 				return;
 			}
 
@@ -27,12 +28,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 				sideboards.FirstOrDefault(s => s.OwnerCardId == CardIds.Collectible.Neutral.ETCBandManager);
 			if(etcSideboard != null)
 			{
-				await CardList.UpdateAsync(etcSideboard.Cards, reset);
+				await CardList.Update(etcSideboard.Cards, reset);
 				if(etcSideboard.Cards.Count > 0)
 					ETCContainer.Visibility = Visibility.Visible;
 			}
 
-			Container.Visibility = ETCContainer.Visibility;
+			Visibility = ETCContainer.Visibility;
 		}
 	}
 

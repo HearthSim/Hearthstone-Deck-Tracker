@@ -196,7 +196,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			foreach(var card in deck.Cards)
 				imported.Cards.Add(card);
 			ShowDeckEditorFlyout(imported, false);
-			Helper.SortCardCollection(ListViewDeck.Items);
 			ManaCurveMyDecks.UpdateValues();
 
 			TagControlEdit.SetSelectedTags(deck.Tags);

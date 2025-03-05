@@ -155,10 +155,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 
 		private void UpdateCards()
 		{
-			foreach(var card in AnimatedCardList.Items.Cast<AnimatedCard>().Select(x => x.Card))
+			foreach(var card in AnimatedCardList.AnimatedCards)
 			{
-				card.UpdateHighlight();
-				card.Update();
+				card.Card?.UpdateHighlight();
+				card.Card?.Update();
 			}
 		}
 

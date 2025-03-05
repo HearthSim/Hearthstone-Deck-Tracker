@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             Width="27" Height="27"
-             Cursor="Hand">
+             Width="27" Height="27">
     <Grid>
         <Image Source="{Binding ImageSrc, RelativeSource={RelativeSource AncestorType=UserControl}}" RenderOptions.BitmapScalingMode="Fant" />
     </Grid>

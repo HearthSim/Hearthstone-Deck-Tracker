@@ -176,7 +176,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public bool Jousted { get; set; }
+		public bool Jousted
+		{
+			get => GetProp(false);
+			set => SetProp(value);
+		}
 
 		public string Text => CleanUpText(Data?.GetLocText(SelectedLanguage));
 
@@ -534,12 +538,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		internal void UpdateHighlight() => OnPropertyChanged(nameof(Highlight));
 
 		public ImageBrush Highlight => ThemeManager.CurrentTheme?.HighlightImage ?? new ImageBrush();
-		public ImageBrush HighlightImageTeal => ThemeManager.CurrentTheme?.HighlightImageTeal ?? new ImageBrush();
-		public ImageBrush HighlightImageOrange => ThemeManager.CurrentTheme?.HighlightImageOrange ?? new ImageBrush();
-		public ImageBrush HighlightImageGreen => ThemeManager.CurrentTheme?.HighlightImageGreen ?? new ImageBrush();
 
 		[XmlIgnore]
-		public bool HighlightInHand { get; set; }
+		public bool HighlightInHand
+		{
+			get => GetProp(false);
+			set => SetProp(value);
+		}
 
 		public string FormattedFlavorText => CleanUpText(Data?.GetLocFlavorText(SelectedLanguage), false) ?? "";
 

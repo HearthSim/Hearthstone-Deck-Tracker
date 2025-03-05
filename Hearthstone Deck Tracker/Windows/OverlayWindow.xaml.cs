@@ -346,24 +346,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
-		public Visibility WarningVisibility { get; set; }
-		public List<Card> PlayerDeck => _game.Player.PlayerCardList;
-		public List<Card> OpponentDeck => _game.Opponent.OpponentCardList;
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public double PlayerStackHeight => (Config.Instance.PlayerDeckHeight / 100 * Height) / (Config.Instance.OverlayPlayerScaling / 100);
-		public double PlayerListHeight => PlayerStackHeight - PlayerLabelsHeight;
-		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
-			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + ChancePanelsMargins + PlayerTopDeckLens.ActualHeight + PlayerBottomDeckLens.ActualHeight + PlayerSideboards.ActualHeight;
 
 		public VerticalAlignment PlayerStackPanelAlignment
 			=> Config.Instance.OverlayCenterPlayerStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
 
 		public double OpponentStackHeight => (Config.Instance.OpponentDeckHeight / 100 * Height) / (Config.Instance.OverlayOpponentScaling / 100);
-		public double OpponentListHeight => OpponentStackHeight - OpponentLabelsHeight - OpponentRelatedCardsDeckLens.ActualHeight;
-
-		public double OpponentLabelsHeight => CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight
-											+ LblOpponentFatigue.ActualHeight + LblWinRateAgainst.ActualHeight + ChancePanelsMargins;
 
 		public VerticalAlignment OpponentStackPanelAlignment
 			=> Config.Instance.OverlayCenterOpponentStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
@@ -486,9 +476,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if(secret.Count <= 0 && Config.Instance.RemoveSecretsFromList)
 					continue;
-				var cardObj = new Controls.Card();
-				cardObj.SetValue(DataContextProperty, secret);
-				StackPanelSecrets.Children.Add(cardObj);
+				StackPanelSecrets.Children.Add(new CardTile { DataContext = new CardTileViewModel(secret) });
 			}
 
 			StackPanelSecrets.Visibility = Visible;

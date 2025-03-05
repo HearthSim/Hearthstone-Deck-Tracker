@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -19,13 +20,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public static readonly DependencyProperty LabelProperty = DependencyProperty.Register("Label", typeof(string), typeof(DeckLens), new PropertyMetadata(""));
 
-		public async void Update(List<Hearthstone.Card> cards, bool reset)
+		public async Task Update(List<Hearthstone.Card> cards, bool reset)
 		{
 			if(cards.Count > 0)
-				Container.Visibility = Visibility.Visible;
-			await CardList.UpdateAsync(cards, reset);
+				Visibility = Visibility.Visible;
+			await CardList.Update(cards, reset);
 			if(cards.Count == 0)
-				Container.Visibility = Visibility.Collapsed;
+				Visibility = Visibility.Collapsed;
 		}
 	}
 

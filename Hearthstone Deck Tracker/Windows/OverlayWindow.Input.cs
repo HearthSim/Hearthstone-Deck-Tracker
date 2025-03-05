@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					{
 						Config.Instance.PlayerDeckHeight += delta.Y / Height;
 						_movableElements[border].Height = Height * Config.Instance.PlayerDeckHeight / 100;
-						OnPropertyChanged(nameof(OpponentListHeight));
+						OnPropertyChanged(nameof(PlayerStackHeight));
 					}
 					else
 					{
@@ -56,27 +56,32 @@ namespace Hearthstone_Deck_Tracker.Windows
 						Config.Instance.PlayerDeckLeft += delta.X / Width;
 						Canvas.SetTop(_movableElements[border], Height * Config.Instance.PlayerDeckTop / 100);
 						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.PlayerDeckLeft / 100
-										- StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
+						                                         - StackPanelPlayer.ActualWidth
+						                                         * Config.Instance.OverlayPlayerScaling / 100);
 					}
+
 					return;
 				}
+
 				if(border.Equals(BorderStackPanelOpponent))
 				{
 					if(_resizeElement)
 					{
 						Config.Instance.OpponentDeckHeight += delta.Y / Height;
 						_movableElements[border].Height = Height * Config.Instance.OpponentDeckHeight / 100;
-						OnPropertyChanged(nameof(OpponentListHeight));
+						OnPropertyChanged(nameof(OpponentStackHeight));
 					}
 					else
 					{
 						Config.Instance.OpponentDeckTop += delta.Y / Height;
 						Config.Instance.OpponentDeckLeft += delta.X / Width;
 						Canvas.SetTop(_movableElements[border], Height * Config.Instance.OpponentDeckTop / 100);
-			}						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.OpponentDeckLeft / 100);
+						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.OpponentDeckLeft / 100);
 					}
+
 					return;
 				}
+			}
 
 
 			if(_selectedUiElement is Panel panel)
