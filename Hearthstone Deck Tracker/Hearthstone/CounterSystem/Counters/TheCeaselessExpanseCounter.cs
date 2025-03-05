@@ -22,7 +22,7 @@ public class TheCeaselessExpanseCounter: NumericCounter
 		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
-		return !InPlayerDeckOrKnown(RelatedCards) && Counter >= 80 && OpponentMayHaveRelevantCards();
+		return !InPlayerDeckOrKnown(RelatedCards) && Counter >= 50 && OpponentMayHaveRelevantCards();
 	}
 
 	public override string[] GetCardsToDisplay()
