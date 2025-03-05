@@ -1,5 +1,6 @@
 ## **Unreleased**
 **Hearthstone**:
+- Added counter for Reska, the Pit Boss.
 - Changed opponent's The Ceaseless Expanse Counter to start appearing when it costs 50.
 - Fixed Sasquawk related cards appearing when they are not relevant.
 
