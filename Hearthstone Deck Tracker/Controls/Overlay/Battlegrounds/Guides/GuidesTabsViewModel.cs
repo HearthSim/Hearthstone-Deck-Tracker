@@ -26,6 +26,10 @@ public class GuidesTabsViewModel : ViewModel
 	public ViewModel? ActiveViewModel
 	{
 		get => GetProp<ViewModel?>(null);
-		set => SetProp(value);
+		set
+		{
+			SetProp(value);
+			Core.Overlay.BattlegroundsMinionsVM.IsFiltersOpen = false;
+		}
 	}
 }

@@ -13,9 +13,14 @@ public class BattlegroundsDb
 	private readonly Dictionary<int, Dictionary<Race, List<Card>>> _cardsByTier = new();
 	private readonly Dictionary<int, Dictionary<Race, List<Card>>> _solosExclusiveCardsByTier = new();
 	private readonly Dictionary<int, Dictionary<Race, List<Card>>> _duosExclusiveCardsByTier = new();
+	private readonly List<HearthDb.Card> _spells = new();
 	private readonly Dictionary<int, List<Card>> _spellsByTier = new();
 	private readonly Dictionary<int, List<Card>> _solosExclusiveSpellsByTier = new();
 	private readonly Dictionary<int, List<Card>> _duosExclusiveSpellsByTier = new();
+	private readonly List<HearthDb.Card> _buddies = new();
+	private readonly Dictionary<int, List<Card>> _buddiesByTier = new();
+	private readonly Dictionary<int, List<Card>> _solosExclusiveBuddiesByTier = new();
+	private readonly Dictionary<int, List<Card>> _duosExclusiveBuddiesByTier = new();
 
 	public HashSet<Race> Races { get; } = new();
 
@@ -79,16 +84,17 @@ public class BattlegroundsDb
 			}
 		}
 
+		_spells.Clear();
 		_spellsByTier.Clear();
 		_solosExclusiveSpellsByTier.Clear();
 		_duosExclusiveSpellsByTier.Clear();
-		var baconSpells = Cards.All.Values
+		_spells.AddRange(Cards.All.Values
 			.Where(x => (
 				GetTag(x, GameTag.TECH_LEVEL) > 0
 				&& x.Type == CardType.BATTLEGROUND_SPELL
 				&& GetTag(x, GameTag.IS_BACON_POOL_SPELL) == 1
-			));
-		foreach(var card in baconSpells)
+			)));
+		foreach(var card in _spells)
 		{
 			var tier = GetTag(card, GameTag.TECH_LEVEL);
 			var duosExclusive = GetTag(card, GameTag.IS_BACON_DUOS_EXCLUSIVE);
@@ -96,6 +102,25 @@ public class BattlegroundsDb
 				duosExclusive > 0 ? _duosExclusiveSpellsByTier :
 				duosExclusive < 0 ? _solosExclusiveSpellsByTier :
 				_spellsByTier
+			);
+			if(!targetDict.ContainsKey(tier))
+				targetDict[tier] = new List<Card>();
+			targetDict[tier].Add(new Card(card, true));
+		}
+
+		_buddies.Clear();
+		_buddiesByTier.Clear();
+		_solosExclusiveBuddiesByTier.Clear();
+		_duosExclusiveBuddiesByTier.Clear();
+		_buddies.AddRange(Cards.All.Values.Where(x => GetTag(x, GameTag.BACON_BUDDY) == 1 && GetTag(x, GameTag.BACON_TRIPLED_BASE_MINION_ID) == 0));
+		foreach(var card in _buddies)
+		{
+			var tier = GetTag(card, GameTag.TECH_LEVEL);
+			var duosExclusive = GetTag(card, GameTag.IS_BACON_DUOS_EXCLUSIVE);
+			var targetDict = (
+				duosExclusive > 0 ? _duosExclusiveBuddiesByTier :
+				duosExclusive < 0 ? _solosExclusiveBuddiesByTier :
+				_buddiesByTier
 			);
 			if(!targetDict.ContainsKey(tier))
 				targetDict[tier] = new List<Card>();
@@ -136,6 +161,32 @@ public class BattlegroundsDb
 		) ? theExclusiveCards : new List<Card>();
 
 		return cards.Concat(exclusiveCards).ToList();
+	}
+
+	public List<Card> GetCards(int tier, GameTag keyword, IEnumerable<Race>? races, bool isDuos)
+	{
+		var availableCards = GetCardsByRaces(races?.ToList() ?? new List<Race>(), isDuos);
+		var cardsByTier = availableCards
+			.GroupBy(card => card.GetTag(GameTag.TECH_LEVEL))
+			.ToDictionary(
+				group => group.Key,
+				group => group.ToList()
+			);
+		return GetFilteredCardsByTierAndKeyword(cardsByTier, tier, keyword).ToList();
+	}
+
+	private List<Card> GetFilteredCardsByTierAndKeyword(Dictionary<int,List<Card>> cardsByTier, int tier,
+		GameTag keyword)
+	{
+		if (!cardsByTier.TryGetValue(tier, out var cards))
+			return new List<Card>();
+
+		return cards
+			.Where(card =>
+				card.GetTag(keyword) > 0 ||
+				(keyword != GameTag.IS_BACON_POOL_SPELL && (card.EnglishText?.Contains(HearthDbConverter.GetLocalizedKeyword(keyword)) ?? false)))
+			.Distinct()
+			.ToList();
 	}
 
 	public List<Card> GetCardsByRaces(IReadOnlyCollection<Race> races, bool isDuos)
@@ -179,5 +230,40 @@ public class BattlegroundsDb
 		).TryGetValue(tier, out var theExclusiveSpells) ? theExclusiveSpells : new List<Card>();
 
 		return spells.Concat(exclusiveSpells).ToList();
+	}
+
+	public List<Card> GetSpells(GameTag keyword, bool isDuos)
+	{
+		var availableSpells = new List<Card>();
+		foreach(var card in _spells)
+		{
+			var duosExclusive = card.Entity.GetTag(GameTag.IS_BACON_DUOS_EXCLUSIVE);
+
+			if(duosExclusive > 0 && isDuos)
+				continue;
+			if(duosExclusive < 0 && !isDuos)
+				continue;
+
+			if (card.Entity.GetTag(keyword) > 0 ||
+			    (keyword != GameTag.IS_BACON_POOL_SPELL && (card.GetLocText(Locale.enUS)?.Contains(HearthDbConverter.GetLocalizedKeyword(keyword)) ?? false)))
+			{
+				availableSpells.Add(new Card(card, true));
+			}
+		}
+		return availableSpells;
+	}
+
+	public List<Card> GetBuddies(int tier, bool isDuos)
+	{
+		var buddies = (
+			_buddiesByTier.TryGetValue(tier, out var defaultBuddies)
+				? defaultBuddies : new List<Card>()
+		);
+
+		var exclusiveBuddies = (
+			isDuos ? _duosExclusiveBuddiesByTier : _solosExclusiveBuddiesByTier
+		).TryGetValue(tier, out var theExclusiveBuddies) ? theExclusiveBuddies : new List<Card>();
+
+		return buddies.Concat(exclusiveBuddies).ToList();
 	}
 }

@@ -5,13 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
              xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
-             xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              extensions:OverlayExtensions.IsOverlayHitTestVisible="True"
+             d:DataContext="{d:DesignInstance local:BattlegroundsMinionsViewModel}"
              x:Name="Container"
              mc:Ignorable="d">
     <UserControl.Resources>
+        <local:BattlegroundsMinionsViewModel x:Key="ViewModel" d:DataContext="{Binding DataContext, ElementName=Container}"/>
+        <CubicEase x:Key="Ease" EasingMode="EaseOut"/>
+        <CubicEase x:Key="Ease2" EasingMode="EaseInOut"/>
         <converters:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter"/>
         <Style x:Key="TopBorderStyle" TargetType="Border">
             <Setter Property="Background" Value="#23272A" />
@@ -31,29 +35,227 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
+    <Grid x:Name="Grid">
         <DockPanel>
-            <Border DockPanel.Dock="Top" Style="{StaticResource TopBorderStyle}">
-                <ItemsControl ItemsSource="{Binding TierButtons}" DockPanel.Dock="Top">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:BattlegroundsTierButton
-                                Tier="{Binding Tier}"
-                                Active="{Binding Active}"
-                                Available="{Binding Available}"
-                                Faded="{Binding Faded}"
-                                Width="{Binding Size}"
-                                Height="{Binding Size}"
-                                ClickTierCommand="{Binding SetActiveTierCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
-                            />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Border>
+            <Grid DockPanel.Dock="Top">
+                <Border Style="{StaticResource TopBorderStyle}">
+                    <ItemsControl ItemsSource="{Binding TierButtons}" DockPanel.Dock="Top">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:BattlegroundsTierButton
+                                    Tier="{Binding Tier}"
+                                    Active="{Binding Active}"
+                                    Available="{Binding Available}"
+                                    Faded="{Binding Faded}"
+                                    Width="{Binding Size}"
+                                    Height="{Binding Size}"
+                                    ClickTierCommand="{Binding SetActiveTierCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
+                                />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
+                <Border extensions:OverlayExtensions.IsOverlayHitTestVisible="True"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        BorderBrush="#3f4346"
+                        Padding="6,0,0,0"
+                    >
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <!-- Animated properties need to be defined here, not on the element itself. EnterAction/ExitAction
+                            permanently write the value. -->
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="Background" Value="#23272A"/>
+                            <Setter Property="Height" Value="58"/>
+                            <Setter Property="Width" Value="10"/>
+                            <Setter Property="Margin" Value="0,-1,0,0"/>
+                            <Setter Property="BorderThickness" Value="1,1,0,1" />
+                            <Setter Property="CornerRadius" Value="0,0,0,3" />
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform X="0" Y="0" />
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsStandAloneMode, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                    <Setter Property="Background" Value="#141617" />
+                                    <Setter Property="Height" Value="49"/>
+                                    <Setter Property="BorderThickness" Value="1,0,0,0" />
+                                    <Setter Property="CornerRadius" Value="0" />
+                                    <Setter Property="Margin" Value="0"/>
+                                </DataTrigger>
+                                <!-- This would bind to some ViewModel.IsFilterButtonVisible prop instead of IsMouseOver -->
+                                <DataTrigger Binding="{Binding IsFilterButtonVisible}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Width" To="48" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}"/>
+                                                <!-- If using the same overlayed panel technique, a TranslateTransform probably
+                                                does not actually work for hit testing purposes. You probably want to animate
+                                                the margin instead? -->
+                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" To="-41" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}"/>
+                                                <!-- Changing the visibility as part of the animation is probably not necessary
+                                                here, but I recently figured out how do to this. Good thing to know -->
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" KeyTime="0"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Width" To="10" Duration="0:0:0.4" EasingFunction="{StaticResource Ease}"/>
+                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" To="0" Duration="0:0:0.4" EasingFunction="{StaticResource Ease}"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" KeyTime="0:0:0.4"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsFilterButtonVisible}" Value="True" />
+                                        <Condition Binding="{Binding IsStandAloneMode, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Width" To="48" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}"/>
+                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" To="-46" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" KeyTime="0"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiDataTrigger.EnterActions>
+                                    <MultiDataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Width" To="2" Duration="0:0:0.4" EasingFunction="{StaticResource Ease}"/>
+                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" To="0" Duration="0:0:0.4" EasingFunction="{StaticResource Ease}"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" KeyTime="0:0:0.4"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiDataTrigger.ExitActions>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <!-- "Extra Filters Button" -->
+                    <Grid>
+                        <Border Width="32" Height="32"
+                                Background="Transparent"
+                                CornerRadius="3"
+                                BorderThickness="1.5"
+                                Visibility="{Binding IsExtraFilterSelected, Converter={StaticResource BoolToVisibility}}"
+                                >
+                            <Border.BorderBrush>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="#f6f601" Offset="0"/>
+                                    <GradientStop Color="#cdcb08" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    Color="#f6f601"
+                                    BlurRadius="5"
+                                    ShadowDepth="0"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <Border RenderTransformOrigin="0.5, 0.5" Width="32" Cursor="Hand" Height="32" CornerRadius="3" BorderThickness="1" BorderBrush="#3f4346">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding FilterClickCommand}" />
+                            </Border.InputBindings>
+                            <Border.Resources>
+                                <system:Double x:Key="MinScale">0.25</system:Double>
+                            </Border.Resources>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="#141617"/>
+                                    <!-- Animated properties need to be defined here, not on the element itself.
+                                    EnterAction/ExitAction permanently write the value. -->
+                                    <Setter Property="Opacity" Value="0"/>
+                                    <Setter Property="RenderTransform">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleX="{StaticResource MinScale}" ScaleY="{StaticResource MinScale}"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <!-- Hover state -->
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#2C3135"/>
+                                        </Trigger>
+
+                                        <!-- Selected state -->
+                                        <DataTrigger Binding="{Binding IsFiltersOpen}" Value="True">
+                                            <Setter Property="Background" Value="#36393f"/>
+                                        </DataTrigger>
+
+                                        <DataTrigger Binding="{Binding IsStandAloneMode, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                            <Setter Property="Background" Value="#202325" />
+                                        </DataTrigger>
+
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                                <Condition Binding="{Binding IsStandAloneMode, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#2C3135" />
+                                        </MultiDataTrigger>
+
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsFiltersOpen}" Value="True" />
+                                                <Condition Binding="{Binding IsStandAloneMode, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#36393f" />
+                                        </MultiDataTrigger>
+
+                                        <DataTrigger Binding="{Binding IsFilterButtonVisible}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" BeginTime="0:0:0.0" EasingFunction="{StaticResource Ease}"/>
+                                                        <!-- Slightly offset to prevent clipping the button -->
+                                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="0.9" Duration="0:0:0.15" BeginTime="0:0:0.05" EasingFunction="{StaticResource Ease2}"/>
+                                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="0.9" Duration="0:0:0.15" BeginTime="0:0:0.05" EasingFunction="{StaticResource Ease2}"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4" EasingFunction="{StaticResource Ease}"/>
+                                                        <!-- Slightly shorter to prevent clipping the button -->
+                                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="{StaticResource MinScale}" Duration="0:0:0.35" EasingFunction="{StaticResource Ease2}"/>
+                                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="{StaticResource MinScale}" Duration="0:0:0.35" EasingFunction="{StaticResource Ease2}"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Rectangle Fill="White" Height="8" Width="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Visual="{DynamicResource bar_filter}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
             <ScrollViewer x:Name="MinionScrollViewer" HorizontalAlignment="Right"
                           VerticalScrollBarVisibility="Auto"
                           ext:OverlayExtensions.IsOverlayHitTestVisible="True">
@@ -68,6 +270,8 @@
                                     Tier="{Binding Tier}"
                                     MinionType="{Binding MinionType}"
                                     GroupedByMinionType="{Binding GroupedByMinionType}"
+                                    Keyword="{Binding Keyword}"
+                                    GroupedByKeyword="{Binding GroupedByKeyword}"
                                     Cards="{Binding Cards}"
                                     IsInspirationEnabled="{Binding IsInspirationEnabled}"
                                     ClickMinionTypeCommand="{Binding SetActiveMinionTypeCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
@@ -78,4 +282,66 @@
                 </StackPanel>
             </ScrollViewer>
         </DockPanel>
+
+        <!-- Hacky: Hide the right end of the top border of the overlayed panel -->
+        <Rectangle HorizontalAlignment="Left" VerticalAlignment="Top" Width="10" Height="3" Fill="#23272A" Margin="1,-2,-1,2">
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsStandAloneMode, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
+
+        <local:BattlegroundsMinionsExtraFilters
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            IsStandAloneMode="True"
+            Margin="-180,73,0,0"
+            ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+        >
+            <local:BattlegroundsMinionsExtraFilters.Style>
+                <Style TargetType="local:BattlegroundsMinionsExtraFilters">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="Opacity" Value="0"/>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <TranslateTransform X="0" Y="-10" />
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <!-- This would bind to some ViewModel.IsFilterButtonVisible prop instead of IsMouseOver -->
+                        <DataTrigger Binding="{Binding IsFiltersOpen}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" EasingFunction="{StaticResource Ease2}"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="0" Duration="0:0:0.2" EasingFunction="{StaticResource Ease2}"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.2" EasingFunction="{StaticResource Ease2}"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="-10" Duration="0:0:0.2" EasingFunction="{StaticResource Ease2}"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" KeyTime="0:0:0.2"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </local:BattlegroundsMinionsExtraFilters.Style>
+        </local:BattlegroundsMinionsExtraFilters>
+    </Grid>
 </UserControl>

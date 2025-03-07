@@ -129,7 +129,29 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Race.UNDEAD => LocUtil.Get("Race_Undead", useCardLanguage: true),
 			Race.TOTEM => LocUtil.Get("Race_Totem", useCardLanguage: true),
 			Race.ALL => LocUtil.Get("Race_All", useCardLanguage: true),
-			Race.INVALID => LocUtil.Get("Race_Other", useCardLanguage: true),
+			Race.INVALID => LocUtil.Get("Race_NoType", useCardLanguage: true),
+			(Race)(-1) => LocUtil.Get("GameTag_BGSpell", useCardLanguage: true),
+			(Race)(-2) => LocUtil.Get("GameTag_BGBuddy", useCardLanguage: true),
+			_ => RaceConverter(race),
+		};
+
+		public static string? GetUppercaseLocalizedRace(Race race) => race switch
+		{
+			Race.DEMON => LocUtil.Get("Race_Demon_Uppercase", useCardLanguage: true),
+			Race.MECHANICAL => LocUtil.Get("Race_Mechanical_Uppercase", useCardLanguage: true),
+			Race.BEAST => LocUtil.Get("Race_Beast_Uppercase", useCardLanguage: true),
+			Race.DRAGON => LocUtil.Get("Race_Dragon_Uppercase", useCardLanguage: true),
+			Race.MURLOC => LocUtil.Get("Race_Murloc_Uppercase", useCardLanguage: true),
+			Race.PIRATE => LocUtil.Get("Race_Pirate_Uppercase", useCardLanguage: true),
+			Race.ELEMENTAL => LocUtil.Get("Race_Elemental_Uppercase", useCardLanguage: true),
+			Race.QUILBOAR => LocUtil.Get("Race_Quilboar_Uppercase", useCardLanguage: true),
+			Race.NAGA => LocUtil.Get("Race_Naga_Uppercase", useCardLanguage: true),
+			Race.UNDEAD => LocUtil.Get("Race_Undead_Uppercase", useCardLanguage: true),
+			Race.TOTEM => LocUtil.Get("Race_Totem_Uppercase", useCardLanguage: true),
+			Race.ALL => LocUtil.Get("Race_All_Uppercase", useCardLanguage: true),
+			Race.INVALID => LocUtil.Get("Race_NoType_Uppercase", useCardLanguage: true),
+			(Race)(-1) => LocUtil.Get("GameTag_BGSpell_Uppercase", useCardLanguage: true),
+			(Race)(-2) => LocUtil.Get("GameTag_BGBuddy_Uppercase", useCardLanguage: true),
 			_ => RaceConverter(race),
 		};
 
@@ -145,6 +167,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SpellSchool.FEL => LocUtil.Get("Spell_School_Fel", useCardLanguage: true),
 			SpellSchool.PHYSICAL_COMBAT => LocUtil.Get("Spell_School_Physical_Combat", useCardLanguage: true),
 			_ => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(spellSchool.ToString().ToLowerInvariant())
+		};
+
+		public static string GetLocalizedKeyword(GameTag gameTag) => gameTag switch
+		{
+			GameTag.TAUNT => LocUtil.Get("GameTag_Taunt"),
+			GameTag.DIVINE_SHIELD => LocUtil.Get("GameTag_DivineShield"),
+			GameTag.POISONOUS => LocUtil.Get("GameTag_Poisonous"),
+			GameTag.VENOMOUS => LocUtil.Get("GameTag_Venomous"),
+			GameTag.WINDFURY => LocUtil.Get("GameTag_Windfury"),
+			GameTag.BATTLECRY => LocUtil.Get("GameTag_Battlecry"),
+			GameTag.DEATHRATTLE => LocUtil.Get("GameTag_Deathrattle"),
+			GameTag.CHOOSE_ONE => LocUtil.Get("GameTag_ChooseOne"),
+			GameTag.END_OF_TURN_TRIGGER => LocUtil.Get("GameTag_EndOfTurn"),
+			GameTag.START_OF_COMBAT => LocUtil.Get("GameTag_StartOfCombat"),
+			GameTag.REBORN => LocUtil.Get("GameTag_Reborn"),
+			GameTag.MODULAR => LocUtil.Get("GameTag_Modular"),
+			GameTag.IS_BACON_POOL_SPELL => LocUtil.Get("GameTag_BGSpell"),
+			_ => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(gameTag.ToString().ToLowerInvariant())
 		};
 
 		public static string SetConverter(CardSet set) => SetDict.TryGetValue((int)set, out var str) ? str ?? string.Empty : string.Empty;

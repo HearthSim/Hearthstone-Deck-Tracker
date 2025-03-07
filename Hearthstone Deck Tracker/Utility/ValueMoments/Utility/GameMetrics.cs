@@ -22,6 +22,9 @@
 		public bool Tier7TrinketOverlayDisplayed { get; set; }
 		public bool Tier7TrialActivated { get; set; }
 		public int? Tier7TrialsRemaining { get; set; }
+		public int BattlegroundsBrowserTypeFilterClicks { get; set; }
+		public int BattlegroundsBrowserMechanicFilterClicks { get; set; }
+		public int BattlegroundsBrowserOpenFilterPanelClicks { get; set; }
 
 		public void IncrementBattlegroundsMinionsTiersClick()
 		{

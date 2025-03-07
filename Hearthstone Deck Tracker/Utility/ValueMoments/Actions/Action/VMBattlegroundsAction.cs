@@ -33,6 +33,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			NumClickBattlegroundsHeroesTab = gameMetrics.BattlegroundsHeroesTabClicks;
 			NumClickBattlegroundsCardsTab = gameMetrics.BattlegroundsCardsTabClicks;
 			NumClickBattlegroundsCompGuidesInspiration = gameMetrics.BattlegroundsCompGuidesInspirationClicks;
+			NumClickBattlegroundsBrowserTypeFilter = gameMetrics.BattlegroundsBrowserTypeFilterClicks;
+			NumClickBattlegroundsBrowserMechanicFilter = gameMetrics.BattlegroundsBrowserMechanicFilterClicks;
+			NumClickBattlegroundsBrowserOpenFilterPanel = gameMetrics.BattlegroundsBrowserOpenFilterPanelClicks;
 			NumBobsBuddyTerminalCases = gameMetrics.BobsBuddyTerminalCases;
 			if (gameMetrics.Tier7TrialActivated)
 				TrialsActivated = new[] { Tier7OverlayTrial };
@@ -40,6 +43,15 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 				TrialsRemaining = new[] { $"{Tier7OverlayTrial}:{gameMetrics.Tier7TrialsRemaining}" };
 			BattlegroundsSettings = new BattlegroundsSettings();
 		}
+
+		[JsonProperty("num_click_battlegrounds_browser_open_filter_panel")]
+		public int NumClickBattlegroundsBrowserOpenFilterPanel { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_browser_mechanic_filter")]
+		public int NumClickBattlegroundsBrowserMechanicFilter { get; set; }
+
+		[JsonProperty("num_click_battlegrounds_browser_type_filter")]
+		public int NumClickBattlegroundsBrowserTypeFilter { get; set; }
 
 		[JsonProperty("hero_dbf_id")]
 		public int HeroDbfId { get; }

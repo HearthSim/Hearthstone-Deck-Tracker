@@ -1,15 +1,18 @@
-﻿using Hearthstone_Deck_Tracker.Annotations;
+﻿using System.Collections.Generic;
+using Hearthstone_Deck_Tracker.Annotations;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Commands;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 
-public partial class BattlegroundsTierButton : UserControl, INotifyPropertyChanged
+public partial class BattlegroundsMinionTypeButton : UserControl, INotifyPropertyChanged
 {
-	public BattlegroundsTierButton()
+	public BattlegroundsMinionTypeButton()
 	{
 		InitializeComponent();
 	}
@@ -22,18 +25,19 @@ public partial class BattlegroundsTierButton : UserControl, INotifyPropertyChang
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 
-	public static readonly DependencyProperty TierProperty = DependencyProperty.Register(
-		nameof(Tier),
-		typeof(int),
-		typeof(BattlegroundsTierButton)
+	public static readonly DependencyProperty MinionTypeProperty = DependencyProperty.Register(
+		nameof(MinionType),
+		typeof(Race),
+		typeof(BattlegroundsMinionTypeButton)
 	);
 
 	public static DependencyProperty ActiveProperty = DependencyProperty.Register(
 		nameof(Active),
 		typeof(bool),
-		typeof(BattlegroundsTierButton),
+		typeof(BattlegroundsMinionTypeButton),
 		new PropertyMetadata(false, (d, e) => {
-			var button = (BattlegroundsTierButton)d;
+			var button = (BattlegroundsMinionTypeButton)d;
+			button.OnPropertyChanged(nameof(RemoveIconVisibility));
 			button.OnPropertyChanged(nameof(IconOpacity));
 			button.OnPropertyChanged(nameof(GlowVisibility));
 			button.OnPropertyChanged(nameof(GlowOpacity));
@@ -43,35 +47,39 @@ public partial class BattlegroundsTierButton : UserControl, INotifyPropertyChang
 	public static DependencyProperty AvailableProperty = DependencyProperty.Register(
 		nameof(Available),
 		typeof(bool),
-		typeof(BattlegroundsTierButton),
+		typeof(BattlegroundsMinionTypeButton),
 		new PropertyMetadata(VisualsChanged)
 	);
 
 	public static DependencyProperty FadedProperty = DependencyProperty.Register(
 		nameof(Faded),
 		typeof(bool),
-		typeof(BattlegroundsTierButton),
+		typeof(BattlegroundsMinionTypeButton),
 		new PropertyMetadata(VisualsChanged)
 	);
 
-	public static readonly DependencyProperty ClickTierCommandProperty = DependencyProperty.Register(
-		nameof(ClickTierCommand),
-		typeof(Command<int>),
-		typeof(BattlegroundsTierButton)
+	public static readonly DependencyProperty ClickMinionTypeCommandProperty = DependencyProperty.Register(
+		nameof(ClickMinionTypeCommand),
+		typeof(Command<Race>),
+		typeof(BattlegroundsMinionTypeButton)
 	);
 
-	public Command<int>? ClickTierCommand
+	public Command<Race>? ClickMinionTypeCommand
 	{
-		get { return (Command<int>?)GetValue(ClickTierCommandProperty); }
-		set { SetValue(ClickTierCommandProperty, value); }
+		get { return (Command<Race>?)GetValue(ClickMinionTypeCommandProperty); }
+		set { SetValue(ClickMinionTypeCommandProperty, value); }
 	}
 
-	public int Tier
+
+	public Race MinionType
 	{
-		get { return (int)GetValue(TierProperty); }
+		get {
+			return (Race)GetValue(MinionTypeProperty);
+		}
 		set
 		{
-			SetValue(TierProperty, value);
+			SetValue(MinionTypeProperty, value);
+			OnPropertyChanged(nameof(TribeName));
 		}
 	}
 
@@ -81,7 +89,6 @@ public partial class BattlegroundsTierButton : UserControl, INotifyPropertyChang
 		set
 		{
 			SetValue(ActiveProperty, value);
-			Update();
 		}
 	}
 
@@ -91,7 +98,7 @@ public partial class BattlegroundsTierButton : UserControl, INotifyPropertyChang
 		set
 		{
 			SetValue(AvailableProperty, value);
-			Update();
+			OnPropertyChanged(nameof(IconOpacity));
 		}
 	}
 
@@ -101,24 +108,15 @@ public partial class BattlegroundsTierButton : UserControl, INotifyPropertyChang
 		set
 		{
 			SetValue(FadedProperty, value);
-			Update();
+			OnPropertyChanged(nameof(IconOpacity));
 		}
-	}
-
-	private void Update()
-	{
-		ImageTierRemove.Visibility = _hovering && Active ? Visibility.Visible : Visibility.Collapsed;
 	}
 
 	private static void VisualsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 	{
-		var button = ((BattlegroundsTierButton)d);
+		var button = ((BattlegroundsMinionTypeButton)d);
 		button.OnPropertyChanged(nameof(IconOpacity));
 	}
-
-	public Visibility GlowVisibility => Active || _hovering ? Visibility.Visible : Visibility.Collapsed;
-
-	public double GlowOpacity => Active ? 1 : 0.5;
 
 	public double IconOpacity
 	{
@@ -134,24 +132,34 @@ public partial class BattlegroundsTierButton : UserControl, INotifyPropertyChang
 		}
 	}
 
+	public string TribeName => (HearthDbConverter.GetUppercaseLocalizedRace(MinionType) ?? "");
+
+	public Visibility RemoveIconVisibility => _hovering && Active ? Visibility.Visible : Visibility.Collapsed;
+
+	public Visibility GlowVisibility => Active || _hovering ? Visibility.Visible : Visibility.Collapsed;
+
+	public double GlowOpacity => Active ? 1 : 0.5;
+
 	private bool _hovering;
 
 	private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 	{
 		_hovering = true;
+		OnPropertyChanged(nameof(IconOpacity));
 		OnPropertyChanged(nameof(GlowVisibility));
-		Update();
+		OnPropertyChanged(nameof(RemoveIconVisibility));
 	}
 
 	private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 	{
 		_hovering = false;
+		OnPropertyChanged(nameof(IconOpacity));
 		OnPropertyChanged(nameof(GlowVisibility));
-		Update();
+		OnPropertyChanged(nameof(RemoveIconVisibility));
 	}
 
 	private void UserControl_MouseUp(object sender, System.Windows.Input.MouseEventArgs e)
 	{
-		ClickTierCommand?.Execute(Tier);
+		ClickMinionTypeCommand?.Execute(MinionType);
 	}
 }

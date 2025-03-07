@@ -350,22 +350,74 @@
                 <activeEffects:ActiveEffectsOverlay Visibility="Visible" x:Name="OpponentActiveEffects" IsPlayer="false" />
                 <activeEffects:ActiveEffectsOverlay Visibility="Visible" x:Name="PlayerActiveEffects" IsPlayer="true" />
 
-                <StackPanel Name="BgsTopBar" Visibility="Collapsed" Orientation="Horizontal" Canvas.Top="0" Canvas.Right="0">
+                <!-- Allows Minion Browser overlay to be dismissible via background click -->
+                <Grid Background="Black" Opacity="0.01" Canvas.Top="0" Canvas.Left="0"
+                      Width="{Binding Width, ElementName=CanvasInfo}" Height="{Binding Height, ElementName=CanvasInfo}"
+                      Visibility="{Binding BattlegroundsMinionsVM.IsFiltersOpen, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}, Converter={StaticResource BoolToVisibility}}"
+                      ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                      MouseDown="BgsMinionsFilterCover_OnMouseDown" />
+
+                <StackPanel Name="BgsTopBar" Orientation="Horizontal" Visibility="Visible" Canvas.Top="0" Canvas.Right="0">
                     <inspiration:BattlegroundsInspirationOverlayButton
                         x:Name="BtnTier7Inspiration" IsEnabled="False" MouseUp="BtnBgsInspiration_OnMouseUp"
-                        ext:OverlayExtensions.IsOverlayHitTestVisible="{Binding IsEnabled, RelativeSource={RelativeSource Self}}"
+                        ext:OverlayExtensions.IsOverlayHitTestVisible="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}}"
                     />
-                    <overlay:TurnCounter x:Name="TurnCounter"  Height="49" VerticalAlignment="Top" />
+                    <overlay:TurnCounter x:Name="TurnCounter" Height="49" VerticalAlignment="Top">
+                        <overlay:TurnCounter.RenderTransform>
+                            <TranslateTransform />
+                        </overlay:TurnCounter.RenderTransform>
+                        <overlay:TurnCounter.Style>
+                            <Style TargetType="overlay:TurnCounter">
+                                <Style.Resources>
+                                    <CubicEase x:Key="Ease" EasingMode="EaseOut"/>
+                                </Style.Resources>
+                                <Setter Property="Margin" Value="0,0,0,0"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding DataContext.IsFilterButtonVisible, ElementName=BattlegroundsMinions}" Value="True" />
+                                            <Condition Binding="{Binding Visibility, ElementName=GuidesTabs}" Value="Collapsed" />
+                                        </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                     To="-46" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </MultiDataTrigger.EnterActions>
+                                        <MultiDataTrigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                     To="0" Duration="0:0:0.2" EasingFunction="{StaticResource Ease}"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </MultiDataTrigger.ExitActions>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </overlay:TurnCounter.Style>
+                    </overlay:TurnCounter>
                     <guides:GuidesTabs x:Name="GuidesTabs" VerticalAlignment="Top" />
                     <minions:BattlegroundsMinions
                         VerticalAlignment="Top"
                         x:Name="BattlegroundsMinions"
-                        Visibility="Visible"
+                        Visibility="Collapsed"
                         IsStandAloneMode="True"
                         ext:OverlayExtensions.IsOverlayHitTestVisible="True"
-                        DataContext="{Binding BattlegroundsMinionsVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                        DataContext="{Binding BattlegroundsMinionsVM, RelativeSource={RelativeSource AncestorType={x:Type windows:OverlayWindow}}}"
                     />
                 </StackPanel>
+
+                <Grid Background="Black" Opacity="0.01" x:Name="BgsTopBarMask" Canvas.Right="0" Canvas.Top="0"
+                      Visibility="Visible"
+                      Width="350"
+                      Height="120"
+                      ext:OverlayExtensions.IsOverlayHoverVisible="True"
+                      IsHitTestVisible="False"
+                      MouseEnter="BgsMinionsFilterCover_OnMouseEnter"
+                      MouseLeave="BgsMinionsFilterCover_OnMouseLeave" />
 
                 <inspiration:BattlegroundsInspiration
                     x:Name="BattlegroundsInspiration" Visibility="Collapsed" Canvas.Top="0" Canvas.Left="0"

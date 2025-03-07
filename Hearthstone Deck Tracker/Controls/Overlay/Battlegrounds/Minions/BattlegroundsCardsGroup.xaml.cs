@@ -35,6 +35,13 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 		new PropertyMetadata(false, null)
 	);
 
+	public static readonly DependencyProperty GroupedByKeywordProperty = DependencyProperty.Register(
+		nameof(GroupedByKeyword),
+		typeof(bool),
+		typeof(BattlegroundsCardsGroup),
+		new PropertyMetadata(false, null)
+	);
+
 	public static readonly DependencyProperty TierProperty = DependencyProperty.Register(
 		nameof(Tier),
 		typeof(int?),
@@ -45,6 +52,13 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 	public static readonly DependencyProperty MinionTypeProperty = DependencyProperty.Register(
 		nameof(MinionType),
 		typeof(Race?),
+		typeof(BattlegroundsCardsGroup),
+		new PropertyMetadata()
+	);
+
+	public static readonly DependencyProperty KeywordProperty = DependencyProperty.Register(
+		nameof(Keyword),
+		typeof(GameTag?),
 		typeof(BattlegroundsCardsGroup),
 		new PropertyMetadata()
 	);
@@ -76,6 +90,21 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 			SetValue(GroupedByMinionTypeProperty, value);
 			OnPropertyChanged(nameof(Title));
 			OnPropertyChanged(nameof(TitleVisibility));
+			OnPropertyChanged(nameof(SubTitle));
+			OnPropertyChanged(nameof(SubTitleVisibility));
+		}
+	}
+
+	public bool GroupedByKeyword
+	{
+		get { return (bool)GetValue(GroupedByKeywordProperty); }
+		set
+		{
+			SetValue(GroupedByKeywordProperty, value);
+			OnPropertyChanged(nameof(Title));
+			OnPropertyChanged(nameof(TitleVisibility));
+			OnPropertyChanged(nameof(SubTitle));
+			OnPropertyChanged(nameof(SubTitleVisibility));
 		}
 	}
 
@@ -87,6 +116,8 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 			SetValue(TierProperty, value);
 			OnPropertyChanged(nameof(Title));
 			OnPropertyChanged(nameof(TitleVisibility));
+			OnPropertyChanged(nameof(SubTitle));
+			OnPropertyChanged(nameof(SubTitleVisibility));
 		}
 	}
 
@@ -98,6 +129,21 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 			SetValue(MinionTypeProperty, value);
 			OnPropertyChanged(nameof(Title));
 			OnPropertyChanged(nameof(TitleVisibility));
+			OnPropertyChanged(nameof(SubTitle));
+			OnPropertyChanged(nameof(SubTitleVisibility));
+		}
+	}
+
+	public GameTag Keyword
+	{
+		get { return (GameTag)GetValue(KeywordProperty); }
+		set
+		{
+			SetValue(KeywordProperty, value);
+			OnPropertyChanged(nameof(Title));
+			OnPropertyChanged(nameof(TitleVisibility));
+			OnPropertyChanged(nameof(SubTitle));
+			OnPropertyChanged(nameof(SubTitleVisibility));
 		}
 	}
 
@@ -111,53 +157,38 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 	{
 		get
 		{
-			var minionTypeName = (int)MinionType == -1
+			if((GroupedByKeyword && (int)MinionType != -1) || GroupedByMinionType)
+			{
+				return string.Format(
+					LocUtil.Get("BattlegroundsMinions_TavernTier", useCardLanguage: true),
+					Tier
+				);
+			}
+
+			return (int)MinionType == -1
 				?  LocUtil.Get("Battlegrounds_Spells", useCardLanguage: true)
 				: HearthDbConverter.GetLocalizedRace(MinionType) ?? string.Empty;
-			if(!GroupedByMinionType)
-				return minionTypeName;
+		}
+	}
 
-			if(minionTypeName == string.Empty)
-				return string.Format(LocUtil.Get("BattlegroundsMinions_TavernTier", useCardLanguage: true), Tier);
+	public string SubTitle
+	{
+		get
+		{
+			if(GroupedByKeyword)
+				return HearthDbConverter.GetLocalizedKeyword(Keyword);
 
-			return string.Format(
-				LocUtil.Get("BattlegroundsMinions_TavernTierMinionType", useCardLanguage: true),
-				Tier, minionTypeName
-			);
+			if(GroupedByMinionType)
+				return HearthDbConverter.GetLocalizedRace(MinionType) ?? string.Empty;
+
+			return string.Empty;
 		}
 	}
 
 	public Visibility TitleVisibility => string.IsNullOrEmpty(Title) ? Visibility.Collapsed : Visibility.Visible;
+	public Visibility SubTitleVisibility => string.IsNullOrEmpty(SubTitle) ? Visibility.Collapsed : Visibility.Visible;
 
-	private bool _hoveringPanel = false;
-	private bool HoveringPanel
-	{
-		get { return _hoveringPanel; }
-		set
-		{
-			_hoveringPanel = value;
-			OnPropertyChanged(nameof(BtnFilterVisibility));
-			OnPropertyChanged(nameof(HeaderBackground));
-		}
-	}
-
-	private bool _hoveringHeader = false;
-	private bool HoveringHeader
-	{
-		get { return _hoveringHeader; }
-		set
-		{
-			_hoveringHeader = value;
-			OnPropertyChanged(nameof(BtnFilterVisibility));
-			OnPropertyChanged(nameof(HeaderBackground));
-		}
-	}
-
-	public Visibility BtnFilterVisibility => (HoveringPanel || HoveringHeader) && !GroupedByMinionType ? Visibility.Visible : Visibility.Hidden;
-
-	public string HeaderBackground => HoveringHeader && !GroupedByMinionType
-		? "#24436c"
-		: "#1d3657";
+	public string HeaderBackground => "#1d3657";
 
 	public string HeaderCursor => !GroupedByMinionType ? "Hand" : "Arrow";
 
@@ -188,31 +219,5 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 	{
 		CardsList.ShowTier7InspirationButton = IsInspirationEnabled;
 		CardsList.Update(cards, true);
-	}
-
-	private void Panel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		HoveringPanel = true;
-	}
-
-	private void Panel_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		HoveringPanel = false;
-	}
-
-	private void Header_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		HoveringHeader = true;
-	}
-
-	private void Header_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		HoveringHeader = false;
-	}
-
-	private void Header_MouseUp(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		if(!GroupedByMinionType)
-			ClickMinionTypeCommand?.Execute(MinionType);
 	}
 }

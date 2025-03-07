@@ -20,6 +20,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Animations;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System.Collections.Generic;
+using System.Windows.Input;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls;
 using static HearthDb.CardIds;
@@ -684,6 +685,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_bgsTopBarBehavior.UpdatePosition();
 			_bgsTopBarBehavior.UpdateScaling();
 
+			_bgsTopBarTriggerMaskBehavior.UpdatePosition();
+			_bgsTopBarTriggerMaskBehavior.UpdateScaling();
+
 			_heroNotificationBehavior.UpdatePosition();
 			_heroNotificationBehavior.UpdateScaling();
 
@@ -829,6 +833,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				_constructedMulliganGuidePreLobbyBehaviour.Hide();
 			}
+		}
+
+		private void BgsMinionsFilterCover_OnMouseDown(object sender, MouseButtonEventArgs e)
+		{
+			BattlegroundsMinionsVM.IsFiltersOpen = false;
+		}
+
+		private void BgsMinionsFilterCover_OnMouseEnter(object sender, MouseEventArgs mouseEventArgs)
+		{
+			BattlegroundsMinionsVM.IsFilterRegionHovered = true;
+		}
+
+		private void BgsMinionsFilterCover_OnMouseLeave(object sender, MouseEventArgs mouseEventArgs)
+		{
+			BattlegroundsMinionsVM.IsFilterRegionHovered = false;
 		}
 	}
 }

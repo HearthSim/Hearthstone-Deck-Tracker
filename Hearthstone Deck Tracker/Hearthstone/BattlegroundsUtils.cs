@@ -100,5 +100,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return anomalyDbfId;
 			return null;
 		}
+		public static List<GameTag> GetAvailableKeywords()
+		{
+			return new List<GameTag>()
+			{
+				GameTag.BATTLECRY,
+				GameTag.DEATHRATTLE,
+				GameTag.DIVINE_SHIELD,
+				GameTag.TAUNT,
+				GameTag.END_OF_TURN_TRIGGER,
+				GameTag.START_OF_COMBAT,
+				GameTag.REBORN,
+				GameTag.CHOOSE_ONE,
+				GameTag.MODULAR,
+				GameTag.VENOMOUS
+			};
+		}
 	}
 }

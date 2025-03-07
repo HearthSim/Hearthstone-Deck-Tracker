@@ -83,6 +83,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _heroNotificationBehavior;
 		private OverlayElementBehavior _bgsTopBarBehavior;
 		private OverlayElementBehavior _bgsBobsBuddyBehavior;
+		private OverlayElementBehavior _bgsTopBarTriggerMaskBehavior;
 		private OverlayElementBehavior _bgsPastOpponentBoardBehavior;
 		private OverlayElementBehavior _experienceCounterBehavior;
 		private OverlayElementBehavior _mercenariesTaskListBehavior;
@@ -201,6 +202,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				AnchorSide = Side.Top,
 				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
+			};
+
+			_bgsTopBarTriggerMaskBehavior = new OverlayElementBehavior(BgsTopBarMask)
+			{
+				GetRight = () => 0,
+				GetTop = () => 0,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Top,
 			};
 
 			_bgsBobsBuddyBehavior = new OverlayElementBehavior(BobsBuddyDisplay)
@@ -743,6 +752,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsCompsGuidesVM.OnMatchStart();
 
 			_bgsTopBarBehavior.Show();
+			_bgsTopBarTriggerMaskBehavior.Show();
 		}
 
 		internal void ShowBgsTopBarAndBobsBuddyPanel()
@@ -756,6 +766,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsMinionsVM.Reset();
 			BattlegroundsCompsGuidesVM.OnMatchEnd();
 			_bgsTopBarBehavior.Hide();
+			_bgsTopBarTriggerMaskBehavior.Hide();
 			TurnCounter.UpdateTurn(1);
 			HideBobsBuddyPanel();
 

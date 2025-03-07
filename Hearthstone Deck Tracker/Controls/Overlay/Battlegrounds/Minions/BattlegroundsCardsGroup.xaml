@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:hearthstone_deck_tracker="clr-namespace:Hearthstone_Deck_Tracker"
-             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -15,32 +14,58 @@
              d:DesignHeight="300" d:DesignWidth="196"
              >
     <Border BorderBrush="#141617" BorderThickness="1" Background="#23272a" Margin="0,5,0,0" Width="196">
-        <Grid
-            Name="BattlegroundsCardsGroup_Grid"
-            MouseEnter="Panel_MouseEnter"
-            MouseLeave="Panel_MouseLeave"
-            extensions:OverlayExtensions.IsOverlayHitTestVisible="True"
-        >
+        <Grid>
             <StackPanel Background="Transparent">
                 <!-- The Transparent background above is required for hit tests -->
                 <Border
                     BorderBrush="#141617"
                     BorderThickness="0,0,0,1"
                     Background="{Binding HeaderBackground, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"
-                    Cursor="{Binding HeaderCursor, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"
-                    MouseEnter="Header_MouseEnter"
-                    MouseLeave="Header_MouseLeave"
-                    MouseUp="Header_MouseUp"
                 >
-                    <hearthstone_deck_tracker:HearthstoneTextBlock FontSize="14"
-                        Margin="7,2"
-                        Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"
-                        d:Text="Mechs"
-                        Visibility="{Binding TitleVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"
-                        d:Visibility="Visible"
-                     />
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Right" Margin="0,0,0,-1" MaxWidth="70" Height="20" VerticalAlignment="Bottom"
+                                   Visibility="{Binding SubTitleVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"
+                                   d:Visibility="Visible">
+                            <Grid Height="30" Width="20" Margin="-20,0,-5,0" ClipToBounds="True" DockPanel.Dock="Left">
+                                <Border BorderThickness="1,0,0,0" BorderBrush="#141617" Background="#23272a" Width="20" Height="42" VerticalAlignment="Center">
+                                    <Border.LayoutTransform>
+                                        <RotateTransform Angle="15"/>
+                                    </Border.LayoutTransform>
+                                </Border>
+                            </Grid>
+                            <Border Background="#23272a"
+                                    Margin="-8,0,0,0"
+                                    BorderBrush="#141617"
+                                    BorderThickness="0,1,0,0"
+                                    Padding="2,0,0,0"
+                                >
+                                <Viewbox Stretch="Uniform" StretchDirection="DownOnly" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock
+                                        Foreground="#dcddde"
+                                        FontSize="10"
+                                        FontWeight="Medium"
+                                        Margin="4,0,8,0"
+                                        d:Text="Mechs"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        TextAlignment="Center"
+                                        TextWrapping="NoWrap"
+                                        Text="{Binding SubTitle, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"
+                                    />
+                                </Viewbox>
+                            </Border>
+                        </DockPanel>
+                        <hearthstone_deck_tracker:HearthstoneTextBlock
+                            FontSize="14"
+                            Margin="7,2"
+                            Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"
+                            d:Text="Tavern Tier 2"
+                            Visibility="{Binding TitleVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"
+                            d:Visibility="Visible"
+                        />
+                    </DockPanel>
                 </Border>
-                <Grid Grid.Row="0" ClipToBounds="True" Margin="5">
+                <Grid ClipToBounds="True" Margin="5">
                     <Grid.Resources>
                         <Style TargetType="controls:Card">
                             <Setter Property="ToolTipService.HorizontalOffset" Value="-33"/>
@@ -49,29 +74,6 @@
                     <controls:AnimatedCardList x:Name="CardsList" Margin="-33,0,0,0"/>
                 </Grid>
             </StackPanel>
-            <Border
-                Name="BtnFilter"
-                Height="19"
-                Width="19"
-                CornerRadius="3"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Right"
-                Margin="3 2"
-                Visibility="{Binding BtnFilterVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"
-                d:Visibility="Visible"
-                IsHitTestVisible="False"
-            >
-                <Rectangle
-                    Height="14"
-                    Width="14"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                >
-                    <Rectangle.Fill>
-                        <VisualBrush Visual="{StaticResource appbar_filter_white}" />
-                    </Rectangle.Fill>
-                </Rectangle>
-            </Border>
         </Grid>
     </Border>
 </UserControl>

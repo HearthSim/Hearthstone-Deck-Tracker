@@ -11,7 +11,10 @@
              MouseLeave="UserControl_MouseLeave"
              MouseUp="UserControl_MouseUp">
     <Grid>
-        <Image Name="Glow" Visibility="Collapsed" d:Visibility="Visible" Source="/HearthstoneDeckTracker;component/Resources/tier-glow.png" />
+        <Image Visibility="{Binding GlowVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}"
+               Opacity="{Binding GlowOpacity, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}"
+               d:Visibility="Visible"
+               Source="/HearthstoneDeckTracker;component/Resources/tier-glow.png" />
         <Grid RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <ScaleTransform ScaleX="0.905" ScaleY="0.905"/>
