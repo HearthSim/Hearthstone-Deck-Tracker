@@ -1,4 +1,12 @@
-## **Unreleased**
+## **Release v1.42.0 - 2025-03-07**
+**Battlegrounds**:
+- Added Battlegrounds card browser filtering by Mechanics and Types!
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Illidan and Gorefiend interaction.
+- Fixed incorrect simulation results due to Gentle Stag.
+- Fixed incorrect simulation results due to Gemsplitter.
+
 **Hearthstone**:
 - Added counter for Reska, the Pit Boss.
 - Changed opponent's The Ceaseless Expanse Counter to start appearing when it costs 50.
