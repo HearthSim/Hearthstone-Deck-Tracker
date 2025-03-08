@@ -179,7 +179,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			EnsureFormattedText();
 
-			if(_formattedText == null)
+			if(_formattedText == null || availableSize.Width <= 0 || availableSize.Height <= 0)
 				return new Size(0, 0);
 			// constrain the formatted text according to the available size
 			// the Math.Min call is important - without this constraint (which seems arbitrary, but is the maximum allowable text width), things blow up when availableSize is infinite in both directions
@@ -199,7 +199,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			EnsureFormattedText();
 
-			if(_formattedText == null)
+			if(_formattedText == null || finalSize.Width <= 0 || finalSize.Height <= 0)
 				return new Size(0, 0);
 			// update the formatted text with the final size
 			_formattedText.MaxTextWidth = Math.Min(3579139, Math.Max(0.0001d, finalSize.Width));
