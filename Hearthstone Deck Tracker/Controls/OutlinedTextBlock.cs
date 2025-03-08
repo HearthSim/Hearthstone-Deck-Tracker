@@ -1,8 +1,10 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Markup;
@@ -83,6 +85,7 @@ namespace Hearthstone_Deck_Tracker
 		public OutlinedTextBlock()
 		{
 			TextDecorations = new TextDecorationCollection();
+			VerticalAlignment = VerticalAlignment.Center;
 		}
 
 		public Brush Fill
@@ -164,35 +167,71 @@ namespace Hearthstone_Deck_Tracker
 			set { SetValue(TextWrappingProperty, value); }
 		}
 
+		private Dictionary<int, Geometry> _cachedGeometry = new();
 		protected override void OnRender(DrawingContext drawingContext)
 		{
 			EnsureFormattedText();
 
 			if(_formattedText == null)
 				return;
-			var y = !double.IsNaN(ActualHeight) ? (ActualHeight - _formattedText.Height) / 2 + _formattedText.Height * 0.05: 0;
-			drawingContext.DrawGeometry(Stroke, new Pen(Brushes.Black, StrokeWidth) {LineJoin = PenLineJoin.Round}, _formattedText.BuildGeometry(new Point(0, y)));
-			drawingContext.DrawGeometry(Fill, new Pen(Brushes.White, 0), _formattedText.BuildGeometry(new Point(0, y)));
+
+			Geometry geometry;
+			if(!double.IsNaN(Width) || !double.IsNaN(Height) || TextAlignment != TextAlignment.Left)
+			{
+				var center = (ActualHeight - _formattedText.Height) / 2;
+				geometry = _formattedText.BuildGeometry(new Point(0, center + _formattedText.Height * 0.05));
+			}
+			else if(!_cachedGeometry.TryGetValue(_fontSize, out geometry))
+			{
+				// If we don't have a set width or height we can very aggressively cache, just
+				// based on font size.
+				_cachedGeometry[_fontSize] = geometry = _formattedText.BuildGeometry(new Point(0, _formattedText.Height * 0.05));
+			}
+
+			drawingContext.DrawGeometry(Stroke, new Pen(Brushes.Black, StrokeWidth) { LineJoin = PenLineJoin.Round }, geometry);
+			drawingContext.DrawGeometry(Fill, new Pen(Brushes.White, 0), geometry);
 		}
 
+		private const int MaxAllowedTextSize = 3579139;
+
+		private int _fontSize;
+
+		private record SizeCache(int FontSize, double Width, double Height);
+		private readonly List<SizeCache> _measureCache = new();
 		protected override Size MeasureOverride(Size availableSize)
 		{
 			EnsureFormattedText();
 
-			if(_formattedText == null || availableSize.Width <= 0 || availableSize.Height <= 0)
+			if(_formattedText == null || string.IsNullOrEmpty(_formattedText.Text) || availableSize.Width <= 0 || availableSize.Height <= 0)
 				return new Size(0, 0);
-			// constrain the formatted text according to the available size
-			// the Math.Min call is important - without this constraint (which seems arbitrary, but is the maximum allowable text width), things blow up when availableSize is infinite in both directions
-			// the Math.Max call is to ensure we don't hit zero, which will cause MaxTextHeight to throw
-			var maxWidth = Math.Min(3579139, Math.Max(0.0001d, availableSize.Width));
-			var ratio = maxWidth / _formattedText.Width;
-			if(ratio < 1 && (TextWrapping == TextWrapping.NoWrap || ratio > 0.8))
-				_formattedText.SetFontSize(Math.Max(1, (int)FontSize * ratio));
-			_formattedText.MaxTextWidth = maxWidth;
-			_formattedText.MaxTextHeight = Math.Max(0.0001d, availableSize.Height);
 
-			// return the desired size
-			return new Size(_formattedText.Width + 2, _formattedText.Height + 2);
+			// 1. Reset max size so that we get the real _formattedText.Width without any wrapping/clipping (not sure which happens)
+			_formattedText.MaxTextWidth = MaxAllowedTextSize;
+			_formattedText.MaxTextHeight = MaxAllowedTextSize;
+
+			var measured = _measureCache.FirstOrDefault(x => x.Width <= availableSize.Width && x.Height <= availableSize.Height);
+			if(measured == null)
+			{
+				var fontSize = (_measureCache.LastOrDefault()?.FontSize - 1) ?? (int)FontSize;
+				// 2. Decrease font size until text fits in available size
+				for(; fontSize > 1; fontSize--)
+				{
+					_formattedText.SetFontSize(fontSize);
+					_measureCache.Add(new SizeCache(fontSize, _formattedText.Width, _formattedText.Height));
+					if(_formattedText.Width <= availableSize.Width && _formattedText.Height <= availableSize.Height)
+						break;
+				}
+				measured = _measureCache.Last();
+			}
+			else
+				_formattedText.SetFontSize(measured.FontSize);
+			_fontSize = measured.FontSize;
+
+			// 3. Set the actual max size so that our text has the correct dimensions
+			_formattedText.MaxTextWidth = Math.Min(MaxAllowedTextSize, Math.Max(1, availableSize.Width));
+			_formattedText.MaxTextHeight = Math.Min(MaxAllowedTextSize, Math.Max(1, availableSize.Height));
+
+			return new Size(Math.Ceiling(measured.Width), Math.Ceiling(measured.Height));
 		}
 
 		protected override Size ArrangeOverride(Size finalSize)
@@ -201,9 +240,9 @@ namespace Hearthstone_Deck_Tracker
 
 			if(_formattedText == null || finalSize.Width <= 0 || finalSize.Height <= 0)
 				return new Size(0, 0);
-			// update the formatted text with the final size
-			_formattedText.MaxTextWidth = Math.Min(3579139, Math.Max(0.0001d, finalSize.Width));
-			_formattedText.MaxTextHeight = Math.Max(0.0001d, finalSize.Height);
+
+			_formattedText.MaxTextWidth = Math.Min(MaxAllowedTextSize, Math.Max(1, finalSize.Width));
+			_formattedText.MaxTextHeight = Math.Min(MaxAllowedTextSize, Math.Max(1, finalSize.Height));
 
 			return finalSize;
 		}
@@ -215,6 +254,8 @@ namespace Hearthstone_Deck_Tracker
 
 			outlinedTextBlock.InvalidateMeasure();
 			outlinedTextBlock.InvalidateVisual();
+			outlinedTextBlock._cachedGeometry.Clear();
+			outlinedTextBlock._measureCache.Clear();
 		}
 
 		private static void OnFormattedTextUpdated(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -224,6 +265,8 @@ namespace Hearthstone_Deck_Tracker
 
 			outlinedTextBlock.InvalidateMeasure();
 			outlinedTextBlock.InvalidateVisual();
+			outlinedTextBlock._cachedGeometry.Clear();
+			outlinedTextBlock._measureCache.Clear();
 		}
 
 		private void EnsureFormattedText()
