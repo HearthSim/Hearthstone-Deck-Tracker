@@ -50,6 +50,11 @@ namespace HDTTests.Hearthstone.Secrets
 			return new Entity(_entityId++) { CardId = card?.Ids[0] };
 		}
 
+		private Entity CreateNewEntity(string cardId)
+		{
+			return new Entity(_entityId++) { CardId = cardId };
+		}
+
 		[TestInitialize]
 		public void Setup()
 		{
@@ -58,7 +63,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_gameEventHandler = new GameEventHandler(_game);
 
 			//Player_IDs are currently not quite representative of an actual game
-			_gameEntity = CreateNewEntity(null);
+			_gameEntity = CreateNewEntity((string)null);
 			_gameEntity.Name = "GameEntity";
 			_heroPlayer = CreateNewEntity("HERO_01");
 			_heroPlayer.SetTag(GameTag.CARDTYPE, (int)CardType.HERO);
@@ -651,6 +656,24 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_FreezingTrapIsActivated_ExcludedFromOtherSecrets()
+		{
+			var freezingTrap = CreateNewEntity(HearthDb.CardIds.Collectible.Hunter.FreezingTrap);
+			freezingTrap.SetTag(GameTag.CLASS, (int)CardClass.HUNTER);
+			freezingTrap.SetTag(GameTag.SECRET, 1);
+			freezingTrap.SetTag(GameTag.ZONE, (int)Zone.SECRET);
+
+			_gameEventHandler.HandleOpponentSecretPlayed(freezingTrap, HearthDb.CardIds.Collectible.Hunter.FreezingTrap, 0, 0, Zone.HAND, freezingTrap.Id);
+			_game.Entities[freezingTrap.Id] = freezingTrap;
+
+			_gameEventHandler.HandleOpponentSecretTrigger(freezingTrap, HearthDb.CardIds.Collectible.Hunter.FreezingTrap, 1, 0);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 

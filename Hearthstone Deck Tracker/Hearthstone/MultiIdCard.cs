@@ -66,8 +66,6 @@ public class MultiIdCard
 	public static bool operator ==(MultiIdCard card, object other) => card.Equals(other);
 	public static bool operator !=(MultiIdCard card, object other) => !card.Equals(other);
 
-	public static implicit operator MultiIdCard(string id) => new MultiIdCard(id);
-
 	public override string ToString()
 	{
 		return Cards[0].Name ?? "";

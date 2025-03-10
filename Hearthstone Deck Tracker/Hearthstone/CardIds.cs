@@ -160,6 +160,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static IReadOnlyList<MultiIdCard> All { get; } = Hunter.All.Concat(Mage.All).Concat(Paladin.All).Concat(Rogue.All).ToList();
 
+			public static MultiIdCard? GetSecretMultiIdCard(string id) =>
+				All.FirstOrDefault(m => m.Ids.Contains(id));
+
 			public class Hunter : EnumerateMultiId<Hunter>
 			{
 				public static readonly MultiIdCard BaitAndSwitch = new MultiIdCard(Collectible.Hunter.BaitAndSwitch);

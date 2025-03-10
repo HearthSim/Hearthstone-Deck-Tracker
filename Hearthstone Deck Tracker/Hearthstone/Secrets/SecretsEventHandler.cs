@@ -151,7 +151,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				return;
 			if(!entity.HasCardId || Game.ProposedAttacker == 0 || Game.ProposedDefender == 0)
 				return;
-			if(!FastCombat.Contains(entity.CardId!))
+			var multiIdCard = GetSecretMultiIdCard(entity.CardId!);
+			if(multiIdCard is null)
+				return;
+			if(!FastCombat.Contains(multiIdCard))
 				return;
 			if(Game.Entities.TryGetValue(Game.ProposedAttacker, out var attacker)
 				&& Game.Entities.TryGetValue(Game.ProposedDefender, out var defender))

@@ -41,7 +41,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(entity == null || !entity.IsSecret || !entity.HasTag(GameTag.CLASS))
 				return false;
 			if(entity.HasCardId)
-				Exclude(entity.CardId!, false);
+			{
+				var secretMultiIdCard = CardIds.Secrets.GetSecretMultiIdCard(entity.CardId!);
+				if(secretMultiIdCard is not null)
+				{
+					Exclude(secretMultiIdCard, false);
+				}
+			}
 			var secret = new Secret(entity);
 			Secrets.Add(secret);
 			OnNewSecret(secret);
@@ -60,9 +66,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				HandleFastCombat(entity);
 				Secrets.Remove(secret);
 				if(secret.Entity.HasCardId)
-				{ 
-					Exclude(secret.Entity.CardId!, false);
-					SavedSecrets.Remove(secret.Entity.CardId!);
+				{
+					var secretMultiIdCard = CardIds.Secrets.GetSecretMultiIdCard(secret.Entity.CardId!);
+					if(secretMultiIdCard is not null)
+					{
+						Exclude(secretMultiIdCard, false);
+						SavedSecrets.Remove(secretMultiIdCard);
+					}
 				}
 				Refresh();
 				return true;
@@ -149,7 +159,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			var cards = Secrets
 				.SelectMany(secret => secret.Excluded)
 				.GroupBy(id => id.Key)
-				.Select(group => new QuantifiedMultiIdCard(group.Key, AdjustCount(group.Key.Ids[0], group.Count(x => !x.Value))));
+				.Select(group =>
+				{
+					var multiIdCard = CardIds.Secrets.GetSecretMultiIdCard(group.Key.Ids[0]);
+					if(multiIdCard is null)
+					{
+						return new QuantifiedMultiIdCard(group.Key, 0);
+					}
+					return new QuantifiedMultiIdCard(group.Key, AdjustCount(multiIdCard, group.Count(x => !x.Value)));
+				});
 
 			var availableSecrets = GetAvailableSecrets(gameMode, format);
 			cards = cards.Where(x => x.Ids.Any(availableSecrets.Contains));
