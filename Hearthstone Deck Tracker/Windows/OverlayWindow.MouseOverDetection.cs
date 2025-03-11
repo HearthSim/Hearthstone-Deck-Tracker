@@ -459,31 +459,101 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(cursorPos == null)
 				return;
 
-			var hoveringClickable = _clickableElements.Any(e => ElementContains(e, (Point)cursorPos));
-			SetClickthrough(!hoveringClickable);
+			var clickableMouseOver = _clickableElements.Where(e => ElementContains(e, (Point)cursorPos)).ToList();
+			SetClickthrough(clickableMouseOver.Count == 0);
 
-			var mouseOverElements = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, (Point)cursorPos)).ToList();
+			var hoverableMouseOver = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, (Point)cursorPos)).ToList();
 
 			// for every previously mouse overed element, if it is no longer hovered, emit a MouseLeaveEvent
 			foreach(var previousMouseOverElement in _mouseOverElements)
 			{
-				if(!mouseOverElements.Contains(previousMouseOverElement))
+				if(!hoverableMouseOver.Contains(previousMouseOverElement))
 				{
 					previousMouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseLeaveEvent });
 				}
 			}
 
-			// for every element, if it was not hovered, emit a MouseEnter event
-			foreach(var mouseOverElement in mouseOverElements)
+			// We want to support emitting hover events for multiple elements if they are nested/related,
+			// meaning, if the share the same "root" element in CanvasInfo, but not otherwise.
+			// This prevents events from firing on elements that are "below" others. This is really only a problem
+			// because we don't have proper event propagation here. Might be worth investing in in the future.
+			if(hoverableMouseOver.Count > 0)
 			{
-				if(!_mouseOverElements.Contains(mouseOverElement))
+				var rootDict = new Dictionary<DependencyObject, OverlayElement>();
+				foreach(var element in hoverableMouseOver)
 				{
-					mouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseEnterEvent });
+					var root = GetCanvasInfoParentRoot(element);
+					if(root == null)
+						continue;
+					if(!rootDict.TryGetValue(root, out var value))
+						value = rootDict[root] = new OverlayElement();
+					value.Hoverables.Add(element);
 				}
-			}
 
-			// remember all elements that are currently hovered
-			_mouseOverElements = new HashSet<FrameworkElement>(mouseOverElements);
+				// Check all clickable elements as well. If the "top most" hovered element is clickable we don't
+				// want to emit any custom hover event.
+				foreach(var element in clickableMouseOver)
+				{
+					var root = GetCanvasInfoParentRoot(element);
+					if(root == null)
+						continue;
+					if(!rootDict.TryGetValue(root, out var value))
+						value = rootDict[root] = new OverlayElement();
+					value.Clickables.Add(element);
+				}
+
+				if(rootDict.Count > 0)
+				{
+					// Since we only want to emit hovers for the "top most" element, we need to index and sort them.
+					var rootChildrenCount = VisualTreeHelper.GetChildrenCount(CanvasInfo);
+					for(var i = 0; i < rootChildrenCount; i++)
+					{
+						var child = VisualTreeHelper.GetChild(CanvasInfo, i);
+						if(rootDict.TryGetValue(child, out var value))
+							value.Index = i;
+					}
+
+					var newMouseOverElements = rootDict.Values.OrderByDescending(x => x.Index).First().Hoverables;
+					foreach(var mouseOverElement in newMouseOverElements)
+					{
+						if(!_mouseOverElements.Contains(mouseOverElement))
+						{
+							mouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseEnterEvent });
+						}
+					}
+
+					// remember all elements that are currently hovered
+					_mouseOverElements = new HashSet<FrameworkElement>(newMouseOverElements);
+				}
+				else
+					_mouseOverElements.Clear();
+			}
+			else
+				_mouseOverElements.Clear();
+
+			return;
+
+			DependencyObject? GetCanvasInfoParentRoot(FrameworkElement e)
+			{
+				DependencyObject element = e;
+				var parent = VisualTreeHelper.GetParent(e);
+				while(parent != CanvasInfo && parent != null)
+				{
+					element = parent;
+					parent = VisualTreeHelper.GetParent(parent);
+				}
+
+				if(parent != null)
+					return element;
+				return null;
+			}
+		}
+
+		private record OverlayElement()
+		{
+			public List<FrameworkElement> Hoverables { get; } = new();
+			public List<FrameworkElement> Clickables { get; } = new();
+			public int Index { get; set; } = -1;
 		}
 
 		public bool EllipseContains(Ellipse ellipse, Point location)
