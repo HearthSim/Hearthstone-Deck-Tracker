@@ -67,6 +67,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 					placeholderAsset: "pack://application:,,,/Resources/faceless_manipulator.png"
 				);
 				ConfigWrapper.Bindable.CardResolutionChanged += () => cardImageDownloader.ClearStorage();
+				Helper.CardLanguageChanged += () => cardImageDownloader.ClearStorage();
 			}
 			catch(ArgumentException e)
 			{

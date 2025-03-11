@@ -28,6 +28,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 					card.UpdateHighlight();
 				}
 			};
+			Helper.CardLanguageChanged += () =>
+			{
+				foreach(var c in LoadedCards)
+					c.UpdateBackground();
+			};
 		}
 
 		public Card()

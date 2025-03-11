@@ -954,6 +954,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static string GetCardLanguage() => Config.Instance.LastSeenHearthstoneLang ?? UpdateCardLanguage();
 
+		public static Action? CardLanguageChanged;
 		public static string UpdateCardLanguage()
 		{
 			var lang = LocUtil.GetHearthstoneLanguageFromRegistry();
@@ -968,10 +969,7 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.LastSeenHearthstoneLang = lang;
 			Config.Save();
 
-			AssetDownloaders.cardImageDownloader?.ClearStorage();
-			Card.ReloadTileImages();
-			foreach(var c in Controls.Card.LoadedCards)
-				c.UpdateBackground();
+			CardLanguageChanged?.Invoke();
 
 			return lang;
 		}
