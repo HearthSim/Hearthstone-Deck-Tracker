@@ -453,16 +453,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private HashSet<FrameworkElement> _mouseOverElements = new();
 
+
+		private Dictionary<FrameworkElement, Vector> _scaleCache = new();
 		private void UpdateHoverable()
 		{
 			var cursorPos = GetCursorPos();
 			if(cursorPos == null)
 				return;
 
-			var clickableMouseOver = _clickableElements.Where(e => ElementContains(e, (Point)cursorPos)).ToList();
+			_scaleCache.Clear();
+
+			var clickableMouseOver = _clickableElements.Where(e => ElementContains(e, (Point)cursorPos, _scaleCache)).ToList();
 			SetClickthrough(clickableMouseOver.Count == 0);
 
-			var hoverableMouseOver = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, (Point)cursorPos)).ToList();
+			var hoverableMouseOver = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, (Point)cursorPos, _scaleCache)).ToList();
 
 			// for every previously mouse overed element, if it is no longer hovered, emit a MouseLeaveEvent
 			foreach(var previousMouseOverElement in _mouseOverElements)
@@ -587,7 +591,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				   && rotated.Y < rectCorner.Y + rect.Height;
 		}
 
-		public bool ElementContains(FrameworkElement element, Point location)
+		public bool ElementContains(FrameworkElement element, Point location, Dictionary<FrameworkElement, Vector>? scaleCache = null)
 		{
 			if(!element.IsVisible)
 				return false;
@@ -595,7 +599,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(parent == null)
 				return false;
 
-			var scale = Helper.GetTotalScaleTransform(element);
+			var scale = scaleCache == null ? Helper.GetTotalScaleTransform(element)
+				: Helper.GetTotalScaleTransform(element, scaleCache);
 
 			try
 			{

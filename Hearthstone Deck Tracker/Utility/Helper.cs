@@ -976,6 +976,11 @@ namespace Hearthstone_Deck_Tracker
 			return lang;
 		}
 
+		/// <summary>
+		/// Calculate the total scale transform for an element. This includes the scale of the element itself,
+		/// as well as all parent elements.
+		/// </summary>
+		/// <param name="element">Element to calculate the total scale transform for</param>
 		public static Vector GetTotalScaleTransform(FrameworkElement? element)
 		{
 			var scale = new Vector(1.0, 1.0);
@@ -994,6 +999,42 @@ namespace Hearthstone_Deck_Tracker
 				element = VisualTreeHelper.GetParent(element) as FrameworkElement;
 			}
 			return scale;
+		}
+
+		/// <summary>
+		/// Calculate the total scale transform for an element. This includes the scale of the element itself,
+		/// as well as all parent elements.
+		///
+		/// Recursive implementation to support caching. The loop approach calculates the total scale bottom-up,
+		/// which does not allow us to cache element further up the chain.
+		/// </summary>
+		/// <param name="element">Element to calculate the total scale transform for</param>
+		/// <param name="cache">Cache to be used across multiple invocations of this function. Any elements previously
+		/// seen will be written to the cache.</param>
+		public static Vector GetTotalScaleTransform(FrameworkElement? element, Dictionary<FrameworkElement, Vector> cache)
+		{
+			var scale = new Vector(1.0, 1.0);
+			if(element == null)
+				return scale;
+			if(cache.TryGetValue(element, out var cached))
+				return cached;
+
+			if(element.RenderTransform is ScaleTransform sr)
+			{
+				scale.X *= sr.ScaleX;
+				scale.Y *= sr.ScaleY;
+			}
+			if(element.LayoutTransform is ScaleTransform sl)
+			{
+				scale.X *= sl.ScaleX;
+				scale.Y *= sl.ScaleY;
+			}
+
+			var parent = VisualTreeHelper.GetParent(element) as FrameworkElement;
+			var parentScale = GetTotalScaleTransform(parent, cache);
+			var totalScale = new Vector(parentScale.X * scale.X, parentScale.Y * scale.Y);
+			cache[element] = totalScale;
+			return totalScale;
 		}
 	}
 }
