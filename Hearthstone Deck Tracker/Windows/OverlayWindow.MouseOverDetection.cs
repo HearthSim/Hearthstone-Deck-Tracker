@@ -472,13 +472,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var hoverableMouseOver = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, (Point)cursorPos, _scaleCache)).ToList();
 
 			// for every previously mouse overed element, if it is no longer hovered, emit a MouseLeaveEvent
-			foreach(var previousMouseOverElement in _mouseOverElements)
-			{
-				if(!hoverableMouseOver.Contains(previousMouseOverElement))
-				{
-					previousMouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseLeaveEvent });
-				}
-			}
 
 #if HOVER_DEBUG
 			ClearHoverDebug();
@@ -525,6 +518,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					}
 
 					var newMouseOverElements = rootDict.Values.OrderByDescending(x => x.Index).First().Hoverables;
+
+					EmitMouseLeave(newMouseOverElements); // Emit mouse out before new mouse enter events
+
 					foreach(var mouseOverElement in newMouseOverElements)
 					{
 						if(!_mouseOverElements.Contains(mouseOverElement))
@@ -560,7 +556,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_mouseOverElements = new HashSet<FrameworkElement>(newMouseOverElements);
 				}
 				else
+				{
+					EmitMouseLeave(hoverableMouseOver);
 					_mouseOverElements.Clear();
+				}
 			}
 			else
 			{
@@ -572,10 +571,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 						ShowHoverDebug(element, Brushes.Lime, "HitTest");
 				}
 #endif
+				EmitMouseLeave(hoverableMouseOver);
 				_mouseOverElements.Clear();
 			}
 
 			return;
+
+			void EmitMouseLeave(IList<FrameworkElement> hoveredElements)
+			{
+				foreach(var previousMouseOverElement in _mouseOverElements)
+				{
+					if(!hoveredElements.Contains(previousMouseOverElement))
+					{
+						previousMouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseLeaveEvent });
+					}
+				}
+			}
 
 			DependencyObject? GetCanvasInfoParentRoot(FrameworkElement e)
 			{
