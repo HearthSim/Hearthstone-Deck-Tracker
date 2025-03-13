@@ -1,3 +1,13 @@
+## **Release v1.43.0 - 2025-03-13**
+**Battlegrounds**:
+- Added Anomaly Overlay Masking during Hero Picking\
+  *Automatically hides part of the tracker overlay when the anomaly is focused.*
+- Added free Anomaly Guides to the overlay, written by Jeef!\
+  *Presented during Hero Picking and during game so they're easy to read inbetween turns.*
+
+**Hearthstone**:
+- Fixed an issue with Freezing Trap not being marked as excluded.
+
 ## **Release v1.42.0 - 2025-03-07**
 **Battlegrounds**:
 - Added Battlegrounds card browser filtering by Mechanics and Types!
