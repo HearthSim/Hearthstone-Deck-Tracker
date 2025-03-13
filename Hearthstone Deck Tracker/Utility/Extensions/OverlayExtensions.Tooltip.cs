@@ -76,15 +76,32 @@ partial class OverlayExtensions
 		return null;
 	}
 
-	private static void ShowTooltip(object sender, MouseEventArgs _)
+	private static void ShowTooltip(object sender, MouseEventArgs args)
 	{
-		if(sender is DependencyObject d && IsInOverlay(d))
+		if(sender is not DependencyObject d)
+			return;
+		if(GetIsOverlayHoverVisible(d) && args is not OverlayWindow.CustomMouseEventArgs)
+		{
+			// If the element defines IsOverlayHoverVisible, but the overlay is also non-transparent while the element
+			// is hovered, this will be called twice, from the Overlay and the native event system. We only want to
+			// process the event emitted by the Overlay. Any IsOverlayHoverVisible elements outside the overlay will be
+			// shown using the native tooltip system, not mouse events, and therefore be unaffected by this.
+			return;
+		}
+		if(IsInOverlay(d))
 			OnToolTipChanged?.Invoke(ResolveTooltip(d), d);
 	}
 
-	private static void HideTooltip(object sender, MouseEventArgs _)
+	private static void HideTooltip(object sender, MouseEventArgs args)
 	{
-		if(sender is DependencyObject d && IsInOverlay(d))
+		if(sender is not DependencyObject d)
+			return;
+		if(GetIsOverlayHoverVisible(d) && args is not OverlayWindow.CustomMouseEventArgs)
+		{
+			// See ShowTooltip for more details
+			return;
+		}
+		if(IsInOverlay(d))
 			OnToolTipChanged?.Invoke(null, d);
 	}
 
