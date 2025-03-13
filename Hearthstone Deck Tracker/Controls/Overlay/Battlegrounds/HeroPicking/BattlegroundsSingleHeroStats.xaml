@@ -5,8 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:heroPicking="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking"
-             xmlns:comp="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition"
-             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -19,9 +17,7 @@
         </Grid>
 
         <!-- Hero Portrait Container -->
-        <Grid Background="#00FF00FF" Margin="0 -237 0 0" Height="285"
-              IsHitTestVisible="False"
-              extensions:OverlayExtensions.IsOverlayHoverVisible="True">
+        <Grid Background="#00FF00FF" Margin="0 -237 0 0" Height="285" IsHitTestVisible="False">
         </Grid>
     </DockPanel>
 </UserControl>
