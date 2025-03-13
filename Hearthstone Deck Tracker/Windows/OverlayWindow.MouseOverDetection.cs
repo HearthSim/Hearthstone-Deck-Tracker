@@ -1,4 +1,6 @@
-﻿#region
+﻿// #define HOVER_DEBUG // Uncomment to enable hover debug overlay
+
+#region
 
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.TrinketPicking;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
+
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -477,6 +480,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
+#if HOVER_DEBUG
+			ClearHoverDebug();
+#endif
+
 			// We want to support emitting hover events for multiple elements if they are nested/related,
 			// meaning, if the share the same "root" element in CanvasInfo, but not otherwise.
 			// This prevents events from firing on elements that are "below" others. This is really only a problem
@@ -524,7 +531,30 @@ namespace Hearthstone_Deck_Tracker.Windows
 						{
 							mouseOverElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseEnterEvent });
 						}
+
+#if HOVER_DEBUG
+						if(clickableMouseOver.Count > 0)
+							ShowHoverDebug(mouseOverElement, Brushes.Orange, "(Hover)");
+						else
+							ShowHoverDebug(mouseOverElement, Brushes.Lime, "Hover");
+#endif
 					}
+
+#if HOVER_DEBUG
+					var roots = rootDict.Values.OrderByDescending(x => x.Index).ToList();
+					foreach(var element in roots.First().Clickables)
+					{
+						ShowHoverDebug(element, Brushes.Lime, "HitTest");
+					}
+
+					foreach(var root in roots.Skip(1))
+					{
+						foreach(var element in root.Hoverables)
+							ShowHoverDebug(element, Brushes.Red, "COVERED Hover");
+						foreach(var element in root.Clickables)
+							ShowHoverDebug(element, Brushes.Lime, "HitTest");
+					}
+#endif
 
 					// remember all elements that are currently hovered
 					_mouseOverElements = new HashSet<FrameworkElement>(newMouseOverElements);
@@ -533,7 +563,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_mouseOverElements.Clear();
 			}
 			else
+			{
+
+#if HOVER_DEBUG
+				if(clickableMouseOver.Count > 0)
+				{
+					foreach(var element in clickableMouseOver)
+						ShowHoverDebug(element, Brushes.Lime, "HitTest");
+				}
+#endif
 				_mouseOverElements.Clear();
+			}
 
 			return;
 
@@ -552,6 +592,61 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return null;
 			}
 		}
+
+#if HOVER_DEBUG
+		private Canvas? _debugCanvas;
+		private Canvas DebugCanvas
+		{
+			get
+			{
+				if(_debugCanvas == null)
+				{
+					_debugCanvas = new Canvas()
+					{
+						HorizontalAlignment = HorizontalAlignment.Stretch,
+						VerticalAlignment = VerticalAlignment.Stretch,
+					};
+					CanvasInfo.Children.Add(_debugCanvas);
+				}
+
+				return _debugCanvas;
+			}
+		}
+
+		private void ClearHoverDebug()
+		{
+			DebugCanvas.Children.Clear();
+			DebugCanvas.Width = CanvasInfo.Width;
+			DebugCanvas.Height = CanvasInfo.Height;
+		}
+
+		private void ShowHoverDebug(FrameworkElement? element, SolidColorBrush color, string text)
+		{
+			if(element == null)
+				return;
+			var scale = Helper.GetTotalScaleTransform(element);
+			var name = Helper.GetVisualParent<UserControl>(element)?.GetType().Name;
+			var border = new Border
+			{
+				BorderThickness = new Thickness(1),
+				BorderBrush = color,
+				Width = element.ActualWidth * scale.X - 2,
+				Height = element.ActualHeight * scale.Y - 2,
+				IsHitTestVisible = false,
+				Child = new TextBlock
+				{
+					Text = $"{text} ({element.GetType().Name}, {name})",
+					Background = Brushes.White,
+					VerticalAlignment = VerticalAlignment.Top,
+					HorizontalAlignment = HorizontalAlignment.Left
+				},
+			};
+			DebugCanvas.Children.Add(border);
+			var point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+			Canvas.SetTop(border, point.Y);
+			Canvas.SetLeft(border, point.X);
+		}
+#endif
 
 		private record OverlayElement()
 		{
