@@ -23,6 +23,7 @@ using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using System.Windows.Controls;
 using System.Windows.Input;
+using BobsBuddy.Anomalies;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -35,6 +36,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Anomalies;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
@@ -105,6 +107,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public BattlegroundsInspirationViewModel BattlegroundsInspirationViewModel { get; } = new();
 
 		public BattlegroundsHeroGuideListViewModel BattlegroundsHeroGuideListViewModel { get; } = new();
+		public BattlegroundsAnomalyGuideListViewModel BattlegroundsAnomalyGuideListViewModel { get; } = new();
 
 		public ConstructedMulliganGuidePreLobbyViewModel ConstructedMulliganGuidePreLobbyViewModel { get; } = new();
 		public ConstructedMulliganGuideViewModel ConstructedMulliganGuideViewModel { get; } = new();
@@ -659,6 +662,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			using var _ = OpacityMaskOverlay.StartBatchUpdate();
 			foreach(var rect in rects)
 				OpacityMaskOverlay.AddMaskedRegion("HeroPickingTooltip", rect);
+		}
+
+		public void SetMulliganAnomalyMask(Card? card)
+		{
+			OpacityMaskOverlay.RemoveMaskedRegion("MulliganAnomaly");
+
+			if(card == null)
+				return;
+
+			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
+
+			var hasAttachedCard = card.GetTag(GameTag.BACON_EVOLUTION_CARD_ID) != 0;
+
+			var rects = regionDrawer.DrawMulliganAnomalyRegions(hasAttachedCard, false);
+
+			using var _ = OpacityMaskOverlay.StartBatchUpdate();
+			foreach(var rect in rects)
+				OpacityMaskOverlay.AddMaskedRegion("MulliganAnomaly", rect);
 		}
 
 		[NotifyPropertyChangedInvocator]

@@ -41,6 +41,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 		private const double BgHeroPickTooltipHeight = 0.32;
 		private const double BgHeroPickTooltipAspectRatio = 25 / (BgHeroPickTooltipHeight * 100);
 
+		private const double AnomalyHeight = 0.45;
+		private const double AnomalyAspectRatio = 32 / (AnomalyHeight * 100);
+
 		private double Height { get; }
 		private double Width { get; }
 		private double ScreenRatio { get; }
@@ -338,6 +341,15 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 			regions.Add(rectCard);
 
 			return regions;
+		}
+
+		public IEnumerable<Rect> DrawMulliganAnomalyRegions(bool hasAttachedCard, bool isTooltip)
+		{
+			var offsetX = 0.383;
+			var offsetY = 0.16;
+			yield return DrawCardRegion(offsetX, offsetY, AnomalyHeight, AnomalyAspectRatio);
+			if(hasAttachedCard)
+				yield return DrawCardRegion(offsetX + 0.293, offsetY, AnomalyHeight, AnomalyAspectRatio);
 		}
 	}
 };

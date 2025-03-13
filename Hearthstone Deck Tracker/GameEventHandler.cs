@@ -465,6 +465,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.HideMulliganGuideStats();
 				Core.Game.Player.MulliganCardStats = null;
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
+				Core.Overlay.ResetAnomalyGuidesMulliganTrigger();
 				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 				Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
 				Core.Overlay.HideBattlegroundsHeroPanel();
@@ -622,6 +623,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 				Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
+				Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
 			}
 		}
@@ -648,6 +650,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 					Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 					Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
+					Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
 					Watchers.BattlegroundsLeaderboardWatcher.Run();
 					if(_game.IsBattlegroundsDuosMatch)
 						Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
@@ -943,7 +946,9 @@ namespace Hearthstone_Deck_Tracker
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 					Core.Overlay.BattlegroundsHeroGuideListViewModel.Reset();
+					Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Reset();
 					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
+					Core.Overlay.ResetAnomalyGuidesMulliganTrigger();
 					Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 					Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
 					Core.Overlay.HideBattlegroundsHeroPanel();
@@ -1163,6 +1168,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 				Core.Overlay.BattlegroundsSessionViewModelVM.HideCompStatsOnError();
 				Core.Overlay.BattlegroundsHeroGuideListViewModel.OnMulliganEnded();
+				Core.Overlay.ResetAnomalyGuidesMulliganTrigger();
 			}
 			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
 			{
@@ -1528,6 +1534,7 @@ namespace Hearthstone_Deck_Tracker
 
 			Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 			Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
+			Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
 
 			if(Core.Game.IsBattlegroundsDuosMatch)
 				Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
@@ -1617,6 +1624,8 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Core.Overlay.ShowBattlegroundsHeroPanel(heroIds, _game.IsBattlegroundsDuosMatch, toastParams);
 				}
+
+				Core.Overlay.SetAnomalyGuidesMulliganTrigger();
 			}
 		}
 

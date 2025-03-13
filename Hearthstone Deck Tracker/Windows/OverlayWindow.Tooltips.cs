@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
@@ -18,6 +19,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using static System.Windows.Visibility;
+using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 #endregion
 
@@ -127,11 +129,6 @@ public partial class OverlayWindow
 		var tooltipWidth = tooltipScale.X * tooltip.ActualWidth;
 		var tooltipHeight = tooltipScale.Y * tooltip.ActualHeight;
 
-		var offsetX = ToolTipService.GetHorizontalOffset(target);
-		tooltipWidth += offsetX;
-		var offsetY = ToolTipService.GetVerticalOffset(target);
-		tooltipHeight += offsetY;
-
 		// Correct placement if tooltip would go outside of window, and it fit on the other side
 		switch (placement)
 		{
@@ -157,13 +154,15 @@ public partial class OverlayWindow
 		// Hopefully the layout of the tooltip should not affect the size when swapping left/right.
 		placementAwareTooltip?.SetPlacement(placement);
 
+		var offsetX = ToolTipService.GetHorizontalOffset(target);
+		var offsetY = ToolTipService.GetVerticalOffset(target);
 
 		var (left, top) = placement switch
 		{
-			PlacementMode.Top => (targetPos.X + targetWidth / 2 - tooltipWidth / 2, targetPos.Y - tooltipHeight),
-			PlacementMode.Bottom => (targetPos.X + targetWidth / 2 - tooltipWidth / 2, targetPos.Y + targetHeight + offsetY),
-			PlacementMode.Left => (targetPos.X - tooltipWidth, targetPos.Y + targetHeight / 2 - tooltipHeight / 2),
-			PlacementMode.Right => (targetPos.X + targetWidth + offsetX, targetPos.Y + targetHeight / 2 - tooltipHeight / 2),
+			PlacementMode.Top => (targetPos.X + targetWidth / 2 - tooltipWidth / 2 + offsetX, targetPos.Y - tooltipHeight - offsetY),
+			PlacementMode.Bottom => (targetPos.X + targetWidth / 2 - tooltipWidth / 2 + offsetX, targetPos.Y + targetHeight + offsetY),
+			PlacementMode.Left => (targetPos.X - tooltipWidth - offsetX, targetPos.Y + targetHeight / 2 - tooltipHeight / 2 + offsetY),
+			PlacementMode.Right => (targetPos.X + targetWidth + offsetX, targetPos.Y + targetHeight / 2 - tooltipHeight / 2 + offsetY),
 		};
 
 		var actualLeft = Math.Max(0, Math.Min(left, ActualWidth - tooltipWidth));
@@ -194,7 +193,7 @@ public partial class OverlayWindow
 
 	public void SetHeroGuidesTrigger(int zoneSize, int zonePosition, bool tooltipOnRight, string[] cards)
 	{
-		var vm = (CardGridTooltipViewModel)HeroGuidesTrigger.DataContext;
+		var vm = (CardGridTooltipViewModel)GuidesTooltipTrigger.DataContext;
 		vm.Reset();
 
 		if(zoneSize != 4 || cards.Length == 0)
@@ -205,7 +204,7 @@ public partial class OverlayWindow
 		if(vm.Cards == null || vm.Cards.Count == 0)
 			return;
 
-		HeroGuidesTrigger.UpdateLayout();
+		GuidesTooltipTrigger.UpdateLayout();
 		UpdateHoverable();
 
 		var bgHeroPickHeroWidth = 0.165;
@@ -222,6 +221,71 @@ public partial class OverlayWindow
 		vm.Height = Height * 0.40;
 		vm.Width = Height * 0.47;
 		vm.TooltipPlacement = tooltipOnRight ? PlacementMode.Right : PlacementMode.Left;
+	}
+
+	public void SetAnomalyGuidesTrigger(string cardId)
+	{
+		var vm = (CardGridTooltipViewModel)GuidesTooltipTrigger.DataContext;
+
+		vm.Reset();
+
+		if(cardId == "")
+			return;
+
+		var card = Database.GetCardFromId(cardId);
+
+		if(card == null)
+			return;
+
+		if(card.TypeEnum != CardType.BATTLEGROUND_ANOMALY)
+			return;
+
+		vm.Cards = new List<Card> { card };
+
+		GuidesTooltipTrigger.UpdateLayout();
+		UpdateHoverable();
+
+		vm.Scale = Height / 1080;
+		vm.Left = Helper.GetScaledXPos(0.90, (int)Width, ScreenRatio);
+		vm.Top = Height * 0.33;
+		vm.Height = Height * 0.1;
+		vm.Width = Height * 0.13;
+		vm.TooltipHorizontalOffset = -340 * vm.Scale;
+		vm.TooltipVerticalOffset = 100 * vm.Scale;
+		vm.TooltipPlacement = PlacementMode.Bottom;
+	}
+
+	public void ResetAnomalyGuidesMulliganTrigger()
+	{
+		var vm = (CardGridTooltipViewModel)AnomalyGuidesMulliganTrigger.DataContext;
+		vm.Reset();
+	}
+
+	public void SetAnomalyGuidesMulliganTrigger()
+	{
+		var vm = (CardGridTooltipViewModel)AnomalyGuidesMulliganTrigger.DataContext;
+
+		vm.Reset();
+
+		var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
+		var anomalyCard = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false) : null;
+
+		if(anomalyCard is not { TypeEnum: CardType.BATTLEGROUND_ANOMALY })
+			return;
+
+		vm.Cards = new List<Card> { anomalyCard };
+
+		GuidesTooltipTrigger.UpdateLayout();
+		UpdateHoverable();
+
+		vm.Scale = Height / 1080;
+		vm.Left = Helper.GetScaledXPos(0.2803, (int)Width, ScreenRatio);
+		vm.Top = Height * 0.0825;
+		vm.Height = Height * 0.123;
+		vm.Width = Height * 0.1188;
+		vm.TooltipHorizontalOffset = -90 * vm.Scale;
+		vm.TooltipVerticalOffset = 20 * vm.Scale;
+		vm.TooltipPlacement = PlacementMode.Bottom;
 	}
 
 	public void SetRelatedCardsTrigger(BigCardState state)
@@ -378,6 +442,19 @@ public partial class OverlayWindow
 			Log.Error(e);
 		}
 	}
+
+	// This is only needed for anomaly during mulligan because there is no way to retrieve the "hover action" by memory reading it.
+	private void AnomalyGuidesMulliganTrigger_OnMouseEnter(object sender, MouseEventArgs e)
+	{
+		var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
+		var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false) : null;
+
+		SetMulliganAnomalyMask(anomalyCardId);
+	}
+	private void AnomalyGuidesMulliganTrigger_OnMouseLeave(object sender, MouseEventArgs e)
+	{
+		SetMulliganAnomalyMask(null);
+	}
 }
 
 public class CardGridTooltipViewModel : ViewModel
@@ -424,9 +501,15 @@ public class CardGridTooltipViewModel : ViewModel
 		set => SetProp(value);
 	}
 
-	public List<Hearthstone.Card>? Cards
+	public double TooltipVerticalOffset
 	{
-		get => GetProp<List<Hearthstone.Card>?>(null);
+		get => GetProp(0.0);
+		set => SetProp(value);
+	}
+
+	public List<Card>? Cards
+	{
+		get => GetProp<List<Card>?>(null);
 		set => SetProp(value);
 	}
 
@@ -437,6 +520,7 @@ public class CardGridTooltipViewModel : ViewModel
 		Top = -1;
 		Left = -1;
 		TooltipHorizontalOffset = 0;
+		TooltipVerticalOffset = 0;
 		Cards = null;
 		TooltipPlacement = PlacementMode.Top;
 	}

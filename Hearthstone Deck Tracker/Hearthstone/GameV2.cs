@@ -222,6 +222,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public bool IsBattlegroundsHeroPickingDone
+		{
+			get
+			{
+				if(!IsBattlegroundsMatch)
+					return false;
+				var player = Entities.FirstOrDefault(x => x.Value.IsPlayer);
+				if(player.Value == null)
+					return false;
+				return player.Value.GetTag(GameTag.MULLIGAN_STATE) == (int)Mulligan.DONE;
+			}
+		}
+
 		public bool Spectator => _spectator ?? (bool)(_spectator = HearthMirror.Reflection.Client.IsSpectating());
 
 		public GameMode CurrentGameMode
