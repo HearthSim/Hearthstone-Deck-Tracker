@@ -883,6 +883,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get => _mulliganCardStats;
 			set
 			{
+				if(Equals(_mulliganCardStats, value))
+					return;
 				_mulliganCardStats = value;
 				Core.UpdatePlayerCards(true);
 			}
