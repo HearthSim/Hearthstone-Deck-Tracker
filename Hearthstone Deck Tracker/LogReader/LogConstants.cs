@@ -41,6 +41,9 @@ public static class LogConstants
 		public static readonly Regex HideEntityRegex = CompileRegex(@"HIDE_ENTITY\ -\ .* id=(?<id>(\d+))");
 
 		public static readonly Regex ShuffleRegex = CompileRegex(@"SHUFFLE_DECK\ PlayerID=(?<id>(\d+))");
+
+		public static readonly Regex SubSpellStartRegex =
+			CompileRegex(@"SUB_SPELL_START - SpellPrefabGUID=(?<spellPrefabGuid>(.*)) Source=(?<source>(\d+))");
 	}
 
 	public static class Choices

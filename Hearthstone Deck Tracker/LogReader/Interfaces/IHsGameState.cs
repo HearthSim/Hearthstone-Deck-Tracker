@@ -45,6 +45,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		Dictionary<int, List<IHsChoice>> ChoicesByTaskList { get; }
 		bool TriangulatePlayed { get; set; }
 		List<int?> StarshipLauchBlockIds { get; }
-
+		List<int> PendingShaladrassils { get; }
 	}
 }

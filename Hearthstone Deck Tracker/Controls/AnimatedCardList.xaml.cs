@@ -12,16 +12,17 @@ namespace Hearthstone_Deck_Tracker.Controls
 {
 	public partial class AnimatedCardList
 	{
-		private Func<Hearthstone.Card, HighlightColor>? _shouldHighlightCard;
+		private Func<Hearthstone.Card, IEnumerable<Hearthstone.Card>, HighlightColor>? _shouldHighlightCard;
 		public ObservableCollection<AnimatedCard> AnimatedCards { get; } = new();
 
-		public Func<Hearthstone.Card, HighlightColor>? ShouldHighlightCard
+		public Func<Hearthstone.Card, IEnumerable<Hearthstone.Card>, HighlightColor>? ShouldHighlightCard
 		{
 			get => _shouldHighlightCard;
 			set
 			{
 				if(_shouldHighlightCard == value) return;
 				_shouldHighlightCard = value;
+				var cards = AnimatedCards.Where(ac => ac.Card.Count > 0).Select(ac => ac.Card).ToArray();
 				foreach (var animatedCard in AnimatedCards)
 				{
 					if(animatedCard.Card.Count <= 0 || animatedCard.Card.Jousted)
@@ -29,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 						animatedCard.ViewModel.Highlight = HighlightColor.None;
 						continue;
 					}
-					animatedCard.ViewModel.Highlight = value?.Invoke(animatedCard.Card) ?? HighlightColor.None;
+					animatedCard.ViewModel.Highlight = value?.Invoke(animatedCard.Card, cards) ?? HighlightColor.None;
 				}
 			}
 		}
@@ -88,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 					if(newCard != null)
 					{
 						var newAnimated = new AnimatedCard(newCard, ShowTier7InspirationButton && newCard.IsBaconMinion);
-						newAnimated.ViewModel.Highlight = ShouldHighlightCard?.Invoke(newCard) ?? 0;
+						newAnimated.ViewModel.Highlight = ShouldHighlightCard?.Invoke(newCard, AnimatedCards.Where(ac => ac.Card.Count > 0).Select(ac => ac.Card)) ?? 0;
 						AnimatedCards.Insert(AnimatedCards.IndexOf(card), newAnimated);
 						newAnimated.Update(true).Forget();
 						newCards.Remove(newCard);
@@ -98,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				foreach(var card in newCards)
 				{
 					var newCard = new AnimatedCard(card, ShowTier7InspirationButton && card.IsBaconMinion);
-					newCard.ViewModel.Highlight = ShouldHighlightCard?.Invoke(card) ?? 0;
+					newCard.ViewModel.Highlight = ShouldHighlightCard?.Invoke(card, AnimatedCards.Where(ac => ac.Card.Count > 0).Select(ac => ac.Card)) ?? 0;
 					AnimatedCards.Insert(cards.IndexOf(card), newCard);
 					newCard.FadeIn(!reset).Forget();
 				}

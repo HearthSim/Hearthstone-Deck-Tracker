@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Paladin;
 
@@ -16,7 +17,7 @@ public class InterstellarResearcher : ICardWithHighlight
 	};
 	public string GetCardId() => HearthDb.CardIds.Collectible.Paladin.InterstellarResearcher;
 
-	public HighlightColor ShouldHighlight(Card card) =>
+	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
 		HighlightColorHelper.GetHighlightColor(
 			_libramCardIds.Contains(card.Id));
 }

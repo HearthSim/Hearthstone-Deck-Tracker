@@ -1,3 +1,24 @@
+## **Release v1.43.1 - 2025-03-18**
+**Updated for Hearthstone 32.0**
+
+**Hearthstone**:
+- Added card highlights for *Into the Emerald Dream* and new Core cards: \
+  *Falric, Tuskpiercer, Reforestation, Grove Shaper, Broll Bearmantle, Exotic Houndmaster,
+  Redscale Dragontamer, Draconscale Armaments, Dreamwardem, Ursine Maul, Spirit Guide,
+  Rotheart Dryad, Steamcleaner, Finja the Flying Star, The Curator,  Nightmare Lord Xavius,
+  Fae Trickster, Tormented Dreadwing, Naralex Herald of the Flights*
+
+- Added Counters for *Into the Emerald Dream* and new Core cards: \
+  *Aessina, Tyrande, Aviana Elune's Chosem, Glowroot Lure, Ysondre*
+
+- Added Related Card tooltips for *Into the Emerald Dream* and new Core cards: \
+  *Nythendra, Sanguine Infestation, Infested Breath, Hideous Husk, Grim Haverst,
+  Ravenous Felhunter, Ferocious Felbat, Wyvern's Slumber, Dreadsoul Corrupter,
+  Broll Bearmantle, Spirit Gatherer, Raza the Released, Krag'wa the Frog, Merithra,
+  Archdruid of Throns, Succumb to Madness, Malorne The Waywatcher*
+
+- Added a widget that shows which minions will be back from Anachronos' effect.
+
 ## **Release v1.43.0 - 2025-03-13**
 **Battlegrounds**:
 - Added Anomaly Overlay Masking during Hero Picking\

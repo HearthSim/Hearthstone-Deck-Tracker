@@ -21,6 +21,6 @@ public class LiftOff: ICardWithRelatedCards, ICardWithHighlight
 
 	public List<Card?> GetRelatedCards(Player player) => _starshipPieces;
 
-	public HighlightColor ShouldHighlight(Card card) =>
+	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
 		HighlightColorHelper.GetHighlightColor(card.GetTag(GameTag.TERRAN) > 0);
 }

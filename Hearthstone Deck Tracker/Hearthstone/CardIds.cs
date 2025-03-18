@@ -238,7 +238,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				public static readonly MultiIdCard Ambush = new MultiIdCard(Collectible.Rogue.Ambush, Collectible.Rogue.AmbushCorePlaceholder);
 				public static readonly MultiIdCard Bamboozle = new MultiIdCard(Collectible.Rogue.Bamboozle);
-				public static readonly MultiIdCard CheatDeath = new MultiIdCard(Collectible.Rogue.CheatDeath, Collectible.Rogue.CheatDeathCorePlaceholder);
+				public static readonly MultiIdCard CheatDeath = new MultiIdCard(Collectible.Rogue.CheatDeath, Collectible.Rogue.Core2024CheatDeathCorePlaceholder);
 				public static readonly MultiIdCard DirtyTricks = new MultiIdCard(Collectible.Rogue.DirtyTricks);
 				public static readonly MultiIdCard DoubleCross = new MultiIdCard(Collectible.Rogue.DoubleCross);
 				public static readonly MultiIdCard Evasion = new MultiIdCard(Collectible.Rogue.Evasion);

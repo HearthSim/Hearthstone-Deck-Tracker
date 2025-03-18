@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.DemonHunter;
 
@@ -8,7 +9,7 @@ public class DirdraRebelCaptain: CrewmateGenerator, ICardWithRelatedCards, ICard
 
 	public bool ShouldShowForOpponent(Player opponent) => false;
 
-	public HighlightColor ShouldHighlight(Card card) =>
+	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
 		HighlightColorHelper.GetHighlightColor(Crewmates.Any(c => c?.Id == card.Id));
 
 }

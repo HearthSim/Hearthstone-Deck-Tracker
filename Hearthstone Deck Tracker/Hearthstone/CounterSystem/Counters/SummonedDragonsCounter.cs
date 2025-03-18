@@ -8,11 +8,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 public class SummonedDragonsCounter : NumericCounter
 {
 	public override string LocalizedName => LocUtil.Get("Counter_SummonedDragons", useCardLanguage: true);
-	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Priest.TimewinderZarimi;
+	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Druid.FyeTheSettingSun;
 
 	public override string[] RelatedCards => new string[]
 	{
-		HearthDb.CardIds.Collectible.Priest.TimewinderZarimi,
 		HearthDb.CardIds.Collectible.Druid.FyeTheSettingSun
 	};
 
