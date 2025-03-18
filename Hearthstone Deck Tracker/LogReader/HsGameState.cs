@@ -96,7 +96,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public Dictionary<int, List<IHsChoice>> ChoicesByTaskList { get; } = new();
 		public bool TriangulatePlayed { get; set; }
 		public List<int?> StarshipLauchBlockIds { get; } = new();
-		public List<int> PendingShaladrassils { get; } = new();
 	}
 
 	public class Block

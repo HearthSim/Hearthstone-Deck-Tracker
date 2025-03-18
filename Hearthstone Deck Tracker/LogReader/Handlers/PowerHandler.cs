@@ -1216,10 +1216,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Mage.SpiritGatherer:
 								AddKnownCardId(gameState, NonCollectible.Mage.WispTokenEMERALD_DREAM);
 								break;
-							case Collectible.Neutral.Shaladrassil:
-								if(actionStartingEntity != null)
-									gameState.PendingShaladrassils.Add(actionStartingEntityId);
-								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
@@ -1301,38 +1297,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 				gameState.BlockEnd();
 			}
-			else if(SubSpellStartRegex.IsMatch(logLine))
-			{
-				var match = SubSpellStartRegex.Match(logLine);
-				var spellPrefabGuid = match.Groups["spellPrefabGuid"].Value;
-				if(spellPrefabGuid.StartsWith("EDRFX_Shaladrassil_PortalFX")) {
-					var parentBlockSourceId = gameState.CurrentBlock?.SourceEntityId;
-					if(
-						parentBlockSourceId.HasValue &&
-						gameState.PendingShaladrassils.Contains(parentBlockSourceId.Value)
-					)
-					{
-						if(spellPrefabGuid.StartsWith("EDRFX_Shaladrassil_PortalFX_Corrupted"))
-						{
-							AddKnownCardId(gameState, NonCollectible.DreamCards.Shaladrassil_CorruptedNightmareToken);
-							AddKnownCardId(gameState, NonCollectible.DreamCards.Shaladrassil_CorruptedDreamToken);
-							AddKnownCardId(gameState, NonCollectible.DreamCards.Shaladrassil_CorruptedLaughingSisterToken);
-							AddKnownCardId(gameState, NonCollectible.DreamCards.Shaladrassil_CorruptedAwakeningToken);
-							AddKnownCardId(gameState, NonCollectible.DreamCards.Shaladrassil_CorruptedDrakeToken);
-						}
-						else
-						{
-							AddKnownCardId(gameState, NonCollectible.DreamCards.NightmareExpert1);
-							AddKnownCardId(gameState, NonCollectible.DreamCards.Dream);
-							AddKnownCardId(gameState, NonCollectible.DreamCards.LaughingSister);
-							AddKnownCardId(gameState, NonCollectible.DreamCards.YseraAwakens);
-							AddKnownCardId(gameState, NonCollectible.DreamCards.EmeraldDrake);
-						}
-						gameState.PendingShaladrassils.Remove(parentBlockSourceId.Value);
-					}
-				}
-			}
-
 
 			if(game.IsInMenu)
 				return;
