@@ -760,6 +760,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(5)]
 		public double SecretsTop = 5;
 
+		[DefaultValue(40)]
+		public double SecretsPanelHeight = 40;
+
 		[DefaultValue(new[] {HeroClassAll.All})]
 		public HeroClassAll[] SelectedDeckPickerClasses = {HeroClassAll.All};
 

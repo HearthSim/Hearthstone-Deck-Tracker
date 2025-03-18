@@ -218,7 +218,11 @@
                 <overlay:LinkOpponentDeckPanel x:Name="LinkOpponentDeckDisplay" Width="218" Visibility="Hidden" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
                     ext:OverlayExtensions.IsOverlayHoverVisible="True" MouseEnter="LinkOpponentDeckDisplay_MouseEnter" MouseLeave="LinkOpponentDeckDisplay_MouseLeave" />
 
-                <StackPanel Name="StackPanelSecrets" Width="217" Height="auto" Visibility="Collapsed" />
+                <Border Name="SecretsContainer" Height="{Binding SecretsHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Visibility="Hidden">
+                    <StackPanel  utility:CardListHelper.AutoScaleCardTiles="True">
+                        <controls:AnimatedCardList x:Name="CardListSecrets" Width="217" />
+                    </StackPanel>
+                </Border>
 
                 <controls:CardMarker x:Name="Marks0" Width="36" ZonePosition="1" />
                 <controls:CardMarker x:Name="Marks1" Width="36" ZonePosition="2" />

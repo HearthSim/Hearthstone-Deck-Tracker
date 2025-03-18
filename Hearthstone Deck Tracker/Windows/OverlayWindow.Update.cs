@@ -152,7 +152,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			StackPanelPlayer.Opacity = Config.Instance.PlayerOpacity / 100;
 			StackPanelOpponent.Opacity = Config.Instance.OpponentOpacity / 100;
-			StackPanelSecrets.Opacity = Config.Instance.SecretsOpacity / 100;
+			SecretsContainer.Opacity = Config.Instance.SecretsOpacity / 100;
 			Opacity = Config.Instance.OverlayOpacity / 100;
 
 			var inBattlegrounds = _game.IsBattlegroundsMatch || Core.Game.CurrentMode == Mode.BACON;
@@ -518,7 +518,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 																  Config.Instance.OverlayPlayerScaling / 100);
 			StackPanelOpponent.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
 																	Config.Instance.OverlayOpponentScaling / 100);
-			StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
+			SecretsContainer.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
 			LinkOpponentDeckDisplay.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
 																	Config.Instance.OverlayOpponentScaling / 100);
 			BattlegroundsSession.RenderTransform = new ScaleTransform(Config.Instance.OverlaySessionRecapScaling / 100,
@@ -547,8 +547,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(BorderStackPanelPlayer, Width * Config.Instance.PlayerDeckLeft / 100 - StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
 			Canvas.SetTop(BorderStackPanelOpponent, BorderStackPanelOpponentTop);
 			Canvas.SetLeft(BorderStackPanelOpponent, Width * Config.Instance.OpponentDeckLeft / 100);
-			Canvas.SetTop(StackPanelSecrets, Height * Config.Instance.SecretsTop / 100);
-			Canvas.SetLeft(StackPanelSecrets, Width * Config.Instance.SecretsLeft / 100);
+			Canvas.SetTop(SecretsContainer, Height * Config.Instance.SecretsTop / 100);
+			Canvas.SetLeft(SecretsContainer, Width * Config.Instance.SecretsLeft / 100);
 			Canvas.SetTop(LblTurnTime, Height * Config.Instance.TimersVerticalPosition / 100 - 5);
 			Canvas.SetLeft(LblTurnTime, Width * Config.Instance.TimersHorizontalPosition / 100);
 			Canvas.SetTop(LblOpponentTurnTime, Height * Config.Instance.TimersVerticalPosition / 100 - Config.Instance.TimersVerticalSpacing);
@@ -615,6 +615,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			OnPropertyChanged(nameof(PlayerStackHeight));
 			OnPropertyChanged(nameof(OpponentStackHeight));
+			OnPropertyChanged(nameof(SecretsHeight));
 			OnPropertyChanged(nameof(BattlegroundsTileHeight));
 			OnPropertyChanged(nameof(BattlegroundsTileWidth));
 

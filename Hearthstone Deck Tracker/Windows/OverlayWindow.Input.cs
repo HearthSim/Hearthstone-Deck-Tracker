@@ -81,22 +81,28 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 					return;
 				}
+
+				if(border.Equals(SecretsContainer))
+				{
+					if(_resizeElement)
+					{
+						Config.Instance.SecretsPanelHeight += delta.Y / Height;
+						_movableElements[border].Height = Height * Config.Instance.SecretsPanelHeight / 100;
+						OnPropertyChanged(nameof(SecretsHeight));
+					}
+					else
+					{
+						Config.Instance.SecretsTop += delta.Y / Height * Config.Instance.SecretsPanelScaling;
+						Config.Instance.SecretsLeft += delta.X / Width * Config.Instance.SecretsPanelScaling;
+						Canvas.SetTop(_movableElements[SecretsContainer], Height * Config.Instance.SecretsTop / 100);
+						Canvas.SetLeft(_movableElements[SecretsContainer], Width * Config.Instance.SecretsLeft / 100);
+					}
+				}
 			}
 
 
 			if(_selectedUiElement is Panel panel)
 			{
-				if(panel.Equals(StackPanelSecrets))
-				{
-					if(!_resizeElement)
-					{
-						Config.Instance.SecretsTop += delta.Y / Height * Config.Instance.SecretsPanelScaling;
-						Config.Instance.SecretsLeft += delta.X / Width * Config.Instance.SecretsPanelScaling;
-						Canvas.SetTop(_movableElements[panel], Height * Config.Instance.SecretsTop / 100);
-						Canvas.SetLeft(_movableElements[panel], Width * Config.Instance.SecretsLeft / 100);
-					}
-				}
-
 				if(panel.Equals(BattlegroundsSessionStackPanel))
 				{
 					if(!_resizeElement)
@@ -282,14 +288,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				else
 				{
-					if (StackPanelSecrets.Visibility != Visibility.Visible)
+					if (SecretsContainer.Visibility != Visibility.Visible)
 					{
 						_secretsTempVisible = true;
 						var secrets = CardIds.Secrets.Mage.All.Select(x => Database.GetCardFromId(x.Ids[0]))
 							.WhereNotNull().ToList();
-						ShowSecrets(secrets, true);
-						//need to wait for panel to actually show up
-						await Task.Delay(50);
+						await ShowSecrets(secrets, true);
 					}
 					if(LblTurnTime.Visibility != Visibility.Visible)
 						ShowTimers();
@@ -350,10 +354,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 							}
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width * Config.Instance.OverlayOpponentScaling / 100 : 0;
 						}
-						else if(movableElement.Key == StackPanelSecrets)
+						else if(movableElement.Key == SecretsContainer)
 						{
-							movableElement.Value.Height = StackPanelSecrets.ActualHeight > 0 ? StackPanelSecrets.ActualHeight : 0;
-							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width : 0;
+							movableElement.Value.Height = SecretsContainer.ActualHeight > 0 ? SecretsContainer.ActualHeight * Config.Instance.SecretsPanelScaling : 0;
+							movableElement.Value.Width = SecretsContainer.ActualWidth > 0 ? SecretsContainer.ActualWidth * Config.Instance.SecretsPanelScaling : 0;
 						}
 						else if(movableElement.Key == BattlegroundsSessionStackPanel)
 						{

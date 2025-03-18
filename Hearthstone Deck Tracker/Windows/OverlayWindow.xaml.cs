@@ -354,6 +354,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			=> Config.Instance.OverlayCenterPlayerStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
 
 		public double OpponentStackHeight => (Config.Instance.OpponentDeckHeight / 100 * Height) / (Config.Instance.OverlayOpponentScaling / 100);
+		public double SecretsHeight => (Config.Instance.SecretsPanelHeight / 100 * Height) / Config.Instance.SecretsPanelScaling;
 
 		public VerticalAlignment OpponentStackPanelAlignment
 			=> Config.Instance.OverlayCenterOpponentStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
@@ -465,25 +466,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 				LblPlayerTurnTime.Visibility = LblOpponentTurnTime.Visibility = LblTurnTime.Visibility
 				= (Config.Instance.HideTimers || _game.IsBattlegroundsMatch || _game.IsMercenariesMatch) ? Hidden : Visible;
 
-		public void ShowSecrets(List<Card> secrets, bool force = false)
+		public async Task ShowSecrets(List<Card> secrets, bool force = false)
 		{
 			if((Config.Instance.HideSecrets || _game.IsBattlegroundsMatch) && !force)
 				return;
 
-			StackPanelSecrets.Children.Clear();
+			if(Config.Instance.RemoveSecretsFromList)
+				secrets = secrets.Where(x => x.Count > 0).ToList();
 
-			foreach(var secret in secrets)
-			{
-				if(secret.Count <= 0 && Config.Instance.RemoveSecretsFromList)
-					continue;
-				StackPanelSecrets.Children.Add(new CardTile { DataContext = new CardTileViewModel(secret) });
-			}
-
-			StackPanelSecrets.Visibility = Visible;
+			var animate = secrets.Count > 0 && CardListSecrets.AnimatedCards.Count > 0;
+			var update = CardListSecrets.Update(secrets, !animate);
+			SecretsContainer.Visibility = Visible;
+			await update;
 		}
 
-		public void HideSecrets() => StackPanelSecrets.Visibility = Collapsed;
-		public void UnhideSecrects() => StackPanelSecrets.Visibility = Visible;
+		public void HideSecrets() => SecretsContainer.Visibility = Hidden;
+
+		public void UnhideSecrects() => SecretsContainer.Visibility = Visible;
 
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{

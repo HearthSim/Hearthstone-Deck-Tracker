@@ -130,7 +130,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 			_movableElements.Add(BorderStackPanelPlayer, new ResizeGrip());
 			_movableElements.Add(BorderStackPanelOpponent, new ResizeGrip());
-			_movableElements.Add(StackPanelSecrets, new ResizeGrip());
+			_movableElements.Add(SecretsContainer, new ResizeGrip());
 			_movableElements.Add(LblTurnTime, new ResizeGrip());
 			_movableElements.Add(IconBoardAttackPlayer, new ResizeGrip());
 			_movableElements.Add(IconBoardAttackOpponent, new ResizeGrip());
