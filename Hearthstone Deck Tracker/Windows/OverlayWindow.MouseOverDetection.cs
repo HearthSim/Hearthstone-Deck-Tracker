@@ -456,22 +456,45 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private HashSet<FrameworkElement> _mouseOverElements = new();
 
+		private class ElementCache<T>
+		{
+			private readonly TimeSpan _maxAge;
+			private DateTime _cacheDate = DateTime.MinValue;
+			public readonly Dictionary<FrameworkElement, T> Dict = new();
 
-		private Dictionary<FrameworkElement, Vector> _scaleCache = new();
+			public ElementCache(TimeSpan maxAge) => _maxAge = maxAge;
+
+			public bool IsInvalid => DateTime.Now.Subtract(_cacheDate) > _maxAge;
+
+			public void Clear()
+			{
+				Dict.Clear();
+				_cacheDate = DateTime.Now;
+			}
+		}
+
+		// Scale should rarely ever change. This can most likely be indefinite, but updating it once a second is cheap enough.
+		private readonly ElementCache<Vector> _scaleCache = new(TimeSpan.FromSeconds(1));
+
+		// Transforms (element positions relative to overlay), while they will rarely change, they will change sometimes,
+		// e.g. when scrolling a card list, and we need to react somewhat fast.
+		private readonly ElementCache<Point> _transformCache = new(TimeSpan.FromMilliseconds(200));
+
 		private void UpdateHoverable()
 		{
 			var cursorPos = GetCursorPos();
 			if(cursorPos == null)
 				return;
 
-			_scaleCache.Clear();
+			if(_scaleCache.IsInvalid)
+				_scaleCache.Clear();
+			if(_transformCache.IsInvalid)
+				_transformCache.Clear();
 
-			var clickableMouseOver = _clickableElements.Where(e => ElementContains(e, (Point)cursorPos, _scaleCache)).ToList();
+			var clickableMouseOver = _clickableElements.Where(e => ElementContains(e, (Point)cursorPos, _scaleCache.Dict, _transformCache.Dict)).ToList();
 			SetClickthrough(clickableMouseOver.Count == 0);
 
-			var hoverableMouseOver = _hoverableElements.Where(x => x.IsVisible && ElementContains(x, (Point)cursorPos, _scaleCache)).ToList();
-
-			// for every previously mouse overed element, if it is no longer hovered, emit a MouseLeaveEvent
+			var hoverableMouseOver = _hoverableElements.Where(x => ElementContains(x, (Point)cursorPos, _scaleCache.Dict, _transformCache.Dict)).ToList();
 
 #if HOVER_DEBUG
 			ClearHoverDebug();
@@ -697,12 +720,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 				   && rotated.Y < rectCorner.Y + rect.Height;
 		}
 
-		public bool ElementContains(FrameworkElement element, Point location, Dictionary<FrameworkElement, Vector>? scaleCache = null)
+		public bool ElementContains(FrameworkElement element, Point location, Dictionary<FrameworkElement, Vector>? scaleCache = null, Dictionary<FrameworkElement, Point>? transformCache = null)
 		{
-			if(!element.IsVisible)
+			if(!element.IsVisible || !element.IsLoaded || element.ActualWidth <= 0 || element.ActualHeight <= 0)
 				return false;
-			var parent = VisualTreeHelper.GetParent(element) as FrameworkElement;
-			if(parent == null)
+			if(VisualTreeHelper.GetParent(element) is not FrameworkElement)
 				return false;
 
 			var scale = scaleCache == null ? Helper.GetTotalScaleTransform(element)
@@ -710,7 +732,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			try
 			{
-				var point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+				Point point;
+				if(transformCache == null)
+				{
+					point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+				}
+				else
+				{
+					if(!transformCache.TryGetValue(element, out point))
+					{
+						point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+						transformCache[element] = point;
+					}
+				}
 				var contains= location.X > point.X && location.X < point.X + element.ActualWidth * scale.X && location.Y > point.Y
 					   && location.Y < point.Y + element.ActualHeight * scale.Y;
 				return contains;

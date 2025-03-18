@@ -70,6 +70,9 @@
 
         <Grid Visibility="{Binding IsPreRendered, Converter={StaticResource InverseBoolToVisibility}}">
             <Border BorderBrush="#000000" BorderThickness="1" Background="#313131">
+                <Border.CacheMode>
+                    <BitmapCache RenderAtScale="2"/>
+                </Border.CacheMode>
                 <DockPanel Name="Content">
                     <!-- Cost -->
                     <Border DockPanel.Dock="Left" BorderThickness="0,0,1,0" BorderBrush="#000000"
