@@ -1,5 +1,6 @@
 ## Unreleased
 **Hearthstone**:
+- Changed when Player's Protoss minions discount counter is shown, now it won't appear if there is no minion to benefit from it.
 - Made the new Fatigue counter appear more appropriately for the opponent.
 - Removed the old Fatigue counter from the deck lists.
 - Fixed a potential crash when resizing the decks after unlocking the overlay.

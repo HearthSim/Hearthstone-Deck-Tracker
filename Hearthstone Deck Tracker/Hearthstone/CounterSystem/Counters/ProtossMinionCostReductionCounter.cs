@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility;
@@ -11,6 +13,8 @@ public class ProtossMinionCostReductionCounter : NumericCounter
 	public override string LocalizedName => LocUtil.Get("Counter_ProtossMinionCostReduction", useCardLanguage: true);
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Invalid.PhotonCannon;
 
+	private readonly Lazy<string[]> _protossMinions;
+
 	public override string[] RelatedCards => new string[]
 	{
 		HearthDb.CardIds.Collectible.Priest.Sentry,
@@ -20,13 +24,19 @@ public class ProtossMinionCostReductionCounter : NumericCounter
 
 	public ProtossMinionCostReductionCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
+		_protossMinions = new Lazy<string[]>(() =>
+			HearthDb.Cards.Collectible.Values
+				.Where(c => c.Entity.GetTag(GameTag.PROTOSS) > 0 && c.Type == CardType.MINION)
+				.Select(c => c.Id)
+				.ToArray()
+		);
 	}
 
 	public override bool ShouldShow()
 	{
 		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
-			return Counter > 0 || InPlayerDeckOrKnown(RelatedCards);
+			return Counter > 0 || InPlayerDeckOrKnown(_protossMinions.Value);
 		return Counter > 0 && OpponentMayHaveRelevantCards();
 	}
 
