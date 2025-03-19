@@ -46,7 +46,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					if(_resizeElement)
 					{
-						Config.Instance.PlayerDeckHeight += delta.Y / Height;
+						Config.Instance.PlayerDeckHeight = Math.Max(
+							Config.Instance.PlayerDeckHeight + delta.Y / Height,
+							5
+						);
 						_movableElements[border].Height = Height * Config.Instance.PlayerDeckHeight / 100;
 						OnPropertyChanged(nameof(PlayerStackHeight));
 					}
@@ -67,7 +70,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					if(_resizeElement)
 					{
-						Config.Instance.OpponentDeckHeight += delta.Y / Height;
+						Config.Instance.OpponentDeckHeight = Math.Max(
+							Config.Instance.OpponentDeckHeight + delta.Y / Height,
+							5
+						);
 						_movableElements[border].Height = Height * Config.Instance.OpponentDeckHeight / 100;
 						OnPropertyChanged(nameof(OpponentStackHeight));
 					}
@@ -86,7 +92,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					if(_resizeElement)
 					{
-						Config.Instance.SecretsPanelHeight += delta.Y / Height;
+						Config.Instance.SecretsPanelHeight = Math.Max(
+							Config.Instance.SecretsPanelHeight + delta.Y / Height,
+							5
+						);
 						_movableElements[border].Height = Height * Config.Instance.SecretsPanelHeight / 100;
 						OnPropertyChanged(nameof(SecretsHeight));
 					}
