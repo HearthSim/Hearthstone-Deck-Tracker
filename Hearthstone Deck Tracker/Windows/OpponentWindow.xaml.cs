@@ -97,9 +97,6 @@ namespace Hearthstone_Deck_Tracker
 					case DeckPanel.CardCounter:
 						StackPanelMain.Children.Add(CanvasOpponentCount);
 						break;
-					case DeckPanel.Fatigue:
-						StackPanelMain.Children.Add(LblOpponentFatigue);
-						break;
 					case DeckPanel.Winrate:
 						StackPanelMain.Children.Add(LblWinRateAgainst);
 						break;
@@ -116,27 +113,11 @@ namespace Hearthstone_Deck_Tracker
 			var fatigueDamage = Math.Max(_game.Opponent.Fatigue + 1, 1);
 			if(cardsLeftInDeck <= 0)
 			{
-				LblOpponentFatigue.Text = string.Format(
-					LocUtil.Get("Overlay_DeckList_Label_FatigueNextDraw"),
-					fatigueDamage
-				);
-
 				LblOpponentDrawChance2.Text = "0%";
 				LblOpponentDrawChance1.Text = "0%";
 				LblOpponentHandChance2.Text = cardCount <= 0 ? "0%" : "100%";
 				LblOpponentHandChance1.Text = cardCount <= 0 ? "0%" : "100%";
 				return;
-			}
-			else if(fatigueDamage > 1 || WotogCounterHelper.ShowOpponentFatigueCounter)
-			{
-				LblOpponentFatigue.Text = string.Format(
-					LocUtil.Get("Overlay_DeckList_Label_FatigueDamage"),
-					fatigueDamage
-				);
-			}
-			else
-			{
-				LblOpponentFatigue.Text = "";
 			}
 
 			var handWithoutCoin = cardCount - (opponentHasCoin ? 1 : 0);
@@ -155,7 +136,7 @@ namespace Hearthstone_Deck_Tracker
 		public double OpponentDeckMaxHeight =>  ActualHeight - OpponentLabelsHeight;
 
 		public double OpponentLabelsHeight => CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight
-			+ LblOpponentFatigue.ActualHeight + LblWinRateAgainst.ActualHeight + 42;
+			+ LblWinRateAgainst.ActualHeight + 42;
 
 		private void OpponentWindow_OnSizeChanged(object sender, SizeChangedEventArgs e) => OnPropertyChanged(nameof(OpponentDeckMaxHeight));
 

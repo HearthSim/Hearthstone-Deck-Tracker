@@ -283,8 +283,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if (battlegroundsMode)
 				{
 					Config.Instance.HideDecksInOverlay = true;
-					Config.Instance.HidePlayerFatigueCount = true;
-					Config.Instance.HideOpponentFatigueCount = true;
 				}
 				else
 				{
@@ -386,8 +384,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(battlegroundsMode)
 				{
 					Config.Instance.HideDecksInOverlay = false;
-					Config.Instance.HidePlayerFatigueCount = false;
-					Config.Instance.HideOpponentFatigueCount = false;
 				}
 				UnHookMouse();
 				if (_secretsTempVisible)

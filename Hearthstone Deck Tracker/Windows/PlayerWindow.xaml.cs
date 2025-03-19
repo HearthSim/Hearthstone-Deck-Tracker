@@ -79,7 +79,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			CanvasPlayerCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
-			LblPlayerFatigue.Visibility = Config.Instance.HidePlayerFatigueCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
 
 			LblWins.Visibility = Config.Instance.ShowDeckWins && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
@@ -124,9 +123,6 @@ namespace Hearthstone_Deck_Tracker
 					case DeckPanel.DrawChances:
 						StackPanelMain.Children.Add(CanvasPlayerChance);
 						break;
-					case DeckPanel.Fatigue:
-						StackPanelMain.Children.Add(LblPlayerFatigue);
-						break;
 					case DeckPanel.DeckTitle:
 						StackPanelMain.Children.Add(LblDeckTitle);
 						break;
@@ -145,24 +141,9 @@ namespace Hearthstone_Deck_Tracker
 			var fatigueDamage = Math.Max(_game.Player.Fatigue + 1, 1);
 			if(cardsLeftInDeck <= 0)
 			{
-				LblPlayerFatigue.Text = string.Format(
-					LocUtil.Get("Overlay_DeckList_Label_FatigueNextDraw"),
-					fatigueDamage
-				);
 				LblDrawChance2.Text = "0%";
 				LblDrawChance1.Text = "0%";
 				return;
-			}
-			else if(fatigueDamage > 1 || WotogCounterHelper.ShowPlayerFatigueCounter)
-			{
-				LblPlayerFatigue.Text = string.Format(
-					LocUtil.Get("Overlay_DeckList_Label_FatigueDamage"),
-					fatigueDamage
-				);
-			}
-			else
-			{
-				LblPlayerFatigue.Text = "";
 			}
 
 			LblDrawChance2.Text = Math.Round(200.0f / cardsLeftInDeck, 1) + "%";

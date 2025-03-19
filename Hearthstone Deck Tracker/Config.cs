@@ -424,9 +424,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool HideOpponentDrawChances = true;
 
 		[DefaultValue(false)]
-		public bool HideOpponentFatigueCount = false;
-
-		[DefaultValue(false)]
 		public bool HideOverlay = false;
 
 		[DefaultValue(false)]
@@ -494,9 +491,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool HidePlayerSideboards = false;
-
-		[DefaultValue(false)]
-		public bool HidePlayerFatigueCount = false;
 
 		[DefaultValue(false)]
 		public bool HideSecrets = false;
@@ -661,11 +655,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool OverlayCenterOpponentStackPanel = false;
 
-		[DefaultValue(new[] { DeckPanel.Winrate, DeckPanel.Cards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue })]
-		public DeckPanel[] DeckPanelOrderOpponent = { DeckPanel.Winrate, DeckPanel.Cards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue };
+		[DefaultValue(new[] { DeckPanel.Winrate, DeckPanel.Cards, DeckPanel.CardCounter, DeckPanel.DrawChances })]
+		public DeckPanel[] DeckPanelOrderOpponent = { DeckPanel.Winrate, DeckPanel.Cards, DeckPanel.CardCounter, DeckPanel.DrawChances };
 
-		[DefaultValue(new[] { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.Sideboards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue })]
-		public DeckPanel[] DeckPanelOrderLocalPlayer = { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.Sideboards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue };
+		[DefaultValue(new[] { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.Sideboards, DeckPanel.CardCounter, DeckPanel.DrawChances })]
+		public DeckPanel[] DeckPanelOrderLocalPlayer = { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.Sideboards, DeckPanel.CardCounter, DeckPanel.DrawChances };
 
 		[DefaultValue(88)]
 		public double PlayerDeckHeight = 88;

@@ -155,24 +155,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 			Config.Instance.OpponentExcavateCounter == DisplayMode.Always ||
 			(Config.Instance.OpponentExcavateCounter == DisplayMode.Auto && (Core.Game.OpponentEntity?.GetTag((GameTag)2822) ?? 0) > 0);
 
-		public static bool ShowPlayerFatigueCounter =>
-			InDeckOrKnown(new[]
-			{
-				CardIds.Collectible.Warlock.BaritoneImp,
-				CardIds.Collectible.Warlock.CrazedConductor,
-				CardIds.Collectible.Warlock.Crescendo,
-				CardIds.Collectible.Warlock.EncroachingInsanity,
-				CardIds.NonCollectible.Warlock.CurseofAgony_AgonyToken,
-			});
-
-		public static bool ShowOpponentFatigueCounter =>
-			InDeckOrKnown(new[]
-			{
-				// Note: this is inspecting the friendly deck, not the opposing deck
-				CardIds.Collectible.Warlock.EncroachingInsanity,
-				CardIds.Collectible.Warlock.CurseOfAgony,
-			});
-
 		private static bool InDeckOrKnown(string cardId)
 		{
 			var contains = DeckContains(cardId);

@@ -53,7 +53,6 @@
                 <local:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25"/>
                 <local:HearthstoneTextBlock x:Name="LblOpponentHandChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25"/>
             </Canvas>
-                <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

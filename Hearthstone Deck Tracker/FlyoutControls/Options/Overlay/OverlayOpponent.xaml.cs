@@ -124,7 +124,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 					Enums.DeckPanel.Cards => new ElementSorterItem(panel, !cfg.HideOpponentCards, value => cfg.HideOpponentCards = !value, false, move),
 					Enums.DeckPanel.CardCounter => new ElementSorterItem(panel, !cfg.HideOpponentCardCount, value => cfg.HideOpponentCardCount = !value, false, move),
 					Enums.DeckPanel.DrawChances => new ElementSorterItem(panel, !cfg.HideOpponentDrawChances, value => cfg.HideOpponentDrawChances = !value, false, move),
-					Enums.DeckPanel.Fatigue => new ElementSorterItem(panel, !cfg.HideOpponentFatigueCount, value => cfg.HideOpponentFatigueCount = !value, false, move),
 					_ => null
 				};
 				if(item != null)

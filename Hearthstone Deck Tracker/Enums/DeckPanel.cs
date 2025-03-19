@@ -10,8 +10,6 @@ namespace Hearthstone_Deck_Tracker.Enums
 		CardCounter,
 		[LocDescription("Enum_DeckPanel_DrawChances")]
 		DrawChances,
-		[LocDescription("Enum_DeckPanel_Fatigue")]
-		Fatigue,
 		[LocDescription("Enum_DeckPanel_DeckTitle")]
 		DeckTitle,
 		[LocDescription("Enum_DeckPanel_Wins")]

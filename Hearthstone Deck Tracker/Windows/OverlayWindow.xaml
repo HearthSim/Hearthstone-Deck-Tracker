@@ -192,7 +192,6 @@
                             <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25" />
                             <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25" />
                         </Canvas>
-                        <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
                     </StackPanel>
                 </Border>
                 <Border Name="BorderStackPanelOpponent" Canvas.Top="203" Canvas.Left="10" Height="{Binding OpponentStackHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
@@ -212,7 +211,6 @@
                             <local:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25" />
                             <local:HearthstoneTextBlock x:Name="LblOpponentHandChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25" />
                         </Canvas>
-                        <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
                     </StackPanel>
                 </Border>
                 <overlay:LinkOpponentDeckPanel x:Name="LinkOpponentDeckDisplay" Width="218" Visibility="Hidden" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
