@@ -1,4 +1,5 @@
-﻿using HearthDb.Enums;
+﻿using System.Linq;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
@@ -19,6 +20,15 @@ public class FatigueCounter : NumericCounter
 		HearthDb.CardIds.NonCollectible.Warlock.CurseofAgony_AgonyToken
 	};
 
+	/**
+	 * If these cards are in the *friendly* deck they should show the *opponent's* counter.
+	 */
+	public string[] RelatedCardsForOpponent => new string[]
+	{
+		HearthDb.CardIds.Collectible.Warlock.EncroachingInsanity,
+		HearthDb.CardIds.Collectible.Warlock.CurseOfAgony,
+	};
+
 	public FatigueCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
@@ -28,14 +38,16 @@ public class FatigueCounter : NumericCounter
 		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
 			return Counter > 0 || InPlayerDeckOrKnown(RelatedCards);
-		return Counter > 0;
+		return Counter > 0 || InPlayerDeckOrKnown(RelatedCardsForOpponent);
 	}
 
 	public override string[] GetCardsToDisplay()
 	{
 		return IsPlayerCounter ?
 			GetCardsInDeckOrKnown(RelatedCards).ToArray() :
-			FilterCardsByClassAndFormat(RelatedCards, Game.Opponent.OriginalClass);
+			GetCardsInDeckOrKnown(RelatedCardsForOpponent).Concat(
+				FilterCardsByClassAndFormat(RelatedCards, Game.Opponent.OriginalClass)
+			).ToArray();
 	}
 
 	public override string ValueToShow() => (Counter + 1).ToString();

@@ -1,3 +1,7 @@
+## Unreleased
+**Hearthstone**:
+- Made the new Fatigue counter appear more appropriately for the opponent.
+
 ## **Release v1.43.1 - 2025-03-18**
 **Updated for Hearthstone 32.0**
 
