@@ -105,6 +105,7 @@ partial class OverlayExtensions
 			OnToolTipChanged?.Invoke(null, d);
 	}
 
+	private const string FallbackTooltipName = "OverlayFallbackTooltip";
 	private static void OnElementLoaded(object sender, RoutedEventArgs e)
 	{
 		if(sender is not FrameworkElement element)
@@ -116,6 +117,7 @@ partial class OverlayExtensions
 		ToolTipService.SetShowDuration(element, 60_000);
 		var tooltip = new ToolTip
 		{
+			Name = FallbackTooltipName,
 			Background = Brushes.Transparent,
 			BorderBrush = Brushes.Transparent
 		};
@@ -189,5 +191,11 @@ partial class OverlayExtensions
 		if(_elementIsInOverlay.TryGetValue(d, out var isInOverlay) && isInOverlay)
 			OnToolTipChanged?.Invoke(null, d);
 		_elementIsInOverlay.Remove(d);
+
+		// AnimatedCards are re-used from a pool for performance reasons, and may "move" between
+		// overlay and non-overlay components. To avoid duplicate tooltips we need to clear
+		// the fallback tooltip when the element is unloaded.
+		if(d is FrameworkElement { ToolTip: ToolTip { Name: FallbackTooltipName } } element)
+			element.ToolTip = null;
 	}
 }
