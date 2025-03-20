@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 				}
 				catch(Exception)
 				{
-					MessageBox.Show("Another instance of Hearthstone Deck Tracker is already running.", 
+					MessageBox.Show("Another instance of Hearthstone Deck Tracker is already running.",
 						"Error starting Hearthstone Deck Tracker", MessageBoxButton.OK, MessageBoxImage.Error);
 					Application.Current.Shutdown();
 					return;
@@ -154,9 +154,31 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 			=> WriteLine(msg, LogType.Warning, memberName, sourceFilePath);
 
 		public static void Error(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
-			=> WriteLine(msg, LogType.Error, memberName, sourceFilePath);
+		{
+			WriteLine(msg, LogType.Error, memberName, sourceFilePath);
+#if DEBUG
+			// For visibility of potential issues we are breaking here in debug mode.
+			// Take a look at the call stack and see how you got here.
+			//
+			// You want to ensure this issue does not affect production, and/or fix it.
+			// Alternatively consider changing the Log.Error() call to Log.Warn(), if this is not a serious issue.
+			if(Debugger.IsAttached)
+				Debugger.Break();
+#endif
+		}
 
 		public static void Error(Exception ex, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
-			=> WriteLine(ex.ToString(), LogType.Error, memberName, sourceFilePath);
+		{
+			WriteLine(ex.ToString(), LogType.Error, memberName, sourceFilePath);
+#if DEBUG
+			// For visibility of potential issues we are breaking here in debug mode.
+			// Take a look at the call stack and see how you got here.
+			//
+			// You want to ensure this issue does not affect production, and/or fix it.
+			// Alternatively consider changing the Log.Error() call to Log.Warn(), if this is not a serious issue.
+			if(Debugger.IsAttached)
+				Debugger.Break();
+#endif
+		}
 	}
 }
