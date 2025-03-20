@@ -41,23 +41,12 @@ public partial class AnimatedCardList
 		get => _shouldHighlightCard;
 		set
 		{
-			if(_shouldHighlightCard == value) return;
+			if(_shouldHighlightCard == value)
+				return;
 			_shouldHighlightCard = value;
-			var cards = AnimatedCards.Where(ac => ac.Card?.Count > 0).Select(ac => ac.Card!).ToArray();
-			foreach (var animatedCard in AnimatedCards)
-			{
-				if(animatedCard.Card == null || animatedCard.CardTileViewModel == null)
-					continue;
-				if(animatedCard.Card.Count <= 0 || animatedCard.Card.Jousted)
-				{
-					animatedCard.CardTileViewModel.Highlight = HighlightColor.None;
-					continue;
-				}
-				animatedCard.CardTileViewModel.Highlight = value?.Invoke(animatedCard.Card, cards) ?? HighlightColor.None;
-			}
+			UpdateHighlights();
 		}
 	}
-
 
 	private Task? _activeUpdate;
 	private object? _pendingUpdate;
@@ -165,6 +154,12 @@ public partial class AnimatedCardList
 			// don't hit any weird race conditions that cause this to permanently block.
 			await Task.WhenAny(Task.WhenAll(loadedTasks), Task.Delay(100));
 
+			if(newCards.Count > 0)
+			{
+				// Defer until all new cards are added/removed so that we have the full list of current cards
+				UpdateHighlights();
+			}
+
 			// When reset=true, and initial set of cards is loaded, there may not be an actual resize event
 			// after the cards have loaded. To ensure CardListHelper is able to handle the initial render
 			// correctly we manually emit a size change event here.
@@ -184,11 +179,6 @@ public partial class AnimatedCardList
 		animatedCard.Update(card, ShowTier7InspirationButton && card.IsBaconMinion);
 		animatedCard.MaxHeight = ViewModel.MaxHeightCard;
 		animatedCard.SetBinding(MaxHeightProperty, new Binding("MaxHeightCard") { Source = ViewModel });
-
-		// @cleanup we should find a better way so set Highlight
-		if(animatedCard.CardTileViewModel != null)
-			animatedCard.CardTileViewModel.Highlight = ShouldHighlightCard?.Invoke(card, AnimatedCards.Where(ac => ac.Card?.Count > 0).Select(ac => ac.Card!)) ?? 0;
-
 		return animatedCard;
 	}
 
@@ -198,6 +188,34 @@ public partial class AnimatedCardList
 			await card.FadeOut(card.Card.Count > 0);
 		_animatedCardPool.Return(card);
 		AnimatedCards.Remove(card);
+	}
+
+	private void UpdateHighlights()
+	{
+		if(ShouldHighlightCard == null)
+		{
+			foreach(var animatedCard in AnimatedCards)
+			{
+				if(animatedCard.CardTileViewModel == null)
+					continue;
+				animatedCard.CardTileViewModel.Highlight = HighlightColor.None;
+			}
+		}
+		else
+		{
+			var cards = AnimatedCards.Where(ac => ac.Card?.Count > 0).Select(ac => ac.Card!).ToList();
+			foreach (var animatedCard in AnimatedCards)
+			{
+				if(animatedCard.Card == null || animatedCard.CardTileViewModel == null)
+					continue;
+				if(animatedCard.Card.Count <= 0 || animatedCard.Card.Jousted)
+				{
+					animatedCard.CardTileViewModel.Highlight = HighlightColor.None;
+					continue;
+				}
+				animatedCard.CardTileViewModel.Highlight = ShouldHighlightCard.Invoke(animatedCard.Card, cards);
+			}
+		}
 	}
 
 	private bool AreEqualForList(Hearthstone.Card c1, Hearthstone.Card c2)
