@@ -6,6 +6,14 @@
 - Removed the old Fatigue counter from the deck lists.
 - Fixed a potential crash when resizing the decks after unlocking the overlay.
 
+**Overlay**:
+- Improved how long deck lists are displayed:
+  - Text now remains readable when card are shrunk to fit on the screen (default card theme only).
+  - Decks now become scrollable once a minimum card size is reached.
+  - Extra card lists (e.g. sideboards) are now scaled in sync with the rest of the deck.
+  - Secrets now scale to fit into a limited space, and also become scrollable.
+  - The maximum height of the Secrets list can now be adjusted when the overlay is unlocked.
+
 ## **Release v1.43.1 - 2025-03-18**
 **Updated for Hearthstone 32.0**
 
