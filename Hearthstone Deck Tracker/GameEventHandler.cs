@@ -1246,6 +1246,9 @@ namespace Hearthstone_Deck_Tracker
 					);
 				}
 			}
+
+			_game.Player.OfferedEntityIds = choice.OfferedEntityIds.ToList();
+			Core.Overlay.PlayerCounters.UpdateVisibleCounters();
 		}
 
 		public async Task HandleBattlegroundsTrinketChoice(IHsChoice choice)
@@ -1353,6 +1356,9 @@ namespace Hearthstone_Deck_Tracker
 					}
 					break;
 			}
+
+			_game.Player.OfferedEntityIds.Clear();
+			Core.Overlay.PlayerCounters.UpdateVisibleCounters();
 		}
 
 		private async void HandleHearthstoneMulliganPhase()

@@ -48,12 +48,17 @@ public abstract class BaseCounter : INotifyPropertyChanged
 
 	private bool InDeckOrKnown(string cardId)
 	{
-		var contains = DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId);
+		var deckContains = DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId) ?? false;
 
-		if(!contains.HasValue)
-			return false;
+		var playerEntitiesContains = Game.Player.PlayerEntities.Any(x =>
+			x.CardId == cardId &&
+			x.Info.OriginalZone != null &&
+			!x.IsInSetAside
+		);
 
-		return contains.Value || Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == cardId && x.Info.OriginalZone != null) != null;
+		var discoverEntitiesContains = Game.Player.OfferedEntities.Any(x => x.CardId == cardId);
+
+		return deckContains || playerEntitiesContains || discoverEntitiesContains;
 	}
 
 	protected bool InPlayerDeckOrKnown(string[] cardIds) => cardIds.Any(InDeckOrKnown);

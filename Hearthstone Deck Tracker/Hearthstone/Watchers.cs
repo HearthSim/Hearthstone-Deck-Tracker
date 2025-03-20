@@ -34,6 +34,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning);
 			ChoicesWatcher.Change += (sender, args) => Core.Overlay.SetChoicesVisible(args.CurrentChoice?.IsVisible ?? false);
 			BigCardWatcher.Change += OnBigCardChange;
+			DiscoverStateWatcher.Change += OnDiscoverStateChange;
 			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
 			BattlegroundsLeaderboardWatcher.Change += (sender, args) => Core.Overlay.SetHoveredBattlegroundsLeaderboardEntityId(args.HoveredEntityId);
 			MulliganTooltipWatcher.Change += OnMulliganTooltipChange;
@@ -53,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SceneWatcher.Stop();
 			ChoicesWatcher.Stop();
 			BigCardWatcher.Stop();
+			DiscoverStateWatcher.Stop();
 			BattlegroundsTeammateBoardStateWatcher.Stop();
 			BattlegroundsLeaderboardWatcher.Stop();
 			MulliganTooltipWatcher.Stop();
@@ -135,6 +137,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Core.Overlay.SetAnomalyGuidesTrigger(state.CardId);
 		}
 
+		internal static void OnDiscoverStateChange(object sender, HearthWatcher.EventArgs.DiscoverStateArgs args)
+		{
+			var state = new DiscoverState
+			{
+				CardId = args.CardId,
+				ZoneSize = args.ZoneSize,
+				ZonePosition = args.ZonePosition
+			};
+
+			Core.Overlay.SetRelatedCardsTrigger(state);
+			if(Core.Game.IsTraditionalHearthstoneMatch)
+			{
+				Core.Overlay.HighlightPlayerDeckCards(args.CardId);
+			}
+		}
+
 		internal static void OnMulliganTooltipChange(object sender, HearthWatcher.EventArgs.MulliganTooltipArgs args)
 		{
 			Core.Overlay.SetHeroPickingTooltipMask(
@@ -192,6 +210,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static SceneWatcher SceneWatcher { get; } = new(new HearthMirrorSceneProvider());
 		public static ChoicesWatcher ChoicesWatcher { get; } = new(new HearthMirrorChoicesProvider());
 		public static BigCardStateWatcher BigCardWatcher { get; } = new(new HearthMirrorBigCardProvider());
+
+		public static DiscoverStateWatcher DiscoverStateWatcher { get; } = new(new HearthMirrorDiscoverStateProvider());
 		public static BattlegroundsTeammateBoardStateWatcher BattlegroundsTeammateBoardStateWatcher { get; } = new(new HearthMirrorBattlegroundsTeammateBoardStateProvider());
 		public static BattlegroundsLeaderboardWatcher BattlegroundsLeaderboardWatcher { get; } = new(new HearthMirrorBattlegroundsLeaderboardProvider());
 		public static MulliganTooltipWatcher MulliganTooltipWatcher { get; } = new(new HearthMirrorMulliganTooltipProvider());
@@ -272,6 +292,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorBigCardProvider : IBigCardProvider
 	{
 		public BigCardState? State => Reflection.Client.GetBigCardState();
+	}
+
+	public class HearthMirrorDiscoverStateProvider : IDiscoverStateProvider
+	{
+		public DiscoverState? State => Reflection.Client.GetDiscoverState();
 	}
 
 	public class HearthMirrorBattlegroundsTeammateBoardStateProvider : IBattlegroundsTeammateBoardStateProvider

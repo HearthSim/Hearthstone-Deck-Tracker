@@ -34,7 +34,7 @@ public partial class CountersOverlay
 
 	public ObservableCollection<BaseCounter> VisibleCounters { get; } = new();
 
-	private void UpdateVisibleCounters()
+	public void UpdateVisibleCounters()
 	{
 		var visibleCounters = _counters.GetVisibleCounters(IsPlayer);
 

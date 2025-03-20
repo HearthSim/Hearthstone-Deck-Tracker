@@ -56,6 +56,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool HasCoin => Hand.Any(e => e.IsTheCoin);
 		public int HandCount => Hand.Count();
 		public int DeckCount => Deck.Count();
+		public List<int> OfferedEntityIds { get; set; } = new();
+		public IEnumerable<Entity> OfferedEntities => PlayerEntities.Where(x => OfferedEntityIds.Contains(x.Id));
 
 		public IEnumerable<Entity> PlayerEntities => _game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && x.IsControlledBy(Id));
 		public IEnumerable<Entity> RevealedEntities => _game.Entities.Values

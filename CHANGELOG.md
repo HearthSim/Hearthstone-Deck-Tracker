@@ -1,5 +1,6 @@
 ## Unreleased
 **Hearthstone**:
+- Made card highlights, counters and related cards work during discover.
 - Changed when Player's Protoss minions discount counter is shown, now it won't appear if there is no minion to benefit from it.
 - Made the new Fatigue counter appear more appropriately for the opponent.
 - Removed the old Fatigue counter from the deck lists.

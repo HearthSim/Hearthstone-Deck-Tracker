@@ -74,6 +74,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				new CollectionItem(_game.Player.Objectives, "Player Objectives"),
 				new CollectionItem(_game.Player.RevealedEntities, "Player RevealedEntities"),
 				new CollectionItem(_game.Player.SetAside, "Player SetAside"),
+				new CollectionItem(_game.Player.OfferedEntities, "Player Discover"),
 				new CollectionItem(_game.Opponent.Hand, "Opponent Hand"),
 				new CollectionItem(_game.Opponent.Board, "Opponent Board"),
 				new CollectionItem(_game.Opponent.Deck, "Opponent Deck"),

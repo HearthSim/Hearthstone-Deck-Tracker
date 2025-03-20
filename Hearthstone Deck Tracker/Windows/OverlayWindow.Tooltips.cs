@@ -376,6 +376,61 @@ public partial class OverlayWindow
 		}
 	}
 
+	public void SetRelatedCardsTrigger(DiscoverState state)
+	{
+		// Note: To debug behavior here and/or implement new triggers set a translucent
+		// Background (e.g. #40FF0000) on the RelatedCardsTrigger Grid in Overlay.xaml.
+
+		var vm = (CardGridTooltipViewModel)RelatedCardsTrigger.DataContext;
+		vm.Reset();
+		if(state.CardId == "")
+			return;
+
+		vm.Scale = Height / 1080;
+
+		// Not ideal. Maybe we re-position the tooltip on size change and canvas.top/left change?
+		RelatedCardsTrigger.UpdateLayout(); // After reset, force layout to update mouse event
+		UpdateHoverable(); // Force mouse events to occur to update tooltip
+
+		if(!Config.Instance.HidePlayerRelatedCards)
+		{
+			var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId)?.GetRelatedCards(Core.Game.Player);
+
+			vm.Cards = relatedCards?.WhereNotNull().ToList();
+			if(vm.Cards == null || vm.Cards.Count == 0)
+				return;
+
+			vm.Top = Height * 0.2;
+			vm.Height = Height * 0.53;
+			vm.Width = Height * 0.3;
+
+			switch(state.ZoneSize)
+			{
+				case 4:
+					vm.Left = (0.116 + state.ZonePosition * 0.2) * Width;
+					vm.TooltipPlacement = state.ZonePosition < 2 ? PlacementMode.Right : PlacementMode.Left;
+					break;
+				case 3:
+					const int centerPosition = 1;
+					const double offsetXScale = 0.2;
+
+					var relativePosition = state.ZonePosition - centerPosition;
+					var offsetX = 0.5 - 0.088 + relativePosition * offsetXScale;
+					vm.Left = offsetX * Width;
+					vm.TooltipPlacement = PlacementMode.Right;
+					break;
+				case 2:
+					vm.Left = state.ZonePosition == 0 ? 0.318 * Width : 0.518 * Width;
+					vm.TooltipPlacement = state.ZonePosition == 0 ? PlacementMode.Left : PlacementMode.Right;
+					break;
+				case 1:
+					vm.Left = (0.5 - 0.088) * Width;
+					vm.TooltipPlacement = PlacementMode.Left;
+					break;
+			}
+		}
+	}
+
 	private Visibility _flavorTextVisibility = Collapsed;
 	private string? _flavorTextCardName;
 	private string? _flavorText;

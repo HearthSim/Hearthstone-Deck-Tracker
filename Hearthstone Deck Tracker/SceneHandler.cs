@@ -53,6 +53,7 @@ public class SceneHandler
 			Watchers.BaconWatcher.Stop();
 			Watchers.BigCardWatcher.Stop();
 			Watchers.ChoicesWatcher.Stop();
+			Watchers.DiscoverStateWatcher.Stop();
 			Watchers.MulliganTooltipWatcher.Stop();
 		}
 	}
@@ -81,6 +82,7 @@ public class SceneHandler
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 			Watchers.BigCardWatcher.Run();
 			Watchers.ChoicesWatcher.Run();
+			Watchers.DiscoverStateWatcher.Run();
 			Watchers.BaconWatcher.Run();
 			Watchers.MulliganTooltipWatcher.Run();
 		}
