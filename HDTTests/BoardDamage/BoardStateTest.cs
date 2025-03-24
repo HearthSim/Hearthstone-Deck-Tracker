@@ -101,7 +101,7 @@ namespace HDTTests.BoardDamage
 		public void WindfuryWeaponEquipped()
 		{
 			_player.Add(new EntityBuilder("HERO_01", 5, 30).InPlay().Hero().Damage(20).ToEntity());
-			_player.Add(new EntityBuilder("DS1_188", 5, 0).InPlay().Weapon().Windfury().Durability(4).ToEntity());
+			_player.Add(new EntityBuilder("DS1_188", 5, 0).InPlay().Weapon().Windfury().Health(4).ToEntity());
 			_opponent.Add(new EntityBuilder("HERO_02", 0, 30).InPlay().Hero().Damage(10).ToEntity());
 
 			var board = new BoardState(_player, _opponent, _entities, 1);

@@ -240,8 +240,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool IsEmptyRace() => RaceEnum == HearthDb.Enums.Race.INVALID && SecondaryRaceEnum == HearthDb.Enums.Race.INVALID;
 
-		public int? Durability => Data?.Durability > 0 ? Data.Durability : null;
-
 		public string? Type => Data != null ? HearthDbConverter.CardTypeConverter(Data.Type) : null;
 
 		public CardType? TypeEnum => Data?.Type;

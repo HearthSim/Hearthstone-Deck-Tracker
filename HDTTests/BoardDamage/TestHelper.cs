@@ -71,12 +71,6 @@ namespace HDTTests.BoardDamage
 			_instance.SetTag(GameTag.NUM_ATTACKS_THIS_TURN, value);
 			return this;
 		}
-		
-		public EntityBuilder Durability(int value)
-		{
-			_instance.SetTag(GameTag.DURABILITY, value);
-			return this;
-		}
 
 		public EntityBuilder Frozen()
 		{
@@ -88,7 +82,7 @@ namespace HDTTests.BoardDamage
 		{
 			_instance.SetTag(GameTag.TAUNT, 1);
 			return this;
-		}		
+		}
 
 		public EntityBuilder Charge()
 		{

@@ -14,7 +14,7 @@ namespace HDTTests.BoardDamage
 		{
 			_minion = new EntityBuilder("CS1_069", 3, 6);
 			_weapon = new EntityBuilder("DS1_188", 5, 0);
-			_weapon.Weapon().Durability(2);
+			_weapon.Weapon().Health(2);
 		}
 
 		[TestMethod]
@@ -67,7 +67,7 @@ namespace HDTTests.BoardDamage
 		public void DontInclude_IfInDeckZoneAndAttacked()
 		{
 			var card = _minion.Deck().AttacksThisTurn(1).ToBoardCard();
-			Assert.IsFalse(card.Include);	
+			Assert.IsFalse(card.Include);
 		}
 
 		[TestMethod]
@@ -172,7 +172,7 @@ namespace HDTTests.BoardDamage
 		[TestMethod]
 		public void Attack_WeaponWithWindfuryOneHitLeft()
 		{
-			var card = _weapon.Windfury().Durability(2).Damage(1).ToBoardCard();
+			var card = _weapon.Windfury().Health(2).Damage(1).ToBoardCard();
 			Assert.AreEqual(5, card.Attack);
 		}
 

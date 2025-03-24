@@ -14,7 +14,7 @@ namespace HDTTests.BoardDamage
 		{
 			_hero = new EntityBuilder("HERO_01", 0, 30).Hero();
 			_weapon = new EntityBuilder("DS1_188", 5, 0);
-			_weapon.Weapon().Durability(2);
+			_weapon.Weapon().Health(2);
 		}
 
 		[TestMethod]
@@ -78,7 +78,7 @@ namespace HDTTests.BoardDamage
 		{
 			var hero = new BoardHero(
 				_hero.Attack(2).ToEntity(),
-				_weapon.Attack(2).Durability(8).Windfury().ToEntity(), 
+				_weapon.Attack(2).Health(8).Windfury().ToEntity(),
 				true);
 			Assert.AreEqual(4, hero.Attack);
 		}
@@ -88,7 +88,7 @@ namespace HDTTests.BoardDamage
 		{
 			var hero = new BoardHero(
 				_hero.Attack(6).ToEntity(),
-				_weapon.Attack(6).Durability(2).Damage(1).Windfury().ToEntity(),
+				_weapon.Attack(6).Health(2).Damage(1).Windfury().ToEntity(),
 				true);
 			Assert.AreEqual(6, hero.Attack);
 		}
@@ -108,7 +108,7 @@ namespace HDTTests.BoardDamage
 		{
 			var hero = new BoardHero(
 				_hero.Attack(2).Windfury().ToEntity(),
-				_weapon.Attack(2).Durability(8).Windfury().ToEntity(),
+				_weapon.Attack(2).Health(8).Windfury().ToEntity(),
 				true);
 			Assert.AreEqual(4, hero.Attack);
 		}

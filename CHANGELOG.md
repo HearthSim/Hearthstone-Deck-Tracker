@@ -5,6 +5,7 @@
 - Improved the Fatigue counter:
   - Made the new Fatigue counter appear for the opponent's side when you have Encroaching Insanity or Curse of Agony.
   - Removed the old Fatigue counter (below the deck lists).
+- Fixed board attack displaying negative values.
 - Fixed the player's Protoss minion discount counter being shown even when there was no minion to benefit from it.
 - Fixed Ravenous Felhunter and Ferocious Felbat related cards showing minions without deathrattle.
 - Fixed Volume Up not highlighting spells in the deck.

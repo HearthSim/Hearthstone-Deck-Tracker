@@ -16,7 +16,7 @@ namespace HDTTests.BoardDamage
 		{
 			var hero = new EntityBuilder("HERO_01", 5, 30).Hero().ToEntity();
 			var weapon = new EntityBuilder("DS1_188", 5, 0)
-				.Weapon().Durability(2).ToEntity();
+				.Weapon().Health(2).ToEntity();
 			_cards = new List<Entity>();
 			_cards.Add(hero);
 			_cards.Add(weapon);
@@ -64,7 +64,7 @@ namespace HDTTests.BoardDamage
 		public void AllowMultipleWeaponsOnBoard()
 		{
 			_cards.Add(new EntityBuilder("", 3, 0)
-				.Weapon().JustPlayed().Durability(2).ToEntity());
+				.Weapon().JustPlayed().Health(2).ToEntity());
 			var board = new PlayerBoard(_cards, true);
 			Assert.IsTrue(board.Hero.HasWeapon);
 		}

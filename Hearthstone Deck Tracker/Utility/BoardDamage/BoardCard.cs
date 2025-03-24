@@ -15,7 +15,6 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		private readonly int _armor;
 		private readonly bool _cantAttack;
 		private readonly int _damageTaken;
-		private readonly int _durability;
 		private readonly bool _frozen;
 		private readonly int _health;
 		private readonly int _stdAttack;
@@ -32,7 +31,6 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			_stdAttack = e.HasTag(HIDE_STATS) ? 0 : e.GetTag(ATK);
 			_health = e.HasTag(HIDE_STATS) ? 0 : e.GetTag(HEALTH);
 			_armor = e.GetTag(ARMOR);
-			_durability = e.GetTag(DURABILITY);
 			_damageTaken = e.GetTag(DAMAGE);
 			Exhausted = e.GetTag(EXHAUSTED) == 1 || (e.GetTag(NUM_TURNS_IN_PLAY) == 0 && !e.IsHero);
 			_cantAttack = e.GetTag(CANT_ATTACK) == 1;
@@ -93,12 +91,12 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		public string Zone { get; }
 
 		/// <summary>
-		/// weapons use durability, instead of health
+		/// since patch 32.0, weapons use HEALTH instead of DURABILITY
 		/// include armor so heroes are correct
 		/// </summary>
 		/// <param name="isWeapon"></param>
 		/// <returns></returns>
-		private int CalculateHealth(bool isWeapon) => isWeapon ? _durability - _damageTaken : _health + _armor - _damageTaken;
+		private int CalculateHealth(bool isWeapon) => isWeapon ? _health - _damageTaken : _health + _armor - _damageTaken;
 
 		private int CalculateAttack(bool active, bool isWeapon)
 		{
