@@ -90,6 +90,7 @@ namespace Hearthstone_Deck_Tracker
 			CardSet.THE_BARRENS, CardSet.STORMWIND, CardSet.ALTERAC_VALLEY, CardSet.PLACEHOLDER_202204,
 			CardSet.WONDERS,
 			CardSet.THE_SUNKEN_CITY, CardSet.REVENDRETH, CardSet.RETURN_OF_THE_LICH_KING,
+			CardSet.BATTLE_OF_THE_BANDS, CardSet.TITANS, CardSet.WILD_WEST,
 		}.Select(HearthDbConverter.SetConverter).ToArray();
 
 		public static string[] ClassicOnlySets = new[]
