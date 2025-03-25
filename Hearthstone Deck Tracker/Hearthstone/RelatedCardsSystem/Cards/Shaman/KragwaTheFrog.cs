@@ -19,5 +19,5 @@ public class KragwaTheFrog: ICardWithRelatedCards
 
 public class KragwaTheFrogCore: KragwaTheFrog
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Shaman.KragwaTheFrogCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Shaman.KragwaTheFrogCore;
 }

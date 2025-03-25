@@ -11,5 +11,5 @@ public class CatrinaMuerte: ResurrectionCard
 
 public class CatrinaMuerteCore: CatrinaMuerte
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Priest.CatrinaMuerteCore;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Priest.CatrinaMuerteCorePlaceholder;
 }

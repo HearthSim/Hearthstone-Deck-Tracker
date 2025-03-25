@@ -2,5 +2,5 @@
 
 public class LesserDiamondSpellstoneCore : LesserDiamondSpellstone
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Priest.LesserDiamondSpellstoneCore;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Priest.LesserDiamondSpellstoneCorePlaceholder;
 }

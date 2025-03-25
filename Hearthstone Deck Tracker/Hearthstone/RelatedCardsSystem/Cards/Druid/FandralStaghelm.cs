@@ -13,5 +13,5 @@ public class FandralStaghelm : ICardWithHighlight
 
 public class FandralStaghelmCorePlaceholder : FandralStaghelm
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Druid.FandralStaghelmCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Druid.FandralStaghelmCore;
 }

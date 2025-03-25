@@ -12,5 +12,5 @@ public class FinjaTheFlyingStar : ICardWithHighlight
 
 public class FinjaTheFlyingStarCorePlaceholder : FinjaTheFlyingStar
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.FinjaTheFlyingStarCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.FinjaTheFlyingStarCore;
 }

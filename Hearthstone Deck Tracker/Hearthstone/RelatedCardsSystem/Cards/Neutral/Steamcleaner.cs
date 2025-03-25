@@ -12,5 +12,5 @@ public class Steamcleaner : ICardWithHighlight
 
 public class SteamcleanerCore : Steamcleaner
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.SteamcleanerCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.SteamcleanerCore;
 }

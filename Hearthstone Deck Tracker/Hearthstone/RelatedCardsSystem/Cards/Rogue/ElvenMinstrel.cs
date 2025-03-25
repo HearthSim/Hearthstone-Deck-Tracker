@@ -12,5 +12,5 @@ public class ElvenMinstrel : ICardWithHighlight
 
 public class ElvenMinstrelCore : ElvenMinstrel
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Rogue.ElvenMinstrelCore;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Rogue.ElvenMinstrelCorePlaceholder;
 }

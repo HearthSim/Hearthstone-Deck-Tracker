@@ -12,6 +12,6 @@ public class TheCurator : ICardWithHighlight
 
 public class TheCuratorCorePlaceholder : TheCurator
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.TheCuratorCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.TheCuratorCore;
 
 }

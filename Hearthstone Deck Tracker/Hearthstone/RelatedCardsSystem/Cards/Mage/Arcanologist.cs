@@ -13,5 +13,5 @@ public class Arcanologist : ICardWithHighlight
 
 public class ArcanologistCore : Arcanologist
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Mage.ArcanologistCore;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Mage.ArcanologistCorePlaceholder;
 }

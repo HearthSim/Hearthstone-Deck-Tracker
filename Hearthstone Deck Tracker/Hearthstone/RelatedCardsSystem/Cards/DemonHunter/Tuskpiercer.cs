@@ -12,5 +12,5 @@ public class Tuskpiercer : ICardWithHighlight
 
 public class TuskpiercerCorePlaceholder : Tuskpiercer
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Demonhunter.TuskpiercerCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Demonhunter.TuskpiercerCore;
 }

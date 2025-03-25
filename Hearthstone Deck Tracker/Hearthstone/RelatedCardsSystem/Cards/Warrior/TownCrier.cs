@@ -13,5 +13,5 @@ public class TownCrier : ICardWithHighlight
 
 public class TownCrierCore : TownCrier
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Warrior.TownCrierCore;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Warrior.TownCrierCorePlaceholder;
 }

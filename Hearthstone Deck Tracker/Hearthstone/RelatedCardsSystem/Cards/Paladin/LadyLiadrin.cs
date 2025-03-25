@@ -17,5 +17,5 @@ public class LadyLiadrin: ICardWithRelatedCards
 
 public class LadyLiadrinCore: LadyLiadrin
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Paladin.LadyLiadrinCore;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Paladin.LadyLiadrinCorePlaceholder;
 }

@@ -818,7 +818,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Druid.Recycle:
 							case Collectible.Mage.ManicSoulcaster:
 							case Collectible.Neutral.ZolaTheGorgon:
-							case Collectible.Neutral.ZolaTheGorgonCore:
+							case Collectible.Neutral.ZolaTheGorgonCorePlaceholder:
 							case Collectible.Druid.Splintergraft:
 							//case Collectible.Priest.HolyWater: -- TODO
 							case Collectible.Neutral.BalefulBanker:
@@ -878,7 +878,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheDarkness_DarknessCandleToken, 3);
 								break;
 							case Collectible.Rogue.FaldoreiStrider:
-							case Collectible.Rogue.FaldoreiStriderCore:
+							case Collectible.Rogue.FaldoreiStriderCorePlaceholder:
 								AddKnownCardId(gameState, NonCollectible.Rogue.FaldoreiStrider_SpiderAmbushEnchantment, 3);
 								break;
 							case Collectible.Neutral.KingTogwaggle:

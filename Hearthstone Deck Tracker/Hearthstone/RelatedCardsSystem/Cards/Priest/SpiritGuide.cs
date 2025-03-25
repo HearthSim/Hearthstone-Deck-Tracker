@@ -16,5 +16,5 @@ public class SpiritGuide : ICardWithHighlight
 
 public class SpiritGuideCorePlaceholder : SpiritGuide
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Priest.SpiritGuideCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Priest.SpiritGuideCore;
 }
