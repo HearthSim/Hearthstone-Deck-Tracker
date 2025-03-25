@@ -1,4 +1,4 @@
-## Unreleased
+## **Release v1.43.2 - 2025-03-25**
 **Hearthstone**:
 - Added card highlights, counters and related cards to Discover:
   - This means you'll now be shown appropriate information before you choose your card.
