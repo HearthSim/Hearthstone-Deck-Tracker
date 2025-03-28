@@ -11,6 +11,10 @@ public class ScaleReplica : ICardWithHighlight
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck)
 	{
 		var dragons = deck.Where(c => c.IsDragon()).ToArray();
+		if (dragons.Length == 0) 
+		{
+			return HighlightColor.None;
+		}
 		var lowestCost = dragons.Min(c => c.Cost);
 		var highestCost = dragons.Max(c => c.Cost);
 		return HighlightColorHelper.GetHighlightColor(
