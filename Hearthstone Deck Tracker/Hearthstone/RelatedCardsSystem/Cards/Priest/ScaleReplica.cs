@@ -7,11 +7,10 @@ public class ScaleReplica : ICardWithHighlight
 {
 	public string GetCardId() => HearthDb.CardIds.Collectible.Priest.ScaleReplica;
 
-	// TODO: use deck state to get highest and lowest cost
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck)
 	{
 		var dragons = deck.Where(c => c.IsDragon()).ToArray();
-		if (dragons.Length == 0) 
+		if (dragons.Length == 0)
 		{
 			return HighlightColor.None;
 		}

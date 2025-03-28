@@ -9,6 +9,10 @@ public class UrsineMaul : ICardWithHighlight
 
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck)
 	{
+		if(!deck.Any())
+		{
+			return HighlightColor.None;
+		}
 		var highestCost = deck.Max(c => c.Cost);
 		return HighlightColorHelper.GetHighlightColor(card.Cost == highestCost);
 	}

@@ -9,7 +9,12 @@ public class MovementOfPride : ICardWithHighlight
 
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck)
 	{
-		var highestCost = deck.Where(c => c.Type == "Minion").Max(c => c.Cost);
+		var minions = deck.Where(c => c.Type == "Minion").ToArray();
+		if(minions.Length == 0)
+		{
+			return HighlightColor.None;
+		}
+		var highestCost = minions.Max(c => c.Cost);
 		return HighlightColorHelper.GetHighlightColor(card.Type == "Minion" && card.Cost == highestCost);
 	}
 }

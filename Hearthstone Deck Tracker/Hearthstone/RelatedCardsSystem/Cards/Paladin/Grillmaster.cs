@@ -9,6 +9,11 @@ public class Grillmaster : ICardWithHighlight
 
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck)
 	{
+		if(!deck.Any())
+		{
+			return HighlightColor.None;
+		}
+
 		var lowestCost = deck.Min(c => c.Cost);
 		var highestCost = deck.Max(c => c.Cost);
 		return HighlightColorHelper.GetHighlightColor(

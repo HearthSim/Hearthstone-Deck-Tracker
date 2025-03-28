@@ -10,6 +10,10 @@ public class TaelanFordringCore : ICardWithHighlight
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck)
 	{
 		var minions = deck.Where(c => c.Type == "Minion").ToArray();
+		if(minions.Length == 0)
+		{
+			return HighlightColor.None;
+		}
 		var highestCost = minions.Max(c => c.Cost);
 		return HighlightColorHelper.GetHighlightColor(
 			card.Type == "Minion" && card.Cost == highestCost

@@ -213,7 +213,16 @@ public partial class AnimatedCardList
 					animatedCard.CardTileViewModel.Highlight = HighlightColor.None;
 					continue;
 				}
-				animatedCard.CardTileViewModel.Highlight = ShouldHighlightCard.Invoke(animatedCard.Card, cards);
+
+				try
+				{
+					animatedCard.CardTileViewModel.Highlight = ShouldHighlightCard.Invoke(animatedCard.Card, cards);
+				}
+				catch(Exception e)
+				{
+					animatedCard.CardTileViewModel.Highlight = HighlightColor.None;
+					Log.Error(e);
+				}
 			}
 		}
 	}
