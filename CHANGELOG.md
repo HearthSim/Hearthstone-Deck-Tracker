@@ -1,3 +1,8 @@
+## **Release v1.43.3 - 2025-03-28**
+**Hearthstone**:
+- Added Imbue counter.
+- Fixed potential crashes when hovering Scale Replica without having dragons in the deck.
+
 ## **Release v1.43.2 - 2025-03-25**
 **Hearthstone**:
 - Added card highlights, counters and related cards to Discover:
