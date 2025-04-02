@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed an issue causing Oasis Ally to not appear in the secret tracker.
+
 ## **Release v1.43.3 - 2025-03-28**
 **Hearthstone**:
 - Added Imbue counter.
