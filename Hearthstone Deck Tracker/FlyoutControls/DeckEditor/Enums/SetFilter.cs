@@ -89,6 +89,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_IslandVacation")]
 		ISLAND_VACATION = 1905,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_GreatDarkBeyond")]
-		SPACE = 1935
+		SPACE = 1935,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_EmeraldDream")]
+		EMERALD_DREAM = 1946
 	}
 }

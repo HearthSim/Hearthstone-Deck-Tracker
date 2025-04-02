@@ -93,5 +93,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_GreatDarkBeyond")]
 		GreatDarkBeyond = CardSet.SPACE,
+
+		[LocDescription("Enum_ArenaRewardPacks_EmeraldDream")]
+		EmeraldDream = CardSet.EMERALD_DREAM,
 	}
 }
