@@ -1,4 +1,6 @@
-## **Unreleased**
+## **Release v1.43.4 - 2025-04-04**
+**Updated for Hearthstone 32.0.3**
+
 **Hearthstone**:
 - Changed Aessina counter to show when opponent generated a Wild God from Malorne the Waywatcher.
 - Fixed an issue causing Oasis Ally to not appear in the secret tracker.
