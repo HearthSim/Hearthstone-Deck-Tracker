@@ -132,6 +132,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.CurrentGameStats != null && _game.CurrentGameStats.GameMode == Battlegrounds)
 			{
 				Core.Game.BattlegroundsSessionViewModel.Update();
+				Core.Overlay.BattlegroundsCompsGuidesVM.Reset();
 			}
 
 			if(!_game.IsUsingPremade)

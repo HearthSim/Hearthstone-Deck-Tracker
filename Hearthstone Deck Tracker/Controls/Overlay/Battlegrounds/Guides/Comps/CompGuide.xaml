@@ -227,7 +227,7 @@
                                 <Border ToolTipService.InitialShowDelay="500">
                                     <Border.ToolTip>
                                         <ToolTip
-                                            Visibility="{Binding ExampleBoardsButtonDisabled, Converter={StaticResource InverseBoolToVisibility}}"
+                                            Visibility="{Binding ExampleBoardsButtonEnabled, Converter={StaticResource InverseBoolToVisibility}}"
                                             Style="{StaticResource BgsTooltipStyle}"
                                             Content="{lex:Loc Battlegrounds_CompGuide_CoreCards_Tier7_Tooltip}"
                                             VerticalOffset="-8" />
@@ -236,7 +236,7 @@
                                             Content="{lex:Loc Battlegrounds_CompGuide_Inspiration_Button}"
                                             Command="{Binding ShowExampleBoardsCommand}"
                                             Margin="9,0"
-                                            IsEnabled="{Binding ExampleBoardsButtonDisabled}"
+                                            IsEnabled="{Binding ExampleBoardsButtonEnabled}"
                                     >
                                     </Button>
                                 </Border>

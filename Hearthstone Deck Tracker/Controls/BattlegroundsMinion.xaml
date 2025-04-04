@@ -16,6 +16,20 @@
             <ColumnDefinition Width="88*"/>
             <ColumnDefinition Width="11*"/>
         </Grid.ColumnDefinitions>
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsAvailable}" Value="False">
+                        <Setter Property="OpacityMask">
+                            <Setter.Value>
+                                <SolidColorBrush Color="#808080"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
         <Ellipse IsHitTestVisible="True" Fill="Black" Opacity="0.01" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1"/>
             <Viewbox IsHitTestVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3">
                 <Canvas Width="256" Height="256">

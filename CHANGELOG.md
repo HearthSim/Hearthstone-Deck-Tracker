@@ -3,6 +3,9 @@
 - Changed Aessina counter to show when opponent generated a Wild God from Malorne the Waywatcher.
 - Fixed an issue causing Oasis Ally to not appear in the secret tracker.
 
+**Battlegrounds**:
+- Improved Tier7 Comp Guides filtering.
+
 ## **Release v1.43.3 - 2025-03-28**
 **Hearthstone**:
 - Added Imbue counter.

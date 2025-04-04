@@ -212,10 +212,8 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			if(availableRaces != null)
 			{
 				var currentRaces = new HashSet<Race>(availableRaces.Concat(new [] { Race.ALL, Race.INVALID }));
-				var availableCards = BattlegroundsDbSingleton.Instance.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch);
-				var availableCardIds = new HashSet<int>(availableCards.Select(card => card.DbfId));
 				filteredComps = Comps.Where(comp =>
-					comp.CoreCards.All(card => card.Card != null && availableCardIds.Contains(card.Card.DbfId))).ToList();
+					currentRaces.Any(race => race == (Race)comp.PrimaryTribe)).ToList();
 			}
 
 			CompsByTier = filteredComps

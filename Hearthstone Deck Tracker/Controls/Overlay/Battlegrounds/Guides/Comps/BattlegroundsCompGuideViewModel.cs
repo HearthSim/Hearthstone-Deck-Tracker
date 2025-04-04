@@ -4,10 +4,12 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using HSReplay.Responses;
@@ -36,7 +38,7 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		CompGuide = compGuide;
 
 		CoreCardId = CompGuide.CoreCards.FirstOrDefault();
-		CardToShowInUi = Database.GetCardFromDbfId(CoreCardId, false);
+		CardToShowInUi = Database.GetCardFromId(CompGuide.RepresentativeCard);
 		CardAsset = new(CardToShowInUi, Utility.Assets.CardAssetType.Portrait);
 		DifficultyText = CompGuide.Difficulty switch
 		{
@@ -73,14 +75,17 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 			_ => CreateLinearGradientBrush(Color.FromRgb(112, 112, 112), Color.FromRgb(64, 64, 64))
 		};
 
-		CommonEnablerTags = ReferencedCardRun.ParseCardsFromText(compGuide.CommonEnablers);
-		WhenToCommitTags = ReferencedCardRun.ParseCardsFromText(compGuide.WhenToCommit);
-		HowToPlay = ReferencedCardRun.ParseCardsFromText(compGuide.HowToPlay).FirstOrDefault();
+		PrimaryTribe = CompGuide.PrimaryTribe;
+		CommonEnablerTags = ReferencedCardRun.ParseCardsFromText(CompGuide.CommonEnablers);
+		WhenToCommitTags = ReferencedCardRun.ParseCardsFromText(CompGuide.WhenToCommit);
+		HowToPlay = ReferencedCardRun.ParseCardsFromText(CompGuide.HowToPlay).FirstOrDefault();
 	}
+
 
 	[LocalizedProp]
 	public string LastUpdatedFormatted => LocUtil.GetAge(CompGuide.LastUpdated);
 
+	public int PrimaryTribe { get; set; }
 	public int CoreCardId { get; }
 
 	public  IEnumerable<Inline>[] CommonEnablerTags { get; }
@@ -95,29 +100,45 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 
 	public CardAssetViewModel CardAsset { get; }
 
-	public IEnumerable<BattlegroundsMinionViewModel> CoreCards
+	private HashSet<int>? _availableCardIds;
+	private HashSet<int> GetAvailableCardIds()
 	{
-		get
+		if (_availableCardIds == null)
 		{
-			return CompGuide.CoreCards.Select(cardId =>
-				{
-					var card = Database.GetCardFromDbfId(cardId, false);
-					if (card == null)
-						return null;
-
-					card.BaconCard = true;
-					return card;
-				}
-			).WhereNotNull().Where(x => x.IsKnownCard).Select(card =>
-				new BattlegroundsMinionViewModel
-				{
-					Attack = card.Attack,
-					Health = card.Health,
-					Tier = card.TechLevel,
-					Card = card
-				});
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+			var currentRaces = new HashSet<Race>(availableRaces.Concat(new[] { Race.ALL, Race.INVALID }));
+			var availableCards = BattlegroundsDbSingleton.Instance.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch);
+			_availableCardIds = new HashSet<int>(availableCards.Select(card => card.DbfId));
 		}
+		return _availableCardIds;
 	}
+
+	private IEnumerable<BattlegroundsMinionViewModel> GetBattlegroundsMinions(IEnumerable<int> cardIds, bool checkAvailability = true)
+	{
+		var availableCardIds = checkAvailability ? GetAvailableCardIds() : null;
+
+		return cardIds.Select(cardId =>
+		{
+			var card = Database.GetCardFromDbfId(cardId, false);
+			if (card == null)
+				return null;
+
+			card.BaconCard = true;
+			return card;
+		}).WhereNotNull().Where(x => x.IsKnownCard).Select(card =>
+			new BattlegroundsMinionViewModel
+			{
+				Attack = card.Attack,
+				Health = card.Health,
+				Tier = card.TechLevel,
+				Card = card,
+				IsAvailable = !checkAvailability || availableCardIds!.Contains(card.DbfId)
+			});
+	}
+
+	public IEnumerable<BattlegroundsMinionViewModel> CoreCards => GetBattlegroundsMinions(CompGuide.CoreCards, IsTier7Enabled);
+
+	public IEnumerable<BattlegroundsMinionViewModel> AddonCards => GetBattlegroundsMinions(CompGuide.AddonCards, IsTier7Enabled);
 
 	public ICommand ShowExampleBoardsCommand => new Command(() =>
 	{
@@ -135,33 +156,11 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		Core.Game.Metrics.BattlegroundsCompGuidesInspirationClicks++;
 	});
 
-	public bool ExampleBoardsButtonDisabled => (HSReplayNetOAuth.AccountData?.IsTier7 ?? false)
-	                                           || Tier7Trial.IsTrialForCurrentGameActive(Core.Game.MetaData.ServerInfo
-		                                           ?.GameHandle);
+	private static bool IsTier7Enabled => (HSReplayNetOAuth.AccountData?.IsTier7 ?? false)
+	                                       || Tier7Trial.IsTrialForCurrentGameActive(Core.Game.MetaData.ServerInfo
+		                                       ?.GameHandle);
 
-	public IEnumerable<BattlegroundsMinionViewModel> AddonCards
-	{
-		get
-		{
-			return CompGuide.AddonCards.Select(cardId =>
-				{
-					var card = Database.GetCardFromDbfId(cardId, false);
-					if (card == null)
-						return null;
-
-					card.BaconCard = true;
-					return card;
-				}
-			).WhereNotNull().Where(x => x.IsKnownCard).Select(card =>
-				new BattlegroundsMinionViewModel
-				{
-					Attack = card.Attack,
-					Health = card.Health,
-					Tier = card.TechLevel,
-					Card = card
-				});
-		}
-	}
+	public bool ExampleBoardsButtonEnabled => IsTier7Enabled;
 
 	public IEnumerable<Inline>? HowToPlay { get; }
 }
