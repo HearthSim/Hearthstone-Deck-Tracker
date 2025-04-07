@@ -355,5 +355,18 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				return null;
 			}
 		}
+
+		public static async Task<BattlegroundsTier7CompsGuidesData?> GetPremiumCompsGuides(string token, string gameLanguage, int[] availableRaces)
+		{
+		    try
+		    {
+			    return await Client.GetTier7CompsGuides(token, gameLanguage, availableRaces);
+		    }
+		    catch(Exception e)
+		    {
+		        Log.Error(e);
+		        return null;
+		    }
+		}
 	}
 }

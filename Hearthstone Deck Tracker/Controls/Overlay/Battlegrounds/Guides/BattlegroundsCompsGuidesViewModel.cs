@@ -55,6 +55,49 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		return null;
 	}
 
+	public async Task<Dictionary<int,TieredComps>?> GetPremiumCompGuides(string? token)
+	{
+		try
+		{
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+			if(availableRaces == null)
+				return null;
+
+			var currentRaces = availableRaces.Cast<int>().ToArray();
+			var compsData = token != null
+				? await ApiWrapper.GetPremiumCompsGuides(token, Helper.GetCardLanguage(), currentRaces)
+				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7CompsGuides(Helper.GetCardLanguage(), currentRaces));
+
+			if(compsData?.ByTier == null)
+				return null;
+
+			var result = new Dictionary<int, TieredComps>();
+
+			foreach(var tierEntry in compsData.ByTier.OrderBy(t => t.Key))
+			{
+				var tier = tierEntry.Key;
+				var comps = tierEntry.Value.OrderBy(comp => comp.Name).ToList();
+
+				var viewModels = comps.Select(comp => new BattlegroundsCompGuideViewModel(comp)).ToList();
+
+				result[tier] = new TieredComps
+				{
+					TierLetter = GetCompText(tier),
+					TierColor = GetTierColor(tier),
+					Comps = viewModels
+				};
+			}
+
+			return CompsByTier = result;
+		}
+		catch (Exception ex)
+		{
+			MessageBox.Show($"Error loading comps data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+		}
+
+		return null;
+	}
+
 
 	public BattlegroundsCompGuideViewModel? SelectedComp
 	{
@@ -90,38 +133,59 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 	{
 		// Always refresh the comp guides
 		await TrySetCompsGuides();
-
-		// Update Tier7 version if we have Comp data
-		// Note: This may be called even if the previous call was unsuccessful,
-		// e.g. because we still had the Comp guides cached from a previous match.
-		if(Comps != null)
-		{
-			await TrySetTier7View();
-		}
 	}
 
 	private async Task TrySetCompsGuides()
 	{
-		var guidesTask = GetCompGuides();
+		var token = await GetTier7Token();
+		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
 
-		List<BattlegroundsCompGuideViewModel>? battlegroundsCompGuides = null;
+		if(token != null || userOwnsTier7)
+		{
+			var premiumGuidesTask = GetPremiumCompGuides(token);
+
+			Dictionary<int,TieredComps>? filteredBattlegroundsCompGuides = null;
+
+#if(DEBUG)
+	    Log.Debug($"Fetching Premium Battlegrounds Comp Guides...");
+#endif
+			try
+			{
+				filteredBattlegroundsCompGuides = await premiumGuidesTask;
+			}
+			catch(Exception e)
+			{
+				HandleCompGuidesError(e);
+			}
+
+			if(filteredBattlegroundsCompGuides is not null)
+			{
+				CompsByTier = filteredBattlegroundsCompGuides;
+			}
+		}
+		else
+		{
+			var guidesTask = GetCompGuides();
+
+			List<BattlegroundsCompGuideViewModel>? battlegroundsCompGuides = null;
 
 #if(DEBUG)
 	    Log.Debug($"Fetching Battlegrounds Comp Guides...");
 #endif
 
-		try
-		{
-			battlegroundsCompGuides = await guidesTask;
-		}
-		catch(Exception e)
-		{
-			HandleCompGuidesError(e);
-		}
+			try
+			{
+				battlegroundsCompGuides = await guidesTask;
+			}
+			catch(Exception e)
+			{
+				HandleCompGuidesError(e);
+			}
 
-		if(battlegroundsCompGuides is not null)
-		{
-			Comps = battlegroundsCompGuides;
+			if(battlegroundsCompGuides is not null)
+			{
+				Comps = battlegroundsCompGuides;
+			}
 		}
 	}
 
@@ -177,55 +241,28 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		};
 	}
 
-	private async Task TrySetTier7View()
+	private async Task<string?> GetTier7Token()
 	{
 		var gameId = Core.Game.MetaData.ServerInfo?.GameHandle;
 		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
 		var userHasTrials = Tier7Trial.RemainingTrials > 0;
 
 		if(!userOwnsTier7 && gameId == null)
-			return;
+			return null;
 
 		if(!userOwnsTier7 && !(userHasTrials || Tier7Trial.IsTrialForCurrentGameActive(gameId)))
-			return;
+			return null;
 
-		// Use a trial if we can
-		string? token;
+		string? token = null;
 		if(!userOwnsTier7)
 		{
 			var acc = Reflection.Client.GetAccountId();
 			token = acc != null ? await Tier7Trial.ActivateOrContinue(acc.Hi, acc.Lo, gameId) : null;
 			if(!((Core.Game.GameEntity?.GetTag(GameTag.STEP) ?? 0) <= (int)Step.BEGIN_MULLIGAN) && token == null)
-				return;
-
-			if(token == null)
-				return;
+				return null;
 		}
 
-		var availableRaces = BattlegroundsUtils.GetAvailableRaces();
-
-		// Filter compositions by core cards based on available races
-		if (Comps != null)
-		{
-			var filteredComps = Comps.ToList();
-
-			if(availableRaces != null)
-			{
-				var currentRaces = new HashSet<Race>(availableRaces.Concat(new [] { Race.ALL, Race.INVALID }));
-				filteredComps = Comps.Where(comp =>
-					currentRaces.Any(race => race == (Race)comp.PrimaryTribe)).ToList();
-			}
-
-			CompsByTier = filteredComps
-				.GroupBy<BattlegroundsCompGuideViewModel, int>(comp => comp.CompGuide.Tier)
-				.OrderBy(group => group.Key)
-				.ToDictionary(group => group.Key, group =>
-				new TieredComps{
-					TierLetter = GetCompText(group.Key),
-					TierColor = GetTierColor(group.Key),
-					Comps = group.ToList()
-				});
-		}
+		return token;
 	}
 
 	private void HandleCompGuidesError(Exception error)
