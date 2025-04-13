@@ -1,3 +1,8 @@
+## Unreleased
+**Hearthstone**:
+- Added counters for Flickering Lightbot and SeaShanty.
+- Added Related Cards Tooltips to Twisted Webweaver.
+
 ## **Release v1.43.4 - 2025-04-04**
 **Updated for Hearthstone 32.0.3**
 
