@@ -39,6 +39,12 @@ namespace Hearthstone_Deck_Tracker
 		void HandleConcede();
 		void HandlePlayerFatigue(int currentDamage);
 		void HandleOpponentFatigue(int currentDamage);
+		void HandlePlayerMaxHealthChange(int value);
+		void HandleOpponentMaxHealthChange(int value);
+		void HandlePlayerMaxManaChange(int value);
+		void HandleOpponentMaxManaChange(int value);
+		void HandlePlayerMaxHandSizeChange(int value);
+		void HandleOpponentMaxHandSizeChange(int value);
 
 		void HandleOpponentJoust(Entity entity, string? cardId, int turn);
 		void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn);

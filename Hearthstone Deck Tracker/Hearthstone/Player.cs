@@ -21,6 +21,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class Player : INotifyPropertyChanged
 	{
 		private readonly IGame _game;
+		private const int InitialMaxHealth = 30;
+		private const int InitialMaxMana = 10;
+		private const int InitialMaxHandSize = 10;
 
 		public Player(IGame game, bool isLocalPlayer)
 		{
@@ -33,6 +36,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string? CurrentClass { get; set; }
 		public int Id { get; set; }
 		public int Fatigue { get; set; }
+		public int MaxHealth { get; set; }
+		public int MaxMana { get; set; }
+		public int MaxHandSize { get; set; }
 		public bool IsLocalPlayer { get; }
 		public int SpellsPlayedCount => SpellsPlayedCards.Count;
 		public List<Entity> SpellsPlayedCards { get; private set; } = new();
@@ -488,6 +494,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CurrentClass = "";
 			Id = -1;
 			Fatigue = 0;
+			MaxMana = InitialMaxMana;
+			MaxHealth = InitialMaxHealth;
+			MaxHandSize = InitialMaxHandSize;
 			InDeckPredictions.Clear();
 			SpellsPlayedCards.Clear();
 			SpellsPlayedInFriendlyCharacters.Clear();

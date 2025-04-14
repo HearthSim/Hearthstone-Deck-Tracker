@@ -86,7 +86,9 @@ namespace HDTTests.Utility.ValueMoments.Actions
 					"opponent_counters",
 					"player_related_cards",
 					"opponent_related_cards",
-					"highlight_deck_synergies"
+					"highlight_deck_synergies",
+					"player_max_resources_widget",
+					"opponent_max_resources_widget"
 				}},
 				{ "hdt_general_settings_disabled", new []{
 					"overlay_hide_completely",

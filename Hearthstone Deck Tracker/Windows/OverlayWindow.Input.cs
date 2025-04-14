@@ -9,6 +9,7 @@ using System.Windows.Media;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.PlayerResourcesWidget;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -199,6 +200,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
+			if(_selectedUiElement is PlayerResourcesWidget widget)
+			{
+				if(widget.Equals(PlayerResourcesWidget))
+				{
+					Config.Instance.PlayerMaxResourcesVertical += delta.Y / Height;
+					Config.Instance.PlayerMaxResourcesHorizontal += delta.X / (Width * ScreenRatio);
+					Canvas.SetTop(_movableElements[widget], Height * Config.Instance.PlayerMaxResourcesVertical / 100);
+					Canvas.SetLeft(_movableElements[widget], Helper.GetScaledXPos(Config.Instance.PlayerMaxResourcesHorizontal / 100, (int)Width, ScreenRatio));
+					return;
+				}
+				if(widget.Equals(OpponentResourcesWidget))
+				{
+					Config.Instance.OpponentMaxResourcesVertical += delta.Y / Height;
+					Config.Instance.OpponentMaxResourcesHorizontal += delta.X / (Width * ScreenRatio);
+					Canvas.SetTop(_movableElements[widget], Height * Config.Instance.OpponentMaxResourcesVertical / 100);
+					Canvas.SetLeft(_movableElements[widget], Helper.GetScaledXPos(Config.Instance.OpponentMaxResourcesHorizontal / 100, (int)Width, ScreenRatio));
+				}
+			}
+
 			if (_selectedUiElement is HearthstoneTextBlock timer)
 			{
 				if (timer.Equals(LblPlayerTurnTime))
@@ -271,6 +291,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						return;
 					}
 					if(element.Key is CountersOverlay && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
+					{
+						_selectedUiElement = element.Key;
+						return;
+					}
+					if(element.Key is PlayerResourcesWidget && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
 					{
 						_selectedUiElement = element.Key;
 						return;
@@ -447,6 +472,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var width = counters.ActualWidth * _activeEffectsScale;
 				var height = counters.ActualHeight * _activeEffectsScale;
+
+				return new Size(width, height);
+			}
+
+			if(element is PlayerResourcesWidget widget)
+			{
+				var width = widget.ActualWidth * _activeEffectsScale;
+				var height = widget.ActualHeight * _activeEffectsScale;
 
 				return new Size(width, height);
 			}

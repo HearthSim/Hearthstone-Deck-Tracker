@@ -70,5 +70,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("highlight_deck_synergies")]
 		public bool HighlightDeckSynergies { get => !Config.Instance.HidePlayerHighlightSynergies; }
+
+		[JsonProperty("player_max_resources_widget")]
+		public bool PlayerMaxResourceWidget { get => !Config.Instance.HidePlayerMaxResourcesWidget; }
+
+		[JsonProperty("opponent_max_resources_widget")]
+		public bool OpponentMaxResourceWidget { get => !Config.Instance.HideOpponentMaxResourcesWidget; }
 	}
 }

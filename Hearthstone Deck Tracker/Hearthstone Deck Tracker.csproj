@@ -197,6 +197,11 @@
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+	<Page Update="Controls\Overlay\Constructed\PlayerResourcesWidget\PlayerResourcesWidget.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	  <XamlRuntime>Wpf</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
     <Page Update="Controls\Overlay\CountersOverlay.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>

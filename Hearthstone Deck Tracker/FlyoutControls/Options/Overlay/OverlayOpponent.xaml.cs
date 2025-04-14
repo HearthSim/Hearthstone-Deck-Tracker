@@ -83,6 +83,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxActiveEffects.IsChecked = !Config.Instance.HideOpponentActiveEffects;
 			CheckBoxCounters.IsChecked = !Config.Instance.HideOpponentCounters;
 			CheckBoxRelatedCards.IsChecked = !Config.Instance.HideOpponentRelatedCards;
+			CheckBoxMaxResourcesWidget.IsChecked = !Config.Instance.HideOpponentMaxResourcesWidget;
 			CheckboxEnableWotogs.IsChecked = !Config.Instance.DisableOpponentWotogs;
 			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxCthun.SelectedItem = Config.Instance.OpponentCthunCounter;
@@ -345,6 +346,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HideOpponentRelatedCards = true;
+			Config.Save();
+		}
+
+		private void CheckBoxMaxResourcesWidget_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentMaxResourcesWidget = false;
+			Config.Save();
+		}
+
+		private void CheckBoxMaxResourcesWidget_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentMaxResourcesWidget = true;
 			Config.Save();
 		}
 

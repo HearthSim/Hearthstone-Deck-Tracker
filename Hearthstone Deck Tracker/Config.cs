@@ -381,6 +381,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HideOpponentRelatedCards = false;
 
+		[DefaultValue(false)]
+		public bool HideOpponentMaxResourcesWidget = false;
+
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode OpponentCthunCounter = DisplayMode.Auto;
 
@@ -443,6 +446,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool HidePlayerHighlightSynergies = false;
+
+		[DefaultValue(false)]
+		public bool HidePlayerMaxResourcesWidget = false;
 
 		[DefaultValue(true)]
 		public bool DisablePlayerWotogs = true;
@@ -1140,6 +1146,18 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(67.7)]
 		public double OpponentCountersHorizontal = 67.7;
+
+		[DefaultValue(95.6)]
+		public double PlayerMaxResourcesVertical = 95.6;
+
+		[DefaultValue(75.2)]
+		public double PlayerMaxResourcesHorizontal = 75.2;
+
+		[DefaultValue(0.3)]
+		public double OpponentMaxResourcesVertical = 0.3;
+
+		[DefaultValue(72.2)]
+		public double OpponentMaxResourcesHorizontal = 72.2;
 
 		[DefaultValue(68.5)]
 		public double WotogIconsPlayerVertical = 68.5;

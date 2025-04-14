@@ -556,6 +556,21 @@ namespace Hearthstone_Deck_Tracker
 				Windows.OpponentWindow.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), reset);
 		}
 
+		internal static void ResetPlayerResourcesWidgets()
+		{
+			Overlay.ResetPlayerResourcesWidgets(Game.Player.MaxHealth, Game.Player.MaxMana, Game.Player.MaxHandSize);
+		}
+
+		internal static void UpdatePlayerResourcesWidget()
+		{
+			Overlay.UpdatePlayerResourcesWidget(Game.Player.MaxHealth, Game.Player.MaxMana, Game.Player.MaxHandSize);
+		}
+
+		internal static void UpdateOpponentResourcesWidget()
+		{
+			Overlay.UpdateOpponentResourcesWidget(Game.Opponent.MaxHealth, Game.Opponent.MaxMana, Game.Opponent.MaxHandSize);
+		}
+
 		public static class Windows
 		{
 			private static PlayerWindow? _playerWindow;

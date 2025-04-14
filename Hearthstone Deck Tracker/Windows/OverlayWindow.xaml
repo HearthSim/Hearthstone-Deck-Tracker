@@ -19,6 +19,7 @@
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:heroPicking="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking"
         xmlns:activeEffects="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.ActiveEffects"
+        xmlns:playerResources="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.PlayerResourcesWidget"
         xmlns:inspiration="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration"
         xmlns:guides="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
         xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
@@ -377,6 +378,12 @@
                 <overlay:CountersOverlay Visibility="Visible" x:Name="PlayerCounters" IsPlayer="true" />
                 <activeEffects:ActiveEffectsOverlay Visibility="Visible" x:Name="OpponentActiveEffects" IsPlayer="false" />
                 <activeEffects:ActiveEffectsOverlay Visibility="Visible" x:Name="PlayerActiveEffects" IsPlayer="true" />
+                <playerResources:PlayerResourcesWidget x:Name="OpponentResourcesWidget"
+                    DataContext="{Binding OpponentResourcesViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
+                </playerResources:PlayerResourcesWidget>
+                <playerResources:PlayerResourcesWidget x:Name="PlayerResourcesWidget"
+                    DataContext="{Binding PlayerResourcesViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
+                </playerResources:PlayerResourcesWidget>
 
                 <!-- Allows Minion Browser overlay to be dismissible via background click -->
                 <Grid Background="Black" Opacity="0.01" Canvas.Top="0" Canvas.Left="0"

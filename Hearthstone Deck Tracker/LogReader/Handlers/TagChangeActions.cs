@@ -108,6 +108,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case PARENT_CARD:
 						OnParentCardChange(gameState, id, game, value, prevValue);
 						break;
+					case HEALTH:
+						HealthChange(gameState, id, game, value, prevValue);
+						break;
+					case MAXRESOURCES:
+						MaxResourcesChange(gameState, id, game, value, prevValue);
+						break;
+					case MAXHANDSIZE:
+						MaxHandSizeChange(gameState, id, game, value, prevValue);
+						break;
 					case LETTUCE_ABILITY_TILE_VISUAL_ALL_VISIBLE:
 					case LETTUCE_ABILITY_TILE_VISUAL_SELF_ONLY:
 					case FAKE_ZONE:
@@ -495,6 +504,71 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			//We do prevValue - value because armor gets smaller as you lose it and damage gets bigger as you lose life.
 			gameState.GameHandler?.HandleEntityLostArmor(entity, prevValue - value);
+		}
+
+		// The HEALTH tag is the total/max Health, the displayed health is HEALTH - DAMAGE
+		private void HealthChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			if(!game.IsTraditionalHearthstoneMatch)
+				return;
+
+			if(!entity.IsHero || !entity.IsInPlay) return;
+
+			if(entity.IsControlledBy(game.Player.Id))
+			{
+				gameState.GameHandler?.HandlePlayerMaxHealthChange(value);
+			}
+			else if(entity.IsControlledBy(game.Opponent.Id))
+			{
+				gameState.GameHandler?.HandleOpponentMaxHealthChange(value);
+			}
+
+		}
+
+		// In Traditional Hearthstone, Resources is Mana
+		private void MaxResourcesChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			if(!game.IsTraditionalHearthstoneMatch)
+				return;
+
+			if(entity.IsControlledBy(game.Player.Id) || id == game.Player.Id)
+			{
+				gameState.GameHandler?.HandlePlayerMaxManaChange(value);
+			}
+			else if(entity.IsControlledBy(game.Opponent.Id) || id == game.Opponent.Id)
+			{
+				gameState.GameHandler?.HandleOpponentMaxManaChange(value);
+			}
+		}
+
+		private void MaxHandSizeChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			if(!game.IsTraditionalHearthstoneMatch)
+				return;
+
+			if(entity.IsControlledBy(game.Player.Id) || id == game.Player.Id)
+			{
+				gameState.GameHandler?.HandlePlayerMaxHandSizeChange(value);
+			}
+			else if(entity.IsControlledBy(game.Opponent.Id) || id == game.Opponent.Id)
+			{
+				gameState.GameHandler?.HandleOpponentMaxHandSizeChange(value);
+			}
 		}
 
 		private void OnForgeRevealed(IHsGameState gameState, int id, IGame game, int value, int prevValue)

@@ -1149,6 +1149,42 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentFatigue.Execute(currentDamage);
 		}
 
+		public void HandlePlayerMaxHealthChange(int value)
+		{
+			_game.Player.MaxHealth = value;
+			Core.UpdatePlayerResourcesWidget();
+		}
+
+		public void HandleOpponentMaxHealthChange(int value)
+		{
+			_game.Opponent.MaxHealth = value;
+			Core.UpdateOpponentResourcesWidget();
+		}
+
+		public void HandlePlayerMaxManaChange(int value)
+		{
+			_game.Player.MaxMana = value;
+			Core.UpdatePlayerResourcesWidget();
+		}
+
+		public void HandleOpponentMaxManaChange(int value)
+		{
+			_game.Opponent.MaxMana = value;
+			Core.UpdateOpponentResourcesWidget();
+		}
+
+		public void HandlePlayerMaxHandSizeChange(int value)
+		{
+			_game.Player.MaxHandSize = value;
+			Core.UpdatePlayerResourcesWidget();
+		}
+
+		public void HandleOpponentMaxHandSizeChange(int value)
+		{
+			_game.Opponent.MaxHandSize = value;
+			Core.UpdateOpponentResourcesWidget();
+		}
+
 		public void HandleBeginMulligan()
 		{
 			var isConstructed = _game.IsConstructedMatch;
@@ -2442,6 +2478,12 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentPlayToDeck(Entity entity, string? cardId, int turn) => HandleOpponentPlayToDeck(entity, cardId, turn);
 		void IGameHandler.HandlePlayerFatigue(int currentDamage) => HandlePlayerFatigue(currentDamage);
 		void IGameHandler.HandleOpponentFatigue(int currentDamage) => HandleOpponentFatigue(currentDamage);
+		void IGameHandler.HandlePlayerMaxHealthChange(int value) => HandlePlayerMaxHealthChange(value);
+		void IGameHandler.HandleOpponentMaxHealthChange(int value) => HandleOpponentMaxHealthChange(value);
+		void IGameHandler.HandlePlayerMaxManaChange(int value) => HandlePlayerMaxManaChange(value);
+		void IGameHandler.HandleOpponentMaxManaChange(int value) => HandleOpponentMaxManaChange(value);
+		void IGameHandler.HandlePlayerMaxHandSizeChange(int value) => HandlePlayerMaxHandSizeChange(value);
+		void IGameHandler.HandleOpponentMaxHandSizeChange(int value) => HandleOpponentMaxHandSizeChange(value);
 		void IGameHandler.HandlePlayerLibramReduction(int value) => HandlePlayerLibramReduction(value);
 		void IGameHandler.HandleOpponentLibramReduction(int value) => HandleOpponentLibramReduction(value);
 		void IGameHandler.HandlePlayerHandCostReduction(int value) => HandlePlayerHandCostReduction(value);

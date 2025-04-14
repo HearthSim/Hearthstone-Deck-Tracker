@@ -41,6 +41,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.PlayerResourcesWidget;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Overlay;
@@ -111,6 +112,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public ConstructedMulliganGuidePreLobbyViewModel ConstructedMulliganGuidePreLobbyViewModel { get; } = new();
 		public ConstructedMulliganGuideViewModel ConstructedMulliganGuideViewModel { get; } = new();
+		public PlayerResourcesViewModel PlayerResourcesViewModel { get; } = new();
+		public PlayerResourcesViewModel OpponentResourcesViewModel { get; } = new();
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
 		public Tier7PreLobbyViewModel Tier7PreLobbyViewModel { get; } = new Tier7PreLobbyViewModel();
@@ -815,6 +818,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void HideLinkOpponentDeckDisplay()
 		{
 			LinkOpponentDeckDisplay.Hide(true);
+		}
+
+		internal void UpdatePlayerResourcesWidget(int maxHealth, int maxMana, int maxHandSize)
+		{
+			PlayerResourcesViewModel.UpdatePlayerResourcesWidget(maxHealth, maxMana, maxHandSize);
+		}
+
+		internal void UpdateOpponentResourcesWidget(int maxHealth, int maxMana, int maxHandSize)
+		{
+			OpponentResourcesViewModel.UpdatePlayerResourcesWidget(maxHealth, maxMana, maxHandSize);
+		}
+
+		internal void ResetPlayerResourcesWidgets(int maxHealth, int maxMana, int maxHandSize)
+		{
+			PlayerResourcesViewModel.Initialize(maxHealth, maxMana, maxHandSize);
+			OpponentResourcesViewModel.Initialize(maxHealth, maxMana, maxHandSize);
 		}
 
 		internal void ShowBobsBuddyPanel()

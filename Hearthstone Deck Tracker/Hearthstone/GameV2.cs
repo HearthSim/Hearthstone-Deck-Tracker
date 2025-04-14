@@ -422,6 +422,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				Core.UpdatePlayerCards(true);
 				Core.UpdateOpponentCards(true);
+				Core.ResetPlayerResourcesWidgets();
 			}
 		}
 

@@ -140,6 +140,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_movableElements.Add(OpponentActiveEffects, new ResizeGrip());
 			_movableElements.Add(PlayerCounters, new ResizeGrip());
 			_movableElements.Add(OpponentCounters, new ResizeGrip());
+			_movableElements.Add(PlayerResourcesWidget, new ResizeGrip());
+			_movableElements.Add(OpponentResourcesWidget, new ResizeGrip());
 			_movableElements.Add(LblPlayerTurnTime, new ResizeGrip());
 			_movableElements.Add(BattlegroundsSessionStackPanel, new ResizeGrip());
 

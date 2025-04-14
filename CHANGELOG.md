@@ -1,5 +1,6 @@
 ## Unreleased
 **Hearthstone**:
+- Added a Max Resources widget displaying players' Max Health, Mana, and Hand Size when they are changed.
 - Added counters for Flickering Lightbot and SeaShanty.
 - Added Related Cards Tooltips to Twisted Webweaver.
 

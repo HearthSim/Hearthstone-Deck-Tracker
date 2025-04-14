@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -154,6 +155,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 			Config.Instance.Reset(nameof(Config.OpponentCountersHorizontal));
 			Config.Instance.Reset(nameof(Config.OpponentCountersVertical));
+
+			Config.Instance.Reset(nameof(Config.PlayerMaxResourcesHorizontal));
+			Config.Instance.Reset(nameof(Config.PlayerMaxResourcesVertical));
+
+			Config.Instance.Reset(nameof(Config.OpponentMaxResourcesHorizontal));
+			Config.Instance.Reset(nameof(Config.OpponentMaxResourcesVertical));
 
 			Config.Instance.Reset(nameof(Config.AttackIconPlayerHorizontalPosition));
 			Config.Instance.Reset(nameof(Config.AttackIconPlayerVerticalPosition));
