@@ -1,5 +1,6 @@
 ## Unreleased
 **Hearthstone**:
+- Fixed an issue where opponent's max resources would display on player's side of the screen.
 - Fixed an issue where the max resources widget would cover Druid Imbue Hero Power number of spells played.
 
 ## **Release v1.43.6 - 2025-04-15**

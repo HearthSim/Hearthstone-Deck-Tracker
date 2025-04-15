@@ -541,11 +541,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.IsTraditionalHearthstoneMatch)
 				return;
 
-			if(entity.IsControlledBy(game.Player.Id) || id == game.Player.Id)
+			if(entity.IsControlledBy(game.Player.Id))
 			{
 				gameState.GameHandler?.HandlePlayerMaxManaChange(value);
 			}
-			else if(entity.IsControlledBy(game.Opponent.Id) || id == game.Opponent.Id)
+			else if(entity.IsControlledBy(game.Opponent.Id))
 			{
 				gameState.GameHandler?.HandleOpponentMaxManaChange(value);
 			}
@@ -561,11 +561,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.IsTraditionalHearthstoneMatch)
 				return;
 
-			if(entity.IsControlledBy(game.Player.Id) || id == game.Player.Id)
+			if(entity.IsControlledBy(game.Player.Id))
 			{
 				gameState.GameHandler?.HandlePlayerMaxHandSizeChange(value);
 			}
-			else if(entity.IsControlledBy(game.Opponent.Id) || id == game.Opponent.Id)
+			else if(entity.IsControlledBy(game.Opponent.Id))
 			{
 				gameState.GameHandler?.HandleOpponentMaxHandSizeChange(value);
 			}
