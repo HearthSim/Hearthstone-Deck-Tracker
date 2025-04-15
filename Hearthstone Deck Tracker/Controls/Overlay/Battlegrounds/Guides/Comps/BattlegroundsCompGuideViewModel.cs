@@ -142,10 +142,11 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 
 	public ICommand ShowExampleBoardsCommand => new Command(() =>
 	{
+		var availableCardIds = GetAvailableCardIds();
 		var cards = CompGuide.CoreCards.Select(cardId =>
 		{
 			var card = Database.GetCardFromDbfId(cardId, false);
-			if(card == null)
+			if(card == null || !availableCardIds.Contains(card.DbfId))
 				return null;
 
 			card.BaconCard = true;
