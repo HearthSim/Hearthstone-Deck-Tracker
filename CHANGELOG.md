@@ -1,4 +1,4 @@
-## **Release v1.43.5 - 2025-04-15**
+## **Release v1.43.6 - 2025-04-15**
 **Hearthstone**:
 - Added a Max Resources widget displaying players' Max Health, Mana, and Hand Size when they are changed.
 - Added counters for Flickering Lightbot and SeaShanty.
