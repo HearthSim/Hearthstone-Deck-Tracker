@@ -1,3 +1,7 @@
+## Unreleased
+**Hearthstone**:
+- Fixed an issue where the max resources widget would cover Druid Imbue Hero Power number of spells played.
+
 ## **Release v1.43.6 - 2025-04-15**
 **Hearthstone**:
 - Added a Max Resources widget displaying players' Max Health, Mana, and Hand Size when they are changed.

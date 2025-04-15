@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 		private const double CardHeight = 0.39;
 		private const double CardAspectRatio = 28 / (CardHeight * 100);
 
-		private const double HeroPowerHeight = 0.34;
+		private const double HeroPowerHeight = 0.42;
 		private const double HeroPowerAspectRatio = 24 / (HeroPowerHeight * 100);
 
 		private const double EnchantHeightFactor = 0.07;
