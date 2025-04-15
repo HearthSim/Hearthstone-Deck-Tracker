@@ -1,8 +1,11 @@
-## Unreleased
+## **Release v1.43.5 - 2025-04-15**
 **Hearthstone**:
 - Added a Max Resources widget displaying players' Max Health, Mana, and Hand Size when they are changed.
 - Added counters for Flickering Lightbot and SeaShanty.
 - Added Related Cards Tooltips to Twisted Webweaver.
+
+**Battlegrounds**:
+- Fixed an issue where Inspiration would accept not available minion types.
 
 ## **Release v1.43.4 - 2025-04-04**
 **Updated for Hearthstone 32.0.3**
