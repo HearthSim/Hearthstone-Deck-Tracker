@@ -299,7 +299,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							{
 								gameState.TriangulatePlayed = true;
 							}
+						}
 
+						if(gameState.CurrentBlock is { CardId: Collectible.Priest.Repackage } &&
+						   entity.CardId == NonCollectible.Priest.Repackage_RepackagedBoxToken)
+						{
+							entity.Info.StoredCardIds.AddRange(gameState.MinionsInPlay);
+							if(entity.IsControlledBy(game.Opponent.Id))
+							{
+								entity.Info.GuessedCardState = GuessedCardState.Guessed;
+							}
 						}
 
 					}
@@ -1193,6 +1202,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									{
 										AddKnownCardId(gameState, card);
 									}
+								}
+								break;
+							case NonCollectible.Priest.Repackage_RepackagedBoxToken:
+								foreach(var card in actionStartingEntity?.Info.StoredCardIds ?? new List<string>())
+								{
+									AddKnownCardId(gameState, card);
 								}
 								break;
 							case Collectible.Demonhunter.XortothBreakerOfStars:

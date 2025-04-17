@@ -600,7 +600,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Hidden = false;
 			entity.Info.Turn = turn;
 			entity.Info.CostReduction = 0;
-			if(entity.CardId != NonCollectible.Neutral.PhotographerFizzle_FizzlesSnapshotToken && !CardUtils.IsStarship(entity.CardId))
+			if(entity.CardId != NonCollectible.Neutral.PhotographerFizzle_FizzlesSnapshotToken &&
+			   entity.CardId != NonCollectible.Priest.Repackage_RepackagedBoxToken &&
+			   !CardUtils.IsStarship(entity.CardId))
 			{
 				entity.Info.StoredCardIds.Clear();
 			}
@@ -707,7 +709,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Returned = true;
 			entity.Info.DrawerId = null;
 			entity.Info.Hidden = true;
-			if(entity.CardId != NonCollectible.Neutral.PhotographerFizzle_FizzlesSnapshotToken && !CardUtils.IsStarship(entity.CardId))
+			if(entity.CardId != NonCollectible.Neutral.PhotographerFizzle_FizzlesSnapshotToken &&
+			   entity.CardId != NonCollectible.Priest.Repackage_RepackagedBoxToken &&
+			   !CardUtils.IsStarship(entity.CardId))
 			{
 				entity.Info.StoredCardIds.Clear();
 			}

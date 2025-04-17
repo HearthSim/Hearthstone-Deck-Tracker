@@ -779,6 +779,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
 			}
+
+
+			if((Zone)value == PLAY)
+			{
+				if(game.Entities.TryGetValue(id, out var e) && (e?.IsMinion ?? false))
+				{
+					gameState.MinionsInPlay.Add(e.CardId ?? "");
+					if(gameState.MinionsInPlayByPlayer.TryGetValue(e.GetTag(CONTROLLER), out var minions))
+					{
+						minions.Add(e.CardId ?? "");
+					}
+					else
+					{
+						gameState.MinionsInPlayByPlayer.Add(e.GetTag(CONTROLLER), new List<string> { e.CardId ?? "" });
+					}
+				}
+			}
 		}
 
 		// The last heropower is created after the last hero, therefore +1
@@ -928,6 +945,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					break;
 				case PLAY:
 					break;
+			}
+
+			if((Zone)value != PLAY)
+			{
+				if(game.Entities.TryGetValue(id, out var e) && (e?.IsMinion ?? false))
+				{
+					gameState.MinionsInPlay.Remove(e.CardId ?? "");
+					if(gameState.MinionsInPlayByPlayer.TryGetValue(e.GetTag(CONTROLLER), out var minions))
+					{
+						minions.Remove(e.CardId ?? "");
+					}
+				}
 			}
 		}
 
