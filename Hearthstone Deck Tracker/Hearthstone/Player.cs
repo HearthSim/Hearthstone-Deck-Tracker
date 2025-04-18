@@ -130,7 +130,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 																&& x.IsPlayableCard
 																&& (!x.IsInDeck || x.Info.Stolen)
 																&& x.Info.OriginalController == Id
-																&& !(x.Info.Hidden && (x.IsInDeck || x.IsInHand))).ToList();
+																&& !x.Info.Hidden).ToList();
 
 			var originalSideboards = DeckList.Instance.ActiveDeckVersion?.Sideboards;
 
@@ -242,7 +242,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 																&& x.IsPlayableCard
 																&& (!x.IsInDeck || x.Info.Stolen)
 																&& x.Info.OriginalController == Id
-																&& !(x.Info.Hidden && (x.IsInDeck || x.IsInHand))).ToList();
+																&& !x.Info.Hidden).ToList();
 			var removedFromDeck = new List<string>();
 			foreach(var e in revealedNotInDeck)
 			{
@@ -428,7 +428,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(KnownOpponentDeck == null)
 			{
 				return RevealedEntities.Where(x =>
-										!(x.Info.GuessedCardState == GuessedCardState.None && x.Info.Hidden && (x.IsInDeck || x.IsInHand))
+										!(x.Info.GuessedCardState == GuessedCardState.None && x.Info.Hidden)
 										&& (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
 										&& (x.GetTag(GameTag.CREATOR) == 1
 											|| ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))

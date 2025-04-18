@@ -251,6 +251,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
+						if(gameState.CurrentBlock is { CardId: Collectible.Warlock.WheelOfDeath })
+						{
+							entity.Info.Hidden = true;
+						}
+						else
+						{
+							entity.Info.Hidden = false;
+						}
 						if(entity.CardId is Collectible.Neutral.PrinceRenathalCorePlaceholder or
 						   Collectible.Neutral.PrinceRenathal or
 						   Collectible.Warrior.SporeEmpressMoldara or
