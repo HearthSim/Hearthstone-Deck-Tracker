@@ -251,7 +251,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-						if(gameState.CurrentBlock is { CardId: Collectible.Warlock.WheelOfDeath })
+						if(gameState.CurrentBlock is { HideShowEntities: true })
 						{
 							entity.Info.Hidden = true;
 						}
@@ -446,6 +446,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					game.Player.ShuffleDeck();
 					gameState.GameHandler?.HandlePlayerDredge();
 				}
+			}
+			else if(logLine.Contains("META_DATA - Meta=OVERRIDE_HISTORY"))
+			{
+				if(gameState.CurrentBlock != null)
+					gameState.CurrentBlock.HideShowEntities = true;
 			}
 
 			if(logLine.Contains("End Spectator") && !game.IsInMenu)

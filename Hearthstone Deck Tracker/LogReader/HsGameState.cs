@@ -119,6 +119,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public List<(Entity entity, HashSet<int> ids)> EntitiesCreatedInDeck { get; } = new();
 
 		public bool IsTradeableAction { get; set; }
+		public bool HideShowEntities { get; set; }
 
 		public Block(Block? parent, int blockId, string? type, string? cardId, string? target)
 		{
