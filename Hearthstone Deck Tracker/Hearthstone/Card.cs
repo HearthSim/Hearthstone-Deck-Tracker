@@ -12,6 +12,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -110,8 +111,39 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				// Get related cards from Entity
 				if (relatedCards.IsEmpty())
 				{
-					foreach(var entity in ControllerPlayer.Deck.Where(x => x.CardId == Id))
+					IEnumerable<Entity> entities;
+					var wasPlayed = ControllerPlayer == Core.Game.Player ? Count == 0 || Jousted : !( Count == 0 || Jousted);
+
+					if(!wasPlayed)
+					{
+						var entitiesInDeck = ControllerPlayer.Deck.Where(x => x.CardId == Id);
+						var entitiesInHand = ControllerPlayer.Hand.Where(x => x.CardId == Id && x.Info.Hidden);
+						entities = entitiesInDeck.Concat(entitiesInHand).OrderBy(x => x.Id);
+					}
+					else
+					{
+						var entitiesInGraveyard = ControllerPlayer.Graveyard.Where(x => x.CardId == Id);
+						var entitiesInSeatside = ControllerPlayer.SetAside.Where(x => x.CardId == Id);
+						var entitesInBoard = ControllerPlayer.Board.Where(x => x.CardId == Id);
+						entities = entitiesInGraveyard.Concat(entitiesInSeatside).Concat(entitesInBoard).OrderBy(x => x.Id);
+					}
+
+					var multiple = false;
+					foreach(var entity in entities)
+					{
+						var storedCards = entity.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull();
+						if(storedCards.IsEmpty())
+						{
+							continue;
+						}
+						// Since we group them, we add an image of the card to separate the related cards
+						if(multiple)
+						{
+							relatedCards.Add(this);
+						}
 						relatedCards.AddRange(entity.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull());
+						multiple = true;
+					}
 				}
 
 				if(relatedCards.IsEmpty())

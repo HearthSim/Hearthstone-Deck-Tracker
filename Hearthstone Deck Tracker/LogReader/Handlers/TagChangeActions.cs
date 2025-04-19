@@ -786,14 +786,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(game.Entities.TryGetValue(id, out var e) && (e?.IsMinion ?? false))
 				{
 					gameState.MinionsInPlay.Add(e.CardId ?? "");
-					if(gameState.MinionsInPlayByPlayer.TryGetValue(e.GetTag(CONTROLLER), out var minions))
-					{
-						minions.Add(e.CardId ?? "");
-					}
-					else
-					{
-						gameState.MinionsInPlayByPlayer.Add(e.GetTag(CONTROLLER), new List<string> { e.CardId ?? "" });
-					}
 				}
 			}
 		}
@@ -952,10 +944,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(game.Entities.TryGetValue(id, out var e) && (e?.IsMinion ?? false))
 				{
 					gameState.MinionsInPlay.Remove(e.CardId ?? "");
-					if(gameState.MinionsInPlayByPlayer.TryGetValue(e.GetTag(CONTROLLER), out var minions))
-					{
-						minions.Remove(e.CardId ?? "");
-					}
 				}
 			}
 		}

@@ -46,6 +46,5 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		bool TriangulatePlayed { get; set; }
 		List<int?> StarshipLauchBlockIds { get; }
 		List<string> MinionsInPlay { get; }
-		Dictionary<int, List<string>> MinionsInPlayByPlayer { get; }
 	}
 }
