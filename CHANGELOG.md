@@ -1,3 +1,9 @@
+## **Unreleased**
+**Hearthstone**:
+- Added tracking for Repackage Box.
+- Added related card tooltips for Brillant Macaw and Contraband Stash.
+- Fixed an issue where cards destroyed by Wheel of Death!!! and The 8 Hands from Beyond appeared on opponent's decklist.
+
 ## **Release v1.43.7 - 2025-04-16**
 **Hearthstone**:
 - Fixed an issue where opponent's max resources would display on player's side of the screen.
