@@ -44,7 +44,7 @@ if (!(Test-Path "$cert")) {
 
 # Sign and zip up portable build
 if (!$dev) {
-    & $signtool sign /tr "http://timestamp.digicert.com" /a /f $cert /p $Env:CERT_PASSWORD "$hdtReleaseDir\HDTUpdate.exe" "$hdtReleaseDir\HDTUninstaller.exe" "$hdtReleaseDir\Hearthstone Deck Tracker.exe" | Out-Default
+    & $signtool sign /tr "http://timestamp.digicert.com" /td SHA256 /a /f $cert /p $Env:CERT_PASSWORD "$hdtReleaseDir\HDTUpdate.exe" "$hdtReleaseDir\HDTUninstaller.exe" "$hdtReleaseDir\Hearthstone Deck Tracker.exe" | Out-Default
     Set-Location $buildDir
     7z a -r -mx9 "$output\Hearthstone.Deck.Tracker-v$packageVersion.zip" "Hearthstone Deck Tracker"
 }
@@ -68,9 +68,9 @@ foreach ($asset in $json.assets) {
 nuget pack "$PSScriptRoot\hdt.nuspec" -Version $packageVersion -Properties Configuration=Release -OutputDirectory "$buildDir\SquirrelNu"
 $icon = "$buildDir\Squirrel\Images\HearthstoneDeckTracker.ico"
 $nupkg = "$buildDir\SquirrelNu\HearthstoneDeckTracker.$packageVersion.nupkg"
-$certInfo = "/tr http://timestamp.digicert.com /a /f $cert /p $Env:CERT_PASSWORD"
+$certInfo = "/tr http://timestamp.digicert.com /td SHA256 /a /f $cert /p $Env:CERT_PASSWORD"
 & $squirrel --releasify $nupkg --releaseDir=$output --setupIcon=$icon --icon=$icon --no-msi -n $certInfo --framework-version=net472 | Out-Default
-& $signtool sign /tr "http://timestamp.digicert.com" /a /f $cert /p $Env:CERT_PASSWORD "$output\Setup.exe" | Out-Default
+& $signtool sign /tr "http://timestamp.digicert.com" /td SHA256 /a /f $cert /p $Env:CERT_PASSWORD "$output\Setup.exe" | Out-Default
 Move-Item "$output\Setup.exe" "$output\HDT-Installer.exe"
 
 # Cleanup
