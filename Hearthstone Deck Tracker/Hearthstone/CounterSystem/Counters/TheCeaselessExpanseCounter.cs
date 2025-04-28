@@ -41,6 +41,8 @@ public class TheCeaselessExpanseCounter: NumericCounter
 		if(!Game.IsMulliganDone)
 			return;
 
+		var currentBlock = gameState.CurrentBlock;
+
 		if(tag != GameTag.ZONE) return;
 
 		switch (prevValue)
@@ -49,8 +51,9 @@ public class TheCeaselessExpanseCounter: NumericCounter
 			case (int)Zone.DECK when value == (int)Zone.HAND:
 				Counter++;
 				return;
-			// card was played
-			case (int)Zone.HAND when value == (int)Zone.PLAY:
+			// card was played.
+			// Need to check the block type because a card can go from hand to play by other means (dirty rat, voidcaller, ...)
+			case (int)Zone.HAND when value == (int)Zone.PLAY && currentBlock?.Type == "PLAY":
 				Counter++;
 				return;
 			case (int)Zone.HAND when value == (int)Zone.SECRET:
@@ -61,6 +64,10 @@ public class TheCeaselessExpanseCounter: NumericCounter
 				Counter++;
 				return;
 			case (int)Zone.DECK when value == (int)Zone.GRAVEYARD && entity.Info.GuessedCardState != GuessedCardState.None:
+				Counter++;
+				return;
+			// paladin auras count as destroyed when they expire
+			case (int)Zone.SECRET when value == (int)Zone.GRAVEYARD && currentBlock?.Type == "TRIGGER" && !entity.IsSecret:
 				Counter++;
 				return;
 		}
