@@ -1,8 +1,9 @@
-## **Unreleased**
+## **Release v1.43.8 - 2025-04-28**
 **Hearthstone**:
 - Added tracking for Repackage Box.
 - Added related card tooltips for Brillant Macaw and Contraband Stash.
 - Fixed an issue where cards destroyed by Wheel of Death!!! and The 8 Hands from Beyond appeared on opponent's decklist.
+- Fixed The Ceaseless Expanse counter not being accurate in some edge cases (Paladin Auras and Dirty Rat).
 
 ## **Release v1.43.7 - 2025-04-16**
 **Hearthstone**:
