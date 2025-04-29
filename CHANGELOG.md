@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed an issue where Emerald Portals shuffled by Paladin Imbue Hero Power were not appearing in the decklist.
+
 ## **Release v1.43.8 - 2025-04-28**
 **Hearthstone**:
 - Added tracking for Repackage Box.
