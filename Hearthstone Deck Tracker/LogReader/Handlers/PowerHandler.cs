@@ -251,7 +251,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-						if(gameState.CurrentBlock is { HideShowEntities: true })
+						if(gameState.CurrentBlock is { HideShowEntities: true } && !entity.HasTag(GameTag.DISPLAYED_CREATOR))
 						{
 							entity.Info.Hidden = true;
 						}
