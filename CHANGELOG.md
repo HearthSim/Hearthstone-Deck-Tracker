@@ -1,6 +1,11 @@
-## **Unreleased**
+## **Release v1.44.0 - 2025-04-29**
+**Updated for Hearthstone 32.2.0**
+
 **Hearthstone**:
 - Fixed an issue where Emerald Portals shuffled by Paladin Imbue Hero Power were not appearing in the decklist.
+
+**Bob's Buddy**:
+- Fixed an issue where Teammate counters would, sometimes, override the player's during simulations.
 
 ## **Release v1.43.8 - 2025-04-28**
 **Hearthstone**:
