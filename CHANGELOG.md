@@ -1,3 +1,8 @@
+## **Unreleased**
+**Hearthstone**:
+- Add card highlights for *Embers of the World Tree* Mini-Set cards: \
+   *Living Flame, Searing Reflection*
+
 ## **Release v1.44.0 - 2025-04-29**
 **Updated for Hearthstone 32.2.0**
 
