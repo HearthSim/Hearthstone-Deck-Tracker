@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Windows.Media.Imaging;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Utility.Assets
 {
@@ -58,9 +59,18 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			{
 				cardImageDownloader = new AssetDownloader<Hearthstone.Card, BitmapImage>(
 					Path.Combine(Config.AppDataPath, "Images", "CardImages"),
-					card => $"https://art.hearthstonejson.com/v1/{(card.BaconCard ? "bgs" : "render")}/latest" +
-					        $"/{Helper.GetCardLanguage()}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}" +
-					        $"/{card.Id}{(card.BaconTriple ? "_triple" : "")}.png",
+					card =>
+					{
+
+						var quality = Config.Instance.HighResolutionCardImages ? "512x" : "256x";
+						if(CardType.BATTLEGROUND_TRINKET.Equals(card.Type))
+						{
+							quality = "orig";
+						}
+
+						return
+							$"https://art.hearthstonejson.com/v1/{(card.BaconCard ? "bgs" : "render")}/latest/{Helper.GetCardLanguage()}/{quality}/{card.Id}{(card.BaconTriple ? "_triple" : "")}.png";
+					},
 					card => $"{card.Id}{(card.BaconTriple ? "_triple" : "")}.png",
 					Helper.BitmapImageFromBytes,
 					maxCacheSize: 200,
