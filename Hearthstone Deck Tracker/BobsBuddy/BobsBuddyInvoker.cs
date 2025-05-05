@@ -695,8 +695,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_input == null || State != BobsBuddyState.Combat)
 				return;
 
-			// Only allow feathermane for now.
-			if(copy.CardId != NonCollectible.Neutral.FreeFlyingFeathermane && copy.CardId != NonCollectible.Neutral.FreeFlyingFeathermane_FreeFlyingFeathermane)
+			// Only allow feathermane and Flighty Scout for now.
+			if(
+				copy.CardId != NonCollectible.Neutral.FreeFlyingFeathermane &&
+				copy.CardId != NonCollectible.Neutral.FreeFlyingFeathermane_FreeFlyingFeathermane &&
+				copy.CardId != NonCollectible.Neutral.FlightyScout &&
+				copy.CardId != NonCollectible.Neutral.FlightyScout_FlightyScout
+			)
 				return;
 
 			_opponentHandMap[entity] = copy;
