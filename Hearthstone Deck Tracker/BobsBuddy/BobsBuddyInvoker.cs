@@ -505,10 +505,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			foreach(var trinket in gamePlayer.Trinkets)
 			{
-				if(trinket.CardId != null)
-				{
-					inputPlayer.Trinkets.Add(simulator.TrinketFactory.Create(trinket.CardId, friendly));
-				}
+				inputPlayer.Trinkets.Add(GetTrinketFromEntity(simulator.TrinketFactory, friendly, trinket));
 			}
 
 			foreach(var objective in gamePlayer.Objectives)

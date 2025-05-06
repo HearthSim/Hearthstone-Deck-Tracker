@@ -158,13 +158,28 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return minion;
 		}
 
+		private static void SetScriptDataProperties(dynamic item, Entity entity)
+		{
+			var scriptDataNum1 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			var scriptDataNum2 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+			if(scriptDataNum1 > 0)
+				item.ScriptDataNum1 = scriptDataNum1;
+			if(scriptDataNum2 > 0)
+				item.ScriptDataNum2 = scriptDataNum2;
+		}
+
 		internal static Objective GetObjectiveFromEntity(ObjectiveFactory factory, bool player, Entity entity)
 		{
 			var objective = factory.Create(entity.CardId ?? "", player);
-			var scriptDataNum = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-			if(scriptDataNum > 0)
-				objective.ScriptDataNum1 = scriptDataNum;
+			SetScriptDataProperties(objective, entity);
 			return objective;
+		}
+
+		internal static Trinket GetTrinketFromEntity(TrinketFactory factory, bool player, Entity entity)
+		{
+			var trinket = factory.Create(entity.CardId ?? "", player);
+			SetScriptDataProperties(trinket, entity);
+			return trinket;
 		}
 
 		internal static bool WasHeroPowerActivated(Entity? heroPower)
