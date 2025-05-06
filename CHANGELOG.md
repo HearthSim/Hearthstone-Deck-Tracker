@@ -1,7 +1,18 @@
-## **Unreleased**
+## **Release v1.44.1 - 2025-05-06**
 **Hearthstone**:
 - Add card highlights for *Embers of the World Tree* Mini-Set cards: \
    *Living Flame, Searing Reflection*
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Vashjir Anemone.
+- Fixed incorrect simulation results due to Fleeting Vigor.
+- Fixed incorrect simulation results due to Eclectic Shrine.
+- Fixed incorrect simulation results due to Faerie Dragon Scale.
+- Fixed incorrect simulation results due to Fire Forged Evoker.
+- Fixed incorrect simulation results due to Corrupted Bristler.
+- Fixed incorrect simulation results due to Glowgullet Warlord.
+- Fixed incorrect simulation results due to Flighty Scout.
+- Fixed an issue where Trinkets extra data would not always be present.
 
 ## **Release v1.44.0 - 2025-04-29**
 **Updated for Hearthstone 32.2.0**
