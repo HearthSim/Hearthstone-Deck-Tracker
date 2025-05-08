@@ -218,6 +218,24 @@ public class BattlegroundsDb
 		return cards;
 	}
 
+	public List<Card> GetSpells(bool isDuos)
+	{
+		var allSpells = new List<Card>();
+
+		foreach (var tierEntry in _spellsByTier)
+		{
+			allSpells.AddRange(tierEntry.Value);
+		}
+
+		var exclusiveSpellsDict = isDuos ? _duosExclusiveSpellsByTier : _solosExclusiveSpellsByTier;
+		foreach (var tierEntry in exclusiveSpellsDict)
+		{
+			allSpells.AddRange(tierEntry.Value);
+		}
+
+		return allSpells;
+	}
+
 	public List<Card> GetSpells(int tier, bool isDuos)
 	{
 		var spells = (

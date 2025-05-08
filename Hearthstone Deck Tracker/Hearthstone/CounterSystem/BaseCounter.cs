@@ -8,6 +8,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
 
@@ -88,6 +89,26 @@ public abstract class BaseCounter : INotifyPropertyChanged
 			.ToArray();
 	}
 
+	private readonly string[] _alwaysAvailableCards = {
+		HearthDb.CardIds.NonCollectible.Neutral.BoonofBeetles_BeetleToken1,
+		HearthDb.CardIds.NonCollectible.Neutral.BloodGem1,
+	};
+
+	private HashSet<int>? _availableCardIds;
+	private HashSet<int> GetAvailableCardIds()
+	{
+		if (_availableCardIds == null)
+		{
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+			var currentRaces = new HashSet<Race>(availableRaces.Concat(new[] { Race.ALL, Race.INVALID }));
+			var availableCards = BattlegroundsDbSingleton.Instance.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch)
+				.Concat(BattlegroundsDbSingleton.Instance.GetSpells(Core.Game.IsBattlegroundsDuosMatch));
+
+			_availableCardIds = new HashSet<int>(availableCards.Select(card => card.DbfId));
+		}
+		return _availableCardIds;
+	}
+
 	public IEnumerable<Card> CardsToDisplay
 	{
 		get
@@ -97,6 +118,14 @@ public abstract class BaseCounter : INotifyPropertyChanged
 				var card = Database.GetCardFromId(cardId);
 				if(card == null)
 					continue;
+
+				if(
+					IsBattlegroundsCounter &&
+					!GetAvailableCardIds().Contains(card.DbfId) &&
+					!_alwaysAvailableCards.Contains(cardId)
+				)
+					continue;
+
 				card.BaconCard = IsBattlegroundsCounter;
 				yield return card;
 			}
