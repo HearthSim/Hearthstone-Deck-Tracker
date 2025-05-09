@@ -1,3 +1,16 @@
+## **Release v1.44.2 - 2025-05-09**
+**Battlegrounds**:
+- Added a counter for Tavern Spell Buffs.
+- Added a counter for Extra Gold Next Turn.
+- Added a counter for Free Refreshes.
+- Added a counter for Elementals Tavern Buffs.
+- Added a counter for Elementals Extra Stats.
+- Improved the Counter system to filter unavailable cards.
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results in Duos due to Flighty Scout.
+- Fixed incorrect simulation results due to Runed Progenitor.
+
 ## **Release v1.44.1 - 2025-05-06**
 **Hearthstone**:
 - Add card highlights for *Embers of the World Tree* Mini-Set cards: \
