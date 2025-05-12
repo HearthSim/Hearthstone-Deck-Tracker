@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Added related card tooltips for Shaladrassil.
+
 ## **Release v1.44.2 - 2025-05-09**
 **Battlegrounds**:
 - Added a counter for Tavern Spell Buffs.
