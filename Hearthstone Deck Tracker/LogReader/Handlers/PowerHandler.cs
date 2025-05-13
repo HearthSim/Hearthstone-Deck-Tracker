@@ -259,12 +259,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							entity.Info.Hidden = false;
 						}
+						// Cards that are revealed at the start of the game
 						if(entity.CardId is Collectible.Neutral.PrinceRenathalCorePlaceholder or
 						   Collectible.Neutral.PrinceRenathal or
+						   Collectible.Neutral.YseraEmeraldAspect or
+						   Collectible.Priest.DarkbishopBenedictus or
+						   Collectible.Priest.DarkbishopBenedictusCorePlaceholder or
 						   Collectible.Warrior.SporeEmpressMoldara or
 						   NonCollectible.Warrior.SporeEmpressMoldara_ReplicatingSporeToken)
 						{
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
+							entity.Info.Hidden = true;
 							Core.UpdateOpponentCards();
 						}
 						if(entity.Info.DeckIndex < 0 && gameState.CurrentBlock != null && gameState.CurrentBlock.SourceEntityId != 0)

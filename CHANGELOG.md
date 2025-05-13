@@ -1,6 +1,7 @@
 ## **Unreleased**
 **Hearthstone**:
 - Added related card tooltips for Shaladrassil.
+- Fixed an issue where cards with a "Start of the Game" effect were sometimes revealed in the opponent's hand.
 
 ## **Release v1.44.2 - 2025-05-09**
 **Battlegrounds**:
