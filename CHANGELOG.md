@@ -1,7 +1,10 @@
-## **Unreleased**
+## **Release v1.44.3 - 2025-05-13**
 **Hearthstone**:
 - Added related card tooltips for Shaladrassil.
 - Fixed an issue where cards with a "Start of the Game" effect were sometimes revealed in the opponent's hand.
+
+**Battlegrounds**:
+- Updated Bob's Buddy for Hearthstone 32.2.2.
 
 ## **Release v1.44.2 - 2025-05-09**
 **Battlegrounds**:
