@@ -98,6 +98,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool TriangulatePlayed { get; set; }
 		public List<int?> StarshipLauchBlockIds { get; } = new();
 		public List<string> MinionsInPlay { get; } = new();
+
+		public bool IsInsideMetaDataHistoryTarget { get; set; }
+
 	}
 
 	public class Block

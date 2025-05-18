@@ -343,6 +343,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool HasOutstandingTagChanges { get; set; }
 		public int OriginalController { get; set; }
 		public bool Hidden { get; set; }
+
+		public bool RevealedOnHistory { get; set; }
 		public int CostReduction { get; set; }
 		public bool Forged { get; set; }
 		public Zone? OriginalZone { get; set; }

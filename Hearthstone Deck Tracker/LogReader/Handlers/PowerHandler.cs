@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
+			var isInsideMetaDataHistoryTarget = false;
 			var creationTag = false;
 			if(GameEntityRegex.IsMatch(logLine))
 			{
@@ -251,7 +252,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-						if(gameState.CurrentBlock is { HideShowEntities: true } && !entity.HasTag(GameTag.DISPLAYED_CREATOR))
+						if(gameState.CurrentBlock is { HideShowEntities: true }
+						   && !entity.Info.RevealedOnHistory
+						   && !entity.HasTag(GameTag.DISPLAYED_CREATOR))
 						{
 							entity.Info.Hidden = true;
 						}
@@ -457,6 +460,36 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(gameState.CurrentBlock != null)
 					gameState.CurrentBlock.HideShowEntities = true;
 			}
+			else if(logLine.Contains("META_DATA - Meta=HISTORY_TARGET"))
+			{
+				gameState.IsInsideMetaDataHistoryTarget = true;
+				isInsideMetaDataHistoryTarget = true;
+			}
+			else if(MetaInfoRegex.IsMatch(logLine))
+			{
+				if(gameState.IsInsideMetaDataHistoryTarget)
+				{
+					var match = MetaInfoRegex.Match(logLine);
+					try
+					{
+						var entityId = int.Parse(match.Groups["id"].Value);
+						if(game.Entities.TryGetValue(entityId, out var entity))
+						{
+							entity.Info.RevealedOnHistory = true;
+							entity.Info.Hidden = false;
+						}
+					}
+					catch(FormatException e)
+					{
+						Log.Info(e.Message);
+					}
+
+					isInsideMetaDataHistoryTarget = true;
+				}
+
+			}
+
+			gameState.IsInsideMetaDataHistoryTarget = isInsideMetaDataHistoryTarget;
 
 			if(logLine.Contains("End Spectator") && !game.IsInMenu)
 				gameState.GameHandler?.HandleGameEnd(false);
