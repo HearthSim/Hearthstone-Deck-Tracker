@@ -105,6 +105,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case FORGE_REVEALED:
 						OnForgeRevealed(gameState, id, game, value, prevValue);
 						break;
+					case REVEALED:
+						OnRevealed(gameState, id, game, value, prevValue);
+						break;
 					case PARENT_CARD:
 						OnParentCardChange(gameState, id, game, value, prevValue);
 						break;
@@ -581,6 +584,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				entity.Info.Forged = true;
 				entity.Info.Hidden = false;
 			}
+
+		}
+
+		private void OnRevealed(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			entity.Info.Hidden = value <= 0;
 
 		}
 
