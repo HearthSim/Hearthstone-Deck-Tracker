@@ -1,3 +1,9 @@
+## **Unreleased**
+**Hearthstone**:
+- Fix decklists not tracking some revealed cards. This should affect cards eaten by "Hamm, the Hungry", cards destroyed by Fracking, cards added to Carry-on Grub Suitcase, and many others.
+- Fix excavate counter always displaying common options.
+- Added Related Cards Tooltips to The Azerite Rat.
+
 ## **Release v1.44.3 - 2025-05-13**
 **Hearthstone**:
 - Added related card tooltips for Shaladrassil.

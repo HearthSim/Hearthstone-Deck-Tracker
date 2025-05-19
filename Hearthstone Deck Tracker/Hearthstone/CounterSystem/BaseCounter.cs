@@ -141,6 +141,7 @@ public abstract class BaseCounter : INotifyPropertyChanged
 	{
 		CounterChanged?.Invoke(this, EventArgs.Empty);
 		OnPropertyChanged(nameof(CounterValue));
+		OnPropertyChanged(nameof(CardsToDisplay));
 	}
 
 	protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
