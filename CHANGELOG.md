@@ -1,8 +1,10 @@
 ## **Unreleased**
 **Hearthstone**:
-- Fix decklists not tracking some revealed cards. This should affect cards eaten by "Hamm, the Hungry", cards destroyed by Fracking, cards added to Carry-on Grub Suitcase, and many others.
-- Fix excavate counter always displaying common options.
-- Added Related Cards Tooltips to The Azerite Rat.
+- Added Counter for Cards Played This Turn.
+- Added Related Cards Tooltips to Hopeful Dryad, Archdruid Naralex, Kingpin Pud, Overlord Saurfang, and The Azerite Rat.
+- Added Card Highlights to Death Speaker Blackthorn, Double Jump, Vengeful Spirit, Living Seed, Commencement, Guardian Animals, High Abbess Alura, Tavish Stormpike, Warsong Wrangler, Knight of Anointment, Northwatch Commander, Sword of The Fallen, Tinyfin's Caravan, Apothecary's Caravan, Archwitch Willow, Crushclaw Enforcer, and Primoridal Protector.
+- Fixed decklists not tracking some revealed cards. This should affect cards eaten by "Hamm, the Hungry", cards destroyed by Fracking, cards added to Carry-on Grub Suitcase, and many others.
+- Fixed excavate counter always displaying common options.
 
 ## **Release v1.44.3 - 2025-05-13**
 **Hearthstone**:
