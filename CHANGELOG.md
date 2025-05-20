@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.44.4 - 2025-05-20**
 **Hearthstone**:
 - Added Counter for Cards Played This Turn.
 - Added Related Cards Tooltips to Hopeful Dryad, Archdruid Naralex, Kingpin Pud, Overlord Saurfang, and The Azerite Rat.
