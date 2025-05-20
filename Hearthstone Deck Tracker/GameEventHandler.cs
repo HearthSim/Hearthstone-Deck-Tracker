@@ -2136,6 +2136,18 @@ namespace Hearthstone_Deck_Tracker
 				GameEvents.OnPlayerJoustReveal.Execute(card);
 		}
 
+		public void HandlePlayerHandToPlay(Entity entity, string? cardId, int turn)
+		{
+			_game.Player.HandToPlay(entity, turn);
+			Core.UpdatePlayerCards();
+		}
+
+		public void HandleOpponentHandToPlay(Entity entity, string? cardId, int turn)
+		{
+			_game.Opponent.HandToPlay(entity, turn);
+			Core.UpdateOpponentCards();
+		}
+
 		public void HandlePlayerDeckToPlay(Entity entity, string? cardId, int turn)
 		{
 			_game.Player.DeckToPlay(entity, turn);

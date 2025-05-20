@@ -592,7 +592,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
 
-			entity.Info.Hidden = value <= 0;
+			entity.Info.Hidden = false;
 
 		}
 
@@ -970,7 +970,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			entity.Info.Mulliganed = false;
 			switch((Zone)value)
 			{
-				case PLAY:
+				// cards can go from hand to play zone for reasons that are not playing them
+				// e.g. Dirty Rat, Summon when Drawn
+				case PLAY when gameState.CurrentBlock?.Type == "PLAY":
 					gameState.LastCardPlayed = id;
 					if(controller == game.Player.Id)
 					{
@@ -994,6 +996,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler?.HandleOpponentPlay(entity, cardId, entity.GetTag(ZONE_POSITION),
 																 gameState.GetTurnNumber());
 					}
+					break;
+				case PLAY when gameState.CurrentBlock?.Type != "PLAY":
+					if(controller == game.Player.Id)
+						gameState.GameHandler?.HandlePlayerHandToPlay(entity, cardId, gameState.GetTurnNumber());
+					else if(controller == game.Opponent.Id)
+						gameState.GameHandler?.HandleOpponentHandToPlay(entity, cardId, gameState.GetTurnNumber());
 					break;
 				case REMOVEDFROMGAME:
 				case SETASIDE:

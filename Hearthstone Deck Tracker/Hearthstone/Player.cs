@@ -626,11 +626,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CardsPlayedThisTurn.Clear();
 		}
 
+		/// <summary>
+		/// Used when a card goes from Hand to Play Zone without being played by the player.
+		/// (e.g. Dirty Rat, Summon when Drawn)
+		/// </summary>
+		public void HandToPlay(Entity entity, int turn)
+		{
+			if(entity.CardId != null)
+				UpdateKnownEntitiesInDeck(entity.CardId);
+			entity.Info.Hidden = false;
+			entity.Info.Turn = turn;
+			entity.Info.CostReduction = 0;
+			//Log(entity);
+		}
+
 		public void DeckToPlay(Entity entity, int turn)
 		{
 			if(entity.CardId != null)
 				UpdateKnownEntitiesInDeck(entity.CardId);
+			entity.Info.Hidden = false;
 			entity.Info.Turn = turn;
+			entity.Info.CostReduction = 0;
 			//Log(entity);
 		}
 

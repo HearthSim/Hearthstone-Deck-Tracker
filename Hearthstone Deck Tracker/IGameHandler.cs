@@ -52,6 +52,8 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn);
 		void HandleOpponentCreateInPlay(Entity entity, string? cardId, int turn);
 		void HandlePlayerJoust(Entity entity, string cardId, int turn);
+		void HandlePlayerHandToPlay(Entity entity, string? cardId, int turn);
+		void HandleOpponentHandToPlay(Entity entity, string? cardId, int turn);
 		void HandlePlayerDeckToPlay(Entity entity, string? cardId, int turn);
 		void HandleOpponentDeckToPlay(Entity entity, string? cardId, int turn);
 		void HandlePlayerRemoveFromDeck(Entity entity, int turn);
