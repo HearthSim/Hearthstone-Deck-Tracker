@@ -37,7 +37,6 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Anomalies;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
@@ -726,7 +725,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
 			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
-			BattlegroundsMinionsVM.AvailableRaces = BattlegroundsUtils.GetAvailableRaces();
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+			BattlegroundsMinionsVM.AvailableRaces = availableRaces?.Concat(new[] { Race.INVALID, Race.ALL });
 			BattlegroundsMinionsVM.IsDuos = _game.IsBattlegroundsDuosMatch;
 			BattlegroundsMinionsVM.Anomaly = anomalyCardId;
 			BattlegroundsMinionsVM.PreloadCardTiles();
