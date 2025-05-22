@@ -1,3 +1,8 @@
+## **Release v1.44.5 - 2025-05-22**
+**Battlegrounds**:
+- Updated Bob's Buddy for Hearthstone 32.2.2.
+- Fixed an issue where some minions were missing from filtering in the minion browser.
+
 ## **Release v1.44.4 - 2025-05-20**
 **Hearthstone**:
 - Added Counter for Cards Played This Turn.
