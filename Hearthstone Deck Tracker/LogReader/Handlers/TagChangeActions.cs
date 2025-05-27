@@ -120,6 +120,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case MAXHANDSIZE:
 						MaxHandSizeChange(gameState, id, game, value, prevValue);
 						break;
+					case CANT_PLAY:
+						CantPlayChange(gameState, id, game, value, prevValue);
+						break;
 					case LETTUCE_ABILITY_TILE_VISUAL_ALL_VISIBLE:
 					case LETTUCE_ABILITY_TILE_VISUAL_SELF_ONLY:
 					case FAKE_ZONE:
@@ -594,6 +597,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 			entity.Info.Hidden = false;
 
+		}
+
+		private void CantPlayChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			var player = entity.IsControlledBy(game.Player.Id) ? game.Player : game.Opponent;
+			player.CardsPlayedThisMatch.Remove(entity);
+			player.CardsPlayedThisTurn.Remove(entity);
+			player.SpellsPlayedCards.Remove(entity);
+			player.SpellsPlayedInFriendlyCharacters.Remove(entity);
+			player.SpellsPlayedInOpponentCharacters.Remove(entity);
 		}
 
 		private void OnParentCardChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)

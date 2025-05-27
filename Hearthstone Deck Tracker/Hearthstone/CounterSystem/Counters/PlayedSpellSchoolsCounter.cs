@@ -61,6 +61,19 @@ public class PlayedSpellSchoolsCounter : NumericCounter
 		if(!Game.IsTraditionalHearthstoneMatch)
 			return;
 
+		var controller = entity.GetTag(GameTag.CONTROLLER);
+		if(!(controller == Game.Player.Id && IsPlayerCounter) || (controller == Game.Opponent.Id && !IsPlayerCounter))
+			return;
+
+		if(DiscountIfCantPlay(tag, value, entity))
+		{
+			if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var schoolTag))
+			{
+				PlayedSpellSchools.Remove((SpellSchool)schoolTag);
+			}
+			return;
+		}
+
 		if(tag != GameTag.ZONE)
 			return;
 
@@ -73,16 +86,12 @@ public class PlayedSpellSchoolsCounter : NumericCounter
 		if(!entity.IsSpell)
 			return;
 
-		var controller = entity.GetTag(GameTag.CONTROLLER);
 
 		if(entity.Tags.TryGetValue(GameTag.SPELL_SCHOOL, out var spellSchoolTag))
 		{
-			if((controller == Game.Player.Id && IsPlayerCounter)
-			   || (controller == Game.Opponent.Id && !IsPlayerCounter))
-			{
-				PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
-				Counter = PlayedSpellSchools.Count;
-			}
+			PlayedSpellSchools.Add((SpellSchool)spellSchoolTag);
+			LastEntityToCount = entity;
+			Counter = PlayedSpellSchools.Count;
 		}
 	}
 }

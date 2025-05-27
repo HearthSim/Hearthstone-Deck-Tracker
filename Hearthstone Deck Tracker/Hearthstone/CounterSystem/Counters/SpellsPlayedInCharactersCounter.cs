@@ -40,6 +40,13 @@ public class SpellsPLayedInCharactersCounter : NumericCounter
 		if(!Game.IsTraditionalHearthstoneMatch)
 			return;
 
+		var controller = entity.GetTag(GameTag.CONTROLLER);
+		if(!(controller == Game.Player.Id && IsPlayerCounter) || (controller == Game.Opponent.Id && !IsPlayerCounter))
+			return;
+
+		if(DiscountIfCantPlay(tag, value, entity))
+			return;
+
 		if(tag != GameTag.ZONE)
 			return;
 
@@ -56,9 +63,7 @@ public class SpellsPLayedInCharactersCounter : NumericCounter
 		   !Core.Game.Entities.TryGetValue(entity.GetTag(GameTag.CARD_TARGET), out var target))
 			return;
 
-		var controller = entity.GetTag(GameTag.CONTROLLER);
-
-		if((controller == Game.Player.Id && IsPlayerCounter) || (controller == Game.Opponent.Id && !IsPlayerCounter))
-			Counter++;
+		LastEntityToCount = entity;
+		Counter++;
 	}
 }

@@ -43,6 +43,9 @@ public class TheCeaselessExpanseCounter: NumericCounter
 
 		var currentBlock = gameState.CurrentBlock;
 
+		if(DiscountIfCantPlay(tag, value, entity))
+			return;
+
 		if(tag != GameTag.ZONE) return;
 
 		switch (prevValue)
@@ -54,9 +57,11 @@ public class TheCeaselessExpanseCounter: NumericCounter
 			// card was played.
 			// Need to check the block type because a card can go from hand to play by other means (dirty rat, voidcaller, ...)
 			case (int)Zone.HAND when value == (int)Zone.PLAY && currentBlock?.Type == "PLAY":
+				LastEntityToCount = entity;
 				Counter++;
 				return;
 			case (int)Zone.HAND when value == (int)Zone.SECRET:
+				LastEntityToCount = entity;
 				Counter++;
 				return;
 			//card was destroyed

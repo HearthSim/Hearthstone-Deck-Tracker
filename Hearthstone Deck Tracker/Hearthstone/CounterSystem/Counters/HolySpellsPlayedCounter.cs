@@ -40,6 +40,13 @@ public class HolySpellsPLayedCounter : NumericCounter
 		if(!Game.IsTraditionalHearthstoneMatch)
 			return;
 
+		var controller = entity.GetTag(GameTag.CONTROLLER);
+		if(!(controller == Game.Player.Id && IsPlayerCounter) || (controller == Game.Opponent.Id && !IsPlayerCounter))
+			return;
+
+		if(DiscountIfCantPlay(tag, value, entity))
+			return;
+
 		if(tag != GameTag.ZONE)
 			return;
 
@@ -55,9 +62,7 @@ public class HolySpellsPLayedCounter : NumericCounter
 		if(entity.GetTag(GameTag.SPELL_SCHOOL) != (int)SpellSchool.HOLY)
 			return;
 
-		var controller = entity.GetTag(GameTag.CONTROLLER);
-
-		if((controller == Game.Player.Id && IsPlayerCounter) || (controller == Game.Opponent.Id && !IsPlayerCounter))
-			Counter++;
+		LastEntityToCount = entity;
+		Counter++;
 	}
 }

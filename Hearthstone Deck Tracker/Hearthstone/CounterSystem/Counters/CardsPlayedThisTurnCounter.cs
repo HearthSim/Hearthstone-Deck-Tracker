@@ -53,6 +53,9 @@ public class CardsPlayedThisTurnCounter: NumericCounter
 		if(entity.IsControlledBy(Game.Player.Id) != IsPlayerCounter)
 			return;
 
+		if(DiscountIfCantPlay(tag, value, entity))
+			return;
+
 		if(tag == GameTag.NUM_TURNS_IN_PLAY)
 		{
 			Counter = 0;
@@ -67,6 +70,7 @@ public class CardsPlayedThisTurnCounter: NumericCounter
 
 		if((value is (int)Zone.PLAY or (int)Zone.SECRET) && gameState.CurrentBlock?.Type == "PLAY")
 		{
+			LastEntityToCount = entity;
 			Counter++;
 		}
 	}
