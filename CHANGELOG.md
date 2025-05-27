@@ -1,3 +1,7 @@
+## **Release v1.44.6 - 2025-05-27**
+**Hearthstone**:
+- Fixed an issue where spells countered by Counterspell were being counted for Counters and Related Card Tooltips.
+
 ## **Release v1.44.5 - 2025-05-22**
 **Battlegrounds**:
 - Updated Bob's Buddy for Hearthstone 32.2.4.
