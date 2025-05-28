@@ -1,3 +1,7 @@
+## **Release v1.44.7 - 2025-05-27**
+**Hearthstone**:
+- Fixed an issue where some of the opponent's counters were not appearing.
+
 ## **Release v1.44.6 - 2025-05-27**
 **Hearthstone**:
 - Fixed an issue where spells countered by Counterspell were being counted for Counters and Related Card Tooltips.
