@@ -23,7 +23,7 @@ public class ColossusCounter : NumericCounter
 		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
-		return Counter > 2 && OpponentMayHaveRelevantCards();
+		return Counter > 1 && OpponentMayHaveRelevantCards();
 	}
 
 	public override string[] GetCardsToDisplay()
@@ -41,7 +41,7 @@ public class ColossusCounter : NumericCounter
 			return;
 
 		var controller = entity.GetTag(GameTag.CONTROLLER);
-		if(!(controller == Game.Player.Id && IsPlayerCounter) || (controller == Game.Opponent.Id && !IsPlayerCounter))
+		if(!((controller == Game.Player.Id && IsPlayerCounter) || (controller == Game.Opponent.Id && !IsPlayerCounter)))
 			return;
 
 		if(DiscountIfCantPlay(tag, value, entity))

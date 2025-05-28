@@ -62,7 +62,7 @@ public class PlayedSpellSchoolsCounter : NumericCounter
 			return;
 
 		var controller = entity.GetTag(GameTag.CONTROLLER);
-		if(!(controller == Game.Player.Id && IsPlayerCounter) || (controller == Game.Opponent.Id && !IsPlayerCounter))
+		if(!((controller == Game.Player.Id && IsPlayerCounter) || (controller == Game.Opponent.Id && !IsPlayerCounter)))
 			return;
 
 		if(DiscountIfCantPlay(tag, value, entity))
