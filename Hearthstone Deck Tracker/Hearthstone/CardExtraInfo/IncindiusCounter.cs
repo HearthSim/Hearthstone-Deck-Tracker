@@ -15,7 +15,9 @@ public class IncindiusCounter: ICardExtraInfo
 	}
 
 
-	public bool Equals(ICardExtraInfo? other) => other is IncindiusCounter counter && TurnPlayed == counter.TurnPlayed;
+	public bool Equals(ICardExtraInfo? other) => other is IncindiusCounter counter
+	                                             && TurnPlayed == counter.TurnPlayed
+	                                             && Counter == counter.Counter;
 
 	public override bool Equals(object? other)
 	{

@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 			return orderedCards
 				.ThenBy(x => x.Cost)
 				.ThenBy(x => x.LocalizedName)
-				.ThenByDescending(x => x.ExtraInfo?.CardNameSuffix)
+				.ThenBy(x => x.ExtraInfo?.CardNameSuffix)
 				.ToList();
 		}
 
