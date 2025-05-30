@@ -1041,7 +1041,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					break;
 				case DECK:
 					if(controller == game.Player.Id && cardId != null)
-						gameState.GameHandler?.HandlePlayerMulligan(entity, cardId);
+					{
+						if(game.PlayerEntity != null && game.PlayerEntity.GetTag(MULLIGAN_STATE) == (int)Mulligan.DONE)
+						{
+							gameState.GameHandler?.HandlePlayerHandToDeck(entity, cardId, gameState);
+						}
+						else
+						{
+							gameState.GameHandler?.HandlePlayerMulligan(entity, cardId);
+						}
+					}
 					else if(controller == game.Opponent.Id)
 					{
 						if(!string.IsNullOrEmpty(cardId))

@@ -17,6 +17,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerBackToHand(Entity entity, string cardId, int turn);
 		void HandlePlayerDraw(Entity entity, string cardId, int turn);
 		void HandlePlayerMulligan(Entity entity, string cardId);
+		void HandlePlayerHandToDeck(Entity entity, string cardId, IHsGameState gameState);
 		void HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone, string parentBlockCardId);
 		void HandlePlayerHandDiscard(Entity entity, string cardId, int turn);
 		void HandlePlayerPlay(Entity entity, string cardId, int turn, string parentBlockCardId);

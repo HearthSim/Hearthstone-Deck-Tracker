@@ -1852,6 +1852,21 @@ namespace Hearthstone_Deck_Tracker
 				GameEvents.OnPlayerMulligan.Execute(card);
 		}
 
+		public void HandlePlayerHandToDeck(Entity entity, string cardId, IHsGameState gameState)
+		{
+			if(string.IsNullOrEmpty(cardId))
+				return;
+
+			if(gameState.CurrentBlock?.CardId == HearthDb.CardIds.Collectible.Neutral.SirFinleySeaGuide)
+			{
+				var newIndex = ++gameState.DredgeCounter;
+				entity.Info.DeckIndex = -newIndex;
+				Log.Info(entity.CardId ?? "");
+			}
+
+			Core.UpdatePlayerCards();
+		}
+
 		public void HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone, string parentBlockCardId)
 		{
 			if(string.IsNullOrEmpty(cardId))
@@ -2457,6 +2472,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerBackToHand(Entity entity, string cardId, int turn) => HandlePlayerBackToHand(entity, cardId, turn);
 		void IGameHandler.HandlePlayerDraw(Entity entity, string cardId, int turn) => HandlePlayerDraw(entity, cardId, turn);
 		void IGameHandler.HandlePlayerMulligan(Entity entity, string cardId) => HandlePlayerMulligan(entity, cardId);
+		void IGameHandler.HandlePlayerHandToDeck(Entity entity, string cardId, IHsGameState gameState) => HandlePlayerHandToDeck(entity, cardId, gameState);
 		void IGameHandler.HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone, string parentBlockCardId) => HandlePlayerSecretPlayed(entity, cardId, turn, fromZone, parentBlockCardId);
 		void IGameHandler.HandlePlayerSecretTrigger(Entity entity, string? cardId, int turn, int otherId) => HandlePlayerSecretTrigger(entity, cardId, turn, otherId);
 		void IGameHandler.HandlePlayerHandDiscard(Entity entity, string cardId, int turn) => HandlePlayerHandDiscard(entity, cardId, turn);

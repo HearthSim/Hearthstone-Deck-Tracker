@@ -853,7 +853,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							case Collectible.Demonhunter.SightlessWatcherCorePlaceholder:
 							case Collectible.Demonhunter.SightlessWatcherLegacy:
-							case Collectible.Neutral.SirFinleySeaGuide:
 							case Collectible.Neutral.AmbassadorFaelin:
 								// These are tricky to implement correctly, so
 								// until the are, we will just reset the state
