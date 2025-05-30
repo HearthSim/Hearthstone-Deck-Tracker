@@ -1861,7 +1861,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var newIndex = ++gameState.DredgeCounter;
 				entity.Info.DeckIndex = -newIndex;
-				Log.Info(entity.CardId ?? "");
 			}
 
 			Core.UpdatePlayerCards();

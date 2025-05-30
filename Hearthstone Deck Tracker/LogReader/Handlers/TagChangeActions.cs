@@ -869,6 +869,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case DECK:
 					if(controller == game.Player.Id && cardId != null)
 					{
+						if(gameState.CurrentBlock?.CardId == Collectible.Neutral.Overplanner)
+						{
+							var newIndex = ++gameState.DredgeCounter;
+							entity.Info.DeckIndex = newIndex;
+						}
+
 						if(gameState.JoustReveals > 0)
 							break;
 						gameState.GameHandler?.HandlePlayerGetToDeck(entity, cardId, gameState.GetTurnNumber());
