@@ -72,6 +72,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{(int)CardSet.ISLAND_VACATION, "Perils in Paradise" },
 			{(int)CardSet.SPACE, "Great Dark Beyond" },
 			{(int)CardSet.EMERALD_DREAM, "Into the Emerald Dream" },
+			{(int)CardSet.THE_LOST_CITY, "The Lost City" },
 			{(int)CardSet.TB_DEV, "Tavern Brawl (Dev)"},
 			{(int)CardSet.EVENT, "Event" },
 		};
