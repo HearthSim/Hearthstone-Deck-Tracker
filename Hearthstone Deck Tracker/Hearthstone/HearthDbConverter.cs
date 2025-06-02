@@ -199,6 +199,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				case GameType.GT_VS_FRIEND:
 					return GameMode.Friendly;
 				case GameType.GT_ARENA:
+				case GameType.GT_UNDERGROUND_ARENA:
 					return GameMode.Arena;
 				case GameType.GT_BATTLEGROUNDS:
 				case GameType.GT_BATTLEGROUNDS_FRIENDLY:
@@ -343,6 +344,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return BGT_BATTLEGROUNDS_DUO_VS_AI;
 				case GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY:
 					return BGT_BATTLEGROUNDS_DUO_FRIENDLY;
+				case GameType.GT_UNDERGROUND_ARENA:
+					return BGT_UNDERGROUND_ARENA;
 				default:
 					return BGT_UNKNOWN;
 			}

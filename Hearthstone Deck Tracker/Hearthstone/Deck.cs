@@ -214,9 +214,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public bool? IsArenaRunCompleted => IsArenaDeck
-												? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 12
-												   || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 3) as bool? : null;
+		public bool? IsArenaRunCompleted {
+			get
+			{
+				if(!IsArenaDeck) return null;
+
+				var isUnderground = CheckIfUndergroundArena() ?? false;
+
+				var maxWins = isUnderground ? 12 : 5;
+				var maxLosses = isUnderground ? 3 : 2;
+
+				return IsArenaDeck
+					? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == maxWins
+					   || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == maxLosses) as bool? : null;
+			}
+		}
 
 		public bool? IsDungeonRunCompleted => IsDungeonDeck
 												? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 8
@@ -487,6 +499,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public bool? CheckIfArenaDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
+
+		public bool? CheckIfUndergroundArena() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameType == GameType.GT_UNDERGROUND_ARENA);
 
 		public bool? CheckIfDungeonDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.IsDungeonMatch);
 
