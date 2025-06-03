@@ -161,7 +161,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					friendly.Losses = game.ArenaLosses;
 
 				var draft = ArenaLastDrafts.Instance.Drafts.FirstOrDefault(d => d.DeckId == game.HsDeckId);
-				if(draft != null && ValidateArenaDraft(friendly.DeckList, draft))
+				if(draft != null && ValidateArenaDraft(friendly.DeckList, draft, game.GameType == GameType.GT_UNDERGROUND_ARENA))
 				{
 					friendly.ArenaDraft =
 						new UploadMetaData.ArenaDraft
@@ -201,8 +201,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		}
 
 		// we already check the deckId, this is an extra confirmation that the draft is for that deck
-		private static bool ValidateArenaDraft(string[] deckList, ArenaLastDrafts.DraftItem draft)
+		private static bool ValidateArenaDraft(string[] deckList, ArenaLastDrafts.DraftItem draft, bool isUnderground)
 		{
+			// skipping underground validation for now
+			if(isUnderground) return true;
+
 			var pickedCards = draft.Picks
 				.Where(pick => pick.Picked != null && !pick.Picked.StartsWith("HERO"))
 				.Select(pick => pick.Picked).ToList();
