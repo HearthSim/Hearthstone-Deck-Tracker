@@ -1,3 +1,10 @@
+## **Release v1.44.8 - 2025-06-03**
+**Updated for Hearthstone 32.4**
+
+**Hearthstone**:
+- Fixed an issue where Incindius' eruptions were not upgrading in the decklist.
+- Added cards chosen by Overplanner to the top of the deck and cards shuffled by Sir Finley, Sea Guide to the bottom of the deck.
+
 ## **Release v1.44.7 - 2025-05-27**
 **Hearthstone**:
 - Fixed an issue where some of the opponent's counters were not appearing.
