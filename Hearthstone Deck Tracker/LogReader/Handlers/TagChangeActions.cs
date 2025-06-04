@@ -567,6 +567,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.IsTraditionalHearthstoneMatch)
 				return;
 
+			// Dark Gift blocks temporarily override the hand size when a card with "Sweet Dreams" is picked
+			// We don't care about these
+			var isDarkGiftBlock = (
+				gameState.CurrentBlock?.CardId == NonCollectible.Neutral.TreacherousTormentor_DarkGiftToken &&
+				gameState.CurrentBlock?.Type == "POWER"
+			);
+			if(isDarkGiftBlock)
+				return;
+
 			if(entity.IsControlledBy(game.Player.Id))
 			{
 				gameState.GameHandler?.HandlePlayerMaxHandSizeChange(value);

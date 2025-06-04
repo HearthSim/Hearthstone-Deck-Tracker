@@ -1,3 +1,8 @@
+## Unreleased
+**Hearthstone:**
+- Added Card Highlights to Cutlass Courier.
+- Fixed the Max Hand Size counter appearing when the "Sweet Dreams" Dark Gift was picked ("Place this card on top of your deck").
+
 ## **Release v1.44.8 - 2025-06-03**
 **Updated for Hearthstone 32.4**
 
