@@ -1,5 +1,6 @@
-## Unreleased
+## **Release v1.44.9 - 2025-06-04**
 **Hearthstone:**
+- Fixed Deck Import for Underground Arena Decks.
 - Added Card Highlights to Cutlass Courier.
 - Fixed the Max Hand Size counter appearing when the "Sweet Dreams" Dark Gift was picked ("Place this card on top of your deck").
 
