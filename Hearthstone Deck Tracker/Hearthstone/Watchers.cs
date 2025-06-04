@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			ArenaWatcher.OnChoicesChanged += OnChoiceChanged;
 			ArenaWatcher.OnCardPicked += OnCardPicked;
-			ArenaWatcher.OnCompleteDeck += (sender, args) => DeckManager.AutoImportArena(args.Info);
+			ArenaWatcher.OnCompleteDeck += OnDeckCompleted;
 			DungeonRunWatcher.DungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set, false);
 			DungeonRunWatcher.DungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo, false);
 			PVPDungeonRunWatcher.PVPDungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set, true);
@@ -60,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			MulliganTooltipWatcher.Stop();
 		}
 
-		private static readonly Dictionary<int, (string[] choices, string pickStartTime)> _currentArenaDraftInfo = new();
+		private static readonly Dictionary<long, Dictionary<int, (string[] choices, string pickStartTime)>> _currentArenaDraftInfo = new();
 
 		internal static void OnChoiceChanged(object sender, HearthWatcher.EventArgs.ChoicesChangedEventArgs args)
 		{
@@ -68,14 +68,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var newChoices = args.Choices.Select(c => c.Id).ToArray();
 			var pickStartTime = DateTime.Now.ToString("o");
 
-			_currentArenaDraftInfo[args.Slot] = (newChoices, pickStartTime);
+			var deckId = args.Deck.Id;
+
+			if (!_currentArenaDraftInfo.TryGetValue(deckId, out var draftInfo))
+				_currentArenaDraftInfo[deckId] = draftInfo = new Dictionary<int, (string[] choices, string pickStartTime)>();
+
+			draftInfo[args.Slot] = (newChoices, pickStartTime);
 		}
 
 		internal static void OnCardPicked(object sender, HearthWatcher.EventArgs.CardPickedEventArgs args)
 		{
-			if(!_currentArenaDraftInfo.TryGetValue(args.Slot, out var draftInfo) ||
-			   draftInfo.choices == null || draftInfo.choices.Length == 0 ||
-			   string.IsNullOrEmpty(draftInfo.pickStartTime))
+			var deckId = args.Deck.Id;
+
+			if(!_currentArenaDraftInfo.TryGetValue(deckId, out var draftInfo) ||
+			   !draftInfo.TryGetValue(args.Slot, out var info) ||
+			   info.choices == null || info.choices.Length == 0 ||
+			   string.IsNullOrEmpty(info.pickStartTime))
 			{
 				return;
 			}
@@ -89,16 +97,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			var pickTime = DateTime.Now.ToString("o");
 			ArenaLastDrafts.Instance.AddPick(
-				draftInfo.pickStartTime,
+				info.pickStartTime,
 				pickTime,
 				args.Picked.Id,
-				draftInfo.choices,
+				info.choices,
 				args.Slot,
 				overlayVisible: false,
 				pickedCards,
-				args.Deck.Id
+				args.Deck.Id,
+				args.IsUnderground
 			);
 
+		}
+
+		internal static void OnDeckCompleted(object sends, HearthWatcher.EventArgs.CompleteDeckEventArgs args)
+		{
+			DeckManager.AutoImportArena(args.Info);
+			_currentArenaDraftInfo.Remove(args.Info.Deck.Id);
 		}
 
 		internal static void OnBaconChange(object sender, HearthWatcher.EventArgs.BaconEventArgs args)

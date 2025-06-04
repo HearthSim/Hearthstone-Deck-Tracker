@@ -21,6 +21,7 @@ namespace HearthWatcher
 		private Card[]? _prevChoices;
 		private int _prevChoicesVersion = -1;
 		private ArenaInfo? _prevInfo;
+		private bool? _prevIsUnderground = null;
 		private const int MaxDeckSize = 30;
 		private readonly IArenaProvider _arenaProvider;
 
@@ -51,6 +52,7 @@ namespace HearthWatcher
 			_prevInfo = null;
 			_prevChoices = null;
 			_prevChoicesVersion = -1;
+			_prevIsUnderground = null;
 			while(_watch)
 			{
 				await Task.Delay(_delay);
@@ -79,7 +81,10 @@ namespace HearthWatcher
 				return true;
 			}
 
-			if(_prevInfo != null && arenaInfo.CurrentSlot <= _prevSlot)
+			// _prevSlot can be related to The arena while currentSlot is Underground and vice-versa
+			// so we need to check if _prevIsUnderground is the same as arenaInfo.IsUnderground
+			if(_prevInfo != null && arenaInfo.CurrentSlot <= _prevSlot
+			  && _prevIsUnderground == arenaInfo.IsUnderground)
 				return false;
 
 			var choices = _arenaProvider.GetDraftChoices();
@@ -90,16 +95,19 @@ namespace HearthWatcher
 				return false;
 
 			OnChoicesChanged?.Invoke(this,
-				new ChoicesChangedEventArgs(choices.Choices.ToArray(), arenaInfo.Deck, arenaInfo.CurrentSlot));
+				new ChoicesChangedEventArgs(choices.Choices.ToArray(), arenaInfo.Deck, arenaInfo.CurrentSlot, arenaInfo.IsUnderground));
 
-			if(_prevSlot == 0 && arenaInfo.CurrentSlot == 1)
+			// we need to check _prevIsUnderground == arenaInfo.IsUnderground
+			// otherwise changing arena mode would trigger Hero/CardPicked
+			if(_prevSlot == 0 && arenaInfo.CurrentSlot == 1 && _prevIsUnderground == arenaInfo.IsUnderground)
 				HeroPicked(arenaInfo);
-			else if(_prevSlot > 0)
+			else if(_prevSlot > 0 && _prevIsUnderground == arenaInfo.IsUnderground)
 				CardPicked(arenaInfo);
 			_prevSlot = arenaInfo.CurrentSlot;
 			_prevInfo = arenaInfo;
 			_prevChoices = choices.Choices.ToArray();
 			_prevChoicesVersion = choices.Version;
+			_prevIsUnderground = arenaInfo.IsUnderground;
 			return false;
 		}
 
@@ -107,14 +115,14 @@ namespace HearthWatcher
 		{
 			var hero = _prevChoices?.FirstOrDefault(x => x.Id == arenaInfo.Deck.Hero);
 			if(hero != null)
-				OnCardPicked?.Invoke(this, new CardPickedEventArgs(hero, _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1));
+				OnCardPicked?.Invoke(this, new CardPickedEventArgs(hero, _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground));
 		}
 
 		private void CardPicked(ArenaInfo arenaInfo)
 		{
 			var pick = arenaInfo.Deck.Cards.FirstOrDefault(x => !_prevInfo?.Deck.Cards.Any(c => x.Id == c.Id && x.Count == c.Count) ?? false);
 			if(pick != null)
-				OnCardPicked?.Invoke(this, new CardPickedEventArgs(new Card(pick.Id, 1, pick.PremiumType), _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1));
+				OnCardPicked?.Invoke(this, new CardPickedEventArgs(new Card(pick.Id, 1, pick.PremiumType), _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground));
 		}
 	}
 }

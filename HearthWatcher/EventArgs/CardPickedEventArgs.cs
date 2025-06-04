@@ -11,12 +11,15 @@ namespace HearthWatcher.EventArgs
 
 		public int Slot { get;  }
 
-		public CardPickedEventArgs(Card picked, Card[] choices, Deck deck, int slot)
+		public bool IsUnderground { get; }
+
+		public CardPickedEventArgs(Card picked, Card[] choices, Deck deck, int slot, bool isUnderground)
 		{
 			Picked = picked;
 			Choices = choices;
 			Deck = deck;
 			Slot = slot;
+			IsUnderground = isUnderground;
 		}
 	}
 }

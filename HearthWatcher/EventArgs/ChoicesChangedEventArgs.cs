@@ -7,13 +7,16 @@ namespace HearthWatcher.EventArgs
 		public Card[] Choices { get; }
 		public Deck Deck { get; }
 
-		public int Slot { get;  }
+		public int Slot { get; }
 
-		public ChoicesChangedEventArgs(Card[] choices, Deck deck, int slot)
+		public bool IsUnderground  { get; }
+
+		public ChoicesChangedEventArgs(Card[] choices, Deck deck, int slot, bool isUnderground)
 		{
 			Choices = choices;
 			Deck = deck;
 			Slot = slot;
+			IsUnderground = isUnderground;
 		}
 	}
 }

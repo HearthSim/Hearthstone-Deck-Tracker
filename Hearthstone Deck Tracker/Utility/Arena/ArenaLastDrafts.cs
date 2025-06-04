@@ -52,7 +52,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 		}
 
 		public async void AddPick(
-			string startTime, string pickedTime, string picked, string[] choices, int slot, bool overlayVisible, string[] pickedCards, long deckId,  bool save = true
+			string startTime,
+			string pickedTime,
+			string picked,
+			string[] choices,
+			int slot,
+			bool overlayVisible,
+			string[] pickedCards,
+			long deckId,
+			bool isUnderground,
+			bool save = true
 		)
 		{
 			var playerId = await GetPlayerId();
@@ -62,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				return;
 			}
 
-			var currentDraft = GetOrCreateDraft(startTime, playerId, deckId);
+			var currentDraft = GetOrCreateDraft(startTime, playerId, deckId, isUnderground);
 
 			var start = DateTime.Parse(startTime);
 			var end = DateTime.Parse(pickedTime);
@@ -74,10 +83,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				Save();
 		}
 
-		public void RemoveDraft(string player, bool save = true)
+		public void RemoveDraft(string player, bool isUnderground, bool save = true)
 		{
-			// the same player can't have 2 drafts open at same time
-			var existingEntry = Drafts.FirstOrDefault(x => x.Player != null && x.Player.Equals(player));
+			// the same player can't have 2 drafts of same type open at same time
+			var existingEntry = Drafts.FirstOrDefault(
+					x => x.Player != null && x.Player.Equals(player) && x.IsUnderground == isUnderground
+				);
 			if (existingEntry != null)
 				Drafts.Remove(existingEntry);
 			if(save)
@@ -102,27 +113,28 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			Save();
 		}
 
-		private DraftItem GetOrCreateDraft(string startTime, string player, long deckId)
+		private DraftItem GetOrCreateDraft(string startTime, string player, long deckId, bool isUnderground)
 		{
-			var draft = Drafts.FirstOrDefault(d => d.DeckId == deckId);
+			var draft = Drafts.FirstOrDefault(d => d.DeckId == deckId && d.IsUnderground == isUnderground);
 			if(draft != null)
 			{
 				return draft;
 			}
 
-			draft = new DraftItem(startTime, player, deckId);
-			RemoveDraft(player, false);
+			draft = new DraftItem(startTime, player, deckId, isUnderground);
+			RemoveDraft(player, isUnderground, false);
 			Drafts.Add(draft);
 			return draft;
 		}
 
 		public class DraftItem
 		{
-			public DraftItem(string startTime, string player, long deckId)
+			public DraftItem(string startTime, string player, long deckId, bool isUnderground)
 			{
 				Player = player;
 				StartTime = startTime;
 				DeckId = deckId;
+				IsUnderground = isUnderground;
 			}
 
 			public DraftItem()
@@ -137,6 +149,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 
 			[XmlAttribute("DeckId")]
 			public long DeckId { get; set; }
+
+			[XmlAttribute("IsUnderground")]
+			public bool IsUnderground { get; set; }
 
 			[XmlElement("Pick")]
 			public List<PickItem> Picks { get; set; } = new();
