@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HearthMirror.Objects;
@@ -19,6 +20,7 @@ namespace HearthWatcher
 		private bool _watch;
 		private int _prevSlot = -1;
 		private Card[]? _prevChoices;
+		private List<List<Card>>? _prevPackages;
 		private int _prevChoicesVersion = -1;
 		private ArenaInfo? _prevInfo;
 		private bool? _prevIsUnderground = null;
@@ -52,6 +54,7 @@ namespace HearthWatcher
 			_prevInfo = null;
 			_prevChoices = null;
 			_prevChoicesVersion = -1;
+			_prevPackages = null;
 			_prevIsUnderground = null;
 			while(_watch)
 			{
@@ -95,7 +98,7 @@ namespace HearthWatcher
 				return false;
 
 			OnChoicesChanged?.Invoke(this,
-				new ChoicesChangedEventArgs(choices.Choices.ToArray(), arenaInfo.Deck, arenaInfo.CurrentSlot, arenaInfo.IsUnderground));
+				new ChoicesChangedEventArgs(choices.Choices.ToArray(), arenaInfo.Deck, arenaInfo.CurrentSlot, arenaInfo.IsUnderground, choices.Packages));
 
 			// we need to check _prevIsUnderground == arenaInfo.IsUnderground
 			// otherwise changing arena mode would trigger Hero/CardPicked
@@ -107,6 +110,7 @@ namespace HearthWatcher
 			_prevInfo = arenaInfo;
 			_prevChoices = choices.Choices.ToArray();
 			_prevChoicesVersion = choices.Version;
+			_prevPackages = choices.Packages;
 			_prevIsUnderground = arenaInfo.IsUnderground;
 			return false;
 		}
@@ -115,14 +119,82 @@ namespace HearthWatcher
 		{
 			var hero = _prevChoices?.FirstOrDefault(x => x.Id == arenaInfo.Deck.Hero);
 			if(hero != null)
-				OnCardPicked?.Invoke(this, new CardPickedEventArgs(hero, _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground));
+				OnCardPicked?.Invoke(this, new CardPickedEventArgs(hero, _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground, null));
 		}
 
 		private void CardPicked(ArenaInfo arenaInfo)
 		{
-			var pick = arenaInfo.Deck.Cards.FirstOrDefault(x => !_prevInfo?.Deck.Cards.Any(c => x.Id == c.Id && x.Count == c.Count) ?? false);
-			if(pick != null)
-				OnCardPicked?.Invoke(this, new CardPickedEventArgs(new Card(pick.Id, 1, pick.PremiumType), _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground));
+			var prevDeck = _prevInfo?.Deck?.Cards ?? new List<Card>();
+			var currDeck = arenaInfo.Deck.Cards;
+
+			var addedCards = currDeck
+				.Where(cd => !prevDeck.Any(pd => pd.Id == cd.Id && pd.Count == cd.Count))
+				.ToList();
+
+			List<Card>? usedPackage = null;
+
+			if(_prevPackages != null)
+			{
+				foreach(var package in _prevPackages)
+				{
+					var packageFullyAdded = package.All(pkgCard =>
+					{
+						var currCard = currDeck.FirstOrDefault(c => c.Id == pkgCard.Id);
+						var prevCard = prevDeck.FirstOrDefault(c => c.Id == pkgCard.Id);
+
+						var currCount = currCard?.Count ?? 0;
+						var prevCount = prevCard?.Count ?? 0;
+
+						return (currCount - prevCount) >= pkgCard.Count;
+					});
+
+					if(packageFullyAdded)
+					{
+						usedPackage = package;
+						break;
+					}
+				}
+			}
+
+			if(usedPackage != null)
+			{
+				foreach (var card in usedPackage)
+				{
+					var match = addedCards.FirstOrDefault(c => c.Id == card.Id);
+					if (match != null)
+						addedCards.Remove(match);
+				}
+			}
+
+			var picked = addedCards.FirstOrDefault();
+			if(picked != null)
+			{
+				var pickedCard = new Card(picked.Id, 1, picked.PremiumType);
+
+				OnCardPicked?.Invoke(this, new CardPickedEventArgs(
+					pickedCard,
+					_prevChoices!,
+					arenaInfo.Deck,
+					arenaInfo.CurrentSlot - 1,
+					arenaInfo.IsUnderground,
+					usedPackage));
+			}
+
+		}
+
+		private Dictionary<string, string[]>? GetPackagesFromChoices(DraftChoices? choices)
+		{
+			if(choices?.Packages == null || choices.Packages.Count == 0) return null;
+
+			var packages = new Dictionary<string, string[]>();
+			for(var i = 0; i < choices.Choices.Count; i++)
+			{
+				if(i >= choices.Packages.Count) break;
+
+				packages.Add(choices.Choices[i].Id, choices.Packages[i].Select(c => c.Id).ToArray());
+			}
+
+			return packages;
 		}
 	}
 }

@@ -60,33 +60,31 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			MulliganTooltipWatcher.Stop();
 		}
 
-		private static readonly Dictionary<long, Dictionary<int, (string[] choices, string pickStartTime)>> _currentArenaDraftInfo = new();
+		private static readonly Dictionary<long, Dictionary<int, (string[] choices, string[][]? packages, string pickStartTime)>> _currentArenaDraftInfo = new();
 
 		internal static void OnChoiceChanged(object sender, HearthWatcher.EventArgs.ChoicesChangedEventArgs args)
 		{
 
 			var newChoices = args.Choices.Select(c => c.Id).ToArray();
+			var packages = args.Packages?.Select(p => p.Select(c => c.Id).ToArray()).ToArray();
 			var pickStartTime = DateTime.Now.ToString("o");
 
 			var deckId = args.Deck.Id;
 
 			if (!_currentArenaDraftInfo.TryGetValue(deckId, out var draftInfo))
-				_currentArenaDraftInfo[deckId] = draftInfo = new Dictionary<int, (string[] choices, string pickStartTime)>();
+				_currentArenaDraftInfo[deckId] = draftInfo = new Dictionary<int, (string[] choices, string[][]? packages, string pickStartTime)>();
 
-			draftInfo[args.Slot] = (newChoices, pickStartTime);
+			draftInfo[args.Slot] = (newChoices, packages, pickStartTime);
+
 		}
 
 		internal static void OnCardPicked(object sender, HearthWatcher.EventArgs.CardPickedEventArgs args)
 		{
-			var deckId = args.Deck.Id;
 
-			if(!_currentArenaDraftInfo.TryGetValue(deckId, out var draftInfo) ||
-			   !draftInfo.TryGetValue(args.Slot, out var info) ||
-			   info.choices == null || info.choices.Length == 0 ||
-			   string.IsNullOrEmpty(info.pickStartTime))
-			{
+			var packageSize = args.PickedPackage?.Count ?? 0;
+
+			if (!TryGetDraftInfo(args.Deck.Id, args.Slot, packageSize, out var info))
 				return;
-			}
 
 			var currentPick = args.Picked.Id;
 
@@ -94,6 +92,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.WhereNotNull()
 				.SelectMany(c => Enumerable.Repeat(c.Id, c.Id == currentPick ? Math.Max(0, c.Count - 1) : c.Count))
 				.ToArray();
+
+			var packages = StructurePackages(info.choices, info.packages);
 
 			var pickTime = DateTime.Now.ToString("o");
 			ArenaLastDrafts.Instance.AddPick(
@@ -105,9 +105,58 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				overlayVisible: false,
 				pickedCards,
 				args.Deck.Id,
-				args.IsUnderground
+				args.IsUnderground,
+				args.PickedPackage?.Select(c => c.Id).ToArray() ?? null,
+				packages
 			);
 
+		}
+
+		private static bool TryGetDraftInfo(long deckId, int slot, int packageSize,
+			out (string[] choices, string[][]? packages, string pickStartTime) info)
+		{
+			info = default;
+
+			if(!_currentArenaDraftInfo.TryGetValue(deckId, out var draftInfo))
+				return false;
+
+			// try original slot
+			if (draftInfo.TryGetValue(slot, out info) &&
+			    info.choices is { Length: > 0 } &&
+			    !string.IsNullOrEmpty(info.pickStartTime))
+			{
+				return true;
+			}
+
+			// try fallback to (slot - package size)
+			if (packageSize > 0)
+			{
+				var fallbackSlot = slot - packageSize;
+				if (draftInfo.TryGetValue(fallbackSlot, out info) &&
+				    info.choices is { Length: > 0 } &&
+				    !string.IsNullOrEmpty(info.pickStartTime))
+				{
+					return true;
+				}
+			}
+
+
+			return false;
+		}
+
+		private static Dictionary<string, string[]>? StructurePackages(string[] choices, string[][]? packages)
+		{
+			if(packages == null || packages.Length == 0) return null;
+
+			var structuredPackages = new Dictionary<string, string[]>();
+			for(var i = 0; i < choices.Length; i++)
+			{
+				if(i >= packages.Length) break;
+
+				structuredPackages.Add(choices[i], packages[i]);
+			}
+
+			return structuredPackages;
 		}
 
 		internal static void OnDeckCompleted(object sends, HearthWatcher.EventArgs.CompleteDeckEventArgs args)

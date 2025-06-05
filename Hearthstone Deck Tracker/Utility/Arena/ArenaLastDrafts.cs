@@ -61,6 +61,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			string[] pickedCards,
 			long deckId,
 			bool isUnderground,
+			string[]? pickedPackage,
+			Dictionary<string, string[]>? packages,
 			bool save = true
 		)
 		{
@@ -77,7 +79,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			var end = DateTime.Parse(pickedTime);
 			var timeSpent = end - start;
 
-			currentDraft.Picks.Add(new PickItem(picked, choices, slot, (int)timeSpent.TotalMilliseconds, overlayVisible, pickedCards));
+			currentDraft.Picks.Add(
+					new PickItem(picked, choices, slot, (int)timeSpent.TotalMilliseconds, overlayVisible, pickedCards, pickedPackage, packages)
+				);
 
 			if(save)
 				Save();
@@ -161,7 +165,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 		public class PickItem
 		{
 
-			public PickItem(string picked, string[] choices, int slot, int timeOnChoice, bool overlayVisible, string[] pickedCards)
+			public PickItem(
+				string picked,
+				string[] choices,
+				int slot,
+				int timeOnChoice,
+				bool overlayVisible,
+				string[] pickedCards,
+				string[]? pickedPackage,
+				Dictionary<string, string[]>? packages)
 			{
 				Picked = picked;
 				Choices = choices;
@@ -169,6 +181,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				TimeOnChoice = timeOnChoice;
 				OverlayVisible = overlayVisible;
 				PickedCards = pickedCards;
+				PickedPackage = pickedPackage;
+				Packages = packages?.Select(p =>
+					new CardPackage { KeyCard = p.Key, Cards = p.Value }
+				).ToList();
 			}
 
 			public PickItem() { }
@@ -190,6 +206,22 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 
 			[XmlElement("PickedCards")]
 			public string[] PickedCards { get; set; } = { };
+
+			[XmlElement("PickedPackage")]
+			public string[]? PickedPackage { get; set; }
+
+			[XmlArray("Packages")]
+			[XmlArrayItem("Package")]
+			public List<CardPackage>? Packages { get; set; }
+		}
+
+		public class CardPackage
+		{
+			[XmlAttribute("KeyCard")]
+			public string? KeyCard { get; set; }
+
+			[XmlElement("Card")]
+			public string[] Cards { get; set; } = { };
 		}
 
 	}
