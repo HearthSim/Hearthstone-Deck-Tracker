@@ -1,3 +1,7 @@
+## **Release v1.44.10 - 2025-06-05**
+**Hearthstone:**
+- Fixed an issue in the upload of Arena games.
+
 ## **Release v1.44.9 - 2025-06-04**
 **Hearthstone:**
 - Fixed Deck Import for Underground Arena Decks.
