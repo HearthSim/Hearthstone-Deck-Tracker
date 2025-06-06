@@ -1,3 +1,7 @@
+## **Release v1.44.10 - 2025-06-06**
+**Hearthstone:**
+- Fixed automatic Deck Import for Underground Arena Decks after redraft.
+
 ## **Release v1.44.10 - 2025-06-05**
 **Hearthstone:**
 - Fixed an issue in the upload of Arena games.
