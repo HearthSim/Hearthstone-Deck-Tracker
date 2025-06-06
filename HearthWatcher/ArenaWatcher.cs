@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HearthMirror.Enums;
 using HearthMirror.Objects;
 using HearthWatcher.EventArgs;
 using HearthWatcher.Providers;
@@ -19,12 +20,15 @@ namespace HearthWatcher
 		private bool _running;
 		private bool _watch;
 		private int _prevSlot = -1;
+		private int _prevRedraftSlot = -1;
 		private Card[]? _prevChoices;
 		private List<List<Card>>? _prevPackages;
 		private int _prevChoicesVersion = -1;
 		private ArenaInfo? _prevInfo;
 		private bool? _prevIsUnderground = null;
+		private ArenaSessionState _prevArenaSessionState = ArenaSessionState.INVALID;
 		private const int MaxDeckSize = 30;
+		private const int MaxRedraftDeckSize = 5;
 		private readonly IArenaProvider _arenaProvider;
 
 		public ArenaWatcher(IArenaProvider arenaProvider, int delay = 500)
@@ -51,11 +55,13 @@ namespace HearthWatcher
 		{
 			_running = true;
 			_prevSlot = -1;
+			_prevRedraftSlot = -1;
 			_prevInfo = null;
 			_prevChoices = null;
 			_prevChoicesVersion = -1;
 			_prevPackages = null;
 			_prevIsUnderground = null;
+			_prevArenaSessionState = ArenaSessionState.INVALID;
 			while(_watch)
 			{
 				await Task.Delay(_delay);
@@ -72,11 +78,18 @@ namespace HearthWatcher
 			var arenaInfo = _arenaProvider.GetArenaInfo();
 			if(arenaInfo == null)
 				return false;
-			var numCards = arenaInfo.Deck.Cards.Sum(x => x.Count);
-			if(numCards == MaxDeckSize)
+
+			if(arenaInfo.SessionState == ArenaSessionState.MIDRUN)
 			{
-				if(_prevSlot == MaxDeckSize)
-					CardPicked(arenaInfo);
+				if(_prevArenaSessionState == ArenaSessionState.DRAFTING)
+				{
+					var numCards = arenaInfo.Deck.Cards.Sum(x => x.Count);
+					if(numCards == MaxDeckSize)
+					{
+						if(_prevSlot == MaxDeckSize)
+							CardPicked(arenaInfo);
+					}
+				}
 				OnCompleteDeck?.Invoke(this, new CompleteDeckEventArgs(arenaInfo));
 				if(arenaInfo.Rewards?.Any() ?? false)
 					OnRewards?.Invoke(this, new RewardsEventArgs(arenaInfo));
@@ -107,11 +120,13 @@ namespace HearthWatcher
 			else if(_prevSlot > 0 && _prevIsUnderground == arenaInfo.IsUnderground)
 				CardPicked(arenaInfo);
 			_prevSlot = arenaInfo.CurrentSlot;
+			_prevRedraftSlot = -1;
 			_prevInfo = arenaInfo;
 			_prevChoices = choices.Choices.ToArray();
 			_prevChoicesVersion = choices.Version;
 			_prevPackages = choices.Packages;
 			_prevIsUnderground = arenaInfo.IsUnderground;
+			_prevArenaSessionState = arenaInfo.SessionState;
 			return false;
 		}
 

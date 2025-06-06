@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				Watchers.ArenaWatcher.Update();
 			}
-			else if(logLine.Line.Contains("DRAFTING") && game.CurrentMode == Mode.DRAFT)
+			else if((logLine.Line.Contains("DRAFTING") || logLine.Line.Contains("REDRAFTING")) && game.CurrentMode == Mode.DRAFT)
 			{
 				Watchers.ArenaWatcher.Run();
 			}
