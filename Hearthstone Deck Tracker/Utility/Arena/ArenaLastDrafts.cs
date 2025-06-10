@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			}
 
 			var currentDraft = GetOrCreateDraft(startTime, playerId, originalDeckId, isUnderground);
-			var currentRedraft = GetOrCreateRedraft(currentDraft, startTime, playerId, originalDeckId, redraftDeckId, losses, isUnderground);
+			var currentRedraft = GetOrCreateRedraft(currentDraft, startTime, playerId, originalDeckId, redraftDeckId, losses, originalDeck, isUnderground);
 
 			var start = DateTime.Parse(startTime);
 			var end = DateTime.Parse(pickedTime);
@@ -124,7 +124,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 					slot,
 					(int)timeSpent.TotalMilliseconds,
 					overlayVisible,
-					originalDeck,
 					redraftPickedCards
 					)
 			);
@@ -177,7 +176,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			return draft;
 		}
 
-		private RedraftItem GetOrCreateRedraft(DraftItem currentDraft, string startTime, string player, long originalDeckId, long redraftDeckId, int losses, bool isUnderground)
+		private RedraftItem GetOrCreateRedraft(DraftItem currentDraft, string startTime, string player, long originalDeckId, long redraftDeckId, int losses, string[] originalDeck, bool isUnderground)
 		{
 			var redraft = currentDraft.Redrafts.FirstOrDefault(r => r.RedraftDeckId == redraftDeckId && r.Losses == losses);
 			if(redraft != null)
@@ -185,7 +184,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				return redraft;
 			}
 
-			redraft = new RedraftItem(startTime, player, originalDeckId, redraftDeckId, losses, isUnderground);
+			redraft = new RedraftItem(startTime, player, originalDeckId, redraftDeckId, losses, originalDeck, isUnderground);
 			currentDraft.Redrafts.Add(redraft);
 			return redraft;
 		}
@@ -288,13 +287,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 
 		public class RedraftItem
 		{
-			public RedraftItem(string startTime, string player, long originalDeckId, long redraftDeckId, int losses, bool isUnderground)
+			public RedraftItem(string startTime, string player, long originalDeckId, long redraftDeckId, int losses, string[] originalDeck, bool isUnderground)
 			{
 				Player = player;
 				StartTime = startTime;
 				OriginalDeckId = originalDeckId;
 				RedraftDeckId = redraftDeckId;
 				Losses = losses;
+				OriginalDeck = originalDeck;
 				IsUnderground = isUnderground;
 			}
 
@@ -320,6 +320,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			[XmlAttribute("IsUnderground")]
 			public bool IsUnderground { get; set; }
 
+			[XmlElement("OriginalDeck")]
+			public string[] OriginalDeck { get; set; } = { };
+
 			[XmlElement("Pick")]
 			public List<RedraftPickItem> Picks { get; set; } = new();
 
@@ -333,7 +336,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				int slot,
 				int timeOnChoice,
 				bool overlayVisible,
-				string[] originalDeck,
 				string[] redraftPickedCards
 			)
 			{
@@ -342,7 +344,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				Slot = slot;
 				TimeOnChoice = timeOnChoice;
 				OverlayVisible = overlayVisible;
-				OriginalDeck = originalDeck;
 				RedraftPickedCards = redraftPickedCards;
 			}
 
@@ -362,9 +363,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 
 			[XmlElement("OverlayVisible")]
 			public bool OverlayVisible { get; set; }
-
-			[XmlElement("OriginalDeck")]
-			public string[] OriginalDeck { get; set; } = { };
 
 			[XmlElement("RedraftPickedCards")]
 			public string[] RedraftPickedCards { get; set; } = { };

@@ -167,6 +167,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 						new UploadMetaData.ArenaDraft
 						{
 							StartTime = draft.StartTime,
+							DeckId = draft.DeckId,
 							// we use groupBy to be safer against picks being duplicated on xml file
 							// and avoid a duplicate key error
 							Picks = draft.Picks
@@ -190,6 +191,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 										StartTime = r.StartTime,
 										RedraftNumber = r.Losses,
 										RedraftDeckId = r.RedraftDeckId,
+										Deck = r.OriginalDeck,
 										Picks = r.Picks.Select(p =>
 											new UploadMetaData.ArenaRedraftPick {
 													Pick = p.Slot,
@@ -198,7 +200,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 													TimeOnChoice = p.TimeOnChoice,
 													OverlayVisible = p.OverlayVisible,
 													PickedCards = p.RedraftPickedCards,
-													OriginalDeck = p.OriginalDeck,
 												}).ToArray()
 									}).ToArray()
 								: null

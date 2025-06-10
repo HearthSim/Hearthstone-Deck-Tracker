@@ -110,7 +110,7 @@ namespace HearthWatcher
 					{
 						if(_prevRedraftSlot == MaxRedraftDeckSize - 1)
 						{
-							RedraftCardPicked(arenaInfo);
+							RedraftLastCardPicked(arenaInfo);
 							_prevRedraftSlot = -1;
 						}
 					}
@@ -271,10 +271,28 @@ namespace HearthWatcher
 					)
 				);
 			}
-			else
+		}
+
+		private void RedraftLastCardPicked(ArenaInfo arenaInfo)
+		{
+			var pick = arenaInfo.RedraftDeck.Cards.FirstOrDefault(x => !_prevInfo?.RedraftDeck.Cards.Any(c => x.Id == c.Id && x.Count == c.Count) ?? false);
+			// on the last redraft pick, all the cards are added to arenaInfo.Deck, resulting on a 35 cards deck.
+			// We use prevInfo.Deck so we have the deck before the pick
+			var deck = _prevInfo?.Deck ?? arenaInfo.Deck;
+			if(pick != null)
 			{
-				;
-				;
+				OnRedraftCardPicked?.Invoke(
+					this,
+					new RedraftCardPickedEventArgs(
+						new Card(pick.Id, 1, pick.PremiumType),
+						_prevChoices!,
+						deck,
+						arenaInfo.RedraftDeck,
+						arenaInfo.RedraftCurrentSlot - 1,
+						arenaInfo.Losses,
+						arenaInfo.IsUnderground
+					)
+				);
 			}
 		}
 
