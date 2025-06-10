@@ -12,7 +12,8 @@ public class PlayedDragonsCounter : NumericCounter
 
 	public override string[] RelatedCards => new string[]
 	{
-		HearthDb.CardIds.Collectible.Priest.TimewinderZarimi
+		HearthDb.CardIds.Collectible.Priest.TimewinderZarimi,
+		HearthDb.CardIds.Collectible.Neutral.Kazakusan,
 	};
 
 	public PlayedDragonsCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
