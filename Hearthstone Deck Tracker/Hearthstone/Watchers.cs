@@ -22,6 +22,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ArenaWatcher.OnChoicesChanged += OnChoiceChanged;
 			ArenaWatcher.OnCardPicked += OnCardPicked;
 			ArenaWatcher.OnCompleteDeck += OnDeckCompleted;
+			ArenaWatcher.OnRedraftChoicesChanged += OnRedraftChoiceChanged;
+			ArenaWatcher.OnRedraftCardPicked += OnRedraftCardPicked;
 			DungeonRunWatcher.DungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set, false);
 			DungeonRunWatcher.DungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo, false);
 			PVPDungeonRunWatcher.PVPDungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set, true);
@@ -108,6 +110,57 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				args.IsUnderground,
 				args.PickedPackage?.Select(c => c.Id).ToArray() ?? null,
 				packages
+			);
+
+		}
+
+		internal static void OnRedraftChoiceChanged(object sender, HearthWatcher.EventArgs.RedraftChoicesChangedEventArgs args)
+		{
+
+			var newChoices = args.Choices.Select(c => c.Id).ToArray();
+			var pickStartTime = DateTime.Now.ToString("o");
+
+			var deckId = args.RedraftDeck.Id;
+
+			if (!_currentArenaDraftInfo.TryGetValue(deckId, out var draftInfo))
+				_currentArenaDraftInfo[deckId] = draftInfo = new Dictionary<int, (string[] choices, string[][]? packages, string pickStartTime)>();
+
+			draftInfo[args.Slot] = (newChoices, null, pickStartTime);
+
+		}
+
+		internal static void OnRedraftCardPicked(object sender, HearthWatcher.EventArgs.RedraftCardPickedEventArgs args)
+		{
+
+			if (!TryGetDraftInfo(args.RedraftDeck.Id, args.Slot, 0, out var info))
+				return;
+
+			var currentPick = args.Picked.Id;
+
+			var originalDeck = args.Deck.Cards
+				.WhereNotNull()
+				.SelectMany(c => Enumerable.Repeat(c.Id, c.Count))
+				.ToArray();
+
+			var redraftDeck = args.RedraftDeck.Cards
+				.WhereNotNull()
+				.SelectMany(c => Enumerable.Repeat(c.Id, c.Id == currentPick ? Math.Max(0, c.Count - 1) : c.Count))
+				.ToArray();
+
+			var pickTime = DateTime.Now.ToString("o");
+			ArenaLastDrafts.Instance.AddRedraftPick(
+				info.pickStartTime,
+				pickTime,
+				args.Picked.Id,
+				info.choices,
+				args.Slot,
+				overlayVisible: false,
+				originalDeck,
+				redraftDeck,
+				args.Deck.Id,
+				args.RedraftDeck.Id,
+				args.Losses,
+				args.IsUnderground
 			);
 
 		}

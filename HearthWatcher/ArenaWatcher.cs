@@ -12,7 +12,9 @@ namespace HearthWatcher
 	public class ArenaWatcher
 	{
 		public delegate void ChoicesChangedEventHandler(object sender, ChoicesChangedEventArgs args);
+		public delegate void RedraftChoicesChangedEventHandler(object sender, RedraftChoicesChangedEventArgs args);
 		public delegate void CardPickedEventHandler(object sender, CardPickedEventArgs args);
+		public delegate void RedraftCardPickedEventHandler(object sender, RedraftCardPickedEventArgs args);
 		public delegate void CompleteDeckEventHandler(object sender, CompleteDeckEventArgs args);
 		public delegate void RewardsEventHandler(object sender, RewardsEventArgs args);
 
@@ -38,7 +40,9 @@ namespace HearthWatcher
 		}
 
 		public event ChoicesChangedEventHandler OnChoicesChanged;
+		public event RedraftChoicesChangedEventHandler OnRedraftChoicesChanged;
 		public event CardPickedEventHandler OnCardPicked;
+		public event RedraftCardPickedEventHandler OnRedraftCardPicked;
 		public event CompleteDeckEventHandler OnCompleteDeck;
 		public event RewardsEventHandler OnRewards;
 
@@ -97,6 +101,27 @@ namespace HearthWatcher
 				return true;
 			}
 
+			if(arenaInfo.SessionState == ArenaSessionState.EDITING_DECK)
+			{
+				if(_prevArenaSessionState is ArenaSessionState.REDRAFTING or ArenaSessionState.MIDRUN_REDRAFT_PENDING or ArenaSessionState.INVALID)
+				{
+					var numCards = arenaInfo.RedraftDeck.Cards.Sum(x => x.Count);
+					if(numCards == MaxRedraftDeckSize)
+					{
+						if(_prevRedraftSlot == MaxRedraftDeckSize - 1)
+						{
+							RedraftCardPicked(arenaInfo);
+							_prevRedraftSlot = -1;
+						}
+					}
+				}
+			}
+
+			if(arenaInfo.SessionState is ArenaSessionState.REDRAFTING or ArenaSessionState.MIDRUN_REDRAFT_PENDING)
+			{
+				return UpdateRedraft(arenaInfo);
+			}
+
 			// _prevSlot can be related to The arena while currentSlot is Underground and vice-versa
 			// so we need to check if _prevIsUnderground is the same as arenaInfo.IsUnderground
 			if(_prevInfo != null && arenaInfo.CurrentSlot <= _prevSlot
@@ -121,6 +146,37 @@ namespace HearthWatcher
 				CardPicked(arenaInfo);
 			_prevSlot = arenaInfo.CurrentSlot;
 			_prevRedraftSlot = -1;
+			_prevInfo = arenaInfo;
+			_prevChoices = choices.Choices.ToArray();
+			_prevChoicesVersion = choices.Version;
+			_prevPackages = choices.Packages;
+			_prevIsUnderground = arenaInfo.IsUnderground;
+			_prevArenaSessionState = arenaInfo.SessionState;
+			return false;
+		}
+
+		private bool UpdateRedraft(ArenaInfo arenaInfo)
+		{
+			var redraftDeck = arenaInfo.RedraftDeck;
+			var redraftSlot = arenaInfo.RedraftCurrentSlot;
+
+			var choices = _arenaProvider.GetDraftChoices();
+			if (choices == null || choices.Choices.Count == 0)
+				return false;
+
+			if (_prevInfo != null && redraftSlot <= _prevRedraftSlot
+			                      && _prevIsUnderground == arenaInfo.IsUnderground
+			                      && _prevChoicesVersion == choices.Version)
+				return false;
+
+			OnRedraftChoicesChanged?.Invoke(this,
+				new RedraftChoicesChangedEventArgs(choices.Choices.ToArray(), arenaInfo.Deck, redraftDeck, redraftSlot, arenaInfo.Losses, arenaInfo.IsUnderground));
+
+			if(_prevRedraftSlot >= 0 && _prevIsUnderground == arenaInfo.IsUnderground)
+				RedraftCardPicked(arenaInfo);
+
+			_prevSlot = -1;
+			_prevRedraftSlot = redraftSlot;
 			_prevInfo = arenaInfo;
 			_prevChoices = choices.Choices.ToArray();
 			_prevChoicesVersion = choices.Version;
@@ -195,6 +251,31 @@ namespace HearthWatcher
 					usedPackage));
 			}
 
+		}
+
+		private void RedraftCardPicked(ArenaInfo arenaInfo)
+		{
+			var pick = arenaInfo.RedraftDeck.Cards.FirstOrDefault(x => !_prevInfo?.RedraftDeck.Cards.Any(c => x.Id == c.Id && x.Count == c.Count) ?? false);
+			if(pick != null)
+			{
+				OnRedraftCardPicked?.Invoke(
+					this,
+					new RedraftCardPickedEventArgs(
+						new Card(pick.Id, 1, pick.PremiumType),
+						_prevChoices!,
+						arenaInfo.Deck,
+						arenaInfo.RedraftDeck,
+						arenaInfo.RedraftCurrentSlot - 1,
+						arenaInfo.Losses,
+						arenaInfo.IsUnderground
+					)
+				);
+			}
+			else
+			{
+				;
+				;
+			}
 		}
 
 		private Dictionary<string, string[]>? GetPackagesFromChoices(DraftChoices? choices)

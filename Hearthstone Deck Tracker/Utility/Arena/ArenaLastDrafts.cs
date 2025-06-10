@@ -87,6 +87,52 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				Save();
 		}
 
+		public async void AddRedraftPick(
+			string startTime,
+			string pickedTime,
+			string picked,
+			string[] choices,
+			int slot,
+			bool overlayVisible,
+			string[] originalDeck,
+			string[] redraftPickedCards,
+			long originalDeckId,
+			long redraftDeckId,
+			int losses,
+			bool isUnderground,
+			bool save = true
+			)
+		{
+			var playerId = await GetPlayerId();
+			if(playerId == null)
+			{
+				Log.Info("Unable to save the game. User account can not found...");
+				return;
+			}
+
+			var currentDraft = GetOrCreateDraft(startTime, playerId, originalDeckId, isUnderground);
+			var currentRedraft = GetOrCreateRedraft(currentDraft, startTime, playerId, originalDeckId, redraftDeckId, losses, isUnderground);
+
+			var start = DateTime.Parse(startTime);
+			var end = DateTime.Parse(pickedTime);
+			var timeSpent = end - start;
+
+			currentRedraft.Picks.Add(
+				new RedraftPickItem(
+					picked,
+					choices,
+					slot,
+					(int)timeSpent.TotalMilliseconds,
+					overlayVisible,
+					originalDeck,
+					redraftPickedCards
+					)
+			);
+
+			if(save)
+				Save();
+		}
+
 		public void RemoveDraft(string player, bool isUnderground, bool save = true)
 		{
 			// the same player can't have 2 drafts of same type open at same time
@@ -131,6 +177,19 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			return draft;
 		}
 
+		private RedraftItem GetOrCreateRedraft(DraftItem currentDraft, string startTime, string player, long originalDeckId, long redraftDeckId, int losses, bool isUnderground)
+		{
+			var redraft = currentDraft.Redrafts.FirstOrDefault(r => r.RedraftDeckId == redraftDeckId && r.Losses == losses);
+			if(redraft != null)
+			{
+				return redraft;
+			}
+
+			redraft = new RedraftItem(startTime, player, originalDeckId, redraftDeckId, losses, isUnderground);
+			currentDraft.Redrafts.Add(redraft);
+			return redraft;
+		}
+
 		public class DraftItem
 		{
 			public DraftItem(string startTime, string player, long deckId, bool isUnderground)
@@ -159,6 +218,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 
 			[XmlElement("Pick")]
 			public List<PickItem> Picks { get; set; } = new();
+
+			[XmlElement("Redraft")]
+			public List<RedraftItem> Redrafts { get; set; } = new();
 
 		}
 
@@ -222,6 +284,90 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 
 			[XmlElement("Card")]
 			public string[] Cards { get; set; } = { };
+		}
+
+		public class RedraftItem
+		{
+			public RedraftItem(string startTime, string player, long originalDeckId, long redraftDeckId, int losses, bool isUnderground)
+			{
+				Player = player;
+				StartTime = startTime;
+				OriginalDeckId = originalDeckId;
+				RedraftDeckId = redraftDeckId;
+				Losses = losses;
+				IsUnderground = isUnderground;
+			}
+
+			public RedraftItem()
+			{
+			}
+
+			[XmlAttribute("Player")]
+			public string? Player { get; set; }
+
+			[XmlAttribute("StartTime")]
+			public string? StartTime { get; set; }
+
+			[XmlAttribute("OriginalDeckId")]
+			public long OriginalDeckId { get; set; }
+
+			[XmlAttribute("RedraftDeckId")]
+			public long RedraftDeckId { get; set; }
+
+			[XmlAttribute("Losses")]
+			public int Losses { get; set; }
+
+			[XmlAttribute("IsUnderground")]
+			public bool IsUnderground { get; set; }
+
+			[XmlElement("Pick")]
+			public List<RedraftPickItem> Picks { get; set; } = new();
+
+		}
+
+		public class RedraftPickItem
+		{
+			public RedraftPickItem(
+				string picked,
+				string[] choices,
+				int slot,
+				int timeOnChoice,
+				bool overlayVisible,
+				string[] originalDeck,
+				string[] redraftPickedCards
+			)
+			{
+				Picked = picked;
+				Choices = choices;
+				Slot = slot;
+				TimeOnChoice = timeOnChoice;
+				OverlayVisible = overlayVisible;
+				OriginalDeck = originalDeck;
+				RedraftPickedCards = redraftPickedCards;
+			}
+
+			public RedraftPickItem() { }
+
+			[XmlElement("Slot")]
+			public int Slot { get; set; }
+
+			[XmlElement("Picked")]
+			public string? Picked { get; set; }
+
+			[XmlElement("Choice")]
+			public string[] Choices { get; set; } = { };
+
+			[XmlElement("TimeOnChoice")]
+			public int TimeOnChoice { get; set; }
+
+			[XmlElement("OverlayVisible")]
+			public bool OverlayVisible { get; set; }
+
+			[XmlElement("OriginalDeck")]
+			public string[] OriginalDeck { get; set; } = { };
+
+			[XmlElement("RedraftPickedCards")]
+			public string[] RedraftPickedCards { get; set; } = { };
 		}
 
 	}

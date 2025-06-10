@@ -182,7 +182,26 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 											PickedPackage = group.Last().PickedPackage,
 											Packages = group.Last().Packages?.ToDictionary(p => p.KeyCard, p => p.Cards),
 										}
-								).ToArray()
+								).ToArray(),
+							Redrafts = draft.Redrafts.Count > 0 ?
+								draft.Redrafts.Select(r =>
+									new UploadMetaData.ArenaRedraft
+									{
+										StartTime = r.StartTime,
+										RedraftNumber = r.Losses,
+										RedraftDeckId = r.RedraftDeckId,
+										Picks = r.Picks.Select(p =>
+											new UploadMetaData.ArenaRedraftPick {
+													Pick = p.Slot,
+													Chosen = p.Picked,
+													Offered = p.Choices,
+													TimeOnChoice = p.TimeOnChoice,
+													OverlayVisible = p.OverlayVisible,
+													PickedCards = p.RedraftPickedCards,
+													OriginalDeck = p.OriginalDeck,
+												}).ToArray()
+									}).ToArray()
+								: null
 						};
 				}
 			}
