@@ -1,4 +1,9 @@
-## **Release v1.44.10 - 2025-06-06**
+## **Release v1.44.12 - 2025-06-11**
+**Hearthstone:**
+- Added Card Highlights to many cards available in Arena.
+- Added Related Card Tooltips to many cards available in Arena.
+
+## **Release v1.44.11 - 2025-06-06**
 **Hearthstone:**
 - Fixed automatic Deck Import for Underground Arena Decks after redraft.
 
