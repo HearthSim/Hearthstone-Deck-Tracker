@@ -1,6 +1,9 @@
-## **Unreleased**
+## **Release v1.44.13 - 2025-06-13**
 **Hearthstone:**
 - Added related cards for Wallow the Wretched.
+
+**Battlegrounds**:
+- Updated Bob's Buddy for Hearthstone 32.4.2.
 
 ## **Release v1.44.12 - 2025-06-11**
 **Hearthstone:**
