@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone:**
+- Added related cards for Wallow the Wretched.
+
 ## **Release v1.44.12 - 2025-06-11**
 **Hearthstone:**
 - Added Card Highlights to many cards available in Arena.
