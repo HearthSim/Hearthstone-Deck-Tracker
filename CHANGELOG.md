@@ -1,3 +1,8 @@
+## **Release v1.44.14 - 2025-06-18**
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Fire-forged Evoker.
+- Fixed incorrect simulation results due to Rapid Reanimation.
+
 ## **Release v1.44.13 - 2025-06-13**
 **Hearthstone:**
 - Added related cards for Wallow the Wretched.
