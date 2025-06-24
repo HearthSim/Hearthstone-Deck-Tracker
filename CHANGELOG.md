@@ -1,3 +1,7 @@
+## **Release v1.44.15 - 2025-06-24**
+**Hearthstone:**
+- Fixed an issue where some cards with a "Start of the Game" effect were revealed in the opponent's hand.
+
 ## **Release v1.44.14 - 2025-06-18**
 **Bob's Buddy**:
 - Fixed incorrect simulation results due to Fire-forged Evoker.
