@@ -79,10 +79,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private int _maxBlockId;
 		public Block? CurrentBlock { get; private set; }
 
-		public void BlockStart(string? type, string? cardId, string? target)
+		public void BlockStart(string? type, string? cardId, string? target, string?  triggerKeyword)
 		{
 			var blockId = _maxBlockId++;
-			CurrentBlock = CurrentBlock?.CreateChild(blockId, type, cardId, target) ?? new Block(null, blockId, type, cardId, target);
+			CurrentBlock = CurrentBlock?.CreateChild(blockId, type, cardId, target, triggerKeyword) ?? new Block(null, blockId, type, cardId, target, triggerKeyword);
 			_game.SecretsManager.OnNewBlock();
 		}
 
@@ -112,6 +112,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public string? CardId { get; }
 		public string? Target { get; }
 
+		public string? TriggerKeyword { get;}
+
 		public int SourceEntityId { get; set; }
 		public int DredgeCounter { get; set; }
 
@@ -124,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool IsTradeableAction { get; set; }
 		public bool HideShowEntities { get; set; }
 
-		public Block(Block? parent, int blockId, string? type, string? cardId, string? target)
+		public Block(Block? parent, int blockId, string? type, string? cardId, string? target, string? triggerKeyword)
 		{
 			Parent = parent;
 			Children = new List<Block>();
@@ -132,8 +134,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			Type = type;
 			CardId = cardId;
 			Target = target;
+			TriggerKeyword = triggerKeyword;
 		}
 
-		public Block CreateChild(int blockId, string? type, string? cardId, string? target) => new Block(this, blockId, type, cardId, target);
+		public Block CreateChild(int blockId, string? type, string? cardId, string? target, string? triggerKeyword) => new Block(this, blockId, type, cardId, target, triggerKeyword);
 	}
 }

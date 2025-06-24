@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		void Reset();
 		void SetCurrentEntity(int id);
 		void ResetCurrentEntity();
-		void BlockStart(string? type, string? cardId, string? target);
+		void BlockStart(string? type, string? cardId, string? target, string? triggerKeyword);
 		void BlockEnd();
 		Block? CurrentBlock { get; }
 		Tuple<int, string>? ChameleosReveal { get; set; }

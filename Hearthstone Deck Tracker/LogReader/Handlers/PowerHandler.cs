@@ -262,19 +262,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							entity.Info.Hidden = false;
 						}
-						// Cards that are revealed at the start of the game
-						if(entity.CardId is Collectible.Neutral.PrinceRenathalCorePlaceholder or
-						   Collectible.Neutral.PrinceRenathal or
-						   Collectible.Neutral.YseraEmeraldAspect or
-						   Collectible.Priest.DarkbishopBenedictus or
-						   Collectible.Priest.DarkbishopBenedictusCorePlaceholder or
-						   Collectible.Warrior.SporeEmpressMoldara or
-						   NonCollectible.Warrior.SporeEmpressMoldara_ReplicatingSporeToken)
-						{
-							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-							entity.Info.Hidden = true;
-							Core.UpdateOpponentCards();
-						}
+
 						if(entity.Info.DeckIndex < 0 && gameState.CurrentBlock != null && gameState.CurrentBlock.SourceEntityId != 0)
 						{
 							if(game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var source) && source.HasDredge())
@@ -501,7 +489,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var target = GetTargetCardId(match);
 				var correspondPlayer = match.Success ? int.Parse(match.Groups["player"].Value) : -1;
 				var triggerKeyword = match.Success ? match.Groups["triggerKeyword"].Value : null;
-				gameState.BlockStart(blockType, cardId, target);
+				gameState.BlockStart(blockType, cardId, target, triggerKeyword);
 
 				if(match.Success && (blockType == "TRIGGER" || blockType == "POWER"))
 				{
