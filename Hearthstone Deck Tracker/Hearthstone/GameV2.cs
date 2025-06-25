@@ -703,7 +703,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(availableRaces == null)
 				return null;
 
-			var hero = Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
+			var hero = Entities.Values.FirstOrDefault(x => x.IsHero && x.IsControlledBy(Player.Id));
 			var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
 			var heroCard = heroCardId != null ? Database.GetCardFromId(heroCardId) : null;
 			if(heroCard == null)
@@ -727,7 +727,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var parameters = new BattlegroundsTrinketPickParams()
 			{
 				HeroDbfId = heroCard.DbfId,
-				HeroPowerDbfIds = Core.Game.Player.PastHeroPowers.Select(x => Database.GetCardFromId(x)?.DbfId).Where(x => x.HasValue).Cast<int>().ToArray(),
+				HeroPowerDbfIds = Player.PastHeroPowers.Select(x => Database.GetCardFromId(x)?.DbfId).Where(x => x.HasValue).Cast<int>().ToArray(),
 				Turn = Core.Game.GetTurnNumber(),
 				SourceDbfId = sourceEntity.Card.DbfId,
 				MinionTypes = availableRaces.Cast<int>().ToArray(),
