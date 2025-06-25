@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 
 			var questData = Tier7Trial.Token != null
 				? await ApiWrapper.GetTier7QuestStats(Tier7Trial.Token, requestParams)
-				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7QuestStats(requestParams));
+				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7QuestPickStats(requestParams));
 			if(questData == null)
 			{
 				Message.Error();
@@ -148,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			}
 		}
 
-		private BattlegroundsQuestStatsParams? GetApiParams()
+		private BattlegroundsQuestPickParams? GetApiParams()
 		{
 			var hero = Core.Game.Entities.Values.FirstOrDefault(x => x.IsHero && x.IsControlledBy(Core.Game.Player.Id));
 			var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
@@ -164,7 +164,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			if(rewards.Length == 0)
 				return null;
 
-			return new BattlegroundsQuestStatsParams
+			return new BattlegroundsQuestPickParams
 			{
 				HeroDbfId = heroCard.DbfId,
 				HeroPowerDbfIds = Core.Game.Player.PastHeroPowers.Select(x => Database.GetCardFromId(x)?.DbfId).Where(x => x.HasValue).Cast<int>().ToArray(),
@@ -178,14 +178,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			};
 		}
 
-		private IEnumerable<BattlegroundsQuestStatsParams.OfferedReward> GetOffererdRewards()
+		private IEnumerable<BattlegroundsQuestPickParams.OfferedReward> GetOffererdRewards()
 		{
 			foreach(var quest in _entities)
 			{
 				if(!quest.HasCardId)
 					continue;
 				var rewardCardDbfId = quest.GetTag(GameTag.BACON_CARD_DBID_REWARD);
-				yield return new BattlegroundsQuestStatsParams.OfferedReward
+				yield return new BattlegroundsQuestPickParams.OfferedReward
 				{
 					RewardDbfId = quest.GetTag(GameTag.QUEST_REWARD_DATABASE_ID),
 					RewardCardDbfId = rewardCardDbfId != 0 ? rewardCardDbfId : null,

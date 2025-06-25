@@ -8,7 +8,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 	{
 		public BattlegroundsCompositionPopularityViewModel? CompVM { get; }
 
-		public BattlegroundsSingleQuestViewModel(BattlegroundsQuestStats? stats) : base(stats?.Tier, stats?.AvgFinalPlacement, stats?.FpPickRate)
+		public BattlegroundsSingleQuestViewModel(BattlegroundsQuestPickStats? stats) : base(stats?.Tier, stats?.AvgFinalPlacement, stats?.FpPickRate)
 		{
 			if(stats != null)
 				CompVM = new(stats.FirstPlaceComps);

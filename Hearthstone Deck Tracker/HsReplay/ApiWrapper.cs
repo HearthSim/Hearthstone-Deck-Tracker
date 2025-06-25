@@ -229,11 +229,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static async Task<BattlegroundsQuestStats[]?> GetTier7QuestStats(string token, BattlegroundsQuestStatsParams parameters)
+		public static async Task<BattlegroundsQuestPickStats[]?> GetTier7QuestStats(string token, BattlegroundsQuestPickParams parameters)
 		{
 			try
 			{
-				return await Client.GetTier7QuestStats(token, parameters);
+				return await Client.GetTier7QuestPickStats(token, parameters);
 			}
 			catch(Exception e)
 			{
