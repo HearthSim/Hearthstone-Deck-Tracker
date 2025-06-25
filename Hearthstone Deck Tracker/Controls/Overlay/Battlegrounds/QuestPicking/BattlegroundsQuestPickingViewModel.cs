@@ -173,6 +173,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
 				OfferedRewards = rewards,
 				LanguageCode = Helper.GetCardLanguage(),
+				GameType = (int)HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, Core.Game.CurrentFormat),
 				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating
 			};
 		}
