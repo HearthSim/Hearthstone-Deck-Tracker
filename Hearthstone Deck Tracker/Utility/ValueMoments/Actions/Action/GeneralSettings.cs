@@ -50,12 +50,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("opponent_active_effects")]
 		public bool OpponentActiveEffects { get => !Config.Instance.HideOpponentActiveEffects; }
 
-		[JsonProperty("player_wotog_counters")]
-		public bool PlayerWotogCounters { get => Config.Instance.DisablePlayerWotogs; }
-
-		[JsonProperty("opponent_wotog_counters")]
-		public bool OpponentWotogCounters { get => Config.Instance.DisableOpponentWotogs; }
-
 		[JsonProperty("player_counters")]
 		public bool PlayerCounters { get => !Config.Instance.HidePlayerCounters; }
 

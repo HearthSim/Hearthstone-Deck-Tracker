@@ -80,8 +80,6 @@ namespace HDTTests.Utility.ValueMoments.Actions
 					"show_news_bar",
 					"player_active_effects",
 					"opponent_active_effects",
-					"player_wotog_counters",
-					"opponent_wotog_counters",
 					"player_counters",
 					"opponent_counters",
 					"player_related_cards",

@@ -384,33 +384,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HideOpponentMaxResourcesWidget = false;
 
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode OpponentCthunCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Never)]
-		public DisplayMode OpponentSpellsCounter = DisplayMode.Never;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode OpponentJadeCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode OpponentPogoHopperCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode OpponentGalakrondCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode OpponentLibramCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Never)]
-		public DisplayMode OpponentSpellSchoolsCounter = DisplayMode.Never;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode OpponentAbyssalCurseCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode OpponentExcavateCounter = DisplayMode.Auto;
-
 		[DefaultValue(false)]
 		public bool HideOpponentCardAge = false;
 
@@ -450,41 +423,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HidePlayerMaxResourcesWidget = false;
 
-		[DefaultValue(true)]
-		public bool DisablePlayerWotogs = true;
-
-		[DefaultValue(true)]
-		public bool DisableOpponentWotogs = true;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode PlayerCthunCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode PlayerSpellsCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode PlayerJadeCounter = DisplayMode.Auto;
-
 		[DefaultValue(false)]
 		public bool HidePlayerCardCount = false;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode PlayerPogoHopperCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode PlayerGalakrondCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode PlayerLibramCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode PlayerSpellSchoolsCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode PlayerAbyssalCurseCounter = DisplayMode.Auto;
-
-		[DefaultValue(DisplayMode.Auto)]
-		public DisplayMode PlayerExcavateTierCounter = DisplayMode.Auto;
 
 		[DefaultValue(false)]
 		public bool HidePlayerCards = false;
@@ -1158,18 +1098,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(72.2)]
 		public double OpponentMaxResourcesHorizontal = 72.2;
-
-		[DefaultValue(68.5)]
-		public double WotogIconsPlayerVertical = 68.5;
-
-		[DefaultValue(86.8)]
-		public double WotogIconsPlayerHorizontal = 86.8;
-
-		[DefaultValue(18.5)]
-		public double WotogIconsOpponentVertical = 18.5;
-
-		[DefaultValue(86.5)]
-		public double WotogIconsOpponentHorizontal = 86.5;
 
 		#region deprecated
 

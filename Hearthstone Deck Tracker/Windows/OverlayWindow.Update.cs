@@ -7,12 +7,10 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using static HearthDb.Enums.GameTag;
-using static Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounterStyle;
 using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -291,103 +289,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				TextBlockPlayerAttack.Text = board.Player.Damage.ToString();
 				TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
 			}
-
-			if(_game.IsInMenu || !_game.IsMulliganDone || inBattlegrounds)
-			{
-				WotogIconsPlayer.Visibility = Collapsed;
-				WotogIconsOpponent.Visibility = Collapsed;
-			}
-			else
-			{
-				WotogIconsPlayer.Visibility = Visible;
-				WotogIconsOpponent.Visibility = Visible;
-			}
-
-			// Deprecated setting for wotog counters
-			if(Config.Instance.DisablePlayerWotogs) WotogIconsPlayer.Visibility = Collapsed;
-			if(Config.Instance.DisableOpponentWotogs) WotogIconsOpponent.Visibility = Collapsed;
-
-			var showPlayerCthunCounter = WotogCounterHelper.ShowPlayerCthunCounter;
-			var showPlayerSpellsCounter = WotogCounterHelper.ShowPlayerSpellsCounter;
-			var showPlayerJadeCounter = WotogCounterHelper.ShowPlayerJadeCounter;
-			var showPlayerPogoHopperCounter = WotogCounterHelper.ShowPlayerPogoHopperCounter;
-			var showPlayerGalakrondCounter = WotogCounterHelper.ShowPlayerGalakrondCounter;
-			var showPlayerLibramCounter = WotogCounterHelper.ShowPlayerLibramCounter;
-			var showPlayerSpellSchoolsCounter = WotogCounterHelper.ShowPlayerSpellSchoolsCounter;
-			var showPlayerAbyssalCurseCounter = WotogCounterHelper.ShowPlayerAbyssalCurseCounter;
-			var showPlayerExcavateTier = WotogCounterHelper.ShowPlayerExcavateTier;
-			if(showPlayerCthunCounter)
-			{
-				var player = Core.Game.PlayerEntity;
-				WotogIconsPlayer.Attack = (player?.HasTag(CTHUN_ATTACK_BUFF) ?? false ? player.GetTag(CTHUN_ATTACK_BUFF) + 6 : 6).ToString();
-				WotogIconsPlayer.Health = (player?.HasTag(CTHUN_HEALTH_BUFF) ?? false ? player.GetTag(CTHUN_HEALTH_BUFF) + 6 : 6).ToString();
-			}
-			if(showPlayerSpellsCounter)
-				WotogIconsPlayer.Spells = _game.Player.SpellsPlayedCount.ToString();
-			if(showPlayerJadeCounter)
-				WotogIconsPlayer.Jade = WotogCounterHelper.PlayerNextJadeGolem.ToString();
-			if(showPlayerPogoHopperCounter)
-				WotogIconsPlayer.PogoHopper = ((_game.Player.PogoHopperPlayedCount + 1 ) * 2 - 1).ToString();
-			if(showPlayerGalakrondCounter)
-				WotogIconsPlayer.Galakrond = WotogCounterHelper.PlayerGalakrondInvokeCounter.ToString();
-			if(showPlayerLibramCounter)
-				WotogIconsPlayer.Libram = WotogCounterHelper.PlayerLibramCounter.ToString();
-			if(showPlayerSpellSchoolsCounter)
-				WotogIconsPlayer.SpellSchools = _game.Player.PlayedSpellSchools.ToList();
-			if(showPlayerAbyssalCurseCounter)
-				WotogIconsPlayer.AbyssalCurse = WotogCounterHelper.PlayerAbyssalCurseCounter.ToString();
-			if(showPlayerExcavateTier)
-				WotogIconsPlayer.ExcavateTier = _game.PlayerEntity?.GetTag(GameTag.CURRENT_EXCAVATE_TIER) ?? 0;
-			WotogIconsPlayer.CthunCounterStyle = showPlayerCthunCounter ? Full : None;
-			WotogIconsPlayer.SpellCounterStyle = showPlayerSpellsCounter ? Full : None;
-			WotogIconsPlayer.JadeCounterStyle = showPlayerJadeCounter ? Full : None;
-			WotogIconsPlayer.PogoHopperCounterStyle = showPlayerPogoHopperCounter ? Full : None;
-			WotogIconsPlayer.GalakrondCounterStyle = showPlayerGalakrondCounter ? Full : None;
-			WotogIconsPlayer.LibramCounterStyle = showPlayerLibramCounter ? Full : None;
-			WotogIconsPlayer.SpellSchoolsStyle = showPlayerSpellSchoolsCounter ? Full : None;
-			WotogIconsPlayer.AbyssalCounterStyle = showPlayerAbyssalCurseCounter ? Full : None;
-			WotogIconsPlayer.ExcavateTierStyle = showPlayerExcavateTier ? Full : None;
-
-			var showOpponentCthunCounter = WotogCounterHelper.ShowOpponentCthunCounter;
-			var showOpponentSpellCounter = WotogCounterHelper.ShowOpponentSpellCounter;
-			var showOpponentJadeCounter = WotogCounterHelper.ShowOpponentJadeCounter;
-			var showOpponentPogoHopperCounter = WotogCounterHelper.ShowOpponentPogoHopperCounter;
-			var showOpponentGalakrondCounter = WotogCounterHelper.ShowOpponentGalakrondCounter;
-			var showOpponentLibramCounter = WotogCounterHelper.ShowOpponentLibramCounter;
-			var showOpponentSpellSchoolsCounter = WotogCounterHelper.ShowOpponentSpellSchoolsCounter;
-			var showOpponentAbyssalCurseCounter = WotogCounterHelper.ShowOpponentAbyssalCurseCounter;
-			var showOpponentExcavateCounter = WotogCounterHelper.ShowOpponentExcavateCounter;
-			if(showOpponentCthunCounter)
-			{
-				var player = Core.Game.OpponentEntity;
-				WotogIconsOpponent.Attack = (player?.HasTag(CTHUN_ATTACK_BUFF) ?? false ? player.GetTag(CTHUN_ATTACK_BUFF) + 6 : 6).ToString();
-				WotogIconsOpponent.Health = (player?.HasTag(CTHUN_HEALTH_BUFF) ?? false ? player.GetTag(CTHUN_HEALTH_BUFF) + 6 : 6).ToString();
-			}
-			if(showOpponentSpellCounter)
-				WotogIconsOpponent.Spells = _game.Opponent.SpellsPlayedCount.ToString();
-			if(showOpponentJadeCounter)
-				WotogIconsOpponent.Jade = WotogCounterHelper.OpponentNextJadeGolem.ToString();
-			if (showOpponentPogoHopperCounter)
-				WotogIconsOpponent.PogoHopper = ((_game.Opponent.PogoHopperPlayedCount + 1) * 2 - 1).ToString();
-			if(showOpponentGalakrondCounter)
-				WotogIconsOpponent.Galakrond = WotogCounterHelper.OpponentGalakrondInvokeCounter.ToString();
-			if(showOpponentLibramCounter)
-				WotogIconsOpponent.Libram = WotogCounterHelper.OpponentLibramCounter.ToString();
-			if(showOpponentSpellSchoolsCounter)
-				WotogIconsOpponent.SpellSchools = _game.Opponent.PlayedSpellSchools.ToList();
-			if(showOpponentAbyssalCurseCounter)
-				WotogIconsOpponent.AbyssalCurse = WotogCounterHelper.OpponentAbyssalCurseCounter.ToString();
-			if(showOpponentExcavateCounter)
-				WotogIconsOpponent.Excavate = (_game.OpponentEntity?.GetTag((GameTag)2822) ?? 0).ToString();
-			WotogIconsOpponent.CthunCounterStyle = showOpponentCthunCounter ? Full : None;
-			WotogIconsOpponent.SpellCounterStyle = showOpponentSpellCounter ? Full : None;
-			WotogIconsOpponent.JadeCounterStyle = showOpponentJadeCounter ? Full : None;
-			WotogIconsOpponent.PogoHopperCounterStyle = showOpponentPogoHopperCounter ? Full : None;
-			WotogIconsOpponent.GalakrondCounterStyle = showOpponentGalakrondCounter ? Full : None;
-			WotogIconsOpponent.LibramCounterStyle = showOpponentLibramCounter ? Full : None;
-			WotogIconsOpponent.SpellSchoolsStyle = showOpponentSpellSchoolsCounter ? Full : None;
-			WotogIconsOpponent.AbyssalCounterStyle = showOpponentAbyssalCurseCounter ? Full : None;
-			WotogIconsOpponent.ExcavateCounterStyle = showOpponentExcavateCounter ? Full : None;
 		}
 
 		public void UpdateVisibility()
@@ -569,10 +470,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(LblOpponentTurnTime, Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
 			Canvas.SetTop(LblPlayerTurnTime, Height * Config.Instance.TimersVerticalPosition / 100 + Config.Instance.TimersVerticalSpacing);
 			Canvas.SetLeft(LblPlayerTurnTime, Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
-			Canvas.SetTop(WotogIconsPlayer, Height * Config.Instance.WotogIconsPlayerVertical / 100);
-			Canvas.SetLeft(WotogIconsPlayer, Helper.GetScaledXPos(Config.Instance.WotogIconsPlayerHorizontal / 100, (int)Width, ScreenRatio));
-			Canvas.SetTop(WotogIconsOpponent, Height * Config.Instance.WotogIconsOpponentVertical / 100);
-			Canvas.SetLeft(WotogIconsOpponent, Helper.GetScaledXPos(Config.Instance.WotogIconsOpponentHorizontal / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(PlayerActiveEffects, Height * Config.Instance.PlayerActiveEffectsVertical / 100);
 			Canvas.SetLeft(PlayerActiveEffects, Helper.GetScaledXPos(Config.Instance.PlayerActiveEffectsHorizontal / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(OpponentActiveEffects, Height - (OpponentActiveEffects.ActualHeight * _activeEffectsScale + Height * Config.Instance.OpponentActiveEffectsVertical / 100));
@@ -627,7 +524,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private double _wotogSize;
 		private double _activeEffectsScale;
 		private void UpdateElementSizes()
 		{
@@ -656,14 +552,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				TextBlockPlayerAttack.FontSize = atkFont;
 				TextBlockOpponentAttack.FontSize = atkFont;
-			}
-
-			var wotogSize = Math.Min(1, Height / 1800);
-			if(_wotogSize != wotogSize)
-			{
-				WotogIconsPlayer.RenderTransform = new ScaleTransform(wotogSize, wotogSize);
-				WotogIconsOpponent.RenderTransform = new ScaleTransform(wotogSize, wotogSize);
-				_wotogSize = wotogSize;
 			}
 
 			var activeEffectsSize = Height / 1080;

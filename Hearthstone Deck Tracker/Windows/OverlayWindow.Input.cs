@@ -142,26 +142,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
-			if(_selectedUiElement is WotogCounter wotogIcons)
-			{
-				if(wotogIcons.Equals(WotogIconsPlayer))
-				{
-					Config.Instance.WotogIconsPlayerVertical += delta.Y / Height;
-					Config.Instance.WotogIconsPlayerHorizontal += delta.X / (Width * ScreenRatio);
-					Canvas.SetTop(_movableElements[wotogIcons], Height * Config.Instance.WotogIconsPlayerVertical / 100);
-					Canvas.SetLeft(_movableElements[wotogIcons], Helper.GetScaledXPos(Config.Instance.WotogIconsPlayerHorizontal / 100, (int)Width, ScreenRatio));
-					return;
-				}
-				if(wotogIcons.Equals(WotogIconsOpponent))
-				{
-					Config.Instance.WotogIconsOpponentVertical += delta.Y / Height;
-					Config.Instance.WotogIconsOpponentHorizontal += delta.X / (Width * ScreenRatio);
-					Canvas.SetTop(_movableElements[wotogIcons], Height * Config.Instance.WotogIconsOpponentVertical / 100);
-					Canvas.SetLeft(_movableElements[wotogIcons], Helper.GetScaledXPos(Config.Instance.WotogIconsOpponentHorizontal / 100, (int)Width, ScreenRatio));
-					return;
-				}
-			}
-
 			if(_selectedUiElement is ActiveEffectsOverlay activeEffects)
 			{
 				if(activeEffects.Equals(PlayerActiveEffects))
@@ -280,11 +260,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 						_selectedUiElement = element.Key;
 						return;
 					}
-					if(element.Key is WotogCounter && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
-					{
-						_selectedUiElement = element.Key;
-						return;
-					}
 					if(element.Key is ActiveEffectsOverlay && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
 					{
 						_selectedUiElement = element.Key;
@@ -329,8 +304,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 					}
 					if(LblTurnTime.Visibility != Visibility.Visible)
 						ShowTimers();
-					WotogIconsPlayer.ForceShow(true);
-					WotogIconsOpponent.ForceShow(true);
 				}
 
 				PlayerActiveEffects.ForceShowExampleEffects(true);
@@ -425,9 +398,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if (_game.IsInMenu)
 					HideTimers();
 
-				WotogIconsPlayer.ForceShow(false);
-				WotogIconsOpponent.ForceShow(false);
-
 				PlayerActiveEffects.ForceHideExampleEffects();
 				OpponentActiveEffects.ForceHideExampleEffects();
 
@@ -459,8 +429,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return new Size(panel.ActualWidth, panel.ActualHeight);
 			if (element is HearthstoneTextBlock block)
 				return new Size(block.ActualWidth, block.ActualHeight);
-			if(element is WotogCounter wotogIcons)
-				return new Size(wotogIcons.IconWidth * _wotogSize, wotogIcons.ActualHeight * _wotogSize);
 			if(element is ActiveEffectsOverlay activeEffects)
 			{
 				var width = activeEffects.MaxWidth * _activeEffectsScale;

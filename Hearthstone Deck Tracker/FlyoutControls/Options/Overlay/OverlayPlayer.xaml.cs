@@ -69,26 +69,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxRelatedCards.IsChecked = !Config.Instance.HidePlayerRelatedCards;
 			CheckBoxHighlightSynergies.IsChecked = !Config.Instance.HidePlayerHighlightSynergies;
 			CheckBoxMaxResourcesWidget.IsChecked = !Config.Instance.HidePlayerMaxResourcesWidget;
-			CheckboxEnableWotogs.IsChecked = !Config.Instance.DisablePlayerWotogs;
 			CheckBoxAttack.IsChecked = !Config.Instance.HidePlayerAttackIcon;
-			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxCthun.SelectedItem = Config.Instance.PlayerCthunCounter;
-			ComboBoxSpells.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxSpells.SelectedItem = Config.Instance.PlayerSpellsCounter;
-			ComboBoxJade.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxJade.SelectedItem = Config.Instance.PlayerJadeCounter;
-			ComboBoxPogoHopper.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxPogoHopper.SelectedItem = Config.Instance.PlayerPogoHopperCounter;
-			ComboBoxGalakrond.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxGalakrond.SelectedItem = Config.Instance.PlayerGalakrondCounter;
-			ComboBoxLibram.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxLibram.SelectedItem = Config.Instance.PlayerLibramCounter;
-			ComboBoxSpellSchools.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();;
-			ComboBoxSpellSchools.SelectedItem = Config.Instance.PlayerSpellSchoolsCounter;
-			ComboBoxAbyssal.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxAbyssal.SelectedItem = Config.Instance.PlayerAbyssalCurseCounter;
-			ComboBoxExcavateTier.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxExcavateTier.SelectedItem = Config.Instance.PlayerExcavateTierCounter;
 
 			ElementSorterPlayer.IsPlayer = true;
 			SetPanel();
@@ -267,30 +248,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Core.Overlay.UpdateStackPanelAlignment();
 		}
 
-		private void ComboBoxCthun_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.PlayerCthunCounter = (DisplayMode)ComboBoxCthun.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxSpells_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.PlayerSpellsCounter = (DisplayMode)ComboBoxSpells.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxJade_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.PlayerJadeCounter = (DisplayMode)ComboBoxJade.SelectedItem;
-			Config.Save();
-		}
-
 		private void CheckBoxAttack_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -384,70 +341,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HidePlayerMaxResourcesWidget = true;
-			Config.Save();
-		}
-
-		private void CheckBoxWotogs_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.DisablePlayerWotogs = false;
-			Config.Save();
-		}
-
-		private void CheckBoxWotogs_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.DisablePlayerWotogs = true;
-			Config.Save();
-		}
-
-		private void ComboBoxPogoHopper_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.PlayerPogoHopperCounter = (DisplayMode)ComboBoxPogoHopper.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxGalakrond_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.PlayerGalakrondCounter = (DisplayMode)ComboBoxGalakrond.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxLibram_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.PlayerLibramCounter = (DisplayMode)ComboBoxLibram.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxSpellSchools_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.PlayerSpellSchoolsCounter = (DisplayMode)ComboBoxSpellSchools.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxAbyssal_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.PlayerAbyssalCurseCounter = (DisplayMode)ComboBoxAbyssal.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxExcavateTier_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.PlayerExcavateTierCounter = (DisplayMode)ComboBoxExcavateTier.SelectedItem;
 			Config.Save();
 		}
 	}

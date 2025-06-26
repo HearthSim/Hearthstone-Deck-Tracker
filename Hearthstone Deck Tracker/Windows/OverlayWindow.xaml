@@ -300,8 +300,6 @@
                     <Image Source="/HearthstoneDeckTracker;component/Images/board_damage.png"/>
                     <local:HearthstoneTextBlock x:Name="TextBlockPlayerAttack" FontSize="24" Width="75" Height="75" Text="0" TextAlignment="Center" Margin="0,3,0,0"/>
                 </Grid>
-                <overlay:WotogCounter x:Name="WotogIconsPlayer" Canvas.Top="200" Canvas.Right="450"/>
-                <overlay:WotogCounter x:Name="WotogIconsOpponent" Canvas.Top="300" Canvas.Right="450"/>
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTileText0" Margin="2 -13 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" TextAlignment="Center"/>
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTurnText0" Margin="2.5 0 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" FontStretch="UltraCondensed" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTileText1" Margin="2 -14 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" TextAlignment="Center"/>

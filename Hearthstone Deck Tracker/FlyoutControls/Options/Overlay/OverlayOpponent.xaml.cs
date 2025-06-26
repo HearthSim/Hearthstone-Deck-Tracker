@@ -84,25 +84,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxCounters.IsChecked = !Config.Instance.HideOpponentCounters;
 			CheckBoxRelatedCards.IsChecked = !Config.Instance.HideOpponentRelatedCards;
 			CheckBoxMaxResourcesWidget.IsChecked = !Config.Instance.HideOpponentMaxResourcesWidget;
-			CheckboxEnableWotogs.IsChecked = !Config.Instance.DisableOpponentWotogs;
-			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxCthun.SelectedItem = Config.Instance.OpponentCthunCounter;
-			ComboBoxSpells.ItemsSource = new[] {DisplayMode.Always, DisplayMode.Never};
-			ComboBoxSpells.SelectedItem = Config.Instance.OpponentSpellsCounter;
-			ComboBoxJade.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxJade.SelectedItem = Config.Instance.OpponentJadeCounter;
-			ComboBoxPogoHopper.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxPogoHopper.SelectedItem = Config.Instance.OpponentPogoHopperCounter;
-			ComboBoxGalakrond.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxGalakrond.SelectedItem = Config.Instance.OpponentGalakrondCounter;
-			ComboBoxLibram.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxLibram.SelectedItem = Config.Instance.OpponentLibramCounter;
-			ComboBoxSpellSchools.ItemsSource = new[] { DisplayMode.Always, DisplayMode.Never };
-			ComboBoxSpellSchools.SelectedItem = Config.Instance.OpponentSpellsCounter;
-			ComboBoxAbyssal.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxAbyssal.SelectedItem = Config.Instance.OpponentAbyssalCurseCounter;
-			ComboBoxExcavate.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-			ComboBoxExcavate.SelectedItem = Config.Instance.OpponentExcavateCounter;
 			CheckboxOpponentCardAge.IsChecked = !Config.Instance.HideOpponentCardAge;
 			CheckboxOpponentCardMarks.IsChecked = !Config.Instance.HideOpponentCardMarks;
 			CheckboxShowSecrets.IsChecked = !Config.Instance.HideSecrets;
@@ -261,30 +242,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Save();
 		}
 
-		private void ComboBoxCthun_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OpponentCthunCounter = (DisplayMode)ComboBoxCthun.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxSpells_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OpponentSpellsCounter = (DisplayMode)ComboBoxSpells.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxJade_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.OpponentJadeCounter = (DisplayMode)ComboBoxJade.SelectedItem;
-			Config.Save();
-		}
-
 		private void CheckBoxAttack_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -365,22 +322,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Save();
 		}
 
-		private void CheckBoxWotogs_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.DisableOpponentWotogs = false;
-			Config.Save();
-		}
-
-		private void CheckBoxWotogs_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.DisableOpponentWotogs = true;
-			Config.Save();
-		}
-
 		private void CheckboxOpponentCardAge_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -429,54 +370,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.HideSecrets = true;
 			SaveConfig(false);
 			Core.Overlay.HideSecrets();
-		}
-
-		private void ComboBoxPogoHopper_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.OpponentPogoHopperCounter = (DisplayMode)ComboBoxPogoHopper.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxGalakrond_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.OpponentGalakrondCounter = (DisplayMode)ComboBoxGalakrond.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxLibram_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OpponentLibramCounter = (DisplayMode)ComboBoxLibram.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxSpellSchools_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OpponentSpellSchoolsCounter = (DisplayMode)ComboBoxSpellSchools.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxAbyssal_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OpponentAbyssalCurseCounter = (DisplayMode)ComboBoxAbyssal.SelectedItem;
-			Config.Save();
-		}
-
-		private void ComboBoxExcavate_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OpponentExcavateCounter = (DisplayMode)ComboBoxExcavate.SelectedItem;
-			Config.Save();
 		}
 	}
 }

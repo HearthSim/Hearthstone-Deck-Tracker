@@ -138,12 +138,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.Reset(nameof(Config.SecretsLeft));
 			Config.Instance.Reset(nameof(Config.SecretsPanelHeight));
 
-			Config.Instance.Reset(nameof(Config.WotogIconsPlayerHorizontal));
-			Config.Instance.Reset(nameof(Config.WotogIconsPlayerVertical));
-
-			Config.Instance.Reset(nameof(Config.WotogIconsOpponentHorizontal));
-			Config.Instance.Reset(nameof(Config.WotogIconsOpponentVertical));
-
 			Config.Instance.Reset(nameof(Config.PlayerActiveEffectsHorizontal));
 			Config.Instance.Reset(nameof(Config.PlayerActiveEffectsVertical));
 
