@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BobsBuddy.Simulation;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Enums;
@@ -301,6 +300,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(!game.Entities.TryGetValue(value, out var targetEntity))
 				return;
+
+			// Eyes in the Sky
+			var sourceEntityId = gameState.CurrentBlock?.SourceEntityId;
+			if(
+				sourceEntityId.HasValue &&
+				gameState.CurrentBlock?.Type == "POWER" &&
+				game.Entities.TryGetValue(sourceEntityId.Value, out var actionStartingEntity) &&
+				actionStartingEntity.CardId == Collectible.Rogue.EyesInTheSky &&
+				game.Entities.TryGetValue(id, out var linkingEntity) &&
+				game.Entities.TryGetValue(value, out var linkedEntity) &&
+				linkingEntity.CardId != "" &&
+				linkedEntity.CardId == ""
+			)
+			{
+				linkedEntity.CardId = linkingEntity.CardId;
+				linkedEntity.Info.GuessedCardState = GuessedCardState.Guessed;
+				Core.UpdateOpponentCards();
+				return;
+			}
+
 			OnDredge(entity, targetEntity, game, gameState);
 		}
 
