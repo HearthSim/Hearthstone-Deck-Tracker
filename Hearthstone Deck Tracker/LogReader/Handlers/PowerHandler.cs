@@ -1269,6 +1269,27 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Mage.SpiritGatherer:
 								AddKnownCardId(gameState, NonCollectible.Mage.WispTokenEMERALD_DREAM);
 								break;
+							case NonCollectible.Warrior.EntertheLostCity_LatorviusGazeOfTheCityToken:
+								if(actionStartingEntity?.IsControlledBy(game.Opponent.Id) == true)
+								{
+									foreach(var id in new List<string> {
+								        NonCollectible.Druid.JungleGiants_BarnabusTheStomperToken,
+								        NonCollectible.Hunter.TheMarshQueen_QueenCarnassaToken,
+								        NonCollectible.Mage.OpentheWaygate_TimeWarpToken,
+								        NonCollectible.Paladin.TheLastKaleidosaur_GalvadonToken,
+								        NonCollectible.Priest.AwakentheMakers_AmaraWardenOfHopeToken,
+								        NonCollectible.Rogue.TheCavernsBelow_CrystalCoreTokenUNGORO,
+								        NonCollectible.Shaman.UnitetheMurlocs_MegafinToken,
+								        NonCollectible.Warlock.LakkariSacrifice_NetherPortalToken1,
+								        NonCollectible.Warrior.FirePlumesHeart_SulfurasToken,
+							        }) {
+										if(id != null)
+										{
+											game.Opponent.PredictUniqueCardInDeck(id, true);
+										}
+									}
+								}
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
