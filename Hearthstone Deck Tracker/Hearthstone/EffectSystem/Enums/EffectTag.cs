@@ -13,5 +13,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.EffectSystem.Enums
 		TargetModification,
 		Summon,
 		SpellModification,
+		DamageModification,
 	}
 }
