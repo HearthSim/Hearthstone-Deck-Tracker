@@ -133,6 +133,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsQuest => HasTag(GameTag.QUEST) || IsQuestline;
 
 		[JsonIgnore]
+		public bool IsInCosmetic => IsInZone(Zone.COSMETIC);
+
+		[JsonIgnore]
 		public bool IsQuestline => HasTag(GameTag.QUESTLINE);
 
 		[JsonIgnore]

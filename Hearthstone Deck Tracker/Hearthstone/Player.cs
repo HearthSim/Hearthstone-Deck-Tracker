@@ -240,6 +240,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.SelectMany(x => x).ToList();
 			var revealedNotInDeck = RevealedEntities.Where(x => (!x.Info.Created || x.Info.OriginalEntityWasCreated == false)
 																&& x.IsPlayableCard
+																&& !x.IsInCosmetic
 																&& (!x.IsInDeck || x.Info.Stolen)
 																&& x.Info.OriginalController == Id
 																&& !x.Info.Hidden).ToList();
@@ -430,6 +431,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return RevealedEntities.Where(x =>
 										!(x.Info.GuessedCardState == GuessedCardState.None && x.Info.Hidden)
 										&& (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
+										&& !x.IsInCosmetic
 										&& (x.GetTag(GameTag.CREATOR) == 1
 											|| ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
 												&& x.Info.OriginalController == Id)
