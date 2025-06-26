@@ -230,6 +230,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public int GetTag(GameTag gameTag) => Data?.Entity.GetTag(gameTag) ?? 0;
 
+		public bool HasTag(GameTag gameTag) => GetTag(gameTag) > 0;
+
 		public Race? RaceEnum => Data?.Race;
 		public Race? SecondaryRaceEnum => Data?.SecondaryRace;
 
