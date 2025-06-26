@@ -15,7 +15,7 @@ public class LatorviusGazeOfTheCity: ICardWithRelatedCards
 			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Hunter.TheMarshQueen_QueenCarnassaToken),
 			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Mage.OpentheWaygate_TimeWarpToken),
 			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Paladin.TheLastKaleidosaur_GalvadonToken),
-			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Priest.AwakentheMakers_WardedByHopeToken),
+			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Priest.AwakentheMakers_AmaraWardenOfHopeToken),
 			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Rogue.TheCavernsBelow_CrystalCoreTokenUNGORO),
 			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Shaman.UnitetheMurlocs_MegafinToken),
 			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Warlock.LakkariSacrifice_NetherPortalToken1),
