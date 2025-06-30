@@ -23,7 +23,6 @@ using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using System.Windows.Controls;
 using System.Windows.Input;
-using BobsBuddy.Anomalies;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -39,10 +38,13 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Anomalies;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.ChinaModule;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.PlayerResourcesWidget;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Overlay;
 using Hearthstone_Deck_Tracker.Utility.RegionDrawer;
 using Hearthstone_Deck_Tracker.Utility.Themes;
@@ -85,6 +87,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _heroNotificationBehavior;
 		private OverlayElementBehavior _bgsTopBarBehavior;
 		private OverlayElementBehavior _bgsBobsBuddyBehavior;
+		private OverlayElementBehavior _bgsChinaModuleBehavior;
 		private OverlayElementBehavior _bgsTopBarTriggerMaskBehavior;
 		private OverlayElementBehavior _bgsPastOpponentBoardBehavior;
 		private OverlayElementBehavior _experienceCounterBehavior;
@@ -121,6 +124,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public List<BoardMinionOverlayViewModel> PlayerBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
 
 		private Dictionary<ItemsControl, List<Ellipse>> _boardHoverTargets = new Dictionary<ItemsControl, List<Ellipse>>();
+
+		public ChinaModuleViewModel ChinaModuleVM { get; } = new();
 		private List<Ellipse> GetBoardHoverTargets(ItemsControl container)
 		{
 			if(_boardHoverTargets.TryGetValue(container, out var targets))
@@ -304,6 +309,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					BtnTier7Inspiration.IsEnabled = BattlegroundsInspirationViewModel.HasBeenActivated;
 				}
+			};
+
+			_bgsChinaModuleBehavior = new OverlayElementBehavior(ChinaModulePanel)
+			{
+				GetLeft = () => 0,
+				GetTop = () => 0,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
 			};
 
 			ShowInTaskbar = Config.Instance.ShowInTaskbar;
@@ -769,6 +784,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			ShowBgsTopBar();
 			ShowBobsBuddyPanel();
+			UpdateBgsChinaModulePanel();
 		}
 
 		internal void HideBgsTopBar()
@@ -783,6 +799,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsInspirationViewModel.Reset();
 			HideBgsInspiration();
 			BtnTier7Inspiration.IsEnabled = false;
+
+			HideBgsChinaModulePanel();
 		}
 
 		internal void ShowBattlegroundsHeroPickingStats(
@@ -850,6 +868,43 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_bgsBobsBuddyBehavior.Hide();
 			BobsBuddyDisplay.ResetDisplays();
 		}
+
+		internal void UpdateBgsChinaModulePanel()
+		{
+			if(Core.Game.CurrentRegion is Region.CHINA)
+				Core.Game.Metrics.IsBattlegroundsChineseEnvironmentCorrect = BattlegroundsChinaModule.IsChineseEnvironment();
+
+			if(!BattlegroundsChinaModule.IsChineseEnvironment())
+			{
+				HideBgsChinaModulePanel();
+
+				if(Config.Instance.ShowChinaModuleOverlay == null)
+					return;
+
+				Core.Game.Metrics.ChinaModuleEnabled = false;
+				Config.Instance.ShowChinaModuleOverlay = null;
+				Config.Save();
+				return;
+			}
+
+			Core.Game.Metrics.ChinaModuleEnabled = true;
+
+			if(Config.Instance.ShowChinaModuleOverlay == null)
+			{
+				Config.Instance.ShowChinaModuleOverlay = true;
+				Config.Save();
+			}
+
+			if(Config.Instance.ShowChinaModuleOverlay == true)
+				_bgsChinaModuleBehavior.Show();
+		}
+
+		internal void HideBgsChinaModulePanel()
+		{
+			_bgsChinaModuleBehavior.Hide();
+			ChinaModuleVM.Reset();
+		}
+
 
 		internal void ShowExperienceCounter()
 		{

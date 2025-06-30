@@ -24,6 +24,7 @@
         xmlns:guides="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
         xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
         xmlns:anomalies="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Anomalies"
+        xmlns:chinaModule="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.ChinaModule"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -442,6 +443,9 @@
                         DataContext="{Binding BattlegroundsMinionsVM, RelativeSource={RelativeSource AncestorType={x:Type windows:OverlayWindow}}}"
                     />
                 </StackPanel>
+
+                <chinaModule:ChinaModulePanel x:Name="ChinaModulePanel" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                                              DataContext="{Binding ChinaModuleVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
 
                 <Grid Background="Black" Opacity="0.01" x:Name="BgsTopBarMask" Canvas.Right="0" Canvas.Top="0"
                       Visibility="Visible"

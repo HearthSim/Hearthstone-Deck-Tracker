@@ -145,11 +145,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			else if(logLine.Line.Contains("Gameplay.Start"))
 			{
+				if(Core.Game.IsChinaModuleActive)
+				{
+					Core.Game.PowerLog.Clear();
+					Core.Game.Entities.Clear();
+					return;
+				}
 				gameState.Reset();
 				gameState.GameHandler?.HandleGameStart(logLine.Time);
 			}
 			else if(logLine.Line.Contains("MulliganManager.HandleGameStart") && logLine.Line.Contains("IsPastBeginPhase()=True"))
 			{
+				if(Core.Game.IsChinaModuleActive)
+					return;
 				gameState.GameHandler?.HandleGameReconnect(logLine.Time);
 			}
 		}

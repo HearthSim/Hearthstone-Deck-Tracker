@@ -40,6 +40,10 @@
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTurnCounter_Checked"
                   Unchecked="CheckboxShowBattlegroundsTurnCounter_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowChinaModuleOverlay" Content="显示重连器"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxCheckboxShowChinaModuleOverlay_Checked"
+                  Unchecked="CheckboxCheckboxShowChinaModuleOverlay_Unchecked" Margin="10,5,0,0" />
         <GroupBox Header="{lex:LocTextUpper Options_Overlay_Battlegrounds_Label_Tier7}" Margin="5,10,5,5">
             <StackPanel>
                 <CheckBox x:Name="CheckboxEnableTier7" Content="{lex:Loc Options_Overlay_Battlegrounds_EnableTier7}"

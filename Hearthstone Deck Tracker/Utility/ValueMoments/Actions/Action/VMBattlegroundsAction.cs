@@ -11,12 +11,13 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		protected VMBattlegroundsAction(
 			Franchise franchise, int? maxDailyOccurrences,
-			int heroDbfId, string heroName, int finalPlacement, GameType gameType, int rating, GameMetrics gameMetrics
+			int heroDbfId, string heroName, int finalPlacement, int finalTurn, GameType gameType, int rating, GameMetrics gameMetrics
 		) : base(franchise, null, maxDailyOccurrences)
 		{
 			HeroDbfId = heroDbfId;
 			HeroName = heroName;
 			FinalPlacement = finalPlacement;
+			FinalTurn = finalTurn;
 			GameType = gameType;
 			Rating = rating;
 			Tier7HeroOverlayDisplayed = gameMetrics.Tier7HeroOverlayDisplayed;
@@ -41,6 +42,16 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 				TrialsActivated = new[] { Tier7OverlayTrial };
 			if (gameMetrics.Tier7TrialsRemaining.HasValue)
 				TrialsRemaining = new[] { $"{Tier7OverlayTrial}:{gameMetrics.Tier7TrialsRemaining}" };
+
+			if(gameMetrics.ChinaModuleEnabled)
+			{
+				NumClickBattlegroundsChinaModuleAction = gameMetrics.BattlegroundsChinaModuleActionClicks;
+				CountBattlegroundsChinaModuleActionSuccess = gameMetrics.BattlegroundsChinaModuleActionSuccessCount;
+				NumClickBattlegroundsChinaModuleAutoAction = gameMetrics.BattlegroundsChinaModuleAutoActionClicks;
+				EnabledBattlegroundsChinaModuleAutoAction = gameMetrics.BattlegroundsChinaModuleAutoActionEnabled;
+			}
+			IsBattlegroundsChineseEnvironmentCorrect = gameMetrics.IsBattlegroundsChineseEnvironmentCorrect;
+
 			BattlegroundsSettings = new BattlegroundsSettings();
 		}
 
@@ -61,6 +72,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("final_placement")]
 		public int FinalPlacement { get; }
+
+		[JsonProperty("final_turn")]
+		public int FinalTurn { get; }
 
 		[JsonProperty("game_type")]
 		public GameType GameType { get; }
@@ -118,6 +132,21 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("trials_remaining", NullValueHandling = NullValueHandling.Ignore)]
 		public string[]? TrialsRemaining { get; }
+
+		[JsonProperty("num_click_battlegrounds_china_module_action", NullValueHandling = NullValueHandling.Ignore)]
+		public int? NumClickBattlegroundsChinaModuleAction { get; }
+
+		[JsonProperty("count_battlegrounds_china_module_action_success", NullValueHandling = NullValueHandling.Ignore)]
+		public int? CountBattlegroundsChinaModuleActionSuccess { get; }
+
+		[JsonProperty("num_click_battlegrounds_china_module_auto_action", NullValueHandling = NullValueHandling.Ignore)]
+		public int? NumClickBattlegroundsChinaModuleAutoAction { get; }
+
+		[JsonProperty("enabled_battlegrounds_china_module_auto_action", NullValueHandling = NullValueHandling.Ignore)]
+		public bool? EnabledBattlegroundsChinaModuleAutoAction { get; }
+
+		[JsonProperty("is_battlegrounds_chinese_environment_correct", NullValueHandling = NullValueHandling.Ignore)]
+		public bool? IsBattlegroundsChineseEnvironmentCorrect { get; }
 
 		[JsonIgnore]
 		public BattlegroundsSettings BattlegroundsSettings { get; }

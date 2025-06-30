@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -350,6 +351,26 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(new InfluxPointBuilder("hdt_bgs_composition_stats_error")
 				.Tag("reason", Regex.Escape(reason))
 				.Field("message", Regex.Escape(message))
+				.Build()
+			);
+		}
+
+		public static void OnBattlegroundsHDTToolsExit(BattlegroundsChinaModule.HDTToolsExitCode exitCode)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_bgs_hdttools_exit_code")
+				.Tag("exit_code", exitCode)
+				.Build()
+			);
+		}
+
+		public static void OnBattlegroundsHDTToolsExecutionProblem(BattlegroundsChinaModule.HDTToolsExecutionProblem executionProblem)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_bgs_hdttools_execution_problem")
+				.Tag("execution_problem", executionProblem)
 				.Build()
 			);
 		}

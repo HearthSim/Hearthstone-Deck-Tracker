@@ -135,7 +135,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				TrackAction(new EndMatchHearthstoneAction(heroDbfId, heroName, matchResult, gameMode, gameType, starLevel, gameMetrics));
 		}
 
-		public static void OnBattlegroundsMatchEnds(string? heroCardId, int finalPlacement, GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)
+		public static void OnBattlegroundsMatchEnds(string? heroCardId, int finalPlacement, int finalTurn, GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)
 		{
 			var bgHeroCard = Database.GetCardFromId(heroCardId);
 			if(bgHeroCard == null)
@@ -146,9 +146,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var bgsRating = gameStats.BattlegroundsRatingAfter;
 
 			if(spectator)
-				TrackAction(new EndSpectateMatchBattlegroundsAction(heroDbfId, heroName, finalPlacement, gameType, bgsRating, gameMetrics));
+				TrackAction(new EndSpectateMatchBattlegroundsAction(heroDbfId, heroName, finalPlacement, finalTurn, gameType, bgsRating, gameMetrics));
 			else
-				TrackAction(new EndMatchBattlegroundsAction(heroDbfId, heroName, finalPlacement, gameType, bgsRating, gameMetrics));
+				TrackAction(new EndMatchBattlegroundsAction(heroDbfId, heroName, finalPlacement, finalTurn, gameType, bgsRating, gameMetrics));
 		}
 
 		public static void OnMercenariesMatchEnds(GameStats gameStats, GameMetrics gameMetrics, GameType gameType, bool spectator)

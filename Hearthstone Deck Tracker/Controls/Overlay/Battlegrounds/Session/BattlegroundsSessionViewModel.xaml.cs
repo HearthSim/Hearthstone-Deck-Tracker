@@ -53,6 +53,9 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	public async void Update()
 	{
+		if(Core.Game.IsChinaModuleActive)
+			return;
+
 		if(Core.Game.Spectator)
 			await Task.Delay(1500);
 

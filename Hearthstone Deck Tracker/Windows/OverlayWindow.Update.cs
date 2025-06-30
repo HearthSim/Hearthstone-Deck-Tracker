@@ -621,6 +621,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_constructedMulliganGuidePreLobbyBehaviour.UpdatePosition();
 			_constructedMulliganGuidePreLobbyBehaviour.UpdateScaling();
 
+			_bgsChinaModuleBehavior.UpdatePosition();
+			_bgsChinaModuleBehavior.UpdateScaling();
+
 			BattlegroundsHeroPickingViewModel.Scaling = scaling;
 			BattlegroundsHeroPicking.Width = Width / scaling;
 			BattlegroundsHeroPicking.Height = Height / scaling;
@@ -680,7 +683,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					)
 				);
 
-			if(show)
+			if(show || (_game.IsChinaModuleActive && Config.Instance.ShowSessionRecap))
 			{
 				FadeAnimation.SetVisibility(BattlegroundsSessionStackPanel, Visible);
 				BattlegroundsSessionViewModelVM.Update();

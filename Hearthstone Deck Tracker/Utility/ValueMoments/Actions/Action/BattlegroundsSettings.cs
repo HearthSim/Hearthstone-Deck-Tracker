@@ -64,5 +64,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("tier7_composition_stats_overlay")]
 		public bool Tier7CompositionStatsOverlay { get => Config.Instance.ShowBattlegroundsTier7SessionCompStats; }
+
+		[JsonProperty("bg_china_module_overlay")]
+		public bool? ChinaModuleOverlay { get => Config.Instance.ShowChinaModuleOverlay; }
 	}
 }

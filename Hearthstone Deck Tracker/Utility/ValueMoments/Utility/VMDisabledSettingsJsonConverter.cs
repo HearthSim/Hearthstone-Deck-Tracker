@@ -17,13 +17,21 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 				return;
 
 			writer.WriteStartArray();
-			foreach(var prop in value.GetType().GetProperties().Where(p => p.PropertyType == typeof(bool)))
+			foreach(var prop in value.GetType().GetProperties().Where(p =>
+				        p.PropertyType == typeof(bool) ||
+				        (p.PropertyType.IsGenericType &&
+				         p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) &&
+				         Nullable.GetUnderlyingType(p.PropertyType) == typeof(bool))))
 			{
 				var propJsonPropertyAttribute = prop.GetCustomAttributes(typeof(JsonPropertyAttribute), false)
 					.FirstOrDefault();
-				var propValue = (bool)prop.GetValue(value);
 
-				if(propJsonPropertyAttribute != null && !propValue)
+				var propValue = prop.GetValue(value);
+
+				if(propValue == null)
+					continue;
+
+				if(propJsonPropertyAttribute != null && !(bool)propValue)
 					writer.WriteValue(((JsonPropertyAttribute)propJsonPropertyAttribute).PropertyName);
 			}
 			writer.WriteEndArray();

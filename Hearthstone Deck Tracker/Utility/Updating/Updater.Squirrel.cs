@@ -7,6 +7,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Squirrel;
 
@@ -113,6 +114,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					onAppUninstall: v =>
 					{
 						initMgr.RemoveShortcutForThisExe();
+
+						BattlegroundsChinaModule.RemoveHDTToolsTask()
+							.ConfigureAwait(false)
+							.GetAwaiter()
+							.GetResult();
+
 						if(Config.Instance.StartWithWindows)
 							RegistryHelper.DeleteRunKey();
 					},

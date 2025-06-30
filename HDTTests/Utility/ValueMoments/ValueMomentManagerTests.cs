@@ -115,7 +115,7 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsBGBobsBuddyValueMoment()
 		{
-			var action = new EndMatchBattlegroundsAction(123, "foo", 1, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
+			var action = new EndMatchBattlegroundsAction(123, "foo", 1, 2, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
 
 			Assert.IsTrue(action.BattlegroundsSettings.BobsBuddyCombatSimulations);
 			Assert.IsTrue(action.BattlegroundsSettings.BobsBuddyResultsDuringCombat);
@@ -130,7 +130,7 @@ namespace HDTTests.Utility.ValueMoments
 			Config.Instance.ShowBobsBuddyDuringCombat = false;
 			Config.Instance.ShowBobsBuddyDuringShopping = true;
 
-			action = new EndMatchBattlegroundsAction(123, "foo", 1, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
+			action = new EndMatchBattlegroundsAction(123, "foo", 1, 2, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
 
 			Assert.IsTrue(action.BattlegroundsSettings.BobsBuddyCombatSimulations);
 			Assert.IsTrue(action.BattlegroundsSettings.BobsBuddyResultsDuringShopping);
@@ -146,7 +146,7 @@ namespace HDTTests.Utility.ValueMoments
 		[TestMethod]
 		public void GetValueMoments_ReturnsBGSessionRecapValueMoment()
 		{
-			var action = new EndMatchBattlegroundsAction(123, "foo", 1, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
+			var action = new EndMatchBattlegroundsAction(123, "foo", 1, 2, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
 
 			Assert.IsTrue(action.BattlegroundsSettings.SessionRecap);
 
@@ -157,7 +157,7 @@ namespace HDTTests.Utility.ValueMoments
 			Assert.IsNotNull(valueMoment);
 			Assert.IsTrue(valueMoment.IsFree);
 
-			action = new EndMatchBattlegroundsAction(123, "foo", 1, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
+			action = new EndMatchBattlegroundsAction(123, "foo", 1, 2, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
 
 			Assert.IsTrue(action.BattlegroundsSettings.SessionRecapBetweenGames);
 
@@ -174,7 +174,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var gameMetrics = new GameMetrics();
 			gameMetrics.IncrementBattlegroundsMinionsTiersClick();
-			var action = new EndMatchBattlegroundsAction(123, "foo", 1, GameType.GT_BATTLEGROUNDS, 5000, gameMetrics);
+			var action = new EndMatchBattlegroundsAction(123, "foo", 1, 2, GameType.GT_BATTLEGROUNDS, 5000, gameMetrics);
 
 			var valueMoment = ValueMomentManager.GetValueMoments(action).FirstOrDefault(
 				vm => vm.Name == ValueMoment.VMName.BGMinionBrowser
@@ -189,7 +189,7 @@ namespace HDTTests.Utility.ValueMoments
 		{
 			var gameMetrics = new GameMetrics();
 			gameMetrics.IncrementBattlegroundsMinionsTiersClick();
-			var action = new EndSpectateMatchBattlegroundsAction(123, "foo", 1, GameType.GT_BATTLEGROUNDS, 5000, gameMetrics);
+			var action = new EndSpectateMatchBattlegroundsAction(123, "foo", 1, 2, GameType.GT_BATTLEGROUNDS, 5000, gameMetrics);
 
 			var valueMoment = ValueMomentManager.GetValueMoments(action).FirstOrDefault(
 				vm => vm.Name == ValueMoment.VMName.BGMinionBrowser

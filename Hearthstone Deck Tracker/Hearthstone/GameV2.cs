@@ -55,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public ActiveEffects ActiveEffects { get; }
 		public CounterManager CounterManager { get; }
 		public RelatedCardsManager RelatedCardsManager { get; }
+		public bool IsChinaModuleActive { get; set; }
 		public GameV2()
 		{
 			Player = new Player(this, true);

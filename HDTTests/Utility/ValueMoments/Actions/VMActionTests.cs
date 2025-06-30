@@ -129,7 +129,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		[TestMethod]
 		public void EndMatchAction_BattlegroundsIncludesExclusiveData()
 		{
-			var action = new EndMatchBattlegroundsAction(123, "foo", 1, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
+			var action = new EndMatchBattlegroundsAction(123, "foo", 1, 2, GameType.GT_BATTLEGROUNDS, 5000, new GameMetrics());
 
 			var mixpanelPayload = JObject.Parse(JsonConvert.SerializeObject(action));
 			Assert.AreEqual(mixpanelPayload["battlegrounds_rating"], 5000);

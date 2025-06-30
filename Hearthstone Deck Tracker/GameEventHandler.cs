@@ -952,6 +952,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.ResetAnomalyGuidesMulliganTrigger();
 					Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 					Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
+					Core.Overlay.ChinaModuleVM.Reset();
 					Core.Overlay.HideBattlegroundsHeroPanel();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
 					var finalPlacement = hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0;
@@ -959,6 +960,7 @@ namespace Hearthstone_Deck_Tracker
 					HSReplayNetClientAnalytics.OnBattlegroundsMatchEnds(
 						hero?.CardId,
 						finalPlacement,
+						_game.GetTurnNumber(),
 						_game.CurrentGameStats,
 						_game.Metrics,
 						_game.CurrentGameType,

@@ -131,6 +131,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			set
 			{
 				_state = value;
+				Core.Overlay.ChinaModuleVM.BobsBuddyState = value;
 				DebugLog($"New State: {value}");
 			}
 		}

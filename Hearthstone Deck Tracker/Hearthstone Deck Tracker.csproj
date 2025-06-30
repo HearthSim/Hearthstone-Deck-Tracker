@@ -68,6 +68,7 @@
     <PackageReference Include="SharpRaven" Version="2.4.0" />
     <PackageReference Include="Splat" Version="1.6.2" />
     <PackageReference Include="squirrel.windows" Version="1.9.1" />
+    <PackageReference Include="TaskScheduler" Version="2.12.1" />
     <PackageReference Include="WPFLocalizeExtension" Version="3.5.0" />
     <PackageReference Include="XAMLMarkupExtensions" Version="1.8.0" />
   </ItemGroup>
@@ -268,6 +269,11 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\Overlay\Battlegrounds\Minions\BattlegroundsMinionType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Overlay\Battlegrounds\ChinaModule\ChinaModulePanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>

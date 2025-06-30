@@ -822,6 +822,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowBattlegroundsTier7SessionCompStats = true;
 
+		[DefaultValue(null)]
+		public bool? ShowChinaModuleOverlay = null;
+
 		[DefaultValue(false)]
 		public bool BattlegroundsSessionRecapWindowOnStart = false;
 

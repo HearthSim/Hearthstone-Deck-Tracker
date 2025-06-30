@@ -9,11 +9,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 	public class EndSpectateMatchBattlegroundsAction : VMBattlegroundsAction
 	{
 		public EndSpectateMatchBattlegroundsAction(
-			int heroDbfId, string heroName, int finalPlacement, GameType gameType, int rating, GameMetrics gameMetrics
+			int heroDbfId, string heroName, int finalPlacement, int finalTurn, GameType gameType, int rating, GameMetrics gameMetrics
 		) : base(
 			Franchise.Battlegrounds,
 			EndMatchActionMaxDailyOccurrences,
-			heroDbfId, heroName, finalPlacement, gameType, rating, gameMetrics
+			heroDbfId, heroName, finalPlacement, finalTurn, gameType, rating, gameMetrics
 		)
 		{
 		}

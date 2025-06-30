@@ -25,6 +25,18 @@
 		public int BattlegroundsBrowserTypeFilterClicks { get; set; }
 		public int BattlegroundsBrowserMechanicFilterClicks { get; set; }
 		public int BattlegroundsBrowserOpenFilterPanelClicks { get; set; }
+		public bool ChinaModuleEnabled { get; set; }
+
+		public bool? IsBattlegroundsChineseEnvironmentCorrect { get; set; }
+
+		public int BattlegroundsChinaModuleActionSuccessCount { get; set; }
+
+		public int BattlegroundsChinaModuleActionClicks { get; set; }
+
+		public int BattlegroundsChinaModuleAutoActionClicks { get; set; }
+
+		public bool BattlegroundsChinaModuleAutoActionEnabled { get; set; }
+
 
 		public void IncrementBattlegroundsMinionsTiersClick()
 		{

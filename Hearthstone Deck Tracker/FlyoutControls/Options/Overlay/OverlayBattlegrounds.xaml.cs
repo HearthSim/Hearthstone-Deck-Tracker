@@ -77,6 +77,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowBattlegroundsBrowser.IsChecked = Config.Instance.ShowBattlegroundsBrowser;
 			CheckboxAlwaysShowBattlegroundsTavernTier7.IsChecked = Config.Instance.AlwaysShowBattlegroundsTavernTier7;
 			CheckboxShowBattlegroundsTurnCounter.IsChecked = Config.Instance.ShowBattlegroundsTurnCounter;
+			CheckboxShowChinaModuleOverlay.IsChecked = Config.Instance.ShowChinaModuleOverlay;
+			CheckboxShowChinaModuleOverlay.Visibility = Config.Instance.ShowChinaModuleOverlay != null ? Visibility.Visible : Visibility.Collapsed;
 
 			CheckboxRunCombatSimulations.IsChecked = Config.Instance.RunBobsBuddy;
 			CheckboxShowResultsDuringCombat.IsChecked = Config.Instance.ShowBobsBuddyDuringCombat;
@@ -121,6 +123,28 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Save();
 			if(updateOverlay)
 				Core.Overlay.Update(true);
+		}
+
+		private void CheckboxCheckboxShowChinaModuleOverlay_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+
+			Config.Instance.ShowChinaModuleOverlay = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.ChinaModulePanel.Visibility = Visibility.Visible;
+		}
+
+		private void CheckboxCheckboxShowChinaModuleOverlay_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+
+			Config.Instance.ShowChinaModuleOverlay = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.ChinaModulePanel.Visibility = Visibility.Collapsed;
 		}
 
 		private void CheckboxShowOverlayInBackground_Checked(object sender, RoutedEventArgs e)
