@@ -1,3 +1,10 @@
+## Unreleased
+**Hearthstone**:
+- Removed the counters with the old layout as these have been fully replaced by the new-style counters.
+
+**Battlegrounds**:
+- Fixed the final placement not being detected correctly.
+
 ## **Release v1.44.15 - 2025-06-24**
 **Hearthstone:**
 - Fixed an issue where some cards with a "Start of the Game" effect were revealed in the opponent's hand.
