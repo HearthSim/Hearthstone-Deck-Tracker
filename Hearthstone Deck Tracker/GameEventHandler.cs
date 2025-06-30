@@ -953,8 +953,8 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 					Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
 					Core.Overlay.HideBattlegroundsHeroPanel();
-					var hero = _game.Entities.Values.FirstOrDefault(x => x.IsHero && x.IsControlledBy(_game.Player.Id));
-					var finalPlacement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0;
+					var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
+					var finalPlacement = hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0;
 					CaptureBattlegroundsFeedback(finalPlacement);
 					HSReplayNetClientAnalytics.OnBattlegroundsMatchEnds(
 						hero?.CardId,
@@ -996,7 +996,7 @@ namespace Hearthstone_Deck_Tracker
 			if (Core.Game.Spectator)
 				return;
 
-			var hero = _game.Entities.Values.FirstOrDefault(x => x.IsHero && x.IsControlledBy(_game.Player.Id));
+			var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
 			var startTime = _game.CurrentGameStats?.StartTime.ToString("o");
 			var endTime = _game.CurrentGameStats?.EndTime.ToString("o");
 			var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
@@ -1008,7 +1008,7 @@ namespace Hearthstone_Deck_Tracker
 				.ToArray();
 			var friendlyGame = _game.CurrentGameType is GameType.GT_BATTLEGROUNDS_FRIENDLY or GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY;
 			var duos = _game.IsBattlegroundsDuosMatch;
-			var placement = Math.Min(hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) ?? 0, duos ? 4 : 8);
+			var placement = Math.Min(hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0, duos ? 4 : 8);
 
 			if(startTime != null && endTime != null && heroCardId != null && rating != null && ratingAfter != null && placement > 0)
 			{

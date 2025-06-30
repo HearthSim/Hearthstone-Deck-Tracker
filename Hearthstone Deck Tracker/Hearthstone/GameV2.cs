@@ -703,7 +703,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(availableRaces == null)
 				return null;
 
-			var hero = Entities.Values.FirstOrDefault(x => x.IsHero && x.IsControlledBy(Player.Id));
+			var hero = Player.Hero;
 			var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
 			var heroCard = heroCardId != null ? Database.GetCardFromId(heroCardId) : null;
 			if(heroCard == null)

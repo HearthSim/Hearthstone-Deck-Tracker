@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 
 		private BattlegroundsQuestPickParams? GetApiParams()
 		{
-			var hero = Core.Game.Entities.Values.FirstOrDefault(x => x.IsHero && x.IsControlledBy(Core.Game.Player.Id));
+			var hero = Core.Game.Player.Hero;
 			var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
 			var heroCard = heroCardId != null ? Database.GetCardFromId(heroCardId) : null;
 			if(heroCard == null)
