@@ -57,6 +57,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				metaData.BrawlSeason = game.BrawlSeasonId;
 			if(game?.RankedSeasonId > 0)
 				metaData.LadderSeason = game.RankedSeasonId;
+			if(game?.ArenaSeasonId > 0)
+				metaData.ArenaSeason = game.ArenaSeasonId;
 			if(gameMetaData?.TwitchVodData != null)
 				metaData.TwitchVod = gameMetaData.TwitchVodData;
 			if(game?.LeagueId > 0)

@@ -280,6 +280,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int RankedSeasonId { get; set; }
 
+		public int ArenaSeasonId { get; set; }
+
 		public int ArenaWins { get; set; }
 
 		public int ArenaLosses { get; set; }
@@ -596,6 +598,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeGameType() => GameType != GameType.GT_UNKNOWN;
 		public bool ShouldSerializeBrawlSeasonId() => BrawlSeasonId > 0;
 		public bool ShouldSerializeRankedSeasonId() => RankedSeasonId > 0;
+		public bool ShouldSerializeArenaSeasonId() => ArenaSeasonId > 0;
 		public bool ShouldSerializeArenaWins() => ArenaWins > 0;
 		public bool ShouldSerializeArenaLosses() => ArenaLosses > 0;
 		public bool ShouldSerializeBrawlWins() => BrawlWins > 0;

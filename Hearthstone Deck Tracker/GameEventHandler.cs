@@ -797,6 +797,7 @@ namespace Hearthstone_Deck_Tracker
 				_game.CurrentGameStats.ScenarioId = _game.MatchInfo?.MissionId ?? 0;
 				_game.CurrentGameStats.BrawlSeasonId = _game.MatchInfo?.BrawlSeasonId ?? 0;
 				_game.CurrentGameStats.RankedSeasonId = _game.MatchInfo?.RankedSeasonId ?? 0;
+				_game.CurrentGameStats.ArenaSeasonId = _game.MatchInfo?.ArenaSeasonId ?? 0;
 				var confirmedCards = _game.Player.RevealedCards.Where(x => x.Collectible)
 					.Concat(_game.Player.KnownCardsInDeck.Where(x => x.Collectible && !x.IsCreated))
 					.ToList();
