@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -63,7 +65,7 @@ public class BattlegroundsChinaModule
 			if(hdtToolsPath == null)
 			{
 				Log.Error("BattlegroundsChinaModule: HDTTools was not found.");
-				Influx.OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.NotFound);
+				OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.NotFound);
 				return false;
 			}
 
@@ -88,26 +90,26 @@ public class BattlegroundsChinaModule
 				Log.Info("BattlegroundsChinaModule: HDTTools is running with elevated privileges...");
 				await Task.Run(() => process.WaitForExit());
 				var exitCode = (HDTToolsExitCode)process.ExitCode;
-				Influx.OnBattlegroundsHDTToolsExit(exitCode);
 				Log.Info($"BattlegroundsChinaModule: HDTTools process exited with code {exitCode}");
+				OnBattlegroundsHDTToolsExit(exitCode);
 				return exitCode == HDTToolsExitCode.Success;
 			}
 
-			Influx.OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.FailedToStart);
 			Log.Error("BattlegroundsChinaModule: Failed to start HDTTools process");
+			OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.FailedToStart);
 			return false;
 		}
 		// Refusing to give elevated privileges is a common case.
 		catch(System.ComponentModel.Win32Exception ex) when(ex.NativeErrorCode == 1223)
 		{
 			Log.Warn("BattlegroundsChinaModule: User refused to give elevated privileges.");
-			Influx.OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.ElevatedPrivilegesRefused);
+			OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.ElevatedPrivilegesRefused);
 			return false;
 		}
 		catch(Exception ex)
 		{
-			Influx.OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.GeneralError);
 			Log.Error($"BattlegroundsChinaModule: Failed to run locally with elevated privileges: {ex.Message}");
+			OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.GeneralError);
 			return false;
 		}
 	}
@@ -124,13 +126,13 @@ public class BattlegroundsChinaModule
 			if(task == null)
 			{
 				Log.Warn($"Task {TaskName} not found");
-				Influx.OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.TaskNotFound);
+				OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.TaskNotFound);
 				return HDTToolsResult.TaskNotFound;
 			}
 
 			if(!IsTaskUpToDate(task))
 			{
-				Influx.OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.TaskOutOfDate);
+				OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.TaskOutOfDate);
 				return HDTToolsResult.TaskOutOfDate;
 			}
 
@@ -153,14 +155,14 @@ public class BattlegroundsChinaModule
 				if(currentTask == null)
 				{
 					Log.Error("BattlegroundsChinaModule: Task not found while checking status");
-					Influx.OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.TaskStatusNotFound);
+					OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.TaskStatusNotFound);
 					return HDTToolsResult.ExecutionError;
 				}
 
 				if(currentTask.State != TaskState.Running)
 				{
 					var lastResult = currentTask.LastTaskResult;
-					Influx.OnBattlegroundsHDTToolsExit((HDTToolsExitCode)lastResult);
+					OnBattlegroundsHDTToolsExit((HDTToolsExitCode)lastResult);
 
 					if(lastResult == (int)HDTToolsExitCode.Success)
 					{
@@ -173,14 +175,14 @@ public class BattlegroundsChinaModule
 				}
 			}
 
-			Influx.OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.TaskTimedOut);
 			Log.Error("BattlegroundsChinaModule: Task timed out");
+			OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.TaskTimedOut);
 			return HDTToolsResult.ExecutionError;
 		}
 		catch(Exception ex)
 		{
 			Log.Error($"BattlegroundsChinaModule: Failed to run scheduled task: {ex.Message}");
-			Influx.OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.TaskGeneralError);
+			OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem.TaskGeneralError);
 			return HDTToolsResult.ExecutionError;
 		}
 	}
@@ -242,6 +244,20 @@ public class BattlegroundsChinaModule
 		var localHdtToolVersion = FileVersionInfo.GetVersionInfo(hdtToolsPath);
 
 		return versionInfo.FileVersion == localHdtToolVersion.FileVersion;
+	}
+
+	private static void OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem problem)
+	{
+		Influx.OnBattlegroundsHDTToolsExecutionProblem(problem);
+		if(problem is not HDTToolsExecutionProblem.ElevatedPrivilegesRefused)
+			Sentry.CaptureHDTToolsExecutionProblem(problem.ToString());
+	}
+
+	private static void OnBattlegroundsHDTToolsExit(HDTToolsExitCode exitCode)
+	{
+		Influx.OnBattlegroundsHDTToolsExit(exitCode);
+		if(exitCode is not HDTToolsExitCode.Success)
+			Sentry.CaptureHDTToolsExitProblem(exitCode.ToString(), HDTToolsManager.GetRecentLogs());
 	}
 
  	public static bool IsChineseEnvironment()

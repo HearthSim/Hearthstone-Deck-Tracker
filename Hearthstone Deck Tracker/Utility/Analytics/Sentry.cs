@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using BobsBuddy;
 using BobsBuddy.Simulation;
 using Hearthstone_Deck_Tracker.BobsBuddy;
@@ -12,11 +13,13 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using SharpRaven;
 using SharpRaven.Data;
 
 #if(SQUIRREL)
 using Hearthstone_Deck_Tracker.BobsBuddy;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 #endif
 #endregion
 
@@ -28,6 +31,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		static Sentry()
 		{
 			Client.Release = Helper.GetCurrentVersion().ToVersionString(true);
+			Log.OnLogLine += AddHDTLogLine;
+		}
+
+		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
+		private static List<string> _recentHDTLog = new List<string>();
+		static int LogLinesKept = Remote.Config.Data?.BobsBuddy?.LogLinesKept ?? 100;
+
+		static void AddHDTLogLine(string toLog)
+		{
+			if(_debuglineToIgnore.IsMatch(toLog))
+				return;
+			if(_recentHDTLog.Count >= LogLinesKept)
+				_recentHDTLog.RemoveAt(0);
+			_recentHDTLog.Add(toLog);
 		}
 
 		private static readonly RavenClient Client = new RavenClient("https://0a6c07cee8d141f0bee6916104a02af4:883b339db7b040158cdfc42287e6a791@app.getsentry.com/80405");
@@ -51,13 +68,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #if(SQUIRREL)
 		private const int MaxBobsBuddyEvents = 10;
 		private const int MaxBobsBuddyExceptions = 1;
+		private const int MaxHDTToolsExecutionProblems = 3;
 		private static int BobsBuddyEventsSent;
 		private static int BobsBuddyExceptionsSent;
+		private static int HDTToolsExecutionProblemsSent;
 #endif
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
+		private static Queue<SentryEvent> HDTToolsEvents = new Queue<SentryEvent>();
 
 		public static void QueueBobsBuddyTerminalCase(
-			Input testInput, Output output, string result, int turn, List<string> debugLog, Region region,
+			Input testInput, Output output, string result, int turn, Region region,
 			bool isDuos, bool isOpposingAkazamzarak
 		)
 		{
@@ -83,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				ExitCondition = output.myExitCondition.ToString(),
 				Input = testInput,
 				Output = output,
-				Log = ReverseAndClone(debugLog),
+				Log = ReverseAndClone(_recentHDTLog),
 				Region = region,
 
 			};
@@ -134,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		}
 
-		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, List<string> debugLog, bool isDuos)
+		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, bool isDuos)
 		{
 #if(SQUIRREL)
 			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptions)
@@ -150,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				Turn = turn,
 				ThreadCount = BobsBuddyInvoker.ThreadCount,
 				Input = input,
-				Log = ReverseAndClone(debugLog)
+				Log = ReverseAndClone(_recentHDTLog)
 			};
 
 			var tags = new Dictionary<string, string>() {
@@ -183,6 +203,69 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			return toReturn;
 		}
 #endif
+
+		public static void CaptureHDTToolsExecutionProblem(string problem)
+		{
+#if(SQUIRREL)
+			if(HDTToolsExecutionProblemsSent >= MaxHDTToolsExecutionProblems)
+				return;
+			HDTToolsExecutionProblemsSent++;
+
+			var msg = new SentryMessage($"HDTTools {HDTToolsManager.VersionString} Problem: {problem}");
+
+			var tags = new Dictionary<string, string>() {
+				{"hdttools_version", HDTToolsManager.VersionString},
+				{"problem", problem}
+			};
+
+			var hdttoolsEvent = new SentryEvent(msg)
+			{
+				Level = ErrorLevel.Warning,
+				Tags = tags,
+				Extra = new Dictionary<string, object>
+				{
+					{"log", ReverseAndClone(_recentHDTLog)},
+					{"problem", problem}
+				}
+			};
+			hdttoolsEvent.Fingerprint.Add(HDTToolsManager.VersionString);
+			hdttoolsEvent.Fingerprint.Add(problem);
+
+			HDTToolsEvents.Enqueue(hdttoolsEvent);
+#endif
+		}
+
+		public static void CaptureHDTToolsExitProblem(string exitProblem, List<string> hdtToolsLog)
+		{
+#if(SQUIRREL)
+			if(HDTToolsExecutionProblemsSent >= MaxHDTToolsExecutionProblems)
+				return;
+			HDTToolsExecutionProblemsSent++;
+
+			var msg = new SentryMessage($"HDTTools {HDTToolsManager.VersionString} Exit Problem: {exitProblem}");
+
+			var tags = new Dictionary<string, string>() {
+				{"hdttools_version", HDTToolsManager.VersionString},
+				{"exit_problem", exitProblem}
+			};
+
+			var hdttoolsEvent = new SentryEvent(msg)
+			{
+				Level = ErrorLevel.Warning,
+				Tags = tags,
+				Extra = new Dictionary<string, object>
+				{
+					{"log", ReverseAndClone(_recentHDTLog)},
+					{"hdttools_log", ReverseAndClone(hdtToolsLog)},
+					{"exit_problem", exitProblem}
+				}
+			};
+			hdttoolsEvent.Fingerprint.Add(HDTToolsManager.VersionString);
+			hdttoolsEvent.Fingerprint.Add(exitProblem);
+
+			HDTToolsEvents.Enqueue(hdttoolsEvent);
+#endif
+		}
 
 		public static void ClearBobsBuddyEvents() => BobsBuddyEvents.Clear();
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -16,6 +17,7 @@ public static class HDTToolsManager
     private static readonly string ExtractedToolsDir = Path.Combine(ToolsDir, "bin");
     private const string ZipFileName = "HDTTools.zip";
     private const string ZipUrl = $"https://hdt-downloads-hongkong.s3.ap-east-1.amazonaws.com/HDTTools/HDTTools-v{HDTToolsVersion}.zip";
+    internal static string VersionString => $"v{HDTToolsVersion}";
 
     static HDTToolsManager()
     {
@@ -34,6 +36,30 @@ public static class HDTToolsManager
         {
             Log.Error($"Could not create asset downloader for HDTTools: {e.Message}");
         }
+    }
+
+    public static List<string> GetRecentLogs()
+    {
+	    var logsDir = Path.Combine(
+		    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+		    "HearthstoneDeckTracker", "HDTTools", "logs");
+
+	    var dirInfo = new DirectoryInfo(logsDir);
+	    var logFile = dirInfo.GetFiles().OrderByDescending(f => f.LastWriteTime).FirstOrDefault();
+
+	    if (logFile == null)
+			return new List<string>();
+
+	    try
+	    {
+		    var allLines = File.ReadAllLines(logFile.FullName);
+		    return allLines.Skip(Math.Max(0, allLines.Length - 100)).ToList();
+	    }
+	    catch (Exception ex)
+	    {
+		    Log.Error($"Error reading HDTTools log file: {ex.Message}");
+		    return new List<string>();
+	    }
     }
 
     private static bool _loading;

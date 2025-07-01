@@ -11,7 +11,6 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
 using static Hearthstone_Deck_Tracker.BobsBuddy.BobsBuddyUtils;
 using BobsBuddy.Simulation;
-using System.Text.RegularExpressions;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
@@ -50,12 +49,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private Input? _input;
 		private int _turn;
-		static int LogLinesKept = Remote.Config.Data?.BobsBuddy?.LogLinesKept ?? 100;
 		private Entity? _attackingHero;
 		private Entity? _defendingHero;
 		public Entity? LastAttackingHero = null;
 		public int LastAttackingHeroAttack;
-		private static List<string> _recentHDTLog = new List<string>();
 
 		private List<Entity> _opponentHand = new();
 		private readonly Dictionary<Entity, Entity> _opponentHandMap = new();
@@ -63,7 +60,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
-		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
 
 		private BobsBuddyPlayer DuosInputPlayer = new BobsBuddyPlayer(null);
 		private BobsBuddyPlayer DuosInputOpponent = new BobsBuddyPlayer(null);
@@ -95,20 +91,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		}
 
 		private readonly string _instanceKey;
-
-		static BobsBuddyInvoker()
-		{
-			Log.OnLogLine += AddHDTLogLine;
-		}
-
-		static void AddHDTLogLine(string toLog)
-		{
-			if(_debuglineToIgnore.IsMatch(toLog))
-				return;
-			if(_recentHDTLog.Count >= LogLinesKept)
-				_recentHDTLog.RemoveAt(0);
-			_recentHDTLog.Add(toLog);
-		}
 
 		private BobsBuddyInvoker(string key)
 		{
@@ -221,7 +203,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog, _game.IsBattlegroundsDuosMatch);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch);
 				return;
 			}
 		}
@@ -260,7 +242,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog, isDuos: true);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, isDuos: true);
 				return;
 			}
 		}
@@ -351,7 +333,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog, _game.IsBattlegroundsDuosMatch);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch);
 				return;
 			}
 		}
@@ -959,7 +941,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				var message = (cardName != null ? $"{cardName}: " : "") + ex.Message;
 				BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.UnsupportedInteraction, message);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(ex, _input, _turn, _recentHDTLog, _game.IsBattlegroundsDuosMatch);
+					Sentry.CaptureBobsBuddyException(ex, _input, _turn, _game.IsBattlegroundsDuosMatch);
 				Output = null;
 				return null;
 			}
@@ -968,7 +950,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog, _game.IsBattlegroundsDuosMatch);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch);
 				Output = null;
 				return null;
 			}
@@ -1116,7 +1098,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			DebugLog($"Queueing alert... (valid input: {_input != null})");
 			if(_input != null && Output != null)
 				Sentry.QueueBobsBuddyTerminalCase(
-					_input, Output, result, _turn, _recentHDTLog, _game.CurrentRegion,
+					_input, Output, result, _turn, _game.CurrentRegion,
 					isDuos: _game.IsBattlegroundsDuosMatch, isOpposingAkazamzarak: IsOpposingAkazamzarak()
 				);
 		}
