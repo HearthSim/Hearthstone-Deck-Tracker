@@ -17,6 +17,7 @@ namespace HDTTests.Hearthstone
 			CardSet.MERCENARIES_DEV,
 			CardSet.PLACEHOLDER_202204,
 			CardSet.TUTORIAL,
+			CardSet.PET,
 		};
 
 		[TestMethod]
