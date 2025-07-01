@@ -1,5 +1,7 @@
-## Unreleased
+## **Release v1.45.0 - 2025-07-01**
 **Hearthstone**:
+- Updated for Hearthstone 33.0.0
+- Added multiple Counters, Related Cards, and Card Highlights for cards from The Lost of Un'Goro.
 - Removed the counters with the old layout as these have been fully replaced by the new-style counters.
 
 **Battlegrounds**:
