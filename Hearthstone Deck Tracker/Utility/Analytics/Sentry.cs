@@ -68,10 +68,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #if(SQUIRREL)
 		private const int MaxBobsBuddyEvents = 10;
 		private const int MaxBobsBuddyExceptions = 1;
-		private const int MaxHDTToolsExecutionProblems = 3;
+		private const int MaxHDTToolsEvents = 10;
 		private static int BobsBuddyEventsSent;
 		private static int BobsBuddyExceptionsSent;
-		private static int HDTToolsExecutionProblemsSent;
+		private static int HDTToolsEventsSent;
 #endif
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
 		private static Queue<SentryEvent> HDTToolsEvents = new Queue<SentryEvent>();
@@ -133,6 +133,31 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bbEvent.Fingerprint.Add(isDuos.ToString());
 
 			BobsBuddyEvents.Enqueue(bbEvent);
+#endif
+		}
+
+		public static void SendQueuedBattlegroundsEvents(string? shortId = null)
+		{
+#if(SQUIRREL)
+			SendQueuedBobsBuddyEvents(shortId);
+			SendQueuedHDTToolsEvents();
+#endif
+		}
+
+		public static void SendQueuedHDTToolsEvents()
+		{
+#if(SQUIRREL)
+			while(HDTToolsEvents.Count > 0)
+			{
+				if(HDTToolsEventsSent >= MaxHDTToolsEvents)
+				{
+					ClearHDTToolsEvents();
+					break;
+				}
+				var e = HDTToolsEvents.Dequeue();
+				Client.Capture(e);
+				HDTToolsEventsSent++;
+			}
 #endif
 		}
 
@@ -207,10 +232,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		public static void CaptureHDTToolsExecutionProblem(string problem)
 		{
 #if(SQUIRREL)
-			if(HDTToolsExecutionProblemsSent >= MaxHDTToolsExecutionProblems)
-				return;
-			HDTToolsExecutionProblemsSent++;
-
 			var msg = new SentryMessage($"HDTTools {HDTToolsManager.VersionString} Problem: {problem}");
 
 			var tags = new Dictionary<string, string>() {
@@ -218,15 +239,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				{"problem", problem}
 			};
 
+			var data = new HDTToolsData()
+			{
+				Problem = problem,
+				Log = ReverseAndClone(_recentHDTLog)
+			};
+
 			var hdttoolsEvent = new SentryEvent(msg)
 			{
 				Level = ErrorLevel.Warning,
 				Tags = tags,
-				Extra = new Dictionary<string, object>
-				{
-					{"log", ReverseAndClone(_recentHDTLog)},
-					{"problem", problem}
-				}
+				Extra = data
 			};
 			hdttoolsEvent.Fingerprint.Add(HDTToolsManager.VersionString);
 			hdttoolsEvent.Fingerprint.Add(problem);
@@ -238,10 +261,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		public static void CaptureHDTToolsExitProblem(string exitProblem, List<string> hdtToolsLog)
 		{
 #if(SQUIRREL)
-			if(HDTToolsExecutionProblemsSent >= MaxHDTToolsExecutionProblems)
-				return;
-			HDTToolsExecutionProblemsSent++;
-
 			var msg = new SentryMessage($"HDTTools {HDTToolsManager.VersionString} Exit Problem: {exitProblem}");
 
 			var tags = new Dictionary<string, string>() {
@@ -249,16 +268,18 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				{"exit_problem", exitProblem}
 			};
 
+			var data = new HDTToolsData()
+			{
+				ExitProblem = exitProblem,
+				Log = ReverseAndClone(_recentHDTLog),
+				HDTToolsLog = ReverseAndClone(hdtToolsLog)
+			};
+
 			var hdttoolsEvent = new SentryEvent(msg)
 			{
 				Level = ErrorLevel.Warning,
 				Tags = tags,
-				Extra = new Dictionary<string, object>
-				{
-					{"log", ReverseAndClone(_recentHDTLog)},
-					{"hdttools_log", ReverseAndClone(hdtToolsLog)},
-					{"exit_problem", exitProblem}
-				}
+				Extra = data
 			};
 			hdttoolsEvent.Fingerprint.Add(HDTToolsManager.VersionString);
 			hdttoolsEvent.Fingerprint.Add(exitProblem);
@@ -268,6 +289,21 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		}
 
 		public static void ClearBobsBuddyEvents() => BobsBuddyEvents.Clear();
+		public static void ClearHDTToolsEvents() => HDTToolsEvents.Clear();
+
+		public static void ClearBattlegroundsEvents()
+		{
+			ClearBobsBuddyEvents();
+			ClearHDTToolsEvents();
+		}
+
+		private class HDTToolsData
+		{
+			public string? Problem { get; set; }
+			public string? ExitProblem { get; set; }
+			public List<string>? Log { get; set; }
+			public List<string>? HDTToolsLog { get; set; }
+		}
 
 		private class BobsBuddyData
 		{

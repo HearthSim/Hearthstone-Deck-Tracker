@@ -701,7 +701,7 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)
 				{
 					Log.Info("Game was spectator mode without a game result. Probably exited spectator mode early.");
-					Sentry.ClearBobsBuddyEvents();
+					Sentry.ClearBattlegroundsEvents();
 					return;
 				}
 				var player = _game.Entities.FirstOrDefault(e => e.Value?.IsPlayer ?? false).Value;
@@ -940,9 +940,9 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.IsBattlegroundsMatch)
 				{
 					if(LogContainsStateComplete)
-						Sentry.SendQueuedBobsBuddyEvents(_game.CurrentGameStats.HsReplay.UploadId);
+						Sentry.SendQueuedBattlegroundsEvents(_game.CurrentGameStats.HsReplay.UploadId);
 					else
-						Sentry.ClearBobsBuddyEvents();
+						Sentry.ClearBattlegroundsEvents();
 					RecordBattlegroundsGame();
 					Tier7Trial.Clear();
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
