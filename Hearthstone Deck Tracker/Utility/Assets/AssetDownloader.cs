@@ -285,7 +285,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			catch(Exception e)
 			{
 				Log.Error(
-					$"Unknown Error while trying to download {filename}: {e.Message}");
+					$"Unknown Error while trying to download {filename}: {e}");
 				return false;
 			}
 			finally

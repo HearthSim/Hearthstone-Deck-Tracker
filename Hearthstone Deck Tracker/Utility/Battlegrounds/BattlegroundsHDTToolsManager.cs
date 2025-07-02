@@ -19,6 +19,9 @@ public static class HDTToolsManager
     private const string ZipUrl = $"https://hdt-downloads-hongkong.s3.ap-east-1.amazonaws.com/HDTTools/HDTTools-v{HDTToolsVersion}.zip";
     internal static string VersionString => $"v{HDTToolsVersion}";
 
+    private const int DownloadMaxRetries = 3;
+    private const int DownloadDelaySeconds = 2;
+
     static HDTToolsManager()
     {
         try
@@ -79,12 +82,38 @@ public static class HDTToolsManager
 
             Downloader.InvalidateCachedAssets();
 
-            var asset = await Task.Run(async () => await Downloader.GetAssetEntry("HDTTools", true));
-            if (asset?.Data == null)
-            {
-	            Log.Warn("Could not download HDTTools.zip");
+	        LRUCache<byte[]>.Entry? asset = null;
+
+	        for (var attempt = 1; attempt <= DownloadMaxRetries; attempt++)
+	        {
+	            try
+	            {
+	                Log.Info($"Downloading HDTTools.zip (attempt {attempt}/{DownloadMaxRetries})...");
+	                asset = await Task.Run(async () => await Downloader.GetAssetEntry("HDTTools", true));
+
+	                if (asset?.Data != null)
+	                    break;
+
+	                Log.Warn($"Download attempt {attempt} returned null data");
+	            }
+	            catch (Exception downloadEx)
+	            {
+	                Log.Warn($"Download attempt {attempt} failed: {downloadEx.Message}");
+
+	                if (attempt >= DownloadMaxRetries)
+	                    throw;
+
+	                var delay = TimeSpan.FromSeconds(DownloadDelaySeconds);
+	                Log.Info($"Waiting {delay.TotalSeconds}s before retry...");
+	                await Task.Delay(delay);
+	            }
+	        }
+
+	        if (asset?.Data == null)
+	        {
+	            Log.Warn("Could not download HDTTools.zip after all retries");
 	            return false;
-            }
+			}
 
             var exePath = Path.Combine(ExtractedToolsDir, "HDTTools.exe");
             var needExtract = !File.Exists(exePath) || !asset.NotModified;
