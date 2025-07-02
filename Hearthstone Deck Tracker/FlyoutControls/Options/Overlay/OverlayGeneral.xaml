@@ -92,11 +92,15 @@
                         <TextBlock Text="{lex:Loc Options_Overlay_General_CheckBox_FlavorText}" TextWrapping="Wrap" />
                     </CheckBox>
         <CheckBox Name="CheckBoxBatteryStatus" Content="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus}" HorizontalAlignment="Left"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                   ToolTip="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus_Tooltip}"
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckBoxBatteryStatus_Checked"
                   Unchecked="CheckBoxBatteryStatus_Unchecked" />
         <CheckBox x:Name="CheckBoxBatteryStatusText"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                   IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxBatteryStatus}"
                   Content="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus_Percent}" Margin="30,5,0,0"
                   VerticalAlignment="Top"
