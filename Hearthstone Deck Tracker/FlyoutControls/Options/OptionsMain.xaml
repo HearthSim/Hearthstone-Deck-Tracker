@@ -44,9 +44,9 @@
                         <TreeViewItem Name="TreeViewItemTrackerAppearance" Header="{lex:LocText Options_Tracker_Appearance_Header}" Selected="TreeViewItemTrackerAppearance_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerSettings" Header="{lex:LocText Options_Tracker_Settings_Header}" Selected="TreeViewItemTrackerSettings_OnSelected"/>
                     </TreeViewItem>
-                    <TreeViewItem Header="{lex:Loc Options_Streaming_Header}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <TreeViewItem Name="TreeViewItemStreamingTwitchExtension" Header="{lex:Loc Options_Streaming_TwitchExt_Header}" Selected="TreeViewItemStreamingTwitchExtension_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
-                        <TreeViewItem Name="TreeViewItemStreamingCapturableOverlay" Header="{lex:Loc Options_Streaming_CaptureableOverlay_Header}" Selected="TreeViewItemStreamingCapturableOverlay_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                    <TreeViewItem Header="{lex:Loc Options_Streaming_Header}">
+                        <TreeViewItem Name="TreeViewItemStreamingTwitchExtension" Header="{lex:Loc Options_Streaming_TwitchExt_Header}" Selected="TreeViewItemStreamingTwitchExtension_OnSelected" />
+                        <TreeViewItem Name="TreeViewItemStreamingCapturableOverlay" Header="{lex:Loc Options_Streaming_CaptureableOverlay_Header}" Selected="TreeViewItemStreamingCapturableOverlay_OnSelected" />
                     </TreeViewItem>
                 </TreeView>
             </DockPanel>
