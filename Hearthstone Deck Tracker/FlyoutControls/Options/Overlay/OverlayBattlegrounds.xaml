@@ -26,7 +26,7 @@
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsBrowser_Checked"
                   Unchecked="CheckboxShowBattlegroundsBrowser_Unchecked" Margin="10,5,0,0" />
-        <CheckBox x:Name="CheckboxShowBattlegroundsGuides" Content="Show Hero and Comp Guides"
+        <CheckBox x:Name="CheckboxShowBattlegroundsGuides" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowGuides}"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsGuides_Checked"
                   IsEnabled="{Binding IsChecked, ElementName=CheckboxShowBattlegroundsBrowser}"

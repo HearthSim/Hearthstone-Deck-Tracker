@@ -61,7 +61,7 @@
                            HorizontalAlignment="Left" Margin="0,2,0,0"
                            VerticalAlignment="Center" DockPanel.Dock="Left" />
                 </DockPanel>
-                <CheckBox x:Name="CheckboxDownloadHiResolutionCardImages" Content="Use High Resolution Card Images"
+                <CheckBox x:Name="CheckboxDownloadHiResolutionCardImages" Content="{lex:Loc Options_Tracker_General_CheckBox_UseHighResolutionImages}"
                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                           IsChecked="{Binding Path=Bindable.UseHighResolutionCardImages, Source={StaticResource ConfigWrapper}}"
                           IsEnabled="{Binding Path=Bindable.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeBooleanConverter}}"/>
