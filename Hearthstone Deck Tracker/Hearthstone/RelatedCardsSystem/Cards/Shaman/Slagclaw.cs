@@ -2,7 +2,7 @@
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Shaman;
 
-public class Slaglaw: ICardWithRelatedCards
+public class Slagclaw: ICardWithRelatedCards
 {
 	public string GetCardId() => HearthDb.CardIds.Collectible.Shaman.Slagclaw;
 
