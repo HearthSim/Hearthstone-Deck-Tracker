@@ -1,4 +1,4 @@
-## **Release v1.45.3 - 2025-07-04**
+## **Release v1.45.4 - 2025-07-04**
 **Battlegrounds**:
 - Added free Trinket Guides to the overlay, written by Jeef!\
   *Presented during Trinket Picking.*
