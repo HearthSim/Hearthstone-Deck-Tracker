@@ -1,3 +1,10 @@
+## **Release v1.45.3 - 2025-07-04**
+**Battlegrounds**:
+- Added free Trinket Guides to the overlay, written by Jeef!\
+  *Presented during Trinket Picking.*
+- Fixed hero picking overlay positioning when hovering over heroes.
+- Fixed anomaly overlay positioning during hero selection.
+
 ## **Release v1.45.0 - 2025-07-01**
 **Hearthstone**:
 - Updated for Hearthstone 33.0.0
