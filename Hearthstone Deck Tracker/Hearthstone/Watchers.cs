@@ -263,6 +263,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				ZonePosition = args.ZonePosition
 			};
 
+			Core.Overlay.SetTrinketGuidesTrigger(state.ZoneSize, state.ZonePosition, state.CardId);
 			Core.Overlay.SetRelatedCardsTrigger(state);
 			if(Core.Game.IsTraditionalHearthstoneMatch)
 			{

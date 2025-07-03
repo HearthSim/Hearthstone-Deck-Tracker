@@ -34,36 +34,29 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides
             var card = Cards?.FirstOrDefault();
             if (card == null)
                 return;
-
-            if (card.TypeEnum == CardType.BATTLEGROUND_ANOMALY)
+            if (card.TypeEnum == CardType.BATTLEGROUND_TRINKET)
             {
-                if (Content is Heroes.HeroGuideTooltip or null)
+	            var trinketGuide = new Trinkets.TrinketGuideTooltip
+	            {
+		            Cards = Cards
+	            };
+	            Content = trinketGuide;
+            }
+	        else if (card.TypeEnum == CardType.BATTLEGROUND_ANOMALY)
+            {
+                var anomalyGuide = new Anomalies.AnomalyGuideTooltip
                 {
-                    var anomalyGuide = new Anomalies.AnomalyGuideTooltip
-                    {
-	                    Cards = Cards
-                    };
-                    Content = anomalyGuide;
-                }
-                else if (Content is Anomalies.AnomalyGuideTooltip anomalyTooltip)
-                {
-                    anomalyTooltip.Cards = Cards;
-                }
+                    Cards = Cards
+                };
+                Content = anomalyGuide;
             }
             else
             {
-                if (Content is Anomalies.AnomalyGuideTooltip || Content == null)
+                var heroGuide = new Heroes.HeroGuideTooltip
                 {
-                    var heroGuide = new Heroes.HeroGuideTooltip
-                    {
-	                    Cards = Cards
-                    };
-                    Content = heroGuide;
-                }
-                else if (Content is Heroes.HeroGuideTooltip heroTooltip)
-                {
-                    heroTooltip.Cards = Cards;
-                }
+                    Cards = Cards
+                };
+                Content = heroGuide;
             }
         }
     }

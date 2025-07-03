@@ -255,6 +255,43 @@ public partial class OverlayWindow
 		vm.TooltipPlacement = PlacementMode.Bottom;
 	}
 
+	public void SetTrinketGuidesTrigger(int zoneSize, int zonePosition, string cardId)
+	{
+		var vm = (CardGridTooltipViewModel)GuidesTooltipTrigger.DataContext;
+
+		vm.Reset();
+
+		if(cardId == "")
+			return;
+
+		var card = Database.GetCardFromId(cardId);
+
+		if(card == null)
+			return;
+
+		if(card.TypeEnum != CardType.BATTLEGROUND_TRINKET)
+			return;
+
+		vm.Cards = new List<Card> { card };
+
+		GuidesTooltipTrigger.UpdateLayout();
+		UpdateHoverable();
+
+		var bgTrinketPickWidth = 0.192;
+		var leftEdge = 0.122;
+
+		var trinketX = leftEdge + zonePosition * (bgTrinketPickWidth);
+
+		vm.Scale = Height / 1080;
+		vm.Left = Helper.GetScaledXPos(trinketX, (int)Width, ScreenRatio);
+		vm.Top = Height * 0.28;
+		vm.Height = Height * 0.35;
+		vm.Width = Height * 0.25;
+		vm.TooltipPlacement = PlacementMode.Bottom;
+		vm.TooltipVerticalOffset = 10 * vm.Scale;
+	}
+
+
 	public void ResetAnomalyGuidesMulliganTrigger()
 	{
 		var vm = (CardGridTooltipViewModel)AnomalyGuidesMulliganTrigger.DataContext;

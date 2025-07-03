@@ -625,6 +625,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 				Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
+				Core.Overlay.BattlegroundsTrinketGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
 			}
 		}
@@ -652,6 +653,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 					Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 					Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
+					Core.Overlay.BattlegroundsTrinketGuideListViewModel.Update();
 					Watchers.BattlegroundsLeaderboardWatcher.Run();
 					if(_game.IsBattlegroundsDuosMatch)
 						Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
@@ -948,6 +950,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 					Core.Overlay.BattlegroundsHeroGuideListViewModel.Reset();
+					Core.Overlay.BattlegroundsTrinketGuideListViewModel.Reset();
 					Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Reset();
 					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 					Core.Overlay.ResetAnomalyGuidesMulliganTrigger();
@@ -1581,6 +1584,7 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 			Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 			Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
+			Core.Overlay.BattlegroundsTrinketGuideListViewModel.Update();
 
 			if(Core.Game.IsBattlegroundsDuosMatch)
 				Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
