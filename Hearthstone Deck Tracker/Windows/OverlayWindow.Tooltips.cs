@@ -316,11 +316,11 @@ public partial class OverlayWindow
 		UpdateHoverable();
 
 		vm.Scale = Height / 1080;
-		vm.Left = Helper.GetScaledXPos(0.2803, (int)Width, ScreenRatio);
+		vm.Left = Helper.GetScaledXPos(0.635, (int)Width, ScreenRatio);
 		vm.Top = Height * 0.0825;
 		vm.Height = Height * 0.123;
 		vm.Width = Height * 0.1188;
-		vm.TooltipHorizontalOffset = -90 * vm.Scale;
+		vm.TooltipHorizontalOffset = -600 * vm.Scale;
 		vm.TooltipVerticalOffset = 20 * vm.Scale;
 		vm.TooltipPlacement = PlacementMode.Bottom;
 	}
