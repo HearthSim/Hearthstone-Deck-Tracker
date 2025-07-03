@@ -13,6 +13,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 
 		private const double HeroPowerHeight = 0.42;
 		private const double HeroPowerAspectRatio = 24 / (HeroPowerHeight * 100);
+		private const double BgsHeroPowerHeight = 0.39;
+		private const double BgsHeroPowerAspectRatio = 28 / (BgsHeroPowerHeight * 100);
+
 
 		private const double EnchantHeightFactor = 0.07;
 		private const double EnchantWidth = 215.0;
@@ -85,12 +88,12 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 			return new Rect(0, 0.27, normalizedWidth, normalizedHeight);
 		}
 
-		public Rect DrawHeroPowerRegion(double offsetX, double offsetY, double heroPowerHeight = HeroPowerHeight)
+		public Rect DrawHeroPowerRegion(double offsetX, double offsetY, double heroPowerHeight = HeroPowerHeight, double heroAspectRatio = HeroPowerAspectRatio)
 		{
 			var heightScaling = Height / BaseHeight;
 
 			var heightInPixels = heroPowerHeight * heightScaling * BaseHeight;
-			var widthInPixels = heightInPixels * HeroPowerAspectRatio;
+			var widthInPixels = heightInPixels * heroAspectRatio;
 
 			var normalizedHeight = heightInPixels / Height;
 			var normalizedWidth = widthInPixels / Width;
@@ -337,7 +340,7 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 			var offsetX = heroX + (tooltipOnRight ? 0.135 : -0.16);
 			var offsetY = heroY - 0.075;
 
-			var rectCard = DrawHeroPowerRegion(offsetX, offsetY, 0.39);
+			var rectCard = DrawHeroPowerRegion(offsetX, offsetY, BgsHeroPowerHeight, BgsHeroPowerAspectRatio);
 			regions.Add(rectCard);
 
 			return regions;
