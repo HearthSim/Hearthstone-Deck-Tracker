@@ -1,3 +1,7 @@
+## **Release v1.45.5 - 2025-07-04**
+**Hearthstone**:
+- Added counter for murloc buffs from Paladin Quest.
+
 ## **Release v1.45.4 - 2025-07-04**
 **Battlegrounds**:
 - Added free Trinket Guides to the overlay, written by Jeef!\
