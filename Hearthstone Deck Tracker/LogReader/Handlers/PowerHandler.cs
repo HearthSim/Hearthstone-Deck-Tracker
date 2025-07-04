@@ -909,7 +909,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, Collectible.Druid.JadeIdol, 3);
 								break;
 							case NonCollectible.Hunter.TheMarshQueen_QueenCarnassaToken:
-								AddKnownCardId(gameState, NonCollectible.Hunter.TheMarshQueen_CarnassasBroodToken, 15);
+								AddKnownCardId(gameState, NonCollectible.Hunter.TheMarshQueen_CarnassasBroodToken, 20);
 								break;
 							case Collectible.Neutral.EliseTheTrailblazer:
 								AddKnownCardId(gameState, NonCollectible.Neutral.ElisetheTrailblazer_UngoroPackToken);
