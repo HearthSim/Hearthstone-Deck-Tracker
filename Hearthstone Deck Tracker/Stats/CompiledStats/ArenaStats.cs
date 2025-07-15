@@ -84,6 +84,9 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountEmeraldDream => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.EmeraldDream));
 
+		public int PacksCountTheLostCity => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.TheLostCity));
+
+
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
 		public double PacksCountAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.PackCount).DefaultIfEmpty(0).Average(), 2);

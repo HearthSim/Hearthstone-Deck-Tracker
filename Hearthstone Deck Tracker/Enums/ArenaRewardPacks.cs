@@ -96,5 +96,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_EmeraldDream")]
 		EmeraldDream = CardSet.EMERALD_DREAM,
+
+		[LocDescription("Enum_ArenaRewardPacks_TheLostCity")]
+		TheLostCity = CardSet.THE_LOST_CITY,
 	}
 }

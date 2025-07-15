@@ -91,6 +91,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_GreatDarkBeyond")]
 		SPACE = 1935,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_EmeraldDream")]
-		EMERALD_DREAM = 1946
+		EMERALD_DREAM = 1946,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_TheLostCity")]
+		THE_LOST_CITY = 1952
 	}
 }
