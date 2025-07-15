@@ -1,3 +1,8 @@
+## **Release v1.45.7 - 2025-07-15**
+**Hearthstone**:
+- Fixed The Lost City of Un'goro not appearing on Arena Rewards.
+- Added counter for Lightray.
+
 ## **Release v1.45.5 - 2025-07-04**
 **Hearthstone**:
 - Added counter for murloc buffs from Paladin Quest.
