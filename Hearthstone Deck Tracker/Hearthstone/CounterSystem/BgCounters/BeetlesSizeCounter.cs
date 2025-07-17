@@ -18,7 +18,8 @@ public class BeetlesSizeCounter : StatsCounter
 		HearthDb.CardIds.NonCollectible.Neutral.ForestRover,
 		HearthDb.CardIds.NonCollectible.Neutral.TurquoiseSkitterer,
 		HearthDb.CardIds.NonCollectible.Neutral.RunedProgenitor,
-		HearthDb.CardIds.NonCollectible.Neutral.NestSwarmer
+		HearthDb.CardIds.NonCollectible.Neutral.NestSwarmer,
+		HearthDb.CardIds.NonCollectible.Neutral.SilkyShimmermoth
 	};
 
 	private IEnumerable<string> RelatedCardsWithTriples => RelatedCards.Concat(RelatedCards.Select(HearthDb.Cards.TryGetTripleId));
