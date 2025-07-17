@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -82,6 +83,7 @@ public static class SquirrelConnection
 			if(!successResults.Any())
 			{
 				Log.Warn("Could not download any RELEASES file. Connectivity problems?");
+				Influx.OnSquirrelFindBestRemote("ConnectivityProblems");
 				return;
 			}
 			foreach(var result in results)
@@ -107,10 +109,12 @@ public static class SquirrelConnection
 			}
 			Config.Save();
 
+			Influx.OnSquirrelFindBestRemote("Success");
 			HSReplayNetClientAnalytics.OnSquirrelRemoteChanged(initial, (SquirrelRemote)Config.Instance.SquirrelRemote);
 		}
 		catch(Exception e)
 		{
+			Influx.OnSquirrelFindBestRemote("Error");
 			Log.Error(e);
 		}
 	}

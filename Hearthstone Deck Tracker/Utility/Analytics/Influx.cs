@@ -397,6 +397,19 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
+		public static void OnSquirrelFindBestRemote(string result)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var timeZone = Regex.Escape(TimeZoneInfo.Local.Id);
+
+			WritePoint(new InfluxPointBuilder("hdt_squirrel_find_best_remote")
+				.Tag("result", result)
+				.Tag("timezone", timeZone)
+				.Build()
+			);
+		}
+
 		private static readonly List<InfluxPoint> _queue = new();
 		public static void SendQueuedMetrics()
 		{
