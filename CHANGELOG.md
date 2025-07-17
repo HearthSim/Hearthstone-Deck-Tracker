@@ -1,8 +1,11 @@
-## **UNRELEASED**
+## **Release v1.45.8 - 2025-07-17**
+**Updated for Hearthstone 33.0.3**
+
 **Hearthstone**:
 - Fixed Dread Raptor not highlighting 3-cost minions in the deck.
 
 **Battlegrounds**:
+- Updated Bob's Buddy for Hearthstone 33.0.3.
 - Fixed Beetles counter when Silky Shimmermot is the only bettle-related minion on the board.
 
 ## **Release v1.45.7 - 2025-07-15**
