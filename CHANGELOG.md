@@ -1,3 +1,7 @@
+## **UNRELEASED**
+**Hearthstone**:
+- Fixed Dread Raptor not highlighting 3-cost minions in the deck.
+
 ## **Release v1.45.7 - 2025-07-15**
 **Hearthstone**:
 - Fixed The Lost City of Un'goro not appearing on Arena Rewards.
