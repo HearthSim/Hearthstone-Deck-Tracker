@@ -70,22 +70,6 @@
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-        <CheckBox x:Name="CheckboxArenaRewardDialog"
-                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxArenaRewardDialog_Checked"
-                  Unchecked="CheckboxArenaRewardDialog_Unchecked">
-                <TextBlock Text="{lex:Loc Options_Tracker_Notifications_Label_ArenaReward}" TextWrapping="Wrap"/>
-            </CheckBox>
-        <CheckBox x:Name="CheckboxNoteDialog"
-                  Content="{lex:Loc Options_Tracker_Notifications_Label_NoteDialog}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxNoteDialog_Checked"
-                  Unchecked="CheckboxNoteDialog_Unchecked" />
-        <CheckBox x:Name="CheckboxNoteDialogDelayed"
-                  Content="{lex:Loc Options_Tracker_Notifications_Label_NoteDialog_WaitMenu}"
-                  HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxNoteDialogDelay_Checked"
-                  Unchecked="CheckboxNoteDialogDelay_Unchecked" />
         <CheckBox x:Name="CheckboxExperienceCounter"
                   Content="{lex:Loc Options_Tracker_Notifications_Label_Experience_Counter}"
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
@@ -101,5 +85,27 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxMulligan_Checked"
                   Unchecked="CheckboxMulligan_Unchecked" />
+        <CheckBox x:Name="CheckboxArenaRewardDialog"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxArenaRewardDialog_Checked"
+                  Unchecked="CheckboxArenaRewardDialog_Unchecked">
+            <TextBlock Text="{lex:Loc Options_Tracker_Notifications_Label_ArenaReward}" TextWrapping="Wrap"/>
+        </CheckBox>
+        <CheckBox x:Name="CheckboxNoteDialog"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Tracker_Notifications_Label_NoteDialog}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxNoteDialog_Checked"
+                  Unchecked="CheckboxNoteDialog_Unchecked" />
+        <CheckBox x:Name="CheckboxNoteDialogDelayed"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Tracker_Notifications_Label_NoteDialog_WaitMenu}"
+                  HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxNoteDialogDelay_Checked"
+                  Unchecked="CheckboxNoteDialogDelay_Unchecked" />
     </StackPanel>
 </UserControl>

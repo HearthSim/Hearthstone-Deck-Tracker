@@ -69,8 +69,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(null)]
 		public bool? AllowDevUpdates = null;
 
-		[DefaultValue(true)]
-		public bool ArenaRewardDialog = true;
+		[DefaultValue(false)]
+		public bool ArenaRewardDialog = false;
 
 		[DefaultValue(true)]
 		public bool ArenaSummaryChartsExpanded = true;
