@@ -1,3 +1,7 @@
+## Unreleased
+**Overlay**:
+- Fixed the Battlegrounds overlay appearing momentarily when starting HDT while Hearthstone is running.
+
 ## **Release v1.45.8 - 2025-07-17**
 **Updated for Hearthstone 33.0.3**
 

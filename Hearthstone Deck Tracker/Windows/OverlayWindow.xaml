@@ -391,7 +391,7 @@
                       ext:OverlayExtensions.IsOverlayHitTestVisible="True"
                       MouseDown="BgsMinionsFilterCover_OnMouseDown" />
 
-                <StackPanel Name="BgsTopBar" Orientation="Horizontal" Visibility="Visible" Canvas.Top="0" Canvas.Right="0">
+                <StackPanel Name="BgsTopBar" Orientation="Horizontal" Visibility="Collapsed" Canvas.Top="0" Canvas.Right="0">
                     <inspiration:BattlegroundsInspirationOverlayButton
                         x:Name="BtnTier7Inspiration" IsEnabled="False" MouseUp="BtnBgsInspiration_OnMouseUp"
                         ext:OverlayExtensions.IsOverlayHitTestVisible="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}}"
