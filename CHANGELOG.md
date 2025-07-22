@@ -1,4 +1,7 @@
 ## Unreleased
+**Hearthstone**:
+- Updated the Arena rewards tracking for the new reward structure.
+
 **Overlay**:
 - Fixed the Battlegrounds overlay appearing momentarily when starting HDT while Hearthstone is running.
 

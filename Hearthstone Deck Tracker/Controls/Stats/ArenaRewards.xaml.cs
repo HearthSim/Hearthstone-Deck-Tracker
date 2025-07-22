@@ -38,6 +38,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		public ArenaRewards()
 		{
 			InitializeComponent();
+
+			var packs = Enum.GetValues(typeof(ArenaRewardPacks)).Cast<ArenaRewardPacks>().ToList();
+			foreach(var pack in packs.GetRange(0, 1).Concat(packs.Skip(1).Reverse()))
+			{
+				ComboBoxPack1.Items.Add(pack);
+				ComboBoxPack2.Items.Add(pack);
+				ComboBoxPack3.Items.Add(pack);
+			}
 		}
 
 		public ArenaReward Reward { get; set; } = new ArenaReward();
@@ -105,16 +113,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				Reward.Cards[0] = card != null
 					                  ? new ArenaReward.CardReward {CardId = card.Id, Golden = CheckBoxGolden1.IsChecked == true} : null;
 			}
-			else if(textBox == TextBoxCard2)
-			{
-				Reward.Cards[1] = card != null
-					                  ? new ArenaReward.CardReward {CardId = card.Id, Golden = CheckBoxGolden2.IsChecked == true} : null;
-			}
-			else if(textBox == TextBoxCard3)
-			{
-				Reward.Cards[2] = card != null
-					                  ? new ArenaReward.CardReward {CardId = card.Id, Golden = CheckBoxGolden3.IsChecked == true} : null;
-			}
 		}
 
 		private void TextBoxCard_OnPreviewKeyDown(object sender, KeyEventArgs e)
@@ -139,10 +137,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(checkBox == CheckBoxGolden1 && Reward.Cards[0] != null)
 				Reward.Cards[0]!.Golden = golden;
-			else if(checkBox == CheckBoxGolden2 && Reward.Cards[1] != null)
-				Reward.Cards[1]!.Golden = golden;
-			else if(checkBox == CheckBoxGolden3 && Reward.Cards[2] != null)
-				Reward.Cards[2]!.Golden = golden;
 		}
 
 		private void TextBoxGold_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -175,39 +169,62 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			Reward.Gold = gold;
 		}
 
-		private void TextBoxDust_OnTextChanged(object sender, TextChangedEventArgs e)
+		private void CheckBoxCrowdsFavor_OnChecked(object sender, RoutedEventArgs e)
 		{
-			var dust = 0;
-			if(!string.IsNullOrEmpty(TextBoxDust.Text) && !int.TryParse(TextBoxDust.Text.Trim(), out dust))
+			Reward.CrowdsFavor = true;
+			if(Reward.Gold < 1000)
 			{
-				if(TextBoxDust.Text.Contains("+"))
+				Reward.Gold += 1000;
+				TextBoxGold.Text = Reward.Gold.ToString();
+			}
+		}
+
+		private void CheckBoxCrowdsFavor_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			Reward.CrowdsFavor = false;
+			if(Reward.Gold >= 1000)
+			{
+				Reward.Gold -= 1000;
+				TextBoxGold.Text = Reward.Gold.ToString();
+			}
+		}
+
+
+		private void TextBoxTavernTickets_OnTextChanged(object sender, TextChangedEventArgs e)
+		{
+			var tickets = 0;
+			if(!string.IsNullOrEmpty(TextBoxTavernTickets.Text) && !int.TryParse(TextBoxTavernTickets.Text.Trim(), out tickets))
+			{
+				if(TextBoxTavernTickets.Text.Contains("+"))
 				{
 					try
 					{
-						dust = TextBoxDust.Text.Split('+').Select(x => int.Parse(x.Trim())).Sum();
+						tickets = TextBoxTavernTickets.Text.Split('+').Select(x => int.Parse(x.Trim())).Sum();
 					}
 					catch
 					{
-						AddInvalidField(TextBoxDust, "Invalid dust value: " + TextBoxDust.Text);
-						TextBoxDust.BorderBrush = Brushes.Red;
+						AddInvalidField(TextBoxTavernTickets, "Invalid tavern ticket value: " + TextBoxTavernTickets.Text);
+						TextBoxTavernTickets.BorderBrush = Brushes.Red;
 						return;
 					}
 				}
 				else
 				{
-					AddInvalidField(TextBoxDust, "Invalid dust value: " + TextBoxDust.Text);
-					TextBoxDust.BorderBrush = Brushes.Red;
+					AddInvalidField(TextBoxTavernTickets, "Invalid dust value: " + TextBoxTavernTickets.Text);
+					TextBoxTavernTickets.BorderBrush = Brushes.Red;
 					return;
 				}
 			}
-			RemoveInvalidField(TextBoxDust);
-			TextBoxDust.BorderBrush = (Brush)FindResource("TextBoxBorderBrush");
-			Reward.Dust = dust;
+			RemoveInvalidField(TextBoxTavernTickets);
+			TextBoxTavernTickets.BorderBrush = (Brush)FindResource("TextBoxBorderBrush");
+			Reward.TavernTickets = tickets;
 		}
 
 		private void ComboBoxPack1_OnSelectionChanged(object sender, SelectionChangedEventArgs e) => Reward.Packs[0] = (ArenaRewardPacks)ComboBoxPack1.SelectedValue;
 
 		private void ComboBoxPack2_OnSelectionChanged(object sender, SelectionChangedEventArgs e) => Reward.Packs[1] = (ArenaRewardPacks)ComboBoxPack2.SelectedValue;
+
+		private void ComboBoxPack3_OnSelectionChanged(object sender, SelectionChangedEventArgs e) => Reward.Packs[2] = (ArenaRewardPacks)ComboBoxPack3.SelectedValue;
 
 		private void CheckBoxGolden_OnChecked(object sender, RoutedEventArgs e)
 		{
@@ -228,30 +245,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		public void LoadArenaReward(ArenaReward reward)
 		{
 			TextBoxGold.Text = reward.Gold.ToString();
-			TextBoxDust.Text = reward.Dust.ToString();
+			CheckBoxCrowdsFavor.IsChecked = reward.CrowdsFavor;
+			TextBoxTavernTickets.Text = reward.TavernTickets.ToString();
 			ComboBoxPack1.SelectedItem = reward.Packs[0];
 			ComboBoxPack2.SelectedItem = reward.Packs[1];
+			ComboBoxPack3.SelectedItem = reward.Packs.Length >= 3 ? reward.Packs[2] : ArenaRewardPacks.None;
 			if(!string.IsNullOrEmpty(reward.Cards[0]?.CardId))
 				TextBoxCard1.Text = Database.GetCardFromId(reward.Cards[0]?.CardId!)?.LocalizedName;
-			if(!string.IsNullOrEmpty(reward.Cards[1]?.CardId))
-				TextBoxCard2.Text = Database.GetCardFromId(reward.Cards[1]?.CardId!)?.LocalizedName;
-			if(!string.IsNullOrEmpty(reward.Cards[2]?.CardId))
-				TextBoxCard3.Text = Database.GetCardFromId(reward.Cards[2]?.CardId!)?.LocalizedName;
 			if(reward.Cards[0] != null)
 				CheckBoxGolden1.IsChecked = reward.Cards[0]?.Golden ?? false;
-			if(reward.Cards[1] != null)
-				CheckBoxGolden2.IsChecked = reward.Cards[1]?.Golden ?? false;
-			if(reward.Cards[2] != null)
-				CheckBoxGolden3.IsChecked = reward.Cards[2]?.Golden ?? false;
-			if(reward.PaymentMethod == ArenaPaymentMethod.Gold)
-				RadioButtonPaymentGold.IsChecked = true;
-			else if(reward.PaymentMethod == ArenaPaymentMethod.Money)
-				RadioButtonPaymentMoney.IsChecked = true;
 		}
-
-		private void RadioButtonPaymentGold_OnChecked(object sender, RoutedEventArgs e) => Reward.PaymentMethod = ArenaPaymentMethod.Gold;
-
-		private void RadioButtonPaymentMoney_OnChecked(object sender, RoutedEventArgs e) => Reward.PaymentMethod = ArenaPaymentMethod.Money;
 
 		public event RoutedEventHandler Save
 		{
@@ -268,10 +271,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 	public class ArenaReward
 	{
-		private CardReward?[] _cards = new CardReward?[3];
+		private CardReward?[] _cards = new CardReward?[1];
 		public int Gold { get; set; }
-		public int Dust { get; set; }
-		public ArenaPaymentMethod PaymentMethod { get; set; }
+		public int TavernTickets { get; set; }
+		public bool CrowdsFavor { get; set; }
 
 		public CardReward?[] Cards
 		{
@@ -280,7 +283,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				if(_cards.Length != 3 || _cards.Any(x => x?.CardId == null))
 				{
 					var valid = _cards.Where(x => x?.CardId != null).ToArray();
-					_cards = new CardReward[3];
+					_cards = new CardReward[1];
 					for(var i = 0; i < valid.Length; i++)
 						_cards[i] = valid[i];
 				}
@@ -289,7 +292,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			set { _cards = value; }
 		}
 
-		public ArenaRewardPacks[] Packs { get; set; } = new ArenaRewardPacks[2];
+		public ArenaRewardPacks[] Packs { get; set; } = new ArenaRewardPacks[3];
 
 		public class CardReward
 		{

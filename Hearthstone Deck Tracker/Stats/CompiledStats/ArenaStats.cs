@@ -95,11 +95,9 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public double GoldAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.Gold).DefaultIfEmpty(0).Average(), 2);
 
-		public int GoldSpent => GetFilteredRuns().Count(x => x.Deck.ArenaReward?.PaymentMethod == ArenaPaymentMethod.Gold) * 150;
+		public int CrowdsFavorTotal => GetFilteredRuns().Count(x => x.CrowdsFavor);
 
-		public int DustTotal => GetFilteredRuns().Sum(x => x.Dust);
-
-		public double DustAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.Dust).DefaultIfEmpty(0).Average(), 2);
+		public int TavernTicketsTotal => GetFilteredRuns().Sum(x => x.TavernTickets);
 
 		public int CardCountTotal => GetFilteredRuns().Sum(x => x.CardCount);
 
@@ -275,7 +273,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			var filtered = Runs;
 			if(requireAnyReward)
-				filtered = filtered.Where(x => x.PackCount > 0 || x.Gold > 0 || x.Dust > 0 || x.CardCount > 0);
+				filtered = filtered.Where(x => x.PackCount > 0 || x.Gold > 0 || x.TavernTickets > 0 || x.CardCount > 0 || x.CrowdsFavor);
 			if (archivedFilter && !Config.Instance.ArenaStatsIncludeArchived)
 				filtered = filtered.Where(x => !x.Deck.Archived);
 			if(classFilter && Config.Instance.ArenaStatsClassFilter != HeroClassStatsFilter.All)
@@ -371,9 +369,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			OnPropertyChanged(nameof(GoldTotal));
 			OnPropertyChanged(nameof(GoldAveragePerRun));
-			OnPropertyChanged(nameof(GoldSpent));
-			OnPropertyChanged(nameof(DustTotal));
-			OnPropertyChanged(nameof(DustAveragePerRun));
+			OnPropertyChanged(nameof(CrowdsFavorTotal));
 			OnPropertyChanged(nameof(PacksCountClassic));
 			OnPropertyChanged(nameof(PacksCountGvg));
 			OnPropertyChanged(nameof(PacksCountTgt));
