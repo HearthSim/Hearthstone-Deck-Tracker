@@ -338,6 +338,10 @@ public class ArenaPickHelperViewModel : ViewModel
 		if(!IsRedraft)
 		{
 			var picked = TileViewModels.SelectMany(x => Enumerable.Repeat(x.CardId, x.Count)).ToArray();
+			// sometimes the game triggers OnChoicesChanged after the last pick, this avoids it
+			if(picked.Length == 30)
+				return;
+
 			var data = await MakeRequestCardPick(offered,  _chosenHero, picked, ArenaSeasonId, deckId.Value, accountId, IsUnderground);
 
 			pickData = data?.Data;
