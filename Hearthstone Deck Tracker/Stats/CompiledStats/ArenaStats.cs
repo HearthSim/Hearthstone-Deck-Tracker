@@ -95,6 +95,10 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public double GoldAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.Gold).DefaultIfEmpty(0).Average(), 2);
 
+		public int DustTotal => GetFilteredRuns().Sum(x => x.Dust);
+
+		public double DustAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.Dust).DefaultIfEmpty(0).Average(), 2);
+
 		public int CrowdsFavorTotal => GetFilteredRuns().Count(x => x.CrowdsFavor);
 
 		public int TavernTicketsTotal => GetFilteredRuns().Sum(x => x.TavernTickets);

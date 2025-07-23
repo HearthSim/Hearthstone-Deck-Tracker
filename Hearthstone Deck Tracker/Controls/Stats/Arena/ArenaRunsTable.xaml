@@ -56,6 +56,13 @@
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
+            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Dust}" Binding="{Binding Dust}">
+                <DataGridTextColumn.ElementStyle>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                    </Style>
+                </DataGridTextColumn.ElementStyle>
+            </DataGridTextColumn>
             <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_TavernTickets}" Binding="{Binding TavernTickets}">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">

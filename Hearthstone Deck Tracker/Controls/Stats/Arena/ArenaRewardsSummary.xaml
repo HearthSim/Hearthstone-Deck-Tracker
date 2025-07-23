@@ -32,6 +32,22 @@
             </StackPanel>
         </StackPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
+        <StackPanel Margin="10" MinWidth="120">
+            <StackPanel Orientation="Horizontal">
+                <Image Width="48" Height="48" Source="/HearthstoneDeckTracker;component/Resources/dust.png" RenderOptions.BitmapScalingMode="Fant"/>
+                <Label Content="{lex:Loc Stats_Arena_Rewards_Label_Dust}" FontSize="16" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Margin="32,10,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Dust_Total, Suffix=' '}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Path=DustTotal, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Dust_Average, Suffix=' '}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Path=DustAveragePerRun, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <StackPanel Margin="10" MinWidth="260">
             <StackPanel Orientation="Horizontal">

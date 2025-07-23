@@ -36,6 +36,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int Gold => Deck.ArenaReward?.Gold ?? 0;
 
+		public int Dust => Deck.ArenaReward?.Dust ?? 0;
+
 		public bool CrowdsFavor => Deck.ArenaReward?.CrowdsFavor ?? false;
 
 		public int TavernTickets => Deck.ArenaReward?.TavernTickets ?? 0;

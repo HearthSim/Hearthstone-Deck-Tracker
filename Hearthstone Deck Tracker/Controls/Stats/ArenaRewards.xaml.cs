@@ -169,6 +169,37 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			Reward.Gold = gold;
 		}
 
+		private void TextBoxDust_OnTextChanged(object sender, TextChangedEventArgs e)
+		{
+			var dust = 0;
+			if(!string.IsNullOrEmpty(TextBoxDust.Text) && !int.TryParse(TextBoxDust.Text.Trim(), out dust))
+			{
+				if(TextBoxDust.Text.Contains("+"))
+				{
+					try
+					{
+						dust = TextBoxDust.Text.Split('+').Select(x => int.Parse(x.Trim())).Sum();
+					}
+					catch
+					{
+						AddInvalidField(TextBoxDust, "Invalid dust value: " + TextBoxDust.Text);
+						TextBoxDust.BorderBrush = Brushes.Red;
+						return;
+					}
+				}
+				else
+				{
+					AddInvalidField(TextBoxDust, "Invalid dust value: " + TextBoxDust.Text);
+					TextBoxDust.BorderBrush = Brushes.Red;
+					return;
+				}
+			}
+			RemoveInvalidField(TextBoxDust);
+			TextBoxDust.BorderBrush = (Brush)FindResource("TextBoxBorderBrush");
+			Reward.Dust = dust;
+		}
+
+
 		private void CheckBoxCrowdsFavor_OnChecked(object sender, RoutedEventArgs e)
 		{
 			Reward.CrowdsFavor = true;
@@ -246,6 +277,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			TextBoxGold.Text = reward.Gold.ToString();
 			CheckBoxCrowdsFavor.IsChecked = reward.CrowdsFavor;
+			TextBoxDust.Text = reward.Dust.ToString();
 			TextBoxTavernTickets.Text = reward.TavernTickets.ToString();
 			ComboBoxPack1.SelectedItem = reward.Packs[0];
 			ComboBoxPack2.SelectedItem = reward.Packs[1];
@@ -273,6 +305,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	{
 		private CardReward?[] _cards = new CardReward?[1];
 		public int Gold { get; set; }
+		public int Dust { get; set; }
 		public int TavernTickets { get; set; }
 		public bool CrowdsFavor { get; set; }
 

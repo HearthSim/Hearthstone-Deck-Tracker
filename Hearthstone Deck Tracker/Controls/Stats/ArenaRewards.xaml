@@ -21,10 +21,16 @@
                 </DockPanel>
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="{lex:Loc ArenaRewards_Label_TavernTickets}">
-            <TextBox Name="TextBoxTavernTickets" TextChanged="TextBoxTavernTickets_OnTextChanged"
-                     GotKeyboardFocus="TextBox_OnGotKeyboardFocus" GotMouseCapture="TextBox_OnGotMouseCapture"/>
-        </GroupBox>
+        <UniformGrid Rows="1">
+            <GroupBox Header="{lex:Loc ArenaRewards_Label_TavernTickets}">
+                <TextBox Name="TextBoxTavernTickets" TextChanged="TextBoxTavernTickets_OnTextChanged"
+                         GotKeyboardFocus="TextBox_OnGotKeyboardFocus" GotMouseCapture="TextBox_OnGotMouseCapture"/>
+            </GroupBox>
+            <GroupBox Header="{lex:Loc ArenaRewards_Label_Dust}">
+                <TextBox Name="TextBoxDust" ToolTip="{lex:Loc ArenaRewards_Label_Dust_Tooltip}" TextChanged="TextBoxDust_OnTextChanged"
+                         GotKeyboardFocus="TextBox_OnGotKeyboardFocus" GotMouseCapture="TextBox_OnGotMouseCapture"/>
+            </GroupBox>
+        </UniformGrid>
         <GroupBox Header="{lex:Loc ArenaRewards_Label_Packs}">
             <StackPanel>
                 <DockPanel>
