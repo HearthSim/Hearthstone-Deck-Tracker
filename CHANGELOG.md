@@ -1,3 +1,7 @@
+## **Release v1.46.1 - 2025-07-23**
+**Arenasmith**
+- Fixes an issue where an error message appeared on play screen.
+
 ## **Release v1.46.0 - 2025-07-23**
 **Hearthstone**:
 - Added Arenasmith, our Draft Assistant for Arena and Underground Arena!\
