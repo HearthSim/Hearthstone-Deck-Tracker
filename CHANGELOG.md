@@ -1,4 +1,4 @@
-## Unreleased
+## **Release v1.46.0 - 2025-07-23**
 **Hearthstone**:
 - Added Arenasmith, our Draft Assistant for Arena and Underground Arena!\
   *As a free user, you can try it for ten drafts, and then for one additional draft per week.*
