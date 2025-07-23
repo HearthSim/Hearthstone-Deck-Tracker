@@ -708,6 +708,21 @@ public class ArenaPickHelperViewModel : ViewModel
 			var arenaInfo = Reflection.Client.GetArenaDeck();
 			var accountId = Reflection.Client.GetAccountId();
 			var redraftNumber = arenaInfo?.Losses ?? 1;
+			var deckId = arenaInfo?.Deck.Id;
+
+			if(accountId == null || !deckId.HasValue)
+				return;
+
+			// Check if the deck is registered for trials
+			if(!HSReplayNetOAuth.IsFullyAuthenticated || !(HSReplayNetOAuth.AccountData?.IsPremium ?? false))
+			{
+				await ArenaTrial.EnsureLoaded(accountId.Hi, accountId.Lo);
+				if(!ArenaTrial.IsDeckResumable(deckId.Value))
+				{
+					Log.Info("Current deck is not registered for trials, aborting");
+					return;
+				}
+			}
 
 			stats = await MakeRequestEditDeck(_chosenHero, redraftNumber, ArenaSeasonId, arenaInfo?.Deck.Id ?? -1, accountId, IsUnderground);
 			 _arenaCardStatsCache.Add(classNumber, stats);
