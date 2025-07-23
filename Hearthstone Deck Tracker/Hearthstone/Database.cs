@@ -102,5 +102,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public static bool IsActualCard(Card card) => card != null && Cards.Collectible.ContainsKey(card.Id);
+
+		public static readonly Dictionary<CardClass, string> CardClassName = new()
+		{
+			{CardClass.WARRIOR, "Warrior"},
+			{CardClass.SHAMAN, "Shaman"},
+			{CardClass.ROGUE, "Rogue"},
+			{CardClass.PALADIN, "Paladin"},
+			{CardClass.HUNTER, "Hunter"},
+			{CardClass.DRUID, "Druid"},
+			{CardClass.WARLOCK, "Warlock"},
+			{CardClass.MAGE, "Mage"},
+			{CardClass.PRIEST, "Priest"},
+			{CardClass.DEMONHUNTER, "DemonHunter"},
+			{CardClass.DEATHKNIGHT, "DeathKnight"},
+		};
 	}
 }

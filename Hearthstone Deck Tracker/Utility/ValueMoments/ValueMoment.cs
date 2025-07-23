@@ -14,6 +14,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			public const string HSDecklistVisible = "Overlay Decklist Visible";
 			public const string HSMulliganGuideOverlay = "Support Mulligan Choice";
 
+			// Arena
+			public const string ArenasmithOverlay = "Used Arenasmith Overlay during Draft";
+
 			// Battlegrounds
 			public const string BGBobsBuddy = "Overlay Bob's Buddy";
 			public const string BGSessionRecap = "Overlay Session Recap";

@@ -90,6 +90,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="Resources/Icons.xaml"/>
+                <ResourceDictionary Source="Controls/Overlay/Arena/ArenaResources.xaml"/>
                 <ResourceDictionary Source="Controls/Overlay/Constructed/ConstructedResources.xaml"/>
                 <ResourceDictionary Source="Controls/Overlay/Battlegrounds/BattlegroundsResources.xaml"/>
                 <ResourceDictionary>
@@ -100,6 +101,7 @@
                     <converters:NullableToVisibilityConverter x:Key="NullableToVisibility"/>
                     <converters:EnumToVisibilityConverter x:Key="EnumToVisibility"/>
                     <converters:ObjectTypeConverter x:Key="ObjectTypeConverter"/>
+                    <converters:EqualsConverter x:Key="EqualsConverter"></converters:EqualsConverter>
                     <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
                 </ResourceDictionary>
                 <ResourceDictionary>

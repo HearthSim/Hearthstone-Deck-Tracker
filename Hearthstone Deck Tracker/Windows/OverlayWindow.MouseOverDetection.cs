@@ -745,6 +745,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 						transformCache[element] = point;
 					}
 				}
+
+				if(element is Polygon p)
+				{
+					var geometryLocalPoint = new Point((location.X - point.X) / scale.X, (location.Y - point.Y) / scale.Y);
+					return p.RenderedGeometry.FillContains(geometryLocalPoint);
+				}
+
 				var contains= location.X > point.X && location.X < point.X + element.ActualWidth * scale.X && location.Y > point.Y
 					   && location.Y < point.Y + element.ActualHeight * scale.Y;
 				return contains;

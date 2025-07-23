@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using HearthDb;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
@@ -136,7 +137,21 @@ public class CardTooltipViewModel : ViewModel
 	public List<Hearthstone.Card>? RelatedCards
 	{
 		get => GetProp<List<Hearthstone.Card>?>(null);
-		set => SetProp(value);
+		set
+		{
+			RelatedCardsHeader = LocUtil.Get("Related_Cards", useCardLanguage: true);
+			OnPropertyChanged(nameof(RelatedCardsHeader));
+			SetProp(value);
+		}
+	}
+
+	public string? RelatedCardsHeader
+	{
+		get => GetProp<string?>(null);
+		set
+		{
+			SetProp(value ?? LocUtil.Get("Related_Cards", useCardLanguage: true));
+		}
 	}
 
 	public string? Text

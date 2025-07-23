@@ -1,0 +1,177 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Arena.ArenaPreDraft"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Arena"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
+             xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             Width="264" Height="630"
+             mc:Ignorable="d">
+    <d:UserControl.DataContext>
+        <local:ArenaPreDraftViewModel UserState="Subscriber" Username="Epix">
+        </local:ArenaPreDraftViewModel>
+    </d:UserControl.DataContext>
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style.Setters>
+        </Style>
+
+        <Style TargetType="ToolTip" BasedOn="{StaticResource ArenaTooltipStyle}"/>
+    </UserControl.Resources>
+
+    <Grid Visibility="{Binding Visibility}">
+
+        <!-- Panel -->
+        <Border Name="ArenaPanel" Width="264" Background="{StaticResource Tier7Black}"
+                BorderBrush="{StaticResource HSReplayNetBlue}" BorderThickness="1" CornerRadius="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+        >
+            <StackPanel>
+                <!-- Header -->
+                <Border Background="{StaticResource HSReplayNetBlue}" Padding="8 5" Margin="-1 -1 -1 0" CornerRadius="0">
+                    <DockPanel>
+                        <local:ArenasmithLogo Width="19" Height="12" DockPanel.Dock="Left"/>
+                        <Border DockPanel.Dock="Right" Padding="4 3" Margin="0 -3 -6 -3" CornerRadius="3"
+                                Cursor="Hand" MouseUp="Chevron_MouseUp">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                                            <Setter Property="Background" Value="#22FFFFFF"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Rectangle Height="8" Width="16">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{Binding ChevronIcon, FallbackValue={StaticResource chevron_up}}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <Border DockPanel.Dock="Right" Padding="4 3" Margin="0 -3 2 -3" CornerRadius="3" Cursor="Hand"
+                                Visibility="{Binding IsMouseOver, ElementName=ArenaPanel, Converter={StaticResource BoolToVisibility}, ConverterParameter=Hidden}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                                            <Setter Property="Background" Value="#22FFFFFF"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="commands:GlobalCommands.ShowSettings" CommandParameter="Arena" />
+                            </Border.InputBindings>
+                            <Rectangle Height="14" Width="14">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_settings}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_Title}" Foreground="White" Margin="4 0" VerticalAlignment="Center" TextAlignment="Left" />
+                    </DockPanel>
+                </Border>
+                <StackPanel Name="ArenaContent"  Visibility="{Binding IsCollapsed, Converter={StaticResource InverseBoolToVisibility}}">
+                    <!-- ArenasmithAvailability=Loading -->
+                    <StackPanel Visibility="{Binding ArenasmithAvailable, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:ArenasmithAvailability.Loading}}">
+                        <StackPanel Margin="16">
+                            <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_Loading}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- ArenasmithAvailability=Unavailable -->
+                    <StackPanel Margin="16" Visibility="{Binding ArenasmithAvailable, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:ArenasmithAvailability.Unavailable}}">
+                        <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_Preparing}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                        <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_GatheringData}" TextWrapping="Wrap" Margin="0 4 0 0" />
+                    </StackPanel>
+
+                    <!-- ArenasmithAvailability=Available -->
+                    <StackPanel Visibility="{Binding ArenasmithAvailable, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:ArenasmithAvailability.Available}}">
+                        <!-- UserState=Loading -->
+                        <StackPanel Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Loading}}">
+                            <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_Loading}" />
+                        </StackPanel>
+
+                        <!-- UserState=UnknownPlayer -->
+                        <StackPanel Width="182" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.UnknownPlayer}}">
+                            <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_JoinForAccess}" Margin="0 8 0 0" />
+                            <Button Style="{StaticResource ArenaButtonStyle}" Content="{lex:Loc ArenaPreDraft_Panel_SubscribeNow}" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}"/>
+                        </StackPanel>
+
+                        <!-- UserState=TrialPlayer -->
+                        <StackPanel Width="230" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.TrialPlayer}}">
+                            <!-- DraftState=PreDraft -->
+                            <StackPanel Visibility="{Binding DraftState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:DraftState.PreDraft}}">
+                                <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_ReadyForRatings}" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 8 0 0">
+                                    <TextBlock FontWeight="SemiBold" Margin="0 0 8 0">
+                                    <Run Text="{lex:Loc ArenaPreDraft_Panel_TrialDraftsRemaining}" />
+                                    <Run Text="{Binding RemainingTrials, Mode=OneWay}"/>
+                                    </TextBlock>
+                                    <Border Width="18" Height="18" BorderBrush="White" Background="{StaticResource Tier7Black}" BorderThickness="1" CornerRadius="18"
+                                        ToolTipService.InitialShowDelay="0" ToolTip="{lex:Loc ArenaPreDraft_Panel_TrialDraftsRemaining_Tooltip}">
+                                        <TextBlock Text="i" VerticalAlignment="Center" FontSize="12" FontWeight="SemiBold" />
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ResetTimeVisibility}">
+                                    <TextBlock>
+                                    <Run Text="{lex:Loc ArenaPreDraft_Panel_TrialsResetsIn}" />
+                                    <Bold><Run Text="{Binding TrialTimeRemaining}" /></Bold>
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- DraftState=MidDraft -->
+                            <StackPanel Visibility="{Binding DraftState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:DraftState.MidDraft}}">
+                                <StackPanel Visibility="{Binding IsTrialEnabledForDeck, Converter={StaticResource BoolToVisibility}}">
+                                    <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_TrialActive}" />
+                                    <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_JoinForUnlimitedAccess}" Margin="0 8 0 0" />
+                                </StackPanel>
+
+                                <StackPanel Visibility="{Binding IsTrialEnabledForDeck, Converter={StaticResource InverseBoolToVisibility}}">
+                                    <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_JoinThisDraft}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <Button Style="{StaticResource ArenaButtonStyle}" Content="{lex:Loc ArenaPreDraft_Panel_SubscribeNow}" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}"/>
+
+                            <!-- Subscribed? Sign In -->
+                            <TextBlock Margin="0 8 0 0" Visibility="{Binding RefreshSubscriptionState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:RefreshSubscriptionState.SignIn}}">
+                                <Run Text="{lex:Loc ArenaPreDraft_Panel_AlreadySubscribed}"/>
+                                <Hyperlink Command="commands:GlobalCommands.SignInCommand">
+                                    <Run Text="{lex:Loc ArenaPreDraft_Panel_SignInToSubscription}"/>
+                                </Hyperlink>
+                            </TextBlock>
+
+                            <!-- Subscribed? Refresh -->
+                            <TextBlock Margin="0 8 0 0" Visibility="{Binding RefreshSubscriptionState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:RefreshSubscriptionState.Refresh}}">
+                                <Run Text="{lex:Loc ArenaPreDraft_Panel_AlreadySubscribed}"/>
+                                <Hyperlink Command="{Binding RefreshAccountCommand}" IsEnabled="{Binding RefreshAccountEnabled}">
+                                    <Run Text="{lex:Loc ArenaPreDraft_Panel_RefreshSubscription}"/>
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- UserState=Subscriber -->
+                        <StackPanel Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.Subscriber}}">
+                            <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_ThanksForSubscribing}" Foreground="{StaticResource HSReplayNetPremiumGold}" FontWeight="SemiBold" />
+                            <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_ReadyForRatings}" Margin="0 4 0 0" FontWeight="Normal"/>
+                            <Button Style="{StaticResource Tier7ButtonStyle}" Content="{lex:Loc ArenaPreDraft_Panel_ViewArenaStats}" Margin="0 10 0 0" Command="{Binding ViewArenaStatsCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

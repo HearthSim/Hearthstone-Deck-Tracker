@@ -85,7 +85,7 @@
             </Image.Style>
         </Image>
 
-        <controls:GridCardImages DockPanel.Dock="{Binding ImageDock}" Cards="{Binding RelatedCards}" Title="{lex:Loc Related_Cards}" Visibility="{Binding RelatedCards, Converter={StaticResource NullableToVisibility}}" VerticalAlignment="Center">
+        <controls:GridCardImages DockPanel.Dock="{Binding ImageDock}" Cards="{Binding RelatedCards}" Title="{Binding RelatedCardsHeader}" Visibility="{Binding RelatedCards, Converter={StaticResource NullableToVisibility}}" VerticalAlignment="Center">
             <controls:GridCardImages.LayoutTransform>
                 <ScaleTransform
                     ScaleX="{Binding Path=Bindable.CardImageSize, Source={StaticResource ConfigWrapper}}"

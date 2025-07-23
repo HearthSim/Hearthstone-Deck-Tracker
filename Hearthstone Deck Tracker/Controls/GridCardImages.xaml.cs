@@ -12,11 +12,11 @@ namespace Hearthstone_Deck_Tracker.Controls;
 public partial class GridCardImages
 {
 	public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
-		nameof(Title), typeof(string), typeof(GridCardImages), new PropertyMetadata(default(string)));
+		nameof(Title), typeof(string), typeof(GridCardImages), new PropertyMetadata(null));
 
-	public string Title
+	public string? Title
 	{
-		get => (string)GetValue(TitleProperty);
+		get => (string?)GetValue(TitleProperty);
 		set => SetValue(TitleProperty, value);
 	}
 
@@ -38,12 +38,30 @@ public partial class GridCardImages
 		set => SetValue(MaxCardGridHeightProperty, value);
 	}
 
+	public static readonly DependencyProperty MaxCardGridWidthProperty = DependencyProperty.Register(
+		nameof(MaxCardGridWidth), typeof(double), typeof(GridCardImages), new PropertyMetadata(600.0, (d, _) => (d as GridCardImages)?.Update()));
+
+	public double MaxCardGridWidth
+	{
+		get => (double)GetValue(MaxCardGridWidthProperty);
+		set => SetValue(MaxCardGridWidthProperty, value);
+	}
+
+	public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register(
+		nameof(Columns), typeof(int), typeof(GridCardImages), new PropertyMetadata(-1, (d, _) => (d as GridCardImages)?.Update()));
+
+	public int Columns
+	{
+		get => (int)GetValue(ColumnsProperty);
+		set => SetValue(ColumnsProperty, value);
+	}
+
 	public GridCardImages()
 	{
 		InitializeComponent();
 	}
 
-	public double MaxGridWidth => 600.0;
+	//public double MaxGridWidth => 600.0;
 	public double CardWidth => 256.0;
 	public double CardHeight => 388.0;
 
@@ -64,22 +82,33 @@ public partial class GridCardImages
 
 		var cardHeight = CardHeight + CardMargin.Top + CardMargin.Bottom;
 		var cardWidth = CardWidth + CardMargin.Left + CardMargin.Right;
+		var maxCardGridWidth = MaxCardGridWidth - 10; // container margin
 
 		if(cardCount <= 3)
 		{
-			var cardScale = Math.Min(MaxScale, Math.Min(MaxCardGridHeight, MaxGridWidth / (cardWidth * 3)));
+			var cardScale = Math.Min(MaxScale, Math.Min(MaxCardGridHeight, maxCardGridWidth / (cardWidth * 3)));
 			ViewModel.CardScale = new ScaleTransform { ScaleX = cardScale, ScaleY = cardScale };
 			return;
 		}
 
 		// Beyond 3 cards: optimize for maximum card scale
 		var scale = 0.0;
-		for(var rows = 1; rows < cardCount; rows++)
+
+		if(Columns > 0)
 		{
-			var cols = Math.Ceiling((double)cardCount / rows);
-			var cardScale = Math.Min(MaxScale, Math.Min(MaxCardGridHeight / (cardHeight * rows), MaxGridWidth / (cardWidth * cols)));
-			if(cardScale > scale)
-				scale = cardScale;
+			var cols = Math.Min(Columns, cardCount);
+			var rows = Math.Ceiling((double)cardCount / cols);
+			scale = Math.Min(MaxScale, Math.Min(MaxCardGridHeight / (cardHeight * rows), maxCardGridWidth / (cardWidth * cols)));
+		}
+		else
+		{
+			for(var rows = 1; rows < cardCount; rows++)
+			{
+				var cols = Math.Ceiling((double)cardCount / rows);
+				var cardScale = Math.Min(MaxScale, Math.Min(MaxCardGridHeight / (cardHeight * rows), maxCardGridWidth / (cardWidth * cols)));
+				if(cardScale > scale)
+					scale = cardScale;
+			}
 		}
 
 		ViewModel.CardScale = new ScaleTransform { ScaleX = scale, ScaleY = scale };

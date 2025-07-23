@@ -397,6 +397,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
+		public static void OnArenasmithMissingScore(bool apiError, string cardId)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_arenasmit_missing_score")
+				.Field("apiError", apiError)
+				.Field("cardId", cardId)
+				.Build()
+			);
+		}
+
 		public static void OnSquirrelFindBestRemote(string result)
 		{
 			if(!Config.Instance.GoogleAnalytics)

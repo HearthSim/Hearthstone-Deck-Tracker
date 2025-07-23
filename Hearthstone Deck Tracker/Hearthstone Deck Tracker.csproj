@@ -273,6 +273,31 @@
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+	<Page Update="Controls\Overlay\Arena\ArenaPickHelper.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	  <XamlRuntime>Wpf</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
+	<Page Update="Controls\Overlay\Arena\Tier7PreLobby.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	  <XamlRuntime>Wpf</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
+	<Page Update="Controls\Overlay\Arena\ArenasmithLogo.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	  <XamlRuntime>Wpf</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
+	<Page Update="Controls\Overlay\Arena\ArenaResources.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	  <XamlRuntime>Wpf</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
+	<Page Update="FlyoutControls\Options\Overlay\OverlayArena.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	  <XamlRuntime>Wpf</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
     <Page Update="Controls\Overlay\Battlegrounds\ChinaModule\ChinaModulePanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>

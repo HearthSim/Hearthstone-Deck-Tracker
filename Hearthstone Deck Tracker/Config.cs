@@ -105,6 +105,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(null)]
 		public int? ArenaStatsCustomSeasonMax = null;
 
+		[DefaultValue(false)]
+		public bool ArenasmithPreLobbyTrialsCollapsed = false;
+
 		[DefaultValue(67.62)]
 		public double AttackIconPlayerVerticalPosition = 67.62;
 
@@ -455,6 +458,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool EnableBattlegroundsTier7Overlay = true;
+
+		[DefaultValue(true)]
+		public bool EnableArenasmithOverlay = true;
 
 		[DefaultValue(true)]
 		public bool HighlightLastDrawn = true;
@@ -914,6 +920,24 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool ShowMercsTasks = true;
+
+		[DefaultValue(true)]
+		public bool ShowArenasmithPreLobby = true;
+
+		[DefaultValue(true)]
+		public bool ShowArenaHeroPicking = true;
+
+		[DefaultValue(true)]
+		public bool ShowArenasmithScore = true;
+
+		[DefaultValue(true)]
+		public bool ShowArenaRelatedCards = true;
+
+		[DefaultValue(true)]
+		public bool ShowArenaDeckSynergies = true;
+
+		[DefaultValue(true)]
+		public bool ShowArenaRedraftDiscard = true;
 
 		[DefaultValue(true)]
 		public bool SortDecksByClass = true;

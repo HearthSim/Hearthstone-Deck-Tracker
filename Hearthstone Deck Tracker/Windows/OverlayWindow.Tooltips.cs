@@ -378,7 +378,7 @@ public partial class OverlayWindow
 				// order / zone position does not seem to always be reliable
 				entity = Core.Game.Player.SecretZone.FirstOrDefault(x => x.CardId == state.CardId);
 			}
-			vm.Cards = entity?.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull().ToList();;
+			vm.Cards = entity?.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull().ToList();
 			if(vm.Cards == null || vm.Cards.Count == 0)
 				return;
 

@@ -31,6 +31,7 @@
                         <TreeViewItem Name="TreeViewItemOverlayPlayer" Header="{lex:LocText Options_Overlay_Player_Header}" Selected="TreeViewItemOverlayPlayer_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemOverlayOpponent" Header="{lex:LocText Options_Overlay_Opponent_Header}" Selected="TreeViewItemOverlayOpponent_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemOverlayBattlegrounds" Header="{lex:LocText Options_Overlay_Battlegrounds_Header}" Selected="TreeViewItemBattlegroundsOverlay_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemOverlayArena" Header="{lex:LocText Options_Overlay_Arena_Header}" Selected="TreeViewItemArenaOverlay_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemOverlayMercenaries" Header="{lex:LocText Options_Overlay_Mercenaries_Header}" Selected="TreeViewItemMercenariesOverlay_OnSelected"/>
                     </TreeViewItem>
                     <TreeViewItem Header="{lex:LocText Options_Tracker_Header}">

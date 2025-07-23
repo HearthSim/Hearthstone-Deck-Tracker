@@ -1,0 +1,45 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayArena"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" d:Background="White"
+             d:DesignHeight="600" d:DesignWidth="300">
+    <StackPanel>
+        <GroupBox Header="{lex:LocTextUpper Options_Overlay_Arena_Label_Arenasmith}" Margin="5,10,5,5">
+            <StackPanel>
+                <CheckBox x:Name="CheckboxEnableArenasmith" Content="{lex:Loc Options_Overlay_Arena_EnableArenasmith}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxEnableArenasmith_Checked" Unchecked="CheckboxEnableArenasmith_Unchecked" />
+                <CheckBox x:Name="CheckboxShowArenasmithPreLobby" Content="{lex:Loc Options_Overlay_Arena_ShowArenasmithPreLobby}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableArenasmith}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxShowArenasmithPreLobby_Checked" Unchecked="CheckboxShowArenasmithPreLobby_Unchecked" />
+                <CheckBox x:Name="CheckboxShowArenaHeroPicking" Content="{lex:Loc Options_Overlay_Arena_CheckBox_ShowHeroPickingStats}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableArenasmith}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxShowArenaHeroPicking_Checked" Unchecked="CheckboxShowArenaHeroPicking_Unchecked"/>
+                <CheckBox x:Name="CheckboxShowArenasmithScore" Content="{lex:Loc Options_Overlay_Arena_CheckBox_ShowScore}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableArenasmith}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxShowArenasmithScore_Checked" Unchecked="CheckboxShowArenasmithScore_Unchecked" />
+                <CheckBox x:Name="CheckboxShowArenaRelatedCards" Content="{lex:Loc Options_Overlay_Arena_CheckBox_ShowRelatedCards}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableArenasmith}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxShowArenaRelatedCards_Checked" Unchecked="CheckboxShowArenaRelatedCards_Unchecked" />
+                <CheckBox x:Name="CheckboxShowArenaDeckSynergies" Content="{lex:Loc Options_Overlay_Arena_CheckBox_ShowDeckSynergies}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableArenasmith}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxShowArenaDeckSynergies_Checked" Unchecked="CheckboxShowArenaDeckSynergies_Unchecked" />
+                <CheckBox x:Name="CheckboxShowArenaRedraftDiscard" Content="{lex:Loc Options_Overlay_Arena_CheckBox_ShowRedraftDiscardSuggestions}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableArenasmith}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxShowArenaRedraftDiscard_Checked" Unchecked="CheckboxShowArenaRedraftDiscard_Unchecked" />
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</UserControl>

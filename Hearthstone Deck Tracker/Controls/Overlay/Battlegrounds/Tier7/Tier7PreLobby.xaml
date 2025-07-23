@@ -7,6 +7,7 @@
              xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
+             xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -50,7 +51,8 @@
 
         <!-- Interactive Panel -->
         <Border Name="Tier7Panel" MinWidth="{Binding PanelMinWidth}" Background="{StaticResource Tier7Black}"
-                BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+                BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top"
+                ext:OverlayExtensions.IsOverlayHitTestVisible="True">
             <StackPanel>
                 <!-- Header -->
                 <Border Background="{StaticResource Tier7Purple}" Padding="8 5" Margin="-1 -1 -1 0" CornerRadius="4">
@@ -120,7 +122,7 @@
 
                     <!-- ValidPlayer -->
                     <StackPanel Width="230" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.ValidPlayer}}">
-                        <TextBlock  Foreground="{StaticResource Tier7Orange}" FontWeight="SemiBold">
+                        <TextBlock Foreground="{StaticResource Tier7Orange}" FontWeight="SemiBold">
                         <Run Text="{lex:Loc BattlegroundsPreLobby_Welcome}"/>
                         <Run Text="{Binding Username}"/>!
                         </TextBlock>

@@ -394,6 +394,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 						//Watchers.ExperienceWatcher.Run();
 						Watchers.SceneWatcher.Run();
+						Watchers.UiWatcher.Run();
 
 						Remote.Config.Load();
 						Remote.Mercenaries.Load();
@@ -479,6 +480,7 @@ namespace Hearthstone_Deck_Tracker
 					TurnTimer.Instance.Stop();
 					Tier7Trial.Clear();
 					Overlay.Tier7PreLobbyViewModel.Reset();
+					Overlay.ArenaPreDraftViewModel.Reset();
 					Overlay.BattlegroundsHeroPickingViewModel.Reset();
 					Overlay.BattlegroundsQuestPickingViewModel.Reset();
 					Overlay.BattlegroundsTrinketPickingViewModel.Reset();

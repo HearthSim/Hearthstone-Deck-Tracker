@@ -9,7 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Border Background="#CC2E3235" CornerRadius="10">
         <DockPanel DataContext="{Binding ViewModel, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}">
-            <Border DockPanel.Dock="Top" Background="#1C2022" CornerRadius="{Binding TitleCornerRadius}">
+            <Border DockPanel.Dock="Top" Background="#1C2022" CornerRadius="{Binding TitleCornerRadius}" Visibility="{Binding Title, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}, Converter={StaticResource NullableToVisibility}}">
                 <hearthstoneDeckTracker:HearthstoneTextBlock
                     Text="{Binding Title, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}"
                     FontSize="17" TextAlignment="Center"
@@ -17,7 +17,7 @@
                 />
             </Border>
             <ItemsControl ItemsSource="{Binding Cards}" Margin="5,0"
-                          MaxWidth="{Binding MaxGridWidth, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}"
+                          MaxWidth="{Binding MaxCardGridWidth, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}"
                           MaxHeight="{Binding MaxCardGridHeight, RelativeSource={RelativeSource AncestorType=controls:GridCardImages}}"
                           HorizontalAlignment="Center">
                 <ItemsControl.ItemsPanel>

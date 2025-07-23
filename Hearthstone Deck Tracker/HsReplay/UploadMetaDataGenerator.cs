@@ -181,7 +181,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 											Offered = group.Last().Choices,
 											TimeOnChoice = group.Last().TimeOnChoice,
 											PickedCards = group.Last().PickedCards,
-											OverlayVisible = false,
+											OverlayVisible =  group.Last().OverlayVisible,
 											PickedPackage = group.Last().PickedPackage,
 											Packages = group.Last().Packages?.ToDictionary(p => p.KeyCard, p => p.Cards),
 										}

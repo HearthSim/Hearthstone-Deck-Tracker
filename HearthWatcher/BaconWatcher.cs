@@ -16,9 +16,9 @@ namespace HearthWatcher
 		private bool _watch;
 		private BaconEventArgs _prev = null;
 
-		public BaconWatcher(IBaconProvider queueProvider, int delay = 200)
+		public BaconWatcher(IBaconProvider baconProvider, int delay = 200)
 		{
-			_provider = queueProvider ?? throw new ArgumentNullException(nameof(queueProvider));
+			_provider = baconProvider ?? throw new ArgumentNullException(nameof(baconProvider));
 			_delay = delay;
 		}
 
@@ -42,11 +42,6 @@ namespace HearthWatcher
 				if(!_watch)
 					break;
 				var curr = new BaconEventArgs(
-					_provider.IsShopOpen ?? false,
-					_provider.IsJournalOpen ?? false,
-					_provider.IsPopupShowing ?? false,
-					_provider.IsFriendslistOpen ?? false,
-					_provider.IsBlurActive ?? false,
 					_provider.SelectedBattlegroundsGameMode ?? SelectedBattlegroundsGameMode.UNKNOWN
 				);
 				if(curr.Equals(_prev))

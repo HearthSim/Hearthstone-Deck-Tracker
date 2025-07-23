@@ -1,0 +1,668 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Arena.ArenaPickHelper"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Arena"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:guides="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:ArenaPickHelperViewModel}"
+             Height="1080"
+             Width="1440"
+             >
+    <Grid ClipToBounds="True">
+        <Grid.Resources>
+            <SolidColorBrush x:Key="BoostLeftColor" Color="#205080"/>
+            <SolidColorBrush x:Key="BoostRightColor" Color="#805020"/>
+            <Pen x:Key="BoostPen" Brush="#FFFFFFFF" Thickness="8" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+
+            <Geometry x:Key="BoostGeo">
+                F1 M65,64z M0,0z M22.4512,2L59.0078,2C60.7323,2,62.0811,3.37032,62.0811,5L62.0811,59 62.0771,59.1523C61.9962,60.7142,60.6783,62,59.0078,62L22.5508,62 22.3496,61.9932C21.4135,61.9333,20.5636,61.4599,20.0332,60.7197L19.9248,60.5566 2.52734,32.5791C1.9538,31.6567,1.93406,30.5101,2.46289,29.5742L2.57617,29.3896 19.874,3.36719C20.4011,2.57432,21.2833,2.06624,22.2559,2.00586L22.4512,2z
+            </Geometry>
+
+            <DrawingImage x:Key="BoostLeftIcon">
+              <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V64 H65 V0 H0 Z">
+                  <GeometryDrawing Brush="{StaticResource BoostLeftColor}" Pen="{StaticResource BoostPen}" Geometry="{StaticResource BoostGeo}"/>
+                </DrawingGroup>
+              </DrawingImage.Drawing>
+            </DrawingImage>
+
+            <DrawingImage x:Key="BoostRightIcon">
+              <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V64 H65 V0 H0 Z">
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="180"/>
+                    </DrawingGroup.Transform>
+                    <GeometryDrawing Brush="{StaticResource BoostRightColor}" Pen="{StaticResource BoostPen}" Geometry="{StaticResource BoostGeo}"/>
+                </DrawingGroup>
+              </DrawingImage.Drawing>
+            </DrawingImage>
+
+            <Geometry x:Key="BoostSmallGeo">
+                F1 M61,30z M0,0z M18.8711,2L56,2C57.6569,2,59,3.34314,59,4.99999L59,25C59,26.6568,57.6569,28,56,28L18.96,28C18.3837,28,17.821,27.8339,17.3389,27.5244L17.1367,27.3828 3.58301,17.0166C2.03175,15.8299,2.01931,13.5176,3.51075,12.3076L3.66016,12.1943 17.126,2.56055C17.6351,2.19632,18.2451,2.00001,18.8711,2z
+            </Geometry>
+
+            <DrawingImage x:Key="BoostSmallLeftIcon">
+              <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V30 H61 V0 H0 Z">
+                  <GeometryDrawing Brush="{StaticResource BoostLeftColor}" Pen="{StaticResource BoostPen}" Geometry="{StaticResource BoostSmallGeo}"/>
+                </DrawingGroup>
+              </DrawingImage.Drawing>
+            </DrawingImage>
+
+            <DrawingImage x:Key="BoostSmallRightIcon">
+              <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V30 H61 V0 H0 Z">
+                    <DrawingGroup.Transform>
+                        <RotateTransform Angle="180"/>
+                    </DrawingGroup.Transform>
+                  <GeometryDrawing Brush="{StaticResource BoostRightColor}" Pen="{StaticResource BoostPen}" Geometry="{StaticResource BoostSmallGeo}"/>
+                </DrawingGroup>
+              </DrawingImage.Drawing>
+            </DrawingImage>
+
+            <DrawingImage x:Key="BoostIcon">
+              <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V42 H40 V0 H0 Z">
+                  <GeometryDrawing Brush="#FFFFFF" Geometry="F1 M40,42z M0,0z M27.7383,12.8623C28.5238,12.2218,29.6829,12.2678,30.415,13L39.415,22 39.5479,22.1464C39.8393,22.502,40.0007,22.9493,40.001,23.413L40.002,25.583 39.9961,25.748C39.8732,27.3656,37.9391,28.1671,36.708,27.1103L36.5879,26.999 32.0039,22.414 32.0039,40C32.0039,41.1043,31.1082,41.9997,30.0039,42L28.0039,42C26.8994,42,26.0039,41.1045,26.0039,40L26.0039,22.414 21.416,27.0019C20.1959,28.2219,18.1364,27.4232,18.0078,25.7529L18.002,25.5888 18,23.415 18.0098,23.2177C18.0549,22.7594,18.2575,22.3285,18.5859,22L27.5859,13 27.7383,12.8623z" />
+                  <GeometryDrawing Brush="#FFFFFF" Geometry="F1 M40,42z M0,0z M9.73828,0.862256C10.5238,0.221776,11.6829,0.267802,12.415,0.999952L21.415,9.99995 21.5479,10.1464C21.8393,10.502,22.0007,10.9493,22.001,11.413L22.002,13.583 21.9961,13.748C21.8732,15.3656,19.9391,16.1671,18.708,15.1103L18.5879,14.999 14.0039,10.414 14.0039,34C14.0039,35.1043,13.1082,35.9997,12.0039,36L10.0039,36C8.89935,36,8.00393,35.1045,8.00391,34L8.00391,10.414 3.41602,15.0019C2.19586,16.2219,0.136386,15.4232,0.0078125,13.7529L0.00195312,13.5888 0,11.415 0.00976562,11.2177C0.0549273,10.7594,0.257496,10.3285,0.585938,9.99995L9.58594,0.999952 9.73828,0.862256z" />
+                </DrawingGroup>
+              </DrawingImage.Drawing>
+            </DrawingImage>
+
+            <BitmapImage x:Key="CardHighlight" UriSource="/HearthstoneDeckTracker;component/Resources/highlight_white.png"/>
+        </Grid.Resources>
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Opacity" Value="0"/>
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <TranslateTransform X="0" />
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StateChange}" Value="{x:Static local:ScreenBehavior.SlideIn}">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Name="SlideIn">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" From="1440" To="0" Duration="0:0:0:0.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="SlideIn"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding StateChange}" Value="{x:Static local:ScreenBehavior.SlideOut}">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Name="SlideOut">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" KeyTime="0:0:0:0.1"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" From="0" To="1440" Duration="0:0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="SlideOut"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding StateChange}" Value="{x:Static local:ScreenBehavior.FadeIn}">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Name="FadeIn">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" KeyTime="0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="FadeIn"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding StateChange}" Value="{x:Static local:ScreenBehavior.FadeOut}">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Name="FadeOut">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" KeyTime="0:0:0:0.2"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="FadeOut"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3.25*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+
+            <!-- Trapezoid shaped trigger areas for detecting hovers in the direction of the card list -->
+            <Polygon Grid.Column="0" Fill="#000" Opacity="0.001" Points="120 220, 1120 65, 1120 985, 120 600"
+                  MouseEnter="CardListDirectionTrigger0_OnMouseEnter" MouseLeave="CardListDirectionTrigger0_OnMouseLeave"
+                  Visibility="{Binding EnableCardListDirectionTrigger0, Converter={StaticResource BoolToVisibility}}"
+                  extensions:OverlayExtensions.IsOverlayHoverVisible="{Binding EnableCardListDirectionTrigger0}" />
+
+            <Polygon Grid.Column="0" Fill="#000" Opacity="0.001" Points="400 220, 1120 65, 1120 985, 400 600"
+                  MouseEnter="CardListDirectionTrigger1_OnMouseEnter" MouseLeave="CardListDirectionTrigger1_OnMouseLeave"
+                  Visibility="{Binding EnableCardListDirectionTrigger1, Converter={StaticResource BoolToVisibility}}"
+                  extensions:OverlayExtensions.IsOverlayHoverVisible="{Binding EnableCardListDirectionTrigger1}" />
+
+            <Polygon Grid.Column="0" Fill="#000" Opacity="0.001" Points="680 220, 1120 65, 1120 985, 680 600"
+                  MouseEnter="CardListDirectionTrigger2_OnMouseEnter" MouseLeave="CardListDirectionTrigger2_OnMouseLeave"
+                  Visibility="{Binding EnableCardListDirectionTrigger2, Converter={StaticResource BoolToVisibility}}"
+                  extensions:OverlayExtensions.IsOverlayHoverVisible="{Binding EnableCardListDirectionTrigger2}" />
+
+            <!-- Trigger area for detecting hovers on the card list -->
+            <Grid Grid.Column="1" Background="#000" Opacity="0.001"
+                  MouseEnter="CardListTrigger_OnMouseEnter" MouseLeave="CardListTrigger_OnMouseLeave"
+                  Visibility="{Binding EnableCardListTrigger, Converter={StaticResource BoolToVisibility}}"
+                  extensions:OverlayExtensions.IsOverlayHoverVisible="{Binding EnableCardListTrigger}" />
+
+                <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding ShowStats, Converter={StaticResource BoolToVisibility}}">
+                    <!-- Background="#40FF0000" -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="108*"/>
+                        <ColumnDefinition Width="782*"/>
+                        <ColumnDefinition Width="110*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="Opacity" Value="0"/>
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowStats}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" KeyTime="0"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0:0.2">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <CubicEase EasingMode="EaseOut"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" KeyTime="0:0:0:0.1"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0:0.1">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <CubicEase EasingMode="EaseOut"/>
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+
+                    <ItemsControl Grid.Column="1" ItemsSource="{Binding HeroStats}" Margin="10,0,10,0" Visibility="{Binding HeroPickVisibility}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:ArenaPickSingleHeroOption />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+                    <ItemsControl Grid.Column="1" ItemsSource="{Binding CardStats}" Margin="10,0,10,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:ArenaPickSingleCardOption
+                                    ArenasmithScoreVisibility="{Binding DataContext.ArenasmithScoreVisibility, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    RelatedCardsVisibility="{Binding DataContext.RelatedCardsVisibility, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    SynergyVisibility="{Binding DataContext.SynergiesVisibility, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    extensions:OverlayExtensions.IsOverlayHoverVisible="True"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </Grid>
+
+            <!-- Trapezoid shaped trigger area for detecting hovers in the direction of the bottom panel -->
+            <Polygon Grid.Column="0" Fill="#000" Opacity="0.001" Points="{Binding BottomPanelDirectionShape}"
+                    MouseEnter="BottomDirectionTrigger_OnMouseEnter" MouseLeave="BottomDirectionTrigger_OnMouseLeave"
+                    Visibility="{Binding EnableBottomDirectionTrigger, Converter={StaticResource BoolToVisibility}}"
+                    extensions:OverlayExtensions.IsOverlayHoverVisible="{Binding EnableBottomDirectionTrigger}" />
+
+            <Grid Grid.Column="0" Margin="60,0,60,99" VerticalAlignment="Bottom" IsVisibleChanged="BottomPanel_OnIsVisibleChanged">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Opacity" Value="0"/>
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowBottom}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" KeyTime="0"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" KeyTime="0"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <Image Source="{Binding PanelBackground}"/>
+
+                <Grid Height="312" MouseEnter="Bottom_OnMouseEnter" MouseLeave="Bottom_OnMouseLeave" extensions:OverlayExtensions.IsOverlayHoverVisible="True">
+                    <Border  Background="#4000" BorderBrush="#2fff" BorderThickness="1" CornerRadius="4"/>
+                    <DockPanel>
+                        <Border Margin="1,1,1,0" Padding="8,4" Background="#8000" DockPanel.Dock="Top" BorderBrush="#2fff" BorderThickness="0,0,0,1">
+                            <Grid>
+                                <TextBlock FontWeight="SemiBold" Text="{Binding BottomPanelTitle}" FontSize="18" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{lex:Loc ArenaPick_SortedByWinrate}" FontSize="14" Foreground="#8fff"
+                                           Visibility="{Binding IsRelatedCardsSorted, Converter={StaticResource BoolToVisibility}}"
+                                           VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>
+                        <Grid extensions:OverlayExtensions.IsOverlayHitTestVisible="{Binding ShowBottom}">
+                            <DockPanel>
+                                <Border DockPanel.Dock="Right" Margin="8" Width="280" Background="#8000"
+                                        CornerRadius="4" BorderBrush="#2fff" BorderThickness="1" ClipToBounds="True"
+                                        Visibility="{Binding ShowMessages, Converter={StaticResource BoolToVisibility}}">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="15" ShadowDepth="10" Direction="-115" Opacity="0.6" />
+                                    </Border.Effect>
+                                    <ScrollViewer Margin="10,10,-4,10">
+                                        <ItemsControl ItemsSource="{Binding Messages}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding}"
+                                                               TextWrapping="Wrap"
+                                                               Margin="0,0,0,4"
+                                                               Foreground="White"
+                                                               FontWeight="Medium"
+                                                               FontSize="12"
+                                                               LineHeight="18"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Border>
+                                <Border Name="CardListContainer" ClipToBounds="True">
+                                    <Grid>
+                                        <TextBlock Text="{lex:Loc ArenaPick_NoRelatedCards}" Foreground="#fff" Opacity="0.5" FontSize="16"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   Visibility="{Binding HasBottomPanelCards, Converter={StaticResource InverseBoolToVisibility}}"/>
+                                        <ScrollViewer Name="CardListScrollViewer" Margin="0,0,-14,0">
+                                            <local:CardImageGrid
+                                                MaxCardHeight="295"
+                                                VerticalAlignment="Center"
+                                                Cards="{Binding BottomPanelCards}"
+                                                MaxCardGridWidth="{Binding ActualWidth, ElementName=CardListContainer}"
+                                                Columns="{Binding BottomPanelColumnCount}"
+                                                MaxCardGridHeight="10000"
+                                                />
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </DockPanel>
+                            <Rectangle Height="12" Margin="1,0,1,0" VerticalAlignment="Top">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#5000" Offset="0"/>
+                                        <GradientStop Color="#0000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                    </DockPanel>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="18.5,79,0,118" ClipToBounds="True">
+                <ItemsControl ItemsSource="{Binding RedraftTileViewModels}" Margin="{Binding RedraftScrollOffset}"
+                              Visibility="{Binding SynergiesVisibility}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="40.75">
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="Opacity" Value="0"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ShowSynergy}" Value="True">
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0:0.2" >
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <CubicEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.EnterActions>
+                                                <DataTrigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.ExitActions>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid Height="40.75" ClipToBounds="True" Margin="0,0,76,0">
+                                    <Image Height="40.75" Source="{StaticResource CardHighlight}" Margin="-4,0,0,0" />
+                                </Grid>
+                                <StackPanel Height="30" Orientation="Horizontal" Margin="0,0,47,0"
+                                            VerticalAlignment="Center" HorizontalAlignment="Right"
+                                            extensions:OverlayExtensions.IsOverlayHoverVisible="True"
+                                            MouseEnter="CardTileImprovement_OnMouseEnter" MouseLeave="CardTileImprovement_OnMouseLeave"
+                                            ToolTipService.IsEnabled="{Binding HasTooltip}"
+                                            ToolTipService.Placement="Top" ToolTipService.VerticalOffset="5" extensions:OverlayExtensions.AutoScaleToolTip="True">
+                                    <extensions:OverlayExtensions.ToolTip>
+                                        <Border Background="#23272A" BorderBrush="#141617" CornerRadius="3" Padding="8" MaxWidth="300" BorderThickness="1">
+                                            <TextBlock guides:TextBlockExtensions.BindableInlines="{Binding TooltipText}" Foreground="White" TextWrapping="Wrap" />
+                                        </Border>
+                                    </extensions:OverlayExtensions.ToolTip>
+                                    <StackPanel.Children>
+                                        <Grid ZIndex="1">
+                                            <ContentControl>
+                                                <ContentControl.Resources>
+                                                    <Grid x:Key="BoostLeft" VerticalAlignment="Center" Margin="0,0,-8,0">
+                                                        <Image Height="20" Source="{StaticResource BoostLeftIcon}"/>
+                                                        <Image Source="{StaticResource BoostIcon}" Height="12" HorizontalAlignment="Center" Margin="2,0,0,0"/>
+                                                    </Grid>
+                                                    <Grid x:Key="BoostRight" VerticalAlignment="Center" Margin="0,0,-12,0">
+                                                        <Image Height="20" Source="{StaticResource BoostRightIcon}" RenderTransformOrigin="0.5,0.5"/>
+                                                        <Image Source="{StaticResource BoostIcon}" Height="12" HorizontalAlignment="Center" Margin="-2,0,0,0"/>
+                                                    </Grid>
+                                                    <StackPanel x:Key="BoostBoth" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,-10,0">
+                                                        <Image Height="10" Source="{StaticResource BoostSmallLeftIcon}" />
+                                                        <Image Height="10" Margin="0,2,0,0" Source="{StaticResource BoostSmallRightIcon}"/>
+                                                    </StackPanel>
+                                                </ContentControl.Resources>
+                                                <ContentControl.Style>
+                                                    <Style TargetType="ContentControl">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ReceivesSynergy}" Value="True">
+                                                                <Setter Property="Content" Value="{StaticResource BoostLeft}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ProvidesSynergy}" Value="True">
+                                                                <Setter Property="Content" Value="{StaticResource BoostRight}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding BothSynergy}" Value="True">
+                                                                <Setter Property="Content" Value="{StaticResource BoostBoth}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentControl.Style>
+                                            </ContentControl>
+                                        </Grid>
+
+                                        <Grid Width="30" Height="30">
+                                            <Grid ClipToBounds="True" Margin="2">
+                                                <Grid.OpacityMask>
+                                                    <VisualBrush Visual="{Binding ElementName=ImageMask}" />
+                                                </Grid.OpacityMask>
+                                                <Border Name="ImageMask" Background="#000" CornerRadius="3"/>
+                                                <Image Opacity="0.8" Source="{Binding DataContext.HoveredAsset.Asset, RelativeSource={RelativeSource AncestorType=local:ArenaPickHelper}}" Height="28" Width="112" Margin="-64,0,0,0" />
+                                            </Grid>
+                                            <Border BorderThickness="3" BorderBrush="#4000" CornerRadius="0,3,3,0" />
+                                            <Border BorderThickness="2" BorderBrush="#fff" CornerRadius="0,3,3,0" />
+                                        </Grid>
+                                    </StackPanel.Children>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding TileViewModels}" Margin="{Binding ScrollOffset}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid Height="40.75">
+                                    <Grid.CacheMode>
+                                        <BitmapCache RenderAtScale="2"/>
+                                    </Grid.CacheMode>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Opacity" Value="0"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ShowSynergy}" Value="True">
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0:0.2" >
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <CubicEase EasingMode="EaseOut"/>
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                    <DataTrigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.ExitActions>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Grid Height="40.75" ClipToBounds="True" Margin="0,0,76,0" Visibility="{Binding DataContext.SynergiesVisibility, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
+                                        <Image Height="40.75" Source="{StaticResource CardHighlight}" Margin="-4,0,0,0"/>
+                                    </Grid>
+                                    <StackPanel Height="30" Orientation="Horizontal" Margin="0,0,47,0"
+                                                VerticalAlignment="Center" HorizontalAlignment="Right"
+                                                extensions:OverlayExtensions.IsOverlayHoverVisible="True"
+                                                MouseEnter="CardTileImprovement_OnMouseEnter" MouseLeave="CardTileImprovement_OnMouseLeave"
+                                                ToolTipService.IsEnabled="{Binding HasTooltip}"
+                                                ToolTipService.Placement="Top" ToolTipService.VerticalOffset="5" extensions:OverlayExtensions.AutoScaleToolTip="True">
+                                        <extensions:OverlayExtensions.ToolTip>
+                                            <Border Background="#23272A" BorderBrush="#141617" CornerRadius="3" Padding="8" MaxWidth="300" BorderThickness="1">
+                                                <TextBlock guides:TextBlockExtensions.BindableInlines="{Binding TooltipText}" Foreground="White" TextWrapping="Wrap" />
+                                            </Border>
+                                        </extensions:OverlayExtensions.ToolTip>
+                                        <StackPanel.Children>
+                                            <Grid ZIndex="1" Visibility="{Binding DataContext.SynergiesVisibility, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
+                                                <ContentControl>
+                                                    <ContentControl.Resources>
+                                                        <Grid x:Key="BoostLeft" VerticalAlignment="Center" Margin="0,0,-8,0">
+                                                            <Image Height="20" Source="{StaticResource BoostLeftIcon}"/>
+                                                            <Image Source="{StaticResource BoostIcon}" Height="12" HorizontalAlignment="Center" Margin="2,0,0,0"/>
+                                                        </Grid>
+                                                        <Grid x:Key="BoostRight" VerticalAlignment="Center" Margin="0,0,-12,0">
+                                                            <Image Height="20" Source="{StaticResource BoostRightIcon}" RenderTransformOrigin="0.5,0.5"/>
+                                                            <Image Source="{StaticResource BoostIcon}" Height="12" HorizontalAlignment="Center" Margin="-2,0,0,0"/>
+                                                        </Grid>
+                                                        <StackPanel x:Key="BoostBoth" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,-10,0">
+                                                            <Image Height="10" Source="{StaticResource BoostSmallLeftIcon}" />
+                                                            <Image Height="10" Margin="0,2,0,0" Source="{StaticResource BoostSmallRightIcon}"/>
+                                                        </StackPanel>
+                                                    </ContentControl.Resources>
+                                                    <ContentControl.Style>
+                                                        <Style TargetType="ContentControl">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ReceivesSynergy}" Value="True">
+                                                                    <Setter Property="Content" Value="{StaticResource BoostLeft}"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding ProvidesSynergy}" Value="True">
+                                                                    <Setter Property="Content" Value="{StaticResource BoostRight}"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding BothSynergy}" Value="True">
+                                                                    <Setter Property="Content" Value="{StaticResource BoostBoth}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ContentControl.Style>
+                                                </ContentControl>
+                                            </Grid>
+
+                                            <Grid Width="30" Height="30">
+                                                <Grid ClipToBounds="True" Margin="2">
+                                                    <Grid.OpacityMask>
+                                                        <VisualBrush Visual="{Binding ElementName=ImageMask}" />
+                                                    </Grid.OpacityMask>
+                                                    <Border Name="ImageMask" Background="#000" CornerRadius="3"/>
+                                                    <Image Opacity="0.8" Source="{Binding DataContext.HoveredAsset.Asset, RelativeSource={RelativeSource AncestorType=local:ArenaPickHelper}}" Height="28" Width="112" Margin="-64,0,0,0" />
+                                                </Grid>
+                                                <Border BorderThickness="3" BorderBrush="#4000" CornerRadius="0,3,3,0">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                            <GradientStop Color="#66000000" Offset="0"/>
+                                                            <GradientStop Color="#00000000" Offset="0.4"/>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                </Border>
+                                                <Border BorderThickness="2" BorderBrush="#fff" CornerRadius="0,3,3,0" />
+                                            </Grid>
+                                        </StackPanel.Children>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Width="34" Height="28" Margin="0, 0, 49, 0"  HorizontalAlignment="Right"
+                                      Visibility="{Binding ArensmithScoreVisibility}">
+                                    <Border CornerRadius="3">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="#23272A"/>
+                                                <Setter Property="BorderBrush" Value="#13171A"/>
+                                                <Setter Property="BorderThickness" Value="1"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SuggestRemove}" Value="True">
+                                                        <Setter Property="BorderBrush" Value="#f82a1e"/>
+                                                        <Setter Property="Background" Value="#4f1719"/>
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <TextBlock Text="{Binding ArensmithScore, TargetNullValue='–'}"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="14">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="#bffF"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding SuggestRemove}" Value="True">
+                                                            <Setter Property="Foreground" Value="#fff"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Border>
+                                    <ContentControl>
+                                        <ContentControl.Resources>
+                                            <Image x:Key="RemoveX" Margin="-12,3,0,0" Width="26" Source="/HearthstoneDeckTracker;component/Resources/tier-x.png" HorizontalAlignment="Left" />
+                                        </ContentControl.Resources>
+                                        <ContentControl.Style>
+                                            <Style TargetType="ContentControl">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SuggestRemove}" Value="True">
+                                                        <Setter Property="Content" Value="{StaticResource RemoveX}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ContentControl.Style>
+                                    </ContentControl>
+                                </Grid>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </Grid>
+        <Border Background="{StaticResource HSReplayNetBlue}"
+                BorderThickness="1"
+                CornerRadius="0"
+                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                Margin="58 0 0 381" Padding="8 5"
+                Visibility="{Binding ShowErrorMessage, Converter={StaticResource BoolToVisibility}}">
+            <TextBlock Text="{lex:Loc ArenaPick_Message_Error}"
+                       Foreground="White" />
+        </Border>
+    </Grid>
+</UserControl>
+

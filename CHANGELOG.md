@@ -1,5 +1,7 @@
 ## Unreleased
 **Hearthstone**:
+- Added Arenasmith, our Draft Assistant for Arena and Underground Arena!\
+  *As a free user, you can try it for ten drafts, and then for one additional draft per week.*
 - Updated the Arena rewards tracking for the new reward structure.
 - Fixed an issue where 'Ysera, Emerald Aspect' was still appearing in the decklist after being drawn.
 

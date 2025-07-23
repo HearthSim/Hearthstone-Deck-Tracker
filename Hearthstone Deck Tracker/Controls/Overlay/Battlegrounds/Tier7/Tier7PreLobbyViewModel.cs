@@ -10,6 +10,8 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 {
@@ -50,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		#endregion
 
 		#region Visibiliy
-		public bool IsModalOpen
+		public bool IsGameCriticalUiOpen
 		{
 			get { return GetProp(false); }
 
@@ -61,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			}
 		}
 
-		public Visibility Visibility => IsModalOpen ? Visibility.Hidden : Visibility.Visible;
+		public Visibility Visibility => IsGameCriticalUiOpen ? Visibility.Hidden : Visibility.Visible;
 		#endregion
 
 		public void InvalidateUserState()
@@ -268,6 +270,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			var url = Helper.BuildHsReplayNetUrl("battlegrounds/tier7/", "bgs_lobby_subscribe");
 			Helper.TryOpenUrl(url);
 			PossiblySubscribed = true;
+			HSReplayNetClientAnalytics.OnClickSubscribeNowLink(
+				Franchise.Battlegrounds, ClickSubscribeNowAction.Button.BattlegroundsPreLobby, TrialUsesRemaining
+			);
 		});
 
 		public ICommand MyStatsCommand => new Command(() =>

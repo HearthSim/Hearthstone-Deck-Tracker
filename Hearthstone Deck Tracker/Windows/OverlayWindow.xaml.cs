@@ -34,6 +34,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.TrinketPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Arena;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Anomalies;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes;
@@ -97,6 +98,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _tier7PreLobbyBehavior;
 		private OverlayElementBehavior _constructedMulliganGuidePreLobbyBehaviour;
 		private OverlayElementBehavior _battlegroundsInspirationBehavior;
+		private OverlayElementBehavior _arenaOverlayBehavior;
+		private OverlayElementBehavior _arenaPreLobbyBehavior;
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
@@ -118,6 +121,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public ConstructedMulliganGuideViewModel ConstructedMulliganGuideViewModel { get; } = new();
 		public PlayerResourcesViewModel PlayerResourcesViewModel { get; } = new();
 		public PlayerResourcesViewModel OpponentResourcesViewModel { get; } = new();
+
+		public ArenaPickHelperViewModel ArenaPickHelperViewModel { get; } = new();
+		public ArenaPreDraftViewModel ArenaPreDraftViewModel { get; } = new();
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
 		public Tier7PreLobbyViewModel Tier7PreLobbyViewModel { get; } = new Tier7PreLobbyViewModel();
@@ -313,6 +319,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			};
 
+			_arenaOverlayBehavior = new OverlayElementBehavior(ArenaPickHelper)
+			{
+				GetLeft = () => Helper.GetScaledXPos(0, (int)Width, ScreenRatio),
+				GetTop = () => 0,
+				GetScaling = () => Height / 1080,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+				Fade = true,
+				Distance = 40,
+				HideCallback = () =>
+				{
+					ArenaPickHelperViewModel.Reset();
+				}
+			};
+
 			_bgsChinaModuleBehavior = new OverlayElementBehavior(ChinaModulePanel)
 			{
 				GetLeft = () => 0,
@@ -321,6 +343,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 				AnchorSide = Side.Top,
 				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
+			};
+			
+			_arenaPreLobbyBehavior = new OverlayElementBehavior(ArenaPreLobby)
+			{
+				GetLeft = () => Helper.GetScaledXPos(0.034, (int)Width, ScreenRatio),
+				GetTop = () => Height * 0.046,
+				GetScaling = () => Height / 1080,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+				Fade = true,
+				Distance = 50,
+				HideCallback = () =>
+				{
+					ArenaPreDraftViewModel.Reset();
+				},
 			};
 
 			ShowInTaskbar = Config.Instance.ShowInTaskbar;
@@ -359,12 +397,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				CanvasPlayerCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 			};
 
+			Watchers.ArenaStateWatcher.OnTrayBigCardChanged += SetArenaCardOpacityMask;
+			Watchers.ArenaStateWatcher.OnTooltipChanged += SetArenaTooltipOpacityMask;
+
 			_winEventCallback = OnHearthstoneWindowLocationChange;
 
 			OpacityMaskOverlay.Changed += OpacityMaskOverlay_OnChanged;
 		}
 
-		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
+		internal double ScreenRatio => (4.0 / 3.0) / (Width / Height);
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public double PlayerStackHeight => (Config.Instance.PlayerDeckHeight / 100 * Height) / (Config.Instance.OverlayPlayerScaling / 100);
@@ -543,6 +584,48 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			else
 				OpacityMaskOverlay.RemoveMaskedRegion("FriendsList");
+		}
+
+		public async void SetArenaCardOpacityMask(ArenaState.BigCard? bigCard)
+		{
+			var calledAgain = Debounce.WasCalledAgain(30);
+			if(bigCard == null && await calledAgain)
+				return;
+			using var _ = OpacityMaskOverlay.StartBatchUpdate();
+			OpacityMaskOverlay.RemoveMaskedRegion("ArenaTrayBigCard");
+			if(bigCard == null)
+				return;
+
+			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
+
+			// PositionY is a unity-space coordinate. Remap it into the screen
+			// space range we expect the top of the card to be.
+			var y = MathUtil.Remap(bigCard.PositionY, 0.27, -0.27, 0, 0.54);
+			var rect = regionDrawer.DrawCardRegion(0.55, y, 450.0 / 1080.0);
+			OpacityMaskOverlay.AddMaskedRegion("ArenaTrayBigCard", rect);
+		}
+
+		private async void SetArenaTooltipOpacityMask((List<float>, int)? tooltip)
+		{
+			OpacityMaskOverlay.RemoveMaskedRegion("ArenaChoiceTooltip");
+
+			var calledAgain = Debounce.WasCalledAgain(240);
+			if(tooltip != null && await calledAgain)
+				return;
+
+			if(tooltip == null)
+				return;
+
+			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
+
+			var x = tooltip.Value.Item2 switch
+			{
+				0 => 0.2975,
+				1 => 0.49,
+				_ => 0.324,
+			};
+			var rect = regionDrawer.DrawCardTooltipRegion(x, 0.195, tooltip.Value.Item1.Sum() * 1.01);
+			OpacityMaskOverlay.AddMaskedRegion("ArenaChoiceTooltip", rect);
 		}
 
 		public void SetCardOpacityMask(BigCardState state)
@@ -828,6 +911,29 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void HideMulliganGuideStats()
 		{
 			ConstructedMulliganGuideViewModel.Reset();
+		}
+
+		internal void UpdateArenaPickHelperVisibility()
+		{
+			var show = (
+				_game.IsRunning &&
+				SceneHandler.Scene == Mode.DRAFT &&
+				Config.Instance.EnableArenasmithOverlay
+			);
+
+			if(show)
+			{
+				_arenaOverlayBehavior.Show();
+			}
+			else
+			{
+				_arenaOverlayBehavior.Hide();
+			}
+		}
+
+		internal void HideArenaPickHelper()
+		{
+			_arenaOverlayBehavior.Hide();
 		}
 
 		internal void ShowLinkOpponentDeckDisplay()
@@ -1177,10 +1283,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ConstructedMulliganGuidePreLobbyViewModel.IsModalOpen = isModalOpen;
 		}
 
-		internal void SetBaconState(SelectedBattlegroundsGameMode mode, bool isAnyOpen)
+		internal void SetBaconState(SelectedBattlegroundsGameMode mode)
 		{
 			Tier7PreLobbyViewModel.BattlegroundsGameMode = mode;
-			Tier7PreLobbyViewModel.IsModalOpen = !_game.QueueEvents.IsInQueue && isAnyOpen;
 			BattlegroundsSessionViewModelVM.BattlegroundsGameMode = mode;
 			UpdateTier7PreLobbyVisibility();
 		}

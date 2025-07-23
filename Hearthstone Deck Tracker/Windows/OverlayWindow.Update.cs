@@ -61,6 +61,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				Tier7PreLobbyViewModel.OnFocus();
 			}
+			if(_game.CurrentMode == Mode.DRAFT)
+			{
+				ArenaPreDraftViewModel.OnFocus();
+			}
 		}
 
 		public void Update(bool refresh)
@@ -624,6 +628,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_bgsChinaModuleBehavior.UpdatePosition();
 			_bgsChinaModuleBehavior.UpdateScaling();
 
+			_arenaOverlayBehavior.UpdatePosition();
+			_arenaOverlayBehavior.UpdateScaling();
+
+			_arenaPreLobbyBehavior.UpdatePosition();
+			_arenaPreLobbyBehavior.UpdateScaling();
+
 			BattlegroundsHeroPickingViewModel.Scaling = scaling;
 			BattlegroundsHeroPicking.Width = Width / scaling;
 			BattlegroundsHeroPicking.Height = Height / scaling;
@@ -654,6 +664,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateBattlegroundsSessionVisibility();
 			UpdateTier7PreLobbyVisibility();
 			UpdateMulliganGuidePreLobbyVisibility();
+			UpdateArenaPickHelperVisibility();
+			UpdateArenaPreLobbyVisibility();
 		}
 
 		public void UpdateBattlegroundsSessionVisibility()
@@ -741,6 +753,28 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else
 			{
 				_constructedMulliganGuidePreLobbyBehaviour.Hide();
+			}
+		}
+
+		public void UpdateArenaPreLobbyVisibility()
+		{
+			var show = (
+				_game.IsRunning &&
+				_game.IsInMenu &&
+				!_game.QueueEvents.IsInQueue &&
+				SceneHandler.Scene == Mode.DRAFT &&
+				Config.Instance.EnableArenasmithOverlay &&
+				Config.Instance.ShowArenasmithPreLobby
+			);
+
+			if(show)
+			{
+				_arenaPreLobbyBehavior.Show();
+				ArenaPreDraftViewModel.Update().Forget();
+			}
+			else
+			{
+				_arenaPreLobbyBehavior.Hide();
 			}
 		}
 

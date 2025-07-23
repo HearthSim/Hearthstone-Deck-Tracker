@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Arena.CardImageGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Arena"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid DataContext="{Binding ViewModel, RelativeSource={RelativeSource AncestorType=arena:CardImageGrid}}">
+        <ItemsControl ItemsSource="{Binding Cards}"
+                      MaxWidth="{Binding MaxCardGridWidth, RelativeSource={RelativeSource AncestorType=arena:CardImageGrid}}"
+                      MaxHeight="{Binding MaxCardGridHeight, RelativeSource={RelativeSource AncestorType=arena:CardImageGrid}}"
+                      HorizontalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" LayoutTransform="{Binding ViewModel.CardScale, RelativeSource={RelativeSource AncestorType=arena:CardImageGrid}}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding Asset}"
+                           Margin="{Binding CardMargin, RelativeSource={RelativeSource AncestorType=arena:CardImageGrid}}"
+                           Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=arena:CardImageGrid}}"
+                           Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=arena:CardImageGrid}}">
+                        <Image.Effect>
+                            <DropShadowEffect BlurRadius="15" ShadowDepth="10" Direction="-115" Opacity="0.6" />
+                        </Image.Effect>
+                    </Image>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

@@ -11,6 +11,7 @@ public class ShowSettingsCommand : ICommand
 		Account,
 		Battlegrounds,
 		Notifications,
+		Arena,
 	}
 
 	private Focus? ParseParameter(object? parameter)
@@ -43,6 +44,9 @@ public class ShowSettingsCommand : ICommand
 				break;
 			case Focus.Notifications:
 				Core.MainWindow.Options.TreeViewItemTrackerNotifications.IsSelected = true;
+				break;
+			case Focus.Arena:
+				Core.MainWindow.Options.TreeViewItemOverlayArena.IsSelected = true;
 				break;
 		}
 		Core.MainWindow.FlyoutOptions.IsOpen = true;

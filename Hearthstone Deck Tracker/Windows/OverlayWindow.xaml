@@ -24,6 +24,7 @@
         xmlns:guides="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
         xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
         xmlns:anomalies="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Anomalies"
+        xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Arena"
         xmlns:chinaModule="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.ChinaModule"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -370,8 +371,10 @@
                     DataContext="{Binding ConstructedMulliganGuidePreLobbyViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                 />
 
-                <tier7:Tier7PreLobby x:Name="Tier7PreLobby" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                <tier7:Tier7PreLobby x:Name="Tier7PreLobby" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed"
                                      DataContext="{Binding Tier7PreLobbyViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+                <arena:ArenaPreDraft x:Name="ArenaPreLobby" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed"
+                                     DataContext="{Binding ArenaPreDraftViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
 
                 <overlay:CountersOverlay Visibility="Visible" x:Name="OpponentCounters" IsPlayer="false" />
                 <overlay:CountersOverlay Visibility="Visible" x:Name="PlayerCounters" IsPlayer="true" />
@@ -383,6 +386,14 @@
                 <playerResources:PlayerResourcesWidget x:Name="PlayerResourcesWidget"
                     DataContext="{Binding PlayerResourcesViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                 </playerResources:PlayerResourcesWidget>
+
+
+                <arena:ArenaPickHelper
+                    x:Name="ArenaPickHelper"
+                    Canvas.Top="0" Canvas.Left="0"
+                    Visibility="Collapsed"
+                    DataContext="{Binding ArenaPickHelperViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
 
                 <!-- Allows Minion Browser overlay to be dismissible via background click -->
                 <Grid Background="Black" Opacity="0.01" Canvas.Top="0" Canvas.Left="0"

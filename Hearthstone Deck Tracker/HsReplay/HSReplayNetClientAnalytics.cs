@@ -183,6 +183,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			TrackAction(new ClickAction(Franchise.HSConstructed, action, subFranchiseArray));
 		}
 
+		public static void OnArenaRunStarts(ArenaDraftInfo draftInfo, bool arenaOverlayVisible, bool trialsActivated, int trialsRemaining)
+		{
+			TrackAction(new ArenaDraftStartAction(draftInfo, arenaOverlayVisible, trialsActivated, trialsRemaining));
+		}
+
 		public static void TryTrackToastClick(Franchise franchise, ToastAction.Toast toastNameEnum)
 		{
 			TrackAction(new ToastAction(franchise, toastNameEnum));
@@ -191,6 +196,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static void OnSquirrelRemoteChanged(SquirrelRemote oldValue, SquirrelRemote newValue)
 		{
 			TrackAction(new SquirrelRemoteAction(oldValue, newValue));
+		}
+
+		public static void OnClickSubscribeNowLink(Franchise franchise, ClickSubscribeNowAction.Button button, int? trialsRemaining)
+		{
+			OnClickSubscribeNowLink(franchise, null, button, trialsRemaining);
+		}
+
+		public static void OnClickSubscribeNowLink(Franchise franchise, SubFranchise[]? subFranchise, ClickSubscribeNowAction.Button button, int? trialsRemaining)
+		{
+			TrackAction(new ClickSubscribeNowAction(franchise, subFranchise, button, trialsRemaining));
 		}
 
 		public static async Task<bool> EnsureOnboarded()

@@ -56,6 +56,13 @@ public class SceneHandler
 			Watchers.DiscoverStateWatcher.Stop();
 			Watchers.MulliganTooltipWatcher.Stop();
 		}
+		else if(from == Mode.DRAFT)
+		{
+			Core.Overlay.UpdateArenaPickHelperVisibility();
+			Core.Overlay.UpdateArenaPreLobbyVisibility();
+			Watchers.ArenaWatcher.Stop();
+			Watchers.ArenaStateWatcher.Stop();
+		}
 	}
 
 	private static void OnSceneTransitionComplete(Mode from, Mode to)
@@ -85,6 +92,14 @@ public class SceneHandler
 			Watchers.DiscoverStateWatcher.Run();
 			Watchers.BaconWatcher.Run();
 			Watchers.MulliganTooltipWatcher.Run();
+		}
+		else if(to == Mode.DRAFT)
+		{
+			Core.Overlay.UpdateArenaPickHelperVisibility();
+			Core.Overlay.UpdateArenaPreLobbyVisibility();
+			Watchers.ArenaWatcher.Run();
+			Watchers.ArenaStateWatcher.Run();
+			Remote.Config.Load();
 		}
 
 		if(from == Mode.BACON)

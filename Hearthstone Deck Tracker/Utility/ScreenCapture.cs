@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
-		public static Bitmap CaptureWindow(IntPtr wndHandle, Point point, int width, int height)
+		public static Bitmap CaptureWindow(IntPtr wndHandle, Point point, int? width = null, int? height = null)
 		{
 			User32.GetWindowRect(wndHandle, out var windowRect);
 			var windowWidth = windowRect.right - windowRect.left;
@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				try
 				{
-					User32.PrintWindow(wndHandle, hdc, 0);
+					User32.PrintWindow(wndHandle, hdc, 2);
 				}
 				finally
 				{
@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return
 				bmp.Clone(
 						  new Rectangle((windowWidth - cWidth) / 2 + point.X, (windowHeight - cHeight - captionHeight) / 2 + captionHeight + point.Y,
-										width, height), PixelFormat.Format32bppArgb);
+										width ?? cWidth, height ?? cHeight), PixelFormat.Format32bppArgb);
 		}
 
 		public static Bitmap CaptureScreen(IntPtr wndHandle, Point point, int width, int height)

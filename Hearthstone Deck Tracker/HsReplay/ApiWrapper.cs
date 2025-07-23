@@ -368,5 +368,82 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		        return null;
 		    }
 		}
+
+		// TODO get rid of generic type param and defer to the HSReplay lib once the response payload is stable
+		public async static Task<T?> GetArenaHeroPickStats<T>(ArenaHeroPickParams parameters)
+			where T : class
+		{
+			try
+			{
+				if(HSReplayNetOAuth.AccountData != null)
+					return await HSReplayNetOAuth.MakeRequest<T>(c => c.GetArenaHeroPickStats<T>(parameters));
+				return await Client.GetArenaHeroPickStats<T>(parameters);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		// TODO get rid of generic type param and defer to the HSReplay lib once the response payload is stable
+		public async static Task<T?> GetArenaCardPickStats<T>(ArenaCardPickParams parameters)
+			where T : class
+		{
+			try
+			{
+				if(HSReplayNetOAuth.AccountData != null)
+					return await HSReplayNetOAuth.MakeRequest<T>(c => c.GetArenaCardPickStats<T>(parameters));
+				return await Client.GetArenaCardPickStats<T>(parameters);
+			}
+			catch (Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		// TODO get rid of generic type param and defer to the HSReplay lib once the response payload is stable
+		public async static Task<T?> ScoreArenaDeck<T>(ArenaScoreDeckParams parameters)
+			where T : class
+		{
+			try
+			{
+				if(HSReplayNetOAuth.AccountData != null)
+					return await HSReplayNetOAuth.MakeRequest<T>(c => c.ScoreArenaDeck<T>(parameters));
+				return await Client.ScoreArenaDeck<T>(parameters);
+			}
+			catch (Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<ArenaTrialStatus?> GetArenaTrialStatus(ulong accountHi, ulong accountLo)
+		{
+			try
+			{
+				return await Client.GetArenaTrialStatus(accountHi, accountLo);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<ArenasmithStatus?> GetArenasmithStatus()
+		{
+			try
+			{
+				return await Client.GetArenasmithStatus();
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
 	}
 }

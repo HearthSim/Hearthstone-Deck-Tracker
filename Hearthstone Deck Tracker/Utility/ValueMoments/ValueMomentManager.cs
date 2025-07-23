@@ -55,6 +55,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 						}
 					}
 					break;
+				case ArenaDraftStartAction startArenaAction:
+					if(startArenaAction.OverlayVisible)
+						yield return new ValueMoment(VMName.ArenasmithOverlay, ValueMoment.VMKind.Paid);
+					break;
 			};
 		}
 
