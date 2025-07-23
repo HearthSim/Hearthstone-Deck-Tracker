@@ -624,9 +624,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 
 			var isStartOfTheGameEffect = gameState.CurrentBlock?.TriggerKeyword == "START_OF_GAME_KEYWORD";
-			entity.Info.Hidden = isStartOfTheGameEffect;
+			entity.Info.Hidden = isStartOfTheGameEffect && entity.IsControlledBy(game.Opponent.Id);
 
-			if(isStartOfTheGameEffect)
+			if(isStartOfTheGameEffect && entity.IsControlledBy(game.Opponent.Id))
 			{
 				entity.Info.GuessedCardState = GuessedCardState.Revealed;
 				Core.UpdateOpponentCards();

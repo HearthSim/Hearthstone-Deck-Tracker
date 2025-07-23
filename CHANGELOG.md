@@ -1,6 +1,7 @@
 ## Unreleased
 **Hearthstone**:
 - Updated the Arena rewards tracking for the new reward structure.
+- Fixed an issue where 'Ysera, Emerald Aspect' was still appearing in the decklist after being drawn.
 
 **Overlay**:
 - Fixed the Battlegrounds overlay appearing momentarily when starting HDT while Hearthstone is running.
