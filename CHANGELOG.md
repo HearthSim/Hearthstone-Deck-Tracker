@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed an issue where Zilliax would always display as 0 mana on deck image exporter.
+
 ## **Release v1.46.1 - 2025-07-23**
 **Arenasmith**
 - Fixes an issue where an error message appeared on play screen.

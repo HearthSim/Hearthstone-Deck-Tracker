@@ -25,7 +25,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			InitializeComponent();
 			_allTags = deck.TagList.ToLowerInvariant().Replace("-", "");
-			ListViewPlayer.Update(deck.Cards.ToSortedCardList(), true);
+			var cards = Helper.ResolveZilliax3000(deck.Cards, deck.Sideboards);
+			ListViewPlayer.Update(cards.ToSortedCardList(), true);
 			_deck = deck;
 			_deckOnly = deckOnly;
 		}
