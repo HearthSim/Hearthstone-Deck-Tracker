@@ -1,4 +1,5 @@
-﻿using HearthDb.Enums;
+﻿using System.Linq;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
@@ -24,6 +25,12 @@ public class PlayedSpellsCounter : NumericCounter
 		HearthDb.CardIds.Collectible.Neutral.PrisonBreaker,
 	};
 
+	private readonly string[] _ignoredCards =
+	{
+		// ReachEquilibrium quest intantly casts those 2 other quests, but only count as 1 spell
+		HearthDb.CardIds.NonCollectible.Priest.ReachEquilibrium_CorruptTheLightToken,
+		HearthDb.CardIds.NonCollectible.Priest.ReachEquilibrium_CleanseTheShadowToken,
+	};
 	public PlayedSpellsCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
@@ -60,6 +67,9 @@ public class PlayedSpellsCounter : NumericCounter
 			return;
 
 		if(!entity.IsSpell)
+			return;
+
+		if(_ignoredCards.Contains(entity.CardId))
 			return;
 
 		var controller = entity.GetTag(GameTag.CONTROLLER);
