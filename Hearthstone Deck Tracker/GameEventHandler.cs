@@ -762,6 +762,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					_game.CurrentGameStats.ArenaWins = DeckImporter.ArenaInfoCache?.Wins ?? 0;
 					_game.CurrentGameStats.ArenaLosses = DeckImporter.ArenaInfoCache?.Losses ?? 0;
+					_game.CurrentGameStats.ArenaRating = _game.ArenaRating;
 				}
 				else if(_game.CurrentGameMode == Brawl)
 				{

@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private int _starLevel;
 		private int _battlegroundsRating;
 		private int _mercenariesRating;
+		private int _arenaRating;
 		private int _stars;
 		private int _legendRank;
 		private Region _region;
@@ -285,6 +286,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int ArenaWins { get; set; }
 
 		public int ArenaLosses { get; set; }
+
+		public int? ArenaRating { get; set; }
 
 		public int BrawlWins { get; set; }
 
@@ -601,6 +604,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeArenaSeasonId() => ArenaSeasonId > 0;
 		public bool ShouldSerializeArenaWins() => ArenaWins > 0;
 		public bool ShouldSerializeArenaLosses() => ArenaLosses > 0;
+		public bool ShouldSerializeArenaRating() => ArenaRating != null;
 		public bool ShouldSerializeBrawlWins() => BrawlWins > 0;
 		public bool ShouldSerializeBrawlLosses() => BrawlLosses > 0;
 		public bool ShouldSerializePlayerHeroCardId() => PlayerHeroCardId != null;

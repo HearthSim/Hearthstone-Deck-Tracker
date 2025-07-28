@@ -77,7 +77,7 @@ public class SceneHandler
 		}
 		else if(to == Mode.BACON)
 		{
-			Core.Game.CacheBattlegroundRatingInfo();
+			Core.Game.CacheBattlegroundsRatingInfo();
 			Core.Game.BattlegroundsSessionViewModel.Update();
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 			Core.Overlay.UpdateTier7PreLobbyVisibility();
@@ -95,6 +95,7 @@ public class SceneHandler
 		}
 		else if(to == Mode.DRAFT)
 		{
+			Core.Game.CacheArenaRating();
 			Core.Overlay.UpdateArenaPickHelperVisibility();
 			Core.Overlay.UpdateArenaPreLobbyVisibility();
 			Watchers.ArenaWatcher.Run();

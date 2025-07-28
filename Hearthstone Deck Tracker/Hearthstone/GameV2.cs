@@ -42,6 +42,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BrawlInfo? _brawlInfo;
 		private BattlegroundRatingInfo? _battlegroundsRatingInfo;
 		private MercenariesRatingInfo? _mercenariesRatingInfo;
+		private ArenaRatingInfo? _arenaRatingInfo;
 		private BattlegroundsBoardState? _battlegroundsBoardState;
 		public BattlegroundsDuosBoardState? BattlegroundsDuosBoardState { get; set; }
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
@@ -380,9 +381,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal void CacheBrawlInfo() => _brawlInfo = HearthMirror.Reflection.Client.GetBrawlInfo();
 
-		internal void CacheBattlegroundRatingInfo() => _battlegroundsRatingInfo = HearthMirror.Reflection.Client.GetBattlegroundRatingInfo();
+		internal void CacheBattlegroundsRatingInfo() => _battlegroundsRatingInfo = HearthMirror.Reflection.Client.GetBattlegroundRatingInfo();
 
 		internal void CacheMercenariesRatingInfo() => _mercenariesRatingInfo = HearthMirror.Reflection.Client.GetMercenariesRatingInfo();
+
+		internal void CacheArenaRating() => _arenaRatingInfo = HearthMirror.Reflection.Client.GetArenaRatingInfo();
+
+		private ArenaRatingInfo? ArenaRatingInfo
+		{
+			get => _arenaRatingInfo ??= HearthMirror.Reflection.Client.GetArenaRatingInfo();
+		}
+
+		public int? ArenaRating => _currentGameType switch
+		{
+			GameType.GT_UNDERGROUND_ARENA => ArenaRatingInfo?.UndergroundRating,
+			GameType.GT_ARENA => ArenaRatingInfo?.Rating,
+			_ => null
+		};
 
 		internal void InvalidateMatchInfoCache() => _matchInfoCacheInvalid = true;
 
