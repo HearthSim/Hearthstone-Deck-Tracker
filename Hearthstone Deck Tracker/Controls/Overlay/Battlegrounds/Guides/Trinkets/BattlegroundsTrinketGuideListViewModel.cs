@@ -22,6 +22,7 @@ public class BattlegroundsTrinketGuideListViewModel : ViewModel
 	private async Task<TrinketGuidesApiResponse?> MakeRequest()
 	{
 		using HttpRequestMessage req = new(HttpMethod.Get, Url + $"?game_language={Helper.GetCardLanguage()}");
+		req.Headers.UserAgent.ParseAdd(Helper.GetUserAgent());
 		var resp = await Core.HttpClient.SendAsync(req);
 		if(resp is { StatusCode: HttpStatusCode.OK })
 			return JsonConvert.DeserializeObject<TrinketGuidesApiResponse>(await resp.Content.ReadAsStringAsync());

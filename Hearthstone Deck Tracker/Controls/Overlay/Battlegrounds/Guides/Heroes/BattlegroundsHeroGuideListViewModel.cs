@@ -24,6 +24,7 @@ public class BattlegroundsHeroGuideListViewModel : ViewModel
 	private async Task<HeroGuidesApiResponse?> MakeRequest()
 	{
 		using HttpRequestMessage req = new(HttpMethod.Get, Url + $"?game_language={Helper.GetCardLanguage()}");
+		req.Headers.UserAgent.ParseAdd(Helper.GetUserAgent());
 		var resp = await Core.HttpClient.SendAsync(req);
 		if(resp is { StatusCode: HttpStatusCode.OK })
 			return JsonConvert.DeserializeObject<HeroGuidesApiResponse>(await resp.Content.ReadAsStringAsync());
