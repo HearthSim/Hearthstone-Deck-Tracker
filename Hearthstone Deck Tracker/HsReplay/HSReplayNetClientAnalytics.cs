@@ -183,7 +183,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			TrackAction(new ClickAction(Franchise.HSConstructed, action, subFranchiseArray));
 		}
 
-		public static void OnArenaRunStarts(ArenaDraftInfo draftInfo, bool arenaOverlayVisible, bool trialsActivated, int trialsRemaining)
+		public static void OnArenaDraftStart(ArenaDraftInfo draftInfo, bool arenaOverlayVisible, bool trialsActivated, int trialsRemaining)
 		{
 			TrackAction(new ArenaDraftStartAction(draftInfo, arenaOverlayVisible, trialsActivated, trialsRemaining));
 		}

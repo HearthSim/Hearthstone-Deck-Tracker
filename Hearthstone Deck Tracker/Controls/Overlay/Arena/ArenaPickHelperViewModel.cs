@@ -265,14 +265,17 @@ public class ArenaPickHelperViewModel : ViewModel
 				if(starter + recurring == 0)
 				{
 					Log.Info("No trials left for hero pick, aborting");
-					HSReplayNetClientAnalytics.OnArenaRunStarts(draftInfo, arenaOverlayVisible: false, trialsActivated, trialsRemaining);
+					HSReplayNetClientAnalytics.OnArenaDraftStart(draftInfo, arenaOverlayVisible: false, trialsActivated, trialsRemaining);
 					return;
 				}
 				trialsActivated = true;
 			}
 
 			if(!Config.Instance.EnableArenasmithOverlay)
+			{
+				HSReplayNetClientAnalytics.OnArenaDraftStart(draftInfo, false, trialsActivated, trialsRemaining);
 				return;
+			}
 
 			if(PickedDeck == null)
 				Reset();
@@ -311,7 +314,7 @@ public class ArenaPickHelperViewModel : ViewModel
 			HeroPickVisibility = Config.Instance.ShowArenaHeroPicking ? Visibility.Visible : Visibility.Collapsed;
 			RelatedCardsVisibility = Config.Instance.ShowArenaRelatedCards ? Visibility.Visible : Visibility.Collapsed;
 
-			HSReplayNetClientAnalytics.OnArenaRunStarts(draftInfo, Config.Instance.EnableArenasmithOverlay, trialsActivated, trialsRemaining);
+			HSReplayNetClientAnalytics.OnArenaDraftStart(draftInfo, true, trialsActivated, trialsRemaining);
 			return;
 		}
 
