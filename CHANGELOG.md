@@ -1,3 +1,6 @@
+## **Release v1.46.3 - 2025-08-05**
+**Updated for Hearthstone 33.2.0**
+
 ## **Release v1.46.2 - 2025-07-25**
 **Hearthstone**:
 - Fixed an issue where Reach Equilibrium (Priest's Quest) would count as 3 spells in the spell counter.
