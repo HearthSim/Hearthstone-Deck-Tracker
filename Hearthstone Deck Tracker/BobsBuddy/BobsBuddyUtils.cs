@@ -22,6 +22,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 	{
 		private const string ReplicatingMenace_Normal = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantmentBATTLEGROUNDS;
 		private const string ReplicatingMenace_Golden = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantmentTavernBrawl;
+		private const string WhirringProtector_Normal = NonCollectible.Neutral.WhirringProtector;
+		private const string WhirringProtector_Golden = NonCollectible.Neutral.WhirringProtector_WhirringProtector1;
 		private const string LivingSpores = NonCollectible.Neutral.LivingSporesToken2;
 		public const string RebornRiteEnchmantment = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
 		public const string SneedsEnchantment = NonCollectible.Neutral.Sneed_Replicate;
@@ -76,17 +78,17 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					case ReplicatingMenace_Golden:
 						minion.AdditionalDeathrattles.Add(ReplicatingMenace.Deathrattle(true));
 						break;
+					case WhirringProtector_Normal:
+						minion.AdditionalRallies.Add(WhirringProtector.Rally(false));
+						break;
+					case WhirringProtector_Golden:
+						minion.AdditionalRallies.Add(WhirringProtector.Rally(true));
+						break;
 					case LivingSpores:
 						minion.AdditionalDeathrattles.Add(GenericDeathrattles.Plants);
 						break;
 					case SneedsEnchantment:
 						minion.AdditionalDeathrattles.Add(GenericDeathrattles.SneedHeroPower);
-						break;
-					case NonCollectible.Neutral.SurfnSurf_CrabRidingEnchantment:
-						minion.AdditionalDeathrattles.Add(GenericDeathrattles.SurfNSurfSpellDeathrattle);
-						break;
-					case NonCollectible.Neutral.SurfnSurf_CrabRiding:
-						minion.AdditionalDeathrattles.Add(GenericDeathrattles.SurfNSurfSpellDeathrattleGolden);
 						break;
 					case NonCollectible.Neutral.Brukan_ElementEarth:
 						minion.AdditionalDeathrattles.Add(GenericDeathrattles.EarthInvocationDeathrattle);
@@ -105,12 +107,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						break;
 					case NonCollectible.Neutral.Wingmen_WingmenEnchantmentTavernBrawl:
 						minion.HasWingmen = true;
-						break;
-					case NonCollectible.Neutral.RecurringNightmare_NightmareInsideEnchantment:
-						minion.AdditionalDeathrattles.Add(RecurringNightmare.SummonDeathrattle(false));
-						break;
-					case NonCollectible.Neutral.RecurringNightmare_NightmareInside:
-						minion.AdditionalDeathrattles.Add(RecurringNightmare.SummonDeathrattle(true));
 						break;
 					case NonCollectible.Neutral.SkyPirateFlagbearer_FlagbearingEnchantment:
 						minion.AdditionalDeathrattles.Add(Scallywag.Deathrattle(false));

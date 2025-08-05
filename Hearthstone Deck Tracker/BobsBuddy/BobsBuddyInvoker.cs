@@ -560,14 +560,17 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);
 
+			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, friendly={friendly}");
+
 			inputPlayer.PiratesSummonCounter = playerEntity.GetTag((GameTag)2358);
 
 			inputPlayer.BeastsSummonCounter = playerEntity.GetTag((GameTag)3962);
 
+			inputPlayer.FriendlyMinionsDeadLastCombatCounter = playerEntity.GetTag((GameTag)2717);
+
 			inputPlayer.BattlecryCounter = playerEntity.GetTag((GameTag)3236);
 
-
-			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, friendly={friendly}");
+			Log.Info($"pPirates={inputPlayer.PiratesSummonCounter}, pBeasts={inputPlayer.BeastsSummonCounter}, pDeadLastCombat={inputPlayer.FriendlyMinionsDeadLastCombatCounter}, pBattlecry={inputPlayer.BattlecryCounter}, friendly={friendly}");
 
 			inputPlayer.BloodGemAtkBuff = playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFATKVALUE);
 			inputPlayer.BloodGemHealthBuff =playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);
