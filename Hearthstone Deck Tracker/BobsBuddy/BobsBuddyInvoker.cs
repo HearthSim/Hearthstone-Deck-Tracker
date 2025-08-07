@@ -482,7 +482,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				inputPlayer.Quests.Add(new QuestData()
 				{
-					RewardCardId = reward.Info.LatestCardId ?? ""
+					RewardCardId = reward.Info.LatestCardId ?? "",
+					RewardScriptDataNum1 = reward.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1),
+					RewardScriptDataNum2 = reward.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2)
 				});
 			}
 
@@ -773,7 +775,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					DebugLog(minion.ToString());
 
 				foreach(var quest in _input.Player.Quests)
-					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}, {quest.RewardScriptDataNum1}, {quest.RewardScriptDataNum2}]");
 
 				DebugLog("---");
 				if (_input.Opponent.HeroPowers.Any())
@@ -790,7 +792,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					DebugLog(minion.ToString());
 
 				foreach(var quest in _input.Opponent.Quests)
-					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+					DebugLog($"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}, {quest.RewardScriptDataNum1}, {quest.RewardScriptDataNum2}]");
 
 				if(_input.isDuos)
 				{
@@ -819,7 +821,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 						foreach(var quest in _input.PlayerTeammate.Quests)
 							DebugLog(
-								$"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+								$"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}, {quest.RewardScriptDataNum1}, {quest.RewardScriptDataNum2}]");
 					}
 					else
 					{
@@ -849,7 +851,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 						foreach(var quest in _input.OpponentTeammate.Quests)
 							DebugLog(
-								$"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}]");
+								$"[{quest.QuestCardId} ({quest.QuestProgress}/{quest.QuestProgressTotal}): {quest.RewardCardId}, {quest.RewardScriptDataNum1}, {quest.RewardScriptDataNum2}]");
 					}
 					else
 					{
