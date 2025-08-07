@@ -1,3 +1,9 @@
+## **Release v1.46.5 - 2025-08-07**
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Glim Guardian.
+- Added support for Orc-estra Conductor
+- Added support for Tumbling Disaster
+
 ## **Release v1.46.4 - 2025-08-07**
 **Battlegrounds**:
 - Added Battlegrounds card browser filtering by Rally and Avenge Mechanics!
