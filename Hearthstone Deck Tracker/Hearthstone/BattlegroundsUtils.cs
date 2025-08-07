@@ -106,6 +106,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				GameTag.BATTLECRY,
 				GameTag.DEATHRATTLE,
+				GameTag.AVENGE,
 				GameTag.BACON_RALLY,
 				GameTag.DIVINE_SHIELD,
 				GameTag.TAUNT,

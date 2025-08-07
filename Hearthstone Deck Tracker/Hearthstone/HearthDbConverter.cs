@@ -186,6 +186,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			GameTag.MODULAR => LocUtil.Get("GameTag_Modular"),
 			GameTag.IS_BACON_POOL_SPELL => LocUtil.Get("GameTag_BGSpell"),
 			GameTag.BACON_RALLY => LocUtil.Get("GameTag_BGRally"),
+			GameTag.AVENGE => LocUtil.Get("GameTag_BGAvenge"),
 			_ => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(gameTag.ToString().ToLowerInvariant())
 		};
 
