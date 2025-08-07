@@ -26,6 +26,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("tier7")]
 			public Tier7Data? Tier7 { get; set; }
 
+			[JsonProperty("sale")]
+			public SaleData? Sale { get; set; }
+
 			[JsonProperty("mulligan_guide")]
 			public MulliganGuideData? MulliganGuide { get; set; }
 
@@ -43,6 +46,18 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 
 			[JsonProperty("items")]
 			public List<string> Items { get; set; } = new List<string>();
+		}
+
+		internal class SaleData
+		{
+			[JsonProperty("id")]
+			public int Id { get; set; }
+
+			[JsonProperty("enabled")]
+			public bool Enabled { get; set; }
+
+			[JsonProperty("discount")]
+			public int Discount { get; set; }
 		}
 
 		internal class CollectionBannerData

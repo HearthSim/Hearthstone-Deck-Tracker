@@ -7,6 +7,7 @@ using HearthMirror;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -17,6 +18,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 {
 	public class Tier7PreLobbyViewModel : ViewModel
 	{
+		private RemoteData.SaleData? _data;
+
 		public Tier7PreLobbyViewModel()
 		{
 			HSReplayNetOAuth.AccountDataUpdated += () =>
@@ -33,6 +36,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			{
 				OnPropertyChanged(nameof(UserState));
 				OnPropertyChanged(nameof(PanelMinWidth));
+			};
+
+			Remote.Config.Loaded += data =>
+			{
+				_data = data?.Sale;
+				OnPropertyChanged(nameof(SaleTagVisibility));
+				OnPropertyChanged(nameof(SaleTooltipVisibility));
+				OnPropertyChanged(nameof(SaleDescription));
+
 			};
 		}
 
@@ -139,6 +151,42 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 					return Visibility.Collapsed;
 				}
 				return Visibility.Visible;
+			}
+		}
+
+		public Visibility SaleTagVisibility
+		{
+			get
+			{
+				if(_data == null || !_data.Enabled)
+					return Visibility.Collapsed;
+
+				return Visibility.Visible;
+			}
+		}
+
+		public Visibility SaleTooltipVisibility
+		{
+			get
+			{
+				if(_data == null || !_data.Enabled)
+					return Visibility.Collapsed;
+
+				if(Config.Instance.IgnoreSaleId >= _data.Id)
+					return Visibility.Collapsed;
+
+				return Visibility.Visible;
+			}
+		}
+
+		public string SaleDescription
+		{
+			get
+			{
+				if(_data == null || !_data.Enabled)
+					return string.Empty;
+
+				return string.Format(LocUtil.Get("BattlegroundsPreLobby_SaleTooltip_Description"), _data.Discount);
 			}
 		}
 
@@ -289,6 +337,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			InvalidateUserState();
 			await Task.WhenAll(HSReplayNetOAuth.UpdateAccountData(), Task.Delay(3000));
 			RefreshAccountEnabled = true;
+		});
+
+		public ICommand CloseSaleTooltipCommand => new Command(() =>
+		{
+			Config.Instance.IgnoreSaleId = _data?.Id ?? -1;
+			Config.Save();
+			OnPropertyChanged(nameof(SaleTooltipVisibility));
 		});
 	}
 

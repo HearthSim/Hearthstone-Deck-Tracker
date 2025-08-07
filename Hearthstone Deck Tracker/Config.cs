@@ -516,6 +516,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(null)]
 		public string? LastSeenHearthstoneLang = null;
 
+		[DefaultValue(-1)]
+		public int IgnoreSaleId = -1;
+
 		[Obsolete]
 		[DefaultValue("")]
 		public string LastDeck = "";
