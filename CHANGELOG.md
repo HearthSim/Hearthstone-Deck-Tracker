@@ -1,3 +1,8 @@
+## **Release v1.46.4 - 2025-08-07**
+**Battlegrounds**:
+- Added Battlegrounds card browser filtering by Rally and Avenge Mechanics!
+- Added Tier7 sale information on the pre-lobby screen.
+
 ## **Release v1.46.3 - 2025-08-05**
 **Updated for Hearthstone 33.2.0**
 
