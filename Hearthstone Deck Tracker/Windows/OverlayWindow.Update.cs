@@ -96,6 +96,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 							{
 								_cardMarks[i].UpdateIcon(entity.Info.CardMark);
 							}
+							else if(entity.Info.CopyOfCardId is not null)
+							{
+								_cardMarks[i].UpdateIcon(CardMark.None);
+							}
 						}
 						else
 						{
@@ -129,8 +133,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 							}
 							else
 								_cardMarks[i].UpdateSource(null, null);
-							_cardMarks[i].UpdateCostReduction(entity.Info.CostReduction);
 						}
+						_cardMarks[i].UpdateCostReduction(entity.Info.CostReduction);
 					}
 					else
 					{

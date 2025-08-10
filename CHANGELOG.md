@@ -1,5 +1,6 @@
 ## **Unreleased**
 **Hearthstone**:
+- Added hand tracking for cards copied by Rangari Scout.
 - Added related cards for Rest in Peace.
 
 ## **Release v1.46.6 - 2025-08-11**

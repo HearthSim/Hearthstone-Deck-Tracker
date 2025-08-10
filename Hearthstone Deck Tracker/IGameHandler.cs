@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerHeroPower(string cardId, int turn);
 		void HandlePlayerEntityChoices(IHsChoice choice);
 		void HandlePlayerEntitiesChosen(IHsCompletedChoice choice);
-		void HandleOpponentEntitiesChosen(IHsCompletedChoice choice);
+		void HandleOpponentEntitiesChosen(IHsCompletedChoice choice, IHsGameState gameState);
 		void SetPlayerHero(string? cardId);
 		void HandlePlayerGetToDeck(Entity entity, string cardId, int turn);
 		void TurnStart(ActivePlayer player, int turnNumber);

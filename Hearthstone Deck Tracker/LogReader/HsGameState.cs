@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int JoustReveals { get; set; }
 		public Dictionary<int, IList<(string, DeckLocation, string?, EntityInfo?)>> KnownCardIds { get; set; } = new();
 		public int LastCardPlayed { get; set; }
+		public int LastEntityChosenOnDiscover { get; set; }
 		public Stack<string> LastPlagueDrawn { get; set; } = new();
 		public bool WasInProgress { get; set; }
 		public int GameTriggerCount { get; set; }
@@ -67,6 +68,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			TriangulatePlayed = false;
 			StarshipLauchBlockIds.Clear();
 			MinionsInPlay.Clear();
+			LastCardPlayed = 0;
+			LastEntityChosenOnDiscover = 0;
+
 		}
 
 		public void SetCurrentEntity(int id)

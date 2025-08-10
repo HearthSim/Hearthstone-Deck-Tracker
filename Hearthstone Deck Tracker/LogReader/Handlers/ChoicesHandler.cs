@@ -130,7 +130,7 @@ internal class ChoicesHandler
 			if(choice.PlayerId == game.Player.Id)
 				gameState.GameHandler?.HandlePlayerEntitiesChosen(choice);
 			if(choice.PlayerId == game.Opponent.Id)
-				gameState.GameHandler?.HandleOpponentEntitiesChosen(choice);
+				gameState.GameHandler?.HandleOpponentEntitiesChosen(choice, gameState);
 		}
 		_tmpChoice = null;
 	}

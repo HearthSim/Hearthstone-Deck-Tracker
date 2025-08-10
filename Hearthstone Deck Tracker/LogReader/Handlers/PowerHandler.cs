@@ -819,6 +819,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Paladin.IdoOfTheThreshfleet:
 								AddKnownCardId(gameState, NonCollectible.Paladin.IdooftheThreshfleet_CallTheThreshfleetToken);
 								break;
+							case Collectible.Hunter.RangariScout:
+								// discover options often are copies of other entities
+								// when they are discovered, they are still not created on game.Entities
+								// here we check if they are a copy of other entity, if they are we use the original entity id
+								var chosenId = gameState.LastEntityChosenOnDiscover;
+								var chosenEntity = game.Entities.TryGetValue(chosenId, out var e) ? e : null;
+								var isCopiedEntity = chosenEntity?.GetTag(GameTag.COPIED_FROM_ENTITY_ID) > 0;
+								gameState.LastEntityChosenOnDiscover = isCopiedEntity ? chosenEntity?.GetTag(GameTag.COPIED_FROM_ENTITY_ID) ?? chosenId : chosenId;
+
+								AddKnownCardId(gameState, "", copyOfCardId: gameState.LastEntityChosenOnDiscover.ToString());
+								break;
 						}
 
 						if(triggerKeyword == "SECRET")
@@ -1405,6 +1416,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					matchingEntity.CardId = entity.CardId;
 					matchingEntity.Info.Hidden = false;
+					matchingEntity.Info.CopyOfCardId = entity.Id.ToString();
 					matchingEntity.Info.GuessedCardState = GuessedCardState.Guessed;
 				}
 			}
