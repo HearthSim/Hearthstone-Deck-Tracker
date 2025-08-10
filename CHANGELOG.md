@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Added related cards for Rest in Peace.
+
 ## **Release v1.46.6 - 2025-08-11**
 **Updated for Hearthstone 33.2.1**
 
@@ -6,7 +10,7 @@
 - Enhanced Tavern Spell Buffs counter.
 - Fixed an issue where Careful Investment was not counting towards the Gold Next Turn counter.
 - Resolved some performance issues.
-
+-
 ## **Release v1.46.5 - 2025-08-07**
 **Bob's Buddy**:
 - Fixed incorrect simulation results due to Glim Guardian.
