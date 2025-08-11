@@ -1072,11 +1072,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					AlertWithLastInputOutput(lethalResult.ToString());
 			}
 
-			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
-				Influx.OnBobsBuddySimulationCompleted(
-					result, Output, _turn, _input?.Anomaly, terminalCase,
-					isDuos:_game.IsBattlegroundsDuosMatch, isOpposingAkazamzarak: IsOpposingAkazamzarak()
-				);
+			Influx.OnBobsBuddySimulationCompleted(
+				result, Output, _turn, _input?.Anomaly, terminalCase,
+				isDuos:_game.IsBattlegroundsDuosMatch, isOpposingAkazamzarak: IsOpposingAkazamzarak()
+			);
 
 			if(terminalCase)
 				Core.Game.Metrics.IncrementBobsBuddyTerminalCase();
