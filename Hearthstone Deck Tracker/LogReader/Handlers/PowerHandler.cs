@@ -159,6 +159,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							}
 							gameState.KnownCardIds[blockId.Value].Remove(known);
 						}
+						else if(gameState.CurrentBlock is {
+							        CardId: NonCollectible.Neutral.MarintheManager_TolinsGobletToken or
+							        NonCollectible.Neutral.TolinsGobletHeroic
+						        })
+						{
+							cardId = "";
+							var lastCardDrawnId = game.Opponent.Hand.OrderByDescending(e => e.ZonePosition).FirstOrDefault()?.Id;
+							var lastCardDrawnEntity = game.Entities.TryGetValue(lastCardDrawnId ?? -1, out var e) ? e : null;
+							copyOfCardId = lastCardDrawnEntity?.Info.CopyOfCardId ?? lastCardDrawnId.ToString();
+						}
 					}
 					var entity = new Entity(id) { CardId = cardId};
 					if(entityInfo != null)
@@ -1262,6 +1272,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									AddKnownCardId(gameState, card);
 								}
 								break;
+							case Collectible.Neutral.MarinTheManager:
+								if(actionStartingEntity?.IsControlledBy(game.Opponent.Id) == true)
+								{
+									foreach(var id in new List<string> {
+								        NonCollectible.Neutral.MarintheManager_TolinsGobletToken,
+								        NonCollectible.Neutral.MarintheManager_GoldenKoboldToken,
+								        NonCollectible.Neutral.MarintheManager_WondrousWandToken,
+								        NonCollectible.Neutral.MarintheManager_ZarogsCrownToken,
+									})
+									{
+										if(id != null)
+										{
+											game.Opponent.PredictUniqueCardInDeck(id, true);
+										}
+									}
+								}
+								break;
 							case Collectible.Demonhunter.XortothBreakerOfStars:
 								AddKnownCardId(gameState, NonCollectible.Demonhunter.XortothBreakerofStars_StarOfOriginationToken);
 								AddKnownCardId(gameState, NonCollectible.Demonhunter.XortothBreakerofStars_StarOfConclusionToken);
@@ -1414,6 +1441,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 				foreach (var matchingEntity in matchingEntities)
 				{
+					if(matchingEntity.Id == entity.Id) continue;
 					matchingEntity.CardId = entity.CardId;
 					matchingEntity.Info.Hidden = false;
 					matchingEntity.Info.CopyOfCardId = entity.Id.ToString();
