@@ -27,6 +27,8 @@ public class TavernSpellsBuffCounter : StatsCounter
 			HearthDb.CardIds.NonCollectible.Neutral.ShoalfinMystic,
 			HearthDb.CardIds.NonCollectible.Neutral.Humongozz,
 			HearthDb.CardIds.NonCollectible.Neutral.FelfireConjurer,
+			HearthDb.CardIds.NonCollectible.Neutral.BlueWhelp,
+			HearthDb.CardIds.NonCollectible.Neutral.FriendlyGeist
 		};
 	}
 
