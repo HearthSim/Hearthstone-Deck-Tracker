@@ -1,3 +1,12 @@
+## **Release v1.46.6 - 2025-08-11**
+**Updated for Hearthstone 33.2.1**
+
+**Battlegrounds**:
+- Updated quest picking UI and tier system.
+- Enhanced Tavern Spell Buffs counter.
+- Fixed an issue where Careful Investment was not counting towards the Gold Next Turn counter.
+- Resolved some performance issues.
+
 ## **Release v1.46.5 - 2025-08-07**
 **Bob's Buddy**:
 - Fixed incorrect simulation results due to Glim Guardian.
