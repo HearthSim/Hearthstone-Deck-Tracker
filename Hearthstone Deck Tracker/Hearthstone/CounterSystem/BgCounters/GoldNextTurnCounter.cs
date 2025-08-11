@@ -114,7 +114,7 @@ public class GoldNextTurnCounter : StatsCounter
         if(tag != GameTag.ZONE || entity.CardId == null)
 	        return;
 
-        var goldValue = GetGoldForMinion(entity.CardId, entity.HasTag(GameTag.PREMIUM));
+        var goldValue = GetGoldFromCard(entity.CardId, entity.HasTag(GameTag.PREMIUM));
 
         if(goldValue <= 0)
 	        return;
@@ -124,19 +124,30 @@ public class GoldNextTurnCounter : StatsCounter
 	        _goldSureAmount += goldValue;
 	        OnCounterChanged();
         }
-        else if (value != (int)Zone.PLAY && prevValue == (int)Zone.PLAY)
+
+        if(entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.CarefulInvestment)
+        {
+	        if(value == (int)Zone.REMOVEDFROMGAME &&
+	           prevValue == (int)Zone.GRAVEYARD)
+	        {
+		        _goldSureAmount -= goldValue;
+		        OnCounterChanged();
+	        }
+        }
+        else if (value != (int)Zone.PLAY && value != (int)Zone.HAND && value != (int)Zone.GRAVEYARD && prevValue == (int)Zone.PLAY)
         {
 	        _goldSureAmount -= goldValue;
 	        OnCounterChanged();
         }
     }
 
-    private static int GetGoldForMinion(string cardId, bool golden)
+    private static int GetGoldFromCard(string cardId, bool golden)
     {
 	    return cardId switch
 	    {
 		    HearthDb.CardIds.NonCollectible.Neutral.AccordOTron => golden ? 2 : 1,
 		    HearthDb.CardIds.NonCollectible.Neutral.RecordSmuggler => golden ? 2 : 4,
+		    HearthDb.CardIds.NonCollectible.Neutral.CarefulInvestment => 2,
 		    _ => 0
 	    };
     }
