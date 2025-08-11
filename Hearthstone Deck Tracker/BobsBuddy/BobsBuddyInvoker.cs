@@ -1053,7 +1053,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if (IsIncorrectCombatResult(result))
 			{
 				terminalCase = true;
-				if (ReportErrors)
+				if (ReportErrors && metricSampling > 0 && _rnd.NextDouble() < metricSampling)
 					AlertWithLastInputOutput(result.ToString());
 			}
 
@@ -1068,7 +1068,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 
 				terminalCase = true;
-				if(ReportErrors)
+				if(ReportErrors && metricSampling > 0 && _rnd.NextDouble() < metricSampling)
 					AlertWithLastInputOutput(lethalResult.ToString());
 			}
 
