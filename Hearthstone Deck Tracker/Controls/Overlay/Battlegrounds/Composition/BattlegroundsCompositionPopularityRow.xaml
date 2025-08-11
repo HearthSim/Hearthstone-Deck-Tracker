@@ -47,11 +47,11 @@
                 FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
                 VerticalAlignment="Center"
                 Grid.Column="4"
-                Text="{Binding PopularityText}"
+                Text="{Binding Popularity, StringFormat={}{0:0.0}%, TargetNullValue=&#8211;, FallbackValue=&#8211;}"
                 FontSize="12"
                 TextAlignment="Right"
                 Margin="8 1 8 0"
-                Width="30"
+                Width="32"
                 DockPanel.Dock="Right"
             />
             <local:BattlegroundsCompositionPopularityBar

@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition
 		public string Name { get; }
 
 		public double PopularityBarValue => _popularity / _maxPopularity * 100;
-		public string PopularityText => $"{_popularity:0.0}%";
+		public double Popularity => _popularity;
 
 		public bool CompositionAvailable => _available;
 		public Visibility CompositionUnavailableVisibility => _available ? Visibility.Hidden : Visibility.Visible;
