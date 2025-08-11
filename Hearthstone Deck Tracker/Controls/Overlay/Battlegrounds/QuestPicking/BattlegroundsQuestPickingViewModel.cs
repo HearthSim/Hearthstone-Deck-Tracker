@@ -85,6 +85,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			if(Quests != null)
 				return;
 
+			var choices = Reflection.Client.GetCardChoices();
+			if(choices == null)
+				return;
+
 			var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
 
 			// The trial would have been activated at hero picking. If it is
@@ -110,13 +114,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				? await ApiWrapper.GetTier7QuestStats(Tier7Trial.Token, requestParams)
 				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7QuestPickStats(requestParams));
 			if(questData == null)
-			{
-				Message.Error();
-				return;
-			}
-
-			var choices = Reflection.Client.GetCardChoices();
-			if(choices == null)
 			{
 				Message.Error();
 				return;
