@@ -1,7 +1,13 @@
-## **Unreleased**
+## **Release v1.46.7 - 2025-08-13**
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Haunted Carapace.
+
 **Hearthstone**:
 - Added hand tracking for cards copied by Rangari Scout and Tolin's Goblet.
 - Added related cards for Rest in Peace.
+
+**Overlay**:
+- Fixed a Battlegrounds overlay issue on the minion explorer when the tier 7 minions filter was present.
 
 ## **Release v1.46.6 - 2025-08-11**
 **Updated for Hearthstone 33.2.1**
