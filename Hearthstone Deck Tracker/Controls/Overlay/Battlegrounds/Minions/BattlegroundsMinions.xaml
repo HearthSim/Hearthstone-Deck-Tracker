@@ -21,6 +21,7 @@
             <Setter Property="Background" Value="#23272A" />
             <Setter Property="CornerRadius" Value="0,0,0,3" />
             <Setter Property="BorderBrush" Value="#3f4346" />
+            <Setter Property="Height" Value="57"/>
             <Setter Property="BorderThickness" Value="1,0,0,1" />
             <Setter Property="Padding" Value="9" />
             <Style.Triggers>
