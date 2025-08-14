@@ -1,3 +1,8 @@
+## **Unreleased**
+**Hearthstone**:
+- Added corpses counter to the resources widget. It appears when the opponent is a Warlock with Death Knight Tourist.
+- Changed Colossus Damage Counter to appear when opponent generated Protoss minions from Mothership.
+
 ## **Release v1.46.7 - 2025-08-13**
 **Bob's Buddy**:
 - Fixed incorrect simulation results due to Haunted Carapace.

@@ -119,6 +119,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case MAXHANDSIZE:
 						MaxHandSizeChange(gameState, id, game, value, prevValue);
 						break;
+					case CORPSES:
+						CorpsesChange(gameState, id, game, value, prevValue);
+						break;
+					case CORPSES_SPENT_THIS_GAME:
+						CorpsesSpentThisGameChange(gameState, id, game, value, prevValue);
+						break;
 					case CANT_PLAY:
 						CantPlayChange(gameState, id, game, value, prevValue);
 						break;
@@ -602,6 +608,40 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			else if(entity.IsControlledBy(game.Opponent.Id))
 			{
 				gameState.GameHandler?.HandleOpponentMaxHandSizeChange(value);
+			}
+		}
+
+		private void CorpsesChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			if(!game.IsTraditionalHearthstoneMatch)
+				return;
+
+			if(entity.IsControlledBy(game.Opponent.Id))
+			{
+				var corpsesSpent = entity.GetTag(CORPSES_SPENT_THIS_GAME);
+				gameState.GameHandler?.HandleOpponentCorpsesLeftChange(value - corpsesSpent);
+			}
+		}
+
+		private void CorpsesSpentThisGameChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			if(!game.IsTraditionalHearthstoneMatch)
+				return;
+
+			if(entity.IsControlledBy(game.Opponent.Id))
+			{
+				var corpses = entity.GetTag(CORPSES);
+				gameState.GameHandler?.HandleOpponentCorpsesLeftChange(corpses - value);
 			}
 		}
 

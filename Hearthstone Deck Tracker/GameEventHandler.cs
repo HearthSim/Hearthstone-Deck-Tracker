@@ -1192,6 +1192,15 @@ namespace Hearthstone_Deck_Tracker
 			Core.UpdateOpponentResourcesWidget();
 		}
 
+		public void HandleOpponentCorpsesLeftChange(int value)
+		{
+			_game.Opponent.CorpsesLeft = value;
+			if(_game.Opponent.HasDeathKnightTourist)
+			{
+				Core.UpdateOpponentResourcesWidget();
+			}
+		}
+
 		public void HandleBeginMulligan()
 		{
 			var isConstructed = _game.IsConstructedMatch;
@@ -2520,6 +2529,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentMaxManaChange(int value) => HandleOpponentMaxManaChange(value);
 		void IGameHandler.HandlePlayerMaxHandSizeChange(int value) => HandlePlayerMaxHandSizeChange(value);
 		void IGameHandler.HandleOpponentMaxHandSizeChange(int value) => HandleOpponentMaxHandSizeChange(value);
+		void IGameHandler.HandleOpponentCorpsesLeftChange(int value) => HandleOpponentCorpsesLeftChange(value);
 		void IGameHandler.HandlePlayerLibramReduction(int value) => HandlePlayerLibramReduction(value);
 		void IGameHandler.HandleOpponentLibramReduction(int value) => HandleOpponentLibramReduction(value);
 		void IGameHandler.HandlePlayerHandCostReduction(int value) => HandlePlayerHandCostReduction(value);

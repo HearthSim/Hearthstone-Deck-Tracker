@@ -119,5 +119,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerAbyssalCurse(int value);
 		void HandleOpponentAbyssalCurse(int value);
 		void HandleQuestRewardDatabaseId(int id, int value);
+		void HandleOpponentCorpsesLeftChange(int value);
 	}
 }

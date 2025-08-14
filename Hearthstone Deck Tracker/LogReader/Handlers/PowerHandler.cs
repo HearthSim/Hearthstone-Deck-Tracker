@@ -219,6 +219,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							game.Opponent.PredictUniqueCardInDeck(cardId, false);
 							Core.UpdateOpponentCards();
+							if(cardId == Collectible.Warlock.SummonerDarkmarrow)
+							{
+								game.Opponent.HasDeathKnightTourist = true;
+								Core.UpdateOpponentResourcesWidget();
+							}
 						}
 					}
 
@@ -323,6 +328,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							{
 								entity.Info.GuessedCardState = GuessedCardState.Guessed;
 							}
+						}
+
+						if(entity.IsControlledBy(game.Opponent.Id) &&
+						   entity is { CardId: Collectible.Warlock.SummonerDarkmarrow, Info.Created: false }
+						   )
+						{
+							game.Opponent.HasDeathKnightTourist = true;
+							Core.UpdateOpponentResourcesWidget();
 						}
 
 					}

@@ -571,7 +571,7 @@ namespace Hearthstone_Deck_Tracker
 
 		internal static void UpdateOpponentResourcesWidget()
 		{
-			Overlay.UpdateOpponentResourcesWidget(Game.Opponent.MaxHealth, Game.Opponent.MaxMana, Game.Opponent.MaxHandSize);
+			Overlay.UpdateOpponentResourcesWidget(Game.Opponent.MaxHealth, Game.Opponent.MaxMana, Game.Opponent.MaxHandSize, Game.Opponent.CorpsesLeft);
 		}
 
 		public static class Windows

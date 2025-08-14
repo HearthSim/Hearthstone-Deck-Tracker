@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int MaxHealth { get; set; }
 		public int MaxMana { get; set; }
 		public int MaxHandSize { get; set; }
+		public int? CorpsesLeft { get; set; }
 		public bool IsLocalPlayer { get; }
 		public int SpellsPlayedCount => SpellsPlayedCards.Count;
 		public List<Entity> SpellsPlayedCards { get; private set; } = new();
@@ -50,6 +51,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<string?> LaunchedStarships { get; private set; } = new();
 		public List<Entity> StartingHand { get; private set; } = new();
 		public bool IsPlayingWhizbang { get; set; }
+		public bool HasDeathKnightTourist { get; set; }
 		public int PogoHopperPlayedCount { get; private set; }
 		public Entity? LastDiedMinionCard => DeadMinionsCards.LastOrDefault();
 		public List<Entity> DeadMinionsCards { get; } = new();
@@ -499,6 +501,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			MaxMana = InitialMaxMana;
 			MaxHealth = InitialMaxHealth;
 			MaxHandSize = InitialMaxHandSize;
+			CorpsesLeft = null;
+			HasDeathKnightTourist = false;
 			InDeckPredictions.Clear();
 			SpellsPlayedCards.Clear();
 			SpellsPlayedInFriendlyCharacters.Clear();

@@ -344,7 +344,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
 			};
-			
+
 			_arenaPreLobbyBehavior = new OverlayElementBehavior(ArenaPreLobby)
 			{
 				GetLeft = () => Helper.GetScaledXPos(0.034, (int)Width, ScreenRatio),
@@ -951,9 +951,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PlayerResourcesViewModel.UpdatePlayerResourcesWidget(maxHealth, maxMana, maxHandSize);
 		}
 
-		internal void UpdateOpponentResourcesWidget(int maxHealth, int maxMana, int maxHandSize)
+		internal void UpdateOpponentResourcesWidget(int maxHealth, int maxMana, int maxHandSize, int? corpsesLeft)
 		{
-			OpponentResourcesViewModel.UpdatePlayerResourcesWidget(maxHealth, maxMana, maxHandSize);
+			OpponentResourcesViewModel.UpdatePlayerResourcesWidget(maxHealth, maxMana, maxHandSize, corpsesLeft);
 		}
 
 		internal void ResetPlayerResourcesWidgets(int maxHealth, int maxMana, int maxHandSize)
