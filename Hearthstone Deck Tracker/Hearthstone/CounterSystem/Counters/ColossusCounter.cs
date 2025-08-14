@@ -1,4 +1,5 @@
-﻿using HearthDb.Enums;
+﻿using System.Linq;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
@@ -23,7 +24,25 @@ public class ColossusCounter : NumericCounter
 		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
-		return Counter > 1 && OpponentMayHaveRelevantCards();
+
+		var couldBeGenerated = Game.Opponent.PlayerEntities.Any(e =>
+		{
+			if(e is { IsInHand: false, IsInPlay: false, IsInDeck: false })
+				return false;
+
+			if(!e.Info.Created)
+				return false;
+
+			if(e.HasCardId && e.CardId != HearthDb.CardIds.Collectible.Mage.Colossus)
+				return false;
+
+			var creatorId = e.Info.GetCreatorId();
+			if(creatorId <= 0 || !Game.Entities.TryGetValue(creatorId, out var creator))
+				return false;
+			return creator.CardId == HearthDb.CardIds.Collectible.Priest.Mothership;
+		});
+
+		return (Counter > 1 && OpponentMayHaveRelevantCards()) || couldBeGenerated;
 	}
 
 	public override string[] GetCardsToDisplay()
