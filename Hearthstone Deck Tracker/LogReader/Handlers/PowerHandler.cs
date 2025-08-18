@@ -499,6 +499,28 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 
 			}
+			else if(SubSpellStartRegex.IsMatch(logLine))
+			{
+				var match = SubSpellStartRegex.Match(logLine);
+				try
+				{
+					var sourceId = int.Parse(match.Groups["source"].Value);
+					if(game.Entities.TryGetValue(sourceId, out var entity))
+					{
+						if(entity.CardId == Collectible.Druid.BottomlessToyChest)
+						{
+							var lastCardDrawnId = game.Opponent.Hand.OrderByDescending(e => e.ZonePosition).FirstOrDefault()?.Id;
+							var lastCardDrawnEntity = game.Entities.TryGetValue(lastCardDrawnId ?? -1, out var e) ? e : null;
+							var copyOfCardId = lastCardDrawnEntity?.Info.CopyOfCardId ?? lastCardDrawnId.ToString();
+							AddKnownCardId(gameState, "", copyOfCardId: copyOfCardId);
+						}
+					}
+				}
+				catch(FormatException e)
+				{
+					Log.Info(e.Message);
+				}
+			}
 
 			gameState.IsInsideMetaDataHistoryTarget = isInsideMetaDataHistoryTarget;
 

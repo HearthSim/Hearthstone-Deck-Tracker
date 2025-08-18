@@ -1,6 +1,7 @@
 ## **Unreleased**
 **Hearthstone**:
 - Added corpses counter to the resources widget. It appears when the opponent is a Warlock with Death Knight Tourist.
+- Added hand tracking for cards copied by Bottomless Toy Chest.
 - Changed Colossus Damage Counter to appear when opponent generated Protoss minions from Mothership.
 
 ## **Release v1.46.7 - 2025-08-13**
