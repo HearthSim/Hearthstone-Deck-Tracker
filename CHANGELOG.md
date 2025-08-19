@@ -1,8 +1,20 @@
-## **Unreleased**
+## **Release v1.46.8 - 2025-08-19**
+**Updated for Hearthstone 33.2.2**
+
 **Hearthstone**:
 - Added corpses counter to the resources widget. It appears when the opponent is a Warlock with Death Knight Tourist.
 - Added hand tracking for cards copied by Bottomless Toy Chest.
 - Changed Colossus Damage Counter to appear when opponent generated Protoss minions from Mothership.
+
+**Battlegrounds**:
+- Refined conditions for displaying the Blood Gem Counter.
+- Fixed an issue where quest picking overlay would sometimes not appear.
+- Fixed Careful Investment being miscounted in the Gold Next Turn counter.
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Blue Whelp.
+- Fixed incorrect simulation results due to Roaring Recruiter.
+- Fixed incorrect simulation results due to Roaring Hydralisk.
 
 ## **Release v1.46.7 - 2025-08-13**
 **Bob's Buddy**:
