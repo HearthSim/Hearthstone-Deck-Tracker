@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
@@ -15,7 +16,7 @@ public class BloodGemCounter : StatsCounter
 	{
 	}
 
-	public override bool ShouldShow() => Game.IsBattlegroundsMatch && (AttackCounter > 3 || HealthCounter > 3);
+	public override bool ShouldShow() => Game.IsBattlegroundsMatch && (AttackCounter > 3 || HealthCounter > 3 || Game.Player.Board.Any(e => e.Card.IsQuillboar()));
 
 	public override string[] GetCardsToDisplay()
 	{
@@ -42,6 +43,8 @@ public class BloodGemCounter : StatsCounter
 			{
 				HealthCounter = value + 1;
 			}
+
+			OnCounterChanged();
 		}
 	}
 }
