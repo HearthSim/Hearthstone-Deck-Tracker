@@ -85,10 +85,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			if(Quests != null)
 				return;
 
-			var choices = Reflection.Client.GetCardChoices();
-			if(choices == null)
-				return;
-
 			var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
 
 			// The trial would have been activated at hero picking. If it is
@@ -102,6 +98,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			Message.Loading();
 			// delay to allow tag changes to update
 			await Task.Delay(500);
+
+			var choices = Reflection.Client.GetCardChoices();
+			if(choices == null)
+				return;
 
 			var requestParams = GetApiParams();
 			if(requestParams == null)
