@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility;
@@ -17,17 +18,28 @@ public class GoldNextTurnCounter : StatsCounter
 	    HearthDb.CardIds.NonCollectible.Neutral.SouthseaBusker_ExtraGoldNextTurnDntEnchantment,
 	    HearthDb.CardIds.NonCollectible.Neutral.Overconfidence_OverconfidentDntEnchantment,
 	    HearthDb.CardIds.NonCollectible.Neutral.GraceFarsail_ExtraGoldIn2TurnsDntEnchantment,
+	    HearthDb.CardIds.NonCollectible.Neutral.CarefulInvestment
     };
 
     private int _overconfidence;
+    private int Overconfidence
+    {
+	    get => _overconfidence;
+	    set => _overconfidence = Math.Max(0, value);
+    }
     private int _goldSureAmount;
-    private int ExtraGoldFromOverconfidence => _overconfidence * 3;
+    private int GoldSureAmount
+    {
+	    get => _goldSureAmount;
+	    set => _goldSureAmount = Math.Max(0, value);
+    }
+    private int ExtraGoldFromOverconfidence => Overconfidence * 3;
 
     public GoldNextTurnCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
     {
     }
 
-    public override bool ShouldShow() => Game.IsBattlegroundsMatch && (_goldSureAmount > 0 || _overconfidence > 0);
+    public override bool ShouldShow() => Game.IsBattlegroundsMatch && (GoldSureAmount > 0 || Overconfidence > 0);
 
     public override string[] GetCardsToDisplay()
     {
@@ -45,8 +57,8 @@ public class GoldNextTurnCounter : StatsCounter
     public override string ValueToShow()
     {
         if (ExtraGoldFromOverconfidence > 0)
-            return $"{_goldSureAmount} ({_goldSureAmount + ExtraGoldFromOverconfidence})";
-        return $"{_goldSureAmount}";
+            return $"{GoldSureAmount} ({GoldSureAmount + ExtraGoldFromOverconfidence})";
+        return $"{GoldSureAmount}";
     }
 
     public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
@@ -63,12 +75,12 @@ public class GoldNextTurnCounter : StatsCounter
             {
                 if (tag == GameTag.ZONE && value == (int)Zone.PLAY && prevValue != (int)Zone.PLAY)
                 {
-                    _overconfidence++;
+                    Overconfidence++;
                     OnCounterChanged();
                 }
                 else if (tag == GameTag.ZONE && value != (int)Zone.PLAY && prevValue == (int)Zone.PLAY)
                 {
-                    _overconfidence--;
+                    Overconfidence--;
                     OnCounterChanged();
                 }
             }
@@ -78,7 +90,7 @@ public class GoldNextTurnCounter : StatsCounter
                 {
                     if (entity.GetTag(GameTag.ZONE) == (int)Zone.PLAY)
                     {
-                        _goldSureAmount += value - prevValue;
+                        GoldSureAmount += value - prevValue;
                         OnCounterChanged();
                     }
                 }
@@ -86,12 +98,12 @@ public class GoldNextTurnCounter : StatsCounter
                 {
                     if (value == (int)Zone.PLAY && prevValue != (int)Zone.PLAY)
                     {
-                        _goldSureAmount += entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+                        GoldSureAmount += entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
                         OnCounterChanged();
                     }
                     else if (value != (int)Zone.PLAY && prevValue == (int)Zone.PLAY)
                     {
-                        _goldSureAmount -= entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+                        GoldSureAmount -= entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
                         OnCounterChanged();
                     }
                 }
@@ -100,15 +112,29 @@ public class GoldNextTurnCounter : StatsCounter
             {
                 if (tag == GameTag.TAG_SCRIPT_DATA_NUM_2 && value == 1)
                 {
-                    _goldSureAmount += entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+                    GoldSureAmount += entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
                     OnCounterChanged();
                 }
                 else if (tag == GameTag.TAG_SCRIPT_DATA_NUM_2 && prevValue == 1)
                 {
-                    _goldSureAmount -= entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+                    GoldSureAmount -= entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
                     OnCounterChanged();
                 }
             }
+            else if(entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.CarefulInvestment)
+            {
+	            if(tag == GameTag.ZONE && value == (int)Zone.PLAY && prevValue != (int)Zone.PLAY)
+	            {
+		            GoldSureAmount += 2;
+		            OnCounterChanged();
+	            }
+	            else if (value == (int)Zone.REMOVEDFROMGAME && prevValue == (int)Zone.GRAVEYARD)
+	            {
+		            GoldSureAmount -= 2;
+		            OnCounterChanged();
+	            }
+            }
+            return;
         }
 
         if(tag != GameTag.ZONE || entity.CardId == null)
@@ -121,22 +147,12 @@ public class GoldNextTurnCounter : StatsCounter
 
         if (value == (int)Zone.PLAY && prevValue != (int)Zone.PLAY)
         {
-	        _goldSureAmount += goldValue;
+	        GoldSureAmount += goldValue;
 	        OnCounterChanged();
         }
-
-        if(entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.CarefulInvestment)
+        else if (value != (int)Zone.PLAY && prevValue == (int)Zone.PLAY)
         {
-	        if(value == (int)Zone.REMOVEDFROMGAME &&
-	           prevValue == (int)Zone.GRAVEYARD)
-	        {
-		        _goldSureAmount -= goldValue;
-		        OnCounterChanged();
-	        }
-        }
-        else if (value != (int)Zone.PLAY && value != (int)Zone.HAND && value != (int)Zone.GRAVEYARD && prevValue == (int)Zone.PLAY)
-        {
-	        _goldSureAmount -= goldValue;
+	        GoldSureAmount -= goldValue;
 	        OnCounterChanged();
         }
     }
@@ -147,7 +163,6 @@ public class GoldNextTurnCounter : StatsCounter
 	    {
 		    HearthDb.CardIds.NonCollectible.Neutral.AccordOTron => golden ? 2 : 1,
 		    HearthDb.CardIds.NonCollectible.Neutral.RecordSmuggler => golden ? 2 : 4,
-		    HearthDb.CardIds.NonCollectible.Neutral.CarefulInvestment => 2,
 		    _ => 0
 	    };
     }
