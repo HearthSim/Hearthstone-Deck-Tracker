@@ -500,6 +500,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		Anomaly = null;
 		IsThorimRelevant = false;
 		IsPaglesFishingRodRelevant = false;
+		IsNorgannonsRewardRelevant = false;
 	}
 
 	private bool _preloadedCardTiles;
