@@ -1,4 +1,4 @@
-## **Release v1.46.9 - 2025-08-20**
+## **Release v1.46.10 - 2025-08-20**
 **Battlegrounds**:
 - Added automatic display of Tavern Tier 7 minions in the overlay when Norgannon’s Reward is present.
 - Improved Gold Next Turn counter.
