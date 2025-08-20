@@ -1407,6 +1407,19 @@ namespace Hearthstone_Deck_Tracker
 						Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(
 							_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id)
 						);
+
+						// Quest choice
+						var chosenEntity = chosen.FirstOrDefault();
+						if (chosenEntity != null)
+						{
+							var questRewardDbfId = chosenEntity.GetTag(QUEST_REWARD_DATABASE_ID);
+							if (questRewardDbfId > 0)
+							{
+								var questReward = Database.GetCardFromDbfId(questRewardDbfId, collectible: false);
+								if (questReward?.Id != null)
+									Core.Overlay.BattlegroundsMinionsVM.OnQuests(new[] { questReward.Id });
+							}
+						}
 					}
 					break;
 			}

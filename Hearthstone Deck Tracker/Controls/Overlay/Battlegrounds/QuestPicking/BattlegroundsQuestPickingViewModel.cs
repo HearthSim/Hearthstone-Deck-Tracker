@@ -95,13 +95,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			if(_entities.Count != ExpectedQuestCount())
 				return;
 
-			Message.Loading();
 			// delay to allow tag changes to update
 			await Task.Delay(500);
 
 			var choices = Reflection.Client.GetCardChoices();
 			if(choices == null)
 				return;
+
+			Message.Loading();
 
 			var requestParams = GetApiParams();
 			if(requestParams == null)

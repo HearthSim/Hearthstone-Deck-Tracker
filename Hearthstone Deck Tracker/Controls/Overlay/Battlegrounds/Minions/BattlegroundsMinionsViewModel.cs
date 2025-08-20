@@ -146,8 +146,17 @@ public class BattlegroundsMinionsViewModel : ViewModel
 			UpdateTavernTier7Visibility();
 		}
 	}
+	public bool IsNorgannonsRewardRelevant
+	{
+		get => GetProp(false);
+		set
+		{
+			SetProp(value);
+			UpdateTavernTier7Visibility();
+		}
+	}
 
-	private bool ShowTavernTier7 => Config.Instance.AlwaysShowBattlegroundsTavernTier7 || IsThorimRelevant || IsPaglesFishingRodRelevant;
+	private bool ShowTavernTier7 => Config.Instance.AlwaysShowBattlegroundsTavernTier7 || IsThorimRelevant || IsPaglesFishingRodRelevant || IsNorgannonsRewardRelevant;
 
 	public void UpdateTavernTier7Visibility()
 	{
@@ -454,6 +463,12 @@ public class BattlegroundsMinionsViewModel : ViewModel
 	public void OnTrinkets(IEnumerable<string> trinkets)
 	{
 		IsPaglesFishingRodRelevant = trinkets.Contains(HearthDb.CardIds.NonCollectible.Neutral.PaglesFishingRod);
+	}
+
+	public void OnQuests(IEnumerable<string> quests)
+	{
+		var questList = quests?.ToList() ?? new List<string>();
+		IsNorgannonsRewardRelevant = questList.Contains(HearthDb.CardIds.NonCollectible.Neutral.NorgannonsReward);
 	}
 
 	public Visibility UnavailableMinionTypesVisibility => ActiveTier is null || ActiveMinionType != null || ActiveMinionKeyword != null || !UnavailableRaces.Any() ? Visibility.Collapsed : Visibility.Visible;
