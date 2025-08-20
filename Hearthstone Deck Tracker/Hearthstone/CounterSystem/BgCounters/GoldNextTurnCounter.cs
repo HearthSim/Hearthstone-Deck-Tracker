@@ -69,101 +69,24 @@ public class GoldNextTurnCounter : StatsCounter
         if (entity.IsControlledBy(Game.Player.Id) != IsPlayerCounter)
             return;
 
-        if (RelatedCards.Contains(entity.CardId))
+        if(tag == GameTag.BACON_PLAYER_EXTRA_GOLD_NEXT_TURN)
         {
-            if (entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.Overconfidence_OverconfidentDntEnchantment)
-            {
-                if (tag == GameTag.ZONE && value == (int)Zone.PLAY && prevValue != (int)Zone.PLAY)
-                {
-                    Overconfidence++;
-                    OnCounterChanged();
-                }
-                else if (tag == GameTag.ZONE && value != (int)Zone.PLAY && prevValue == (int)Zone.PLAY)
-                {
-                    Overconfidence--;
-                    OnCounterChanged();
-                }
-            }
-            else if (entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.SouthseaBusker_ExtraGoldNextTurnDntEnchantment)
-            {
-                if (tag == GameTag.TAG_SCRIPT_DATA_NUM_1)
-                {
-                    if (entity.GetTag(GameTag.ZONE) == (int)Zone.PLAY)
-                    {
-                        GoldSureAmount += value - prevValue;
-                        OnCounterChanged();
-                    }
-                }
-                else if (tag == GameTag.ZONE)
-                {
-                    if (value == (int)Zone.PLAY && prevValue != (int)Zone.PLAY)
-                    {
-                        GoldSureAmount += entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-                        OnCounterChanged();
-                    }
-                    else if (value != (int)Zone.PLAY && prevValue == (int)Zone.PLAY)
-                    {
-                        GoldSureAmount -= entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-                        OnCounterChanged();
-                    }
-                }
-            }
-            else if (entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.GraceFarsail_ExtraGoldIn2TurnsDntEnchantment)
-            {
-                if (tag == GameTag.TAG_SCRIPT_DATA_NUM_2 && value == 1)
-                {
-                    GoldSureAmount += entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-                    OnCounterChanged();
-                }
-                else if (tag == GameTag.TAG_SCRIPT_DATA_NUM_2 && prevValue == 1)
-                {
-                    GoldSureAmount -= entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-                    OnCounterChanged();
-                }
-            }
-            else if(entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.CarefulInvestment)
-            {
-	            if(tag == GameTag.ZONE && value == (int)Zone.PLAY && prevValue != (int)Zone.PLAY)
-	            {
-		            GoldSureAmount += 2;
-		            OnCounterChanged();
-	            }
-	            else if (value == (int)Zone.REMOVEDFROMGAME && prevValue == (int)Zone.GRAVEYARD)
-	            {
-		            GoldSureAmount -= 2;
-		            OnCounterChanged();
-	            }
-            }
-            return;
-        }
-
-        if(tag != GameTag.ZONE || entity.CardId == null)
-	        return;
-
-        var goldValue = GetGoldFromCard(entity.CardId, entity.HasTag(GameTag.PREMIUM));
-
-        if(goldValue <= 0)
-	        return;
-
-        if (value == (int)Zone.PLAY && prevValue != (int)Zone.PLAY)
-        {
-	        GoldSureAmount += goldValue;
+	        GoldSureAmount = value;
 	        OnCounterChanged();
         }
-        else if (value != (int)Zone.PLAY && prevValue == (int)Zone.PLAY)
-        {
-	        GoldSureAmount -= goldValue;
-	        OnCounterChanged();
-        }
-    }
 
-    private static int GetGoldFromCard(string cardId, bool golden)
-    {
-	    return cardId switch
-	    {
-		    HearthDb.CardIds.NonCollectible.Neutral.AccordOTron => golden ? 2 : 1,
-		    HearthDb.CardIds.NonCollectible.Neutral.RecordSmuggler => golden ? 2 : 4,
-		    _ => 0
-	    };
+        if (entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.Overconfidence_OverconfidentDntEnchantment)
+        {
+            if (tag == GameTag.ZONE && value == (int)Zone.PLAY && prevValue != (int)Zone.PLAY)
+            {
+                Overconfidence++;
+                OnCounterChanged();
+            }
+            else if (tag == GameTag.ZONE && value != (int)Zone.PLAY && prevValue == (int)Zone.PLAY)
+            {
+                Overconfidence--;
+                OnCounterChanged();
+            }
+        }
     }
 }
