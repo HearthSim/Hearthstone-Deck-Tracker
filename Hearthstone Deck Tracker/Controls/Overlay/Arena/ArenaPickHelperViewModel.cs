@@ -932,11 +932,11 @@ public class ArenaPickHelperViewModel : ViewModel
 				break;
 			case MessageType.Highlander:
 				var highlanderContent = message.ParseContent<HighlanderMessageContent>();
-				yield return string.Format(LocUtil.Get("ArenaPick_Message_Highlander"), highlanderContent.HighlanderCardId ?? "");
+				yield return string.Format(LocUtil.Get("ArenaPick_Message_Highlander"), new Hearthstone.Card(highlanderContent.HighlanderCardId ?? "").LocalizedName);
 				break;
 			case MessageType.SoftHighlander:
 				var softHighlanderContent = message.ParseContent<SoftHighlanderMessageContent>();
-				yield return string.Format(LocUtil.Get("ArenaPick_Message_SoftHighlander"), softHighlanderContent.HighlanderCardId ?? "");
+				yield return string.Format(LocUtil.Get("ArenaPick_Message_SoftHighlander"), new Hearthstone.Card(softHighlanderContent.HighlanderCardId ?? "").LocalizedName);
 				break;
 			case MessageType.HighlanderChances:
 				yield return LocUtil.Get("ArenaPick_Message_HighlanderChance");
@@ -947,7 +947,7 @@ public class ArenaPickHelperViewModel : ViewModel
 				break;
 			case MessageType.QuestHelps:
 				var questHelpsContent = message.ParseContent<QuestHelpsMessageContent>();
-				yield return string.Format(LocUtil.Get("ArenaPick_Message_HelpsQuest"), questHelpsContent.QuestCardId ?? "");
+				yield return string.Format(LocUtil.Get("ArenaPick_Message_HelpsQuest"), new Hearthstone.Card(questHelpsContent.QuestCardId ?? "").LocalizedName);
 				break;
 		}
 	}
