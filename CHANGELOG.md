@@ -1,3 +1,11 @@
+## **Release v1.46.9 - 2025-08-20**
+**Battlegrounds**:
+- Added automatic display of Tavern Tier 7 minions in the overlay when Norgannon’s Reward is present.
+- Improved Gold Next Turn counter.
+
+**Bob's Buddy**:
+- Fixed an issue where cards were wrongly marked as unsupported.
+
 ## **Release v1.46.8 - 2025-08-19**
 **Updated for Hearthstone 33.2.2**
 
