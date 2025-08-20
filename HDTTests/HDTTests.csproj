@@ -39,6 +39,9 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="BobsBuddy">
+      <HintPath>..\lib\BobsBuddy.dll</HintPath>
+    </Reference>
     <Reference Include="HearthDb">
       <HintPath>..\lib\HearthDb.dll</HintPath>
     </Reference>
