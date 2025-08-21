@@ -1,3 +1,7 @@
+## **Release v1.46.10 - 2025-08-21**
+**Arenasmith**:
+- Fixed an issue where some messages would not correctly display the card names.
+
 ## **Release v1.46.10 - 2025-08-20**
 **Battlegrounds**:
 - Added automatic display of Tavern Tier 7 minions in the overlay when Norgannon’s Reward is present.
