@@ -180,6 +180,11 @@ public class ArenaPickHelperViewModel : ViewModel
 		};
 	}
 
+	public bool IsArenasmithAvailable;
+	public bool IsOverlayVisible;
+	public bool IsTrialsActivated;
+	public Dictionary<string, float> ArenasmithScores = new();
+
 	private void UpdateUnderground(bool isUnderground)
 	{
 		IsUnderground = isUnderground;
@@ -228,13 +233,23 @@ public class ArenaPickHelperViewModel : ViewModel
 		if(IsUnderground && !availabilities.UndergroundArena)
 		{
 			Log.Info("Arenasmith is not available for Underground Arena, aborting");
+			IsArenasmithAvailable = false;
+			IsTrialsActivated = false;
+			IsOverlayVisible = false;
+			ArenasmithScores.Clear();
 			return;
 		}
 		else if(!IsUnderground && !availabilities.Arena)
 		{
 			Log.Info("Arenasmith is not available for Arena, aborting");
+			IsArenasmithAvailable = false;
+			IsTrialsActivated = false;
+			IsOverlayVisible = false;
+			ArenasmithScores.Clear();
 			return;
 		}
+
+		IsArenasmithAvailable = true;
 
 		if(choices.Count == 0)
 			return;
@@ -252,7 +267,8 @@ public class ArenaPickHelperViewModel : ViewModel
 			await ArenaTrial.EnsureLoaded(accountId.Hi, accountId.Lo);
 			var (starter, recurring) = ArenaTrial.RemainingTrials ?? (0, 0);
 
-			var trialsActivated = false;
+			IsTrialsActivated = false;
+			ArenasmithScores.Clear();
 			var trialsRemaining = starter + recurring;
 			var draftInfo = new ArenaDraftInfo
 			{
@@ -265,15 +281,17 @@ public class ArenaPickHelperViewModel : ViewModel
 				if(starter + recurring == 0)
 				{
 					Log.Info("No trials left for hero pick, aborting");
-					HSReplayNetClientAnalytics.OnArenaDraftStart(draftInfo, arenaOverlayVisible: false, trialsActivated, trialsRemaining);
+					HSReplayNetClientAnalytics.OnArenaDraftStart(draftInfo, arenaOverlayVisible: false, IsTrialsActivated, trialsRemaining);
 					return;
 				}
-				trialsActivated = true;
+				IsTrialsActivated = true;
 			}
+
+			IsOverlayVisible = false;
 
 			if(!Config.Instance.EnableArenasmithOverlay)
 			{
-				HSReplayNetClientAnalytics.OnArenaDraftStart(draftInfo, false, trialsActivated, trialsRemaining);
+				HSReplayNetClientAnalytics.OnArenaDraftStart(draftInfo, false, IsTrialsActivated, trialsRemaining);
 				return;
 			}
 
@@ -314,12 +332,19 @@ public class ArenaPickHelperViewModel : ViewModel
 			HeroPickVisibility = Config.Instance.ShowArenaHeroPicking ? Visibility.Visible : Visibility.Collapsed;
 			RelatedCardsVisibility = Config.Instance.ShowArenaRelatedCards ? Visibility.Visible : Visibility.Collapsed;
 
-			HSReplayNetClientAnalytics.OnArenaDraftStart(draftInfo, true, trialsActivated, trialsRemaining);
+			IsOverlayVisible = HeroPickVisibility == Visibility.Visible;
+
+			HSReplayNetClientAnalytics.OnArenaDraftStart(draftInfo, true, IsTrialsActivated, trialsRemaining);
 			return;
 		}
 
+		IsOverlayVisible = false;
+
 		if(!Config.Instance.EnableArenasmithOverlay)
+		{
+			ArenasmithScores.Clear();
 			return;
+		}
 
 		// Check if the deck is registered for trials
 		if(!HSReplayNetOAuth.IsFullyAuthenticated || !(HSReplayNetOAuth.AccountData?.IsPremium ?? false))
@@ -328,6 +353,8 @@ public class ArenaPickHelperViewModel : ViewModel
 			if(!ArenaTrial.IsDeckResumable(deckId.Value))
 			{
 				Log.Info("Current deck is not registered for trials, aborting");
+				IsTrialsActivated = false;
+				ArenasmithScores.Clear();
 				return;
 			}
 		}
@@ -336,6 +363,8 @@ public class ArenaPickHelperViewModel : ViewModel
 		CardStats = offered.Select(cardId => new ArenaPickSingleCardOptionViewModel(cardId, IsUnderground)).ToList();
 		ArenasmithScoreVisibility = Config.Instance.ShowArenasmithScore ? Visibility.Visible : Visibility.Collapsed;
 		RelatedCardsVisibility = Config.Instance.ShowArenaRelatedCards ? Visibility.Visible : Visibility.Collapsed;
+
+		IsOverlayVisible = ArenasmithScoreVisibility == Visibility.Visible;
 
 		Dictionary<string, ArenaCardPickApiResponse.CardStatsEntry>? pickData = null;
 		if(!IsRedraft)
@@ -371,6 +400,34 @@ public class ArenaPickHelperViewModel : ViewModel
 					apiError: pickData == null
 				)
 			).ToList();
+
+		ArenasmithScores.Clear();
+		foreach (var card in offered)
+		{
+			if (pickData?.TryGetValue(card, out var stats) ?? false)
+			{
+				ArenasmithScores.Add(card, GetScore(stats));
+			}
+			else
+			{
+				ArenasmithScores.Add(card, -1);
+			}
+		}
+	}
+
+	private float GetScore(ArenaCardPickApiResponse.CardStatsEntry? stats)
+	{
+		if (stats?.ArenasmithDyn?.Score != null && float.TryParse(stats.ArenasmithDyn.Score, out var score))
+		{
+			return score;
+		}
+
+		if (stats?.Arenasmith?.Score != null && float.TryParse(stats.Arenasmith.Score, out score))
+		{
+			return score;
+		}
+
+		return -1;
 	}
 
 	public bool ShowErrorMessage

@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private static readonly Dictionary<long, Dictionary<int, (string[] choices, string[][]? packages, string pickStartTime)>> _currentArenaDraftInfo = new();
 
-		internal static async void OnChoiceChanged(object sender, HearthWatcher.EventArgs.ChoicesChangedEventArgs args)
+		internal static void OnChoiceChanged(object sender, HearthWatcher.EventArgs.ChoicesChangedEventArgs args)
 		{
 			var newChoices = args.Choices.Select(c => c.Id).ToArray();
 			var packages = args.Packages?.Select(p => p.Select(c => c.Id).ToArray()).ToArray();
@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			draftInfo[args.Slot] = (newChoices, packages, pickStartTime);
 		}
 
-		internal static async void OnCardPicked(object sender, HearthWatcher.EventArgs.CardPickedEventArgs args)
+		internal static void OnCardPicked(object sender, HearthWatcher.EventArgs.CardPickedEventArgs args)
 		{
 
 			var packageSize = args.PickedPackage?.Count ?? 0;
@@ -116,12 +116,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				args.Picked.Id,
 				info.choices,
 				args.Slot,
-				overlayVisible: Config.Instance.EnableArenasmithOverlay,
 				pickedCards,
 				args.Deck.Id,
 				args.IsUnderground,
 				args.PickedPackage?.Select(c => c.Id).ToArray() ?? null,
-				packages
+				packages,
+				isOverlayEnabled: Config.Instance.EnableArenasmithOverlay && Config.Instance.ShowArenasmithScore,
+				overlayVisible: Core.Overlay.ArenaPickHelperViewModel.IsOverlayVisible,
+				isArenasmithAvailable: Core.Overlay.ArenaPickHelperViewModel.IsArenasmithAvailable,
+				isTrialsActivated: Core.Overlay.ArenaPickHelperViewModel.IsTrialsActivated,
+				arenasmithScores: Core.Overlay.ArenaPickHelperViewModel.ArenasmithScores
 			);
 
 			const int lastPickSlot = 30;
@@ -171,13 +175,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				args.Picked.Id,
 				info.choices,
 				args.Slot,
-				overlayVisible: false,
 				originalDeck,
 				redraftDeck,
 				args.Deck.Id,
 				args.RedraftDeck.Id,
 				args.Losses,
-				args.IsUnderground
+				args.IsUnderground,
+				isOverlayEnabled: Config.Instance.EnableArenasmithOverlay && Config.Instance.ShowArenasmithScore,
+				overlayVisible: Core.Overlay.ArenaPickHelperViewModel.IsOverlayVisible,
+				isArenasmithAvailable: Core.Overlay.ArenaPickHelperViewModel.IsArenasmithAvailable,
+				isTrialsActivated: Core.Overlay.ArenaPickHelperViewModel.IsTrialsActivated,
+				arenasmithScores: Core.Overlay.ArenaPickHelperViewModel.ArenasmithScores
 			);
 
 		}

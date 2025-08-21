@@ -173,6 +173,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 						{
 							StartTime = draft.StartTime,
 							DeckId = draft.DeckId,
+							IsTrial = draft.IsTrialsActivated,
 							// we use groupBy to be safer against picks being duplicated on xml file
 							// and avoid a duplicate key error
 							Picks = draft.Picks
@@ -184,9 +185,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 											Offered = group.Last().Choices,
 											TimeOnChoice = group.Last().TimeOnChoice,
 											PickedCards = group.Last().PickedCards,
-											OverlayVisible =  group.Last().OverlayVisible,
 											PickedPackage = group.Last().PickedPackage,
 											Packages = group.Last().Packages?.ToDictionary(p => p.KeyCard, p => p.Cards),
+											IsOverlayEnabled = group.Last().OverlayEnabled,
+											IsOverlayVisible =  group.Last().OverlayVisible,
+											IsArenasmithAvailable = group.Last().ArenasmithAvailable,
+											ArenasmithScores = group.Last().ArenasmithScores?.ToDictionary(s => s.Card, s => s.Score),
 										}
 								).ToArray(),
 							Redrafts = draft.Redrafts.Count > 0 ?
@@ -203,8 +207,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 													Chosen = p.Picked,
 													Offered = p.Choices,
 													TimeOnChoice = p.TimeOnChoice,
-													OverlayVisible = p.OverlayVisible,
 													PickedCards = p.RedraftPickedCards,
+													IsOverlayEnabled = p.OverlayEnabled,
+													IsOverlayVisible = p.OverlayVisible,
+													IsArenasmithAvailable = p.ArenasmithAvailable,
+													ArenasmithScores = p.ArenasmithScores?.ToDictionary(s => s.Card, s => s.Score),
 												}).ToArray()
 									}).ToArray()
 								: null

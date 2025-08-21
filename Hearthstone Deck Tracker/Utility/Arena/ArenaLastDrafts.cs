@@ -57,12 +57,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			string picked,
 			string[] choices,
 			int slot,
-			bool overlayVisible,
 			string[] pickedCards,
 			long deckId,
 			bool isUnderground,
 			string[]? pickedPackage,
 			Dictionary<string, string[]>? packages,
+			bool overlayVisible,
+			bool isOverlayEnabled,
+			bool isArenasmithAvailable,
+			bool isTrialsActivated,
+			Dictionary<string, float>? arenasmithScores,
 			bool save = true
 		)
 		{
@@ -73,14 +77,26 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				return;
 			}
 
-			var currentDraft = GetOrCreateDraft(startTime, playerId, deckId, isUnderground);
+			var currentDraft = GetOrCreateDraft(startTime, playerId, deckId, isUnderground, isTrialsActivated);
 
 			var start = DateTime.Parse(startTime);
 			var end = DateTime.Parse(pickedTime);
 			var timeSpent = end - start;
 
 			currentDraft.Picks.Add(
-					new PickItem(picked, choices, slot, (int)timeSpent.TotalMilliseconds, overlayVisible, pickedCards, pickedPackage, packages)
+					new PickItem(
+						picked,
+						choices,
+						slot,
+						(int)timeSpent.TotalMilliseconds,
+						pickedCards,
+						pickedPackage,
+						packages,
+						overlayVisible,
+						isOverlayEnabled,
+						isArenasmithAvailable,
+						arenasmithScores
+					)
 				);
 
 			if(save)
@@ -93,13 +109,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			string picked,
 			string[] choices,
 			int slot,
-			bool overlayVisible,
 			string[] originalDeck,
 			string[] redraftPickedCards,
 			long originalDeckId,
 			long redraftDeckId,
 			int losses,
 			bool isUnderground,
+			bool overlayVisible,
+			bool isOverlayEnabled,
+			bool isArenasmithAvailable,
+			bool isTrialsActivated,
+			Dictionary<string, float>? arenasmithScores,
 			bool save = true
 			)
 		{
@@ -110,7 +130,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				return;
 			}
 
-			var currentDraft = GetOrCreateDraft(startTime, playerId, originalDeckId, isUnderground);
+			var currentDraft = GetOrCreateDraft(startTime, playerId, originalDeckId, isUnderground, isTrialsActivated);
 			var currentRedraft = GetOrCreateRedraft(currentDraft, startTime, playerId, originalDeckId, redraftDeckId, losses, originalDeck, isUnderground);
 
 			var start = DateTime.Parse(startTime);
@@ -123,9 +143,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 					choices,
 					slot,
 					(int)timeSpent.TotalMilliseconds,
+					redraftPickedCards,
 					overlayVisible,
-					redraftPickedCards
-					)
+					isOverlayEnabled,
+					isArenasmithAvailable,
+					arenasmithScores
+				)
 			);
 
 			if(save)
@@ -162,7 +185,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			Save();
 		}
 
-		private DraftItem GetOrCreateDraft(string startTime, string player, long deckId, bool isUnderground)
+		private DraftItem GetOrCreateDraft(string startTime, string player, long deckId, bool isUnderground, bool isTrialsActivated)
 		{
 			var draft = Drafts.FirstOrDefault(d => d.DeckId == deckId && d.IsUnderground == isUnderground);
 			if(draft != null)
@@ -170,7 +193,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				return draft;
 			}
 
-			draft = new DraftItem(startTime, player, deckId, isUnderground);
+			draft = new DraftItem(startTime, player, deckId, isUnderground, isTrialsActivated);
 			RemoveDraft(player, isUnderground, false);
 			Drafts.Add(draft);
 			return draft;
@@ -191,12 +214,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 
 		public class DraftItem
 		{
-			public DraftItem(string startTime, string player, long deckId, bool isUnderground)
+			public DraftItem(string startTime, string player, long deckId, bool isUnderground, bool isTrialsActivated = false)
 			{
 				Player = player;
 				StartTime = startTime;
 				DeckId = deckId;
 				IsUnderground = isUnderground;
+				IsTrialsActivated = isTrialsActivated;
 			}
 
 			public DraftItem()
@@ -215,6 +239,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			[XmlAttribute("IsUnderground")]
 			public bool IsUnderground { get; set; }
 
+			[XmlAttribute("IsTrialsActivated")]
+			public bool IsTrialsActivated { get; set; }
+
 			[XmlElement("Pick")]
 			public List<PickItem> Picks { get; set; } = new();
 
@@ -231,21 +258,28 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				string[] choices,
 				int slot,
 				int timeOnChoice,
-				bool overlayVisible,
 				string[] pickedCards,
 				string[]? pickedPackage,
-				Dictionary<string, string[]>? packages)
+				Dictionary<string, string[]>? packages,
+				bool overlayVisible,
+				bool isOverlayEnabled,
+				bool isArenasmithAvailable,
+				Dictionary<string, float>? arenasmithScores)
 			{
 				Picked = picked;
 				Choices = choices;
 				Slot = slot;
 				TimeOnChoice = timeOnChoice;
-				OverlayVisible = overlayVisible;
 				PickedCards = pickedCards;
 				PickedPackage = pickedPackage;
 				Packages = packages?.Select(p =>
 					new CardPackage { KeyCard = p.Key, Cards = p.Value }
 				).ToList();
+				OverlayVisible = overlayVisible;
+				OverlayEnabled = isOverlayEnabled;
+				ArenasmithAvailable = isArenasmithAvailable;
+				ArenasmithScores = arenasmithScores?.Select(s =>
+					new ArenasmithScore {Card = s.Key, Score = s.Value}).ToList();
 			}
 
 			public PickItem() { }
@@ -265,6 +299,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 			[XmlElement("OverlayVisible")]
 			public bool OverlayVisible { get; set; }
 
+			[XmlElement("OverlayEnabled")]
+			public bool OverlayEnabled { get; set; }
+
+			[XmlElement("ArenasmithAvailable")]
+			public bool ArenasmithAvailable { get; set; }
+
+			[XmlArray("ArenasmithScores")]
+			[XmlArrayItem("ArenasmithScore")]
+			public List<ArenasmithScore>? ArenasmithScores { get; set; }
+
 			[XmlElement("PickedCards")]
 			public string[] PickedCards { get; set; } = { };
 
@@ -283,6 +327,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 
 			[XmlElement("Card")]
 			public string[] Cards { get; set; } = { };
+		}
+
+		public class ArenasmithScore
+		{
+			[XmlAttribute("Card")]
+			public string Card { get; set; } = "";
+
+			[XmlAttribute("Score")]
+			public float Score { get; set; }
 		}
 
 		public class RedraftItem
@@ -335,16 +388,23 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 				string[] choices,
 				int slot,
 				int timeOnChoice,
+				string[] redraftPickedCards,
 				bool overlayVisible,
-				string[] redraftPickedCards
+				bool isOverlayEnabled,
+				bool isArenasmithAvailable,
+				Dictionary<string, float>? arenasmithScores
 			)
 			{
 				Picked = picked;
 				Choices = choices;
 				Slot = slot;
 				TimeOnChoice = timeOnChoice;
-				OverlayVisible = overlayVisible;
 				RedraftPickedCards = redraftPickedCards;
+				OverlayVisible = overlayVisible;
+				OverlayEnabled = isOverlayEnabled;
+				ArenasmithAvailable = isArenasmithAvailable;
+				ArenasmithScores = arenasmithScores?.Select(s =>
+					new ArenasmithScore {Card = s.Key, Score = s.Value}).ToList();
 			}
 
 			public RedraftPickItem() { }
@@ -363,6 +423,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Arena
 
 			[XmlElement("OverlayVisible")]
 			public bool OverlayVisible { get; set; }
+
+			[XmlElement("OverlayEnabled")]
+			public bool OverlayEnabled { get; set; }
+
+			[XmlElement("ArenasmithAvailable")]
+			public bool ArenasmithAvailable { get; set; }
+
+			[XmlArray("ArenasmithScores")]
+			[XmlArrayItem("ArenasmithScore")]
+			public List<ArenasmithScore>? ArenasmithScores { get; set; }
 
 			[XmlElement("RedraftPickedCards")]
 			public string[] RedraftPickedCards { get; set; } = { };
