@@ -1,4 +1,4 @@
-## **Release v1.46.10 - 2025-08-21**
+## **Release v1.46.11 - 2025-08-21**
 **Arenasmith**:
 - Fixed an issue where some messages would not correctly display the card names.
 

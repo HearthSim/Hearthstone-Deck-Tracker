@@ -380,8 +380,12 @@ public class ArenaPickHelperViewModel : ViewModel
 		}
 		else
 		{
+			var deckCards = TileViewModels.SelectMany(x => Enumerable.Repeat(x.CardId, x.Count)).ToArray();
+			if(deckCards.Length == 0)
+				return;
+
 			var picked = _pickedRedraftDeck?.ToArray() ?? new string[] {};
-			var deckCards = PickedDeck?.ToArray() ?? new string[] {};
+
 			var redraftNumber = arenaInfo?.Losses ?? 1;
 			var data = await MakeRequestRedraftCardPick(offered,  _chosenHero, picked, deckCards, redraftNumber, ArenaSeasonId, deckId.Value, accountId, IsUnderground);
 
@@ -695,8 +699,7 @@ public class ArenaPickHelperViewModel : ViewModel
 
 		if(SessionState is ArenaSessionState.EDITING_DECK)
 		{
-			var deckClass = (int?)Database.GetCardFromId(_chosenHero)?.CardClass ?? 0;
-			OnDeckEditing(deckClass);
+			OnDeckEditing();
 		}
 	}
 
@@ -754,21 +757,21 @@ public class ArenaPickHelperViewModel : ViewModel
 		}
 	}
 
-	private readonly Dictionary<int, ArenaCardStats?> _arenaCardStatsCache = new();
+	private readonly Dictionary<(long? deckId, int redraftNumber), ArenaCardStats?> _arenaCardStatsCache = new();
 
-	public async void OnDeckEditing(int classNumber)
+	public async void OnDeckEditing()
 	{
 		if(!Config.Instance.EnableArenasmithOverlay)
 			return;
 		CardStats = null;
 		Messages = null;
-		if(!_arenaCardStatsCache.TryGetValue(classNumber, out var stats))
+		// @todo: refactor this. We call this in a few places, but should probably not call it at all.
+		var arenaInfo = Reflection.Client.GetArenaDeck();
+		var accountId = Reflection.Client.GetAccountId();
+		var redraftNumber = arenaInfo?.Losses ?? 1;
+		var deckId = arenaInfo?.Deck.Id;
+		if(!_arenaCardStatsCache.TryGetValue((deckId, redraftNumber), out var stats))
 		{
-			 // @todo: refactor this. We call this in a few places, but should probably not call it at all.
-			var arenaInfo = Reflection.Client.GetArenaDeck();
-			var accountId = Reflection.Client.GetAccountId();
-			var redraftNumber = arenaInfo?.Losses ?? 1;
-			var deckId = arenaInfo?.Deck.Id;
 
 			if(accountId == null || !deckId.HasValue)
 				return;
@@ -784,8 +787,13 @@ public class ArenaPickHelperViewModel : ViewModel
 				}
 			}
 
-			stats = await MakeRequestEditDeck(_chosenHero, redraftNumber, ArenaSeasonId, arenaInfo?.Deck.Id ?? -1, accountId, IsUnderground);
-			 _arenaCardStatsCache.Add(classNumber, stats);
+			var originalDeck = PickedDeck?.ToArray() ?? new string[] {};
+			var redraftDeck = _pickedRedraftDeck?.ToArray() ?? new string[] {};
+			var deck = originalDeck.Concat(redraftDeck);
+
+			stats = await MakeRequestEditDeck(deck, _chosenHero, redraftNumber, ArenaSeasonId, arenaInfo?.Deck.Id ?? -1, accountId, IsUnderground);
+			Log.Info(stats?.ToString() ?? "");
+			 _arenaCardStatsCache.Add((deckId, redraftNumber), stats);
 		}
 
 		RedraftDiscardVisibility = Config.Instance.ShowArenaRedraftDiscard ? Visibility.Visible : Visibility.Collapsed;
@@ -1249,7 +1257,7 @@ public class ArenaPickHelperViewModel : ViewModel
 	}
 
 	private Task<ArenaCardStats?> MakeRequestEditDeck(
-		// IEnumerable<string> deckCardIds, -- not used so we can cache this
+		IEnumerable<string> deckCardIds,
 		string heroCardId,
 		int redraftNumber,
 		int arenaSeasonId,
@@ -1257,7 +1265,7 @@ public class ArenaPickHelperViewModel : ViewModel
 		AccountId accountId,
 		bool isUnderground)
 	{
-		var parameters = new ArenaScoreDeckParams(heroCardId) {
+		var parameters = new ArenaScoreDeckParams(heroCardId, deckCardIds) {
 			ArenaSeason = arenaSeasonId,
 			PlayerRegion = (int)Helper.GetRegion(accountId.Hi),
 			AccountLo = accountId.Lo,
@@ -1265,6 +1273,8 @@ public class ArenaPickHelperViewModel : ViewModel
 			GameType = isUnderground ? (int)BnetGameType.BGT_UNDERGROUND_ARENA : (int)BnetGameType.BGT_ARENA,
 			RedraftNumber = redraftNumber,
 		};
+
+		Log.Debug(JsonConvert.SerializeObject(parameters));
 
 		return ApiWrapper.ScoreArenaDeck<ArenaCardStats>(parameters);
 	}
