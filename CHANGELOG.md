@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed an issue where opponent's rest in peace related cards would display the heroes swapped.
+
 ## **Release v1.46.11 - 2025-08-21**
 **Arenasmith**:
 - Fixed an issue where some messages would not correctly display the card names.

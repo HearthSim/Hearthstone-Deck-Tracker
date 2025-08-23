@@ -19,7 +19,8 @@ public class RestInPeace: ICardWithRelatedCards
 	{
 		var retval = new List<Card?>();
 
-		var opponent = Core.Game.Player.Id == player.Id ? Core.Game.Opponent : Core.Game.Player;
+		var isPlayer = Core.Game.Player.Id == player.Id;
+		var opponent = isPlayer ? Core.Game.Opponent : Core.Game.Player;
 
 		var playerMinions =  player.DeadMinionsCards.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
 			.Where(card => card is not null).ToList();
@@ -29,7 +30,7 @@ public class RestInPeace: ICardWithRelatedCards
 
 		if(playerMinions.Any())
 		{
-			retval.Add(new Card(PlayerHero));
+			retval.Add(isPlayer ? new Card(PlayerHero) : new Card(OpponentHero));
 			var highestCost = playerMinions.Max(c => c?.Cost);
 			var minionsWithHighestCost = playerMinions.Where(c => (c?.Cost ?? 0) == highestCost);
 			retval.AddRange(minionsWithHighestCost);
@@ -38,7 +39,7 @@ public class RestInPeace: ICardWithRelatedCards
 
 		if(opponentMinions.Any())
 		{
-			retval.Add(new Card(OpponentHero));
+			retval.Add(isPlayer ? new Card(OpponentHero) : new Card(PlayerHero));
 			var highestCost = opponentMinions.Max(c => c?.Cost);
 			var minionsWithHighestCost = opponentMinions.Where(c => (c?.Cost ?? 0) == highestCost);
 			retval.AddRange(minionsWithHighestCost);
