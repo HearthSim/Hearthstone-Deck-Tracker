@@ -1,6 +1,7 @@
 ## **Unreleased**
 **Hearthstone**:
 - Fixed an issue where opponent's rest in peace related cards would display the heroes swapped.
+- Fixed an issue where counters were not correctly appearing/disappearing during discover phase.
 
 ## **Release v1.46.11 - 2025-08-21**
 **Arenasmith**:

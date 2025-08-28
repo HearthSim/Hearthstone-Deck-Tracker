@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
+using NuGet;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
 
@@ -54,7 +55,8 @@ public abstract class BaseCounter : INotifyPropertyChanged
 		var playerEntitiesContains = Game.Player.PlayerEntities.Any(x =>
 			x.CardId == cardId &&
 			x.Info.OriginalZone != null &&
-			!x.IsInSetAside
+			// non-picked discover option entities now go to the graveyard
+			x is { IsInSetAside: false, IsInGraveyard: false }
 		);
 
 		var discoverEntitiesContains = Game.Player.OfferedEntities.Any(x => x.CardId == cardId);
