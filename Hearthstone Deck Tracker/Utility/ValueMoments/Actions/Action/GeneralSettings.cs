@@ -70,5 +70,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("opponent_max_resources_widget")]
 		public bool OpponentMaxResourceWidget { get => !Config.Instance.HideOpponentMaxResourcesWidget; }
+
+		[JsonProperty("mulligan_overlay")]
+		public bool MulliganOverlay { get => Config.Instance.EnableMulliganGuide; }
 	}
 }
