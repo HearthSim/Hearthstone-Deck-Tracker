@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker
 				Config.Load();
 			}
 
-			var forceSoftwareRendering = Config.Instance.ForceSoftwareRendering;
+			var forceSoftwareRendering = !Config.Instance.UseHardwareAcceleration;
 			if(forceSoftwareRendering == null)
 			{
 				// avoid using hardware acceleration if the render capability is low. This solves the most common OOM crashes

@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker
 
 
 		[DefaultValue(null)]
-		public bool? ForceSoftwareRendering = null;
+		public bool? UseHardwareAcceleration = null;
 
 		[DefaultValue("Blue")]
 		public string AccentName = "Blue";
