@@ -88,6 +88,13 @@
                   VerticalAlignment="Top" Checked="CheckboxAlternativeScreenCapture_Checked"
                   Unchecked="CheckboxAlternativeScreenCapture_Unchecked"
                   ToolTip="{lex:Loc Options_Tracker_Settings_CheckBox_AltScreenCapture_Tooltip}" />
+        <CheckBox x:Name="CheckboxDisableHardwareAcceleration" Content="{lex:Loc Options_Tracker_General_CheckBox_DisableHardwareAcceleration}"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0"
+                  VerticalAlignment="Top" Checked="CheckboxDisableHardwareAcceleration_Checked"
+                  Unchecked="CheckboxDisableHardwareAcceleration_Unchecked"
+                  ToolTip="{lex:Loc Options_Tracker_General_CheckBox_DisableHardwareAcceleration_Tooltip}" />
         <CheckBox x:Name="CheckboxShowNewsBar" Content="{lex:Loc Options_Tracker_Settings_CheckBox_Newsbar}"
                   HorizontalAlignment="Left" Margin="10,5,0,0"
                   VerticalAlignment="Top" Click="CheckboxShowNewsBar_OnClick" />

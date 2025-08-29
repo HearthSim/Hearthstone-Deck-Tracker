@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -1043,6 +1044,31 @@ namespace Hearthstone_Deck_Tracker
 			var totalScale = new Vector(parentScale.X * scale.X, parentScale.Y * scale.Y);
 			cache[element] = totalScale;
 			return totalScale;
+		}
+
+		public static bool IsIntelGpu()
+		{
+			try
+			{
+				// Query for GPU details using WMI (Windows Management Instrumentation)
+				var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_VideoController");
+				var objs = searcher.Get();
+				if(objs.Count == 1)
+				{
+					var obj = objs.Cast<ManagementObject>().First();
+					var gpuName = obj["Name"]?.ToString();
+					if (gpuName != null && gpuName.Contains("Intel"))
+					{
+						return true;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Log.Error($"Error checking GPU: {ex.Message}");
+			}
+
+			return false;
 		}
 	}
 }

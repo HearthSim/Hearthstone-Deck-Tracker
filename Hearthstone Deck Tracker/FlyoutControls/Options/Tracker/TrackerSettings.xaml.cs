@@ -48,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxAnalytics.IsChecked = Config.Instance.GoogleAnalytics;
 
 			CheckboxAlternativeScreenCapture.IsChecked = Config.Instance.AlternativeScreenCapture;
+			CheckboxDisableHardwareAcceleration.IsChecked = Config.Instance.ForceSoftwareRendering;
 #if(!SQUIRREL)
 			CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
 			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
@@ -372,6 +373,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AlternativeScreenCapture = false;
 			Config.Save();
+		}
+
+		private void CheckboxDisableHardwareAcceleration_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ForceSoftwareRendering = true;
+			Config.Save();
+			this.ParentMainWindow()?.ShowRestartDialog();
+		}
+
+		private void CheckboxDisableHardwareAcceleration_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ForceSoftwareRendering = false;
+			Config.Save();
+			this.ParentMainWindow()?.ShowRestartDialog();
 		}
 
 		private async void ButtonHearthstoneLogsDirectory_Click(object sender, RoutedEventArgs e)

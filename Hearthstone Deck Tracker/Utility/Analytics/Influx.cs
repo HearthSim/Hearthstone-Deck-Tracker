@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static DateTime? _lastMainWindowActivation;
 		private static DateTime _oAuthInitiated;
 
-		public static void OnAppStart(Version version, bool isNew, bool authenticated, bool premium, int startupDuration, int numPlugins, bool cleanShutdown, bool skippedSplashscreen)
+		public static void OnAppStart(Version version, bool isNew, bool authenticated, bool premium, int startupDuration, int numPlugins, bool cleanShutdown, bool skippedSplashscreen, bool forceSoftwareRendering)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("lang_ui", Config.Instance.Localization.ToString())
 				.Tag("clean_shutdown", cleanShutdown)
 				.Tag("skipped_splashscreen", skippedSplashscreen)
+				.Tag("forced_software_rendering", forceSoftwareRendering)
 				.Field("num_plugins", numPlugins)
 				.Field("startup_duration", startupDuration);
 #if(SQUIRREL)

@@ -30,6 +30,8 @@ using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System.Linq;
 using System.Net.Http;
+using System.Windows.Interop;
+using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Stats;
@@ -87,6 +89,24 @@ namespace Hearthstone_Deck_Tracker
 				// We may load the config earlier as part of squirrel init
 				Config.Load();
 			}
+
+			var forceSoftwareRendering = Config.Instance.ForceSoftwareRendering;
+			if(forceSoftwareRendering == null)
+			{
+				// avoid using hardware acceleration if the render capability is low. This solves the most common OOM crashes
+				// more info: https://stackoverflow.com/questions/7737372/wpf-crash-with-intel-hd-video-cards and https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf/4951250#4951250
+				var renderingTier = RenderCapability.Tier >> 16;
+				// force Intel Arc gpus to use software rendering
+				var isIntelGpu = Helper.IsIntelGpu();
+				forceSoftwareRendering = renderingTier == 0 || isIntelGpu;
+
+			}
+
+			if (forceSoftwareRendering.Value)
+			{
+				RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
+			}
+
 
 			var splashScreenWindow = new SplashScreenWindow();
 			splashScreenWindow.ShowConditional();
@@ -260,7 +280,8 @@ namespace Hearthstone_Deck_Tracker
 				(int)(DateTime.UtcNow - _startUpTime).TotalSeconds,
 				PluginManager.Instance.Plugins.Count,
 				Config.Instance.CleanShutdown,
-				Updater.Status.SkipStartupCheck
+				Updater.Status.SkipStartupCheck,
+				forceSoftwareRendering.Value
 			);
 
 			Config.Instance.CleanShutdown = false;
