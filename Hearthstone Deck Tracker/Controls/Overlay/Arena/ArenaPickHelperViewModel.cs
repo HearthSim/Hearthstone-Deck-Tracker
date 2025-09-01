@@ -787,9 +787,11 @@ public class ArenaPickHelperViewModel : ViewModel
 				}
 			}
 
+			// sometimes the game already has the 35 cards in the original deck, other times it has them split
+			// depending on the timing of memory reading
 			var originalDeck = PickedDeck?.ToArray() ?? new string[] {};
 			var redraftDeck = _pickedRedraftDeck?.ToArray() ?? new string[] {};
-			var deck = originalDeck.Concat(redraftDeck);
+			var deck = originalDeck.Length == 35 ? originalDeck : originalDeck.Concat(redraftDeck);
 
 			stats = await MakeRequestEditDeck(deck, _chosenHero, redraftNumber, ArenaSeasonId, arenaInfo?.Deck.Id ?? -1, accountId, IsUnderground);
 			Log.Info(stats?.ToString() ?? "");
