@@ -1,3 +1,7 @@
+## **Release v1.46.13 - 2025-09-01**
+**Arenasmith**:
+- Fixed an issue where scores were not appearing on re-draft discard.
+
 ## **Release v1.46.12 - 2025-08-29**
 **Hearthstone**:
 - Fixed a crash issue with integrated Intel GPUs caused by "Out of Memory" errors in HDT. Hardware Acceleration for HDT is now disabled by default for affected GPUs and is also available as a configurable setting for all users.
