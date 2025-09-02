@@ -127,6 +127,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool IsInMenu { get; set; }
 		public bool IsUsingPremade { get; set; }
 		public bool IsRunning { get; set; }
+		public bool IsBattlegroundsCombatPhase { get; set; }
 		public Region CurrentRegion { get; set; }
 		public GameStats? CurrentGameStats { get; set; }
 		public HearthMirror.Objects.Deck? CurrentSelectedDeck { get; set; }
@@ -413,7 +414,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ProposedAttacker = 0;
 			ProposedDefender = 0;
 			Entities.Clear();
-			SavedReplay = false;
+			IsBattlegroundsCombatPhase = false;
 			SecretsManager.Reset();
 			SetupDone = false;
 			_spectator = null;

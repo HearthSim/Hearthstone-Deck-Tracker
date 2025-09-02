@@ -474,6 +474,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(_game.IsBattlegroundsMatch)
 				{
+					_game.IsBattlegroundsCombatPhase = false;
 					_game.PrimaryPlayerId = _game.Player.Id;
 					OpponentDeadForTracker.ShoppingStarted(_game);
 					if(_game.CurrentGameStats != null && turn.Item2 > 1)

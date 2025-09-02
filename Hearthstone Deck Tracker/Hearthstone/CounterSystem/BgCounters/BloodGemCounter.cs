@@ -16,7 +16,16 @@ public class BloodGemCounter : StatsCounter
 	{
 	}
 
-	public override bool ShouldShow() => Game.IsBattlegroundsMatch && (AttackCounter > 3 || HealthCounter > 3 || Game.Player.Board.Any(e => e.Card.IsQuillboar()));
+	public override bool ShouldShow()
+	{
+		if(!Game.IsBattlegroundsMatch)
+			return false;
+
+		var boardHasQuillboar = Game.Player.Board.Any(e => e.Card.IsQuillboar() && !e.Card.IsAllRace());
+		var handHasQuillboar = Game.Player.Hand.Any(e => e.Card.IsQuillboar() && !e.Card.IsAllRace());
+
+		return AttackCounter > 3 || HealthCounter > 3 || boardHasQuillboar || handHasQuillboar;
+	}
 
 	public override string[] GetCardsToDisplay()
 	{
@@ -32,19 +41,33 @@ public class BloodGemCounter : StatsCounter
 		if(!Game.IsBattlegroundsMatch)
 			return;
 
-		if(entity.IsControlledBy(Game.Player.Id) == IsPlayerCounter)
+		if(entity.IsControlledBy(Game.Player.Id) != IsPlayerCounter)
+			return;
+
+		if(tag == GameTag.BACON_BLOODGEMBUFFATKVALUE)
 		{
-			if(tag == GameTag.BACON_BLOODGEMBUFFATKVALUE)
-			{
-				AttackCounter = value + 1;
-			}
-
-			if(tag == GameTag.BACON_BLOODGEMBUFFHEALTHVALUE)
-			{
-				HealthCounter = value + 1;
-			}
-
+			AttackCounter = value + 1;
 			OnCounterChanged();
 		}
+
+		if(tag == GameTag.BACON_BLOODGEMBUFFHEALTHVALUE)
+		{
+			HealthCounter = value + 1;
+			OnCounterChanged();
+		}
+
+		if(Game.IsBattlegroundsCombatPhase)
+			return;
+
+		if(!entity.IsMinion)
+			return;
+
+		if(tag != GameTag.ZONE)
+			return;
+
+		if(prevValue != (int)Zone.PLAY && prevValue != (int)Zone.HAND)
+			return;
+
+		OnCounterChanged();
 	}
 }

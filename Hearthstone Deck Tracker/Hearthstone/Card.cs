@@ -250,6 +250,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return false;
 		}
 
+		public bool IsAllRace() => RaceEnum == HearthDb.Enums.Race.ALL || SecondaryRaceEnum == HearthDb.Enums.Race.ALL;
+
 		public bool IsMech() => HasRace(HearthDb.Enums.Race.MECHANICAL);
 
 		public bool IsDemon() => HasRace(HearthDb.Enums.Race.DEMON);

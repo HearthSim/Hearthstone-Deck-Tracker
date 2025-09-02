@@ -170,6 +170,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(prevValue == 1 && value == 0)
 			{
+				game.IsBattlegroundsCombatPhase = true;
 				if(game.IsBattlegroundsSoloMatch && game.CurrentGameStats != null)
 				{
 					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
@@ -185,6 +186,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 			if(prevValue == 1 && value == 0)
 			{
+				game.IsBattlegroundsCombatPhase = true;
 				if(!game.IsBattlegroundsDuosMatch || game.DuosWasOpponentHeroModified)
 				{
 					game.SnapshotBattlegroundsBoardState();
