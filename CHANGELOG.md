@@ -1,5 +1,6 @@
 ## **Release v1.46.14 - 2025-09-02**
 **Updated for Hearthstone 33.4**
+
 **Hearthstone**:
 - Added card highlighting for Day of Rebirth cards.
 - Fixed an issue where "Start of the Game" cards would be identified in opponent's hand when drawn by Nightmare Lord Xavius.
