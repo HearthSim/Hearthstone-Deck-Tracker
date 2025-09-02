@@ -422,6 +422,22 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
+		public static void OnBobsBuddyUnsupportedInteraction(string? cardId, string message, int turn, bool isDuos)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_bb_unsupported_interaction")
+				.Tag("turn", turn)
+				.Tag("is_duos", isDuos.ToString())
+				.Tag("bb_version", BobsBuddyUtils.VersionString)
+				.Field("message", Regex.Escape(message));
+
+			if(cardId != null)
+				point.Field("card_id", cardId);
+
+			WritePoint(point.Build());
+		}
+
 		private static readonly List<InfluxPoint> _queue = new();
 		public static void SendQueuedMetrics()
 		{

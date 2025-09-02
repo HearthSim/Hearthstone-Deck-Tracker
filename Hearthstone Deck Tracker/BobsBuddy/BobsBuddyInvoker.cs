@@ -947,6 +947,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.UnsupportedInteraction, message);
 				if(ReportErrors)
 					Sentry.CaptureBobsBuddyException(ex, _input, _turn, _game.IsBattlegroundsDuosMatch);
+				Influx.OnBobsBuddyUnsupportedInteraction(ex.Entity?.CardID, message, _turn, _game.IsBattlegroundsDuosMatch);
 				Output = null;
 				return null;
 			}
