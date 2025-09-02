@@ -181,6 +181,10 @@ namespace Hearthstone_Deck_Tracker
 						break;
 				}
 			}
+			else
+			{
+				Log.Warn("Log is not complete!");
+			}
 
 			var powerLog = new List<string>();
 			foreach(var stored in _game.StoredPowerLogs.Where(x => x.Item1 == _game.MetaData.ServerInfo?.GameHandle))
@@ -248,7 +252,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async Task UpdatePostGameBattlegroundsRating(GameStats gs)
 		{
-			var data = await Helper.RetryWhileNull(Reflection.Client.GetBaconRatingChangeData);
+			var data = await Helper.RetryWhileNull(Reflection.Client.GetBaconRatingChangeData, 5, 500);
 			if(data == null)
 			{
 				Log.Warn("Could not get battlegrounds rating");
