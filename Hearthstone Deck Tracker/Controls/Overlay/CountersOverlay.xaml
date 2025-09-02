@@ -15,7 +15,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border extensions:OverlayExtensions.IsOverlayHoverVisible="True" ToolTipService.Placement="Top" ToolTipService.VerticalOffset="5"
-                            ToolTipService.InitialShowDelay="400" extensions:OverlayExtensions.AutoScaleToolTip="True"
+                            ToolTipService.InitialShowDelay="600" ToolTipService.BetweenShowDelay="1200"  extensions:OverlayExtensions.AutoScaleToolTip="True"
                             Margin="{Binding DataContext.InnerMargin, RelativeSource={RelativeSource AncestorType=UserControl}}"
                             Background="#CC23272A" BorderBrush="#141617" BorderThickness="2" CornerRadius="20" >
                         <extensions:OverlayExtensions.ToolTip>
