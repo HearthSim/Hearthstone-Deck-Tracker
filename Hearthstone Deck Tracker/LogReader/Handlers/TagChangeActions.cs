@@ -326,6 +326,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			}
 
+			// prevents dark gift leaking the card
+			if(entity.CardId == NonCollectible.Neutral.TreacherousTormentor_DarkGiftToken)
+			{
+				targetEntity.Info.RevealedOnHistory = false;
+				targetEntity.Info.Hidden = true;
+				return;
+			}
+
 			OnDredge(entity, targetEntity, game, gameState);
 		}
 

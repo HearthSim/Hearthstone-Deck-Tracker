@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed an issue where "Start of the Game" cards would be identified in opponent's hand when drawn by Nightmare Lord Xavius.
+
 ## **Release v1.46.13 - 2025-09-01**
 **Arenasmith**:
 - Fixed an issue where scores were not appearing on re-draft discard.
