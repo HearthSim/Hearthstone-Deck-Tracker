@@ -2,6 +2,12 @@
 **Hearthstone**:
 - Fixed an issue where "Start of the Game" cards would be identified in opponent's hand when drawn by Nightmare Lord Xavius.
 
+**Battlegrounds**:
+- Fixed conditions for displaying the Blood Gem Counter.
+- Fixed an issue where the Shop Elemental Buffs counter would not appear.
+- Increased delay to show counter tooltips on hover.
+- Tentatively fixed an issue that prevented MMR results from updating after ranked matches.
+
 ## **Release v1.46.13 - 2025-09-01**
 **Arenasmith**:
 - Fixed an issue where scores were not appearing on re-draft discard.
