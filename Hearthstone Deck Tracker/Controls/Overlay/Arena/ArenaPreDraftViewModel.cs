@@ -390,7 +390,7 @@ public class ArenaPreDraftViewModel : ViewModel
 
 	public ICommand ViewArenaStatsCommand => new Command(() =>
 	{
-		var url = Helper.BuildHsReplayNetUrl("cards", "arena_lobby_view_stats", fragmentParams: new[] { "gameType=UNDERGROUND_ARENA" });
+		var url = Helper.BuildHsReplayNetUrl("arena/cards", "arena_lobby_view_stats", fragmentParams: new[] { "gameType=UNDERGROUND_ARENA" });
 		Helper.TryOpenUrl(url);
 		PossiblySubscribed = true;
 	});
