@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Quests.QuestGuideTooltip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:guides="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:session="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session"
+             xmlns:quests="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Quests"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Border Background="#292D30" CornerRadius="10" MaxWidth="300" MinWidth="200"
+            DataContext="{Binding ViewModel, RelativeSource={RelativeSource AncestorType=quests:QuestGuideTooltip}}"
+            Visibility="{Binding QuestGuideVisibility}">
+        <DockPanel>
+            <Border DockPanel.Dock="Top" Background="#1C2022" CornerRadius="10,10,0,0">
+                <DockPanel>
+                    <Border
+                        DockPanel.Dock="Right"
+                        CornerRadius="0,10,0,0"
+                        Visibility="{Binding IsGuidePublished, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Stretch" Background="#292D30"
+                    >
+                        <StackPanel VerticalAlignment="Center" Margin="10,0,10,0">
+                            <TextBlock HorizontalAlignment="Center" Text="{lex:Loc Battlegrounds_CompGuide_CreatedBy}" Foreground="White" FontSize="9" Opacity="0.8"/>
+                            <TextBlock HorizontalAlignment="Center" Text="JeefHS" Foreground="White" FontSize="10" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <hearthstoneDeckTracker:HearthstoneTextBlock
+                        Text="{lex:Loc Battlegrounds_CompGuide_HowToPlay}"
+                        Margin="10"
+                        FontSize="16" TextAlignment="Center"
+                        HorizontalAlignment="Left" />
+                </DockPanel>
+            </Border>
+            <Border Visibility="{Binding FavorableTribesVisibility}" DockPanel.Dock="Bottom" Background="#1C2022" CornerRadius="0,0,10,10">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <hearthstoneDeckTracker:HearthstoneTextBlock
+                        Text="{lex:Loc Battlegrounds_Guides_FavorableMinions}"
+                        FontSize="12"
+                        TextAlignment="Center"
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                    />
+                    <ItemsControl Grid.Column="1" ItemsSource="{Binding FavorableTribes}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,-8,12,8">
+                                    <Ellipse Fill="#1C2022" Height="44" VerticalAlignment="Top" Margin="-4,-4,-4,0"/>
+                                    <session:BattlegroundsTribe Tribe="{Binding}" >
+                                        <session:BattlegroundsTribe.LayoutTransform>
+                                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                        </session:BattlegroundsTribe.LayoutTransform>
+                                    </session:BattlegroundsTribe>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Border>
+            <StackPanel Margin="20,16,20,16">
+                <hearthstoneDeckTracker:HearthstoneTextBlock
+                    Margin="0,10,0,10"
+                    Visibility="{Binding IsGuidePublished, Converter={StaticResource InverseBoolToVisibility}}"
+                    TextAlignment="Center"
+                    FontSize="12"
+                    Text="{lex:Loc Battlegrounds_Guides_NoGuideAvailable}"
+                    FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+                />
+                <TextBlock
+                    Visibility="{Binding IsGuidePublished, Converter={StaticResource BoolToVisibility}}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    FontSize="15"
+                    LineHeight="23"
+                    Foreground="White"
+                    Margin="0,0,0,3"
+                    guides:TextBlockExtensions.BindableInlines="{Binding PublishedGuide}"
+                />
+            </StackPanel>
+        </DockPanel>
+    </Border>
+</UserControl>

@@ -46,7 +46,8 @@ public class DiscoverStateWatcher
 			var curr = new DiscoverStateArgs(
 				state?.CardId ?? "",
 				state?.ZonePosition ?? 0,
-				state?.ZoneSize ?? 0
+				state?.ZoneSize ?? 0,
+				state?.EntityId ?? 0
 			);
 			if(curr.Equals(_prev))
 				continue;

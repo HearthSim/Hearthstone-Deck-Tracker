@@ -82,7 +82,45 @@
                 </Grid>
 
                 <Grid Name="GuidesTooltipTrigger" Width="{Binding Width}" Height="{Binding Height}" Canvas.Top="{Binding Top}" Canvas.Left="{Binding Left}"
-                      ext:OverlayExtensions.IsOverlayHoverVisible="True" ToolTipService.InitialShowDelay="200" ToolTipService.Placement="{Binding TooltipPlacement}" ToolTipService.HorizontalOffset="{Binding TooltipHorizontalOffset}" ToolTipService.VerticalOffset="{Binding TooltipVerticalOffset}">
+                      ext:OverlayExtensions.IsOverlayHoverVisible="True" ToolTipService.InitialShowDelay="200" ToolTipService.Placement="{Binding TooltipPlacement}" ToolTipService.HorizontalOffset="{Binding TooltipHorizontalOffset}" ToolTipService.VerticalOffset="{Binding TooltipVerticalOffset}"
+                      ext:OverlayExtensions.ToolTipAlignment="{Binding TooltipAlignment}">
+                    <Grid.DataContext>
+                        <windows:CardGridTooltipViewModel/>
+                    </Grid.DataContext>
+                    <ext:OverlayExtensions.ToolTip>
+                        <guides:GuideTooltipContainer Cards="{Binding Cards}" Visibility="{Binding Cards, Converter={StaticResource NullableToVisibility}}">
+                            <guides:GuideTooltipContainer.LayoutTransform>
+                                <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+                            </guides:GuideTooltipContainer.LayoutTransform>
+                            <guides:GuideTooltipContainer.Style>
+                                <Style TargetType="guides:GuideTooltipContainer">
+                                    <Setter Property="Opacity" Value="0"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </guides:GuideTooltipContainer.Style>
+                        </guides:GuideTooltipContainer>
+                    </ext:OverlayExtensions.ToolTip>
+                </Grid>
+                <Grid Name="DiscoveryGuidesTooltipTrigger" Width="{Binding Width}" Height="{Binding Height}" Canvas.Top="{Binding Top}" Canvas.Left="{Binding Left}"
+                      ext:OverlayExtensions.IsOverlayHoverVisible="True" ToolTipService.InitialShowDelay="200" ToolTipService.Placement="{Binding TooltipPlacement}" ToolTipService.HorizontalOffset="{Binding TooltipHorizontalOffset}" ToolTipService.VerticalOffset="{Binding TooltipVerticalOffset}"
+                      ext:OverlayExtensions.ToolTipAlignment="{Binding TooltipAlignment}">
                     <Grid.DataContext>
                         <windows:CardGridTooltipViewModel/>
                     </Grid.DataContext>
@@ -444,7 +482,11 @@
                             </Style>
                         </overlay:TurnCounter.Style>
                     </overlay:TurnCounter>
-                    <guides:GuidesTabs x:Name="GuidesTabs" VerticalAlignment="Top" />
+                    <guides:GuidesTabs
+                        x:Name="GuidesTabs"
+                        VerticalAlignment="Top"
+                        DataContext="{Binding BattlegroundsGuidesTabsViewModel, RelativeSource={RelativeSource AncestorType={x:Type windows:OverlayWindow}}}"
+                        />
                     <minions:BattlegroundsMinions
                         VerticalAlignment="Top"
                         x:Name="BattlegroundsMinions"

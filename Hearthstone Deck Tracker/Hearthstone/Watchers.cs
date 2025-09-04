@@ -13,6 +13,7 @@ using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Arena;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Importing;
@@ -47,8 +48,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DeckPickerWatcher.Change += OnDeckPickerChange;
 			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning);
 			ChoicesWatcher.Change += (sender, args) => Core.Overlay.SetChoicesVisible(args.CurrentChoice?.IsVisible ?? false);
-			BigCardWatcher.Change += OnBigCardChange;
 			DiscoverStateWatcher.Change += OnDiscoverStateChange;
+			BigCardWatcher.Change += OnBigCardChange;
 			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
 			BattlegroundsLeaderboardWatcher.Change += (sender, args) => Core.Overlay.SetHoveredBattlegroundsLeaderboardEntityId(args.HoveredEntityId);
 			MulliganTooltipWatcher.Change += OnMulliganTooltipChange;
@@ -292,11 +293,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				CardId = args.CardId,
 				ZoneSize = args.ZoneSize,
-				ZonePosition = args.ZonePosition
+				ZonePosition = args.ZonePosition,
+				EntityId = args.EntityId
 			};
 
 			Core.Overlay.SetTrinketGuidesTrigger(state.ZoneSize, state.ZonePosition, state.CardId);
 			Core.Overlay.SetRelatedCardsTrigger(state);
+			Core.Overlay.SetQuestGuidesTrigger(state);
+
 			if(Core.Game.IsTraditionalHearthstoneMatch)
 			{
 				Core.Overlay.HighlightPlayerDeckCards(args.CardId);

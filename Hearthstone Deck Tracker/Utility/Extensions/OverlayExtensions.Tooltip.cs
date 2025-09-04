@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Windows;
 
 namespace Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -18,6 +19,17 @@ partial class OverlayExtensions
 	/// as a LayoutTransform to the tooltip element
 	/// </summary>
 	public static void SetAutoScaleToolTip(UIElement element, bool value) => element.SetValue(AutoScaleToolTipProperty, value);
+
+
+	public static readonly DependencyProperty ToolTipAlignmentProperty = DependencyProperty.RegisterAttached("ToolTipAlignment", typeof(AlignmentMode), typeof(OverlayExtensions), new PropertyMetadata(AlignmentMode.Center));
+	public static AlignmentMode GetToolTipAlignment(UIElement element) => (AlignmentMode)element.GetValue(ToolTipAlignmentProperty);
+
+	/// <summary>
+	/// Gets or sets the alignment mode for the tooltip relative to the target element.
+	/// This attached property allows customization of tooltip position (e.g., Start, Center, End) based on
+	/// the tooltip placement when displayed in the overlay.
+	/// </summary>
+	public static void SetToolTipAlignment(UIElement element, AlignmentMode value) => element.SetValue(ToolTipAlignmentProperty, value);
 
 	public static readonly DependencyProperty ToolTipProperty = DependencyProperty.RegisterAttached("ToolTip", typeof(object), typeof(OverlayExtensions), new FrameworkPropertyMetadata(null, OnToolTipChange));
 

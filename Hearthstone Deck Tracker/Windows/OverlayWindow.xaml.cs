@@ -40,6 +40,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Anomalies;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.ChinaModule;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Quests;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Trinkets;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.PlayerResourcesWidget;
@@ -113,9 +114,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public BattlegroundsTrinketPickingViewModel BattlegroundsTrinketPickingViewModel { get; } = new();
 		public BattlegroundsInspirationViewModel BattlegroundsInspirationViewModel { get; } = new();
 
+		public BattlegroundsGuidesTabsViewModel BattlegroundsGuidesTabsViewModel { get; } = new();
 		public BattlegroundsHeroGuideListViewModel BattlegroundsHeroGuideListViewModel { get; } = new();
 		public BattlegroundsAnomalyGuideListViewModel BattlegroundsAnomalyGuideListViewModel { get; } = new();
 		public BattlegroundsTrinketGuideListViewModel BattlegroundsTrinketGuideListViewModel { get; } = new();
+		public BattlegroundsQuestGuideListViewModel BattlegroundsQuestGuideListViewModel { get; } = new();
 
 		public ConstructedMulliganGuidePreLobbyViewModel ConstructedMulliganGuidePreLobbyViewModel { get; } = new();
 		public ConstructedMulliganGuideViewModel ConstructedMulliganGuideViewModel { get; } = new();

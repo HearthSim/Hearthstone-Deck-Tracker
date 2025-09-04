@@ -58,10 +58,21 @@
         </Style>
     </UserControl.Resources>
 
-    <Border Background="#23272A" CornerRadius="0,0,0,3" BorderBrush="#3f4346"
-            BorderThickness="1,0,0,1"
+    <Border Background="#23272A" BorderBrush="#3f4346"
             Padding="9"
     >
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="0,0,0,3"/>
+                <Setter Property="BorderThickness" Value="1,0,0,1"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding HasQuests}" Value="True">
+                        <Setter Property="CornerRadius" Value="0,0,0,0"/>
+                        <Setter Property="BorderThickness" Value="1,0,0,0"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
         <StackPanel DataContext="{Binding SelectedHero}">
             <StackPanel Margin="10,20,10,20" Visibility="{Binding IsHeroSelected, Converter={StaticResource InverseBoolToVisibility}}">
                 <TextBlock
@@ -158,26 +169,27 @@
                                             </ItemsControl>
                                         </StackPanel>
                                     </Border>
+
+                                    <Border BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256" Background="#141617">
+                                        <Grid Margin="7" HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel HorizontalAlignment="Left">
+                                                <TextBlock Text="{lex:Loc Battlegrounds_CompGuide_CreatedBy}" Foreground="White" FontSize="9" Opacity="0.8"/>
+                                                <TextBlock Text="JeefHS" Foreground="White" FontSize="10" FontWeight="Bold" TextAlignment="Left"/>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="{lex:Loc Battlegrounds_CompGuide_LastUpdated}" Foreground="White" HorizontalAlignment="Right" FontSize="9" Opacity="0.8"/>
+                                                <TextBlock Text="{Binding LastUpdatedFormatted}" Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
                                 </StackPanel>
                             </StackPanel>
                         </ScrollViewer>
-                    </Grid>
-                </Border>
-                <Border Grid.Row="2" BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256" Background="#141617" Margin="-9,9,-9,-9" Visibility="{Binding IsGuidePublished, Converter={StaticResource BoolToVisibility}}">
-                    <Grid Margin="7" HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel HorizontalAlignment="Left">
-                            <TextBlock Text="{lex:Loc Battlegrounds_CompGuide_CreatedBy}" Foreground="White" FontSize="9" Opacity="0.8"/>
-                            <TextBlock Text="JeefHS" Foreground="White" FontSize="10" FontWeight="Bold"/>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Text="{lex:Loc Battlegrounds_CompGuide_LastUpdated}" Foreground="White" HorizontalAlignment="Right" FontSize="9" Opacity="0.8"/>
-                            <TextBlock Text="{Binding LastUpdatedFormatted}" Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
-                        </StackPanel>
                     </Grid>
                 </Border>
             </Grid>

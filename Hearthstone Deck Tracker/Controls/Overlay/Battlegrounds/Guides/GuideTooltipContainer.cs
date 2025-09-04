@@ -42,6 +42,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides
 	            };
 	            Content = trinketGuide;
             }
+            else if (card.TypeEnum == CardType.BATTLEGROUND_QUEST_REWARD)
+            {
+	            var questGuide = new Quests.QuestGuideTooltip()
+	            {
+		            Cards = Cards
+	            };
+	            Content = questGuide;
+            }
 	        else if (card.TypeEnum == CardType.BATTLEGROUND_ANOMALY)
             {
                 var anomalyGuide = new Anomalies.AnomalyGuideTooltip

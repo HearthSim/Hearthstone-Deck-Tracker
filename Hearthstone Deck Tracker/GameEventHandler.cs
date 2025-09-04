@@ -631,6 +631,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsTrinketGuideListViewModel.Update();
+				Core.Overlay.BattlegroundsQuestGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
 			}
 		}
@@ -659,6 +660,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 					Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
 					Core.Overlay.BattlegroundsTrinketGuideListViewModel.Update();
+					Core.Overlay.BattlegroundsQuestGuideListViewModel.Update();
 					Watchers.BattlegroundsLeaderboardWatcher.Run();
 					if(_game.IsBattlegroundsDuosMatch)
 						Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
@@ -955,7 +957,9 @@ namespace Hearthstone_Deck_Tracker
 					Tier7Trial.Clear();
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
+					Core.Overlay.BattlegroundsGuidesTabsViewModel.Reset();
 					Core.Overlay.BattlegroundsHeroGuideListViewModel.Reset();
+					Core.Overlay.BattlegroundsQuestGuideListViewModel.Reset();
 					Core.Overlay.BattlegroundsTrinketGuideListViewModel.Reset();
 					Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Reset();
 					Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
@@ -1414,23 +1418,34 @@ namespace Hearthstone_Deck_Tracker
 						);
 
 						// Quest choice
-						var chosenEntity = chosen.FirstOrDefault();
-						if (chosenEntity != null)
-						{
-							var questRewardDbfId = chosenEntity.GetTag(QUEST_REWARD_DATABASE_ID);
-							if (questRewardDbfId > 0)
-							{
-								var questReward = Database.GetCardFromDbfId(questRewardDbfId, collectible: false);
-								if (questReward?.Id != null)
-									Core.Overlay.BattlegroundsMinionsVM.OnQuests(new[] { questReward.Id });
-							}
-						}
+						OnQuestChosen(chosen.FirstOrDefault());
 					}
 					break;
 			}
 
 			_game.Player.OfferedEntityIds.Clear();
 			Core.Overlay.PlayerCounters.UpdateVisibleCounters();
+		}
+
+		private void OnQuestChosen(Entity? entity)
+		{
+			if(entity == null)
+				return;
+
+			var questRewardDbfId = entity.GetTag(QUEST_REWARD_DATABASE_ID);
+
+			if(questRewardDbfId <= 0)
+				return;
+
+			var questReward = Database.GetCardFromDbfId(questRewardDbfId, collectible: false);
+
+			if(questReward == null)
+				return;
+
+			Core.Overlay.BattlegroundsMinionsVM.OnQuests(new[] { questReward.Id });
+			Core.Overlay.BattlegroundsQuestGuideListViewModel.OnQuestSelected(questReward);
+			Core.Overlay.BattlegroundsHeroGuideListViewModel.OnQuestSelected(true);
+			Core.Overlay.BattlegroundsGuidesTabsViewModel.OnQuestSelected(true);
 		}
 
 		private async void HandleHearthstoneMulliganPhase()
@@ -1614,6 +1629,7 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 			Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
 			Core.Overlay.BattlegroundsTrinketGuideListViewModel.Update();
+			Core.Overlay.BattlegroundsQuestGuideListViewModel.Update();
 
 			if(Core.Game.IsBattlegroundsDuosMatch)
 				Watchers.BattlegroundsTeammateBoardStateWatcher.Run();

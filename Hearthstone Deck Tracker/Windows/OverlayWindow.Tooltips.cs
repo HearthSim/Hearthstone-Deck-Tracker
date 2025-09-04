@@ -12,6 +12,7 @@ using System.Windows.Media;
 using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Tooltips;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -165,6 +166,24 @@ public partial class OverlayWindow
 			PlacementMode.Right => (targetPos.X + targetWidth + offsetX, targetPos.Y + targetHeight / 2 - tooltipHeight / 2 + offsetY),
 		};
 
+		var alignment = OverlayExtensions.GetToolTipAlignment(feTarget);
+
+		switch(alignment)
+		{
+			case AlignmentMode.Start:
+				if(placement is PlacementMode.Top or PlacementMode.Bottom)
+					left = targetPos.X + offsetX;
+				else
+					top = targetPos.Y + offsetY;
+				break;
+			case AlignmentMode.End:
+				if(placement is PlacementMode.Top or PlacementMode.Bottom)
+					left = targetPos.X + targetWidth - tooltipWidth + offsetX;
+				else
+					top = targetPos.Y + targetHeight - tooltipHeight + offsetY;
+				break;
+		}
+
 		var actualLeft = Math.Max(0, Math.Min(left, ActualWidth - tooltipWidth));
 		var actualTop = Math.Max(0, Math.Min(top, ActualHeight - tooltipHeight));
 
@@ -257,7 +276,7 @@ public partial class OverlayWindow
 
 	public void SetTrinketGuidesTrigger(int zoneSize, int zonePosition, string cardId)
 	{
-		var vm = (CardGridTooltipViewModel)GuidesTooltipTrigger.DataContext;
+		var vm = (CardGridTooltipViewModel)DiscoveryGuidesTooltipTrigger.DataContext;
 
 		vm.Reset();
 
@@ -289,6 +308,55 @@ public partial class OverlayWindow
 		vm.Width = Height * 0.25;
 		vm.TooltipPlacement = PlacementMode.Bottom;
 		vm.TooltipVerticalOffset = 10 * vm.Scale;
+	}
+
+	public void SetQuestGuidesTrigger(DiscoverState state)
+	{
+		var vm = (CardGridTooltipViewModel)DiscoveryGuidesTooltipTrigger.DataContext;
+
+		vm.Reset();
+
+		if(state.EntityId is null or 0)
+			return;
+
+		if(!Core.Game.Entities.TryGetValue((int)state.EntityId, out var entity))
+			return;
+
+		var questRewardCardId = entity.GetTag(GameTag.QUEST_REWARD_DATABASE_ID);
+		var questRewardCard = Database.GetCardFromDbfId(questRewardCardId, false);
+
+		if(questRewardCard == null)
+			return;
+
+		if(questRewardCard.TypeEnum != CardType.BATTLEGROUND_QUEST_REWARD)
+			return;
+
+		vm.Cards = new List<Card> { questRewardCard };
+
+		GuidesTooltipTrigger.UpdateLayout();
+		UpdateHoverable();
+
+		var bgQuestPickWidth = 0.270;
+		var leftEdge = 0.117;
+
+		var questX = leftEdge + state.ZonePosition * bgQuestPickWidth;
+
+		var rewardCardId = entity.GetTag(GameTag.BACON_CARD_DBID_REWARD);
+		var rewardCard = Database.GetCardFromDbfId(rewardCardId, false);
+		var isRewardCardPresent = rewardCard != null;
+		var isGameTooltipRight = state.ZonePosition == 0;
+
+		if(isRewardCardPresent)
+			isGameTooltipRight = state.ZonePosition + 1 == state.ZoneSize;
+
+		vm.Scale = Height / 1080;
+		vm.Left = Helper.GetScaledXPos(questX, (int)Width, ScreenRatio);
+		vm.Top = Height * 0.22;
+		vm.Height = Height * 0.55;
+		vm.Width = Height * 0.30;
+		vm.TooltipPlacement = isGameTooltipRight ? PlacementMode.Right : PlacementMode.Left;
+		vm.TooltipVerticalOffset = 32 * vm.Scale;
+		vm.TooltipAlignment = AlignmentMode.Start;
 	}
 
 
@@ -599,6 +667,12 @@ public class CardGridTooltipViewModel : ViewModel
 		set => SetProp(value);
 	}
 
+	public AlignmentMode TooltipAlignment
+	{
+		get => GetProp(AlignmentMode.Center);
+		set => SetProp(value);
+	}
+
 	public List<Card>? Cards
 	{
 		get => GetProp<List<Card>?>(null);
@@ -614,6 +688,7 @@ public class CardGridTooltipViewModel : ViewModel
 		TooltipHorizontalOffset = 0;
 		TooltipVerticalOffset = 0;
 		Cards = null;
+		TooltipAlignment = AlignmentMode.Center;
 		TooltipPlacement = PlacementMode.Top;
 	}
 }

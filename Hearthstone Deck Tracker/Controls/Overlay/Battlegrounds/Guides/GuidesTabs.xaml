@@ -8,10 +8,13 @@
              xmlns:comps="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:heroes="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes"
+             xmlns:quests="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Quests"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
              Width="249"
-             d:DesignHeight="249" d:DesignWidth="249">
-
+             d:DesignHeight="249" d:DesignWidth="249"
+             d:DataContext="{d:DesignInstance local:BattlegroundsGuidesTabsViewModel}"
+             >
     <UserControl.Resources>
         <Style TargetType="Button">
             <Setter Property="Cursor" Value="Hand" />
@@ -41,9 +44,6 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <local:GuidesTabsViewModel />
-    </UserControl.DataContext>
 
     <StackPanel extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Background="#2C3135">
@@ -102,10 +102,31 @@
                 </Button.Style>
                 <Grid Width="83"
                       Height="49">
-                    <Rectangle Fill="White" Height="23" Width="21">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Visual="{DynamicResource icon_hero}" />
-                        </Rectangle.OpacityMask>
+                    <Rectangle Fill="White">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Height" Value="27" />
+                                <Setter Property="Width" Value="24" />
+                                <Setter Property="Margin" Value="2.5,3.7,0,0" />
+                                <Setter Property="OpacityMask">
+                                    <Setter.Value>
+                                        <VisualBrush Visual="{DynamicResource icon_hero_and_quest}" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasQuests}" Value="False">
+                                        <Setter Property="Height" Value="23" />
+                                        <Setter Property="Width" Value="21" />
+                                        <Setter Property="Margin" Value="0" />
+                                        <Setter Property="OpacityMask">
+                                            <Setter.Value>
+                                                <VisualBrush Visual="{DynamicResource icon_hero}" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
                     </Rectangle>
                 </Grid>
             </Button>
@@ -117,7 +138,10 @@
                 <ContentControl.Resources>
                     <minions:BattlegroundsMinions x:Key="Minions" />
                     <comps:CompGuideList x:Key="Comps" />
-                    <heroes:HeroGuide x:Key="Heroes" />
+                    <StackPanel x:Key="Heroes">
+                        <heroes:HeroGuide />
+                        <quests:QuestGuide DataContext="{Binding Source={x:Static hearthstoneDeckTracker:Core.Overlay}, Path=BattlegroundsQuestGuideListViewModel}" />
+                    </StackPanel>
 
                     <DataTemplate DataType="{x:Type minions:BattlegroundsMinionsViewModel}">
                         <ContentControl Content="{StaticResource Minions}"/>

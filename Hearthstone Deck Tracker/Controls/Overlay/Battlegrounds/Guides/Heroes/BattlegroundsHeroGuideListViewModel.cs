@@ -20,6 +20,12 @@ public class BattlegroundsHeroGuideListViewModel : ViewModel
 		private set => SetProp(value);
 	}
 
+	public bool HasQuests
+	{
+		get => GetProp(false);
+		private set => SetProp(value);
+	}
+
 	private const string Url = "https://hsreplay.net/api/v1/battlegrounds/hero_guides/";
 	private async Task<HeroGuidesApiResponse?> MakeRequest()
 	{
@@ -68,6 +74,7 @@ public class BattlegroundsHeroGuideListViewModel : ViewModel
 		HeroGuides = null;
 		SelectedHero.HeroCard = null;
 		SelectedHero.HeroGuide = null;
+		HasQuests = false;
 	}
 
 	public BattlegroundsHeroGuideViewModel SelectedHero { get; } = new ();
@@ -95,5 +102,10 @@ public class BattlegroundsHeroGuideListViewModel : ViewModel
 
 		SelectedHero.HeroCard = heroCard;
 		SelectedHero.HeroGuide = guide;
+	}
+
+	public void OnQuestSelected(bool hasQuests)
+	{
+		HasQuests = hasQuests;
 	}
 }
