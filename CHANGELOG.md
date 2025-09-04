@@ -1,4 +1,8 @@
-## **Unreleased**
+## **Release v1.46.15 - 2025-09-04**
+**Battlegrounds**:
+- Added free Quest Guides to the overlay, written by Jeef!\
+  *Presented during Trinket Picking and during game so they're easy to read inbetween turns.*
+
 **Hearthstone**:
 - Fixed an issue where corpse counter would appear when the opponent is not a Warlock with Death Knight Tourist.
 
