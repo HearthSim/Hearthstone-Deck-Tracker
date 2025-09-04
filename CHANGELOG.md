@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed an issue where corpse counter would appear when the opponent is not a Warlock with Death Knight Tourist.
+
 ## **Release v1.46.14 - 2025-09-02**
 **Updated for Hearthstone 33.4**
 
