@@ -275,10 +275,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			if(Core.Game.IsTraditionalHearthstoneMatch)
 			{
-				Core.Overlay.HighlightPlayerDeckCards(state.CardId);
+				var isFriendlyCard = state.Side == (int)Side.FRIENDLY;
+				Core.Overlay.HighlightPlayerDeckCards(isFriendlyCard ? state.CardId : null);
 				if(Core.Windows.PlayerWindow.IsVisible)
 				{
-					Core.Windows.PlayerWindow.HighlightPlayerDeckCards(state.CardId);
+					Core.Windows.PlayerWindow.HighlightPlayerDeckCards(isFriendlyCard ? state.CardId : null);
 				}
 			}
 
