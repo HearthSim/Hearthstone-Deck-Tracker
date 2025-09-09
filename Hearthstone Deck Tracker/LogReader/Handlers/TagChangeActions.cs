@@ -34,6 +34,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case PLAYSTATE:
 						PlaystateChange(gameState, id, game, value);
 						break;
+					case (GameTag)3479: //TAG_PLAYER_CONCEDED_OR_DISCONNECTED
+						BGsConcededChange(gameState, id, game, value);
+						break;
 					case CARDTYPE:
 						CardTypeChange(gameState, id, game, value);
 						break;
@@ -805,6 +808,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					MinionRevealed(id, game, gameState);
 					break;
 			}
+		}
+
+		private void BGsConcededChange(IHsGameState gameState, int id, IGame game, int value)
+		{
+			if(value == 1)
+				gameState.GameHandler?.HandleConcede();
 		}
 
 		private void PlaystateChange(IHsGameState gameState, int id, IGame game, int value)
