@@ -22,8 +22,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 	{
 		private const string ReplicatingMenace_Normal = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantmentBATTLEGROUNDS;
 		private const string ReplicatingMenace_Golden = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantmentTavernBrawl;
-		private const string WhirringProtector_Normal = NonCollectible.Neutral.WhirringProtector;
-		private const string WhirringProtector_Golden = NonCollectible.Neutral.WhirringProtector_WhirringProtector1;
+		private const string WhirringProtector_Normal = NonCollectible.Neutral.WhirringProtector_WhirringProtectorEnchantment;
+		private const string WhirringProtector_Golden = NonCollectible.Neutral.WhirringProtector_WhirringProtector2;
 		private const string LivingSpores = NonCollectible.Neutral.LivingSporesToken2;
 		public const string RebornRiteEnchmantment = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
 		public const string SneedsEnchantment = NonCollectible.Neutral.Sneed_Replicate;
