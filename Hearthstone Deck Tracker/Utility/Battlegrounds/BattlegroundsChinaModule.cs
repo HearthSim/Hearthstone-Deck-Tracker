@@ -249,6 +249,7 @@ public class BattlegroundsChinaModule
 	private static void OnBattlegroundsHDTToolsExecutionProblem(HDTToolsExecutionProblem problem)
 	{
 		Influx.OnBattlegroundsHDTToolsExecutionProblem(problem);
+		Influx.OnBattlegroundsHDTToolsNotFound(problem == HDTToolsExecutionProblem.NotFound, true);
 		if(problem is not HDTToolsExecutionProblem.ElevatedPrivilegesRefused)
 			Sentry.CaptureHDTToolsExecutionProblem(problem.ToString());
 	}
@@ -256,6 +257,7 @@ public class BattlegroundsChinaModule
 	private static void OnBattlegroundsHDTToolsExit(HDTToolsExitCode exitCode)
 	{
 		Influx.OnBattlegroundsHDTToolsExit(exitCode);
+		Influx.OnBattlegroundsHDTToolsNotFound(false);
 		if(exitCode is not HDTToolsExitCode.Success)
 			Sentry.CaptureHDTToolsExitProblem(exitCode.ToString(), HDTToolsManager.GetRecentLogs());
 	}

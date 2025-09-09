@@ -376,6 +376,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
+		public static void OnBattlegroundsHDTToolsNotFound(bool notFound, bool executionProblem = false)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_bgs_hdttools_not_found")
+				.Tag("not_found", notFound)
+				.Tag("execution_problem", executionProblem)
+				.Build()
+			);
+		}
+
 		public static void OnGetBattlegroundsCompositionGuidesError(string reason, string message)
 		{
 			if(!Config.Instance.GoogleAnalytics)
