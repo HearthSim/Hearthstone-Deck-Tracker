@@ -76,7 +76,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			foreach(var tierEntry in compsData.ByTier.OrderBy(t => t.Key))
 			{
 				var tier = tierEntry.Key;
-				var comps = tierEntry.Value.OrderBy(comp => comp.Name).ToList();
+				var comps = tierEntry.Value.OrderBy(comp => comp.TierRank).ToList();
 
 				var viewModels = comps.Select(comp => new BattlegroundsCompGuideViewModel(comp)).ToList();
 
