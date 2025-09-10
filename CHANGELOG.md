@@ -1,3 +1,10 @@
+## **Release v1.46.17 - 2025-09-10**
+**Battlegrounds**:
+- Improved Tier7 Comp Guides sorting.
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Whirring Protector.
+
 ## **Release v1.46.16 - 2025-09-04**
 **Battlegrounds**:
 - Added free Quest Guides to the overlay, written by Jeef!\
