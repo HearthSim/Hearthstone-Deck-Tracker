@@ -83,7 +83,7 @@ public static class SquirrelConnection
 			if(!successResults.Any())
 			{
 				Log.Warn("Could not download any RELEASES file. Connectivity problems?");
-				Influx.OnSquirrelFindBestRemote("ConnectivityProblems");
+				Influx.OnSquirrelFindBestRemote("ConnectivityProblems", "None");
 				return;
 			}
 			foreach(var result in results)
@@ -109,12 +109,12 @@ public static class SquirrelConnection
 			}
 			Config.Save();
 
-			Influx.OnSquirrelFindBestRemote("Success");
+			Influx.OnSquirrelFindBestRemote("Success", best.Remote.ToString());
 			HSReplayNetClientAnalytics.OnSquirrelRemoteChanged(initial, (SquirrelRemote)Config.Instance.SquirrelRemote);
 		}
 		catch(Exception e)
 		{
-			Influx.OnSquirrelFindBestRemote("Error");
+			Influx.OnSquirrelFindBestRemote("Error", "None");
 			Log.Error(e);
 		}
 	}

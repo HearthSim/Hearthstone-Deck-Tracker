@@ -420,7 +420,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
-		public static void OnSquirrelFindBestRemote(string result)
+		public static void OnSquirrelFindBestRemote(string result, string remote)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
@@ -428,6 +428,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			WritePoint(new InfluxPointBuilder("hdt_squirrel_find_best_remote")
 				.Tag("result", result)
+				.Tag("remote", remote)
 				.Tag("timezone", timeZone)
 				.Build()
 			);
