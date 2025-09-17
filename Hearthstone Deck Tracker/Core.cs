@@ -574,7 +574,7 @@ namespace Hearthstone_Deck_Tracker
 			_updateRequestsOpponent--;
 			if(_updateRequestsOpponent > 0)
 				return;
-			var cardWithRelatedCards = Game.RelatedCardsManager.GetCardsOpponentMayHave(Game.Opponent).ToList();
+			var cardWithRelatedCards = Game.RelatedCardsManager.GetCardsOpponentMayHave(Game.Opponent, Game.CurrentGameType, Game.CurrentFormatType).ToList();
 			Overlay.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), cardWithRelatedCards,  reset);
 			if(Windows.OpponentWindow.IsVisible)
 				Windows.OpponentWindow.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), reset);

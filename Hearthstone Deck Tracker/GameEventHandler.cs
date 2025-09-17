@@ -611,6 +611,11 @@ namespace Hearthstone_Deck_Tracker
 
 			Core.Overlay.LinkOpponentDeckDisplay.IsFriendlyMatch = _game.IsFriendlyMatch;
 
+			if(_game.IsTraditionalHearthstoneMatch)
+			{
+				CardLegalityChecker.LoadCardsByFormat(_game.CurrentGameType, _game.CurrentFormatType);
+			}
+
 			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
 			{
 				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
@@ -650,6 +655,11 @@ namespace Hearthstone_Deck_Tracker
 
 			if(_game.GameEntity is null || _game.CurrentMode != Mode.GAMEPLAY)
 				return;
+
+			if(_game.IsTraditionalHearthstoneMatch)
+			{
+				CardLegalityChecker.LoadCardsByFormat(_game.CurrentGameType, _game.CurrentFormatType);
+			}
 
 			if(_game.IsBattlegroundsMatch)
 			{

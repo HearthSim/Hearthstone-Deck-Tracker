@@ -10,7 +10,8 @@ public class VelenLeaderOfTheExiled: ICardWithRelatedCards
 	public bool ShouldShowForOpponent(Player opponent)
 	{
 		var card = Database.GetCardFromId(GetCardId());
-		return CardUtils.IsCardFromFormat(card, Core.Game.CurrentFormat) && GetRelatedCards(opponent).Count > 2;
+		return card != null && card.IsCardLegal(Core.Game.CurrentGameType, Core.Game.CurrentFormatType)
+		                    && GetRelatedCards(opponent).Count > 2;
 	}
 
 	public List<Card?> GetRelatedCards(Player player) =>

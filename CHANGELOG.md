@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Filtered out unavailable cards: Opponent's counters and related cards on Arena are now hidden if they are not in the current card pool.
+
 ## **Release v1.46.18 - 2025-09-17**
 **Updated for Hearthstone 33.4.2**
 

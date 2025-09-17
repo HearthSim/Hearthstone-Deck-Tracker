@@ -22,8 +22,10 @@ public class CardsDrawnThisGameCounter: NumericCounter
 		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
 			return InPlayerDeckOrKnown(RelatedCards);
+		var playhouseGiant = Database.GetCardFromId(HearthDb.CardIds.Collectible.Neutral.PlayhouseGiant);
+		if(playhouseGiant == null) return false;
 		return Game.Opponent.OriginalClass?.ToUpperInvariant() == "ROGUE" &&
-			CardUtils.IsCardFromFormat(Database.GetCardFromId(HearthDb.CardIds.Collectible.Neutral.PlayhouseGiant), Game.CurrentFormat) &&
+			playhouseGiant.IsCardLegal(Game.CurrentGameType, Game.CurrentFormatType) &&
 			Counter >= 10;
 	}
 

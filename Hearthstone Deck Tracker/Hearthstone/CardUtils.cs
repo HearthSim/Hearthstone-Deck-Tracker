@@ -11,21 +11,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone;
 
 public static class CardUtils
 {
-	public static IEnumerable<Card?> FilterCardsByFormat(this IEnumerable<Card?> cards, Format? format)
+	public static IEnumerable<Card?> FilterCardsByFormat(this IEnumerable<Card?> cards, GameType gameType, FormatType format)
 	{
-		return cards.Where(card => IsCardFromFormat(card, format));
-	}
-
-	public static bool IsCardFromFormat(Card? card, Format? format)
-	{
-		return format switch
-		{
-			Format.Classic => card != null && Helper.ClassicOnlySets.Contains(card.Set),
-			Format.Wild => card != null && !Helper.ClassicOnlySets.Contains(card.Set),
-			Format.Standard => card != null && !Helper.WildOnlySets.Contains(card.Set) && !Helper.ClassicOnlySets.Contains(card.Set),
-			Format.Twist => card != null && Helper.TwistSets.Contains(card.Set),
-			_ => true
-		};
+		return cards.Where(card => card != null && card.IsCardLegal(gameType, format));
 	}
 
 	public static IEnumerable<Card?> FilterCardsByPlayerClass(this IEnumerable<Card?> cards, string? playerClass, bool ignoreNeutral = false)
@@ -40,10 +28,10 @@ public static class CardUtils
 		        (!ignoreNeutral && card.CardClass == CardClass.NEUTRAL));
 	}
 
-	public static bool MayCardBeRelevant(Card? card, Format? format, string? playerClass,
+	public static bool MayCardBeRelevant(Card? card, GameType gameType, FormatType format, string? playerClass,
 		bool ignoreNeutral = false)
 	{
-		return IsCardFromFormat(card, format) && IsCardFromPlayerClass(card, playerClass, ignoreNeutral);
+		return card != null && card.IsCardLegal(gameType, format) && IsCardFromPlayerClass(card, playerClass, ignoreNeutral);
 	}
 
 	public static Card? HandleZilliax3000(this Card? card, Player player)

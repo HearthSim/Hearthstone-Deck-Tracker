@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using BobsBuddy.Simulation;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
@@ -64,9 +66,9 @@ public class RelatedCardsManager
 		return RelatedCards.TryGetValue(cardId, out var card) ? card : null;
 	}
 
-	public IEnumerable<Card> GetCardsOpponentMayHave(Player opponent)
+	public IEnumerable<Card> GetCardsOpponentMayHave(Player opponent, GameType gameType, FormatType format)
 	{
-		return RelatedCards.Values.Where(card => card.ShouldShowForOpponent(opponent))
+		return RelatedCards.Values.Where(card => card.ShouldShowForOpponent(opponent) && card.IsCardLegal(gameType, format))
 			.Select(card =>
 			{
 				var c =  Database.GetCardFromId(card.GetCardId());

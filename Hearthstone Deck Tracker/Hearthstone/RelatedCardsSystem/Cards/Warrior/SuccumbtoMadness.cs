@@ -7,7 +7,7 @@ public class SuccumbToMadness: ResurrectionCard
 	public new bool ShouldShowForOpponent(Player opponent)
 	{
 		var card = Database.GetCardFromId(GetCardId());
-		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentFormat, opponent.OriginalClass) && GetRelatedCards(opponent).Count > 0;
+		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentGameType, Core.Game.CurrentFormatType , opponent.OriginalClass) && GetRelatedCards(opponent).Count > 0;
 	}
 
 	protected override bool FilterCard(Card card) => card.IsDragon();

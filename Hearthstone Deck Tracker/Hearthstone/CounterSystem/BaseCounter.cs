@@ -85,7 +85,7 @@ public abstract class BaseCounter : INotifyPropertyChanged
 	{
 		return cardIds
 			.Select(Database.GetCardFromId)
-			.FilterCardsByFormat(Game.CurrentFormat)!
+			.FilterCardsByFormat(Game.CurrentGameType, Game.CurrentFormatType)!
 			.FilterCardsByPlayerClass(playerClass, ignoreNeutral)
 			.Select(card => card!.Id)
 			.ToArray();
