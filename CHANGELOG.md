@@ -1,3 +1,6 @@
+## **Release v1.46.18 - 2025-09-17**
+**Updated for Hearthstone 33.4.2**
+
 ## **Release v1.46.17 - 2025-09-10**
 **Battlegrounds**:
 - Improved Tier7 Comp Guides sorting.
