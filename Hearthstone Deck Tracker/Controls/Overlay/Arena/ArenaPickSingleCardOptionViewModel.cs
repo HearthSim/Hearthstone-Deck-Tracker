@@ -40,9 +40,9 @@ public class ArenaPickSingleCardOptionViewModel : ViewModel
 
 		var score = "-";
 		if(CardStats.ArenasmithDyn?.Score != null)
-			score = CardStats.ArenasmithDyn?.Score?.Split('.').First() ?? "-";
+			score = FormatArenasmithScoreString(CardStats.ArenasmithDyn?.Score);
 		else if(CardStats.Arenasmith?.Score != null)
-			score = CardStats.Arenasmith?.Score?.Split('.').First() ?? "-";
+			score = FormatArenasmithScoreString(CardStats.Arenasmith?.Score);
 
 		var level = 0;
 		if(CardStats.ArenasmithDyn?.Plaque != null)
@@ -56,6 +56,15 @@ public class ArenaPickSingleCardOptionViewModel : ViewModel
 		{
 			Influx.OnArenasmithMissingScore(apiError, cardId);
 		}
+	}
+
+	private static string FormatArenasmithScoreString(string? score)
+	{
+		if(string.IsNullOrWhiteSpace(score)) return "-";
+
+		var intScore = score!.Split('.').First();
+
+		return int.Parse(intScore) >= 10 ? intScore : score;
 	}
 
 	public ArenaPickSingleCardOptionViewModel(string cardId, bool isUnderground)
