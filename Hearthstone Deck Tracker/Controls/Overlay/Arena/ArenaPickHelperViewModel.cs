@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
+using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -374,9 +375,16 @@ public class ArenaPickHelperViewModel : ViewModel
 			if(picked.Length == 30)
 				return;
 
-			var data = await MakeRequestCardPick(offered,  _chosenHero, picked, ArenaSeasonId, deckId.Value, accountId, IsUnderground);
-
-			pickData = data?.Data;
+			try
+			{
+				var data = await MakeRequestCardPick(offered,  _chosenHero, picked, ArenaSeasonId, deckId.Value, accountId, IsUnderground);
+				pickData = data?.Data;
+			}
+			catch(DuplicatedRequestException e)
+			{
+				Log.Info(e.Message);
+				return;
+			}
 		}
 		else
 		{
@@ -385,12 +393,19 @@ public class ArenaPickHelperViewModel : ViewModel
 				return;
 
 			var picked = _pickedRedraftDeck?.ToArray() ?? new string[] {};
-
 			var redraftNumber = arenaInfo?.Losses ?? 1;
-			var data = await MakeRequestRedraftCardPick(offered,  _chosenHero, picked, deckCards, redraftNumber, ArenaSeasonId, deckId.Value, accountId, IsUnderground);
 
-			pickData = data?.Data;
-
+			try
+			{
+				var data = await MakeRequestRedraftCardPick(offered, _chosenHero, picked, deckCards, redraftNumber,
+					ArenaSeasonId, deckId.Value, accountId, IsUnderground);
+				pickData = data?.Data;
+			}
+			catch(DuplicatedRequestException e)
+			{
+				Log.Info(e.Message);
+				return;
+			}
 		}
 
 		ShowErrorMessage = pickData == null;
@@ -1189,7 +1204,7 @@ public class ArenaPickHelperViewModel : ViewModel
 			GameType = isUnderground ? (int)BnetGameType.BGT_UNDERGROUND_ARENA : (int)BnetGameType.BGT_ARENA
 		};
 
-		Log.Debug(JsonConvert.SerializeObject(parameters)); // TODO removeme
+		Log.Debug(JsonConvert.SerializeObject(parameters));
 		return ApiWrapper.GetArenaHeroPickStats<ArenaHeroPickApiResponse>(parameters);
 	}
 
@@ -1215,10 +1230,10 @@ public class ArenaPickHelperViewModel : ViewModel
 		};
 
 		var parametersJson = JsonConvert.SerializeObject(parameters);
-		Log.Debug(parametersJson); // TODO removeme
+		Log.Debug(parametersJson);
 		if(_lastApiCallParameters == parametersJson)
 		{
-			Log.Debug("Last API call parameters DID NOT change");
+			throw new DuplicatedRequestException("Last API call parameters DID NOT change");
 		}
 		_lastApiCallParameters = parametersJson;
 
@@ -1249,10 +1264,10 @@ public class ArenaPickHelperViewModel : ViewModel
 		};
 
 		var parametersJson = JsonConvert.SerializeObject(parameters);
-		Log.Debug(parametersJson); // TODO removeme
+		Log.Debug(parametersJson);
 		if(_lastApiCallParameters == parametersJson)
 		{
-			Log.Debug("Last API call parameters DID NOT change");
+			throw new DuplicatedRequestException("Last API call parameters DID NOT change");
 		}
 		_lastApiCallParameters = parametersJson;
 		return ApiWrapper.GetArenaCardPickStats<ArenaCardPickApiResponse>(parameters);
