@@ -945,6 +945,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowArenaRedraftDiscard = true;
 
+		[DefaultValue(false)]
+		public bool HideOpponentArenaPackages = false;
+
 		[DefaultValue(true)]
 		public bool SortDecksByClass = true;
 

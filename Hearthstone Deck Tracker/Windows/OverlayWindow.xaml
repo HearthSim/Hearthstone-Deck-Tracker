@@ -241,6 +241,7 @@
                        utility:CardListHelper.AutoScaleCardTiles="True" >
                         <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="15" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
                         <controls:AnimatedCardList x:Name="ListViewOpponent" Width="217" />
+                        <controls:DeckLens x:Name="OpponentPackageCardsDeckLens" Visibility="Collapsed" Icon="Arenasmith" IsPremium="True" />
                         <controls:DeckLens x:Name="OpponentRelatedCardsDeckLens" Label="{lex:Loc Related_Cards}" />
                         <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.CardCounterFrame, Source={StaticResource ThemeManager}}">
                             <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />

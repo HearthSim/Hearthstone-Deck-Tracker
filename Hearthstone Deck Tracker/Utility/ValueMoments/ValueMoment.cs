@@ -16,6 +16,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 
 			// Arena
 			public const string ArenasmithOverlay = "Used Arenasmith Overlay during Draft";
+			public const string ArenaOpponentPackage = "Showed opponent's package during arena match";
 
 			// Battlegrounds
 			public const string BGBobsBuddy = "Overlay Bob's Buddy";

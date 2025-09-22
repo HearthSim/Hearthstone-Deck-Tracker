@@ -24,10 +24,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		{
 			HeroDbfId = heroDbfId;
 			HeroName = heroName;
-			MatchResult = matchResult;	
+			MatchResult = matchResult;
 			GameType = gameType;
 			StarLevel = starLevel;
 			MulliganGuideOverlayDisplayed = gameMetrics.ConstructedMulliganGuideOverlayDisplayed;
+			ShowedOpponentArenaPackage = gameMetrics.ArenaShowedOpponentPackage;
 			HearthstoneSettings = new HearthstoneSettings();
 		}
 
@@ -51,6 +52,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonIgnore]
 		public HearthstoneSettings HearthstoneSettings { get; }
+
+		[JsonProperty("showed_opponent_arena_package")]
+		public bool ShowedOpponentArenaPackage { get; }
 
 		[JsonProperty("hdt_hsconstructed_settings_enabled")]
 		[JsonConverter(typeof(VMEnabledSettingsJsonConverter))]

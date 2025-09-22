@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.HsReplay.Data;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using HSReplay;
@@ -444,6 +445,38 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Log.Error(e);
 				return null;
 			}
+		}
+
+		public static async Task<ArenaPackages?> GetArenaPackages()
+		{
+			try
+			{
+				if(HSReplayNetOAuth.AccountData != null)
+					return  await HSReplayNetOAuth.MakeRequest(c => c.GetArenaPackages());
+
+				// Check if the deck is registered for trials
+				var deckId = Reflection.Client.GetArenaDeck()?.Deck.Id;
+				var accountId = Reflection.Client.GetAccountId();
+				if(accountId == null || !deckId.HasValue)
+					return null;
+
+				await ArenaTrial.EnsureLoaded(accountId.Hi, accountId.Lo);
+				if(!ArenaTrial.IsDeckResumable(deckId.Value))
+				{
+					Log.Info("Current deck is not registered for trials, aborting");
+					return null;
+				}
+
+				return await Client.GetArenaPackages(new ArenaPackagesParams {
+					DeckId = deckId.Value, AccountLo = accountId.Lo, PlayerRegion = (int)Helper.GetRegion(accountId.Hi)
+				});
+			}
+			catch (Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+
 		}
 	}
 }

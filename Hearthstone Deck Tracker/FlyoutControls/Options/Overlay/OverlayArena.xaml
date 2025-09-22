@@ -39,6 +39,11 @@
                           IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableArenasmith}"
                           HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
                           Checked="CheckboxShowArenaRedraftDiscard_Checked" Unchecked="CheckboxShowArenaRedraftDiscard_Unchecked" />
+                <CheckBox x:Name="CheckboxShowOpponentPackage" Content="{lex:Loc Options_Overlay_Arena_CheckBox_ShowOpponentPackage}"
+                          ToolTip="{lex:Loc Options_Overlay_Arena_CheckBox_ShowOpponentPackage_Tooltip}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableArenasmith}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"
+                          Checked="CheckboxShowOpponentPackage_Checked" Unchecked="CheckboxShowOpponentPackage_Unchecked" />
             </StackPanel>
         </GroupBox>
     </StackPanel>

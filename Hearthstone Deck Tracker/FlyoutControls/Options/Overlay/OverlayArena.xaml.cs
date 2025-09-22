@@ -42,6 +42,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowArenaRelatedCards.IsChecked = Config.Instance.ShowArenaRelatedCards;
 			CheckboxShowArenaDeckSynergies.IsChecked = Config.Instance.ShowArenaDeckSynergies;
 			CheckboxShowArenaRedraftDiscard.IsChecked = Config.Instance.ShowArenaRedraftDiscard;
+			CheckboxShowOpponentPackage.IsChecked = !Config.Instance.HideOpponentArenaPackages;
 
 			_initialized = true;
 		}
@@ -159,6 +160,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowArenaRedraftDiscard = false;
 			SaveConfig(true);
 			Core.Overlay.ArenaPickHelperViewModel.RedraftDiscardVisibility = Visibility.Collapsed;
+		}
+
+		private void CheckboxShowOpponentPackage_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentArenaPackages = false;
+			SaveConfig(true);
+		}
+
+		private void CheckboxShowOpponentPackage_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentArenaPackages = true;
+			SaveConfig(true);
 		}
 
 		private void CheckboxEnableArenasmith_Checked(object sender, RoutedEventArgs e)

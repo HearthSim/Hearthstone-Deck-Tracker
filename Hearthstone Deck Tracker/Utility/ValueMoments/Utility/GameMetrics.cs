@@ -3,6 +3,7 @@
 	public class GameMetrics
 	{
 		public bool ConstructedMulliganGuideOverlayDisplayed { get; set; }
+		public bool ArenaShowedOpponentPackage { get; set; }
 		public int BattlegroundsMinionTiersClicks { get; private set; }
 		public int BattlegroundsMinionsByMinionTypeFilterClicks { get; private set; }
 		public int BattlegroundsMinionsInspirationClicks { get; set; }

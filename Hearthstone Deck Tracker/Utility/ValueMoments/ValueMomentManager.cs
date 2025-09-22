@@ -73,6 +73,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 
 			if(hearthstoneAction.MulliganGuideOverlayDisplayed)
 				yield return new ValueMoment(VMName.HSMulliganGuideOverlay, ValueMoment.VMKind.Paid);
+
+			if(hearthstoneAction.ShowedOpponentArenaPackage)
+				yield return new ValueMoment(VMName.ArenaOpponentPackage, ValueMoment.VMKind.Paid);
 		}
 
 		private static IEnumerable<ValueMoment> GetEndMatchBattlegroundsValueMoments(VMAction action)

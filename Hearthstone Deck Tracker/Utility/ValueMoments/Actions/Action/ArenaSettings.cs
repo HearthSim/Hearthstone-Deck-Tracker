@@ -26,5 +26,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("arena_redraft_discard_overlay")]
 		public bool ArenaRedraftDiscardOverlay { get => Config.Instance.ShowArenaRedraftDiscard; }
 
+		[JsonProperty("arena_opponent_package")]
+		public bool ArenaOpponentPackage { get => !Config.Instance.HideOpponentArenaPackages; }
+
 	}
 }

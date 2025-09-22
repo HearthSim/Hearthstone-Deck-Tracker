@@ -639,6 +639,11 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.BattlegroundsQuestGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
 			}
+
+			if(_game.IsArenaMatch)
+			{
+				_game.ArenaPackagesManager.UpdatePackages();
+			}
 		}
 
 		private DateTime _lastReconnectStartTimestamp = DateTime.MinValue;
@@ -675,6 +680,11 @@ namespace Hearthstone_Deck_Tracker
 					if(_game.IsBattlegroundsDuosMatch)
 						Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
 				}
+			}
+
+			if(_game.IsArenaMatch)
+			{
+				_game.ArenaPackagesManager.UpdatePackages();
 			}
 		}
 

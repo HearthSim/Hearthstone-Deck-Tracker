@@ -27,7 +27,7 @@ public class PlayedSpellsCounter : NumericCounter
 
 	private readonly string[] _ignoredCards =
 	{
-		// ReachEquilibrium quest intantly casts those 2 other quests, but only count as 1 spell
+		// ReachEquilibrium quest instantly casts those 2 other quests, but only count as 1 spell
 		HearthDb.CardIds.NonCollectible.Priest.ReachEquilibrium_CorruptTheLightToken,
 		HearthDb.CardIds.NonCollectible.Priest.ReachEquilibrium_CleanseTheShadowToken,
 	};

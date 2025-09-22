@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -68,6 +69,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						StackPanelOpponent.Children.Add(ListViewOpponent);
 						break;
 				}
+			}
+
+			if(!Config.Instance.HideOpponentArenaPackages)
+			{
+				StackPanelOpponent.Children.Add(OpponentPackageCardsDeckLens);
 			}
 
 			if(!Config.Instance.HideOpponentRelatedCards)
@@ -145,12 +151,30 @@ namespace Hearthstone_Deck_Tracker.Windows
 			await Task.WhenAll(updates);
 		}
 
+		public async Task UpdateOpponentCards(List<Card> cards, List<Card> cardsWithRelatedCards, (Card? packageKey, IEnumerable<Card> packageCards) arenaPackage, bool reset)
+		{
+			var arenaPacakges = arenaPackage.packageCards.Where(card => cards.All(c => c.Id != card.Id))
+				.ToSortedCardList();
+			var relatedCards = cardsWithRelatedCards.Where(card => cards.All(c => c.Id != card.Id) && arenaPacakges.All(c => c.Id != card.Id)).ToSortedCardList();
+
+			OpponentPackageCardsDeckLens.Label = string.Format(LocUtil.Get("Arena_Legendary_Group_Cards"), arenaPackage.packageKey?.LocalizedName ?? "");
+
+			var updates = new[]
+			{
+				ListViewOpponent.Update(cards, reset),
+				OpponentPackageCardsDeckLens.Update(arenaPacakges, reset),
+				OpponentRelatedCardsDeckLens.Update(relatedCards, reset),
+			};
+			await Task.WhenAll(updates);
+		}
+
 		public async Task UpdateOpponentCards(List<Card> cards, List<Card> cardsWithRelatedCards, bool reset)
 		{
 			var updates = new[]
 			{
 				ListViewOpponent.Update(cards, reset),
 				OpponentRelatedCardsDeckLens.Update(cardsWithRelatedCards.Where(card => cards.All(c => c.Id != card.Id)).ToList(), reset),
+				OpponentPackageCardsDeckLens.Update(new List<Card>(), reset),
 			};
 			await Task.WhenAll(updates);
 		}

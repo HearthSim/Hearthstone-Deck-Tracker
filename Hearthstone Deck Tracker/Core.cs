@@ -574,8 +574,18 @@ namespace Hearthstone_Deck_Tracker
 			_updateRequestsOpponent--;
 			if(_updateRequestsOpponent > 0)
 				return;
+
 			var cardWithRelatedCards = Game.RelatedCardsManager.GetCardsOpponentMayHave(Game.Opponent, Game.CurrentGameType, Game.CurrentFormatType).ToList();
-			Overlay.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), cardWithRelatedCards,  reset);
+			if(Game.IsArenaMatch)
+			{
+				var arenaPackages = Game.ArenaPackagesManager.GetOpponentsPackageCards(Game.Opponent.OpponentCardList);
+				Overlay.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), cardWithRelatedCards, arenaPackages, reset);
+			}
+			else
+			{
+				Overlay.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), cardWithRelatedCards, reset);
+			}
+
 			if(Windows.OpponentWindow.IsVisible)
 				Windows.OpponentWindow.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), reset);
 		}

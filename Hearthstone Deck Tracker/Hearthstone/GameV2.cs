@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Arena;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -56,6 +57,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public ActiveEffects ActiveEffects { get; }
 		public CounterManager CounterManager { get; }
 		public RelatedCardsManager RelatedCardsManager { get; }
+		public ArenaPackagesManager ArenaPackagesManager { get; }
 		public bool IsChinaModuleActive { get; set; }
 		public GameV2()
 		{
@@ -66,6 +68,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ActiveEffects = new ActiveEffects();
 			CounterManager = new CounterManager(this);
 			RelatedCardsManager = new RelatedCardsManager();
+			ArenaPackagesManager = new ArenaPackagesManager();
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
@@ -172,6 +175,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool IsConstructedMatch => CurrentGameType == GameType.GT_RANKED
 										|| CurrentGameType == GameType.GT_CASUAL
 										|| CurrentGameType == GameType.GT_VS_FRIEND;
+
 		public bool IsArenaMatch => CurrentGameType is GameType.GT_ARENA or GameType.GT_UNDERGROUND_ARENA;
 		public bool IsFriendlyMatch => CurrentGameType == GameType.GT_VS_FRIEND;
 

@@ -3,6 +3,7 @@
 - Filtered out unavailable cards: Opponent's counters and related cards on Arena are now hidden if they are not in the current card pool.
 
 **Arenasmith**:
+- Show opponent's legendary group cards during match when they play a card that reveals their legendary.
 - Start showing decimal values for scores lower than 10. This can help to break ties on low scores.
 
 ## **Release v1.46.18 - 2025-09-17**

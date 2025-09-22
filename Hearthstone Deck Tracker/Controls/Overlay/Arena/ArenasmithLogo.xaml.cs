@@ -8,7 +8,7 @@ public partial class ArenasmithLogo : UserControl
 {
 	// Register a DependencyProperty for the brush
 	public static readonly DependencyProperty LogoBrushProperty =
-		DependencyProperty.Register("LogoBrush", typeof(Brush), typeof(ArenasmithLogo), new PropertyMetadata(Application.Current.Resources["Tier7Orange"]));
+		DependencyProperty.Register("LogoBrush", typeof(Brush), typeof(ArenasmithLogo), new PropertyMetadata(Brushes.White));
 
 
 	public Brush LogoBrush
