@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.47.0 - 2025-09-23**
 **Hearthstone**:
 - Filtered out unavailable cards: Opponent's counters and related cards on Arena are now hidden if they are not in the current card pool.
 
