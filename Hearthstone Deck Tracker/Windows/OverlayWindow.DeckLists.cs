@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using NuGet;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -155,7 +157,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var arenaPacakges = arenaPackage.packageCards.Where(card => cards.All(c => c.Id != card.Id))
 				.ToSortedCardList();
-			var relatedCards = cardsWithRelatedCards.Where(card => cards.All(c => c.Id != card.Id) && arenaPacakges.All(c => c.Id != card.Id)).ToSortedCardList();
+
+			// on current arena rotation, only 1 legendary is available per draft.
+			// so if a legendary package is active, no legendary should appear on related cards
+			var hasLegendaryPackage = !arenaPacakges.IsEmpty();
+			var relatedCards = cardsWithRelatedCards.Where(card =>
+					cards.All(c => c.Id != card.Id) &&
+					arenaPacakges.All(c => c.Id != card.Id) &&
+					!(hasLegendaryPackage && card.Rarity == Rarity.LEGENDARY)
+				).ToSortedCardList();
 
 			OpponentPackageCardsDeckLens.Label = string.Format(LocUtil.Get("Arena_Legendary_Group_Cards"), arenaPackage.packageKey?.LocalizedName ?? "");
 
