@@ -6,6 +6,9 @@
 - Show opponent's legendary group cards during match when they play a card that reveals their legendary.
 - Start showing decimal values for scores lower than 10. This can help to break ties on low scores.
 
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Rallying Cry.
+
 ## **Release v1.46.18 - 2025-09-17**
 **Updated for Hearthstone 33.4.2**
 
