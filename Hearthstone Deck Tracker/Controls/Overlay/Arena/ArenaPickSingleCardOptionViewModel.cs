@@ -63,8 +63,9 @@ public class ArenaPickSingleCardOptionViewModel : ViewModel
 		if(string.IsNullOrWhiteSpace(score)) return "-";
 
 		var intScore = score!.Split('.').First();
+		var decimalScore = score!.Split('.').Last();
 
-		return int.Parse(intScore) >= 10 ? intScore : score;
+		return int.Parse(intScore) >= 10 || decimalScore == "0" ? intScore : score;
 	}
 
 	public ArenaPickSingleCardOptionViewModel(string cardId, bool isUnderground)
