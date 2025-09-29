@@ -86,6 +86,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountTheLostCity => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.TheLostCity));
 
+		public int PacksCountAcrossTheTimeways => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.AcrossTheTimeways));
+
 
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
