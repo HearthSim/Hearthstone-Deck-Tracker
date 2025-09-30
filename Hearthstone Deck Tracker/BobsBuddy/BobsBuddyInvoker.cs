@@ -440,6 +440,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				var pHpData = heroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
 				var pHpData2 = heroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
+				Minion? pHpAttachedMinion = null;
+
 				if(heroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
 				{
 					var minionsInPlay = gamePlayer.Board.Where(e => e.IsMinion && e.IsControlledBy(gamePlayer.Id)).Select(x => x.Id);
@@ -462,7 +464,20 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						pHpData = attachedToEntityId;
 				}
 
-				inputPlayer.AddHeroPower(heroPower?.CardId ?? "", friendly, WasHeroPowerActivated(heroPower), pHpData, pHpData2);
+				if(heroPower?.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad)
+				{
+					var attachedEntityId = heroPower.GetTag(GameTag.TAG_SCRIPT_DATA_ENT_1);
+					var attachedEntity = gamePlayer.SetAside.FirstOrDefault(e => e.Id == attachedEntityId);
+
+					if(attachedEntity != null)
+					{
+						pHpAttachedMinion = GetMinionFromEntity(simulator, friendly, attachedEntity,
+							GetAttachedEntities(attachedEntityId));
+					}
+
+				}
+
+				inputPlayer.AddHeroPower(heroPower?.CardId ?? "", friendly, WasHeroPowerActivated(heroPower), pHpData, pHpData2, pHpAttachedMinion);
 			}
 
 			foreach(var quest in gamePlayer.Quests)
