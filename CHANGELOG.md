@@ -1,6 +1,10 @@
+## **Release v1.47.5 - 2025-10-01**
+**Bob's Buddy**:
+- Improved simulation results.
+
 ## **Release v1.47.4 - 2025-09-30**
 **Bob's Buddy**:
-- Fixed incorrect simulation results due to Tavish Hero Power.
+- Fixed incorrect simulation results due to player's Tavish Hero Power.
 
 ## **Release v1.47.3 - 2025-09-29**
 **Updated for Hearthstone 33.6**
