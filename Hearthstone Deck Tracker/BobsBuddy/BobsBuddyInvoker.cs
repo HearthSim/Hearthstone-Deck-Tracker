@@ -440,6 +440,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				var pHpData = heroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
 				var pHpData2 = heroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2) ?? 0;
+				var pHpData3 = heroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3) ?? 0;
 				Minion? pHpAttachedMinion = null;
 
 				if(heroPower?.CardId == NonCollectible.Neutral.TeronGorefiend_RapidReanimation)
@@ -483,7 +484,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				}
 
-				inputPlayer.AddHeroPower(heroPower?.CardId ?? "", friendly, WasHeroPowerActivated(heroPower), pHpData, pHpData2, pHpAttachedMinion);
+				inputPlayer.AddHeroPower(heroPower?.CardId ?? "", friendly, WasHeroPowerActivated(heroPower), pHpData, pHpData2, pHpData3, pHpAttachedMinion);
 			}
 
 			foreach(var quest in gamePlayer.Quests)
