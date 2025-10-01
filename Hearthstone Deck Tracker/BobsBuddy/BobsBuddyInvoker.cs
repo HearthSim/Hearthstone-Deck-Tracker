@@ -466,6 +466,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				if(heroPower?.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad)
 				{
+					if(!friendly)
+					{
+						ErrorState = BobsBuddyErrorState.UnsupportedCards;
+						throw new ArgumentException("Board has unsupported hero power. Exiting.");
+					}
+
 					var attachedEntityId = heroPower.GetTag(GameTag.TAG_SCRIPT_DATA_ENT_1);
 					var attachedEntity = gamePlayer.SetAside.FirstOrDefault(e => e.Id == attachedEntityId);
 
