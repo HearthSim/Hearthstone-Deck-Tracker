@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed an issue where opponent's decklist would not be updated when a quest or aura is played.
+
 ## **Release v1.47.5 - 2025-10-01**
 **Bob's Buddy**:
 - Improved simulation results.

@@ -2385,6 +2385,7 @@ namespace Hearthstone_Deck_Tracker
 					if(card != null)
 						GameEvents.OnOpponentPlay.Execute(card);
 				}
+				Core.UpdateOpponentCards();
 				return;
 			}
 			switch(fromZone)
