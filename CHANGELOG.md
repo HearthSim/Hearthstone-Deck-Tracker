@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.47.6 - 2025-10-03**
 **Hearthstone**:
 - Fixed an issue where opponent's decklist would not be updated when a quest or aura is played.
 
