@@ -321,7 +321,7 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 			return regions;
 		}
 
-		public List<Rect> DrawBgHeroPickingTooltipRegion(int zoneSize, int zonePosition, bool tooltipOnRight, int numCards)
+		public List<Rect> DrawBgHeroPickingTooltipRegion(int zoneSize, int zonePosition, bool tooltipOnRight, int numCards, bool buddiesEnabled = false)
 		{
 			var regions = new List<Rect>();
 
@@ -342,6 +342,13 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 
 			var rectCard = DrawHeroPowerRegion(offsetX, offsetY, BgsHeroPowerHeight, BgsHeroPowerAspectRatio);
 			regions.Add(rectCard);
+
+			if(buddiesEnabled)
+			{
+				var extraOffset = tooltipOnRight ? 0.05 : -0.05;
+				var rectBuddy = DrawCardRegion(offsetX + extraOffset + (tooltipOnRight ? rectCard.Width : -rectCard.Width), offsetY);
+				regions.Add(rectBuddy);
+			}
 
 			return regions;
 		}

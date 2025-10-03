@@ -210,7 +210,7 @@ public partial class OverlayWindow
 		new(0.059, 0.076), // Zone Position 5
 	};
 
-	public void SetHeroGuidesTrigger(int zoneSize, int zonePosition, bool tooltipOnRight, string[] cards)
+	public void SetHeroGuidesTrigger(int zoneSize, int zonePosition, bool tooltipOnRight, string[] cards, bool buddiesEnabled = false)
 	{
 		var vm = (CardGridTooltipViewModel)GuidesTooltipTrigger.DataContext;
 		vm.Reset();
@@ -239,7 +239,9 @@ public partial class OverlayWindow
 		vm.Top = Height * 0.21;
 		vm.Height = Height * 0.40;
 		vm.Width = Height * 0.47;
-		vm.TooltipPlacement = tooltipOnRight ? PlacementMode.Right : PlacementMode.Left;
+		vm.TooltipPlacement = buddiesEnabled
+			? PlacementMode.Bottom
+			: (tooltipOnRight ? PlacementMode.Right : PlacementMode.Left);
 	}
 
 	public void SetAnomalyGuidesTrigger(string cardId)

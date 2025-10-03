@@ -313,11 +313,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal static void OnMulliganTooltipChange(object sender, HearthWatcher.EventArgs.MulliganTooltipArgs args)
 		{
+			var buddiesEnabled = Core.Game.GameEntity?.GetTag(GameTag.BACON_BUDDY_ENABLED) > 0;
 			Core.Overlay.SetHeroPickingTooltipMask(
-				args.ZoneSize, args.ZonePosition, args.IsTooltipOnRight, args.TooltipCards.Length
+				args.ZoneSize, args.ZonePosition, args.IsTooltipOnRight, args.TooltipCards.Length, buddiesEnabled
 			);
 
-			Core.Overlay.SetHeroGuidesTrigger(args.ZoneSize, args.ZonePosition, args.IsTooltipOnRight, args.TooltipCards);
+			Core.Overlay.SetHeroGuidesTrigger(args.ZoneSize, args.ZonePosition, args.IsTooltipOnRight, args.TooltipCards, buddiesEnabled);
 		}
 
 		internal static void OnDeckPickerChange(object sender, HearthWatcher.EventArgs.DeckPickerEventArgs args)

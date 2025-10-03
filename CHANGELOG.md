@@ -2,6 +2,10 @@
 **Hearthstone**:
 - Fixed an issue where opponent's decklist would not be updated when a quest or aura is played.
 
+**Battlegrounds**:
+- Added Buddies Overlay Masking during Hero Picking\
+  *Automatically hides part of the tracker overlay when the buddy appears.*
+
 ## **Release v1.47.5 - 2025-10-01**
 **Bob's Buddy**:
 - Improved simulation results.

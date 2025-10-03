@@ -740,7 +740,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		public void SetHeroPickingTooltipMask(int zoneSize, int zonePosition, bool tooltipOnRight, int numCards)
+		public void SetHeroPickingTooltipMask(int zoneSize, int zonePosition, bool tooltipOnRight, int numCards, bool buddiesEnabled = false)
 		{
 			OpacityMaskOverlay.RemoveMaskedRegion("HeroPickingTooltip");
 
@@ -749,7 +749,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
 
-			var rects = regionDrawer.DrawBgHeroPickingTooltipRegion(zoneSize, zonePosition, tooltipOnRight, numCards);
+			var rects = regionDrawer.DrawBgHeroPickingTooltipRegion(zoneSize, zonePosition, tooltipOnRight, numCards, buddiesEnabled);
 
 			using var _ = OpacityMaskOverlay.StartBatchUpdate();
 			foreach(var rect in rects)
