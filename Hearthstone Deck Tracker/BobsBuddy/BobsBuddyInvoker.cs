@@ -467,21 +467,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				if(heroPower?.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad)
 				{
-					if(!friendly)
-					{
-						ErrorState = BobsBuddyErrorState.UnsupportedCards;
-						throw new ArgumentException("Board has unsupported hero power. Exiting.");
-					}
-
-					var attachedEntityId = heroPower.GetTag(GameTag.TAG_SCRIPT_DATA_ENT_1);
-					var attachedEntity = gamePlayer.SetAside.FirstOrDefault(e => e.Id == attachedEntityId);
-
-					if(attachedEntity != null)
-					{
-						pHpAttachedMinion = GetMinionFromEntity(simulator, friendly, attachedEntity,
-							GetAttachedEntities(attachedEntityId));
-					}
-
+					ErrorState = BobsBuddyErrorState.UnsupportedCards;
+					throw new ArgumentException("Board has unsupported hero power. Exiting.");
 				}
 
 				inputPlayer.AddHeroPower(heroPower?.CardId ?? "", friendly, WasHeroPowerActivated(heroPower), pHpData, pHpData2, pHpData3, pHpAttachedMinion);
