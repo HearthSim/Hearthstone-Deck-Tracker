@@ -1,3 +1,9 @@
+## **Release v1.47.7 - 2025-10-06**
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Malorne.
+- Fixed incorrect simulation results due to Onyxia Hero Power.
+- Fixed incorrect simulation results due to Geared Guard.
+
 ## **Release v1.47.6 - 2025-10-03**
 **Hearthstone**:
 - Fixed an issue where opponent's decklist would not be updated when a quest or aura is played.
