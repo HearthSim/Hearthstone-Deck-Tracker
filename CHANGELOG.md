@@ -1,3 +1,7 @@
+## **Uneleased**
+**Hearthstone**:
+- Fixed an issue where cards drawn by Nightmare Lord Xavius were not removed from the decklist.
+
 ## **Release v1.47.7 - 2025-10-06**
 **Bob's Buddy**:
 - Fixed incorrect simulation results due to Malorne.
