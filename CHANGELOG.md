@@ -1,4 +1,4 @@
-## **Release v1.47.8 - 2025-10-07**
+## **Release v1.47.9 - 2025-10-07**
 **Hearthstone**:
 - Fixed an issue where cards drawn by Nightmare Lord Xavius were not removed from the decklist.
 
