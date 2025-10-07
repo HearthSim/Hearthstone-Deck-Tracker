@@ -1,6 +1,9 @@
-## **Uneleased**
+## **Release v1.47.8 - 2025-10-07**
 **Hearthstone**:
 - Fixed an issue where cards drawn by Nightmare Lord Xavius were not removed from the decklist.
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Tavish Hero Power.
 
 ## **Release v1.47.7 - 2025-10-06**
 **Bob's Buddy**:
