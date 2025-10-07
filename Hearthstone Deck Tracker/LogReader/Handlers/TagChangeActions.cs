@@ -278,16 +278,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
-			if(!game.Entities.TryGetValue(value, out var targetEntity))
-				return;
 
 			if(game.CurrentGameMode == GameMode.Battlegrounds && gameState.CurrentBlock?.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad &&
-				entity.GetTag(CONTROLLER) == game.Opponent.Id && entity.IsInZone(PLAY))
+			   entity.GetTag(CONTROLLER) == game.Opponent.Id && entity.IsInZone(PLAY))
 			{
 				if(game.CurrentGameStats != null)
 					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateOpponentHeroPower(entity);
 			}
 
+			if(!game.Entities.TryGetValue(value, out var targetEntity))
+				return;
 
 			OnDredge(entity, targetEntity, game, gameState);
 
