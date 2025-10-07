@@ -146,6 +146,11 @@
                                         <TextBlock TextAlignment="Left" TextWrapping="Wrap" FontSize="11" LineHeight="17" Foreground="White" Opacity="0.7" guides:TextBlockExtensions.BindableInlines="{Binding HowToPlay}" />
                                     </StackPanel>
 
+                                    <StackPanel Margin="9" Visibility="{Binding IsBuddyGuidePublished, Converter={StaticResource BoolToVisibility}}">
+                                        <hearthstoneDeckTracker:OutlinedTextBlock Margin="0,0,0,8" FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_BuddyGuide}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                                        <TextBlock TextAlignment="Left" TextWrapping="Wrap" FontSize="11" LineHeight="17" Foreground="White" Opacity="0.7" guides:TextBlockExtensions.BindableInlines="{Binding HowToPlayBuddy}" />
+                                    </StackPanel>
+
                                     <Border Visibility="{Binding FavorableTribesVisibility}" BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256" Background="#1c1f22">
                                         <StackPanel Margin="9">
                                             <hearthstoneDeckTracker:OutlinedTextBlock Margin="0,0,0,7" FontSize="12" Text="{lex:Loc Battlegrounds_Guides_FavorableMinions}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>

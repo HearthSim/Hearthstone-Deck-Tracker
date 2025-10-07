@@ -23,6 +23,8 @@ public class BattlegroundsHeroGuideViewModel : ViewModel
 			OnPropertyChanged(nameof(FavorableTribesVisibility));
 			OnPropertyChanged(nameof(IsGuidePublished));
 			OnPropertyChanged(nameof(LastUpdatedFormatted));
+			OnPropertyChanged(nameof(HowToPlayBuddy));
+			OnPropertyChanged(nameof(IsBuddyGuidePublished));
 		}
 	}
 	public Hearthstone.Card? HeroCard
@@ -72,4 +74,8 @@ public class BattlegroundsHeroGuideViewModel : ViewModel
 	public Visibility FavorableTribesVisibility => FavorableTribes != null && FavorableTribes.Any() ? Visible : Collapsed;
 
 	public bool IsGuidePublished => HowToPlay != null && HowToPlay.Any();
+
+	public IEnumerable<Inline>? HowToPlayBuddy =>
+		HeroGuide != null ? ReferencedCardRun.ParseCardsFromText(HeroGuide.BuddyGuide).FirstOrDefault() : null;
+	public bool IsBuddyGuidePublished => IsGuidePublished && Core.Game.BattlegroundsBuddiesEnabled && HowToPlayBuddy != null && HowToPlayBuddy.Any() ;
 }
