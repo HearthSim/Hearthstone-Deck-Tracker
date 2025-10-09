@@ -1,3 +1,6 @@
+## **Release v1.47.10 - 2025-10-09**
+**Updated for Hearthstone 33.6.2**
+
 ## **Release v1.47.9 - 2025-10-07**
 **Hearthstone**:
 - Fixed an issue where cards drawn by Nightmare Lord Xavius were not removed from the decklist.
