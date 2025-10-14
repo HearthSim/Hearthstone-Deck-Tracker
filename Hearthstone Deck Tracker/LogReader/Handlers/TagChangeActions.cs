@@ -340,7 +340,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 
 			// prevents dark gift leaking the card
-			if(entity.CardId == NonCollectible.Neutral.TreacherousTormentor_DarkGiftToken && entity.IsControlledBy(game.Opponent.Id))
+			if(
+				gameState.CurrentBlock?.Parent?.CardId == Collectible.Neutral.NightmareLordXavius &&
+				entity.CardId == NonCollectible.Neutral.TreacherousTormentor_DarkGiftToken &&
+				entity.IsControlledBy(game.Opponent.Id)
+			)
 			{
 				targetEntity.Info.RevealedOnHistory = false;
 				targetEntity.Info.Hidden = true;
