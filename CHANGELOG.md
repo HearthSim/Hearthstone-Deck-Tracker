@@ -3,6 +3,9 @@
 - Added deck highlight to Portal Vanguard.
 - Fixed card marks not appearing for cards discovered by creature of madness.
 
+**Battlegrounds**:
+- Added Buddies Guides to the overlay during Hero Picking.
+
 ## **Release v1.47.11 - 2025-10-09**
 **Updated for Hearthstone 33.6.2**
 

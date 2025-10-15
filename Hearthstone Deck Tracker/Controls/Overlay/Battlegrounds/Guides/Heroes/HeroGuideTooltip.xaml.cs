@@ -62,8 +62,12 @@ public partial class HeroGuideTooltip : UserControl
 		else
 		{
 			ViewModel.PublishedGuide = null;
+			ViewModel.BuddyGuide = null;
 			ViewModel.FavorableTribes = null;
+			return;
 		}
+
+		ViewModel.BuddyGuide = !string.IsNullOrEmpty(heroGuide.BuddyGuide) ? ReferencedCardRun.ParseCardsFromText(heroGuide.BuddyGuide).FirstOrDefault() : null;
 	}
 
 	public BattlegroundsHeroGuideTooltipViewModel ViewModel { get; } = new();
@@ -126,4 +130,15 @@ public class BattlegroundsHeroGuideTooltipViewModel : ViewModel
 	}
 	public bool IsGuidePublished => PublishedGuide != null && PublishedGuide.Any();
 	public Visibility FavorableTribesVisibility => FavorableTribes != null && FavorableTribes.Any() ? Visible : Collapsed;
+
+	public IEnumerable<Inline>? BuddyGuide
+	{
+		get => GetProp<IEnumerable<Inline>?>(null);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(IsBuddyGuidePublished));
+		}
+	}
+	public bool IsBuddyGuidePublished => BuddyGuide != null && BuddyGuide.Any();
 }

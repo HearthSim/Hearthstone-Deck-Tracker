@@ -240,7 +240,7 @@ public partial class OverlayWindow
 		vm.Height = Height * 0.40;
 		vm.Width = Height * 0.47;
 		vm.TooltipPlacement = buddiesEnabled
-			? PlacementMode.Bottom
+			? (tooltipOnRight ? PlacementMode.Left : PlacementMode.Right)
 			: (tooltipOnRight ? PlacementMode.Right : PlacementMode.Left);
 	}
 
