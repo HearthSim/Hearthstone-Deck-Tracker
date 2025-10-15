@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.47.12 - 2025-10-15**
 **Hearthstone**:
 - Added deck highlight to Portal Vanguard.
 - Fixed card marks not appearing for cards discovered by creature of madness.
