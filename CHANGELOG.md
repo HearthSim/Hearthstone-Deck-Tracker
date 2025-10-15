@@ -6,6 +6,10 @@
 **Battlegrounds**:
 - Added Buddies Guides to the overlay during Hero Picking.
 
+**Bob's Buddy**:
+- Fixed incorrect simulation results due to Devout Hellcaller.
+- Added support for Titanic Guardian.
+
 ## **Release v1.47.11 - 2025-10-09**
 **Updated for Hearthstone 33.6.2**
 
