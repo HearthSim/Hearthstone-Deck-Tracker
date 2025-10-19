@@ -2,6 +2,7 @@
 **Hearthstone**:
 - Secret tracker now filters the list of possible secrets by the creator of the secret in Arena and Underground Arena.\
   *This means that only Fire secrets will appear when created by Pyrotechnician or only secrets from the past will appear when created by Tear Reality.*
+- Added Related Cards for Grey Sage Parrot.
 
 ## **Release v1.47.12 - 2025-10-15**
 **Hearthstone**:
