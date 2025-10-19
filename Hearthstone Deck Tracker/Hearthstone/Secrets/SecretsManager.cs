@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -129,11 +130,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			};
 		}
 
+		public Dictionary<string, HashSet<string>>? GetCreatedBySecretsByCreator(GameType gameMode, FormatType format)
+		{
+			if(gameMode is not (GT_ARENA or GT_UNDERGROUND_ARENA)) return null;
+			if(_availableSecrets.CreatedByTypeByCreator != null)
+			{
+				if(_availableSecrets.CreatedByTypeByCreator.TryGetValue(gameMode.ToString(), out var gameModeSecrets))
+					return gameModeSecrets;
+			}
+
+			return null;
+		}
+
 		public List<Card> GetSecretList()
 		{
 			var gameMode = Game.CurrentGameType;
 			var format = Game.CurrentFormatType;
-
 
 			var gameModeHasCardLimit = gameMode switch
 			{
@@ -141,44 +153,129 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				_ => false
 			};
 
-			var opponentEntities = Game.Opponent.RevealedEntities.Where(e => e.Id < 68 && e.IsSecret && e.HasCardId).ToList();
+			var opponentEntities = Game.Opponent.RevealedEntities
+				.Where(e => e.Id < 68 && e is { IsSecret: true, HasCardId: true })
+				.ToList();
 
-			//List of all non-excluded cardIds for created secrets
 			var createdSecrets = Secrets
 				.Where(s => s.Entity.Info.Created)
 				.SelectMany(s => s.Excluded)
 				.Where(x => !x.Value)
 				.Select(x => x.Key)
-				.Distinct().ToList();
+				.Distinct()
+				.ToList();
 
-			bool HasPlayedTwoOf(MultiIdCard card) => opponentEntities.Count(e => card == e.CardId! && !e.Info.Created) >= 2;
+			bool HasPlayedTwoOf(MultiIdCard card) =>
+				opponentEntities.Count(e => card == e.CardId! && !e.Info.Created) >= 2;
 
-			int AdjustCount(MultiIdCard card, int count)
-				=> gameModeHasCardLimit && HasPlayedTwoOf(card) && !createdSecrets.Contains(card) ? 0 : count;
+			int AdjustCount(MultiIdCard card, int count) =>
+				gameModeHasCardLimit && HasPlayedTwoOf(card) && !createdSecrets.Contains(card) ? 0 : count;
+
+			var deckSecrets = GetSecretsFromDeck(format, AdjustCount);
+			var createdSecretsList = GetSecretsCreatedBy(gameMode, format);
+
+			return createdSecretsList.ConcatCardList(deckSecrets).ToList();
+		}
+
+		private IEnumerable<Card> GetSecretsFromDeck(FormatType format, Func<MultiIdCard, int, int> adjustCount)
+		{
+			var availableSecrets = GetAvailableSecrets(Game.CurrentGameType, format);
 
 			var cards = Secrets
-				.SelectMany(secret => secret.Excluded)
-				.GroupBy(id => id.Key)
+				.Where(s => !s.Entity.Info.Created)
+				.SelectMany(s => s.Excluded)
+				.GroupBy(x => x.Key)
 				.Select(group =>
 				{
 					var multiIdCard = CardIds.Secrets.GetSecretMultiIdCard(group.Key.Ids[0]);
-					if(multiIdCard is null)
-					{
+					if (multiIdCard is null)
 						return new QuantifiedMultiIdCard(group.Key, 0);
-					}
-					return new QuantifiedMultiIdCard(group.Key, AdjustCount(multiIdCard, group.Count(x => !x.Value)));
-				});
+					return new QuantifiedMultiIdCard(group.Key, adjustCount(multiIdCard, group.Count(x => !x.Value)));
+				})
+				.Where(x => x.Ids.Any(availableSecrets.Contains));
 
-			var availableSecrets = GetAvailableSecrets(gameMode, format);
-			cards = cards.Where(x => x.Ids.Any(availableSecrets.Contains));
-
-			return cards.Select(x =>
-			{
-				var card = x.GetCardForFormat(format);
-				if (card != null)
-					card.Count = x.Count;
-				return card;
-			}).WhereNotNull().ToList();
+			return QuantifiedCardsToCards(cards, format);
 		}
+
+		private List<Card> GetSecretsCreatedBy(GameType gameMode, FormatType format)
+		{
+			var createdBySecrets = Secrets.Where(s => s.Entity.Info.Created);
+			var availableSecrets = GetAvailableSecrets(gameMode, format);
+
+			if (gameMode is GT_ARENA or GT_UNDERGROUND_ARENA)
+			{
+				var secrets = GetArenaCreatedSecrets(createdBySecrets, availableSecrets, gameMode, format);
+				return secrets;
+			}
+
+			var quantified = createdBySecrets
+				.SelectMany(s => s.Excluded)
+				.Where(x => !x.Value)
+				.GroupBy(x => x.Key)
+				.Select(g =>
+				{
+					var card = CardIds.Secrets.GetSecretMultiIdCard(g.Key.Ids[0]);
+					return card is not null ? new QuantifiedMultiIdCard(g.Key, g.Count()) : new QuantifiedMultiIdCard(g.Key, 0);
+				})
+				.Where(x => x.Ids.Any(availableSecrets.Contains));
+
+			return QuantifiedCardsToCards(quantified, format);
+		}
+
+		private List<Card> GetArenaCreatedSecrets(IEnumerable<Secret> createdBySecrets, HashSet<string> availableSecrets, GameType gameMode, FormatType format)
+		{
+			var secretsCreated = new List<MultiIdCard>();
+			var availableCreatedBy = GetCreatedBySecretsByCreator(gameMode, format);
+
+			if (availableCreatedBy != null)
+			{
+				var creators = createdBySecrets.Select(s =>
+					(s, Game.Opponent.RevealedEntities.FirstOrDefault(e => e.Id == s.Entity.Info.GetCreatorId()))
+				);
+
+				foreach (var (secret, creator) in creators)
+				{
+					var secrets = creator != null && availableCreatedBy.TryGetValue(creator.CardId ?? "", out var creatableSecrets)
+						? secret.Excluded.Where(x => x.Key.Ids.Any(creatableSecrets.Contains))
+						: secret.Excluded.Where(x => x.Key.Ids.Any(availableSecrets.Contains));
+
+					secretsCreated.AddRange(secrets.Where(x => !x.Value).Select(x => x.Key));
+				}
+
+				var quantified = secretsCreated
+					.GroupBy(m => m)
+					.Select(g =>
+					{
+						var card = CardIds.Secrets.GetSecretMultiIdCard(g.Key.Ids[0]);
+						return card is not null ? new QuantifiedMultiIdCard(g.Key, g.Count())
+							: new QuantifiedMultiIdCard(g.Key, 0);
+					});
+
+				return QuantifiedCardsToCards(quantified, format);
+			}
+
+			var quantifiedSecrets = secretsCreated
+				.GroupBy(m => m)
+				.Select(g =>
+				{
+					var card = CardIds.Secrets.GetSecretMultiIdCard(g.Key.Ids[0]);
+					return card is not null ? new QuantifiedMultiIdCard(g.Key, g.Count()) : new QuantifiedMultiIdCard(g.Key, 0);
+				})
+				.Where(x => x.Ids.Any(availableSecrets.Contains));
+
+			return QuantifiedCardsToCards(quantifiedSecrets, format);
+		}
+
+		private static List<Card> QuantifiedCardsToCards(IEnumerable<QuantifiedMultiIdCard> quantified, FormatType format) =>
+        	quantified
+        		.Select(x =>
+        		{
+        			var card = x.GetCardForFormat(format);
+        			if (card != null)
+        				card.Count = x.Count;
+        			return card;
+        		})
+        		.WhereNotNull()
+        		.ToList();
 	}
 }

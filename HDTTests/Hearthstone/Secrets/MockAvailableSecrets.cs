@@ -11,9 +11,12 @@ namespace HDTTests.Hearthstone.Secrets
 	{
 		public Dictionary<string, HashSet<string>> ByType { get; }
 
+		public Dictionary<string, Dictionary<string, HashSet<string>>> CreatedByTypeByCreator { get; }
+
 		public MockAvailableSecrets()
 		{
 			ByType = new Dictionary<string, HashSet<string>>();
+			CreatedByTypeByCreator = new Dictionary<string, Dictionary<string, HashSet<string>>>();
 
 			var ftWild = new HashSet<string>();
 			ftWild.AddRange(Hunter.All.Select(x => x.Ids[0]));
@@ -37,6 +40,9 @@ namespace HDTTests.Hearthstone.Secrets
 				Rogue.All.First().Ids[0]
 			};
 			ByType["GT_ARENA"] = gtArena;
+
+			CreatedByTypeByCreator["GT_ARENA"] = new Dictionary<string, HashSet<string>>();
+			CreatedByTypeByCreator["GT_UNDERGROUND_ARENA"] = new Dictionary<string, HashSet<string>>();
 		}
 	}
 }

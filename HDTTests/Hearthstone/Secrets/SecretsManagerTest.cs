@@ -235,7 +235,7 @@ namespace HDTTests.Hearthstone.Secrets
 			Assert.AreEqual(3, secretsManager.Secrets.Count);
 
 			var allSecrets = Paladin.All.Concat(Mage.All).Concat(Hunter.All).ToList();
-			
+
 			var cards = secretsManager.GetSecretList();
 			foreach(var card in cards)
 				Assert.AreEqual(1, card.Count);
@@ -393,7 +393,7 @@ namespace HDTTests.Hearthstone.Secrets
 			// - An unknown secret is added
 			// - We will create and then reveal a second copy that was NOT created.
 			// - In constructed game modes we expect the unknown secret to not be the 2x revealed one
-			
+
 			game.Entities.Add(0, RevealedSecret(0));
 			var createdSecret = RevealedSecret(1);
 			createdSecret.Info.Created = true;
@@ -447,6 +447,77 @@ namespace HDTTests.Hearthstone.Secrets
 			cards = secretsManager.GetSecretList();
 			// unknown secret is created, can be plagiarize
 			Assert.IsNotNull(cards.SingleOrDefault(c => Rogue.Plagiarize == c.Id && c.Count == 1));
+		}
+
+		[TestMethod]
+		public void ArenaSecretFilteredByCreator()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_ARENA,
+				CurrentFormatType = FormatType.FT_WILD
+			};
+
+			var creator = new Entity(10);
+			creator.CardId = HearthDb.CardIds.Collectible.Mage.TearReality;
+			game.Entities.Add(10, creator);
+
+			var createdSecret = new Entity(1);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.CREATOR, 10);
+			createdSecret.Info.Created = true;
+			game.Entities.Add(1, createdSecret);
+
+			var availableSecrets = new MockAvailableSecrets();
+			availableSecrets.ByType["FT_WILD"] = new HashSet<string> { Mage.Counterspell.Ids[0] };
+			availableSecrets.CreatedByTypeByCreator["GT_ARENA"]
+				.Add(
+					HearthDb.CardIds.Collectible.Mage.TearReality,
+					new HashSet<string>
+					{
+						"AT_002",
+						"BT_003",
+						"CFM_620",
+						"DEEP_000",
+						"DMF_107",
+						"EX1_294",
+						"EX1_295",
+						"EX1_594",
+						"FP1_018",
+						"ICC_082",
+						"MAW_006",
+						"REV_516",
+						"TRL_400",
+						"ULD_239",
+						"UNG_024",
+						"WW_422",
+						"tt_010"
+					}
+				);
+
+			var secretsManager = new SecretsManager(game, availableSecrets);
+
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// Only secrets creatable by TearReality should be included
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.IceBlock == c.Id && c.Count == 1));
+
+			// in not arena only counterspell should be included
+			game.CurrentGameType = GameType.GT_RANKED;
+			cards = secretsManager.GetSecretList();
+
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.IceBlock == c.Id && c.Count == 1));
 		}
 	}
 }

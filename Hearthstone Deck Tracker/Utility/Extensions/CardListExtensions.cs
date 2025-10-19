@@ -55,5 +55,33 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 
 			return diff;
 		}
+
+		public static void AddCard(this List<Card> cards, Card newCard)
+		{
+			var existingCard = cards.FirstOrDefault(c => c.Id == newCard.Id);
+			if (existingCard != null)
+			{
+				existingCard.Count += newCard.Count;
+			}
+			else
+			{
+				cards.Add(newCard);
+			}
+
+		}
+
+		public static void AddCardRange(this List<Card> cards, IEnumerable<Card> newCards)
+		{
+			foreach (var card in newCards)
+			{
+				cards.AddCard(card);
+			}
+		}
+
+		public static List<Card> ConcatCardList(this List<Card> cards, IEnumerable<Card> newCards)
+		{
+			cards.AddCardRange(newCards);
+			return cards;
+		}
 	}
 }
