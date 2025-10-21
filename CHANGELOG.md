@@ -5,6 +5,7 @@
 - Secret tracker now filters the list of possible secrets if they were drawn by a Tutor card.\
   *This means that only Frost secrets will appear when drawn by Watercolor Artist or only Fire secrets when drawn by Living Flame.*
 - Added Related Cards for Grey Sage Parrot.
+- Added deck highlight to Twilight Deceptor and Herald of Lokholar.
 
 ## **Release v1.47.12 - 2025-10-15**
 **Hearthstone**:
