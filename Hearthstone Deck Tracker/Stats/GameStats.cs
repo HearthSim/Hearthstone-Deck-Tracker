@@ -26,6 +26,15 @@ using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
 namespace Hearthstone_Deck_Tracker.Stats
 {
+	public class BattlegroundsLobbyDetails
+	{
+		public List<int> LobbyRawHeroDbfIds { get; set; } = new List<int>();
+		public int? FriendlyPlayerEntityId { get; set; }
+		public int? FriendlyRawHeroDbfId { get; set; }
+		public int? FinalPlacement {  get; set; }
+		public int? AnomalyDbfId { get; set; }
+	}
+
 	public class GameStats : INotifyPropertyChanged
 	{
 		private Guid? _deckId;
@@ -242,6 +251,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public HashSet<Race>? BattlegroundsRaces { get; set; }
 
+		public BattlegroundsLobbyDetails? BattlegroundsDetails { get; set; }
+
 		public int OpponentLegendRank
 		{
 			get { return _opponentLegendRank; }
@@ -274,6 +285,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int ScenarioId { get; set; }
 
 		public GameServerInfo? ServerInfo { get; set; }
+
+		public bool IsReconnect { get; set; }
 
 		public GameType GameType { get; set; }
 
@@ -472,6 +485,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				PlayerDeckVersion = PlayerDeckVersion,
 				HearthstoneBuild = HearthstoneBuild,
 				HsReplay = HsReplay,
+				BattlegroundsDetails = BattlegroundsDetails,
 				IsClone = true
 			};
 			return newGame;

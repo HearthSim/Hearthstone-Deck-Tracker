@@ -88,6 +88,8 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Duels && Config.Instance.HsReplayUploadDuels
 											 || _game.IsMercenariesMatch && Config.Instance.HsReplayUploadMercenaries;
 
+		public bool ShouldSuppressLog => _game.IsBattlegroundsMatch && (_game.CurrentGameStats?.IsReconnect ?? false);
+
 		public void HandleInMenu()
 		{
 			if(_game.IsInMenu)
@@ -199,6 +201,10 @@ namespace Hearthstone_Deck_Tracker
 
 			if(Config.Instance.HsReplayAutoUpload && UploadCurrentGameMode)
 			{
+				if(ShouldSuppressLog)
+				{
+					Log.Info("Reconnected Battlegrounds game detected; this log will likely be invalid.");
+				}
 				var log = powerLog.ToArray();
 				var validationResult = LogValidator.Validate(log);
 				if(validationResult.IsValid)
@@ -596,6 +602,7 @@ namespace Hearthstone_Deck_Tracker
 			_game.CacheGameType();
 			_game.CacheSpectator();
 
+			_game.MetaData.AccountId = Reflection.Client.GetAccountId();
 			_game.MetaData.ServerInfo = Reflection.Client.GetServerInfo();
 			TurnTimer.Instance.Start(_game).Forget();
 
@@ -632,6 +639,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(_game.IsBattlegroundsMatch)
 			{
+				if(_game.CurrentGameStats != null)
+					_game.CurrentGameStats.BattlegroundsDetails = new BattlegroundsLobbyDetails();
 				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 				Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
@@ -670,6 +679,11 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(_game.GameEntity?.GetTag(STEP) > (int)Step.BEGIN_MULLIGAN)
 				{
+					if(_game.CurrentGameStats != null)
+					{
+						_game.CurrentGameStats.IsReconnect = true;
+					}
+
 					Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 					Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 					Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
@@ -954,6 +968,26 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
 				{
 					CaptureMulliganGuideFeedback();
+				}
+
+				if(_game.IsBattlegroundsMatch)
+				{
+					var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
+
+					var finalPlacement = hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0;
+					if(_game.CurrentGameStats.BattlegroundsDetails != null)
+					{
+						_game.CurrentGameStats.BattlegroundsDetails.AnomalyDbfId = _game.GameEntity?.GetTag(GameTag.BACON_GLOBAL_ANOMALY_DBID);
+						_game.CurrentGameStats.BattlegroundsDetails.FinalPlacement = finalPlacement;
+						_game.CurrentGameStats.BattlegroundsDetails.FriendlyRawHeroDbfId = hero?.Card.DbfId;
+						_game.CurrentGameStats.BattlegroundsDetails.FriendlyPlayerEntityId = hero?.Id;
+
+						var allHeroes = _game.Entities.Values.Where(x => x.HasTag(PLAYER_LEADERBOARD_PLACE));
+						foreach(var lobbyHero in allHeroes)
+						{
+							_game.CurrentGameStats.BattlegroundsDetails.LobbyRawHeroDbfIds.Add(lobbyHero.Card.DbfId);
+						}
+					}
 				}
 
 				await SaveReplays(_game.CurrentGameStats);

@@ -12,6 +12,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool Reconnected { get; set; }
 		public UploadMetaData.TwitchVodData? TwitchVodData { get; set; }
 
+		public AccountId? AccountId { get; set; }
+
 		public int? HearthstoneBuild
 		{
 			get
@@ -30,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object Clone() => new GameMetaData
 		{
 			_hearthstoneBuild = _hearthstoneBuild,
+			AccountId = AccountId,
 			EnqueueTime = EnqueueTime,
 			HearthstoneBuild = HearthstoneBuild,
 			Reconnected = Reconnected,

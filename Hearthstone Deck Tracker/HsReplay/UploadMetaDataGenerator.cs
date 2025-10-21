@@ -65,6 +65,25 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				metaData.LeagueId = game.LeagueId;
 			if(game?.GameMode == GameMode.Battlegrounds)
 			{
+				if(gameMetaData?.AccountId != null)
+				{
+					metaData.AccountHi = gameMetaData?.AccountId.Hi;
+					metaData.AccountLo = gameMetaData?.AccountId.Lo;
+				}
+
+				metaData.NumTurns = game.Turns;
+				metaData.GameDurationSeconds = (int) (game!.EndTime - game.StartTime).TotalSeconds;
+
+				metaData.BattlegroundsDetails = new UploadMetaData.BattlegroundsLobbyDetails();
+				if(game!.BattlegroundsDetails != null)
+				{
+					metaData.BattlegroundsDetails.AnomalyDbfId = game.BattlegroundsDetails.AnomalyDbfId;
+					metaData.BattlegroundsDetails.FinalPlacement = game.BattlegroundsDetails.FinalPlacement;
+					metaData.BattlegroundsDetails.FriendlyPlayerEntityId = game.BattlegroundsDetails.FriendlyPlayerEntityId;
+					metaData.BattlegroundsDetails.FriendlyRawHeroDbfId = game.BattlegroundsDetails.FriendlyRawHeroDbfId;
+					metaData.BattlegroundsDetails.LobbyRawHeroDbfIds = game.BattlegroundsDetails.LobbyRawHeroDbfIds.ToArray();
+				}
+
 				metaData.BattlegroundsRaces = BattlegroundsUtils.GetAvailableRaces(game.GameId).Cast<int>().OrderBy(x => x).ToArray();
 			}
 			if(game?.GameMode == GameMode.Mercenaries)
