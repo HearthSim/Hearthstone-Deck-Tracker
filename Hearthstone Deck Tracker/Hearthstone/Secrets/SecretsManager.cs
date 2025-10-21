@@ -209,21 +209,43 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if (gameMode is GT_ARENA or GT_UNDERGROUND_ARENA)
 			{
-				var secrets = GetArenaCreatedSecrets(createdBySecrets, availableSecrets, gameMode, format);
-				return secrets;
+				return GetArenaCreatedSecrets(createdBySecrets, availableSecrets, gameMode, format);
 			}
 
-			var filteredSecrets = GetFilteredSecretsByDrawer(createdBySecrets, availableSecrets);
+			var secretsCreated = new List<MultiIdCard>();
 
-			var quantified = filteredSecrets
-				.GroupBy(m => m)
-				.Select(g =>
+			foreach (var secret in createdBySecrets)
+			{
+				var creator = TryGetCreator(secret);
+				var drawer = TryGetDrawer(secret);
+
+				if (creator != null && _relatedCardsManager.CardGeneratorCards.TryGetValue(creator.CardId ?? "", out var generator))
 				{
-					var card = CardIds.Secrets.GetSecretMultiIdCard(g.Key.Ids[0]);
-					return card is not null ? new QuantifiedMultiIdCard(g.Key, g.Count()) : new QuantifiedMultiIdCard(g.Key, 0);
-				});
+					var creatableSecrets = GetCreatableSecretsFromGenerator(generator, gameMode, format);
 
-			return QuantifiedCardsToCards(quantified, format);
+					if (drawer != null && _relatedCardsManager.SpellSchoolTutorCards.TryGetValue(drawer.CardId ?? "", out var tutor))
+					{
+						secretsCreated.AddRange(GetFilteredSecretsByDrawerFromSingleSecret(secret, tutor, creatableSecrets));
+					}
+					else
+					{
+						secretsCreated.AddRange(GetFilteredSecrets(secret, creatableSecrets));
+					}
+				}
+				else
+				{
+					if (drawer != null && _relatedCardsManager.SpellSchoolTutorCards.TryGetValue(drawer.CardId ?? "", out var tutor))
+					{
+						secretsCreated.AddRange(GetFilteredSecretsByDrawerFromSingleSecret(secret, tutor, availableSecrets));
+					}
+					else
+					{
+						secretsCreated.AddRange(GetFilteredSecrets(secret, availableSecrets));
+					}
+				}
+			}
+
+			return QuantifyAndConvertSecrets(secretsCreated, format);
 		}
 
 		private List<Card> GetArenaCreatedSecrets(IEnumerable<Secret> createdBySecrets, HashSet<string> availableSecrets, GameType gameMode, FormatType format)
@@ -320,6 +342,44 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				.Where(c => spellSchools.Contains(c.GetTag(GameTag.SPELL_SCHOOL)))
 				.Select(c => CardIds.Secrets.GetSecretMultiIdCard(c.Id))
 				.WhereNotNull();
+		}
+
+		private Entity? TryGetCreator(Secret secret) =>
+			Game.Opponent.RevealedEntities.FirstOrDefault(e => e.Id == secret.Entity.Info.GetCreatorId());
+
+		private Entity? TryGetDrawer(Secret secret) =>
+			Game.Opponent.RevealedEntities.FirstOrDefault(e => e.Id == secret.Entity.Info.GetDrawerId());
+
+		private HashSet<string> GetCreatableSecretsFromGenerator(ICardGenerator generator, GameType gameMode, FormatType format)
+		{
+			var allSecrets = CardIds.Secrets.Mage.All
+				.Concat(CardIds.Secrets.Hunter.All)
+				.Concat(CardIds.Secrets.Paladin.All)
+				.Concat(CardIds.Secrets.Rogue.All);
+
+			return allSecrets
+				.Where(s => s.Ids.All(id => generator.IsInGeneratorPool(new Card(id), gameMode, format)))
+				.SelectMany(m => m.Ids)
+				.ToHashSet();
+		}
+
+		private IEnumerable<MultiIdCard> GetFilteredSecrets(Secret secret, HashSet<string> allowedSecretIds) =>
+			secret.Excluded
+				.Where(x => x.Key.Ids.Any(allowedSecretIds.Contains) && !x.Value)
+				.Select(x => x.Key);
+
+		private List<Card> QuantifyAndConvertSecrets(IEnumerable<MultiIdCard> secrets, FormatType format)
+		{
+			var quantified = secrets
+				.GroupBy(m => m)
+				.Select(g =>
+				{
+					var card = CardIds.Secrets.GetSecretMultiIdCard(g.Key.Ids[0]);
+					return card is not null ? new QuantifiedMultiIdCard(g.Key, g.Count())
+						: new QuantifiedMultiIdCard(g.Key, 0);
+				});
+
+			return QuantifiedCardsToCards(quantified, format);
 		}
 
 		private static List<Card> QuantifiedCardsToCards(IEnumerable<QuantifiedMultiIdCard> quantified, FormatType format) =>

@@ -1,7 +1,8 @@
 ## **Unreleased**
 **Hearthstone**:
-- Secret tracker now filters the list of possible secrets by the creator of the secret in Arena and Underground Arena.\
-  *This means that only Fire secrets will appear when created by Pyrotechnician or only secrets from the past will appear when created by Tear Reality.*
+- Secret tracker now filters the list of possible secrets by the creator of the secret.\
+  *This means that only Fire secrets will appear when created by Pyrotechnician or only secrets from the past will appear when created by Tear Reality.*\
+  *It also works for Arena and Underground Arena, where the generation pool may be different from the draft pool.*
 - Secret tracker now filters the list of possible secrets if they were drawn by a Tutor card.\
   *This means that only Frost secrets will appear when drawn by Watercolor Artist or only Fire secrets when drawn by Living Flame.*
 - Added Related Cards for Grey Sage Parrot.

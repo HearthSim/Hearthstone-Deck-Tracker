@@ -460,7 +460,8 @@ namespace HDTTests.Hearthstone.Secrets
 			};
 
 			var creator = new Entity(10);
-			creator.CardId = HearthDb.CardIds.Collectible.Mage.TearReality;
+			// use fake tear reality id because it is now also implemented for non-arena
+			creator.CardId = "HearthDb.CardIds.Collectible.Mage.TearReality";
 			game.Entities.Add(10, creator);
 
 			var createdSecret = new Entity(1);
@@ -475,7 +476,7 @@ namespace HDTTests.Hearthstone.Secrets
 			availableSecrets.ByType["FT_WILD"] = new HashSet<string> { Mage.Counterspell.Ids[0] };
 			availableSecrets.CreatedByTypeByCreator["GT_ARENA"]
 				.Add(
-					HearthDb.CardIds.Collectible.Mage.TearReality,
+					"HearthDb.CardIds.Collectible.Mage.TearReality",
 					new HashSet<string>
 					{
 						"AT_002",
@@ -603,7 +604,7 @@ namespace HDTTests.Hearthstone.Secrets
 
 			var creator = new Entity(10)
 			{
-				CardId = HearthDb.CardIds.Collectible.Mage.TearReality
+				CardId = "HearthDb.CardIds.Collectible.Mage.TearReality"
 			};
 			game.Entities.Add(10, creator);
 
@@ -627,7 +628,7 @@ namespace HDTTests.Hearthstone.Secrets
 			availableSecrets.ByType["FT_WILD"] = new HashSet<string> { Mage.Counterspell.Ids[0] };
 			availableSecrets.CreatedByTypeByCreator["GT_ARENA"]
 				.Add(
-					HearthDb.CardIds.Collectible.Mage.TearReality,
+					"HearthDb.CardIds.Collectible.Mage.TearReality",
 					new HashSet<string>
 					{
 						"AT_002",
@@ -659,6 +660,91 @@ namespace HDTTests.Hearthstone.Secrets
 
 			// Secrets Not from the past should not be included
 			Assert.IsNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.IceBarrier == c.Id && c.Count == 1));
+
+			// Non-Frost secrets should not be included
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
+
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.IceBlock == c.Id && c.Count == 1));
+		}
+
+		[TestMethod]
+		public void RankedSecretFilteredByCreator()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_STANDARD
+			};
+
+			var creator = new Entity(10);
+			creator.CardId = HearthDb.CardIds.Collectible.Mage.TearReality;
+			game.Entities.Add(10, creator);
+
+			var createdSecret = new Entity(1);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.CREATOR, 10);
+			createdSecret.Info.Created = true;
+			game.Entities.Add(1, createdSecret);
+
+			var availableSecrets = new MockAvailableSecrets();
+			availableSecrets.ByType["FT_STANDARD"] = new HashSet<string> { Mage.Counterspell.Ids[0] };
+
+			var secretsManager = new SecretsManager(game, availableSecrets, new RelatedCardsManager());
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// Only secrets creatable by TearReality should be included
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.IceBlock == c.Id && c.Count == 1));
+		}
+
+		[TestMethod]
+		public void RankedSecretFilteredByCreatorAndDrawer()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_STANDARD
+			};
+
+			var creator = new Entity(10);
+			creator.CardId = HearthDb.CardIds.Collectible.Mage.TearReality;
+			game.Entities.Add(10, creator);
+
+			var watercolorArtist = new Entity(20)
+			{
+				CardId = HearthDb.CardIds.Collectible.Mage.WatercolorArtist
+			};
+			game.Entities.Add(20, watercolorArtist);
+
+			var createdSecret = new Entity(1);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.CREATOR, 10);
+			createdSecret.Info.Created = true;
+			createdSecret.Info.DrawerId = 20;
+			game.Entities.Add(1, createdSecret);
+
+			var availableSecrets = new MockAvailableSecrets();
+			availableSecrets.ByType["FT_STANDARD"] = new HashSet<string> { Mage.Counterspell.Ids[0] };
+
+			var secretsManager = new SecretsManager(game, availableSecrets, new RelatedCardsManager());
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// Secrets Not from the past should not be included
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.IceBarrier == c.Id && c.Count == 1));
 
 			// Non-Frost secrets should not be included
 			Assert.IsNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
