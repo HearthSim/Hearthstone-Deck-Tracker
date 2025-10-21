@@ -591,5 +591,79 @@ namespace HDTTests.Hearthstone.Secrets
 			// all secrets should be available
 			Assert.AreEqual(Mage.All.Count, cards.Count);
 		}
+
+		[TestMethod]
+		public void ArenaSecretFilteredByCreatorAndDrawer()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_ARENA,
+				CurrentFormatType = FormatType.FT_WILD
+			};
+
+			var creator = new Entity(10)
+			{
+				CardId = HearthDb.CardIds.Collectible.Mage.TearReality
+			};
+			game.Entities.Add(10, creator);
+
+			var watercolorArtist = new Entity(20)
+			{
+				CardId = HearthDb.CardIds.Collectible.Mage.WatercolorArtist
+			};
+			game.Entities.Add(20, watercolorArtist);
+
+			var createdSecret = new Entity(1);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.CREATOR, 10);
+			createdSecret.Info.Created = true;
+			createdSecret.Info.DrawerId = 20;
+
+			game.Entities.Add(1, createdSecret);
+
+			var availableSecrets = new MockAvailableSecrets();
+			availableSecrets.ByType["FT_WILD"] = new HashSet<string> { Mage.Counterspell.Ids[0] };
+			availableSecrets.CreatedByTypeByCreator["GT_ARENA"]
+				.Add(
+					HearthDb.CardIds.Collectible.Mage.TearReality,
+					new HashSet<string>
+					{
+						"AT_002",
+						"BT_003",
+						"CFM_620",
+						"DEEP_000",
+						"DMF_107",
+						"EX1_294",
+						"EX1_295",
+						"EX1_594",
+						"FP1_018",
+						"ICC_082",
+						"MAW_006",
+						"REV_516",
+						"TRL_400",
+						"ULD_239",
+						"UNG_024",
+						"WW_422",
+						"tt_010"
+					}
+				);
+
+			var secretsManager = new SecretsManager(game, availableSecrets, new RelatedCardsManager());
+
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// Secrets Not from the past should not be included
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+
+			// Non-Frost secrets should not be included
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
+
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.IceBlock == c.Id && c.Count == 1));
+		}
 	}
 }
