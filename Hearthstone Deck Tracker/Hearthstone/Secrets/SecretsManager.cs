@@ -358,7 +358,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				.Concat(CardIds.Secrets.Rogue.All);
 
 			return allSecrets
-				.Where(s => s.Ids.All(id => generator.IsInGeneratorPool(new Card(id), gameMode, format)))
+				.Where(s => generator.IsInGeneratorPool(s, gameMode, format))
 				.SelectMany(m => m.Ids)
 				.ToHashSet();
 		}

@@ -328,6 +328,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			var creatorId = _entity.GetTag(GameTag.DISPLAYED_CREATOR);
 			if(creatorId == 0)
 				creatorId = _entity.GetTag(GameTag.CREATOR);
+			if(creatorId == 0)
+				creatorId = _entity.Info.CreatorId ?? 0;
 			return creatorId;
 		}
 
@@ -343,6 +345,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool Stolen => OriginalController > 0 && OriginalController != _entity.GetTag(GameTag.CONTROLLER);
 		public bool DrawnByEntity => DrawerId != null;
 		public bool Created { get; set; }
+
+		public int? CreatorId { get; set; } = null;
 		public bool HasOutstandingTagChanges { get; set; }
 		public int OriginalController { get; set; }
 		public bool Hidden { get; set; }

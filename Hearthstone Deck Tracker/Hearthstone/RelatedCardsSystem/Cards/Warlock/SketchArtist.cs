@@ -1,5 +1,6 @@
 ﻿using HearthDb.Enums;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Warlock;
 
@@ -17,6 +18,11 @@ public class SketchArtist : ICardWithHighlight, ISpellSchoolTutor, ICardGenerato
 		return card.Type == "Spell" &&
 		       card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.SHADOW &&
 		       card.IsCardLegal(gameMode, format);
+	}
+
+	public bool IsInGeneratorPool(MultiIdCard card, GameType gameMode, FormatType format)
+	{
+		return card.Ids.Any(c => IsInGeneratorPool(new Card(c), gameMode, format));
 	}
 
 }

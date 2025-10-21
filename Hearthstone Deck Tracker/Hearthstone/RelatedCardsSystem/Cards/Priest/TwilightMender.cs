@@ -1,4 +1,5 @@
-﻿using HearthDb.Enums;
+﻿using System.Linq;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Priest;
 
@@ -11,5 +12,10 @@ public class TwilightMender : ICardGenerator
 		return card.Type == "Spell" &&
 		       (card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.HOLY || card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.SHADOW ) &&
 		       card.IsCardLegal(gameMode, format);
+	}
+
+	public bool IsInGeneratorPool(MultiIdCard card, GameType gameMode, FormatType format)
+	{
+		return card.Ids.Any(c => IsInGeneratorPool(new Card(c), gameMode, format));
 	}
 }

@@ -2362,7 +2362,7 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentGet.Execute();
 		}
 
-		public void HandleOpponentSecretPlayed(Entity entity, string? cardId, int from, int turn, Zone fromZone, int otherId)
+		public void HandleOpponentSecretPlayed(Entity entity, string? cardId, int from, int turn, Zone fromZone, int otherId, int? creatorId = null)
 		{
 			var card = Database.GetCardFromId(cardId);
 			if(!entity.IsSecret)
@@ -2397,7 +2397,7 @@ namespace Hearthstone_Deck_Tracker
 					_game.Opponent.SecretPlayedFromHand(entity, turn);
 					break;
 				default:
-					_game.Opponent.CreateInSecret(entity, turn);
+					_game.Opponent.CreateInSecret(entity, turn, creatorId);
 					break;
 			}
 
@@ -2556,7 +2556,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentDraw(Entity entity, int turn, string? cardId, int? drawerId) => HandleOpponentDraw(entity, turn, cardId, drawerId);
 		void IGameHandler.HandleOpponentMulligan(Entity entity, int @from) => HandleOpponentMulligan(entity, @from);
 		void IGameHandler.HandleOpponentGet(Entity entity, int turn, int id) => HandleOpponentGet(entity, turn, id);
-		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string? cardId, int @from, int turn, Zone fromZone, int otherId) => HandleOpponentSecretPlayed(entity, cardId, @from, turn, fromZone, otherId);
+		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string? cardId, int @from, int turn, Zone fromZone, int otherId, int? creatorId = null) => HandleOpponentSecretPlayed(entity, cardId, @from, turn, fromZone, otherId, creatorId);
 		void IGameHandler.HandleOpponentHandToDeck(Entity entity, string? cardId, IHsGameState gamestate) => HandleOpponentHandToDeck(entity, cardId, gamestate);
 		void IGameHandler.HandleOpponentPlayToHand(Entity entity, string? cardId, int turn, int id) => HandleOpponentPlayToHand(entity, cardId, turn, id);
 		void IGameHandler.HandleOpponentSecretTrigger(Entity entity, string? cardId, int turn, int otherId) => HandleOpponentSecretTrigger(entity, cardId, turn, otherId);

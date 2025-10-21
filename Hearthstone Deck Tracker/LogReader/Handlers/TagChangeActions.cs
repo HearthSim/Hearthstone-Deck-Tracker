@@ -1001,8 +1001,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case Zone.SECRET:
 					if(controller == game.Player.Id && cardId != null)
 						gameState.GameHandler?.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, currentBlockCardId);
+					// secret casted by some minion (e.g. Fyrakk)
 					else if(controller == game.Opponent.Id)
-						gameState.GameHandler?.HandleOpponentSecretPlayed(entity, cardId, -1, gameState.GetTurnNumber(), (Zone)prevValue, id);
+					{
+						gameState.GameHandler?.HandleOpponentSecretPlayed(entity, cardId, -1, gameState.GetTurnNumber(),
+							(Zone)prevValue, id, gameState.CurrentBlock?.SourceEntityId);
+					}
 					break;
 				case SETASIDE:
 					if(controller == game.Player.Id)

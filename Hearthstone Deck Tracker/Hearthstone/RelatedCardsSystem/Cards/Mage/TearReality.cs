@@ -13,4 +13,9 @@ public class TearReality : ICardGenerator
 			(Helper.WildOnlySets.Contains(card.Set) ||
 		        Helper.ClassicOnlySets.Contains(card.Set));
 	}
+
+	public bool IsInGeneratorPool(MultiIdCard card, GameType gameMode, FormatType format)
+	{
+		return card.Ids.All(c => IsInGeneratorPool(new Card(c), gameMode, format));
+	}
 }

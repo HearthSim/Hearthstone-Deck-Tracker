@@ -686,10 +686,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				HeroPowerChanged(entity);
 		}
 
-		public void CreateInSecret(Entity entity, int turn)
+		public void CreateInSecret(Entity entity, int turn, int? creatorId = null)
 		{
 			entity.Info.Created = true;
 			entity.Info.Turn = turn;
+			entity.Info.CreatorId = creatorId;
 			//Log(entity);
 		}
 
