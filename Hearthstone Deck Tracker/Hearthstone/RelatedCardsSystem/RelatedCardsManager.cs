@@ -12,31 +12,51 @@ public class RelatedCardsManager
 {
 	private Dictionary<string, ICardWithRelatedCards>? _relatedCards;
 	private Dictionary<string, ICardWithHighlight>? _highlightCards;
+	private Dictionary<string, ISpellSchoolTutor>? _spellSchoolTutorCards;
 
 	public Dictionary<string, ICardWithRelatedCards> RelatedCards => _relatedCards ??= InitializeRelatedCards();
 	public Dictionary<string, ICardWithHighlight> HighlightCards  => _highlightCards ??= InitializeHighlightCards();
 
+	public Dictionary<string, ISpellSchoolTutor> SpellSchoolTutorCards  => _spellSchoolTutorCards ??= InitializeSpellSchoolTutorCards();
+
+
 	private Dictionary<string, ICardWithRelatedCards> InitializeRelatedCards()
 	{
-		var (relatedCardsDict, highlightCardsDict ) = InitializeCards();
+		var (relatedCardsDict, highlightCardsDict, spellSchoolTutorCardsDict ) = InitializeCards();
 		_highlightCards = highlightCardsDict;
+		_spellSchoolTutorCards = spellSchoolTutorCardsDict;
 		return relatedCardsDict;
 	}
 
 	private Dictionary<string, ICardWithHighlight> InitializeHighlightCards()
 	{
-		var (relatedCardsDict, highlightCardsDict ) = InitializeCards();
+		var (relatedCardsDict, highlightCardsDict, spellSchoolTutorCardsDict ) = InitializeCards();
 		_relatedCards = relatedCardsDict;
+		_spellSchoolTutorCards = spellSchoolTutorCardsDict;
 		return highlightCardsDict;
 	}
 
-	private (Dictionary<string, ICardWithRelatedCards> , Dictionary<string, ICardWithHighlight>) InitializeCards()
+	private Dictionary<string, ISpellSchoolTutor> InitializeSpellSchoolTutorCards()
+	{
+		var (relatedCardsDict, highlightCardsDict, spellSchoolTutorCardsDict ) = InitializeCards();
+		_relatedCards = relatedCardsDict;
+		_highlightCards = highlightCardsDict;
+		return spellSchoolTutorCardsDict;
+	}
+
+	private (
+		Dictionary<string, ICardWithRelatedCards>,
+		Dictionary<string, ICardWithHighlight>,
+		Dictionary<string, ISpellSchoolTutor>
+		) InitializeCards()
 	{
 		var cards = Assembly.GetAssembly(typeof(ICard)).GetTypes()
 			.Where(t => t.IsClass && !t.IsAbstract && typeof(ICard).IsAssignableFrom(t));
 
 		var relatedCardsDict = new Dictionary<string, ICardWithRelatedCards>();
 		var highlightCardsDict = new Dictionary<string, ICardWithHighlight>();
+		var spellSchoolTutorCardsDict = new Dictionary<string, ISpellSchoolTutor>();
+
 
 		foreach(var card in cards)
 		{
@@ -51,9 +71,14 @@ public class RelatedCardsManager
 			{
 				highlightCardsDict[highlightCard.GetCardId()] = highlightCard;
 			}
+
+			if(cardInstance is ISpellSchoolTutor tutor)
+			{
+				spellSchoolTutorCardsDict[tutor.GetCardId()] = tutor;
+			}
 		}
 
-		return (relatedCardsDict, highlightCardsDict);
+		return (relatedCardsDict, highlightCardsDict, spellSchoolTutorCardsDict);
 	}
 
 	public ICardWithHighlight? GetCardWithHighlight(string cardId)
@@ -64,6 +89,11 @@ public class RelatedCardsManager
 	public ICardWithRelatedCards? GetCardWithRelatedCards(string cardId)
 	{
 		return RelatedCards.TryGetValue(cardId, out var card) ? card : null;
+	}
+
+	public ISpellSchoolTutor? GetSpellSchoolTutor(string cardId)
+	{
+		return SpellSchoolTutorCards.TryGetValue(cardId, out var card) ? card : null;
 	}
 
 	public IEnumerable<Card> GetCardsOpponentMayHave(Player opponent, GameType gameType, FormatType format)

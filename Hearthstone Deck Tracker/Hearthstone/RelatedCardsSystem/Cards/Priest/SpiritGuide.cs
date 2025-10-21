@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Priest;
 
-public class SpiritGuide : ICardWithHighlight
+public class SpiritGuide : ICardWithHighlight, ISpellSchoolTutor
 {
 	public virtual string GetCardId() => HearthDb.CardIds.Collectible.Priest.SpiritGuide;
 
@@ -12,6 +12,9 @@ public class SpiritGuide : ICardWithHighlight
 			card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.HOLY,
 			card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.SHADOW
 			);
+
+	public int[] TutoredSpellSchools { get; } = { (int)SpellSchool.HOLY, (int)SpellSchool.SHADOW };
+
 }
 
 public class SpiritGuideCorePlaceholder : SpiritGuide

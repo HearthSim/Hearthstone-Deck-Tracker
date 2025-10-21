@@ -4,6 +4,7 @@ using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -13,13 +14,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 {
 	public class SecretsManager : SecretsEventHandler
 	{
-		public SecretsManager(IGame game, AvailableSecretsProvider availableSecrets)
+		public SecretsManager(IGame game, AvailableSecretsProvider availableSecrets, RelatedCardsManager relatedCardsManager)
 		{
 			Game = game;
 			_availableSecrets = availableSecrets;
+			_relatedCardsManager = relatedCardsManager;
 		}
 
 		private readonly AvailableSecretsProvider _availableSecrets;
+		private readonly RelatedCardsManager _relatedCardsManager;
 		protected override IGame Game { get; }
 		protected override bool HasActiveSecrets => Secrets.Count > 0;
 
@@ -147,6 +150,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			var gameMode = Game.CurrentGameType;
 			var format = Game.CurrentFormatType;
 
+			var deckSecrets = GetSecretsFromDeck(gameMode, format);
+			var createdSecretsList = GetSecretsCreatedBy(gameMode, format);
+
+			return createdSecretsList.ConcatCardList(deckSecrets).ToList();
+		}
+
+		private IEnumerable<Card> GetSecretsFromDeck(GameType gameMode, FormatType format)
+		{
 			var gameModeHasCardLimit = gameMode switch
 			{
 				GT_CASUAL or GT_RANKED or GT_VS_FRIEND or GT_VS_AI => true,
@@ -165,36 +176,54 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				.Distinct()
 				.ToList();
 
-			bool HasPlayedTwoOf(MultiIdCard card) =>
-				opponentEntities.Count(e => card == e.CardId! && !e.Info.Created) >= 2;
+			var availableSecrets = GetAvailableSecrets(gameMode, format);
 
-			int AdjustCount(MultiIdCard card, int count) =>
-				gameModeHasCardLimit && HasPlayedTwoOf(card) && !createdSecrets.Contains(card) ? 0 : count;
+			var secretsFromDeck = Secrets
+				.Where(s => !s.Entity.Info.Created);
 
-			var deckSecrets = GetSecretsFromDeck(format, AdjustCount);
-			var createdSecretsList = GetSecretsCreatedBy(gameMode, format);
+			var secretAndDrawSource = secretsFromDeck.Select(s =>
+				(s, Game.Opponent.RevealedEntities.FirstOrDefault(e => e.Id == s.Entity.Info.GetDrawerId()))
+			);
 
-			return createdSecretsList.ConcatCardList(deckSecrets).ToList();
-		}
+			var filteredSecretsFromDeck = new List<MultiIdCard>();
+			foreach (var (secret, drawSource) in secretAndDrawSource)
+			{
+				if(drawSource is not null && _relatedCardsManager.SpellSchoolTutorCards.TryGetValue(drawSource.CardId ?? "", out var spellSchoolTutor))
+				{
+					var spellSchools = spellSchoolTutor.TutoredSpellSchools;
+					var secrets = secret.Excluded
+						.Where(x => x.Key.Ids.Any(availableSecrets.Contains) && !x.Value)
+						.Select(x => new Card(x.Key.Ids[0]))
+						.Where(c => spellSchools.Contains(c.GetTag(GameTag.SPELL_SCHOOL)))
+						.Select(c => CardIds.Secrets.GetSecretMultiIdCard(c.Id))
+						.WhereNotNull();
 
-		private IEnumerable<Card> GetSecretsFromDeck(FormatType format, Func<MultiIdCard, int, int> adjustCount)
-		{
-			var availableSecrets = GetAvailableSecrets(Game.CurrentGameType, format);
+					filteredSecretsFromDeck.AddRange(secrets);
+				}
+				else
+				{
+					var secrets = secret.Excluded.Where(x => x.Key.Ids.Any(availableSecrets.Contains));
+					filteredSecretsFromDeck.AddRange(secrets.Where(x => !x.Value).Select(x => x.Key));
+				}
+			}
 
-			var cards = Secrets
-				.Where(s => !s.Entity.Info.Created)
-				.SelectMany(s => s.Excluded)
-				.GroupBy(x => x.Key)
+			var cards = filteredSecretsFromDeck
+				.GroupBy(m => m)
 				.Select(group =>
 				{
 					var multiIdCard = CardIds.Secrets.GetSecretMultiIdCard(group.Key.Ids[0]);
 					if (multiIdCard is null)
 						return new QuantifiedMultiIdCard(group.Key, 0);
-					return new QuantifiedMultiIdCard(group.Key, adjustCount(multiIdCard, group.Count(x => !x.Value)));
-				})
-				.Where(x => x.Ids.Any(availableSecrets.Contains));
+					return new QuantifiedMultiIdCard(group.Key, AdjustCount(multiIdCard, group.Count()));
+				});
 
 			return QuantifiedCardsToCards(cards, format);
+
+			int AdjustCount(MultiIdCard card, int count) =>
+				gameModeHasCardLimit && HasPlayedTwoOf(card) && !createdSecrets.Contains(card) ? 0 : count;
+
+			bool HasPlayedTwoOf(MultiIdCard card) =>
+				opponentEntities.Count(e => card == e.CardId! && !e.Info.Created) >= 2;
 		}
 
 		private List<Card> GetSecretsCreatedBy(GameType gameMode, FormatType format)
@@ -254,8 +283,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				return QuantifiedCardsToCards(quantified, format);
 			}
 
-			var quantifiedSecrets = secretsCreated
-				.GroupBy(m => m)
+			var quantifiedSecrets = createdBySecrets
+				.SelectMany(s => s.Excluded)
+				.GroupBy(x => x.Key)
 				.Select(g =>
 				{
 					var card = CardIds.Secrets.GetSecretMultiIdCard(g.Key.Ids[0]);

@@ -5,6 +5,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HunterSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Hunter;
@@ -594,7 +595,7 @@ namespace HDTTests.Hearthstone.Secrets
 			var mockegame = new MockGame();
 			mockegame.GameTime = new GameTime();
 			mockegame.OpponentSecretCount = 2;
-			mockegame.SecretsManager = new SecretsManager(mockegame, null);
+			mockegame.SecretsManager = new SecretsManager(mockegame, null, new RelatedCardsManager());
 			mockegame.SecretsManager.Secrets.Add(new Secret(_secretHunter1));
 			mockegame.SecretsManager.Secrets.Add(new Secret(_secretMage1));
 			mockegame.SecretsManager.HandleCardPlayed(_playerSpell2, "");

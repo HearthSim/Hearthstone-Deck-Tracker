@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
@@ -20,7 +21,7 @@ namespace HDTTests.Hearthstone.Secrets
 				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
 			Assert.AreEqual(0, secretsManager.GetSecretList().Count);
 
 			var added = secretsManager.NewSecret(null);
@@ -54,7 +55,7 @@ namespace HDTTests.Hearthstone.Secrets
 				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
 			Assert.AreEqual(0, secretsManager.GetSecretList().Count);
 
 			var validEntity = new Entity(0);
@@ -89,7 +90,7 @@ namespace HDTTests.Hearthstone.Secrets
 				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
 
 			var removed = secretsManager.RemoveSecret(null);
 			Assert.IsFalse(removed);
@@ -118,7 +119,7 @@ namespace HDTTests.Hearthstone.Secrets
 				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
 
 			var entity = new Entity(0);
 			entity.SetTag(GameTag.SECRET, 1);
@@ -150,7 +151,7 @@ namespace HDTTests.Hearthstone.Secrets
 				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
 			var entity = new Entity(0);
 			entity.SetTag(GameTag.SECRET, 1);
 			entity.SetTag(GameTag.CLASS, (int)CardClass.PRIEST);
@@ -171,7 +172,7 @@ namespace HDTTests.Hearthstone.Secrets
 				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
 
 			var entity = new Entity(0);
 			entity.SetTag(GameTag.SECRET, 1);
@@ -180,15 +181,15 @@ namespace HDTTests.Hearthstone.Secrets
 			Assert.AreEqual(1, secretsManager.Secrets.Count);
 
 			var cards = secretsManager.GetSecretList();
-			Assert.AreEqual(1, cards.Single(x => Paladin.Avenge == x.Id).Count);
+			Assert.IsNotNull(cards.SingleOrDefault(x => Paladin.Avenge == x.Id));
 
 			secretsManager.Toggle(Paladin.Avenge);
 			cards = secretsManager.GetSecretList();
-			Assert.AreEqual(0, cards.Single(x => Paladin.Avenge == x.Id).Count);
+			Assert.IsNull(cards.SingleOrDefault(x => Paladin.Avenge == x.Id));
 
 			secretsManager.Toggle(Paladin.Avenge);
 			cards = secretsManager.GetSecretList();
-			Assert.AreEqual(1, cards.Single(x => Paladin.Avenge == x.Id).Count);
+			Assert.IsNotNull(cards.SingleOrDefault(x => Paladin.Avenge == x.Id));
 
 			foreach(var id in Paladin.All)
 				secretsManager.Toggle(id);
@@ -214,7 +215,7 @@ namespace HDTTests.Hearthstone.Secrets
 				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
 
 			var paladinEntity = new Entity(0);
 			paladinEntity.SetTag(GameTag.SECRET, 1);
@@ -264,7 +265,7 @@ namespace HDTTests.Hearthstone.Secrets
 				CurrentFormatType = FormatType.FT_WILD
 			};
 
-			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
 
 			var entity = new Entity(0);
 			entity.SetTag(GameTag.SECRET, 1);
@@ -286,7 +287,7 @@ namespace HDTTests.Hearthstone.Secrets
 			};
 
 			var callbackCount = 0;
-			var secretsManager = new SecretsManager(game, new MockAvailableSecrets());
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
 			secretsManager.OnSecretsChanged += secrets => callbackCount += 1;
 
 			var entity = new Entity(0);
@@ -321,7 +322,7 @@ namespace HDTTests.Hearthstone.Secrets
 			};
 
 			var settings = new MockAvailableSecrets();
-			var secretsManager = new SecretsManager(game, settings);
+			var secretsManager = new SecretsManager(game, settings,  new RelatedCardsManager());
 
 			var paladinEntity = new Entity(0);
 			paladinEntity.SetTag(GameTag.SECRET, 1);
@@ -404,7 +405,7 @@ namespace HDTTests.Hearthstone.Secrets
 			availableSecrets.ByType["FT_STANDARD"].Add(Rogue.Plagiarize.Ids[0]);
 			availableSecrets.ByType["GT_ARENA"].Add(Rogue.Plagiarize.Ids[0]);
 
-			var secretsManager = new SecretsManager(game, availableSecrets);
+			var secretsManager = new SecretsManager(game, availableSecrets, new RelatedCardsManager());
 
 			var coreSecret = new Entity(2);
 			coreSecret.SetTag(GameTag.SECRET, 1);
@@ -497,7 +498,7 @@ namespace HDTTests.Hearthstone.Secrets
 					}
 				);
 
-			var secretsManager = new SecretsManager(game, availableSecrets);
+			var secretsManager = new SecretsManager(game, availableSecrets, new RelatedCardsManager());
 
 
 			secretsManager.NewSecret(createdSecret);
@@ -518,6 +519,77 @@ namespace HDTTests.Hearthstone.Secrets
 
 			Assert.IsNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
 			Assert.IsNull(cards.SingleOrDefault(c => Mage.IceBlock == c.Id && c.Count == 1));
+		}
+
+		[TestMethod]
+		public void SecretsFilteredByDrawer()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_WILD
+			};
+
+			var watercolorArtist = new Entity(10);
+			watercolorArtist.CardId = HearthDb.CardIds.Collectible.Mage.WatercolorArtist;
+			game.Entities.Add(10, watercolorArtist);
+
+			var drawnByWatercolorArtistSecret = new Entity(1);
+			drawnByWatercolorArtistSecret.SetTag(GameTag.SECRET, 1);
+			drawnByWatercolorArtistSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			drawnByWatercolorArtistSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			drawnByWatercolorArtistSecret.Info.DrawerId = 10;
+			game.Entities.Add(1, drawnByWatercolorArtistSecret);
+
+			var availableSecrets = new MockAvailableSecrets();
+
+			var secretsManager = new SecretsManager(game, availableSecrets, new RelatedCardsManager());
+
+			secretsManager.NewSecret(drawnByWatercolorArtistSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// only Frost secrets should be included
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
+			// all Frost secrets should be included
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.IceBlock == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.IceBarrier == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.OasisAlly == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.FrozenClone == c.Id && c.Count == 1));
+			Assert.AreEqual(4, cards.Count);
+		}
+
+		[TestMethod]
+		public void SecretsNotFilteredByGenericDrawer()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_WILD
+			};
+
+			var arcaneIntellect = new Entity(10);
+			arcaneIntellect.CardId = HearthDb.CardIds.Collectible.Mage.ArcaneIntellectCore;
+			game.Entities.Add(10, arcaneIntellect);
+
+			var drawnByarcaneIntellectSecret = new Entity(1);
+			drawnByarcaneIntellectSecret.SetTag(GameTag.SECRET, 1);
+			drawnByarcaneIntellectSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			drawnByarcaneIntellectSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			drawnByarcaneIntellectSecret.Info.DrawerId = 10;
+			game.Entities.Add(1, drawnByarcaneIntellectSecret);
+
+			var availableSecrets = new MockAvailableSecrets();
+
+			var secretsManager = new SecretsManager(game, availableSecrets, new RelatedCardsManager());
+
+			secretsManager.NewSecret(drawnByarcaneIntellectSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// all secrets should be available
+			Assert.AreEqual(Mage.All.Count, cards.Count);
 		}
 	}
 }

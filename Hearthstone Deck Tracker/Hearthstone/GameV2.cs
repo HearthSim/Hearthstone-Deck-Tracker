@@ -64,10 +64,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Player = new Player(this, true);
 			Opponent = new Player(this, false);
 			IsInMenu = true;
-			SecretsManager = new SecretsManager(this, new RemoteArenaSettings());
 			ActiveEffects = new ActiveEffects();
 			CounterManager = new CounterManager(this);
 			RelatedCardsManager = new RelatedCardsManager();
+			SecretsManager = new SecretsManager(this, new RemoteArenaSettings(), RelatedCardsManager);
 			ArenaPackagesManager = new ArenaPackagesManager();
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
