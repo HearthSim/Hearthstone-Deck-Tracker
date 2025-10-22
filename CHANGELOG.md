@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.48.0 - 2025-10-22**
 **Hearthstone**:
 - Secret tracker now filters the list of possible secrets by the creator of the secret.\
   *This means that only Fire secrets will appear when created by Pyrotechnician or only secrets from the past will appear when created by Tear Reality.*\
