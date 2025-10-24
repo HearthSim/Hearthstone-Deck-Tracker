@@ -1,0 +1,119 @@
+name: Build Portable
+
+on:
+  workflow_dispatch:
+    inputs:
+      hearthdb_url:
+        description: "Custom HearthDb.zip URL (optional)"
+        required: false
+        type: string
+      hearthmirror_url:
+        description: "Custom HearthMirror.zip URL (optional)"
+        required: false
+        type: string
+      hsreplay_url:
+        description: "Custom HSReplay.dll URL (optional)"
+        required: false
+        type: string
+      bobsbuddy_url:
+        description: "Custom BobsBuddy.zip URL (optional)"
+        required: false
+        type: string
+
+defaults:
+  run:
+    shell: powershell
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Override Bootstrap URLs (if provided)
+        if: ${{ github.event.inputs.hearthdb_url != '' || github.event.inputs.hearthmirror_url != '' || github.event.inputs.hsreplay_url != '' || github.event.inputs.bobsbuddy_url != '' }}
+        run: |
+          $bootstrapPath = "Bootstrap/Bootstrap.csproj"
+          $content = Get-Content $bootstrapPath -Raw
+
+          if ("${{ github.event.inputs.hearthdb_url }}" -ne "") {
+            Write-Host "Using custom HearthDb URL: ${{ github.event.inputs.hearthdb_url }}"
+            $content = $content -replace '<HearthDbUrl>.*?</HearthDbUrl>', '<HearthDbUrl>${{ github.event.inputs.hearthdb_url }}</HearthDbUrl>'
+          }
+
+          if ("${{ github.event.inputs.hearthmirror_url }}" -ne "") {
+            Write-Host "Using custom HearthMirror URL: ${{ github.event.inputs.hearthmirror_url }}"
+            $content = $content -replace '<HearthMirrorUrl>.*?</HearthMirrorUrl>', '<HearthMirrorUrl>${{ github.event.inputs.hearthmirror_url }}</HearthMirrorUrl>'
+          }
+
+          if ("${{ github.event.inputs.hsreplay_url }}" -ne "") {
+            Write-Host "Using custom HSReplay URL: ${{ github.event.inputs.hsreplay_url }}"
+            $content = $content -replace '<HSReplayUrl>.*?</HSReplayUrl>', '<HSReplayUrl>${{ github.event.inputs.hsreplay_url }}</HSReplayUrl>'
+          }
+
+          if ("${{ github.event.inputs.bobsbuddy_url }}" -ne "") {
+            Write-Host "Using custom BobsBuddy URL: ${{ github.event.inputs.bobsbuddy_url }}"
+            $content = $content -replace '<BobsBuddyUrl>.*?</BobsBuddyUrl>', '<BobsBuddyUrl>${{ github.event.inputs.bobsbuddy_url }}</BobsBuddyUrl>'
+          }
+
+          Set-Content $bootstrapPath $content
+
+      - name: Run Bootstrap
+        run: ./bootstrap.ps1
+
+      - name: Update version
+        id: version
+        run: |
+          $buildNumber = $Env:GITHUB_RUN_NUMBER
+          $packageVersion = ./build-scripts/update_version.ps1 -dev $true -buildNumber $buildNumber
+          echo "::set-output name=packageVersion::$packageVersion"
+
+      - name: Build (Release)
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
+
+      - name: Setup VSTest
+        uses: Malcolmnixon/Setup-VSTest@v4
+
+      - name: Test
+        run: |
+          vstest.console "HearthWatcher.Test\bin\x86\Release\HearthWatcher.Test.dll"
+          vstest.console "HDTTests\bin\x86\Release\HDTTests.dll"
+
+      - name: Run post-build script
+        run: |
+          Set-Location "Hearthstone Deck Tracker\bin\x86\Release"
+          & "$env:GITHUB_WORKSPACE\build-scripts\release_post_build.bat"
+          exit 0
+
+      - name: Generate certificate and sign executables
+        run: |
+          $cert = "cert.pfx"
+          [IO.File]::WriteAllBytes("$cert", [Convert]::FromBase64String($Env:CERT))
+          $squirrelTools = "packages\squirrel.windows\1.9.1\tools"
+          $signtool = "$squirrelTools\signtool.exe"
+          $hdtReleaseDir = "Hearthstone Deck Tracker\bin\x86\Hearthstone Deck Tracker"
+          & $signtool sign /tr "http://timestamp.digicert.com" /td SHA256 /a /f $cert /p $Env:CERT_PASSWORD "$hdtReleaseDir\HDTUpdate.exe" "$hdtReleaseDir\HDTUninstaller.exe" "$hdtReleaseDir\Hearthstone Deck Tracker.exe" | Out-Default
+        env:
+          CERT: ${{ secrets.CERT }}
+          CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
+
+      - name: Create portable zip
+        run: |
+          $packageVersion = "${{ steps.version.outputs.packageVersion }}"
+          $buildDir = "Hearthstone Deck Tracker\bin\x86"
+          $output = "portable-build"
+          New-Item -ItemType Directory -Force -Path $output
+          Set-Location $buildDir
+          7z a -r -mx9 "$env:GITHUB_WORKSPACE\$output\Hearthstone.Deck.Tracker-v$packageVersion.zip" "Hearthstone Deck Tracker"
+
+      - name: Upload portable build
+        uses: actions/upload-artifact@v4
+        with:
+          name: portable-release
+          path: portable-build/Hearthstone.Deck.Tracker-*.zip
+          retention-days: 30
