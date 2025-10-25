@@ -446,4 +446,6 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 		_decksByFormatAndDeckId = new();
 		_deckStatusByDeckstring = new();
 	}
+
+	public string HSReplayIcon => "/HearthstoneDeckTracker;component/Resources/hsreplay_logo_white.png";
 }
