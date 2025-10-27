@@ -567,6 +567,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					PlayerStarMultiplier = starsPerWin > 0 ? starsPerWin : null,
 					GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
 					FormatType = (int)CurrentFormatType,
+					OfferedCards = MulliganState.OfferedCards?.Select(x => x.Card.DbfId).ToArray()
 				};
 			}
 			catch(Exception e)
