@@ -95,7 +95,7 @@
             </ItemsControl>
         </Grid>
         <Border Grid.Row="1" MinWidth="176" Background="{StaticResource HSReplayNetBlue}" Padding="8 5" CornerRadius="4" Cursor="Hand"
-                 HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 12 0"
+                 HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 8 0"
                 extensions:OverlayExtensions.IsOverlayHitTestVisible="True" Visibility="{Binding Visibility}"
                  MouseUp="ViewMetaDecks_MouseUp">
             <DockPanel>
