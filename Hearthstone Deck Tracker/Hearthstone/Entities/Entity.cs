@@ -280,6 +280,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			};
 		}
 
+		public int? TurnPlayed { get; set; }
 		public int Turn { get; set; }
 
 		public CardMark CardMark

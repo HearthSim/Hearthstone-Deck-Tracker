@@ -2125,6 +2125,15 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentGetToDeck(Entity entity, int turn)
 		{
 			_game.Opponent.CreateInDeck(entity, turn);
+
+			if(entity.CardId is not null && CardIds.FabledDict.TryGetValue(entity.CardId, out var cardIds))
+			{
+				foreach(var cardId in cardIds)
+				{
+					_game.Opponent.PredictUniqueCardInDeck(cardId, false);
+				}
+			}
+
 			Core.UpdateOpponentCards();
 		}
 
@@ -2265,6 +2274,9 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentHandToPlay(Entity entity, string? cardId, int turn)
 		{
 			_game.Opponent.HandToPlay(entity, turn);
+
+			PredictFabled(entity);
+
 			Core.UpdateOpponentCards();
 		}
 
@@ -2280,6 +2292,9 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentDeckToPlay(Entity entity, string? cardId, int turn)
 		{
 			_game.Opponent.DeckToPlay(entity, turn);
+
+			PredictFabled(entity);
+
 			Core.UpdateOpponentCards();
 			var card = Database.GetCardFromId(cardId);
 			if(card != null)
@@ -2296,6 +2311,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentRemoveFromDeck(Entity entity, int turn)
 		{
 			_game.Opponent.RemoveFromDeck(entity, turn);
+			PredictFabled(entity);
 			Core.UpdateOpponentCards();
 		}
 
@@ -2342,6 +2358,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentPlay(Entity entity, string? cardId, int from, int turn)
 		{
 			_game.Opponent.Play(entity, turn);
+			PredictFabled(entity);
 			Core.UpdateOpponentCards();
 			var card = Database.GetCardFromId(cardId);
 			if(card != null)
@@ -2352,6 +2369,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentJoust(Entity entity, string? cardId, int turn)
 		{
 			_game.Opponent.JoustReveal(entity, turn);
+			PredictFabled(entity);
 			Core.UpdateOpponentCards();
 			var card = Database.GetCardFromId(cardId);
 			if(card != null)
@@ -2361,6 +2379,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentHandDiscard(Entity entity, string? cardId, int from, int turn)
 		{
 			_game.Opponent.HandDiscard(entity, turn);
+			PredictFabled(entity);
 			Core.UpdateOpponentCards();
 			var card = Database.GetCardFromId(cardId);
 			if(card != null)
@@ -2478,6 +2497,7 @@ namespace Hearthstone_Deck_Tracker
 				entity.Info.Hidden = true;
 				if(gameState.CurrentBlock != null)
 					gameState.CurrentBlock.IsTradeableAction = true;
+				PredictFabled(entity);
 			}
 			_game.Opponent.HandToDeck(entity, gameState.GetTurnNumber());
 			Core.UpdateOpponentCards();
@@ -2523,6 +2543,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentDeckDiscard(Entity entity, string? cardId, int turn)
 		{
 			_game.Opponent.DeckDiscard(entity, turn);
+			PredictFabled(entity);
 
 			//there seems to be an issue with the overlay not updating here.
 			//possibly a problem with order of logs?
@@ -2570,6 +2591,18 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.InvalidateBattlegroundsHeroPickingStats(theDbfId);
 
 				RefreshBattlegroundsHeroPickStats().Forget();
+			}
+		}
+
+		private void PredictFabled(Entity entity)
+		{
+			if(entity.CardId is null || !CardIds.FabledDict.TryGetValue(entity.CardId, out var cardIds))
+				return;
+
+			foreach(var id in cardIds)
+			{
+				if(id != entity.CardId)
+					_game.Opponent.PredictUniqueCardInDeck(id, false);
 			}
 		}
 

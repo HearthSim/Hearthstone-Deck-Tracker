@@ -606,6 +606,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Hidden = false;
 			entity.Info.Turn = turn;
 			entity.Info.CostReduction = 0;
+			entity.Info.TurnPlayed = _game.GameEntity?.GetTag(GameTag.TURN);
 			if(entity.CardId != NonCollectible.Neutral.PhotographerFizzle_FizzlesSnapshotToken &&
 			   entity.CardId != NonCollectible.Priest.Repackage_RepackagedBoxToken &&
 			   !CardUtils.IsStarship(entity.CardId))

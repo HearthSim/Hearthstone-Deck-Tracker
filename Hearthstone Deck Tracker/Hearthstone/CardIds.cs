@@ -147,6 +147,78 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{"Diablo", new string[]{ "Warlock", "Warrior"}},
 		};
 
+		private static readonly Dictionary<CardClass, IReadOnlyList<string>> FabledGroups = new ()
+		{
+				{ CardClass.DEATHKNIGHT, new List<string>
+				{
+					Collectible.Deathknight.TalanjiOfTheGraves,
+					NonCollectible.Deathknight.TalanjioftheGraves_BwonsamdiToken,
+					NonCollectible.Deathknight.TalanjioftheGraves_WhatBefellZandalarToken,
+				}},
+				{ CardClass.DEMONHUNTER, new List<string> {
+					Collectible.Demonhunter.Broxigar,
+					NonCollectible.Demonhunter.Broxigar_AxeOfCenariusToken,
+					NonCollectible.Demonhunter.Broxigar_FirstPortalToArgusToken,
+				}},
+				{ CardClass.DRUID, new List<string> {
+					Collectible.Druid.LadyAzshara,
+					NonCollectible.Druid.LadyAzshara_EmpowerTheWell,
+					NonCollectible.Druid.LadyAzshara_EmpowerZinAzshari,
+				}},
+				{ CardClass.HUNTER, new List<string> {
+					Collectible.Hunter.RangerGeneralSylvanas,
+					NonCollectible.Hunter.RangerGeneralSylvanas_RangerCaptainAlleriaToken,
+					NonCollectible.Hunter.RangerGeneralSylvanas_RangerInitiateVereesaToken,
+				}},
+				{ CardClass.MAGE, new List<string> {
+					Collectible.Mage.AzureQueenSindragosa,
+					NonCollectible.Mage.AzureQueenSindragosa_AzureKingMalygosToken,
+					NonCollectible.Mage.AzureQueenSindragosa_AzureOathstoneToken,
+				}},
+				{ CardClass.PALADIN, new List<string>
+				{
+					Collectible.Paladin.GelbinOfTomorrow,
+					NonCollectible.Paladin.GelbinofTomorrow_GnomishAuraToken,
+					NonCollectible.Paladin.GelbinofTomorrow_MekkatorquesAuraToken,
+				}},
+				{ CardClass.PRIEST, new List<string> {
+					Collectible.Priest.MedivhTheHallowed,
+					NonCollectible.Priest.MedivhtheHallowed_AtieshTheGreatstaffToken,
+					NonCollectible.Priest.MedivhtheHallowed_KarazhanTheSanctumToken,
+				}},
+				{ CardClass.ROGUE, new List<string> {
+					Collectible.Rogue.GaronaHalforcen,
+					NonCollectible.Rogue.GaronaHalforcen_KingLlaneToken,
+					NonCollectible.Rogue.GaronaHalforcen_TheKingslayersToken,
+				}},
+				{ CardClass.SHAMAN, new List<string> {
+					Collectible.Shaman.MuradinHighKing,
+					NonCollectible.Shaman.MuradinHighKing_HighKingsHammerToken,
+					NonCollectible.Shaman.MuradinHighKing_AvatarFormToken1,
+				}},
+				{ CardClass.WARLOCK, new List<string> {
+					Collectible.Warlock.TimethiefRafaam,
+					NonCollectible.Warlock.TimethiefRafaam_TinyRafaamToken,
+					NonCollectible.Warlock.TimethiefRafaam_GreenRafaamToken,
+					NonCollectible.Warlock.TimethiefRafaam_MurlocRafaamToken,
+					NonCollectible.Warlock.TimethiefRafaam_ExplorerRafaamToken,
+					NonCollectible.Warlock.TimethiefRafaam_WarchiefRafaamToken,
+					NonCollectible.Warlock.TimethiefRafaam_CalamitousRafaamToken,
+					NonCollectible.Warlock.TimethiefRafaam_MindflayerRfaamToken,
+					NonCollectible.Warlock.TimethiefRafaam_GiantRafaamToken,
+					NonCollectible.Warlock.TimethiefRafaam_ArchmageRafaamToken,
+				}},
+				{ CardClass.WARRIOR, new List<string> {
+					Collectible.Warrior.LogoshBloodFighter,
+					NonCollectible.Warrior.LoGoshBloodFighter_BrollBloodFighterToken,
+					NonCollectible.Warrior.LoGoshBloodFighter_ValeeraBloodFighterToken,
+				}},
+		};
+
+		public static readonly Dictionary<string, IReadOnlyList<string>> FabledDict =
+			FabledGroups.SelectMany(kvp => kvp.Value.Select(card => new { card, kvp.Value }))
+				.ToDictionary(x => x.card, x => x.Value);
+
 		public static class Secrets
 		{
 			public static readonly IReadOnlyList<MultiIdCard> FastCombat = new List<MultiIdCard>
@@ -184,6 +256,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard RatTrap = new MultiIdCard(Collectible.Hunter.RatTrap, Collectible.Hunter.RatTrapCore);
 				public static readonly MultiIdCard SnakeTrap = new MultiIdCard(Collectible.Hunter.SnakeTrap, Collectible.Hunter.SnakeTrapCorePlaceholder, Collectible.Hunter.SnakeTrapVanilla);
 				public static readonly MultiIdCard Snipe = new MultiIdCard(Collectible.Hunter.SnipeExpert1, Collectible.Hunter.SnipeVanilla, Collectible.Hunter.SnipeWONDERS);
+				public static readonly MultiIdCard UntimelyDeath = new MultiIdCard(Collectible.Hunter.UntimelyDeath);
 				public static readonly MultiIdCard VenomstrikeTrap = new MultiIdCard(Collectible.Hunter.VenomstrikeTrap, Collectible.Hunter.VenomstrikeTrapCorePlaceholder);
 				public static readonly MultiIdCard WanderingMonster = new MultiIdCard(Collectible.Hunter.WanderingMonster, Collectible.Hunter.WanderingMonsterCorePlaceholder);
 				public static readonly MultiIdCard Zombeeees = new MultiIdCard(Collectible.Hunter.Zombeeees);

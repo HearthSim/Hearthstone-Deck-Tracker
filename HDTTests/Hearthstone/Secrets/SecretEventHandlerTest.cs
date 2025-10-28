@@ -267,6 +267,19 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
+		public void SingleSecret_OnlyMinionDied_MinionWasPlayedTheTurnBefore()
+		{
+			_opponentMinion1.Info.TurnPlayed = 1;
+			_game.GameEntity?.SetTag(GameTag.TURN, 2);
+			_gameEventHandler.HandleOpponentMinionDeath(_opponentMinion1, 2);
+			_game.GameTime.Time += TimeSpan.FromSeconds(1);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.EmergencyManeuvers, HunterSecrets.UntimelyDeath);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Redemption, PaladinSecrets.GetawayKodo);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.CheatDeath);
+		}
+
+		[TestMethod]
 		public void SingleSecret_MinionPlayed_DrawnSameTurn()
 		{
 			_playerMinion1.SetTag(GameTag.NUM_TURNS_IN_HAND, 1);

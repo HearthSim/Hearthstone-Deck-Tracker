@@ -263,6 +263,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			exclude.Add(Mage.Effigy);
 			exclude.Add(Hunter.EmergencyManeuvers);
 
+			if(entity.Info.TurnPlayed == Game.GameEntity?.GetTag(GameTag.TURN) - 1)
+			{
+				exclude.Add(Hunter.UntimelyDeath);
+			}
+
 			Exclude(exclude);
 		}
 

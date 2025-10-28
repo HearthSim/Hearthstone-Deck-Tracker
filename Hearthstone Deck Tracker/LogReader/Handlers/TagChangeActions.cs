@@ -694,9 +694,24 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(isStartOfTheGameEffect && entity.IsControlledBy(game.Opponent.Id))
 			{
 				entity.Info.GuessedCardState = GuessedCardState.Revealed;
+
+				PredictFabled(entity);
+
 				Core.UpdateOpponentCards();
 			}
 
+		}
+
+		private void PredictFabled(Entity entity)
+		{
+			if(entity.CardId is null || !Hearthstone.CardIds.FabledDict.TryGetValue(entity.CardId, out var cardIds))
+				return;
+
+			foreach(var cardId in cardIds)
+			{
+				if(cardId != entity.CardId)
+					Core.Game.Opponent.PredictUniqueCardInDeck(cardId, false);
+			}
 		}
 
 		private void CantPlayChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
