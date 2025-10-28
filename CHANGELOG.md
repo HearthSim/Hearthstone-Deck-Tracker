@@ -1,3 +1,6 @@
+## **Release v1.48.1 - 2025-10-28**
+**Updated for Hearthstone 34.0**
+
 ## **Release v1.48.0 - 2025-10-22**
 **Hearthstone**:
 - Secret tracker now filters the list of possible secrets by the creator of the secret.\
