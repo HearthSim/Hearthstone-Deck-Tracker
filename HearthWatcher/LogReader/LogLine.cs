@@ -16,6 +16,7 @@ public class LogLine
 
 	public LogLine(string ns, string line)
 	{
+		line = line.Replace("\n", "").Trim();
 		Namespace = ns;
 		Line = line;
 		var match = _regex.Match(line);

@@ -24,11 +24,6 @@ namespace HearthWatcher.LogReader
 		private DateTime _startingPoint;
 		private bool _stop;
 		private Thread _thread;
-		/**
-		 * When the Millhouse hero power is logged in the korean localization there is a line break in the entity name.
-		 * This causes the parser to get stuck on this broken line and stop reading new power information.
-		 */
-		 const int KoreanMillhouseBugHack = 54253;
 
 		/**
 		 * Limit the amount of LogLines we keep in the ConcurrentQueue, so that we don't run out of memory.
@@ -218,12 +213,31 @@ namespace HearthWatcher.LogReader
 						using(var sr = new StreamReader(fs))
 						{
 							string line;
-							while(!sr.EndOfStream && _lines.Count < MAX_LOG_LINE_BUFFER && (line = sr.ReadLine()) != null)
+							var sb = new StringBuilder();
+							while(!sr.EndOfStream && _lines.Count < MAX_LOG_LINE_BUFFER)
 							{
+								sb.Clear();
+								var foundEndOfLine = false;
+								var prevChar = '\0';
+								while(!sr.EndOfStream)
+								{
+									var c = (char)sr.Read();
+									if(c == '\n' && prevChar == '\r')
+									{
+										foundEndOfLine = true;
+										break;
+									}
+									sb.Append(c);
+									prevChar = c;
+								}
+								if(!foundEndOfLine) break;
+
+								line = sb.ToString(0, sb.Length - 1);
+
 								if(line.StartsWith("D "))
 								{
 									var next = sr.Peek();
-									if(!sr.EndOfStream && !(next == 'D' || next == 'W' || next == 'E' || next == KoreanMillhouseBugHack))
+									if(!sr.EndOfStream && !(next == 'D' || next == 'W' || next == 'E'))
 										break;
 									var logLine = new LogLine(Info.Name, line);
 									if((!Info.HasFilters || (Info.StartsWithFilters?.Any(x => logLine.LineContent.StartsWith(x)) ?? false)
@@ -275,7 +289,7 @@ namespace HearthWatcher.LogReader
 						for(var i = 0; i < 4096; i++)
 						{
 							skip++;
-							if(buffer[i] == '\n')
+							if(i > 0 && buffer[i - 1] == '\r' && buffer[i] == '\n')
 								break;
 						}
 						offset -= skip;
@@ -323,7 +337,7 @@ namespace HearthWatcher.LogReader
 						for(var i = 0; i < 4096; i++)
 						{
 							skip++;
-							if(buffer[i] == '\n')
+							if(i > 0 && buffer[i - 1] == '\r' && buffer[i] == '\n')
 								break;
 						}
 						if(skip >= 4096)
