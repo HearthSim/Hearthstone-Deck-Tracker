@@ -1,3 +1,7 @@
+## **Release v1.48.2 - 2025-10-31**
+**Hearthstone**
+- Fixed an issue where HDT would not work while playing Cower in Fear with the Russian localization of Hearthstone.
+
 ## **Release v1.48.1 - 2025-10-28**
 **Updated for Hearthstone 34.0**
 
