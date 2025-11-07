@@ -7,7 +7,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-
+using NuGet;
 using static HearthDb.Enums.GameType;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
@@ -219,7 +219,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				var creator = TryGetCreator(secret);
 				var drawer = TryGetDrawer(secret);
 
-				if (creator != null && _relatedCardsManager.CardGeneratorCards.TryGetValue(creator.CardId ?? "", out var generator))
+				if(creator is { CardId: HearthDb.CardIds.Collectible.Mage.FacelessEnigma })
+				{
+					var storedIds = creator.Info.StoredCardIds;
+					var controlledByPlayer = creator.IsControlledBy(Game.Player.Id);
+
+					if (storedIds.IsEmpty())
+					{
+						secretsCreated.AddRange(GetFilteredSecrets(secret, availableSecrets));
+					}
+					else if (controlledByPlayer)
+					{
+						secretsCreated.AddRange(GetFilteredSecrets(secret, storedIds.ToHashSet()));
+					}
+					else
+					{
+						availableSecrets.Remove(storedIds.Last());
+						secretsCreated.AddRange(GetFilteredSecrets(secret, availableSecrets));
+					}
+
+				}
+				else if (creator != null && _relatedCardsManager.CardGeneratorCards.TryGetValue(creator.CardId ?? "", out var generator))
 				{
 					var creatableSecrets = GetCreatableSecretsFromGenerator(generator, gameMode, format);
 
@@ -344,8 +364,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				.WhereNotNull();
 		}
 
-		private Entity? TryGetCreator(Secret secret) =>
-			Game.Opponent.RevealedEntities.FirstOrDefault(e => e.Id == secret.Entity.Info.GetCreatorId());
+		private Entity? TryGetCreator(Secret secret)
+		{
+			var opponentCreator = Game.Opponent.RevealedEntities.FirstOrDefault(e => e.Id == secret.Entity.Info.GetCreatorId());
+			if(opponentCreator is not null)
+				return opponentCreator;
+
+			var playerCreator = Game.Player.RevealedEntities.FirstOrDefault(e => e.Id == secret.Entity.Info.GetCreatorId());
+			return playerCreator?.CardId is HearthDb.CardIds.Collectible.Mage.FacelessEnigma ? playerCreator : null;
+		}
 
 		private Entity? TryGetDrawer(Secret secret) =>
 			Game.Opponent.RevealedEntities.FirstOrDefault(e => e.Id == secret.Entity.Info.GetDrawerId());

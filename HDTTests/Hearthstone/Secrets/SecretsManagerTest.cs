@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
@@ -750,6 +751,124 @@ namespace HDTTests.Hearthstone.Secrets
 			Assert.IsNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
 
 			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.IceBlock == c.Id && c.Count == 1));
+		}
+
+		[TestMethod]
+		public void CreatedByFacelessEnigma()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_STANDARD
+			};
+			game.Player = new Player(game, true) { Id = 1 };
+			game.Opponent = new Player(game, false) { Id = 2 };
+
+			var creator = new Entity(10);
+			creator.CardId = HearthDb.CardIds.Collectible.Mage.FacelessEnigma;
+			creator.SetTag(GameTag.CONTROLLER, game.Player.Id);
+			game.Entities.Add(10, creator);
+
+			var option1Secret = new Entity(21);
+			option1Secret.SetTag(GameTag.SECRET, 1);
+			option1Secret.CardId = HearthDb.CardIds.Collectible.Mage.Counterspell;
+			option1Secret.SetTag(GameTag.CONTROLLER, game.Player.Id);
+			option1Secret.SetTag(GameTag.ZONE, (int)Zone.GRAVEYARD);
+			option1Secret.SetTag(GameTag.CREATOR, 10);
+			game.Entities.Add(21, option1Secret);
+
+			var option2Secret = new Entity(22);
+			option2Secret.SetTag(GameTag.SECRET, 1);
+			option2Secret.CardId = HearthDb.CardIds.Collectible.Mage.IceBarrier;
+			option2Secret.SetTag(GameTag.CONTROLLER, game.Player.Id);
+			option2Secret.SetTag(GameTag.ZONE, (int)Zone.GRAVEYARD);
+			option2Secret.SetTag(GameTag.CREATOR, 10);
+			game.Entities.Add(22, option2Secret);
+
+			var playerSecret = new Entity(20);
+			playerSecret.SetTag(GameTag.SECRET, 1);
+			playerSecret.CardId = HearthDb.CardIds.Collectible.Mage.Counterspell;
+			playerSecret.SetTag(GameTag.CONTROLLER, game.Player.Id);
+			playerSecret.SetTag(GameTag.ZONE, (int)Zone.SECRET);
+			playerSecret.SetTag(GameTag.CREATOR, 10);
+			game.Entities.Add(20, playerSecret);
+
+			creator.Info.StoredCardIds = new List<string> { HearthDb.CardIds.Collectible.Mage.IceBarrier };
+
+			var createdSecret = new Entity(1);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.CREATOR, 10);
+			createdSecret.Info.Created = true;
+			game.Entities.Add(1, createdSecret);
+
+			var availableSecrets = new MockAvailableSecrets();
+			availableSecrets.ByType["FT_STANDARD"] = new HashSet<string> { Mage.Counterspell.Ids[0], Mage.ExplosiveRunes.Ids[0], Mage.IceBarrier.Ids[0] };
+
+			var secretsManager = new SecretsManager(game, availableSecrets, new RelatedCardsManager());
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// We should know the secret is Ice Barrier
+			Assert.AreEqual(1, cards.Count);
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.ExplosiveRunes == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.IceBarrier == c.Id && c.Count == 1));
+
+		}
+
+		[TestMethod]
+		public void CreatedByOpponentsFacelessEnigma()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_STANDARD,
+			};
+			game.Player = new Player(game, true) { Id = 1 };
+			game.Opponent = new Player(game, false) { Id = 2 };
+
+			var creator = new Entity(10);
+			creator.CardId = HearthDb.CardIds.Collectible.Mage.FacelessEnigma;
+			creator.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			game.Entities.Add(10, creator);
+
+			var playerSecret = new Entity(20);
+			playerSecret.SetTag(GameTag.SECRET, 1);
+			playerSecret.CardId = HearthDb.CardIds.Collectible.Mage.Counterspell;
+			playerSecret.SetTag(GameTag.CONTROLLER, game.Player.Id);
+			playerSecret.SetTag(GameTag.ZONE, (int)Zone.SECRET);
+			playerSecret.SetTag(GameTag.CREATOR, 10);
+			game.Entities.Add(20, playerSecret);
+
+			creator.Info.StoredCardIds = new List<string> { HearthDb.CardIds.Collectible.Mage.Counterspell };
+
+			var createdSecret = new Entity(1);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.CREATOR, 10);
+			createdSecret.Info.Created = true;
+			game.Entities.Add(1, createdSecret);
+
+			var availableSecrets = new MockAvailableSecrets();
+			availableSecrets.ByType["FT_STANDARD"] = new HashSet<string> { Mage.Counterspell.Ids[0], Mage.ExplosiveRunes.Ids[0], Mage.IceBarrier.Ids[0] };
+
+			var secretsManager = new SecretsManager(game, availableSecrets, new RelatedCardsManager());
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// We should know the secret is NOT Counterspell
+			Assert.AreEqual(2, cards.Count);
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.ExplosiveRunes == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.IceBarrier == c.Id && c.Count == 1));
+
 		}
 	}
 }

@@ -693,6 +693,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Turn = turn;
 			entity.Info.CreatorId = creatorId;
 			//Log(entity);
+
+			if(_game.Entities.TryGetValue(creatorId ?? -1, out var creator))
+			{
+				if(creator.CardId == Collectible.Mage.FacelessEnigma)
+				{
+					var allSecrets = _game.Player.Graveyard.Where(e => e.IsSecret).ToList();
+					var options = allSecrets.Skip(Math.Max(0, allSecrets.Count - 2)).Select(e => e.CardId).WhereNotNull().ToList();
+
+					var ownSecret = _game.Player.Secrets.LastOrDefault();
+					if(ownSecret is not null && ownSecret.Info.GetCreatorId() == creator.Id && ownSecret.CardId is not null)
+					{
+						options.Remove(ownSecret.CardId);
+					}
+
+					if(!options.IsEmpty())
+					{
+						creator.Info.StoredCardIds.Add(options.Last());
+					}
+
+				}
+			}
 		}
 
 		public void RemoveFromDeck(Entity entity, int turn)
