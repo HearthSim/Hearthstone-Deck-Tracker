@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.48.3 - 2025-11-07**
 **Hearthstone**
 - Added cards offered by Waveshaping to the bottom of the deck.
 - Added cards discovered by Kaldorei Cultivator to the bottom of the deck.
