@@ -1,3 +1,9 @@
+## **Unreleased**
+**Hearthstone**
+- Fixed The Kingslayer not Highlighting Incindius' Eruptions.
+- Added cards offered by Waveshaping to the bottom of the deck.
+
+
 ## **Release v1.48.2 - 2025-10-31**
 **Hearthstone**
 - Fixed an issue where HDT would not work while playing Cower in Fear with the Russian localization of Hearthstone.

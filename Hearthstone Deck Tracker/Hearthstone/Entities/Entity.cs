@@ -225,7 +225,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public bool HasDredge()
 		{
-			return HasTag(DREDGE) || CardId == Warrior.FromTheDepths;
+			return HasTag(DREDGE) || CardId == Warrior.FromTheDepths || CardId == Druid.Waveshaping;
 		}
 
 		public int GetTag(GameTag tag) => Tags.TryGetValue(tag, out var value) ? value : 0;
