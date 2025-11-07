@@ -2126,7 +2126,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_game.Opponent.CreateInDeck(entity, turn);
 
-			if(entity.CardId is not null && CardIds.FabledDict.TryGetValue(entity.CardId, out var cardIds))
+			if(!entity.Info.Created && entity.CardId is not null && CardIds.FabledDict.TryGetValue(entity.CardId, out var cardIds))
 			{
 				foreach(var cardId in cardIds)
 				{
@@ -2596,6 +2596,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void PredictFabled(Entity entity)
 		{
+			if(entity.Info.Created) return;
 			if(entity.CardId is null || !CardIds.FabledDict.TryGetValue(entity.CardId, out var cardIds))
 				return;
 

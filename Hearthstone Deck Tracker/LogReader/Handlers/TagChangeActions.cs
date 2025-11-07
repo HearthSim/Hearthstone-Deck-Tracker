@@ -704,6 +704,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void PredictFabled(Entity entity)
 		{
+			if(entity.Info.Created) return;
 			if(entity.CardId is null || !Hearthstone.CardIds.FabledDict.TryGetValue(entity.CardId, out var cardIds))
 				return;
 

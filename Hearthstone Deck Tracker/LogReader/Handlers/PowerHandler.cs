@@ -825,6 +825,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Rogue.MetalDetector:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
+							case NonCollectible.Rogue.GaronaHalforcen_KingLlaneToken:
+								AddKnownCardId(gameState, NonCollectible.Rogue.GaronaHalforcen_KingLlaneToken);
+								break;
 							case NonCollectible.Paladin.LibramofDivinity_LibramOfDivinityEnchantment:
 								AddKnownCardId(gameState, Collectible.Paladin.LibramOfDivinity);
 								break;

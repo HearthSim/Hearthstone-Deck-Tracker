@@ -5,6 +5,7 @@
 - Added cards discovered by Kaldorei Cultivator to the bottom of the deck.
 - Fixed crashes when Murozond, Unbounded's attack was set to infinity. HDT is now capable of handling all its power.
 - Fixed fabled bundled cards not appearing as Legendary cards in the decklist.
+- Fixed King Llane not appearing in opponent's decklist.
 
 ## **Release v1.48.2 - 2025-10-31**
 **Hearthstone**
