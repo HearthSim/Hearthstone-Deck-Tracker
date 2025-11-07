@@ -996,6 +996,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							entity.Info.DeckIndex = newIndex;
 						}
 
+						if(gameState.CurrentBlock?.CardId == Collectible.Druid.KaldoreiCultivator)
+						{
+							var newIndex = ++gameState.DredgeCounter;
+							entity.Info.DeckIndex = -newIndex;
+						}
+
 						if(gameState.JoustReveals > 0)
 							break;
 						gameState.GameHandler?.HandlePlayerGetToDeck(entity, cardId, gameState.GetTurnNumber());
