@@ -166,7 +166,8 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 		{
 			if(!Config.Instance.RarityCardGems)
 				return GemDefaultBrush;
-			return Card.Rarity switch
+			var rarity = Card.Rarity == Rarity.INVALID && Card.GetTag(GameTag.ELITE) > 0 ? Rarity.LEGENDARY : Card.Rarity;
+			return rarity switch
 			{
 				Rarity.COMMON => CommonBrush,
 				Rarity.EPIC => EpicBrush,
@@ -182,7 +183,8 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 		{
 			if(!Config.Instance.RarityCardFrames)
 				return BorderDefaultBrush;
-			return Card.Rarity switch
+			var rarity = Card.Rarity == Rarity.INVALID && Card.GetTag(GameTag.ELITE) > 0 ? Rarity.LEGENDARY : Card.Rarity;
+			return rarity switch
 			{
 				Rarity.COMMON => CommonBrush,
 				Rarity.RARE => RareBrush,
@@ -198,7 +200,8 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 		{
 			if(!Config.Instance.RarityCardFrames)
 				return 0.3;
-			return Card.Rarity switch
+			var rarity = Card.Rarity == Rarity.INVALID && Card.GetTag(GameTag.ELITE) > 0 ? Rarity.LEGENDARY : Card.Rarity;
+			return rarity switch
 			{
 				Rarity.COMMON or Rarity.RARE or Rarity.EPIC or Rarity.LEGENDARY => 0.5,
 				_ => 0.3,
@@ -208,7 +211,7 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 
 	public bool IsCountVisible => IsCountTextVisible || IsLegendaryIconVisible;
 	public bool IsCountTextVisible => !IsLegendaryIconVisible && Count > 1;
-	public bool IsLegendaryIconVisible => Count == 1 && Card.Rarity == Rarity.LEGENDARY;
+	public bool IsLegendaryIconVisible => Count == 1 && (Card.Rarity == Rarity.LEGENDARY || (Card.Rarity == Rarity.INVALID && Card.GetTag(GameTag.ELITE) > 0));
 	public bool IsCostVisible => !Card.BaconCard;
 	public bool IsDarkened => Count == 0 || Card.Jousted;
 

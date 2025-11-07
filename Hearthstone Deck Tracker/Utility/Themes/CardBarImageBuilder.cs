@@ -197,7 +197,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var frame = Required[ThemeElement.DefaultFrame];
 			if(Config.Instance.RarityCardFrames && HasAllOptionalFrames)
 			{
-				switch(Card.Rarity)
+				var rarity = Card.Rarity == Rarity.INVALID && Card.GetTag(GameTag.ELITE) > 0 ? Rarity.LEGENDARY : Card.Rarity;
+				switch(rarity)
 				{
 					case Rarity.RARE:
 						frame = OptionalFrame[ThemeElement.RareFrame];
@@ -224,7 +225,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var gem = Required[ThemeElement.DefaultGem];
 			if(Config.Instance.RarityCardGems && HasAllOptionalGems)
 			{
-				switch(Card.Rarity)
+				var rarity = Card.Rarity == Rarity.INVALID && Card.GetTag(GameTag.ELITE) > 0 ? Rarity.LEGENDARY : Card.Rarity;
+				switch(rarity)
 				{
 					case Rarity.RARE:
 						gem = OptionalGems[ThemeElement.RareGem];
@@ -253,7 +255,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var countBox = Required[ThemeElement.DefaultCountBox];
 			if(Config.Instance.RarityCardFrames && HasAllOptionalCountBoxes)
 			{
-				switch(Card.Rarity)
+				var rarity = Card.Rarity == Rarity.INVALID && Card.GetTag(GameTag.ELITE) > 0 ? Rarity.LEGENDARY : Card.Rarity;
+				switch(rarity)
 				{
 					case Rarity.RARE:
 						countBox = OptionalCountBoxes[ThemeElement.RareCountBox];
