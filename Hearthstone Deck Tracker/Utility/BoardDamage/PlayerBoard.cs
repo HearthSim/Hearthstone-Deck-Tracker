@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		public List<IBoardEntity> Cards { get; }
 
 		public int Damage => Cards.Where(x => x.Include).Sum(x => x.Attack);
+		public bool HasInfiniteDamage => Cards.Where(x => x.Include).Any(x => x.HasInfiniteAttack);
 
 		public Entity? GetWeapon(List<Entity> list)
 		{

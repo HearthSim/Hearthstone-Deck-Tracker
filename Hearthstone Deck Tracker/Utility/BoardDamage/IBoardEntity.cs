@@ -5,6 +5,7 @@
 		string Name { get; }
 		int Health { get; }
 		int Attack { get; }
+		bool HasInfiniteAttack { get; }
 		// number of attacks made this turn
 		int AttacksThisTurn { get; }
 		// ability to attack this turn (some exceptions)

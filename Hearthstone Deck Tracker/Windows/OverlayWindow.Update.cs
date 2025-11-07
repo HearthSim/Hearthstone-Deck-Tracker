@@ -294,8 +294,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (_game.SetupDone && (IconBoardAttackPlayer.Visibility == Visible || IconBoardAttackOpponent.Visibility == Visible))
 			{
 				var board = new BoardState();
-				TextBlockPlayerAttack.Text = board.Player.Damage.ToString();
-				TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
+				TextBlockPlayerAttack.Text = board.Player.HasInfiniteDamage ? $" \u221e + {board.Player.Damage}" :  board.Player.Damage.ToString();
+				TextBlockOpponentAttack.Text = board.Opponent.HasInfiniteDamage ? $" \u221e + {board.Opponent.Damage}" : board.Opponent.Damage.ToString();
 			}
 		}
 

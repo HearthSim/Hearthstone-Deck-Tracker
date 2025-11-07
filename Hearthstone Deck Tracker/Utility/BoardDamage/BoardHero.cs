@@ -18,6 +18,11 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			_hero = new BoardCard(hero, activeTurn);
 			// hero gains windfury with weapon, doubling attack get base attack
 			_baseAttack = hero.GetTag(GameTag.ATK);
+			if(_baseAttack == 2147483647)
+			{
+				_baseAttack = 0;
+				HasInfiniteAttack = true;
+			}
 			if(weapon != null)
 				_weapon = new BoardCard(weapon, activeTurn);
 			Include = activeTurn && _hero.Include;
@@ -33,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 
 		// total attack, weapon plus abilities
 		public int Attack { get; }
+		public bool HasInfiniteAttack { get; }
 
 		public int AttacksThisTurn => _hero.AttacksThisTurn;
 

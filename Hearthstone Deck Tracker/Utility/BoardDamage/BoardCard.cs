@@ -29,6 +29,11 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			var name = string.IsNullOrEmpty(e.Name) ? cardName : e.Name!;
 
 			_stdAttack = e.HasTag(HIDE_STATS) ? 0 : e.GetTag(ATK);
+			if(_stdAttack == 2147483647)
+			{
+				_stdAttack = 0;
+				HasInfiniteAttack = true;
+			}
 			_health = e.HasTag(HIDE_STATS) ? 0 : e.GetTag(HEALTH);
 			_armor = e.GetTag(ARMOR);
 			_damageTaken = e.GetTag(DAMAGE);
@@ -70,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 
 		public string Name { get; }
 		public int Attack { get; }
+		public bool HasInfiniteAttack { get; }
 		public int Health { get; }
 		public bool Include { get; }
 
