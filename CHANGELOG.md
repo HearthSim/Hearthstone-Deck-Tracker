@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**
+- Fixed opponent's King Llane info leak under some circumstances.
+
 ## **Release v1.48.3 - 2025-11-07**
 **Hearthstone**
 - Added cards offered by Waveshaping to the bottom of the deck.

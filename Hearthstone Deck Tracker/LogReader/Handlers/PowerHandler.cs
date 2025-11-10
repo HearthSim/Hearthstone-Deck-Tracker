@@ -267,9 +267,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-						if(gameState.CurrentBlock is { HideShowEntities: true }
-						   && !entity.Info.RevealedOnHistory
-						   && !entity.HasTag(GameTag.DISPLAYED_CREATOR))
+						if((gameState.CurrentBlock is { HideShowEntities: true }
+						    && !entity.Info.RevealedOnHistory
+						    && !entity.HasTag(GameTag.DISPLAYED_CREATOR)) || entity.CardId == NonCollectible.Rogue.GaronaHalforcen_KingLlaneToken)
 						{
 							entity.Info.Hidden = true;
 						}
@@ -487,7 +487,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(game.Entities.TryGetValue(entityId, out var entity))
 						{
 							entity.Info.RevealedOnHistory = true;
-							entity.Info.Hidden = false;
+							entity.Info.Hidden = entity.CardId == NonCollectible.Rogue.GaronaHalforcen_KingLlaneToken;
 						}
 					}
 					catch(FormatException e)
