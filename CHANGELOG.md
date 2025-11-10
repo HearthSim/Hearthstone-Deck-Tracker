@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.48.4 - 2025-11-10**
 **Hearthstone**
 - Fixed opponent's King Llane info leak under some circumstances.
 
