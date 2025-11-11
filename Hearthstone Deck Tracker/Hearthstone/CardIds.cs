@@ -42,6 +42,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			[NonCollectible.Warlock.ImpSwarmRank1_ImpSwarmRank3Token] = Collectible.Warlock.ImpSwarmRank1,
 			[NonCollectible.Warrior.ConditioningRank1_ConditioningRank2Token] = Collectible.Warrior.ConditioningRank1,
 			[NonCollectible.Warrior.ConditioningRank1_ConditioningRank3Token] = Collectible.Warrior.ConditioningRank1,
+			[NonCollectible.Druid.LadyAzshara_TheWellOfEternityToken2] = NonCollectible.Druid.LadyAzshara_TheWellOfEternityToken1,
+			[NonCollectible.Druid.LadyAzshara_ZinAzshariToken2] = NonCollectible.Druid.LadyAzshara_ZinAzshariToken1
 		};
 
 		// todo: conditional deathrattle summons: Voidcaller
