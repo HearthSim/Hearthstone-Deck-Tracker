@@ -1,3 +1,6 @@
+## **Release v1.48.5 - 2025-11-13**
+**Updated for Hearthstone 34.0.2**
+
 ## **Release v1.48.4 - 2025-11-10**
 **Hearthstone**
 - Fixed opponent's King Llane info leak under some circumstances.
