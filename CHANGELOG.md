@@ -1,4 +1,5 @@
-## **Release v1.48.6 - 2025-11-17**
+## **Release v1.48.7 - 2025-11-17**
+**Battlegrounds**:
 - New Tier7 feature: Tavern Pinning! Never miss a card you want again.\
   *You'll be able to pin individual cards, whole comps or even whole minion types.*
 - New Tier7 feature: Comp Key Pieces Pinning! Always know when available Comp key pieces are offered.\
