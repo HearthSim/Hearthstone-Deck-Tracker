@@ -218,6 +218,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 	public void UpdateCards(List<Hearthstone.Card> cards)
 	{
 		CardsList.ShowTier7InspirationButton = IsInspirationEnabled;
+		CardsList.ShowPinButton = true;
 		CardsList.Update(cards, true);
 	}
 }

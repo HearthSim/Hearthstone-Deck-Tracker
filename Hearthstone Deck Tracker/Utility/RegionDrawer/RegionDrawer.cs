@@ -361,5 +361,29 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 			if(hasAttachedCard)
 				yield return DrawCardRegion(offsetX + 0.293, offsetY, AnomalyHeight, AnomalyAspectRatio);
 		}
+
+		public List<Rect> DrawDiscoverCardRegions(int zoneSize)
+		{
+			var regions = new List<Rect>();
+
+			if(zoneSize == 0)
+				return regions;
+
+			const double discoverCardSpacing = 0.27;
+
+			var totalWidth = zoneSize * discoverCardSpacing;
+			var leftEdge = 0.53 - totalWidth / 2;
+
+			var cardY = 0.29;
+
+			for (var i = 0; i < zoneSize; i++)
+			{
+				var cardX = leftEdge + i * discoverCardSpacing;
+				var rect = DrawCardRegion(cardX, cardY);
+				regions.Add(rect);
+			}
+
+			return regions;
+		}
 	}
-};
+}

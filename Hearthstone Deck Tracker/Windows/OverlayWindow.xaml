@@ -26,6 +26,7 @@
         xmlns:anomalies="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Anomalies"
         xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Arena"
         xmlns:chinaModule="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.ChinaModule"
+        xmlns:minionPinning="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -307,6 +308,7 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </Grid>
+
                 <Grid Name="GridFlavorText" Visibility="{Binding FlavorTextVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Panel.ZIndex="5" Width="298" Height="123" Canvas.Left="-338">
                     <Image Source="../Resources/flavor_text.png"/>
                     <Image Source="../Resources/banner.png" Width="200" VerticalAlignment="Top"/>
@@ -426,7 +428,6 @@
                     DataContext="{Binding PlayerResourcesViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                 </playerResources:PlayerResourcesWidget>
 
-
                 <arena:ArenaPickHelper
                     x:Name="ArenaPickHelper"
                     Canvas.Top="0" Canvas.Left="0"
@@ -497,6 +498,17 @@
                         DataContext="{Binding BattlegroundsMinionsVM, RelativeSource={RelativeSource AncestorType={x:Type windows:OverlayWindow}}}"
                     />
                 </StackPanel>
+
+                <Grid Name="BgsMinionPinning"
+                      Visibility="Collapsed"
+                      Canvas.Top="0"
+                      Canvas.Left="0"
+                      Width="{Binding Width, ElementName=CanvasInfo}"
+                      Height="{Binding Height, ElementName=CanvasInfo}"
+                >
+                    <minionPinning:BattlegroundsMinionPinning x:Name="BattlegroundsMinionPinningControl" VerticalAlignment="Bottom" DataContext="{Binding BattlegroundsMinionPinningViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" />
+                    <minionPinning:BattlegroundsMinionPinningShop x:Name="BgsMinionPinningShop" DataContext="{Binding BattlegroundsMinionPinningViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+                </Grid>
 
                 <chinaModule:ChinaModulePanel x:Name="ChinaModulePanel" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
                                               DataContext="{Binding ChinaModuleVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>

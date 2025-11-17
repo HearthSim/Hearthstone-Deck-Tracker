@@ -92,6 +92,7 @@ public class SceneHandler
 			Watchers.DiscoverStateWatcher.Run();
 			Watchers.BaconWatcher.Run();
 			Watchers.MulliganTooltipWatcher.Run();
+			Watchers.OpponentBoardStateWatcher.Run();
 		}
 		else if(to == Mode.DRAFT)
 		{

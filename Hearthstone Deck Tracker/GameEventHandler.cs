@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using HearthDb.Enums;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.API;
@@ -492,6 +493,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id));
 					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Select(x => x.Card.Id));
 					Core.Overlay.BattlegroundsInspirationViewModel.OnShoppingStart();
+					Core.Overlay.BgsMinionPinningShop.Visibility = Visibility.Visible;
 				}
 				switch(Config.Instance.TurnStartAction)
 				{
@@ -647,6 +649,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.BattlegroundsTrinketGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsQuestGuideListViewModel.Update();
 				Core.Overlay.BattlegroundsSessionViewModelVM.UpdateCompositionStatsVisibility();
+				Core.Overlay.BattlegroundsMinionPinningViewModel.Reset();
 			}
 
 			if(_game.IsArenaMatch)
@@ -1012,6 +1015,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 					Core.Overlay.BattlegroundsGuidesTabsViewModel.Reset();
+					Core.Overlay.BattlegroundsMinionPinningViewModel.Reset();
 					Core.Overlay.BattlegroundsHeroGuideListViewModel.Reset();
 					Core.Overlay.BattlegroundsQuestGuideListViewModel.Reset();
 					Core.Overlay.BattlegroundsTrinketGuideListViewModel.Reset();
@@ -1334,6 +1338,14 @@ namespace Hearthstone_Deck_Tracker
 					Core.Game.Player.MulliganCardStats = null;
 				}
 			}
+		}
+
+		public void HandleSetupDone()
+		{
+			_game.SetupDone = true;
+
+			if(_game.IsBattlegroundsMatch)
+				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 		}
 
 		public void HandlePlayerEntityChoices(IHsChoice choice)
@@ -1684,6 +1696,7 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
 			Core.Overlay.BattlegroundsTrinketGuideListViewModel.Update();
 			Core.Overlay.BattlegroundsQuestGuideListViewModel.Update();
+			Core.Overlay.BattlegroundsMinionPinningViewModel.Reset();
 
 			if(Core.Game.IsBattlegroundsDuosMatch)
 				Watchers.BattlegroundsTeammateBoardStateWatcher.Run();

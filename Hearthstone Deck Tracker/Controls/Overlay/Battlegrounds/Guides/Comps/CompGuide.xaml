@@ -11,12 +11,67 @@
              xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
              xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
              xmlns:guides="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
+             xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance local:BattlegroundsCompGuideViewModel}">
     <UserControl.Resources>
+        <!-- Pin Button Animations -->
+        <Storyboard x:Key="PinButtonIn">
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="Opacity"
+                           To="1" Duration="0:0:0.2" BeginTime="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="1" Duration="0:0:0.5" BeginTime="0:0:0.1">
+                <DoubleAnimation.EasingFunction>
+                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="3"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="1" Duration="0:0:0.5" BeginTime="0:0:0.1">
+                <DoubleAnimation.EasingFunction>
+                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="3"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="PinButtonOut">
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="Opacity"
+                           To="0" Duration="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="0.7" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="0.7" Duration="0:0:0"/>
+        </Storyboard>
+
+        <Storyboard x:Key="PinButtonPinned">
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="Opacity"
+                           To="1" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="1" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="1" Duration="0:0:0"/>
+        </Storyboard>
+
+        <Storyboard x:Key="PinButtonUnpinned">
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="Opacity"
+                           To="0" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="0.7" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="0.7" Duration="0:0:0.2"/>
+        </Storyboard>
+
+        <Storyboard x:Key="PinButtonHidden">
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="Opacity"
+                           To="0" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="0.7" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinAllCompCards" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="0.7" Duration="0:0:0"/>
+        </Storyboard>
+
         <Style TargetType="TextBlock">
             <Style.Setters>
                 <Setter Property="Foreground" Value="White"/>
@@ -102,6 +157,32 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="PinIconButtonStyle" TargetType="{x:Type ButtonBase}">
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Background" Value="#23272a" />
+            <Setter Property="BorderBrush" Value="#141617" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                        <Border x:Name="border" CornerRadius="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="UIElement.IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#43474a" />
+                            </Trigger>
+                            <Trigger Property="UIElement.IsEnabled" Value="false">
+                                <Setter TargetName="border" Property="Opacity" Value="0.5" />
+                                <Setter Property="Cursor" Value="Arrow" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style TargetType="controls:BattlegroundsMinion">
             <Setter Property="Width" Value="70"/>
             <Setter Property="Height" Value="70"/>
@@ -135,7 +216,7 @@
             <Setter Property="BorderBrush" Value="Transparent"/>
         </Style>
     </UserControl.Resources>
-    <Grid d:Background="#292d30">
+    <Grid d:Background="#292d30" MouseEnter="Grid_OnMouseEnter" MouseLeave="Grid_OnMouseLeave">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -172,6 +253,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <hearthstoneDeckTracker:OutlinedTextBlock
                                     Text="{Binding CompGuide.Name}"
@@ -180,7 +262,29 @@
                                     TextTrimming="None"
                                     FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
                                 />
-                                <Border Grid.Column="1" VerticalAlignment="Center" Background="{Binding TierColor}" CornerRadius="3" Padding="8,2,8,5" HorizontalAlignment="Right">
+                                <Button x:Name="BtnPinAllCompCards"
+                                        Grid.Column="1"
+                                        Command="{Binding PinAllCompCardsCommand}"
+                                        VerticalAlignment="Center"
+                                        Margin="0,0,6,0"
+                                        Opacity="0"
+                                        RenderTransformOrigin="0.5,0.5"
+                                        Visibility="{Binding BgsMinionPinningVisibility, RelativeSource={RelativeSource AncestorType={x:Type windows:OverlayWindow}}}">
+                                    <Button.RenderTransform>
+                                        <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
+                                    </Button.RenderTransform>
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource PinIconButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding AreAllCompCardsPinned}" Value="True">
+                                                    <Setter Property="Background" Value="#141617" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Image Source="/HearthstoneDeckTracker;component/Resources/pin.png" Width="22" Height="22" RenderOptions.BitmapScalingMode="Fant"/>
+                                </Button>
+                                <Border Grid.Column="2" VerticalAlignment="Center" Background="{Binding TierColor}" CornerRadius="3" Padding="8,2,8,5" HorizontalAlignment="Right">
                                     <TextBlock
                                         Text="{Binding TierText}"
                                         FontSize="12"
@@ -209,7 +313,7 @@
                         </StackPanel>
                         <Border BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256" Background="#1c1f22" Padding="0,9,0,9">
                             <StackPanel>
-                                <hearthstoneDeckTracker:OutlinedTextBlock FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_CoreCards}" Margin="9,0,0,9" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                                <hearthstoneDeckTracker:OutlinedTextBlock FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_CoreCards}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive" Margin="9,0,0,9"/>
                                 <ItemsControl ItemsSource="{Binding CoreCards}" Margin="-7,0,-7,0">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -244,7 +348,7 @@
                         </Border>
                         <Border BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256" Background="#1c1f22" Padding="0,9,0,9">
                             <StackPanel>
-                                <hearthstoneDeckTracker:OutlinedTextBlock FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_AddonCards}" Margin="9,0,0,9" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                                <hearthstoneDeckTracker:OutlinedTextBlock FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_AddonCards}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive" Margin="9,0,0,9"/>
                                 <ItemsControl ItemsSource="{Binding AddonCards}" Margin="-7,0,-7,0">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -263,7 +367,7 @@
                         </Border>
                         <Border BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256" Padding="9" >
                             <StackPanel>
-                                <hearthstoneDeckTracker:OutlinedTextBlock FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_WhenToCommit}" Margin="0,0,0,9" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                                <hearthstoneDeckTracker:OutlinedTextBlock FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_WhenToCommit}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive" Margin="0,0,0,9"/>
                                 <ItemsControl ItemsSource="{Binding WhenToCommitTags}" Margin="0">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>

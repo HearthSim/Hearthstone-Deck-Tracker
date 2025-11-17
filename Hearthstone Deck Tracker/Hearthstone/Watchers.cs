@@ -11,6 +11,7 @@ using HearthMirror;
 using HearthMirror.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Arena;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -47,9 +48,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			UiWatcher.Change += OnUiChange;
 			DeckPickerWatcher.Change += OnDeckPickerChange;
 			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning);
-			ChoicesWatcher.Change += (sender, args) => Core.Overlay.SetChoicesVisible(args.CurrentChoice?.IsVisible ?? false);
+			ChoicesWatcher.Change += (sender, args) => Core.Overlay.SetChoicesVisible(args.CurrentChoice?.IsVisible ?? false, args.CurrentChoice?.Cards);
 			DiscoverStateWatcher.Change += OnDiscoverStateChange;
 			BigCardWatcher.Change += OnBigCardChange;
+			OpponentBoardStateWatcher.Change += OnOpponentBoardStateChange;
 			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
 			BattlegroundsLeaderboardWatcher.Change += (sender, args) => Core.Overlay.SetHoveredBattlegroundsLeaderboardEntityId(args.HoveredEntityId);
 			MulliganTooltipWatcher.Change += OnMulliganTooltipChange;
@@ -72,6 +74,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ChoicesWatcher.Stop();
 			BigCardWatcher.Stop();
 			DiscoverStateWatcher.Stop();
+			OpponentBoardStateWatcher.Stop();
 			BattlegroundsTeammateBoardStateWatcher.Stop();
 			BattlegroundsLeaderboardWatcher.Stop();
 			MulliganTooltipWatcher.Stop();
@@ -326,6 +329,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Core.Overlay.SetDeckPickerState(args.SelectedFormatType, args.DecksOnPage, args.IsModalOpen);
 		}
 
+		internal static void OnOpponentBoardStateChange (object sender, HearthWatcher.EventArgs.OpponentBoardArgs args)
+		{
+			var boardCards = args.BoardCards;
+			var mousedOverSlot = args.MousedOverSlot;
+
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.BattlegroundsMinionPinningViewModel.OnShopChange(boardCards, mousedOverSlot);
+		}
+
 		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.FriendlyChallengeEventArgs args)
 		{
 			if(args.DialogVisible)
@@ -371,7 +383,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static SceneWatcher SceneWatcher { get; } = new(new HearthMirrorSceneProvider());
 		public static ChoicesWatcher ChoicesWatcher { get; } = new(new HearthMirrorChoicesProvider());
 		public static BigCardStateWatcher BigCardWatcher { get; } = new(new HearthMirrorBigCardProvider());
-
+		public static OpponentBoardStateWatcher OpponentBoardStateWatcher { get; } =
+			new(new HearthMirrorOpponentBoardStateProvider());
 		public static DiscoverStateWatcher DiscoverStateWatcher { get; } = new(new HearthMirrorDiscoverStateProvider());
 		public static BattlegroundsTeammateBoardStateWatcher BattlegroundsTeammateBoardStateWatcher { get; } = new(new HearthMirrorBattlegroundsTeammateBoardStateProvider());
 		public static BattlegroundsLeaderboardWatcher BattlegroundsLeaderboardWatcher { get; } = new(new HearthMirrorBattlegroundsLeaderboardProvider());
@@ -492,5 +505,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorMulliganTooltipProvider : IMulliganTooltipProvider
 	{
 		public MulliganTooltipState? State => Reflection.Client.GetMulliganTooltipState();
+	}
+
+	public class HearthMirrorOpponentBoardStateProvider : IOpponentBoardProvider
+	{
+		public OpponentBoardState? OpponentBoardState => Reflection.Client.GetOpponentBoardState();
 	}
 }

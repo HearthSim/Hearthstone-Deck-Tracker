@@ -15,6 +15,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static event Action? ReplayAutoUploadChanged;
 		public static event Action? CollectionSyncingChanged;
 		public static event Action? ShowBattlegroundsHeroPickingChanged;
+		public static event Action? AutoEnableTavernMarkersRecommendedChanged;
+		public static event Action? DismissedTavernMarkerQuickGuideChanged;
+		public static event Action? DismissedCompGuidesMarkerQuickGuideChanged;
 		public static event Action? IgnoreNewsIdChanged;
 
 		public static bool CardDbIncludeWildOnlyCards
@@ -438,6 +441,59 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Instance.ShowBattlegroundsHeroPicking = value;
 				Config.Save();
 				ShowBattlegroundsHeroPickingChanged?.Invoke();
+			}
+		}
+
+		public static bool AutoEnableTavernMarkersRecommended
+		{
+			get => Config.Instance.AutoEnableTavernMarkersRecommended;
+			set
+			{
+				Config.Instance.AutoEnableTavernMarkersRecommended = value;
+				Config.Save();
+				AutoEnableTavernMarkersRecommendedChanged?.Invoke();
+			}
+		}
+
+		public static bool TavernMarkersPanelExpanded
+		{
+			get => Config.Instance.TavernMarkersPanelExpanded;
+			set
+			{
+				Config.Instance.TavernMarkersPanelExpanded = value;
+				Config.Save();
+			}
+		}
+
+		public static bool DismissedTavernMarkerQuickGuide
+		{
+			get => Config.Instance.DismissedTavernMarkerQuickQuickGuide;
+			set
+			{
+				Config.Instance.DismissedTavernMarkerQuickQuickGuide = value;
+				Config.Save();
+				DismissedTavernMarkerQuickGuideChanged?.Invoke();
+			}
+		}
+
+		public static bool DismissedCompGuidesMarkerQuickGuide
+		{
+			get => Config.Instance.DismissedCompGuidesMarkerQuickGuide;
+			set
+			{
+				Config.Instance.DismissedCompGuidesMarkerQuickGuide = value;
+				Config.Save();
+				DismissedCompGuidesMarkerQuickGuideChanged?.Invoke();
+			}
+		}
+
+		public static bool DismissedAutoEnablePopup
+		{
+			get => Config.Instance.DismissedAutoEnablePopup;
+			set
+			{
+				Config.Instance.DismissedAutoEnablePopup = value;
+				Config.Save();
 			}
 		}
 

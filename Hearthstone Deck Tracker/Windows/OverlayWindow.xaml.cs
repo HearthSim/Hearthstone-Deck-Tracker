@@ -42,6 +42,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.ChinaModule;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Quests;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Trinkets;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.PlayerResourcesWidget;
 using Hearthstone_Deck_Tracker.Enums;
@@ -130,6 +131,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
 		public Tier7PreLobbyViewModel Tier7PreLobbyViewModel { get; } = new Tier7PreLobbyViewModel();
+
+		public BattlegroundsMinionPinningViewModel BattlegroundsMinionPinningViewModel { get; } = new BattlegroundsMinionPinningViewModel();
 
 		public List<BoardMinionOverlayViewModel> OppBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
 		public List<BoardMinionOverlayViewModel> PlayerBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
@@ -427,6 +430,46 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double BattlegroundsDuosTileHeight => Height * 0.69 * (1 - BattlegroundsDuosTileToSpacingRatio) / 8;
 		public double BattlegroundsDuosSpacingHeight => Height * 0.69 * BattlegroundsDuosTileToSpacingRatio / 3;
 		public double BattlegroundsTileWidth => BattlegroundsTileHeight;
+
+		public Visibility BgsMinionPinningVisibility
+		{
+			get => BgsMinionPinning.Visibility;
+			set
+			{
+				if(BgsMinionPinning.Visibility == value)
+					return;
+				BgsMinionPinning.Visibility = value;
+				if(value == Visible)
+					Core.Game.Metrics.TavernMarkersDisplayed = true;
+
+				// Clear all pins when the feature is hidden to prevent persistence
+				if(value == Collapsed)
+					BattlegroundsMinionPinningViewModel.ClearPins();
+
+				OnPropertyChanged();
+			}
+		}
+
+		internal bool ShouldShowBgsMinionPinning()
+		{
+			if(!Config.Instance.ShowBattlegroundsTavernMarkers)
+				return false;
+
+			if(!_game.IsBattlegroundsHeroPickingDone)
+				return false;
+
+			if(!_game.SetupDone)
+				return false;
+
+			var gameId = _game.MetaData.ServerInfo?.GameHandle;
+			var userHasTier7 = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) || Tier7Trial.IsTrialForCurrentGameActive(gameId);
+			return userHasTier7;
+		}
+
+		internal void ShowQuickGuide()
+		{
+			BattlegroundsMinionPinningControl?.ShowGuide();
+		}
 
 		private double MercenariesButtonOffset
 		{
@@ -774,6 +817,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OpacityMaskOverlay.AddMaskedRegion("MulliganAnomaly", rect);
 		}
 
+		public void SetDiscoverCardOpacityMask(int zoneSize)
+		{
+			OpacityMaskOverlay.RemoveMaskedRegion("DiscoverCard");
+
+			if(zoneSize == 0)
+				return;
+
+			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
+			var rects = regionDrawer.DrawDiscoverCardRegions(zoneSize);
+
+			using var _ = OpacityMaskOverlay.StartBatchUpdate();
+			foreach(var rect in rects)
+				OpacityMaskOverlay.AddMaskedRegion("DiscoverCard", rect);
+		}
+
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
@@ -830,6 +888,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
 			BattlegroundsMinionsVM.AvailableRaces = availableRaces?.Concat(new[] { Race.INVALID, Race.ALL });
+			BattlegroundsMinionPinningViewModel.AvailableRaces = availableRaces;
 			BattlegroundsMinionsVM.IsDuos = _game.IsBattlegroundsDuosMatch;
 			BattlegroundsMinionsVM.Anomaly = anomalyCardId;
 			BattlegroundsMinionsVM.PreloadCardTiles();
@@ -864,6 +923,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			BattlegroundsCompsGuidesVM.OnMatchStart();
 
+			BgsMinionPinningVisibility = ShouldShowBgsMinionPinning() ? Visible : Collapsed;
 			_bgsTopBarBehavior.Show();
 			_bgsTopBarTriggerMaskBehavior.Show();
 		}
@@ -888,6 +948,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HideBgsInspiration();
 			BtnTier7Inspiration.IsEnabled = false;
 
+			BgsMinionPinningVisibility = Collapsed;
 			HideBgsChinaModulePanel();
 		}
 
@@ -1303,9 +1364,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateTier7PreLobbyVisibility();
 		}
 
-		internal void SetChoicesVisible(bool choicesVisible)
+		internal void SetChoicesVisible(bool choicesVisible, IEnumerable<string>? cardIds)
 		{
 			BattlegroundsTrinketPickingViewModel.ChoicesVisible = choicesVisible;
+
+			if(_game.IsBattlegroundsMatch)
+			{
+				var cardIdList = (cardIds ?? Array.Empty<string>()).ToList();
+				if(!choicesVisible || !cardIdList.Any())
+				{
+					OpacityMaskOverlay.RemoveMaskedRegion("DiscoverCard");
+					return;
+				}
+
+				var cards = cardIdList.Select(Database.GetCardFromId).WhereNotNull().ToList();
+
+				if(cards.All(x => x.TypeEnum == CardType.MINION))
+					SetDiscoverCardOpacityMask(cards.Count);
+			}
 		}
 
 		private void BgsInspirationCover_OnMouseDown(object sender, MouseButtonEventArgs e) => HideBgsInspiration();

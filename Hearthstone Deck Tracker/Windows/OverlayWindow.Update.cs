@@ -336,6 +336,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OnPropertyChanged(nameof(CardHeight));
 				OnPropertyChanged(nameof(MercAbilityHeight));
 				OnPropertyChanged(nameof(MinionMargin));
+
 				for(int i = 0; i < OppBoard.Count; i++)
 				{
 					OppBoard[i].Width = MinionWidth;
@@ -409,6 +410,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
 					fadeBgsMinionsList = false;
 				BgsTopBar.Opacity = fadeBgsMinionsList ? 0.3 : 1;
+				BgsMinionPinning.Opacity = fadeBgsMinionsList ? 0.3 : 1;
+				PlayerCounters.Opacity = fadeBgsMinionsList ? 0.3 : 1;
+				OpponentCounters.Opacity = fadeBgsMinionsList ? 0.3 : 1;
 				BobsBuddyDisplay.Opacity = fadeBgsMinionsList ? 0.3 : 1;
 			}
 			catch(Exception ex)
@@ -534,7 +538,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		private double _activeEffectsScale;
-		private void UpdateElementSizes()
+		internal void UpdateElementSizes()
 		{
 			OnPropertyChanged(nameof(PlayerStackHeight));
 			OnPropertyChanged(nameof(OpponentStackHeight));
@@ -578,14 +582,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 				_activeEffectsScale = activeEffectsSize;
 			}
 
+			var bgsTopBarScaling = _bgsTopBarBehavior.GetScaling?.Invoke() ?? 1.0;
+			var bgsMinionPinningButtonSpace = BgsMinionPinningVisibility == Visible ? 20 : 0;
+			var bgsMinionPinningHeight = BgsMinionPinningVisibility == Visible ? BattlegroundsMinionPinningControl.ActualHeight : 0;
 			if(GuidesTabs.TabsContent is not null)
 			{
-				GuidesTabs.TabsContent.MaxHeight =  Math.Max(0, (ActualHeight - 54) * 0.95 / _bgsTopBarBehavior.GetScaling?.Invoke() ?? 1.0);
+				GuidesTabs.TabsContent.MaxHeight =  Math.Max(0, (ActualHeight - 54 + bgsMinionPinningButtonSpace) * 0.95 / bgsTopBarScaling - bgsMinionPinningHeight);
 			}
 
 			if(BattlegroundsMinions is not null)
 			{
-				BattlegroundsMinions.MaxHeight =  Math.Max(0, ActualHeight * 0.95 / _bgsTopBarBehavior.GetScaling?.Invoke() ?? 1.0);
+				BattlegroundsMinions.MaxHeight =  Math.Max(0, (ActualHeight + bgsMinionPinningButtonSpace) * 0.95 / bgsTopBarScaling - bgsMinionPinningHeight);
 			}
 		}
 
@@ -654,6 +661,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ConstructedMulliganGuideViewModel.Scaling = scaling;
 			ConstructedMulliganGuide.Width = Width / scaling;
 			ConstructedMulliganGuide.Height = Height / scaling;
+
+			BattlegroundsMinionPinningViewModel.Scaling = scaling;
+			BgsMinionPinningShop.Width = Width / scaling;
+			BgsMinionPinningShop.Height = Height / scaling;
 		}
 
 		public void UpdateStackPanelAlignment()

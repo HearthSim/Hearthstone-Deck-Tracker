@@ -1,0 +1,165 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning.BattlegroundsMinionPinningCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:minionPinning="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning"
+             xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
+             mc:Ignorable="d"
+             d:DesignHeight="60" d:DesignWidth="60"
+             d:DataContext="{d:DesignInstance minionPinning:BattlegroundsMinionPinningCardViewModel}"
+             >
+    <Grid Visibility="{Binding IsSlotOccupied, Converter={StaticResource BoolToVisibility}}"
+          Background="Transparent"
+          Height="190"
+          Width="138">
+        <Canvas>
+            <Border Width="30" Height="30" Canvas.Top="35" Canvas.Right="17" Background="Transparent" Cursor="Hand"
+                    Visibility="{Binding IsMinionPinned, Converter={StaticResource BoolToVisibility}}">
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick"
+                                  Command="{Binding DataContext.TogglePinCardCommand, RelativeSource={RelativeSource AncestorType={x:Type minionPinning:BattlegroundsMinionPinningShop}}}"
+                                  CommandParameter="{Binding CardId}"/>
+                </Border.InputBindings>
+                <Image Source="/HearthstoneDeckTracker;component/Resources/pin.png"
+                       RenderOptions.BitmapScalingMode="Fant"/>
+            </Border>
+            <!-- <Border Width="30" Height="30" Canvas.Top="35" Canvas.Right="17" Background="#33000000" BorderBrush="#55FFFFFF" BorderThickness="1" CornerRadius="50" Cursor="Hand"> -->
+            <!--     <Border.Style> -->
+            <!--         <Style TargetType="Border"> -->
+            <!--             <Setter Property="Visibility" Value="Collapsed"/> -->
+            <!--             <Style.Triggers> -->
+            <!--                 <MultiDataTrigger> -->
+            <!--                     <MultiDataTrigger.Conditions> -->
+            <!--                         <Condition Binding="{Binding IsMinionPinned}" Value="False"/> -->
+            <!--                         <Condition Binding="{Binding IsHovered}" Value="True"/> -->
+            <!--                     </MultiDataTrigger.Conditions> -->
+            <!--                     <Setter Property="Visibility" Value="Visible"/> -->
+            <!--                 </MultiDataTrigger> -->
+            <!--             </Style.Triggers> -->
+            <!--         </Style> -->
+            <!--     </Border.Style> -->
+            <!--     <Border.InputBindings> -->
+            <!--         <MouseBinding MouseAction="LeftClick" -->
+            <!--                       Command="{Binding DataContext.TogglePinCardCommand, RelativeSource={RelativeSource AncestorType={x:Type minionPinning:BattlegroundsMinionPinningShop}}}" -->
+            <!--                       CommandParameter="{Binding CardId}"/> -->
+            <!--     </Border.InputBindings> -->
+            <!-- </Border> -->
+            <Border
+                Canvas.Top="66" Canvas.Right="3"
+                Background="Transparent"
+                Width="30"
+                Height="30"
+                Visibility="{Binding IsTribePinned, Converter={StaticResource BoolToVisibility}}"
+                IsHitTestVisible="False">
+                <Grid Width="30" Height="30">
+                    <Image
+                        Source="/HearthstoneDeckTracker;component/Resources/pin.png"
+                        Width="30" Height="30"
+                        Stretch="Uniform"
+                        RenderOptions.BitmapScalingMode="Fant"/>
+
+                    <minions:BattlegroundsMinionType
+                        Width="23" Height="23"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Tribe="{Binding TribeIconRace}"
+                        RenderOptions.BitmapScalingMode="Fant" />
+                </Grid>
+            </Border>
+            <Border
+                Canvas.Top="99" Canvas.Right="0"
+                Background="Transparent"
+                Width="30"
+                Height="30"
+                Visibility="{Binding IsRecommendedPinned, Converter={StaticResource BoolToVisibility}}">
+                <Grid Width="30" Height="30">
+                    <Image
+                        Source="/HearthstoneDeckTracker;component/Resources/key.png"
+                        Width="30" Height="30"
+                        Stretch="Uniform"
+                        RenderOptions.BitmapScalingMode="Fant"/>
+                </Grid>
+            </Border>
+            <Border Width="249" Canvas.Top="-90"
+                    Canvas.Left="{Binding RecommendedSectionCanvasLeft}"
+                    Background="#23272A"
+                    Visibility="{Binding ShouldShowRecommendedSection, Converter={StaticResource BoolToVisibility}}"
+                    BorderBrush="#141617"
+                    CornerRadius="3"
+                    BorderThickness="1"
+                >
+                <StackPanel>
+                    <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" CornerRadius="3,0,0,0" Background="#1C2022" VerticalAlignment="Center" Padding="8,0,0,0">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <tier7:Tier7Logo Width="14" Height="14"  VerticalAlignment="Center" />
+                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="Comps – Enabler / Commit Piece" d:Text="Composition Stats" FontSize="11" HorizontalAlignment="Center" Margin="6,6, 0, 6"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <ItemsControl Padding="9,9,9,6">
+                        <ItemsControl.Resources>
+                            <CollectionViewSource x:Key="GroupedComps" Source="{Binding RecommendedComps}">
+                                <CollectionViewSource.GroupDescriptions>
+                                    <PropertyGroupDescription PropertyName="Key" />
+                                </CollectionViewSource.GroupDescriptions>
+                            </CollectionViewSource>
+                        </ItemsControl.Resources>
+                        <ItemsControl.ItemsSource>
+                            <Binding Source="{StaticResource GroupedComps}" />
+                        </ItemsControl.ItemsSource>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#CC4A5256" BorderThickness="1" Background="#141617" CornerRadius="3" Height="48" Margin="0,0,0,3">
+                                    <Grid>
+                                        <Rectangle Opacity="0.4">
+                                            <Rectangle.Fill>
+                                                <ImageBrush
+                                                    ImageSource="{Binding CardAsset.Asset}" Stretch="None">
+                                                    <ImageBrush.Transform>
+                                                        <TranslateTransform X="-30" Y="0" />
+                                                    </ImageBrush.Transform>
+                                                </ImageBrush>
+                                            </Rectangle.Fill>
+                                            <Rectangle.OpacityMask>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0.80,0">
+                                                    <GradientStop Color="#141617" Offset="0.5"/>
+                                                    <GradientStop Color="Transparent" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <Grid Margin="9,0,9,0" HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <hearthstoneDeckTracker:OutlinedTextBlock
+                                                Text="{Binding CompGuide.Name}"
+                                                FontSize="13"
+                                                TextWrapping="Wrap"
+                                                TextTrimming="None"
+                                                FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+                                            />
+                                            <Border Grid.Column="1" VerticalAlignment="Center" Background="{Binding TierColor}" CornerRadius="3" Padding="8,2,8,5" HorizontalAlignment="Right">
+                                                <TextBlock
+                                                    Text="{Binding TierText}"
+                                                    FontSize="12"
+                                                    Foreground="White"
+                                                    FontWeight="Black"
+                                                />
+                                            </Border>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </Canvas>
+    </Grid>
+</UserControl>

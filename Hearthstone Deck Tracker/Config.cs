@@ -787,6 +787,24 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowBattlegroundsTurnCounter = true;
 
 		[DefaultValue(true)]
+		public bool ShowBattlegroundsTavernMarkers = true;
+
+		[DefaultValue(false)]
+		public bool AutoEnableTavernMarkersRecommended = false;
+
+		[DefaultValue(true)]
+		public bool TavernMarkersPanelExpanded = true;
+
+		[DefaultValue(false)]
+		public bool DismissedTavernMarkerQuickQuickGuide = false;
+
+		[DefaultValue(false)]
+		public bool DismissedCompGuidesMarkerQuickGuide = false;
+
+		[DefaultValue(false)]
+		public bool DismissedAutoEnablePopup = false;
+
+		[DefaultValue(true)]
 		public bool RunBobsBuddy = true;
 
 		[DefaultValue(true)]

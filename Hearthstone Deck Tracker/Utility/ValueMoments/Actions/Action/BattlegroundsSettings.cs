@@ -67,5 +67,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("bg_china_module_overlay")]
 		public bool? ChinaModuleOverlay { get => Config.Instance.ShowChinaModuleOverlay; }
+
+		[JsonProperty("bg_tavern_markers")]
+		public bool TavernMarkers { get => Config.Instance.ShowBattlegroundsTavernMarkers; }
+
+		[JsonProperty("bg_tavern_markers_auto_enable_recommended")]
+		public bool TavernMarkersAutoEnableRecommended { get => Config.Instance.AutoEnableTavernMarkersRecommended; }
 	}
 }

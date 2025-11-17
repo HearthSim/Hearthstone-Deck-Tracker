@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,6 +16,22 @@ public partial class AnimatedCard : IPoolItem, INotifyPropertyChanged
 	public AnimatedCard()
 	{
 		InitializeComponent();
+		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged += OnPinsChanged;
+	}
+
+	private void OnPinsChanged(object? sender, EventArgs e)
+	{
+		if(Core.Overlay.BgsMinionPinningVisibility != Visibility.Visible)
+			return;
+
+		var isPinned = Card?.Id != null && Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(Card.Id);
+		OnPropertyChanged(nameof(IsPinned));
+
+		if(BtnPinMinion.Visibility != Visibility.Visible)
+			return;
+
+		var storyboardKey = isPinned ? "PinButtonPinned" : "PinButtonUnpinned";
+		RunStoryBoardNonBlocking(storyboardKey);
 	}
 
 	public void Update(Hearthstone.Card card, bool showTier7InspirationBtn = false)
@@ -22,10 +39,12 @@ public partial class AnimatedCard : IPoolItem, INotifyPropertyChanged
 		DataContext = card;
 		CardTileViewModel = new CardTileViewModel(card);
 		BtnTier7Inspiration.Visibility = showTier7InspirationBtn ? Visibility.Visible : Visibility.Collapsed;
+		UpdatePinButtonState();
 	}
 
 	public void OnReuseFromPool()
 	{
+		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged += OnPinsChanged;
 	}
 
 	public void OnReturnToPool()
@@ -35,6 +54,7 @@ public partial class AnimatedCard : IPoolItem, INotifyPropertyChanged
 		foreach(var sb in _runningStoryBoards.Values.ToList())
 			sb.TrySetResult(false);
 		_runningStoryBoards.Clear();
+		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged -= OnPinsChanged;
 	}
 
 	public Hearthstone.Card? Card => DataContext as Hearthstone.Card;
@@ -50,6 +70,26 @@ public partial class AnimatedCard : IPoolItem, INotifyPropertyChanged
 			_cardTileViewModel = value;
 			OnPropertyChanged();
 		}
+	}
+
+	private bool _showPinButton;
+	public bool ShowPinButton
+	{
+		get => _showPinButton;
+		set
+		{
+			if(_showPinButton == value)
+				return;
+			_showPinButton = value;
+			OnPropertyChanged();
+			BtnPinMinion.Visibility = _showPinButton ? Visibility.Visible : Visibility.Collapsed;
+			UpdatePinButtonState();
+		}
+	}
+
+	public bool IsPinned
+	{
+		get => Card?.Id != null && Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(Card.Id);
 	}
 
 	public async Task FadeIn(bool fadeIn)
@@ -111,6 +151,19 @@ public partial class AnimatedCard : IPoolItem, INotifyPropertyChanged
 		return completed;
 	}
 
+	private void RunStoryBoardNonBlocking(string key)
+	{
+		try
+		{
+			var sb = (Storyboard)FindResource(key);
+			sb.Begin();
+		}
+		catch(Exception e)
+		{
+			// ignored
+		}
+	}
+
 	private void BtnBgsInspiration_OnMouseUp(object sender, MouseButtonEventArgs e)
 	{
 		Core.Overlay.BattlegroundsInspirationViewModel.SetKeyMinion(Card);
@@ -118,10 +171,92 @@ public partial class AnimatedCard : IPoolItem, INotifyPropertyChanged
 		Core.Game.Metrics.BattlegroundsMinionsInspirationClicks++;
 	}
 
+	private void BtnPinMinion_OnMouseUp(object sender, MouseButtonEventArgs e)
+	{
+		if(Card?.Id is not { } id)
+			return;
+		Core.Overlay.BattlegroundsMinionPinningViewModel.TogglePinCard(id);
+		// Don't call UpdatePinButtonState() here - the PinsChanged event will handle it
+		Core.Game.Metrics.TavernMarkersPinnedFromAnimatedCard = true;
+	}
+
+	private void UpdatePinButtonState()
+	{
+		if(Core.Overlay.BgsMinionPinningVisibility != Visibility.Visible)
+			return;
+
+		var isPinned = Card?.Id != null && Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(Card.Id);
+		OnPropertyChanged(nameof(IsPinned));
+
+		// Use storyboard to set the initial state
+		var storyboardKey = (isPinned && BtnPinMinion.Visibility == Visibility.Visible) ? "PinButtonPinned" : "PinButtonHidden";
+		RunStoryBoardNonBlocking(storyboardKey);
+	}
+
+	private void Grid_OnMouseEnter(object sender, MouseEventArgs e)
+	{
+		AnimateButtonsIn();
+	}
+
+	private void Grid_OnMouseLeave(object sender, MouseEventArgs e)
+	{
+		AnimateButtonsOut();
+	}
+
+	private void AnimateButtonsIn()
+	{
+		RunStoryBoardNonBlocking("InspirationButtonIn");
+
+		if(Core.Overlay.BgsMinionPinningVisibility != Visibility.Visible)
+			return;
+
+		var isPinned = Card?.Id != null && Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(Card.Id);
+
+		if(isPinned)
+		{
+			// For pinned cards, show immediately without animation
+			RunStoryBoardNonBlocking("PinButtonPinned");
+		}
+		else if(BtnPinMinion.Visibility == Visibility.Visible)
+		{
+			// For non-pinned cards, animate in
+			RunStoryBoardNonBlocking("PinButtonIn");
+		}
+	}
+
+	private void AnimateButtonsOut()
+	{
+		RunStoryBoardNonBlocking("InspirationButtonOut");
+
+		if(Core.Overlay.BgsMinionPinningVisibility != Visibility.Visible)
+			return;
+
+		if(BtnPinMinion.Visibility != Visibility.Visible)
+			return;
+
+		var isPinned = Card?.Id != null && Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(Card.Id);
+
+		if(isPinned)
+		{
+			// Keep pinned button at full opacity and scale
+			RunStoryBoardNonBlocking("PinButtonPinned");
+		}
+		else
+		{
+			// Animate out for non-pinned cards
+			RunStoryBoardNonBlocking("PinButtonOut");
+		}
+	}
+
 	public event PropertyChangedEventHandler? PropertyChanged;
 
 	protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 	{
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+
+	private void AnimatedCard_OnLoaded(object sender, RoutedEventArgs e)
+	{
+		OnPinsChanged(null, EventArgs.Empty);
 	}
 }

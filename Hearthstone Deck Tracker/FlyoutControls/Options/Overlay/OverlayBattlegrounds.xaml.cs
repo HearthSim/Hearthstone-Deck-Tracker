@@ -77,7 +77,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowBattlegroundsBrowser.IsChecked = Config.Instance.ShowBattlegroundsBrowser;
 			CheckboxAlwaysShowBattlegroundsTavernTier7.IsChecked = Config.Instance.AlwaysShowBattlegroundsTavernTier7;
 			CheckboxShowBattlegroundsTurnCounter.IsChecked = Config.Instance.ShowBattlegroundsTurnCounter;
+			CheckboxShowBattlegroundsTavernMarkers.IsChecked = Config.Instance.ShowBattlegroundsTavernMarkers;
+			CheckboxAutoEnableTavernMarkersRecommended.IsChecked = Config.Instance.AutoEnableTavernMarkersRecommended;
+			CheckboxShowTavernMarkersQuickGuides.IsChecked = !Config.Instance.DismissedTavernMarkerQuickQuickGuide && !Config.Instance.DismissedCompGuidesMarkerQuickGuide;
 			CheckboxShowChinaModuleOverlay.IsChecked = Config.Instance.ShowChinaModuleOverlay;
+			CheckboxAutoShowBattlegroundsTrinketPicking.IsChecked = Config.Instance.AutoShowBattlegroundsTrinketPicking;
 			CheckboxShowChinaModuleOverlay.Visibility = Config.Instance.ShowChinaModuleOverlay != null ? Visibility.Visible : Visibility.Collapsed;
 
 			CheckboxRunCombatSimulations.IsChecked = Config.Instance.RunBobsBuddy;
@@ -95,6 +99,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 			ConfigWrapper.ShowBattlegroundsHeroPickingChanged += () =>
 				CheckboxShowBattlegroundsHeroPicking.IsChecked = Config.Instance.ShowBattlegroundsHeroPicking;
+			ConfigWrapper.AutoEnableTavernMarkersRecommendedChanged += () =>
+				CheckboxAutoEnableTavernMarkersRecommended.IsChecked = Config.Instance.AutoEnableTavernMarkersRecommended;
+			ConfigWrapper.DismissedTavernMarkerQuickGuideChanged += () =>
+				CheckboxShowTavernMarkersQuickGuides.IsChecked = !Config.Instance.DismissedTavernMarkerQuickQuickGuide && !Config.Instance.DismissedCompGuidesMarkerQuickGuide;
+			ConfigWrapper.DismissedCompGuidesMarkerQuickGuideChanged += () =>
+				CheckboxShowTavernMarkersQuickGuides.IsChecked = !Config.Instance.DismissedTavernMarkerQuickQuickGuide && !Config.Instance.DismissedCompGuidesMarkerQuickGuide;
 			_initialized = true;
 		}
 
@@ -358,6 +368,60 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.TurnCounter.Visibility = Visibility.Collapsed;
+		}
+
+		private void CheckboxShowBattlegroundsTavernMarkers_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsTavernMarkers = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.BgsMinionPinningVisibility = Core.Overlay.ShouldShowBgsMinionPinning() ? Visibility.Visible : Visibility.Collapsed;
+		}
+
+		private void CheckboxShowBattlegroundsTavernMarkers_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsTavernMarkers = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.BgsMinionPinningVisibility = Visibility.Collapsed;
+		}
+
+		private void CheckboxAutoEnableTavernMarkersRecommended_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			ConfigWrapper.AutoEnableTavernMarkersRecommended = true;
+		}
+
+		private void CheckboxAutoEnableTavernMarkersRecommended_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			ConfigWrapper.AutoEnableTavernMarkersRecommended = false;
+		}
+
+		private void CheckboxShowTavernMarkersQuickGuides_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			ConfigWrapper.DismissedTavernMarkerQuickGuide = false;
+			ConfigWrapper.DismissedCompGuidesMarkerQuickGuide = false;
+			Core.Overlay.ShowQuickGuide();
+		}
+
+		private void CheckboxShowTavernMarkersQuickGuides_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			if(CheckboxShowTavernMarkersQuickGuides.IsMouseOver || CheckboxShowTavernMarkersQuickGuides.IsKeyboardFocused)
+			{
+				ConfigWrapper.DismissedTavernMarkerQuickGuide = true;
+				ConfigWrapper.DismissedCompGuidesMarkerQuickGuide = true;
+			}
 		}
 
 		private void CheckboxRunCombatSimulations_Checked(object sender, RoutedEventArgs e)

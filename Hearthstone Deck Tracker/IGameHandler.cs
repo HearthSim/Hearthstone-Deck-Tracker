@@ -106,6 +106,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleChameleosReveal(string cardId);
 		void HandleBeginMulligan();
 		void HandlePlayerMulliganDone();
+		void HandleSetupDone();
 		void HandleCardCopy();
 		void HandleProposedAttackerChange(Entity entity);
 		void HandlePlayerLibramReduction(int value);

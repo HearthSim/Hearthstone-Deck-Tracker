@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
@@ -13,6 +14,7 @@ using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using HSReplay.Responses;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 
@@ -79,6 +81,95 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		CommonEnablerTags = ReferencedCardRun.ParseCardsFromText(CompGuide.CommonEnablers);
 		WhenToCommitTags = ReferencedCardRun.ParseCardsFromText(CompGuide.WhenToCommit);
 		HowToPlay = ReferencedCardRun.ParseCardsFromText(CompGuide.HowToPlay).FirstOrDefault();
+		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged += OnGlobalPinsChanged;
+		OnGlobalPinsChanged(this, EventArgs.Empty);
+	}
+
+	private void OnGlobalPinsChanged(object? sender, EventArgs e)
+	{
+		if(!Application.Current.Dispatcher.CheckAccess())
+		{
+			Application.Current.Dispatcher.BeginInvoke(new Action(() => OnGlobalPinsChanged(sender, e)));
+			return;
+		}
+		OnPropertyChanged(nameof(AreAllCompCardsPinned));
+	}
+
+	private bool AreAllDbfIdsPinned(IEnumerable<int> dbfIds)
+	{
+		var available = GetAvailableCardIds();
+		var any = false;
+		foreach(var dbfId in dbfIds)
+		{
+			if(available != null && !available.Contains(dbfId))
+				continue;
+			var card = Database.GetCardFromDbfId(dbfId, false);
+			if(card == null || !card.IsKnownCard)
+				continue;
+			any = true;
+			if(!Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(card.Id))
+				return false;
+		}
+		return any;
+	}
+
+	private bool AreAllInlinePinned(IEnumerable<Inline>[] tags)
+	{
+		var any = false;
+		foreach(var line in tags)
+		{
+			foreach(var inline in line)
+			{
+				if(inline is ReferencedCardRun r && r.Card?.DbfId is int dbfId)
+				{
+					var card = Database.GetCardFromDbfId(dbfId, false);
+					if(card == null || !card.IsKnownCard)
+						continue;
+					any = true;
+					if(!Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(card.Id))
+						return false;
+				}
+			}
+		}
+		return any;
+	}
+
+	private bool AreAllInlinePinned(IEnumerable<Inline>? inlines)
+	{
+		if(inlines == null)
+			return false;
+		var any = false;
+		foreach(var inline in inlines)
+		{
+			if(inline is ReferencedCardRun r && r.Card?.DbfId is int dbfId)
+			{
+				var card = Database.GetCardFromDbfId(dbfId, false);
+				if(card == null || !card.IsKnownCard)
+					continue;
+				any = true;
+				if(!Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(card.Id))
+					return false;
+			}
+		}
+		return any;
+	}
+
+	public bool AreAllCompCardsPinned
+	{
+		get
+		{
+			var coreCardsPinned = AreAllDbfIdsPinned(CompGuide.CoreCards);
+			var addonCardsPinned = AreAllDbfIdsPinned(CompGuide.AddonCards);
+			var whenToCommitPinned = AreAllInlinePinned(WhenToCommitTags);
+			var commonEnablersPinned = AreAllInlinePinned(CommonEnablerTags);
+			var howToPlayPinned = AreAllInlinePinned(HowToPlay);
+
+			var hasAnyCards = coreCardsPinned || addonCardsPinned || whenToCommitPinned || commonEnablersPinned || howToPlayPinned;
+			if(!hasAnyCards)
+				return false;
+
+			return coreCardsPinned && addonCardsPinned && whenToCommitPinned && commonEnablersPinned && howToPlayPinned;
+		}
 	}
 
 
@@ -107,7 +198,8 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		{
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
 			var currentRaces = new HashSet<Race>(availableRaces.Concat(new[] { Race.ALL, Race.INVALID }));
-			var availableCards = BattlegroundsDbSingleton.Instance.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch);
+			var availableCards = BattlegroundsDbSingleton.Instance.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch)
+				.Concat(BattlegroundsDbSingleton.Instance.GetSpells(Core.Game.IsBattlegroundsDuosMatch));
 			_availableCardIds = new HashSet<int>(availableCards.Select(card => card.DbfId));
 		}
 		return _availableCardIds;
@@ -155,6 +247,91 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		Core.Overlay.BattlegroundsInspirationViewModel.SetKeyMinion(CompGuide.Name, cards);
 		Core.Overlay.ShowBgsInspiration();
 		Core.Game.Metrics.BattlegroundsCompGuidesInspirationClicks++;
+	});
+
+	public ICommand PinAllCompCardsCommand => new Command(() =>
+	{
+		var available = GetAvailableCardIds();
+		var ids = new List<string>();
+
+		foreach(var dbfId in CompGuide.CoreCards)
+		{
+			if(available != null && !available.Contains(dbfId))
+				continue;
+			var card = Database.GetCardFromDbfId(dbfId, false);
+			if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard)
+				ids.Add(id);
+		}
+
+		foreach(var dbfId in CompGuide.AddonCards)
+		{
+			if(available != null && !available.Contains(dbfId))
+				continue;
+			var card = Database.GetCardFromDbfId(dbfId, false);
+			if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard)
+				ids.Add(id);
+		}
+
+		foreach(var line in WhenToCommitTags)
+		{
+			foreach(var inline in line)
+			{
+				if(inline is ReferencedCardRun r && r.Card?.DbfId is int dbfId)
+				{
+					if(available != null && !available.Contains(dbfId))
+						continue;
+					var card = Database.GetCardFromDbfId(dbfId, false);
+					if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard && !ids.Contains(id))
+						ids.Add(id);
+				}
+			}
+		}
+
+		foreach(var line in CommonEnablerTags)
+		{
+			foreach(var inline in line)
+			{
+				if(inline is ReferencedCardRun r && r.Card?.DbfId is int dbfId)
+				{
+					if(available != null && !available.Contains(dbfId))
+						continue;
+					var card = Database.GetCardFromDbfId(dbfId, false);
+					if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard && !ids.Contains(id))
+						ids.Add(id);
+				}
+			}
+		}
+
+		if(HowToPlay != null)
+		{
+			foreach(var inline in HowToPlay)
+			{
+				if(inline is ReferencedCardRun r && r.Card?.DbfId is int dbfId)
+				{
+					if(available != null && !available.Contains(dbfId))
+						continue;
+					var card = Database.GetCardFromDbfId(dbfId, false);
+					if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard && !ids.Contains(id))
+						ids.Add(id);
+				}
+			}
+		}
+
+		if(ids.Count == 0)
+			return;
+
+		var allPinned = ids.All(id => Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(id));
+		if(allPinned)
+		{
+			foreach(var id in ids)
+				Core.Overlay.BattlegroundsMinionPinningViewModel.UnpinCard(id);
+		}
+		else
+		{
+			Core.Game.Metrics.TavernMarkersPinnedFromCompGuide = true;
+			foreach(var id in ids)
+				Core.Overlay.BattlegroundsMinionPinningViewModel.PinCard(id);
+		}
 	});
 
 	private static bool IsTier7Enabled => (HSReplayNetOAuth.AccountData?.IsTier7 ?? false)

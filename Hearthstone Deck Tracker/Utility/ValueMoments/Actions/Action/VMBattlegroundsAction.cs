@@ -52,6 +52,26 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			}
 			IsBattlegroundsChineseEnvironmentCorrect = gameMetrics.IsBattlegroundsChineseEnvironmentCorrect;
 
+			TavernMarkersDisplayed = gameMetrics.TavernMarkersDisplayed;
+			if(gameMetrics.TavernMarkersDisplayed)
+			{
+				TavernMarkersPinnedFromAnimatedCard = gameMetrics.TavernMarkersPinnedFromAnimatedCard;
+				TavernMarkersPinnedFromCompGuide = gameMetrics.TavernMarkersPinnedFromCompGuide;
+				TavernMarkersTribeToggled = gameMetrics.TavernMarkersTribeToggled;
+				TavernMarkersRecommendedToggled = gameMetrics.TavernMarkersRecommendedToggled;
+				TavernMarkersRecommendedDisabledTurn = gameMetrics.TavernMarkersRecommendedDisabledTurn;
+				TavernMarkersRecommendedEnabled = gameMetrics.TavernMarkersRecommendedEnabled;
+				TavernMarkersAutoEnableResponse = gameMetrics.TavernMarkersAutoEnableResponse;
+				TavernMarkersPanelExpanded = Config.Instance.TavernMarkersPanelExpanded;
+
+				// Value should be ignored if the user has dismissed the quick guides before
+				if(Config.Instance.DismissedCompGuidesMarkerQuickGuide == gameMetrics.TavernMarkersCompGuidesQuickGuideDismissed)
+					TavernMarkersCompGuidesQuickGuideDismissed = gameMetrics.TavernMarkersCompGuidesQuickGuideDismissed;
+
+				if(Config.Instance.DismissedTavernMarkerQuickQuickGuide == gameMetrics.TavernMarkersQuickGuideDismissed)
+					TavernMarkersQuickGuideDismissed = gameMetrics.TavernMarkersQuickGuideDismissed;
+			}
+
 			BattlegroundsSettings = new BattlegroundsSettings();
 		}
 
@@ -147,6 +167,39 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("is_battlegrounds_chinese_environment_correct", NullValueHandling = NullValueHandling.Ignore)]
 		public bool? IsBattlegroundsChineseEnvironmentCorrect { get; }
+
+		[JsonProperty("tavern_markers_displayed")]
+		public bool TavernMarkersDisplayed { get; set; }
+
+		[JsonProperty("tavern_markers_pinned_from_animated_card", NullValueHandling = NullValueHandling.Ignore)]
+		public bool? TavernMarkersPinnedFromAnimatedCard { get; }
+
+		[JsonProperty("tavern_markers_pinned_from_comp_guide", NullValueHandling = NullValueHandling.Ignore)]
+		public bool? TavernMarkersPinnedFromCompGuide { get; }
+
+		[JsonProperty("tavern_markers_tribe_toggled", NullValueHandling = NullValueHandling.Ignore)]
+		public bool? TavernMarkersTribeToggled { get; }
+
+		[JsonProperty("tavern_markers_recommended_toggled", NullValueHandling = NullValueHandling.Ignore)]
+		public bool? TavernMarkersRecommendedToggled { get; }
+
+		[JsonProperty("tavern_markers_recommended_disabled_turn", NullValueHandling = NullValueHandling.Ignore)]
+		public int? TavernMarkersRecommendedDisabledTurn { get; }
+
+		[JsonProperty("tavern_markers_recommended_enabled", NullValueHandling = NullValueHandling.Ignore)]
+		public bool? TavernMarkersRecommendedEnabled { get; }
+
+		[JsonProperty("tavern_markers_quick_guide_dismissed", NullValueHandling = NullValueHandling.Ignore)]
+		public bool? TavernMarkersQuickGuideDismissed { get; }
+
+		[JsonProperty("tavern_markers_comp_guides_quick_guide_dismissed", NullValueHandling = NullValueHandling.Ignore)]
+		public bool? TavernMarkersCompGuidesQuickGuideDismissed { get; }
+
+		[JsonProperty("tavern_markers_auto_enable_response", NullValueHandling = NullValueHandling.Ignore)]
+		public string? TavernMarkersAutoEnableResponse { get; }
+
+		[JsonProperty("tavern_markers_panel_expanded", NullValueHandling = NullValueHandling.Ignore)]
+		public bool? TavernMarkersPanelExpanded { get; }
 
 		[JsonIgnore]
 		public BattlegroundsSettings BattlegroundsSettings { get; }

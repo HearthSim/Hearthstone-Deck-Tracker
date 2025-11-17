@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
-             xmlns:relatedCardsSystem="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem"
+             xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
              Name="UserControl"
              mc:Ignorable="d"
+             Loaded="AnimatedCard_OnLoaded"
              d:DesignHeight="34" d:DesignWidth="217">
     <UserControl.Resources>
         <Storyboard x:Key="StoryboardFadeIn" Duration="0:0:1">
@@ -28,61 +28,111 @@
             <DoubleAnimation Storyboard.TargetName="RectHighlight" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
             <DoubleAnimation Storyboard.TargetName="RectHighlight" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5" BeginTime="0:0:0.5"/>
         </Storyboard>
+
+        <!-- Pin Button Animations -->
+        <Storyboard x:Key="PinButtonIn">
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="Opacity"
+                           To="1" Duration="0:0:0.2" BeginTime="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="1" Duration="0:0:0.5" BeginTime="0:0:0.1">
+                <DoubleAnimation.EasingFunction>
+                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="3"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="1" Duration="0:0:0.5" BeginTime="0:0:0.1">
+                <DoubleAnimation.EasingFunction>
+                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="3"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="PinButtonOut">
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="Opacity"
+                           To="0" Duration="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="0.7" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="0.7" Duration="0:0:0"/>
+        </Storyboard>
+
+        <Storyboard x:Key="PinButtonPinned">
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="Opacity"
+                           To="1" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="1" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="1" Duration="0:0:0"/>
+        </Storyboard>
+
+        <Storyboard x:Key="PinButtonUnpinned">
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="Opacity"
+                           To="0" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="0.7" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="0.7" Duration="0:0:0.2"/>
+        </Storyboard>
+
+        <Storyboard x:Key="PinButtonHidden">
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="Opacity"
+                           To="0" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="0.7" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnPinMinion" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="0.7" Duration="0:0:0"/>
+        </Storyboard>
+
+        <!-- Inspiration Button Animations -->
+        <Storyboard x:Key="InspirationButtonIn">
+            <DoubleAnimation Storyboard.TargetName="BtnTier7Inspiration" Storyboard.TargetProperty="Opacity"
+                           To="1" Duration="0:0:0.2" BeginTime="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetName="BtnTier7Inspiration" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="1" Duration="0:0:0.5" BeginTime="0:0:0.1">
+                <DoubleAnimation.EasingFunction>
+                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="3"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="BtnTier7Inspiration" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="1" Duration="0:0:0.5" BeginTime="0:0:0.1">
+                <DoubleAnimation.EasingFunction>
+                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="3"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="InspirationButtonOut">
+            <DoubleAnimation Storyboard.TargetName="BtnTier7Inspiration" Storyboard.TargetProperty="Opacity"
+                           To="0" Duration="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetName="BtnTier7Inspiration" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                           To="0.7" Duration="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="BtnTier7Inspiration" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                           To="0.7" Duration="0:0:0"/>
+        </Storyboard>
     </UserControl.Resources>
     <UserControl.LayoutTransform>
         <ScaleTransform ScaleY="1" ScaleX="1" />
     </UserControl.LayoutTransform>
-    <Grid Name="Grid">
+    <Grid Name="Grid" MouseEnter="Grid_OnMouseEnter" MouseLeave="Grid_OnMouseLeave">
         <local:CardTile DataContext="{Binding CardTileViewModel, RelativeSource={RelativeSource AncestorType=local:AnimatedCard}}" />
         <!-- Highlight that flashes when user draws a card -->
         <Rectangle Name="RectHighlight" Fill="{Binding Highlight}" Height="34" Width="217" RenderOptions.BitmapScalingMode="Fant"
                    Opacity="0" VerticalAlignment="Center" IsHitTestVisible="False" />
-
-        <Border Name="BtnTier7Inspiration" Width="30" Height="30" Margin="0,2,2,2" Cursor="Hand"
+        <Border Name="BtnTier7Inspiration" Width="30" Height="30" Margin="0,2,34,2" Cursor="Hand"
                 MouseUp="BtnBgsInspiration_OnMouseUp" HorizontalAlignment="Right"
                 RenderTransformOrigin="0.5,0.5" CornerRadius="3"
                 BorderBrush="#141617"
-                BorderThickness="1" Visibility="Collapsed">
+                BorderThickness="1" Visibility="Collapsed"
+                Opacity="0">
+            <Border.RenderTransform>
+                <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
+            </Border.RenderTransform>
             <Border.Style>
                 <Style TargetType="Border">
-                    <Setter Property="Opacity" Value="0"/>
                     <Setter Property="Background" Value="#23272a"/>
-                    <Setter Property="RenderTransform">
-                        <Setter.Value>
-                            <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
-                        </Setter.Value>
-                    </Setter>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsMouseOver, ElementName=BtnTier7Inspiration}" Value="True">
                             <Setter Property="Background" Value="#43474a"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=Grid}" Value="True">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0:0.2" BeginTime="0:0:0:0.1" />
-                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1" Duration="0:0:0:0.5" BeginTime="0:0:0:0.1">
-                                            <DoubleAnimation.EasingFunction>
-                                                <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="3" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1" Duration="0:0:0:0.5" BeginTime="0:0:0:0.1">
-                                            <DoubleAnimation.EasingFunction>
-                                                <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="3" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0:0.1" />
-                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="0.7" Duration="0:0:0:0" />
-                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="0.7" Duration="0:0:0:0" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </DataTrigger.ExitActions>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -92,6 +142,36 @@
                     <VisualBrush Visual="{StaticResource icon_inspiration}" />
                 </Rectangle.Fill>
             </Rectangle>
+        </Border>
+
+        <Border Visibility="{Binding BgsMinionPinningVisibility, RelativeSource={RelativeSource AncestorType={x:Type windows:OverlayWindow}}}">
+            <Border Name="BtnPinMinion" Width="30" Height="30" Margin="0,2,2,2" Cursor="Hand"
+                    MouseUp="BtnPinMinion_OnMouseUp" HorizontalAlignment="Right"
+                    RenderTransformOrigin="0.5,0.5" CornerRadius="3"
+                    BorderBrush="#141617"
+                    BorderThickness="1" Visibility="Collapsed"
+                    Opacity="0">
+                <Border.RenderTransform>
+                    <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
+                </Border.RenderTransform>
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="#23272a"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowPinButton, RelativeSource={RelativeSource AncestorType=local:AnimatedCard}}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsPinned, RelativeSource={RelativeSource AncestorType=local:AnimatedCard}}" Value="True">
+                                <Setter Property="Background" Value="#141617"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=BtnPinMinion}" Value="True">
+                                <Setter Property="Background" Value="#43474a"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Image Height="20" Width="20" Margin="4" Source="/HearthstoneDeckTracker;component/Resources/pin.png"/>
+            </Border>
         </Border>
     </Grid>
 </UserControl>

@@ -40,6 +40,17 @@
 
 		public bool BattlegroundsChinaModuleAutoActionEnabled { get; set; }
 
+		// Tavern Markers (Minion Pinning)
+		public bool TavernMarkersDisplayed { get; set; }
+		public bool TavernMarkersPinnedFromAnimatedCard { get; set; }
+		public bool TavernMarkersPinnedFromCompGuide { get; set; }
+		public bool TavernMarkersTribeToggled { get; set; }
+		public bool TavernMarkersRecommendedToggled { get; set; }
+		public int? TavernMarkersRecommendedDisabledTurn { get; set; }
+		public bool TavernMarkersRecommendedEnabled { get; set; }
+		public bool? TavernMarkersQuickGuideDismissed { get; set; }
+		public bool? TavernMarkersCompGuidesQuickGuideDismissed { get; set; }
+		public string? TavernMarkersAutoEnableResponse { get; set; }
 
 		public void IncrementBattlegroundsMinionsTiersClick()
 		{
