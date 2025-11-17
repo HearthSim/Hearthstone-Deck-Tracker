@@ -1,3 +1,9 @@
+## **Release v1.48.6 - 2025-11-17**
+- New Tier7 feature: Tavern Pinning! Never miss a card you want again.\
+  *You'll be able to pin individual cards, whole comps or even whole minion types.*
+- New Tier7 feature: Comp Key Pieces Pinning! Always know when available Comp key pieces are offered.\
+  *Comp Key Pieces are based on Jeef's "When to Commit" and "Common Enablers" for all available Comps in the lobby.*
+
 ## **Release v1.48.5 - 2025-11-13**
 **Updated for Hearthstone 34.0.2**
 
