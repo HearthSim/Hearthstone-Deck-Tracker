@@ -16,7 +16,7 @@ public static class HDTToolsManager
     private static readonly string ToolsDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HDTTools");
     private static readonly string ExtractedToolsDir = Path.Combine(ToolsDir, "bin");
     private const string ZipFileName = "HDTTools.zip";
-    private const string ZipUrl = $"https://hdt-downloads-hongkong.s3.ap-east-1.amazonaws.com/HDTTools/HDTTools-v{HDTToolsVersion}.zip";
+    private const string ZipUrl = $"http://hdt-downloads-hongkong.s3.ap-east-1.amazonaws.com/HDTTools/HDTTools-v{HDTToolsVersion}.zip";
     internal static string VersionString => $"v{HDTToolsVersion}";
 
     private const int DownloadMaxRetries = 3;
