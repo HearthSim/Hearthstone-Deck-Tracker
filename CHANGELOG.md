@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed an issue where fabled cards could appear duplicated in opponent's decklist.
+
 ## **Release v1.48.7 - 2025-11-17**
 **Battlegrounds**:
 - New Tier7 feature: Tavern Pinning! Never miss a card you want again.\

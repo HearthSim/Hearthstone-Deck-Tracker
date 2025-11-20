@@ -2615,7 +2615,7 @@ namespace Hearthstone_Deck_Tracker
 
 			foreach(var id in cardIds)
 			{
-				if(id != entity.CardId)
+				if(id != entity.CardId && _game.Opponent.RevealedEntities.All(x => x.CardId != id))
 					_game.Opponent.PredictUniqueCardInDeck(id, false);
 			}
 		}
