@@ -10,7 +10,7 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             Width="264" Height="630"
+             Width="500" Height="1000"
              mc:Ignorable="d">
     <d:UserControl.DataContext>
         <local:ArenaPreDraftViewModel UserState="Subscriber" Username="Epix">
@@ -18,16 +18,22 @@
     </d:UserControl.DataContext>
 
     <UserControl.Resources>
-        <Style TargetType="TextBlock">
-            <Style.Setters>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="TextAlignment" Value="Center"/>
-                <Setter Property="FontSize" Value="12"/>
-                <Setter Property="TextWrapping" Value="Wrap"/>
-            </Style.Setters>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../OverlayResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-        <Style TargetType="ToolTip" BasedOn="{StaticResource ArenaTooltipStyle}"/>
+            <Style TargetType="TextBlock">
+                <Style.Setters>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                </Style.Setters>
+            </Style>
+
+            <Style TargetType="ToolTip" BasedOn="{StaticResource ArenaTooltipStyle}"/>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid Visibility="{Binding Visibility}">
@@ -104,9 +110,94 @@
                         </StackPanel>
 
                         <!-- UserState=UnknownPlayer -->
-                        <StackPanel Width="182" Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.UnknownPlayer}}">
+                        <StackPanel Margin="16" Visibility="{Binding UserState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:UserState.UnknownPlayer}}">
                             <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_JoinForAccess}" Margin="0 8 0 0" />
-                            <Button Style="{StaticResource ArenaButtonStyle}" Content="{lex:Loc ArenaPreDraft_Panel_SubscribeNow}" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}"/>
+                            <Grid>
+                                <Button Height="25" Style="{StaticResource SubscribeButton}" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}">
+                                    <Button.Content>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_SubscribeNow}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2"
+                                                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                            <!-- Sale Tag -->
+                                            <Grid HorizontalAlignment="Right" Grid.Column="1" Visibility="{Binding SaleTagVisibility}">
+                                                <!-- Diagonal separator -->
+                                                <Path Fill="#b94038" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="15">
+                                                    <Path.Data>
+                                                        <PathGeometry>
+                                                            <PathFigure StartPoint="0,0">
+                                                                <LineSegment Point="15,0"/>
+                                                                <LineSegment Point="15,25"/>
+                                                                <LineSegment Point="0,25"/>
+                                                                <LineSegment Point="10,0"/>
+                                                            </PathFigure>
+                                                        </PathGeometry>
+                                                    </Path.Data>
+                                                </Path>
+
+                                                <!-- Sale tag body -->
+                                                <Border Background="#b94038"  Padding="8,0" Height="25" Margin="10 0 0 0">
+                                                    <Border.Effect>
+                                                        <DropShadowEffect Color="Black" Direction="315" ShadowDepth="1" Opacity="0.3" BlurRadius="2"/>
+                                                    </Border.Effect>
+
+                                                    <TextBlock Text="{lex:Loc BattlegroundsPreLobby_SaleTag}" FontSize="12" FontWeight="Bold" Foreground="White"
+                                                               TextAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                                 <!-- Tooltip -->
+                                <Canvas Height="25" Visibility="{Binding SaleTooltipVisibility}">
+                                    <Border Width="227" Canvas.Right="-250" Canvas.Top="-40" BorderBrush="#F21D3657" BorderThickness="1"
+                                            CornerRadius="4" Padding="20" Visibility="Visible"
+                                            ext:OverlayExtensions.IsOverlayHitTestVisible="True">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#F21D3657" Offset="0"/>
+                                                <GradientStop Color="#F2152B47" Offset="0.5"/>
+                                                <GradientStop Color="#F21D3657" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+
+                                        <Grid>
+                                            <!-- Close Button -->
+                                            <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="18" Height="18"
+                                                    Margin="0 -12 -12 0"
+                                                    CornerRadius="3"
+                                                    Cursor="Hand">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                                                                <Setter Property="Background" Value="#22FFFFFF"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <Border.InputBindings>
+                                                    <MouseBinding MouseAction="LeftClick" Command="{Binding CloseSaleTooltipCommand}" />
+                                                </Border.InputBindings>
+                                                <TextBlock Text="✕" Foreground="White" FontSize="12" FontWeight="Bold"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+
+                                            <!-- Tooltip Content -->
+                                            <StackPanel Margin="0 0 0 0">
+                                                <TextBlock Text="{lex:Loc BattlegroundsPreLobby_SaleTooltip_Title}" FontWeight="Bold" FontSize="14" Foreground="White" Margin="0 0 0 12"/>
+                                                <TextBlock TextWrapping="Wrap" MaxWidth="200" Foreground="White" FontSize="12" Text="{Binding SaleDescription}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+
+                                    <Polygon Canvas.Right="-23" Canvas.Top="6" Fill="{StaticResource HSReplayNetBlue}" Points="24,0 5,12 24,24"/>
+                                </Canvas>
+                            </Grid>
                         </StackPanel>
 
                         <!-- UserState=TrialPlayer -->
@@ -143,8 +234,91 @@
                                     <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_JoinThisDraft}" />
                                 </StackPanel>
                             </StackPanel>
+                            <Grid>
+                                <Button Height="25" Style="{StaticResource SubscribeButton}" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}">
+                                    <Button.Content>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
 
-                            <Button Style="{StaticResource ArenaButtonStyle}" Content="{lex:Loc ArenaPreDraft_Panel_SubscribeNow}" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}"/>
+                                            <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_SubscribeNow}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2"
+                                                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                            <!-- Sale Tag -->
+                                            <Grid HorizontalAlignment="Right" Grid.Column="1" Visibility="{Binding SaleTagVisibility}">
+                                                <!-- Diagonal separator -->
+                                                <Path Fill="#b94038" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="15">
+                                                    <Path.Data>
+                                                        <PathGeometry>
+                                                            <PathFigure StartPoint="0,0">
+                                                                <LineSegment Point="15,0"/>
+                                                                <LineSegment Point="15,25"/>
+                                                                <LineSegment Point="0,25"/>
+                                                                <LineSegment Point="10,0"/>
+                                                            </PathFigure>
+                                                        </PathGeometry>
+                                                    </Path.Data>
+                                                </Path>
+
+                                                <!-- Sale tag body -->
+                                                <Border Background="#b94038"  Padding="8,0" Height="25" Margin="10 0 0 0">
+                                                    <Border.Effect>
+                                                        <DropShadowEffect Color="Black" Direction="315" ShadowDepth="1" Opacity="0.3" BlurRadius="2"/>
+                                                    </Border.Effect>
+
+                                                    <TextBlock Text="{lex:Loc BattlegroundsPreLobby_SaleTag}" FontSize="12" FontWeight="Bold" Foreground="White"
+                                                               TextAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                                <!-- Tooltip -->
+                                <Canvas Height="25" Visibility="{Binding SaleTooltipVisibility}">
+                                    <Border Width="227" Canvas.Right="-250" Canvas.Top="-40" BorderBrush="#F21D3657" BorderThickness="1"
+                                            CornerRadius="4" Padding="20" Visibility="Visible"
+                                            ext:OverlayExtensions.IsOverlayHitTestVisible="True">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#F21D3657" Offset="0"/>
+                                                <GradientStop Color="#F2152B47" Offset="0.5"/>
+                                                <GradientStop Color="#F21D3657" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+
+                                        <Grid>
+                                            <!-- Close Button -->
+                                            <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="18" Height="18"
+                                                    Margin="0 -12 -12 0"
+                                                    CornerRadius="3"
+                                                    Cursor="Hand">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                                                                <Setter Property="Background" Value="#22FFFFFF"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <Border.InputBindings>
+                                                    <MouseBinding MouseAction="LeftClick" Command="{Binding CloseSaleTooltipCommand}" />
+                                                </Border.InputBindings>
+                                                <TextBlock Text="✕" Foreground="White" FontSize="12" FontWeight="Bold"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+
+                                            <!-- Tooltip Content -->
+                                            <StackPanel Margin="0 0 0 0">
+                                                <TextBlock Text="{lex:Loc BattlegroundsPreLobby_SaleTooltip_Title}" FontWeight="Bold" FontSize="14" Foreground="White" Margin="0 0 0 12"/>
+                                                <TextBlock TextWrapping="Wrap" MaxWidth="200" Foreground="White" FontSize="12" Text="{Binding SaleDescription}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                    <Polygon Canvas.Right="-23" Canvas.Top="6" Fill="{StaticResource HSReplayNetBlue}" Points="24,0 5,12 24,24"/>
+                                </Canvas>
+                            </Grid>
 
                             <!-- Subscribed? Sign In -->
                             <TextBlock Margin="0 8 0 0" Visibility="{Binding RefreshSubscriptionState, Converter={StaticResource EnumToVisibility}, ConverterParameter={x:Static local:RefreshSubscriptionState.SignIn}}">

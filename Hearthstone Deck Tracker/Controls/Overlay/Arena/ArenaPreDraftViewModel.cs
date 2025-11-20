@@ -8,6 +8,7 @@ using HearthMirror.Enums;
 using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -18,6 +19,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Arena;
 
 public class ArenaPreDraftViewModel : ViewModel
 {
+	private RemoteData.SaleData? _data;
+
 	public ArenaPreDraftViewModel()
 	{
 		Watchers.ArenaStateWatcher.OnClientStateChanged += UpdateClientState;
@@ -36,6 +39,14 @@ public class ArenaPreDraftViewModel : ViewModel
 		Remote.Config.Loaded += (_) =>
 		{
 			OnPropertyChanged(nameof(UserState));
+		};
+
+		Remote.Config.Loaded += data =>
+		{
+			_data = data?.Sales?.TraditionalSale;
+			OnPropertyChanged(nameof(SaleTagVisibility));
+			OnPropertyChanged(nameof(SaleTooltipVisibility));
+			OnPropertyChanged(nameof(SaleDescription));
 		};
 	}
 
@@ -393,6 +404,49 @@ public class ArenaPreDraftViewModel : ViewModel
 		var url = Helper.BuildHsReplayNetUrl("arena/cards", "arena_lobby_view_stats", fragmentParams: new[] { "gameType=UNDERGROUND_ARENA" });
 		Helper.TryOpenUrl(url);
 		PossiblySubscribed = true;
+	});
+
+	public Visibility SaleTagVisibility
+	{
+		get
+		{
+			if(_data == null || !_data.Enabled)
+				return Visibility.Collapsed;
+
+			return Visibility.Visible;
+		}
+	}
+
+	public Visibility SaleTooltipVisibility
+	{
+		get
+		{
+			if(_data == null || !_data.Enabled)
+				return Visibility.Collapsed;
+
+			if(Config.Instance.IgnoreTraditionalSaleId >= _data.Id)
+				return Visibility.Collapsed;
+
+			return Visibility.Visible;
+		}
+	}
+
+	public string SaleDescription
+	{
+		get
+		{
+			if(_data == null || !_data.Enabled)
+				return string.Empty;
+
+			return string.Format(LocUtil.Get("PreLobbySale_Blackfriday_Description"), _data.Discount);
+		}
+	}
+
+	public ICommand CloseSaleTooltipCommand => new Command(() =>
+	{
+		Config.Instance.IgnoreTraditionalSaleId = _data?.Id ?? -1;
+		Config.Save();
+		OnPropertyChanged(nameof(SaleTooltipVisibility));
 	});
 }
 

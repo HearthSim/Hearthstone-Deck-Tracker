@@ -8,28 +8,6 @@
 
     <SolidColorBrush x:Key="PremiumOrange" Color="#FFB00D"/>
 
-    <Style x:Key="ArenaButtonStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="Background" Value="#F1C040" />
-        <Setter Property="Foreground" Value="#26200F" />
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Padding" Value="4" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="UIElement.IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="#CCCCCC" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                    <Border Background="{TemplateBinding Background}" Padding="4">
-                        <TextBlock Text="{TemplateBinding Content}" TextAlignment="Center" Margin="0 0 0 1"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="ArenaTooltipStyle" TargetType="ToolTip">
         <Setter Property="Template">
             <Setter.Value>

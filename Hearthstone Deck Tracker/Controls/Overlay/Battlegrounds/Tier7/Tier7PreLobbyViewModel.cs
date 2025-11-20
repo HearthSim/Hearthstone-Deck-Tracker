@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 
 			Remote.Config.Loaded += data =>
 			{
-				_data = data?.Sale;
+				_data = data?.Sales?.BattlegroundsSale;
 				OnPropertyChanged(nameof(SaleTagVisibility));
 				OnPropertyChanged(nameof(SaleTooltipVisibility));
 				OnPropertyChanged(nameof(SaleDescription));
@@ -172,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				if(_data == null || !_data.Enabled)
 					return Visibility.Collapsed;
 
-				if(Config.Instance.IgnoreSaleId >= _data.Id)
+				if(Config.Instance.IgnoreBattlegroundsSaleId >= _data.Id)
 					return Visibility.Collapsed;
 
 				return Visibility.Visible;
@@ -186,7 +186,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				if(_data == null || !_data.Enabled)
 					return string.Empty;
 
-				return string.Format(LocUtil.Get("BattlegroundsPreLobby_SaleTooltip_Description"), _data.Discount);
+				return string.Format(LocUtil.Get("PreLobbySale_Blackfriday_Description"), _data.Discount);
 			}
 		}
 
@@ -341,7 +341,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 
 		public ICommand CloseSaleTooltipCommand => new Command(() =>
 		{
-			Config.Instance.IgnoreSaleId = _data?.Id ?? -1;
+			Config.Instance.IgnoreBattlegroundsSaleId = _data?.Id ?? -1;
 			Config.Save();
 			OnPropertyChanged(nameof(SaleTooltipVisibility));
 		});

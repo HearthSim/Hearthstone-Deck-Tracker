@@ -19,37 +19,22 @@
     </d:UserControl.DataContext>
 
     <UserControl.Resources>
-        <Style TargetType="TextBlock">
-            <Style.Setters>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="TextAlignment" Value="Center"/>
-                <Setter Property="FontSize" Value="12"/>
-                <Setter Property="TextWrapping" Value="Wrap"/>
-            </Style.Setters>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../OverlayResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-        <Style x:Key="Tier7Button" TargetType="{x:Type ButtonBase}">
-            <Setter Property="Background" Value="{StaticResource Tier7YellowButtonBackground}" />
-            <Setter Property="Foreground" Value="{StaticResource Tier7YellowButtonForeground}" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="UIElement.IsMouseOver" Value="true">
-                                <Setter Property="Background" Value="{StaticResource Tier7YellowButtonBackgroundHover}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+            <Style TargetType="TextBlock">
+                <Style.Setters>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                </Style.Setters>
+            </Style>
 
         <Style TargetType="ToolTip" BasedOn="{StaticResource BgsTooltipStyle}"/>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid Visibility="{Binding Visibility}">
@@ -165,7 +150,7 @@
                         </StackPanel>
                         <TextBlock Text="{lex:Loc BattlegroundsPreLobby_Join}" TextWrapping="Wrap" Margin="0 8 0 0" />
                         <Grid>
-                            <Button Cursor="Hand" Height="25" Style="{StaticResource Tier7Button}" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}">
+                            <Button Cursor="Hand" Height="25" Style="{StaticResource SubscribeButton}" Margin="0 8 0 0" Command="{Binding SubscribeNowCommand}">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
