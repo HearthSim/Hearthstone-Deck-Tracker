@@ -1,4 +1,7 @@
-## **Unreleased**
+## **Release v1.48.8 - 2025-11-21**
+**Battlegrounds**:
+- Improve Comp Guides error handling.
+
 **Hearthstone**:
 - Fixed an issue where fabled cards could appear duplicated in opponent's decklist.
 
