@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using HearthDb.Enums;
 using HearthMirror;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -19,6 +21,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 
 public class BattlegroundsCompsGuidesViewModel : ViewModel
 {
+	public BattlegroundsCompsGuidesViewModel()
+	{
+		RetryCommand = new Command(async () => await RetryLoadCompGuides());
+	}
+
+	public ICommand RetryCommand { get; }
+
+	public bool IsRetrying
+	{
+		get => GetProp(false);
+		private set => SetProp(value);
+	}
+
 	public List<BattlegroundsCompGuideViewModel>? Comps
 	{
 		get => GetProp<List<BattlegroundsCompGuideViewModel>?>(null);
@@ -33,7 +48,26 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			SetProp(value);
 			OnPropertyChanged(nameof(Tier7FeatureVisibility));
 			OnPropertyChanged(nameof(BaseFeatureVisibility));
+			OnPropertyChanged(nameof(ErrorVisibility));
 		}
+	}
+
+	public bool HasError
+	{
+		get => GetProp(false);
+		private set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(ErrorVisibility));
+			OnPropertyChanged(nameof(BaseFeatureVisibility));
+			OnPropertyChanged(nameof(Tier7FeatureVisibility));
+		}
+	}
+
+	public bool HasRetriedAndFailed
+	{
+		get => GetProp(false);
+		private set => SetProp(value);
 	}
 
 	public async Task<List<BattlegroundsCompGuideViewModel>?> GetCompGuides()
@@ -49,7 +83,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		}
 		catch (Exception ex)
 		{
-			MessageBox.Show($"Error loading comps data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			Log.Error($"Error loading comps data: {ex.Message}");
 		}
 
 		return null;
@@ -88,14 +122,15 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 				};
 			}
 
-			return CompsByTier = result;
+			CompsByTier = result;
+
+			return CompsByTier;
 		}
 		catch (Exception ex)
 		{
-			MessageBox.Show($"Error loading comps data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			Log.Error($"Error loading comps data: {ex.Message}");
+			throw;
 		}
-
-		return null;
 	}
 
 
@@ -112,6 +147,30 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 	public bool IsCompSelected => SelectedComp != null;
 
 	private readonly SemaphoreSlim _updateCompGuidesSemaphore = new (1, 1);
+
+	private async Task RetryLoadCompGuides()
+	{
+		if (IsRetrying)
+			return;
+
+		try
+		{
+			IsRetrying = true;
+			HasRetriedAndFailed = false;
+			await _updateCompGuidesSemaphore.WaitAsync();
+			await UpdateCompGuides();
+
+			if (HasError)
+			{
+				HasRetriedAndFailed = true;
+			}
+		}
+		finally
+		{
+			_updateCompGuidesSemaphore.Release();
+			IsRetrying = false;
+		}
+	}
 
 	public async void OnMatchStart()
 	{
@@ -161,6 +220,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			if(filteredBattlegroundsCompGuides is not null)
 			{
 				CompsByTier = filteredBattlegroundsCompGuides;
+				HasError = false;
 			}
 		}
 		else
@@ -185,6 +245,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			if(battlegroundsCompGuides is not null)
 			{
 				Comps = battlegroundsCompGuides;
+				HasError = false;
 			}
 		}
 	}
@@ -192,6 +253,8 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 	public void OnMatchEnd()
 	{
 		CompsByTier = null;
+		HasError = false;
+		HasRetriedAndFailed = false;
 	}
 
 	public class TieredComps
@@ -267,19 +330,20 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 
 	private void HandleCompGuidesError(Exception error)
 	{
+		HasError = true;
 		Influx.OnGetBattlegroundsCompositionGuidesError(error.GetType().Name, error.Message);
-
-		// CompStatsErrorVisibility = Visibility.Visible;
-		// CompStatsBodyVisibility = Visibility.Hidden;
 	}
 
-	public Visibility Tier7FeatureVisibility => CompsByTier != null ? Visibility.Visible : Visibility.Collapsed;
-	public Visibility BaseFeatureVisibility => CompsByTier == null ? Visibility.Visible : Visibility.Collapsed;
+	public Visibility Tier7FeatureVisibility => !HasError && CompsByTier != null ? Visibility.Visible : Visibility.Collapsed;
+	public Visibility BaseFeatureVisibility => !HasError && CompsByTier == null ? Visibility.Visible : Visibility.Collapsed;
+	public Visibility ErrorVisibility => HasError ? Visibility.Visible : Visibility.Collapsed;
 
 	public void Reset()
 	{
 		Comps = null;
 		CompsByTier = null;
 		SelectedComp = null;
+		HasError = false;
+		HasRetriedAndFailed = false;
 	}
 }

@@ -84,6 +84,97 @@
                 <Border Grid.Row="1" BorderBrush="#4F565B" BorderThickness="1" CornerRadius="3" Background="#141617" ClipToBounds="True">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
                         <StackPanel>
+                            <!-- Error State -->
+                            <Border Visibility="{Binding ErrorVisibility}" Padding="16">
+                                <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock
+                                        Text="{lex:Loc Battlegrounds_CompGuides_Error_Title}"
+                                        FontSize="13"
+                                        FontWeight="Bold"
+                                        Foreground="#E74C3C"
+                                        TextAlignment="Center"
+                                        Margin="0,0,0,12"
+                                    />
+                                    <TextBlock
+                                        Text="{lex:Loc Battlegrounds_CompGuides_Error_Message}"
+                                        FontSize="12"
+                                        Foreground="#9CA3A8"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap"
+                                        MaxWidth="250"
+                                        Margin="0,0,0,16"
+                                    />
+                                    <Button
+                                        Command="{Binding RetryCommand}"
+                                        HorizontalAlignment="Center"
+                                        Cursor="Hand"
+                                        extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Background" Value="#F1C040" />
+                                                <Setter Property="Foreground" Value="#26200F" />
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="BorderThickness" Value="0" />
+                                                <Setter Property="Padding" Value="16,10" />
+                                                <Setter Property="MinWidth" Value="140" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border
+                                                                Background="{TemplateBinding Background}"
+                                                                CornerRadius="4"
+                                                                Padding="{TemplateBinding Padding}">
+                                                                <ContentPresenter
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsRetrying}" Value="True">
+                                                        <Setter Property="Background" Value="#5A5A5A" />
+                                                        <Setter Property="Foreground" Value="#9CA3A8" />
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                        <Setter Property="Cursor" Value="Wait" />
+                                                    </DataTrigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#FFD966" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <TextBlock
+                                                Text="⟳"
+                                                FontSize="14"
+                                                FontWeight="Bold"
+                                                Margin="0,0,6,0"
+                                                VerticalAlignment="Center"
+                                            />
+                                            <TextBlock
+                                                Text="{lex:Loc Battlegrounds_CompGuides_Error_Retry}"
+                                                FontSize="13"
+                                                FontWeight="Bold"
+                                                VerticalAlignment="Center"
+                                            />
+                                        </StackPanel>
+                                    </Button>
+                                    <TextBlock
+                                        Text="{lex:Loc Battlegrounds_CompGuides_Error_RetryFailed}"
+                                        FontSize="11"
+                                        Foreground="#E67E22"
+                                        Opacity="0.9"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap"
+                                        MaxWidth="250"
+                                        Margin="0,16,0,0"
+                                        FontWeight="SemiBold"
+                                        Visibility="{Binding HasRetriedAndFailed, Converter={StaticResource BoolToVisibility}}"
+                                    />
+                                </StackPanel>
+                            </Border>
+
                             <!-- Base Feature -->
                             <ItemsControl Margin="0,-1,0,0" AlternationCount="1000" ItemsSource="{Binding Comps}" Visibility="{Binding BaseFeatureVisibility}">
                                 <ItemsControl.ItemTemplate>
