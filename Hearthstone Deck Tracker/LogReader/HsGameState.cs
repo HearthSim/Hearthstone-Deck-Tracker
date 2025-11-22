@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			MinionsInPlay.Clear();
 			LastCardPlayed = 0;
 			LastEntityChosenOnDiscover = 0;
-
+			LastPlayBlockTime = null;
 		}
 
 		public void SetCurrentEntity(int id)
@@ -104,6 +104,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public List<string> MinionsInPlay { get; } = new();
 
 		public bool IsInsideMetaDataHistoryTarget { get; set; }
+
+		public DateTime? LastPlayBlockTime { get; set; }
 
 	}
 

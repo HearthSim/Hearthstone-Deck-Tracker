@@ -1,14 +1,17 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Handlers;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using HearthWatcher;
@@ -30,6 +33,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private GameV2? _game;
 		private readonly LogWatcher _logWatcher;
 		private bool _stop;
+
+		public List<DateTimeRange> IgnoredTimeRanges = new List<DateTimeRange>();
 
 		internal bool IsEnabled { get; set; } = true;
 
@@ -99,6 +104,30 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			return await _logWatcher.Stop(force);
 		}
 
+		public async Task HandleRewind(DateTime cardPlayTime, DateTime rewindTime)
+		{
+			if(rewindTime < cardPlayTime)
+				return;
+			IgnoredTimeRanges.Add(new DateTimeRange(cardPlayTime, rewindTime));
+
+			await ResetAndReprocess();
+		}
+
+		private async Task ResetAndReprocess()
+		{
+			await _logWatcher.Stop(force: true);
+
+			_gameState?.Reset();
+
+			_game?.PowerLog.Clear();
+
+			var logDirectory = Path.Combine(
+				Config.Instance.HearthstoneDirectory,
+				Config.Instance.HearthstoneLogsDirectoryName);
+
+			_logWatcher.Start(logDirectory);
+		}
+
 		private void InitializeGameState(GameV2 game)
 		{
 			_game = game;
@@ -114,6 +143,13 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			{
 				if(_stop)
 					break;
+
+				// skip rewinded lines
+				if(IgnoredTimeRanges.Any(tr => tr.Contains(line.Time)))
+				{
+					continue;
+				}
+
 				_game.GameTime.Time = line.Time;
 				switch(line.Namespace)
 				{
@@ -146,7 +182,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						}
 						else
 						{
-							_powerLineHandler.Handle(line.Line, _gameState, _game);
+							_powerLineHandler.Handle(line.Line, line.Time, _gameState, _game);
 							OnPowerLogLine.Execute(line.Line);
 							_choicesHandler.Flush(_gameState, _game);
 						}

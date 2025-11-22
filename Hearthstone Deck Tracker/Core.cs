@@ -606,6 +606,16 @@ namespace Hearthstone_Deck_Tracker
 			Overlay.UpdateOpponentResourcesWidget(Game.Opponent.MaxHealth, Game.Opponent.MaxMana, Game.Opponent.MaxHandSize, shouldShowCorpsesLeft ? Game.Opponent.CorpsesLeft : null);
 		}
 
+		public static async void HandleRewind(DateTime playTime, DateTime rewindTime)
+		{
+			await LogWatcherManger.HandleRewind(playTime, rewindTime);
+		}
+
+		public static void HandleGameEnd()
+		{
+			LogWatcherManger.IgnoredTimeRanges.Clear();
+		}
+
 		public static class Windows
 		{
 			private static PlayerWindow? _playerWindow;

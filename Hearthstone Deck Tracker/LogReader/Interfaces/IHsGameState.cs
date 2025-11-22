@@ -48,5 +48,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		bool IsInsideMetaDataHistoryTarget { get; set; }
 		List<int?> StarshipLauchBlockIds { get; }
 		List<string> MinionsInPlay { get; }
+		DateTime? LastPlayBlockTime { get; set; }
 	}
 }

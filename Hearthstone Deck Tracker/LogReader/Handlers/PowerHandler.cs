@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		private readonly List<Entity> _tmpEntities = new List<Entity>();
 		const string TransferStudentToken = Collectible.Neutral.TransferStudent + "t";
 
-		public void Handle(string logLine, IHsGameState gameState, IGame game)
+		public void Handle(string logLine, DateTime logLineTime, IHsGameState gameState, IGame game)
 		{
 			var isInsideMetaDataHistoryTarget = false;
 			var creationTag = false;
@@ -536,7 +536,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var triggerKeyword = match.Success ? match.Groups["triggerKeyword"].Value : null;
 				gameState.BlockStart(blockType, cardId, target, triggerKeyword);
 
-				if(match.Success && (blockType == "TRIGGER" || blockType == "POWER"))
+				if(match.Success && blockType == "PLAY")
+				{
+					gameState.LastPlayBlockTime = logLineTime;
+				}
+				else if(match.Success && (blockType == "TRIGGER" || blockType == "POWER"))
 				{
 					var playerEntity =
 						game.Entities.FirstOrDefault(
@@ -1367,6 +1371,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 											game.Opponent.PredictUniqueCardInDeck(id, true);
 										}
 									}
+								}
+								break;
+							case NonCollectible.Neutral.SemiStablePortal_RewindTimelineToken:
+								if(gameState.LastPlayBlockTime is not null)
+								{
+									Core.HandleRewind(gameState.LastPlayBlockTime.Value, logLineTime);
 								}
 								break;
 							default:
