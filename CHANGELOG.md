@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Added deck highlight to Shroud of Concealment.
+
 ## **Release v1.48.8 - 2025-11-21**
 **Battlegrounds**:
 - Improve Comp Guides error handling.
