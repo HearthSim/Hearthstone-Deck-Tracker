@@ -406,10 +406,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal void InvalidateMatchInfoCache() => _matchInfoCacheInvalid = true;
 
-		public void Reset(bool resetStats = true)
+		public void Reset(bool resetStats = true, bool updateUI = true)
 		{
 			Log.Info("-------- Reset ---------");
-
+			GameTime.Reset();
 			Player.Reset();
 			Opponent.Reset();
 			ActiveEffects.Reset();
@@ -440,7 +440,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Metrics = new GameMetrics();
 			MulliganCardStats = null;
 
-			if(Core._game != null && Core.Overlay != null)
+			if(Core._game != null && Core.Overlay != null && updateUI)
 			{
 				Core.UpdatePlayerCards(true);
 				Core.UpdateOpponentCards(true);

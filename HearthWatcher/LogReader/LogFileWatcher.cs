@@ -216,6 +216,7 @@ namespace HearthWatcher.LogReader
 							var sb = new StringBuilder();
 							while(!sr.EndOfStream && _lines.Count < MAX_LOG_LINE_BUFFER)
 							{
+								if(_stop) break;
 								sb.Clear();
 								var foundEndOfLine = false;
 								var prevChar = '\0';

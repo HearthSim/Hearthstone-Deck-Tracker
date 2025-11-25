@@ -110,22 +110,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				return;
 			IgnoredTimeRanges.Add(new DateTimeRange(cardPlayTime, rewindTime));
 
-			await ResetAndReprocess();
-		}
-
-		private async Task ResetAndReprocess()
-		{
-			await _logWatcher.Stop(force: true);
-
-			_gameState?.Reset();
-
-			_game?.PowerLog.Clear();
-
-			var logDirectory = Path.Combine(
-				Config.Instance.HearthstoneDirectory,
-				Config.Instance.HearthstoneLogsDirectoryName);
-
-			_logWatcher.Start(logDirectory);
+			await Core.Reset(false);
 		}
 
 		private void InitializeGameState(GameV2 game)

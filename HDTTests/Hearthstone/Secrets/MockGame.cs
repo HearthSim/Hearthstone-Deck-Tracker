@@ -51,7 +51,7 @@ namespace HDTTests.Hearthstone.Secrets
 		public Mode CurrentMode { get; set; }
 		public Mode PreviousMode { get; set; }
 		public GameTime GameTime { get; set; }
-		public void Reset(bool resetStats = true)
+		public void Reset(bool resetStats = true, bool updateUI = true)
 		{
 			throw new NotImplementedException();
 		}

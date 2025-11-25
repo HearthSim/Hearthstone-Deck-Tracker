@@ -526,7 +526,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private static bool _resetting;
-		public static async Task Reset()
+		public static async Task Reset(bool updateUI = true)
 		{
 			if(_resetting)
 			{
@@ -535,13 +535,16 @@ namespace Hearthstone_Deck_Tracker
 			}
 			_resetting = true;
 			var stoppedReader = await LogWatcherManger.Stop();
-			Game.Reset();
+			Game.Reset(updateUI: updateUI);
 			await Task.Delay(1000);
 			if(stoppedReader)
 				LogWatcherManger.Start(Game).Forget();
-			Overlay.HideSecrets();
-			Overlay.Update(false);
-			UpdatePlayerCards(true);
+			if(updateUI)
+			{
+				Overlay.HideSecrets();
+				Overlay.Update(false);
+				UpdatePlayerCards(true);
+			}
 			_resetting = false;
 		}
 
@@ -552,6 +555,10 @@ namespace Hearthstone_Deck_Tracker
 			_updateRequestsPlayer--;
 			if(_updateRequestsPlayer > 0)
 				return;
+
+			if(Game.GameTime.Time == DateTime.MinValue)
+				return;
+
 			var dredged = Game.Player.Deck.Where(x => x.Info.DeckIndex != 0).OrderByDescending(x => x.Info.DeckIndex);
 			Card toCard (Entity entity)
 			{
@@ -573,6 +580,9 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(100);
 			_updateRequestsOpponent--;
 			if(_updateRequestsOpponent > 0)
+				return;
+
+			if(Game.GameTime.Time == DateTime.MinValue)
 				return;
 
 			var cardWithRelatedCards = Game.RelatedCardsManager.GetCardsOpponentMayHave(Game.Opponent, Game.CurrentGameType, Game.CurrentFormatType).ToList();

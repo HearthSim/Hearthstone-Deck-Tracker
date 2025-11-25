@@ -46,5 +46,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			public TaskCompletionSource<T?> TaskCompletionSource { get; set; }
 			public DateTime ExpirationTime { get; set; }
 		}
+
+		public void Reset()
+		{
+			_time = DateTime.MinValue;
+			foreach(var task in TimedTasks.ToList())
+			{
+				task.TaskCompletionSource.SetResult(null);
+				TimedTasks.Remove(task);
+			}
+		}
 	}
 }

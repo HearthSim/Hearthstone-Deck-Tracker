@@ -50,15 +50,22 @@ namespace HearthWatcher
 				{
 					foreach(var logReader in _logWatchers)
 					{
+						if(_stop) break;
 						var lines = logReader.Collect();
 						foreach(var line in lines)
 						{
+							if(_stop) break;
 							if(!newLines.TryGetValue(line.Time, out var logLines))
 								newLines.Add(line.Time, logLines = new List<LogLine>());
 							logLines.Add(line);
 						}
 					}
 				});
+				if(_stop)
+				{
+					newLines.Clear();
+					break;
+				}
 				OnNewLines?.Invoke(new List<LogLine>(newLines.Values.SelectMany(x => x)));
 				newLines.Clear();
 				await Task.Delay(UpdateDelay);

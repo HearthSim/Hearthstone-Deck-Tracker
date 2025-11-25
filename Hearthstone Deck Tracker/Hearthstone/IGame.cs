@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		Mode CurrentMode { get; set; }
 		Mode PreviousMode { get; set; }
 		GameTime GameTime { get; }
-		void Reset(bool resetStats = true);
+		void Reset(bool resetStats = true, bool updateUI = true);
 		void StoreGameState();
 		string GetStoredPlayerName(int id);
 		SecretsManager SecretsManager { get; }
