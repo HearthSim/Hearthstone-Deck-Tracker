@@ -175,6 +175,30 @@
                                 </StackPanel>
                             </Border>
 
+                            <!-- Empty State -->
+                            <Border Visibility="{Binding EmptyStateVisibility}" Padding="16">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock
+                                        Text="{lex:Loc Battlegrounds_CompGuides_Empty_Title}"
+                                        FontSize="13"
+                                        FontWeight="Bold"
+                                        Foreground="White"
+                                        Opacity="0.8"
+                                        TextAlignment="Center"
+                                        Margin="0,0,0,12"
+                                    />
+                                    <TextBlock
+                                        Text="{lex:Loc Battlegrounds_CompGuides_Empty_Message}"
+                                        FontSize="12"
+                                        Foreground="White"
+                                        Opacity="0.7"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap"
+                                        MaxWidth="250"
+                                    />
+                                </StackPanel>
+                            </Border>
+
                             <!-- Base Feature -->
                             <ItemsControl Margin="0,-1,0,0" AlternationCount="1000" ItemsSource="{Binding Comps}" Visibility="{Binding BaseFeatureVisibility}">
                                 <ItemsControl.ItemTemplate>

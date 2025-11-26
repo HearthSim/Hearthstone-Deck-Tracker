@@ -19,6 +19,15 @@ using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 
+public enum CompGuideListState
+{
+	Loading,
+	BaseFeature,
+	Tier7Feature,
+	Empty,
+	Error
+}
+
 public class BattlegroundsCompsGuidesViewModel : ViewModel
 {
 	public BattlegroundsCompsGuidesViewModel()
@@ -37,7 +46,11 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 	public List<BattlegroundsCompGuideViewModel>? Comps
 	{
 		get => GetProp<List<BattlegroundsCompGuideViewModel>?>(null);
-		private set => SetProp(value);
+		private set
+		{
+			SetProp(value);
+			UpdateState();
+		}
 	}
 
 	public Dictionary<int, TieredComps>? CompsByTier
@@ -46,9 +59,43 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		private set
 		{
 			SetProp(value);
-			OnPropertyChanged(nameof(Tier7FeatureVisibility));
+			UpdateState();
+		}
+	}
+
+	public CompGuideListState CurrentState
+	{
+		get => GetProp(CompGuideListState.Loading);
+		private set
+		{
+			SetProp(value);
+			// Notify all visibility properties when state changes
+			OnPropertyChanged(nameof(LoadingVisibility));
 			OnPropertyChanged(nameof(BaseFeatureVisibility));
+			OnPropertyChanged(nameof(Tier7FeatureVisibility));
+			OnPropertyChanged(nameof(EmptyStateVisibility));
 			OnPropertyChanged(nameof(ErrorVisibility));
+		}
+	}
+
+	private void UpdateState()
+	{
+		if (HasError)
+		{
+			CurrentState = CompGuideListState.Error;
+		}
+		else if (CompsByTier != null)
+		{
+			var hasComps = CompsByTier.Values.Any(tier => tier.Comps?.Any() == true);
+			CurrentState = hasComps ? CompGuideListState.Tier7Feature : CompGuideListState.Empty;
+		}
+		else if (Comps != null)
+		{
+			CurrentState = Comps.Any() ? CompGuideListState.BaseFeature : CompGuideListState.Empty;
+		}
+		else
+		{
+			CurrentState = CompGuideListState.Loading;
 		}
 	}
 
@@ -58,9 +105,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		private set
 		{
 			SetProp(value);
-			OnPropertyChanged(nameof(ErrorVisibility));
-			OnPropertyChanged(nameof(BaseFeatureVisibility));
-			OnPropertyChanged(nameof(Tier7FeatureVisibility));
+			UpdateState();
 		}
 	}
 
@@ -84,9 +129,8 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		catch (Exception ex)
 		{
 			Log.Error($"Error loading comps data: {ex.Message}");
+			throw;
 		}
-
-		return null;
 	}
 
 	public async Task<Dictionary<int,TieredComps>?> GetPremiumCompGuides(string? token)
@@ -334,9 +378,12 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		Influx.OnGetBattlegroundsCompositionGuidesError(error.GetType().Name, error.Message);
 	}
 
-	public Visibility Tier7FeatureVisibility => !HasError && CompsByTier != null ? Visibility.Visible : Visibility.Collapsed;
-	public Visibility BaseFeatureVisibility => !HasError && CompsByTier == null ? Visibility.Visible : Visibility.Collapsed;
-	public Visibility ErrorVisibility => HasError ? Visibility.Visible : Visibility.Collapsed;
+	// Exclusive state visibility properties
+	public Visibility LoadingVisibility => CurrentState == CompGuideListState.Loading ? Visibility.Visible : Visibility.Collapsed;
+	public Visibility BaseFeatureVisibility => CurrentState == CompGuideListState.BaseFeature ? Visibility.Visible : Visibility.Collapsed;
+	public Visibility Tier7FeatureVisibility => CurrentState == CompGuideListState.Tier7Feature ? Visibility.Visible : Visibility.Collapsed;
+	public Visibility EmptyStateVisibility => CurrentState == CompGuideListState.Empty ? Visibility.Visible : Visibility.Collapsed;
+	public Visibility ErrorVisibility => CurrentState == CompGuideListState.Error ? Visibility.Visible : Visibility.Collapsed;
 
 	public void Reset()
 	{
