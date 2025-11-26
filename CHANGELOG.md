@@ -1,7 +1,7 @@
 ## **Unreleased**
 **Hearthstone**:
 - Fixed an issue where Counters and Related cards would double count rewinded cards.
-- Added deck highlight to Shroud of Concealment.
+- Added deck highlight to All You Can Eat and Shroud of Concealment.
 
 ## **Release v1.48.8 - 2025-11-21**
 **Battlegrounds**:
