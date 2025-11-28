@@ -1,3 +1,11 @@
+## **Release v1.48.10 - 2025-11-28**
+**Battlegrounds**:
+- Improve Comp Guides empty state handling.
+
+**Bob's Buddy**:
+- Fix summoning cards from hand not being supported.
+- Fix Choral Mrrrglr not being supported for opponent.
+
 ## **Release v1.48.9 - 2025-11-26**
 **Hearthstone**:
 - Fixed an issue where Counters and Related cards would double count rewinded cards.
