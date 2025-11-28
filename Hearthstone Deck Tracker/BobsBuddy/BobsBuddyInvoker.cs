@@ -697,15 +697,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_input == null || State != BobsBuddyState.Combat)
 				return;
 
-			// Only allow feathermane and Flighty Scout for now.
-			if(
-				copy.CardId != NonCollectible.Neutral.FreeFlyingFeathermane &&
-				copy.CardId != NonCollectible.Neutral.FreeFlyingFeathermane_FreeFlyingFeathermane &&
-				copy.CardId != NonCollectible.Neutral.FlightyScout &&
-				copy.CardId != NonCollectible.Neutral.FlightyScout_FlightyScout
-			)
-				return;
-
 			_opponentHandMap[entity] = copy;
 
 			// Wait for attached entities to be logged. This should happen at the exact same timestamp.
@@ -748,6 +739,32 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			tavishLockAndLoad.AttachedMinion = GetMinionFromEntity(new Simulator(), false, attachedEntity,
 				GetAttachedEntities(attachedEntity.Id));
+
+			await TryRerun();
+		}
+
+		internal async void UpdateMinionEnchantment(Entity enchantmentEntity, int attachedToEntityId, bool isPlayerMinion)
+		{
+			if(_input == null || State != BobsBuddyState.Combat)
+				return;
+
+			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
+			var minion = targetPlayer.Side.FirstOrDefault(m => m.game_id == attachedToEntityId);
+
+			if(minion == null)
+				return;
+
+			// Attach enchant to the minion
+			if(enchantmentEntity.Card.TypeEnum == CardType.ENCHANTMENT && enchantmentEntity.CardId != null)
+			{
+				var enchantment = new Simulator().EnchantmentFactory.Create(enchantmentEntity.CardId, minion.ControlledByPlayer);
+				if(enchantment != null)
+				{
+					enchantment.ScriptDataNum1 = enchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+					enchantment.ScriptDataNum2 = enchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+					minion.AttachEnchantment(enchantment);
+				}
+			}
 
 			await TryRerun();
 		}

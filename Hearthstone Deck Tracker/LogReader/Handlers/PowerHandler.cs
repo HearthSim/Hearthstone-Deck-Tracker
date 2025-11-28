@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.BobsBuddy;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
@@ -1456,6 +1457,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler?.HandleOpponentAbyssalCurse(nextDamage);
 					else
 						gameState.GameHandler?.HandlePlayerAbyssalCurse(nextDamage);
+				}
+
+				// Handle Choral Mrrrglr enchantment in Battlegrounds
+				// Check at BLOCK_END because the enchantment is updated DURING the block, not at BLOCK_START
+				if(game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null &&
+				   gameState.CurrentBlock?.Type == "TRIGGER" && gameState.CurrentBlock?.CardId == NonCollectible.Neutral.ChoralMrrrglr)
+				{
+					var choralEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
+					if(choralEntity != null && choralEntity.IsControlledBy(game.Opponent.Id))
+					{
+						// Find the Chorus enchantment that was CHANGED in this block and attached to Choral
+						// The enchantment is created inside the TRIGGER block, so it exists in game.Entities by BLOCK_END
+						var chorusEnchantment = game.Entities.Values
+							.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment &&
+							                    e.GetTag(GameTag.ATTACHED) == choralEntity.Id &&
+							                    e.GetTag(GameTag.CREATOR) == choralEntity.Id);
+
+						if(chorusEnchantment != null)
+							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber()).UpdateMinionEnchantment(chorusEnchantment, choralEntity.Id, false);
+					}
 				}
 
 				gameState.BlockEnd();
