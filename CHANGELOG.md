@@ -1,3 +1,7 @@
+## **Release v1.48.11 - 2025-11-29**
+**Hearthstone**:
+- Fix decklists not resetting when a new game starts.
+
 ## **Release v1.48.10 - 2025-11-28**
 **Battlegrounds**:
 - Improve Comp Guides empty state handling.
