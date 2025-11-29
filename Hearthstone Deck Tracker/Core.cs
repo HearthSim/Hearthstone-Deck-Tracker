@@ -556,7 +556,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_updateRequestsPlayer > 0)
 				return;
 
-			if(Game.GameTime.Time == DateTime.MinValue)
+			if(Game.GameTime.Time == DateTime.MinValue && !reset)
 				return;
 
 			var dredged = Game.Player.Deck.Where(x => x.Info.DeckIndex != 0).OrderByDescending(x => x.Info.DeckIndex);
@@ -582,7 +582,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_updateRequestsOpponent > 0)
 				return;
 
-			if(Game.GameTime.Time == DateTime.MinValue)
+			if(Game.GameTime.Time == DateTime.MinValue && !reset)
 				return;
 
 			var cardWithRelatedCards = Game.RelatedCardsManager.GetCardsOpponentMayHave(Game.Opponent, Game.CurrentGameType, Game.CurrentFormatType).ToList();
