@@ -36,7 +36,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			minion.PrimaryRace = (Race)entity.GetTag(GameTag.CARDRACE);
 			minion.baseAttack = entity.GetTag(GameTag.ATK);
-			minion.baseHealth = entity.GetTag(GameTag.HEALTH);
+			minion.baseHealth = entity.GetTag(GameTag.HEALTH) - entity.GetTag(GameTag.DAMAGE);
+			minion.maxAttack = entity.GetTag(GameTag.ATK);
+			minion.maxHealth = entity.GetTag(GameTag.HEALTH);
 			minion.taunt = entity.HasTag(GameTag.TAUNT);
 			minion.div = entity.HasTag(GameTag.DIVINE_SHIELD) ? 1 : 0;
 			minion.cleave = MinionFactory.cardIDsWithCleave.Contains(minion.CardID);
