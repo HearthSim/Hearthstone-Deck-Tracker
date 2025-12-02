@@ -1,4 +1,4 @@
-## **Release v1.48.12 - 2025-12-02**
+## **Release v1.48.13 - 2025-12-02**
 **Updated for Hearthstone 34.2.0**
 **Hearthstone**:
 - Fix Dragons Played Counter inaccuracy in some cases.
