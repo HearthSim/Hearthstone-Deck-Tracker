@@ -56,6 +56,9 @@ public class PlayedDragonsCounter : NumericCounter
 		if(value != (int)Zone.PLAY)
 			return;
 
+		if(prevValue != (int)Zone.HAND)
+			return;
+
 		if(gameState.CurrentBlock?.Type != "PLAY")
 			return;
 

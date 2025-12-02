@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fix Dragons Played Counter inaccuracy in some cases.
+
 ## **Release v1.48.11 - 2025-11-29**
 **Hearthstone**:
 - Fix decklists not resetting when a new game starts.
