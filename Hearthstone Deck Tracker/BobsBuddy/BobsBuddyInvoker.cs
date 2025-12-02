@@ -565,6 +565,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
 			if(pUndeadBonus != null)
 				inputPlayer.UndeadAttackBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+			var pBeastBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TimewarpedGoldrinn_TimewarpedGoldrinnPlayerEnchantDnt);
+			if(pBeastBonus != null)
+			{
+				inputPlayer.BeastAttackBonus = pBeastBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+				inputPlayer.BeastHealthBonus = pBeastBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				Log.Info($"pBeastAttack={inputPlayer.BeastAttackBonus}, pBeastHealth={inputPlayer.BeastHealthBonus}, friendly={friendly}");
+			}
 			var pAncestralAutomaton = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomatonPlayerEnchantDnt);
 			if(pAncestralAutomaton != null)
 				inputPlayer.AncestralAutomatonCounter = pAncestralAutomaton.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
@@ -573,6 +580,20 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				inputPlayer.BeetlesAtkBuff = pBeetle.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
 				inputPlayer.BeetlesHealthBuff = pBeetle.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+			}
+			var pDeepBlues = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.DeepBlueCrooner_DeepBluesEnchantment);
+			if(pDeepBlues != null)
+			{
+				inputPlayer.DeepBluesAtkBuff = pDeepBlues.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+				inputPlayer.DeepBluesHealthBuff = pDeepBlues.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				Log.Info($"pDeepBluesAtk={inputPlayer.DeepBluesAtkBuff}, pDeepBluesHealth={inputPlayer.DeepBluesHealthBuff}, friendly={friendly}");
+			}
+			var pVolumizer = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.AutoAccelerator_VolumizerPlayerEnchantDnt);
+			if(pVolumizer != null)
+			{
+				inputPlayer.VolumizerAtkBuff = pVolumizer.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+				inputPlayer.VolumizerHealthBuff = pVolumizer.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				Log.Info($"pVolumizerAtk={inputPlayer.VolumizerAtkBuff}, pVolumizerHealth={inputPlayer.VolumizerHealthBuff}, friendly={friendly}");
 			}
 
 			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);

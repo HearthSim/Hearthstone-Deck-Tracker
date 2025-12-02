@@ -456,7 +456,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 	public void OnHeroPowers(IEnumerable<string> heroPowers)
 	{
 		IsThorimRelevant = heroPowers.Any(
-			x => x is HearthDb.CardIds.NonCollectible.Neutral.ThorimStormlord_ChooseYourChampion or HearthDb.CardIds.NonCollectible.Neutral.ThorimStormlord_ThorimsChampion
+			x => x is HearthDb.CardIds.NonCollectible.Neutral.ThorimStormlord_ChooseYourChampion
 		);
 	}
 

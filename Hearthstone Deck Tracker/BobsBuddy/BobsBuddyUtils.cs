@@ -95,6 +95,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					case NonCollectible.Neutral.Brukan_ElementEarth:
 						minion.AdditionalDeathrattles.Add(GenericDeathrattles.EarthInvocationDeathrattle);
 						break;
+					case NonCollectible.Neutral.SurfnSurf_CrabRidingEnchantment:
+						minion.AdditionalDeathrattles.Add(GenericDeathrattles.Crab);
+						break;
+					case NonCollectible.Neutral.SurfnSurf_CrabRiding:
+						minion.AdditionalDeathrattles.Add(GenericDeathrattles.CrabGolden);
+						break;
 					case NonCollectible.Neutral.Brukan_EarthRecollection:
 						minion.AdditionalDeathrattles.Add(BrukanInvocationDeathrattles.Earth);
 						break;
