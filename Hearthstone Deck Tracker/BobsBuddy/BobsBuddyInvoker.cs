@@ -588,13 +588,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				inputPlayer.DeepBluesHealthBuff = pDeepBlues.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
 				Log.Info($"pDeepBluesAtk={inputPlayer.DeepBluesAtkBuff}, pDeepBluesHealth={inputPlayer.DeepBluesHealthBuff}, friendly={friendly}");
 			}
-			var pVolumizer = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.AutoAccelerator_VolumizerPlayerEnchantDnt);
-			if(pVolumizer != null)
-			{
-				inputPlayer.VolumizerAtkBuff = pVolumizer.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-				inputPlayer.VolumizerHealthBuff = pVolumizer.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
-				Log.Info($"pVolumizerAtk={inputPlayer.VolumizerAtkBuff}, pVolumizerHealth={inputPlayer.VolumizerHealthBuff}, friendly={friendly}");
-			}
 
 			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);
 
