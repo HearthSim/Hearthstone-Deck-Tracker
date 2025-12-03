@@ -1,5 +1,17 @@
+## **Release v1.48.14 - 2025-12-03**
+**Battlegrounds**:
+- Added check to display Buddies Guides
+
+**Bob's Buddy**:
+- Tentatively fixed incorrect simulation results due to Apexis Guardian.
+- Fixed incorrect simulation results due to Blue Volumizer;
+- Fixed incorrect simulation results due to Green Volumizer;
+- Fixed incorrect simulation results due to Red Volumizer;
+- Fixed incorrect simulation results due to Deathwing Hero Power.
+
 ## **Release v1.48.13 - 2025-12-02**
 **Updated for Hearthstone 34.2.0**
+
 **Hearthstone**:
 - Fix Dragons Played Counter inaccuracy in some cases.
 
