@@ -86,7 +86,7 @@
                     Margin="0,0,0,3"
                     guides:TextBlockExtensions.BindableInlines="{Binding PublishedGuide}"
                 />
-                <StackPanel Margin="0,9,0,0" Visibility="{Binding IsBuddyGuidePublished, Converter={StaticResource BoolToVisibility}}">
+                <StackPanel Margin="0,9,0,0" Visibility="{Binding ShouldShowBuddyGuide, Converter={StaticResource BoolToVisibility}}">
                     <Border Padding="9" Background="#1C2022" CornerRadius="5" BorderThickness="1" BorderBrush="#2e3235">
                         <StackPanel>
                             <hearthstoneDeckTracker:OutlinedTextBlock Margin="0,0,0,8" FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_BuddyGuide}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>

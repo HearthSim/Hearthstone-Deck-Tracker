@@ -141,4 +141,5 @@ public class BattlegroundsHeroGuideTooltipViewModel : ViewModel
 		}
 	}
 	public bool IsBuddyGuidePublished => BuddyGuide != null && BuddyGuide.Any();
+	public bool ShouldShowBuddyGuide => Core.Game.BattlegroundsBuddiesEnabled && IsBuddyGuidePublished;
 }
