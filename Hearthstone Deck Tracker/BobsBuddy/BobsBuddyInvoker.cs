@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
+using BobsBuddy.Enchantments;
 using BobsBuddy.Utils;
 using BobsBuddyPlayer = BobsBuddy.Simulation.Player;
 
@@ -778,6 +779,28 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					enchantment.ScriptDataNum2 = enchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
 					minion.AttachEnchantment(enchantment);
 				}
+			}
+
+			await TryRerun();
+		}
+
+		internal async void UpdateNelliesShipEnchantment(int[] cardDbfids, int attachedToEntityId, bool isPlayerMinion)
+		{
+			if(_input == null || State != BobsBuddyState.Combat)
+				return;
+
+			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
+			var minion = targetPlayer.Side.FirstOrDefault(m => m.game_id == attachedToEntityId);
+
+			if(minion == null)
+				return;
+
+			var enchantment = new Simulator().EnchantmentFactory.Create(TimewarpedNelliesShipEnchantment.CardId, minion.ControlledByPlayer);
+			if(enchantment != null)
+			{
+				enchantment.ScriptDataNum1 = cardDbfids.ElementAtOrDefault(0);
+				enchantment.ScriptDataNum2 = cardDbfids.ElementAtOrDefault(1);
+				minion.AttachEnchantment(enchantment);
 			}
 
 			await TryRerun();

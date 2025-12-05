@@ -1462,21 +1462,42 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				// Handle Choral Mrrrglr enchantment in Battlegrounds
 				// Check at BLOCK_END because the enchantment is updated DURING the block, not at BLOCK_START
 				if(game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null &&
-				   gameState.CurrentBlock?.Type == "TRIGGER" && gameState.CurrentBlock?.CardId == NonCollectible.Neutral.ChoralMrrrglr)
+				   gameState.CurrentBlock?.Type == "TRIGGER")
 				{
-					var choralEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
-					if(choralEntity != null && choralEntity.IsControlledBy(game.Opponent.Id))
+					if(gameState.CurrentBlock?.CardId == NonCollectible.Neutral.ChoralMrrrglr)
 					{
-						// Find the Chorus enchantment that was CHANGED in this block and attached to Choral
-						// The enchantment is created inside the TRIGGER block, so it exists in game.Entities by BLOCK_END
-						var chorusEnchantment = game.Entities.Values
-							.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment &&
-							                    e.GetTag(GameTag.ATTACHED) == choralEntity.Id &&
-							                    e.GetTag(GameTag.CREATOR) == choralEntity.Id);
+						var choralEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
+						if(choralEntity != null && choralEntity.IsControlledBy(game.Opponent.Id))
+						{
+							// Find the Chorus enchantment that was CHANGED in this block and attached to Choral
+							// The enchantment is created inside the TRIGGER block, so it exists in game.Entities by BLOCK_END
+							var chorusEnchantment = game.Entities.Values
+								.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment &&
+								                     e.GetTag(GameTag.ATTACHED) == choralEntity.Id &&
+								                     e.GetTag(GameTag.CREATOR) == choralEntity.Id);
 
-						if(chorusEnchantment != null)
-							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber()).UpdateMinionEnchantment(chorusEnchantment, choralEntity.Id, false);
+							if(chorusEnchantment != null)
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber()).UpdateMinionEnchantment(chorusEnchantment, choralEntity.Id, false);
+						}
 					}
+					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TimewarpedNelliesShipToken1, TriggerKeyword: "DEATHRATTLE" })
+					{
+						var nelliesEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
+						if(nelliesEntity != null)
+						{
+							var summonedEntities = game.Entities.Values
+								.Where(e =>
+									e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
+						            e.GetTag(GameTag.CREATOR) == nelliesEntity.GetTag(GameTag.CREATOR) &&
+									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY
+								).Select(x => x.Card.DbfId).ToArray();
+
+							if(summonedEntities.Any())
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+									.UpdateNelliesShipEnchantment(summonedEntities, nelliesEntity.Id, nelliesEntity.IsControlledBy(game.Player.Id));
+						}
+					}
+
 				}
 
 				gameState.BlockEnd();
