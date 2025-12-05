@@ -1,3 +1,8 @@
+## **Release v1.48.15 - 2025-12-05**
+**Bob's Buddy**:
+- Added support for Timewarped Nellie's Ship.
+- Fixed incorrect simulation results due to Bluesy Siren.
+
 ## **Release v1.48.14 - 2025-12-03**
 **Battlegrounds**:
 - Added check to display Buddies Guides
