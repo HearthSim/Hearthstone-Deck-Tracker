@@ -8,5 +8,5 @@ public class SteamGuardian : ICardWithHighlight
 	public string GetCardId() => HearthDb.CardIds.Collectible.Warrior.SteamGuardian;
 
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
-		HighlightColorHelper.GetHighlightColor(card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.FIRE, card.Type == "Spell");
+		HighlightColorHelper.GetHighlightColor(card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.FIRE, card.TypeEnum == CardType.SPELL);
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Hunter;
 
@@ -9,7 +10,7 @@ public class Fetch : ICardWithHighlight
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
 		HighlightColorHelper.GetHighlightColor(
 			card.IsBeast(),
-			card.Type == "Minion",
-			card.Type == "Spell"
+			card.TypeEnum == CardType.MINION,
+			card.TypeEnum == CardType.SPELL
 		);
 }

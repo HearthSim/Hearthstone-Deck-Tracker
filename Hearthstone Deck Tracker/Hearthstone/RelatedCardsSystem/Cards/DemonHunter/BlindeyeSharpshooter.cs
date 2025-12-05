@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.DemonHunter;
 
@@ -9,5 +10,5 @@ public class BlindeyeSharpshooter : ICardWithHighlight
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
 		HighlightColorHelper.GetHighlightColor(
 			card.IsNaga(),
-			card.Type == "Spell");
+			card.TypeEnum == CardType.SPELL);
 }

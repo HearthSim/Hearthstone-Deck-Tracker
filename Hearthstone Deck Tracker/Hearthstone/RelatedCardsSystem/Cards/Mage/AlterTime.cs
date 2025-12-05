@@ -9,7 +9,7 @@ public class AlterTime : ICardGenerator
 
 	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
 	{
-		return card.Type == "Spell" && card.IsClass("Mage") &&
+		return card.TypeEnum == CardType.SPELL && card.IsClass("Mage") &&
 		       card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.ARCANE &&
 		       (Helper.WildOnlySets.Contains(card.Set) ||
 		        Helper.ClassicOnlySets.Contains(card.Set));

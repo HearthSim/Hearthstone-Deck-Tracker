@@ -9,7 +9,7 @@ public class SweetenedSnowflurry : ICardGenerator
 
 	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
 	{
-		return card.Type == "Spell" &&
+		return card.TypeEnum == CardType.SPELL &&
 		       card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.FROST &&
 		       card.IsCardLegal(gameMode, format);
 	}

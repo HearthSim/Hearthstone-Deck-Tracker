@@ -9,7 +9,7 @@ public class Pyrotechnician : ICardGenerator
 
 	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
 	{
-		return card.Type == "Spell" &&
+		return card.TypeEnum == CardType.SPELL &&
 		       card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.FIRE &&
 		       card.IsCardLegal(gameMode, format);
 	}

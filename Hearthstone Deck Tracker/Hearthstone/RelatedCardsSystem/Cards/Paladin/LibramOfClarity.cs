@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Paladin;
 
@@ -8,5 +9,5 @@ public class LibramOfClarity : ICardWithHighlight
 
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
 		HighlightColorHelper.GetHighlightColor(
-			card.Type == "Minion");
+			card.TypeEnum == CardType.MINION);
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Hunter;
+using HearthDb.Enums;
 
 public class BrollBearmantle : ICardWithHighlight, ICardWithRelatedCards
 {
@@ -12,7 +13,7 @@ public class BrollBearmantle : ICardWithHighlight, ICardWithRelatedCards
 	public string GetCardId() => HearthDb.CardIds.Collectible.Hunter.BrollBearmantle;
 
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
-		HighlightColorHelper.GetHighlightColor(card.Type == "Spell");
+		HighlightColorHelper.GetHighlightColor(card.TypeEnum == CardType.SPELL);
 
 	public bool ShouldShowForOpponent(Player opponent) => false;
 

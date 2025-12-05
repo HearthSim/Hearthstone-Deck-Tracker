@@ -9,7 +9,7 @@ public class TearReality : ICardGenerator
 
 	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
 	{
-		return card.Type == "Spell" && card.IsClass("Mage") &&
+		return card.TypeEnum == CardType.SPELL && card.IsClass("Mage") &&
 			(Helper.WildOnlySets.Contains(card.Set) ||
 		        Helper.ClassicOnlySets.Contains(card.Set));
 	}

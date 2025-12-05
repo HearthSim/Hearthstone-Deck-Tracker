@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Warlock.SymphonyOfSins;
 
@@ -15,6 +16,6 @@ public class MovementOfPride : ICardWithHighlight
 			return HighlightColor.None;
 		}
 		var highestCost = minions.Max(c => c.Cost);
-		return HighlightColorHelper.GetHighlightColor(card.Type == "Minion" && card.Cost == highestCost);
+		return HighlightColorHelper.GetHighlightColor(card.TypeEnum == CardType.MINION && card.Cost == highestCost);
 	}
 }

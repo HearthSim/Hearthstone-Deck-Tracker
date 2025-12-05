@@ -10,5 +10,5 @@ public class NorthernNavigation : ICardWithHighlight
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
 		HighlightColorHelper.GetHighlightColor(
 			card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.FROST,
-			card.Type == "Spell");
+			card.TypeEnum == CardType.SPELL);
 }

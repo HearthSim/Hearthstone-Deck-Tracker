@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Druid;
 
@@ -8,8 +9,8 @@ public class Reforestation : ICardWithHighlight
 
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
 		HighlightColorHelper.GetHighlightColor(
-			card.Type == "Minion",
-			card.Type == "Spell"
+			card.TypeEnum == CardType.MINION,
+			card.TypeEnum == CardType.SPELL
 		);
 }
 

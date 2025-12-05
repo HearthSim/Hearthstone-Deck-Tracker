@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
 
@@ -16,7 +17,7 @@ public class TaelanFordringCore : ICardWithHighlight
 		}
 		var highestCost = minions.Max(c => c.Cost);
 		return HighlightColorHelper.GetHighlightColor(
-			card.Type == "Minion" && card.Cost == highestCost
+			card.TypeEnum == CardType.MINION && card.Cost == highestCost
 		);
 	}
 }

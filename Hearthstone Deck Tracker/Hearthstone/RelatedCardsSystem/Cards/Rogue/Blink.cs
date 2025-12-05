@@ -8,5 +8,5 @@ public class Blink : ICardWithHighlight
 	public string GetCardId() => HearthDb.CardIds.Collectible.Rogue.Blink;
 
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
-		HighlightColorHelper.GetHighlightColor(card.Type == "Minion" && card.GetTag(GameTag.PROTOSS) > 0);
+		HighlightColorHelper.GetHighlightColor(card.TypeEnum == CardType.MINION && card.GetTag(GameTag.PROTOSS) > 0);
 }

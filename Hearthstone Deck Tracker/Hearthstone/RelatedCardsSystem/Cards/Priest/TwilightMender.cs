@@ -9,7 +9,7 @@ public class TwilightMender : ICardGenerator
 
 	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
 	{
-		return card.Type == "Spell" &&
+		return card.TypeEnum == CardType.SPELL &&
 		       (card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.HOLY || card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.SHADOW ) &&
 		       card.IsCardLegal(gameMode, format);
 	}
