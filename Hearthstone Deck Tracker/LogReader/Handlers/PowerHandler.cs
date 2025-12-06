@@ -260,7 +260,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						entity.HasTag(GameTag.BACON_TRINKET) ||
 						// Heroes during Battlegrounds reroll
 						entity.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) ||
-						entity.HasTag(GameTag.BACON_SKIN)
+						entity.HasTag(GameTag.BACON_SKIN) ||
+						(entity.CardId?.StartsWith("CREATED_BY_") ?? false)
 					)
 						entity.CardId = cardId;
 					entity.Info.LatestCardId = cardId;
@@ -1379,6 +1380,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								{
 									Core.HandleRewind(gameState.LastPlayBlockTime.Value, logLineTime);
 								}
+								break;
+							case Collectible.Druid.SkyMotherAviana:
+								var createdByAviana = new FakeCard(Collectible.Druid.SkyMotherAviana)
+								{
+									Cost = 1,
+									Type = CardType.MINION,
+									Rarity = Rarity.LEGENDARY,
+									Tags = new Dictionary<string, int>
+									{
+										{ GameTag.ELITE.ToString(), 1 }
+									}
+								};
+								AddKnownCardId(gameState, createdByAviana.Serialize(), count: 10);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
