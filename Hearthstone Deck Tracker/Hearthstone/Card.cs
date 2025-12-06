@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,11 +14,13 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.Themes;
+using Newtonsoft.Json;
 using NuGet;
 
 #endregion
@@ -39,7 +42,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private HearthDb.Card? _data;
 		public HearthDb.Card? Data => _data ??= HearthDb.Cards.All.TryGetValue(Id, out var data) ? data : null;
 
-		public bool IsKnownCard => Data != null;
+		[NonSerialized]
+		private FakeCard? _fakeData;
+
+		public bool IsKnownCard => Data != null || _fakeData != null;
 
 		[NonSerialized]
 		private static readonly Dictionary<string, Dictionary<int, CardImageObject>> CardImageCache = new();
@@ -79,13 +85,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public int Cost
 		{
-			get => GetProp<int?>(null) ?? Data?.Cost ?? 0;
+			get => GetProp<int?>(null) ?? Data?.Cost ?? _fakeData?.Cost ?? 0;
 			set => SetProp(value);
 		}
 
 		public string? PlayerClass => Data != null ? HearthDbConverter.ConvertClass(Data.Class) : null;
 
-		public Rarity Rarity => Data?.Rarity ?? Rarity.INVALID;
+		public Rarity Rarity => Data?.Rarity ?? _fakeData?.Rarity ?? Rarity.INVALID;
 
 		[XmlIgnore]
 		public bool BaconCard { get; set; }
@@ -166,6 +172,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Card(string id)
 		{
 			Id = id;
+			if(id.StartsWith("CREATED_BY_"))
+			{
+				_fakeData = FakeCard.FromString(id);
+			}
 		}
 
 		public Card(HearthDb.Card data, bool baconCard = false)
@@ -228,7 +238,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public int BattlegroundsSkinParentId => Data?.Entity.GetTag(GameTag.BACON_SKIN_PARENT_ID) ?? 0;
 
-		public int GetTag(GameTag gameTag) => Data?.Entity.GetTag(gameTag) ?? 0;
+		public int GetTag(GameTag gameTag) => Data?.Entity.GetTag(gameTag) ?? _fakeData?.GetTag(gameTag) ?? 0;
 
 		public bool HasTag(GameTag gameTag) => GetTag(gameTag) > 0;
 
@@ -278,12 +288,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string? Type => Data != null ? HearthDbConverter.CardTypeConverter(Data.Type) : null;
 
-		public CardType? TypeEnum => Data?.Type;
+		public CardType? TypeEnum => Data?.Type ?? _fakeData?.Type;
 
 		public string? Name => Data?.GetLocName(Locale.enUS);
 
-		public bool HideStats => Data?.Entity.GetTag(GameTag.HIDE_STATS) == 1;
-		public bool HideCost => Data?.Entity.GetTag(GameTag.HIDE_COST) == 1 || (Cost == 0 && (EnglishText?.Contains("Passive") ?? false));
+		public bool HideStats => Data?.Entity.GetTag(GameTag.HIDE_STATS) == 1 || _fakeData is { Cost: null };
+
+		public bool HideCost => Data?.Entity.GetTag(GameTag.HIDE_COST) == 1
+		                        || (Cost == 0 && (EnglishText?.Contains("Passive") ?? false)) || _fakeData is { Cost: null };
 
 		private static readonly Regex _overloadRegex = new(@"Overload:.+?\((?<value>(\d+))\)");
 		private int? _overload;
@@ -314,7 +326,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_ => 0
 		};
 
-		public string? LocalizedName => Data?.GetLocName(SelectedLanguage) ?? Name;
+		public string? LocalizedName => Data?.GetLocName(SelectedLanguage) ?? _fakeData?.LocalizedName ?? Name;
 
 		[XmlIgnore]
 		public int InHandCount
@@ -704,6 +716,81 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				hashCode = (hashCode * 397) ^ (ExtraInfo?.CardNameSuffix?.GetHashCode() ?? 1);
 				return hashCode;
 			}
+		}
+	}
+
+	internal class FakeCard
+	{
+		private static Locale? _selectedLanguage;
+		private static Locale SelectedLanguage => _selectedLanguage ??= Enum.TryParse(Helper.GetCardLanguage(), out Locale lang) ? lang : Locale.enUS;
+
+		public string OriginalCardId { get; }
+		public string? LocalizedName { get; }
+
+		public FakeCard(string originalCardId)
+		{
+			OriginalCardId = originalCardId;
+
+			if (HearthDb.Cards.All.TryGetValue(originalCardId, out var card))
+			{
+				LocalizedName = string.Format(
+					LocUtil.Get("CardTile_Created_By"),
+					card.GetLocName(SelectedLanguage)
+				);
+			}
+			else
+			{
+				LocalizedName = null;
+			}
+		}
+		public CardType? Type { get; set; }
+		public Rarity? Rarity { get; set; }
+		public int? Cost { get; set; }
+		public Dictionary<string, int> Tags { get; set; } = new();
+
+		public int GetTag(GameTag tag) => Tags.TryGetValue(tag.ToString(), out var tagValue) ? tagValue : 0;
+
+		public string Serialize()
+		{
+			var payload = new
+			{
+				originalCardId = OriginalCardId,
+				type = Type?.ToString(),
+				rarity = Rarity?.ToString(),
+				cost = Cost,
+				tags = Tags
+			};
+
+			var json = JsonConvert.SerializeObject(payload);
+			return "CREATED_BY_" + Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
+		}
+
+		public static FakeCard FromString(string cardId)
+		{
+			if (!cardId.StartsWith("CREATED_BY_"))
+				throw new ArgumentException("Not a FakeCard cardId");
+
+			var base64 = cardId.Substring("CREATED_BY_".Length);
+			var json = Encoding.UTF8.GetString(Convert.FromBase64String(base64));
+
+			var dto = JsonConvert.DeserializeObject<FakeCardDto>(json);
+
+			return new FakeCard(dto.originalCardId)
+			{
+				Type = Enum.TryParse<CardType>(dto.type, out var t) ? t : null,
+				Rarity = Enum.TryParse<Rarity>(dto.rarity, out var r) ? r : null,
+				Cost = dto.cost,
+				Tags = dto.tags ?? new()
+			};
+		}
+
+		private class FakeCardDto
+		{
+			public string originalCardId  = "";
+			public string? type { get; set; }
+			public string? rarity { get; set; }
+			public int? cost { get; set; }
+			public Dictionary<string, int>? tags { get; set; }
 		}
 	}
 }
