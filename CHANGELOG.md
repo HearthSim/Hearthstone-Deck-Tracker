@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Add unknown cards shuffled by Sky Mother Aviana, Blasteroid, Academic Espionage and Agency Espionage. This way the player can know how many were drawn and how many are left in the deck.
+
 ## **Release v1.48.15 - 2025-12-05**
 **Bob's Buddy**:
 - Added support for Timewarped Nellie's Ship.
