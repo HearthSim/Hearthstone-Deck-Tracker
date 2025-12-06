@@ -1394,6 +1394,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								};
 								AddKnownCardId(gameState, createdByAviana.Serialize(), count: 10);
 								break;
+							case Collectible.Mage.Blasteroid:
+								var createdByBlasteroid = new FakeCard(Collectible.Mage.Blasteroid)
+								{
+									Type = CardType.SPELL,
+									Tags = new Dictionary<string, int>
+									{
+										{ GameTag.SPELL_SCHOOL.ToString(), (int)SpellSchool.FIRE }
+									}
+								};
+								AddKnownCardId(gameState, createdByBlasteroid.Serialize(), count: 5);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
