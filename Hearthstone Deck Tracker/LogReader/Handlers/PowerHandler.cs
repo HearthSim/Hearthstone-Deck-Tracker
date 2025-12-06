@@ -1405,6 +1405,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								};
 								AddKnownCardId(gameState, createdByBlasteroid.Serialize(), count: 5);
 								break;
+							case Collectible.Rogue.AcademicEspionage:
+								var createdByAcademicEspionage = new FakeCard(Collectible.Rogue.AcademicEspionage)
+								{
+									Cost = 1,
+								};
+								AddKnownCardId(gameState, createdByAcademicEspionage.Serialize(), count: 10);
+								break;
+							case Collectible.Rogue.AgencyEspionage:
+								var createdByAgencyEspionage = new FakeCard(Collectible.Rogue.AgencyEspionage)
+								{
+									Cost = 1,
+								};
+								AddKnownCardId(gameState, createdByAgencyEspionage.Serialize(), count: 10);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
