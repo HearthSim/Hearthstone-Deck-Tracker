@@ -1,4 +1,18 @@
-## ***Release v1.48.16 - 2025-12-08**
+## **Release v1.48.17 - 2025-12-09**
+**Bob's Buddy**:
+- Added support for Dramaloc.
+- Added support for Costume Enthusiast.
+- Added support for Imposing Percussionist.
+- Added support for Soul Rewinder.
+- Added support for Ashen Corruptor.
+- Fixed incorrect simulation results due to Apexis Guardian.
+- Fixed incorrect simulation results due to Saltscale Honcho.
+- Fixed incorrect simulation results due to Flighty Scout.
+- Fixed incorrect simulation results due to Bluesy Siren.
+- Fixed incorrect simulation results due to Timewarped Scourfin.
+- Fixed incorrect simulation results due to Expert Aviator.
+
+## **Release v1.48.16 - 2025-12-08**
 **Hearthstone**:
 - Add unknown cards shuffled by Sky Mother Aviana, Blasteroid, Academic Espionage and Agency Espionage. This way the player can know how many were drawn and how many are left in the deck.
 
