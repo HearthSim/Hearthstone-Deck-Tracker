@@ -1498,25 +1498,32 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler?.HandlePlayerAbyssalCurse(nextDamage);
 				}
 
-				// Handle Choral Mrrrglr enchantment in Battlegrounds
+				// Handle Hand related enchantments in Battlegrounds
 				// Check at BLOCK_END because the enchantment is updated DURING the block, not at BLOCK_START
-				if(game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null &&
-				   gameState.CurrentBlock?.Type == "TRIGGER")
+				if(game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null && gameState.CurrentBlock?.Type == "TRIGGER")
 				{
-					if(gameState.CurrentBlock?.CardId == NonCollectible.Neutral.ChoralMrrrglr)
+					// Handle hand related minions that trigger enchantments on opponent's board
+					var enchantmentMapping = new Dictionary<string, string>
 					{
-						var choralEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
-						if(choralEntity != null && choralEntity.IsControlledBy(game.Opponent.Id))
-						{
-							// Find the Chorus enchantment that was CHANGED in this block and attached to Choral
-							// The enchantment is created inside the TRIGGER block, so it exists in game.Entities by BLOCK_END
-							var chorusEnchantment = game.Entities.Values
-								.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment &&
-								                     e.GetTag(GameTag.ATTACHED) == choralEntity.Id &&
-								                     e.GetTag(GameTag.CREATOR) == choralEntity.Id);
+						{ NonCollectible.Neutral.ChoralMrrrglr, NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment },
+						{ NonCollectible.Neutral.TimewarpedMrrrglr, NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment },
+						{ NonCollectible.Neutral.CostumeEnthusiast, NonCollectible.Neutral.CostumeEnthusiast_EnthusiasticEnchantment },
+						{ NonCollectible.Neutral.Dramaloc, NonCollectible.Neutral.Dramaloc_DramaticEnchantment }
+					};
 
-							if(chorusEnchantment != null)
-								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber()).UpdateMinionEnchantment(chorusEnchantment, choralEntity.Id, false);
+					if(gameState.CurrentBlock?.CardId != null && enchantmentMapping.TryGetValue(gameState.CurrentBlock.CardId, out var enchantmentCardId))
+					{
+						var sourceEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
+						if(sourceEntity != null && sourceEntity.IsControlledBy(game.Opponent.Id))
+						{
+							// Find the enchantment that was created in this TRIGGER block and attached to the source minion
+							var enchantment = game.Entities.Values
+								.FirstOrDefault(e => e.CardId == enchantmentCardId &&
+								                     e.GetTag(GameTag.ATTACHED) == sourceEntity.Id &&
+								                     e.GetTag(GameTag.CREATOR) == sourceEntity.Id);
+
+							if(enchantment != null)
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber()).UpdateMinionEnchantment(enchantment, sourceEntity.Id, false);
 						}
 					}
 					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TimewarpedNelliesShipToken1, TriggerKeyword: "DEATHRATTLE" })
@@ -1536,9 +1543,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									.UpdateNelliesShipEnchantment(summonedEntities, nelliesEntity.Id, nelliesEntity.IsControlledBy(game.Player.Id));
 						}
 					}
-
 				}
-
 				gameState.BlockEnd();
 			}
 
