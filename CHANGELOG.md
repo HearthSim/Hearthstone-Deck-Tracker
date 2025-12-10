@@ -1,3 +1,7 @@
+## **Release v1.48.18 - 2025-12-10**
+**Bob's Buddy**:
+-  Fixed incorrect simulation results due to fighting a dead opponent.
+
 ## **Release v1.48.17 - 2025-12-09**
 **Bob's Buddy**:
 - Added support for Dramaloc.
