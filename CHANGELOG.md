@@ -1,3 +1,6 @@
+## **Release v1.48.19 - 2025-12-12**
+**Updated for Hearthstone 34.2.2**
+
 ## **Release v1.48.18 - 2025-12-10**
 **Bob's Buddy**:
 -  Fixed incorrect simulation results due to fighting a dead opponent.
