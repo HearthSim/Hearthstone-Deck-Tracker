@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed Tiny Rafaam not highlighting 10 mana Timethief Rafaam.
+
 ## **Release v1.48.19 - 2025-12-12**
 **Updated for Hearthstone 34.2.2**
 
