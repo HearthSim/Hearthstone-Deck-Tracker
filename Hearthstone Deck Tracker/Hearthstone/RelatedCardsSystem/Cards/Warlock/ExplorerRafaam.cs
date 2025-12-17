@@ -19,5 +19,6 @@ public class ExplorerRafaam : ICardWithHighlight
 		HearthDb.CardIds.NonCollectible.Warlock.TimethiefRafaam_MindflayerRfaamToken,
 		HearthDb.CardIds.NonCollectible.Warlock.TimethiefRafaam_GiantRafaamToken,
 		HearthDb.CardIds.NonCollectible.Warlock.TimethiefRafaam_ArchmageRafaamToken,
+		HearthDb.CardIds.Collectible.Warlock.TimethiefRafaam,
 	};
 }
