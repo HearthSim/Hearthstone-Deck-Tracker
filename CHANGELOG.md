@@ -1,4 +1,14 @@
 ## **Unreleased**
+**Battlegrounds**:
+- Added Tavern Pinning support for Timewarped Tavern.
+- Fixed incorrect simulation results due to Opponent Hand Cards not being buffed correctly.
+- Fixed incorrect simulation results due to Costume Enthusiast.
+- Fixed incorrect simulation results due to Twilight Hatchling.
+- Fixed incorrect simulation results due to Timewarped Nellies Ship.
+
+**Streaming:**
+- Fixed Timewarped Tavern not being hoverable on the Twitch Extension
+
 **Hearthstone**:
 - Fixed Tiny Rafaam and Explorer Rafaam not highlighting 10 mana Timethief Rafaam.
 
