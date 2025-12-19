@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.48.20 - 2025-12-19**
 **Battlegrounds**:
 - Added Tavern Pinning support for Timewarped Tavern.
 - Fixed incorrect simulation results due to Opponent Hand Cards not being buffed correctly.
