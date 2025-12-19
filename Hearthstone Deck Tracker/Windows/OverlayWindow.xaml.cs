@@ -52,6 +52,7 @@ using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Overlay;
 using Hearthstone_Deck_Tracker.Utility.RegionDrawer;
 using Hearthstone_Deck_Tracker.Utility.Themes;
+using HearthWatcher.EventArgs;
 using HSReplay.Responses;
 
 #endregion
@@ -72,6 +73,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly Dictionary<UIElement, ResizeGrip> _movableElements = new Dictionary<UIElement, ResizeGrip>();
 		private readonly List<FrameworkElement> _clickableElements = new List<FrameworkElement>();
 		private readonly HashSet<FrameworkElement> _hoverableElements = new HashSet<FrameworkElement>();
+		private readonly HashSet<int> _specialShopEntityIds = new HashSet<int>();
 		private readonly List<Rectangle> _playerHand = new List<Rectangle>();
 		private readonly List<Rectangle> _leaderboardIcons = new List<Rectangle>();
 		private readonly List<HearthstoneTextBlock> _leaderboardDeadForText = new List<HearthstoneTextBlock>();
@@ -1381,6 +1383,51 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				if(cards.All(x => x.TypeEnum == CardType.MINION))
 					SetDiscoverCardOpacityMask(cards.Count);
+			}
+		}
+
+		internal void HandleSpecialShop(SpecialShopChoicesArgs args)
+		{
+			if(!_game.IsBattlegroundsMatch)
+				return;
+
+			var isActive = args.IsActive;
+			var boardCards = args.BoardCards;
+
+			// Clear previously added entities by resetting their tags
+			foreach(var entityId in _specialShopEntityIds)
+			{
+				if(_game.Entities.TryGetValue(entityId, out var previousEntity))
+				{
+					previousEntity.Info.Created = false;
+					previousEntity.SetTag(GameTag.ZONE, 0);
+					previousEntity.SetTag(GameTag.ZONE_POSITION, 0);
+					previousEntity.SetTag(GameTag.CONTROLLER, 0);
+				}
+			}
+			_specialShopEntityIds.Clear();
+
+			if(!isActive)
+				return;
+			if(boardCards == null)
+				return;
+
+			Core.Overlay.BattlegroundsMinionPinningViewModel.OnShopChange(boardCards, args.MousedOverSlot);
+
+			for(var i = 0; i < boardCards.Count; i++)
+			{
+				var card = boardCards[i];
+				if(card == null)
+					continue;
+				var entity = _game.Entities.FirstOrDefault(x => x.Value.Id == card.EntityId).Value;
+				if(entity != null)
+				{
+					entity.SetTag(GameTag.CONTROLLER, _game.Opponent.Id);
+					entity.SetTag(GameTag.ZONE_POSITION, i);
+					entity.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+					_game.Opponent.CreateInPlay(entity, _game.GetTurnNumber());
+					_specialShopEntityIds.Add(entity.Id);
+				}
 			}
 		}
 

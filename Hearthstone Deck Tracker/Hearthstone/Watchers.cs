@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DeckPickerWatcher.Change += OnDeckPickerChange;
 			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning);
 			ChoicesWatcher.Change += (sender, args) => Core.Overlay.SetChoicesVisible(args.CurrentChoice?.IsVisible ?? false, args.CurrentChoice?.Cards);
+			SpecialShopChoicesStateWatcher.Change += (sender, args) => Core.Overlay.HandleSpecialShop(args);
 			DiscoverStateWatcher.Change += OnDiscoverStateChange;
 			BigCardWatcher.Change += OnBigCardChange;
 			OpponentBoardStateWatcher.Change += OnOpponentBoardStateChange;
@@ -72,6 +73,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DeckPickerWatcher.Stop();
 			SceneWatcher.Stop();
 			ChoicesWatcher.Stop();
+			SpecialShopChoicesStateWatcher.Stop();
 			BigCardWatcher.Stop();
 			DiscoverStateWatcher.Stop();
 			OpponentBoardStateWatcher.Stop();
@@ -382,6 +384,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static DeckPickerWatcher DeckPickerWatcher { get; } = new(new HearthMirrorDeckPickerProvider());
 		public static SceneWatcher SceneWatcher { get; } = new(new HearthMirrorSceneProvider());
 		public static ChoicesWatcher ChoicesWatcher { get; } = new(new HearthMirrorChoicesProvider());
+		public static SpecialShopChoicesStateWatcher SpecialShopChoicesStateWatcher { get; } = new(new HearthMirrorSpecialShopChoicesProvider());
 		public static BigCardStateWatcher BigCardWatcher { get; } = new(new HearthMirrorBigCardProvider());
 		public static OpponentBoardStateWatcher OpponentBoardStateWatcher { get; } =
 			new(new HearthMirrorOpponentBoardStateProvider());
@@ -500,6 +503,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorChoicesProvider : IChoicesProvider
 	{
 		public CardChoices? CurrentChoice => Reflection.Client.GetCardChoices();
+	}
+
+	public class HearthMirrorSpecialShopChoicesProvider : ISpecialShopChoicesProvider
+	{
+		public SpecialShopChoicesState? SpecialShopChoicesState => Reflection.Client.GetSpecialShopChoices();
 	}
 
 	public class HearthMirrorMulliganTooltipProvider : IMulliganTooltipProvider
