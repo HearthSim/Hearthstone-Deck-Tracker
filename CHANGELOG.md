@@ -1,3 +1,7 @@
+## **Release v1.48.21 - 2025-12-20**
+**Battlegrounds**:
+- Fixed a major issue with Timewarped Tavern support causing incorrect simulation results in many cases.
+
 ## **Release v1.48.20 - 2025-12-19**
 **Battlegrounds**:
 - Added Tavern Pinning support for Timewarped Tavern.
