@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Threading.Tasks;
 using HearthWatcher.EventArgs;
 using HearthWatcher.Providers;
@@ -14,6 +14,7 @@ public class SpecialShopChoicesStateWatcher
 	private bool _running;
 	private bool _watch;
 	private SpecialShopChoicesArgs _prev = null;
+	public SpecialShopChoicesArgs? CurrentState => _prev;
 
 	public SpecialShopChoicesStateWatcher(ISpecialShopChoicesProvider opponentBoardProvider, int delay = 16)
 	{

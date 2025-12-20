@@ -105,6 +105,13 @@ namespace Hearthstone_Deck_Tracker.Live
 		private int[] SortedDbfIds(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
 			entities.OrderBy(ZonePosition).Select(DbfId).ToArray();
 
+		private int[] SortedDbfIds(IEnumerable<BoardCard> boardCards) =>
+			boardCards
+				.Where(c => c?.CardId != null)
+				.Select(c => Database.GetCardFromId(c.CardId)?.DbfId ?? 0)
+				.Where(dbfId => dbfId != 0)
+				.ToArray();
+
 		private int HeroId(Entity playerEntity) => playerEntity.GetTag(GameTag.HERO_ENTITY);
 
 		private int WeaponId(Entity playerEntity) => playerEntity.GetTag(GameTag.WEAPON);
@@ -263,6 +270,13 @@ namespace Hearthstone_Deck_Tracker.Live
 			var anomalyId = new[] { GameTag.ANOMALY1, GameTag.ANOMALY2 }.Select(x => Core.Game.GameEntity?.GetTag(x)).FirstOrDefault(x => x is > 0);
 			var anomaly = anomalyId.HasValue && Core.Game.Entities.TryGetValue(anomalyId.Value, out var anomalyEntity) ? anomalyEntity?.Card.DbfId : null;
 
+			// Check if the special shop (timewarped tavern) is currently active
+			var specialShopState = Watchers.SpecialShopChoicesStateWatcher.CurrentState;
+			var specialShopActive = specialShopState?.IsActive == true && specialShopState.BoardCards.Count > 0;
+			var opponentBoard = specialShopActive
+				? SortedDbfIds(specialShopState!.BoardCards)
+				: SortedDbfIds(opponent.Board.Where(x => x.TakesBoardSlot));
+
 			return new BoardState
 			{
 				Player = new BoardStatePlayer
@@ -292,7 +306,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				},
 				Opponent = new BoardStatePlayer
 				{
-					Board = SortedDbfIds(opponent.Board.Where(x => x.TakesBoardSlot)),
+					Board = opponentBoard,
 					Deck = new BoardStateDeck
 					{
 						Size = opponent.DeckCount
@@ -325,6 +339,13 @@ namespace Hearthstone_Deck_Tracker.Live
 			int? opponentWeaponEntityId = opponentEntity != null ? WeaponId(opponentEntity) : null;
 			int opponentWeapon = opponentWeaponEntityId.HasValue ? DbfId(Find(opponent, opponentWeaponEntityId.Value)) : 0;
 
+			// Check if the special shop (timewarped tavern) is currently active
+			var specialShopState = Watchers.SpecialShopChoicesStateWatcher.CurrentState;
+			var specialShopActive = specialShopState?.IsActive == true && specialShopState.BoardCards.Count > 0;
+			var opponentBoard = specialShopActive
+				? SortedDbfIds(specialShopState!.BoardCards)
+				: SortedDbfIds(opponent.Board.Where(x => x.TakesBoardSlot));
+
 			return new Tuple<BoardStatePlayer, BoardStatePlayer>(
 				new BoardStatePlayer
 				{
@@ -346,7 +367,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					Fatigue = playerEntity?.GetTag(GameTag.FATIGUE) ?? 0
 				}, new BoardStatePlayer
 				{
-					Board = SortedDbfIds(opponent.Board.Where(x => x.TakesBoardSlot)),
+					Board = opponentBoard,
 					Hero = HeroDbfId(opponentEntity != null ? Find(opponent, HeroId(opponentEntity)) : null),
 					HeroPower = BgsQuestReward(opponent, true) ?? BgsTrinket(opponent, TrinketHeroPowerSlot) ?? DbfId(FindHeroPower(opponent)),
 					Weapon = opponentWeapon != 0 ? opponentWeapon :
