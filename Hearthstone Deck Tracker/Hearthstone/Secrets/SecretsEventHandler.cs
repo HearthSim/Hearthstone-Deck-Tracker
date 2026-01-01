@@ -368,6 +368,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				Exclude(Rogue.Perjury);
 				if(Game.OpponentMinionCount >= 1 && FreeSpaceOnBoard)
 					Exclude(Mage.SummoningWard);
+				if(Game.PlayerMinionCount >= 1)
+					Exclude(Mage.FlamesOfInfinity);
 			}
 			if(Game.OpponentEntity.IsCurrentPlayer && turn > _lastStartOfTurnMinionCheck)
 			{
