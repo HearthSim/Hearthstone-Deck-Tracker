@@ -20,16 +20,23 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Commands;
 using HSReplay.Requests;
 using HSReplay.Responses;
 using Newtonsoft.Json;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
+using System.Windows.Input;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 
 public class BattlegroundsSessionViewModel : ViewModel
 {
 	private readonly BattlegroundsDb _db = BattlegroundsDbSingleton.Instance;
+
+	public BattlegroundsSessionViewModel()
+	{
+		RetryCompStatsCommand = new Command(async () => await RetryCompStats());
+	}
 
 	public ObservableCollection<Race> AvailableMinionTypes { get; } = new();
 	public ObservableCollection<Race> BannedMinionTypes { get; } = new();
@@ -49,6 +56,8 @@ public class BattlegroundsSessionViewModel : ViewModel
 	}
 
 	private readonly SemaphoreSlim _updateCompStatsSemaphore = new SemaphoreSlim(1, 1);
+
+	public ICommand RetryCompStatsCommand { get; }
 
 
 	public async void Update()
@@ -187,6 +196,20 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	    var availableRaces = BattlegroundsUtils.GetAvailableRaces();
 
+	    // Retry logic: game state may not be ready immediately
+	    if(availableRaces == null)
+	    {
+		    Log.Info("[Tier7CompStats] Available races not ready, retrying after delay...");
+		    await Task.Delay(2000);
+		    availableRaces = BattlegroundsUtils.GetAvailableRaces();
+		    
+		    if(availableRaces == null)
+		    {
+			    await Task.Delay(3000);
+			    availableRaces = BattlegroundsUtils.GetAvailableRaces();
+		    }
+	    }
+
 	    if(availableRaces == null)
 		    throw new CompositionStatsException("Unable to get available races");
 
@@ -315,6 +338,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 	private void HandleCompStatsError(Exception error)
 	{
 		Influx.OnGetBattlegroundsCompositionStatsError(error.GetType().Name, error.Message);
+		Log.Error($"[Tier7CompStats] error: {error.GetType().Name} - {error.Message}; debug={CompStatsDebugInfo ?? "<none>"}");
 
 		var beforeHeroPicked = (Core.Game.GameEntity?.GetTag(GameTag.STEP) ?? 0) <= (int)Step.BEGIN_MULLIGAN;
 		if(!beforeHeroPicked)
@@ -330,6 +354,23 @@ public class BattlegroundsSessionViewModel : ViewModel
 		CompStatsErrorVisibility = Visibility.Visible;
 		CompStatsBodyVisibility = Visibility.Hidden;
 		CompStatsWaitingMsgVisibility = Visibility.Hidden;
+	}
+
+	private async Task RetryCompStats()
+	{
+		CompStatsErrorVisibility = Visibility.Hidden;
+		CompStatsBodyVisibility = Visibility.Hidden;
+		CompStatsWaitingMsgVisibility = Visibility.Visible;
+
+		try
+		{
+			await _updateCompStatsSemaphore.WaitAsync();
+			await TrySetCompStats();
+		}
+		finally
+		{
+			_updateCompStatsSemaphore.Release();
+		}
 	}
 
 	private async Task<GameItem?> UpdateLatestGames()
@@ -528,6 +569,20 @@ public class BattlegroundsSessionViewModel : ViewModel
 			OnPropertyChanged();
 		}
 	}
+
+	private string? _compStatsDebugInfo;
+	public string? CompStatsDebugInfo
+	{
+		get => _compStatsDebugInfo;
+		set
+		{
+			_compStatsDebugInfo = value;
+			OnPropertyChanged();
+			OnPropertyChanged(nameof(CompStatsDebugVisibility));
+		}
+	}
+
+	public Visibility CompStatsDebugVisibility => string.IsNullOrWhiteSpace(_compStatsDebugInfo) ? Visibility.Collapsed : Visibility.Visible;
 
 	private Visibility _compStatsWaitingMsgVisibility;
 	public Visibility CompStatsWaitingMsgVisibility
