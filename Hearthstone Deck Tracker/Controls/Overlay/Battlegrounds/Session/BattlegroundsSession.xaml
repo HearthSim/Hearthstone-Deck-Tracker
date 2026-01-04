@@ -200,7 +200,7 @@
                                             HorizontalAlignment="Center"
                                             Margin="4 0 4 8"
                                         />
-                                        <Button Content="Retry" Command="{Binding RetryCompStatsCommand}" Width="64" HorizontalAlignment="Center" />
+                                        <Button Content="Retry" Command="{Binding RetryCompStatsCommand}" Width="64" HorizontalAlignment="Center" Style="{StaticResource Tier7ButtonStyle}" Cursor="Hand" />
                                         <TextBlock Text="{Binding CompStatsDebugInfo}" Visibility="{Binding CompStatsDebugVisibility, FallbackValue=Collapsed}" Foreground="#FFFFFF" Opacity=".6" FontSize="10" TextWrapping="Wrap" Margin="6,6,6,0" />
                                     </StackPanel>
                                 </Grid>
