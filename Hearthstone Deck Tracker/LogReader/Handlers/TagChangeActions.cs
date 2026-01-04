@@ -354,6 +354,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			}
 
+			// prevents nightmare fuel leaking the card
+			if(
+				(gameState.CurrentBlock?.CardId == Collectible.Rogue.NightmareFuel ||
+				 gameState.CurrentBlock?.Parent?.CardId == Collectible.Rogue.NightmareFuel &&
+				 entity.CardId == NonCollectible.Neutral.TreacherousTormentor_DarkGiftToken) &&
+				entity.IsControlledBy(game.Player.Id)
+			)
+			{
+				targetEntity.CardId = null;
+				targetEntity.Info.Hidden = true;
+				return;
+			}
+
 			OnDredge(entity, targetEntity, game, gameState);
 		}
 

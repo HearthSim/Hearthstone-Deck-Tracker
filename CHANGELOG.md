@@ -1,3 +1,8 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed an info leak involving Nightmare Fuel.
+- Added deck highlight to Timeline Accelerator.
+
 ## **Release v1.48.21 - 2025-12-20**
 **Battlegrounds**:
 - Fixed a major issue with Timewarped Tavern support causing incorrect simulation results in many cases.
