@@ -311,18 +311,28 @@ public class BattlegroundsSessionViewModel : ViewModel
 		catch(Exception e)
 		{
 			HandleCompStatsError(e);
+			return;
 		}
 
 		if(battlegroundsCompStats is BattlegroundsCompStats compStats)
 		{
 			var firstPlaceComps = compStats.Data?.FirstPlaceCompsLobbyRaces;
-			if(firstPlaceComps != null)
+			if(firstPlaceComps != null && firstPlaceComps.Count > 0)
 			{
+				Log.Info($"[Tier7CompStats] Success: received {firstPlaceComps.Count} compositions");
 				SetBattlegroundsCompositionStatsViewModel(
 					firstPlaceComps
 				);
 				ShowCompositionStats();
 			}
+			else
+			{
+				Log.Warn($"[Tier7CompStats] API returned null or empty compositions. compStats.Data={compStats.Data}, firstPlaceComps.Count={firstPlaceComps?.Count ?? 0}");
+			}
+		}
+		else
+		{
+			Log.Warn($"[Tier7CompStats] Received null from API");
 		}
 	}
 
