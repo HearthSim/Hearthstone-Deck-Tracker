@@ -2,6 +2,7 @@
 **Hearthstone**:
 - Fixed an info leak involving Nightmare Fuel.
 - Added deck highlight to Timeline Accelerator.
+- Added Zul'jin related cards.
 
 ## **Release v1.48.21 - 2025-12-20**
 **Battlegrounds**:
