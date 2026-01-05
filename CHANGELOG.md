@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.48.22 - 2026-01-05**
 **Hearthstone**:
 - Fixed an info leak involving Nightmare Fuel.
 - Added deck highlight to Timeline Accelerator.
