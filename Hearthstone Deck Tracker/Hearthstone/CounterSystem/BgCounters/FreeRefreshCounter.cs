@@ -22,7 +22,9 @@ public class FreeRefreshCounter : NumericCounter
     {
         return new[]
         {
-            HearthDb.CardIds.NonCollectible.Neutral.RefreshingAnomaly
+            HearthDb.CardIds.NonCollectible.Neutral.RefreshingAnomaly,
+            HearthDb.CardIds.NonCollectible.Neutral.GhostlyYmirjar,
+            HearthDb.CardIds.NonCollectible.Neutral.LeafThroughThePages
         };
     }
 
@@ -36,13 +38,10 @@ public class FreeRefreshCounter : NumericCounter
         if (entity.IsControlledBy(Game.Player.Id) != IsPlayerCounter)
             return;
 
-        if (entity.CardId != HearthDb.CardIds.NonCollectible.Neutral.RefreshingAnomaly_RefreshCosts0Enchantment)
-            return;
-
-        if (tag == GameTag.TAG_SCRIPT_DATA_NUM_2)
-        {
-            Counter += (value - prevValue);
-            OnCounterChanged();
-        }
+	    if(tag == GameTag.BACON_FREE_REFRESH_COUNT)
+	    {
+		    Counter = value;
+		    OnCounterChanged();
+	    }
     }
 }
