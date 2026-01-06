@@ -509,6 +509,7 @@
                     <minionPinning:BattlegroundsMinionPinning x:Name="BattlegroundsMinionPinningControl" VerticalAlignment="Bottom" DataContext="{Binding BattlegroundsMinionPinningViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" />
                     <minionPinning:BattlegroundsMinionPinningShop x:Name="BgsMinionPinningShop" DataContext="{Binding BattlegroundsMinionPinningViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 </Grid>
+                <overlay:BattlegroundsTimewarpPanel x:Name="TimewarpNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
 
                 <chinaModule:ChinaModulePanel x:Name="ChinaModulePanel" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
                                               DataContext="{Binding ChinaModuleVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>

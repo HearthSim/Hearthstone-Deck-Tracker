@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.BattlegroundsTimewarpPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             Background="#361637" Cursor="Hand"
+             MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave"
+             MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
+             Margin="5" MinHeight="60"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Storyboard x:Key="StoryboardNormal">
+            <DoubleAnimation To="0.5" Duration="0:0:0.2" Storyboard.TargetName="BackgroundImage" Storyboard.TargetProperty="Opacity" />
+        </Storyboard>
+        <Storyboard x:Key="StoryboardHover">
+            <DoubleAnimation To="0.8" Duration="0:0:0.2" Storyboard.TargetName="BackgroundImage" Storyboard.TargetProperty="Opacity" />
+        </Storyboard>
+    </UserControl.Resources>
+    <Border BorderThickness="1" BorderBrush="White">
+        <Grid>
+            <utility:IgnoreSizeDecorator>
+                <Image Name="BackgroundImage" Source="{StaticResource BgsToastBackground}" Opacity="0.5" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant"/>
+            </utility:IgnoreSizeDecorator>
+            <DockPanel Margin="10" VerticalAlignment="Center">
+                <Image Source="{StaticResource HsReplayIconWhite}" Height="28" Width="28"
+                       HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
+                <Grid>
+                    <TextBlock Foreground="White" TextAlignment="Center" Margin="20,0"
+                               LineHeight="15" LineStackingStrategy="BlockLineHeight">
+                        <Run Text="{lex:Loc Toast_Battlegrounds_Timewarp}" FontWeight="SemiBold" FontSize="17"/>
+                        <LineBreak/>
+                        <Run Text="{lex:Loc Toast_Battlegrounds_HSReplaynet}" FontSize="12"/>
+                    </TextBlock>
+                </Grid>
+            </DockPanel>
+        </Grid>
+    </Border>
+</UserControl>
+

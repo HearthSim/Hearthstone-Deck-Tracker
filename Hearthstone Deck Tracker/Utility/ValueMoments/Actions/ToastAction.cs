@@ -20,6 +20,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions
 			BattlegroundsHeroPicker,
 			[JsonProperty("mercenaries_collection_uploaded")]
 			MercenariesCollectionUploaded,
+			[JsonProperty("battlegrounds_timewarp")]
+			BattlegroundsTimewarp,
 		}
 
 		public ToastAction(Franchise franchise, Toast toastName) : base(

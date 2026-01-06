@@ -809,6 +809,48 @@ namespace Hearthstone_Deck_Tracker
 			HSReplayNetClientAnalytics.TryTrackToastClick(Franchise.Battlegrounds, ToastAction.Toast.BattlegroundsHeroPicker);
 		}
 
+		internal static void OpenBattlegroundsTimewarpPage(List<HearthMirror.Objects.BoardCard> boardCards)
+		{
+			var cardIds = boardCards
+				.Select(card => card.CardId)
+				.Where(id => !string.IsNullOrEmpty(id))
+				.Distinct()
+				.ToList();
+
+			if(cardIds.Count == 0)
+				return;
+
+			var timewarpCards = cardIds
+				.Select(Database.GetCardFromId)
+				.Where(card => card != null)
+				.ToList();
+
+			var dbfIds = timewarpCards
+				.Where(card => card != null)
+				.Select(card => card!.DbfId)
+				.ToList();
+
+			var isMajorTimewarp = timewarpCards.Any(card => card?.TechLevel == 5);
+
+			var fragmentParams = new List<string>
+			{
+				"view=advanced",
+				$"searchTerm={string.Join(",", dbfIds)}"
+			};
+
+			if(isMajorTimewarp)
+				fragmentParams.Add("timewarp=major");
+
+			var url = BuildHsReplayNetUrl(
+				"/battlegrounds/timewarp/",
+				"bgs_timewarp_toast",
+				null,
+				fragmentParams
+			);
+			TryOpenUrl(url);
+			HSReplayNetClientAnalytics.TryTrackToastClick(Franchise.Battlegrounds, ToastAction.Toast.BattlegroundsTimewarp);
+		}
+
 		public static async Task<T?> RetryWhileNull<T>(Func<T> func, int tries = 5, int delay = 150)
 		{
 			for(var i = 0; i < tries; i++)

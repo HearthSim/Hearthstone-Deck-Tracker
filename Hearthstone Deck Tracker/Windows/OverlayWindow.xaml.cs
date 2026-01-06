@@ -90,7 +90,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private OverlayElementBehavior _mulliganNotificationBehavior;
 		private OverlayElementBehavior _heroNotificationBehavior;
+		private OverlayElementBehavior _timewarpNotificationBehavior;
 		private OverlayElementBehavior _bgsTopBarBehavior;
+		private bool? _tavernMarkersPanelExpandedBeforeTimewarp;
 		private OverlayElementBehavior _bgsBobsBuddyBehavior;
 		private OverlayElementBehavior _bgsChinaModuleBehavior;
 		private OverlayElementBehavior _bgsTopBarTriggerMaskBehavior;
@@ -214,6 +216,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 				HideCallback = () => {
 					ShowBgsTopBarAndBobsBuddyPanel();
 				},
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+			};
+
+			_timewarpNotificationBehavior = new OverlayElementBehavior(TimewarpNotificationPanel)
+			{
+				GetRight = () => 0,
+				GetBottom = () => Height * 0.05,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Bottom,
 				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
 			};
@@ -879,6 +891,32 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_heroNotificationBehavior.Hide();
 		}
 
+		internal void ShowBattlegroundsTimewarpPanel(List<HearthMirror.Objects.BoardCard> boardCards)
+		{
+			// Only save the initial state if the panel is not already showing
+			if(TimewarpNotificationPanel.Visibility != Visible)
+			{
+				// Save the current state and collapse the Tavern Markers Panel
+				_tavernMarkersPanelExpandedBeforeTimewarp = BattlegroundsMinionPinningViewModel.IsExpanded;
+				BattlegroundsMinionPinningViewModel.IsExpanded = false;
+			}
+
+			TimewarpNotificationPanel.BoardCards = boardCards;
+			_timewarpNotificationBehavior.Show();
+		}
+
+		internal void HideBattlegroundsTimewarpPanel()
+		{
+			_timewarpNotificationBehavior.Hide();
+
+			// Restore the Tavern Markers Panel to its initial state only if we saved one
+			if(_tavernMarkersPanelExpandedBeforeTimewarp.HasValue)
+			{
+				BattlegroundsMinionPinningViewModel.IsExpanded = _tavernMarkersPanelExpandedBeforeTimewarp.Value;
+				_tavernMarkersPanelExpandedBeforeTimewarp = null;
+			}
+		}
+
 		internal void ShowBgsTopBar()
 		{
 			TurnCounter.Visibility = Config.Instance.ShowBattlegroundsTurnCounter ? Visible : Collapsed;
@@ -1390,10 +1428,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(!_game.IsBattlegroundsMatch)
 				return;
 
-			if(!args.IsActive)
-				return;
-
 			var boardCards = args.BoardCards;
+
+			var gameId = _game.MetaData.ServerInfo?.GameHandle;
+			var userHasTier7 = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) || Tier7Trial.IsTrialForCurrentGameActive(gameId);
+
+			if(args.IsActive && boardCards.Count > 0 && userHasTier7)
+			{
+				ShowBattlegroundsTimewarpPanel(boardCards);
+			}
+			else
+			{
+				HideBattlegroundsTimewarpPanel();
+			}
 
 			Core.Overlay.BattlegroundsMinionPinningViewModel.OnShopChange(boardCards, args.MousedOverSlot);
 		}

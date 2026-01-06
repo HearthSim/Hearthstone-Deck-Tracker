@@ -613,6 +613,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_heroNotificationBehavior.UpdatePosition();
 			_heroNotificationBehavior.UpdateScaling();
 
+			_timewarpNotificationBehavior.UpdatePosition();
+			_timewarpNotificationBehavior.UpdateScaling();
+
 			_bgsBobsBuddyBehavior.UpdatePosition();
 			_bgsBobsBuddyBehavior.UpdateScaling();
 

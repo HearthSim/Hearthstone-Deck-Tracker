@@ -481,6 +481,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 				Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
 				Core.Overlay.HideBattlegroundsHeroPanel();
+				Core.Overlay.HideBattlegroundsTimewarpPanel();
 				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
 
 				if(_game.IsBattlegroundsMatch)
@@ -1027,6 +1028,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
 					Core.Overlay.ChinaModuleVM.Reset();
 					Core.Overlay.HideBattlegroundsHeroPanel();
+					Core.Overlay.HideBattlegroundsTimewarpPanel();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
 					var finalPlacement = hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0;
 					CaptureBattlegroundsFeedback(finalPlacement);
@@ -1286,6 +1288,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.SnapshotBattlegroundsHeroPick();
 				Core.Overlay.HideBattlegroundsHeroPanel();
+				Core.Overlay.HideBattlegroundsTimewarpPanel();
 				Core.Overlay.BattlegroundsHeroPickingViewModel.Reset();
 				Core.Overlay.BattlegroundsSessionViewModelVM.HideCompStatsOnError();
 				Core.Overlay.BattlegroundsHeroGuideListViewModel.OnMulliganEnded();
