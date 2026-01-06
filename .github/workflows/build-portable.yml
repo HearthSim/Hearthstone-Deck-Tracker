@@ -90,17 +90,34 @@ jobs:
           & "$env:GITHUB_WORKSPACE\build-scripts\release_post_build.bat"
           exit 0
 
-      - name: Generate certificate and sign executables
+      - name: Setup SM_CLIENT_CERT_FILE from base64 secret data
+        shell: bash
         run: |
-          $cert = "cert.pfx"
-          [IO.File]::WriteAllBytes("$cert", [Convert]::FromBase64String($Env:CERT))
-          $squirrelTools = "packages\squirrel.windows\1.9.1\tools"
-          $signtool = "$squirrelTools\signtool.exe"
-          $hdtReleaseDir = "Hearthstone Deck Tracker\bin\x86\Hearthstone Deck Tracker"
-          & $signtool sign /tr "http://timestamp.digicert.com" /td SHA256 /a /f $cert /p $Env:CERT_PASSWORD "$hdtReleaseDir\HDTUpdate.exe" "$hdtReleaseDir\HDTUninstaller.exe" "$hdtReleaseDir\Hearthstone Deck Tracker.exe" | Out-Default
+          echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > ${RUNNER_TEMP}/sm_client_cert.p12
+          echo "SM_CLIENT_CERT_FILE=${RUNNER_TEMP}/sm_client_cert.p12" >> $GITHUB_ENV
+
+      - name: Setup Software Trust Manager
+        uses: digicert/code-signing-software-trust-action@v1.0.1
+        with:
+          simple-signing-mode: true
         env:
-          CERT: ${{ secrets.CERT }}
-          CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
+          SM_HOST: ${{ vars.SM_HOST }}
+          SM_API_KEY: ${{ secrets.SM_API_KEY }}
+          SM_CLIENT_CERT_FILE: ${{ env.SM_CLIENT_CERT_FILE }}
+          SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
+
+      - name: Sign executables
+        shell: pwsh
+        run: |
+          $hdtReleaseDir = "Hearthstone Deck Tracker\bin\x86\Hearthstone Deck Tracker"
+          smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUpdate.exe"
+          smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUninstaller.exe"
+          smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\Hearthstone Deck Tracker.exe"
+        env:
+          SM_HOST: ${{ vars.SM_HOST }}
+          SM_API_KEY: ${{ secrets.SM_API_KEY }}
+          SM_CLIENT_CERT_FILE: ${{ env.SM_CLIENT_CERT_FILE }}
+          SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
 
       - name: Create portable zip
         run: |

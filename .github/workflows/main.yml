@@ -42,12 +42,30 @@ jobs:
       - name: Build (Squirrel)
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
 
+      - name: Setup SM_CLIENT_CERT_FILE from base64 secret data
+        shell: bash
+        run: |
+          echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > ${RUNNER_TEMP}/sm_client_cert.p12
+          echo "SM_CLIENT_CERT_FILE=${RUNNER_TEMP}/sm_client_cert.p12" >> $GITHUB_ENV
+
+      - name: Setup Software Trust Manager
+        uses: digicert/code-signing-software-trust-action@v1.0.1
+        with:
+          simple-signing-mode: true
+        env:
+          SM_HOST: ${{ vars.SM_HOST }}
+          SM_API_KEY: ${{ secrets.SM_API_KEY }}
+          SM_CLIENT_CERT_FILE: ${{ env.SM_CLIENT_CERT_FILE }}
+          SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
+
       - name: Package
         if: startsWith(github.ref, 'refs/tags/v')
         run: ./build-scripts/package.ps1 -dev $false -packageVersion ${{ steps.version.outputs.packageVersion }}
         env:
-          CERT: ${{ secrets.CERT }}
-          CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
+          SM_HOST: ${{ vars.SM_HOST }}
+          SM_API_KEY: ${{ secrets.SM_API_KEY }}
+          SM_CLIENT_CERT_FILE: ${{ env.SM_CLIENT_CERT_FILE }}
+          SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
 
       - name: Create Release (Squirrel)
         if: startsWith(github.ref, 'refs/tags/v')

@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HearthWatcher.Test", "Heart
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap", "Bootstrap\Bootstrap.csproj", "{7CF4E289-B871-4E52-B451-EE7BF1250359}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignToolShim", "SignToolShim\SignToolShim.csproj", "{1324828D-7E53-4458-BE90-A6EEAA565810}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -82,6 +84,12 @@ Global
 		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Release|x86.Build.0 = Release|x86
 		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Squirrel|x86.ActiveCfg = Debug|x86
 		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Squirrel|x86.Build.0 = Debug|x86
+		{1324828D-7E53-4458-BE90-A6EEAA565810}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1324828D-7E53-4458-BE90-A6EEAA565810}.Debug|x86.Build.0 = Debug|Any CPU
+		{1324828D-7E53-4458-BE90-A6EEAA565810}.Release|x86.ActiveCfg = Release|Any CPU
+		{1324828D-7E53-4458-BE90-A6EEAA565810}.Release|x86.Build.0 = Release|Any CPU
+		{1324828D-7E53-4458-BE90-A6EEAA565810}.Squirrel|x86.ActiveCfg = Debug|Any CPU
+		{1324828D-7E53-4458-BE90-A6EEAA565810}.Squirrel|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
