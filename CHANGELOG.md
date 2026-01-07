@@ -1,3 +1,11 @@
+## **Release v1.48.23 - 2026-01-07**
+**Battlegrounds**:
+- Updated Free Refreshes counter.
+- Added Blood Gem Barrage Buff counter.
+- Added Right Most Tavern Minion Buff counter.
+- Added Volumizer Buff counter.
+- New Tier7 feature: Added a notification at the start of Timewarped Taverns to compare the HSReplay.net Timewarped Cards filtered to the presented choices.
+
 ## **Release v1.48.22 - 2026-01-05**
 **Hearthstone**:
 - Fixed an info leak involving Nightmare Fuel.
