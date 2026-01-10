@@ -303,6 +303,25 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			}
 
+			// prevents nightmare fuel and dejavu leaking the card
+			if(
+				(gameState.CurrentBlock?.CardId == Collectible.Rogue.NightmareFuel ||
+				 (gameState.CurrentBlock?.Parent?.CardId == Collectible.Rogue.NightmareFuel &&
+				  entity.CardId == NonCollectible.Neutral.TreacherousTormentor_DarkGiftToken) ||
+				 gameState.CurrentBlock?.CardId == Collectible.Rogue.DejaVu) &&
+				entity.IsControlledBy(game.Player.Id)
+			)
+			{
+				targetEntity.CardId = null;
+				targetEntity.Info.Hidden = true;
+				if(entity.Info.LatestCardId != null)
+				{
+					game.Opponent.PredictUniqueCardInDeck(entity.Info.LatestCardId, false);
+					Core.UpdateOpponentCards();
+				}
+				return;
+			}
+
 
 			if(string.IsNullOrEmpty(targetEntity.CardId))
 			{

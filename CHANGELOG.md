@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed an info leak involving Nightmare Fuel and Deja Vu.
+
 ## **Release v1.48.23 - 2026-01-07**
 **Battlegrounds**:
 - Updated Free Refreshes counter.
