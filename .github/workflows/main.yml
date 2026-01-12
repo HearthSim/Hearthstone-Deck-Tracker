@@ -43,12 +43,14 @@ jobs:
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
 
       - name: Setup SM_CLIENT_CERT_FILE from base64 secret data
+        if: startsWith(github.ref, 'refs/tags/v')
         shell: bash
         run: |
           echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > ${RUNNER_TEMP}/sm_client_cert.p12
           echo "SM_CLIENT_CERT_FILE=${RUNNER_TEMP}/sm_client_cert.p12" >> $GITHUB_ENV
 
       - name: Setup Software Trust Manager
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: digicert/code-signing-software-trust-action@v1.0.1
         with:
           simple-signing-mode: true
