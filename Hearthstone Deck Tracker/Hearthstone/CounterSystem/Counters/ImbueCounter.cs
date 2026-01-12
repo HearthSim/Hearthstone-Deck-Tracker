@@ -18,6 +18,8 @@ public class ImbueCounter : NumericCounter
 		HearthDb.CardIds.NonCollectible.Paladin.BlessingOfTheDragon,
 		HearthDb.CardIds.NonCollectible.Priest.LunarwingMessenger_BlessingOfTheMoon,
 		HearthDb.CardIds.NonCollectible.Shaman.BlessingOfTheWind,
+		"HearthDb.CardIds.NonCollectible.Deathknight.BlessingOfTheInfinite",
+		"HearthDb.CardIds.NonCollectible.Rogue.BlessingOfTheBronze",
 		HearthDb.CardIds.Collectible.Neutral.MalorneTheWaywatcher,
 	};
 
