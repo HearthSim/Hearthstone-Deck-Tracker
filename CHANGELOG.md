@@ -1,3 +1,7 @@
+## *Unreleased**
+**Battlegrounds**:
+- Updated Right Most Tavern Minion Buff counter-related cards.
+
 ## **Release v1.48.24 - 2026-01-12**
 **Hearthstone**:
 - Fixed an info leak involving Nightmare Fuel and Deja Vu.

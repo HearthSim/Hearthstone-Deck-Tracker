@@ -17,6 +17,8 @@ public class RightMostTavernMinionBuffCounter : StatsCounter
 	{
 		HearthDb.CardIds.NonCollectible.Neutral.WorgenExecutive,
 		HearthDb.CardIds.NonCollectible.Neutral.Waveling,
+		HearthDb.CardIds.NonCollectible.Neutral.EnDjinnBlazer,
+		HearthDb.CardIds.NonCollectible.Neutral.EasterlyWinds
 	};
 
 	public RightMostTavernMinionBuffCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
