@@ -1,4 +1,11 @@
-## *Unreleased**
+## **Release v1.49.0 - 2026-01-13**
+**Updated for Hearthstone 34.4.0**
+
+**Hearthstone**:
+- Added new counters: Minions that Died this Turn and Overload this game.
+- Added deck highlight for Finality.
+- Added Flames Of Infinity to secret tracker.
+
 **Battlegrounds**:
 - Updated Right Most Tavern Minion Buff counter-related cards.
 
