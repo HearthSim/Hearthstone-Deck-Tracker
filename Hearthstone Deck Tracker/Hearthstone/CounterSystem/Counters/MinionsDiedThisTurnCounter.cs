@@ -6,11 +6,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 
 public class MinionsDiedThisTurnCounter: NumericCounter
 {
-	protected override string? CardIdToShowInUI => "HearthDb.CardIds.Collectible.Demonhunter.RemnantofRage";
+	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Invalid.RemnantOfRage;
 
 	public override string[] RelatedCards => new string[]
 	{
-		"HearthDb.CardIds.Collectible.Demonhunter.RemnantofRage",
+		HearthDb.CardIds.Collectible.Invalid.RemnantOfRage,
 	};
 
 	public MinionsDiedThisTurnCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)

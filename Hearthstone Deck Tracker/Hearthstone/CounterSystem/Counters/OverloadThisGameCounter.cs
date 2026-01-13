@@ -7,10 +7,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 
 public class OverloadThisGameCounter : NumericCounter
 {
-	protected override string? CardIdToShowInUI => "HearthDb.CardIds.Collectible.Shaman.HaywireHornswog";
+	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Shaman.HaywireHornswog;
 	public override string[] RelatedCards => new string[]
 	{
-		"HearthDb.CardIds.Collectible.Shaman.HaywireHornswog"
+		HearthDb.CardIds.Collectible.Shaman.HaywireHornswog
 	};
 
 	public OverloadThisGameCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
