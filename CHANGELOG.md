@@ -1,3 +1,7 @@
+## **Release v1.49.1 - 2026-01-14**
+**Hearthstone**:
+- Attempted fix for an info leak involving Nightmare Fuel and Deja Vu.
+
 ## **Release v1.49.0 - 2026-01-13**
 **Updated for Hearthstone 34.4.0**
 
