@@ -14,16 +14,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
       - name: Setup NodeJS
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v6
 
       - name: Download Assets
         run: node ./build-scripts/download-release-assets.js ${{ github.event.release.tag_name }}
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: ${{ secrets.AWS_ASIA_DEPLOY_ROLE_ARN }}
           aws-region: ap-east-1
