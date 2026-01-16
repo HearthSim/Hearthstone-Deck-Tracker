@@ -50,6 +50,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Entity> CardsPlayedLastTurn { get; private set; } = new();
 		public List<string?> LaunchedStarships { get; private set; } = new();
 		public List<Entity> StartingHand { get; private set; } = new();
+		public List<Entity> EntitiesDiscardedFromHand { get; } = new();
 		public bool IsPlayingWhizbang { get; set; }
 		public bool HasDeathKnightTourist { get; set; }
 		public int PogoHopperPlayedCount { get; private set; }
@@ -513,6 +514,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CardsPlayedThisMatch.Clear();
 			LaunchedStarships.Clear();
 			StartingHand.Clear();
+			EntitiesDiscardedFromHand.Clear();
 			SecretsTriggeredCards.Clear();
 			LastDrawnCardId = null;
 			LibramReductionCount = 0;
@@ -736,6 +738,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				UpdateKnownEntitiesInDeck(entity.CardId, entity.Info.Turn);
 			entity.Info.Turn = turn;
 			entity.Info.Discarded = true;
+			EntitiesDiscardedFromHand.Add(entity);
 			//Log(entity);
 		}
 
