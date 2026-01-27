@@ -1,3 +1,10 @@
+## **Release v1.49.2 - 2026-01-27**
+**Updated for Hearthstone 34.4.2**
+
+**Hearthstone**:
+- Added Elwynn Boar counter.
+- Added Chogall and Magister Dawngrasp related cards.
+
 ## **Release v1.49.1 - 2026-01-14**
 **Hearthstone**:
 - Attempted fix for an info leak involving Nightmare Fuel and Deja Vu.
