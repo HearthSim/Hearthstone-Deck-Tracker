@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed Secret Tracker not handling cards created by Timelooper Toki.
+
 ## **Release v1.49.2 - 2026-01-27**
 **Updated for Hearthstone 34.4.2**
 
