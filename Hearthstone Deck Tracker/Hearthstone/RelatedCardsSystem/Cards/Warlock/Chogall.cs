@@ -7,7 +7,7 @@ public class Chogall: ICardWithRelatedCards
 {
 	public virtual string GetCardId() => HearthDb.CardIds.Collectible.Warlock.ChogallOG;
 
-	public bool ShouldShowForOpponent(Player opponent)
+	public virtual bool ShouldShowForOpponent(Player opponent)
 	{
 		var card = Database.GetCardFromId(GetCardId());
 		return CardUtils.MayCardBeRelevant(card, Core.Game.CurrentGameType, Core.Game.CurrentFormatType , opponent.OriginalClass) && GetRelatedCards(opponent).Count > 2;
@@ -22,4 +22,6 @@ public class Chogall: ICardWithRelatedCards
 public class ChogallWONDERS : Chogall
 {
 	public override string GetCardId() => HearthDb.CardIds.Collectible.Warlock.ChogallWONDERS;
+
+	public override bool ShouldShowForOpponent(Player opponent) => false;
 }
