@@ -1,3 +1,7 @@
+## **Release v1.49.4 - 2026-01-28**
+**Hearthstone**:
+- Fixed Cho'gall related cards appearing twice.
+
 ## **Release v1.49.3 - 2026-01-28**
 **Hearthstone**:
 - Fixed Secret Tracker not handling cards created by Timelooper Toki.
