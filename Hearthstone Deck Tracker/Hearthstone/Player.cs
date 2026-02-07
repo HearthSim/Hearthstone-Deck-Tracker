@@ -357,7 +357,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(DeckList.Instance.ActiveDeck == null)
 				return RevealedCards.Concat(createdInHand).Concat(KnownCardsInDeck).Concat(GetPredictedCardsInDeck(true)).ToSortedCardList();
 
-			var sorting = _game.IsMulliganDone ? CardListExtensions.CardSorting.Cost : CardListExtensions.CardSorting.MulliganWr;
+			var sorting = !_game.IsMulliganDone && Config.Instance.SortByWinrate ? CardListExtensions.CardSorting.MulliganWr : CardListExtensions.CardSorting.Cost;
 
 			var deckState = GetDeckState();
 			var inDeck = deckState.RemainingInDeck.ToList();

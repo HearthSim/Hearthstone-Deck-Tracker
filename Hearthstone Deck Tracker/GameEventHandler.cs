@@ -1340,6 +1340,7 @@ namespace Hearthstone_Deck_Tracker
 
 					Core.Overlay.HideMulliganGuideStats();
 					Core.Game.Player.MulliganCardStats = null;
+					Core.UpdatePlayerCards(true);
 				}
 			}
 		}

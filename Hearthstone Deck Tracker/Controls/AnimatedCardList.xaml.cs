@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
@@ -48,6 +49,11 @@ public partial class AnimatedCardList
 			_shouldHighlightCard = value;
 			UpdateHighlights();
 		}
+	}
+
+	public void UpdateSortButtonsVisibility(bool shouldShow)
+	{
+		ViewModel.ShowSort = shouldShow;
 	}
 
 	private Task? _activeUpdate;
@@ -259,6 +265,12 @@ public partial class AnimatedCardList
 	{
 		CardListSizeChanged?.Invoke(this);
 	}
+
+	private void OnSortButtonClick(object sender, RoutedEventArgs e)
+	{
+		if (sender is ToggleButton btn && btn.IsChecked == false)
+			btn.IsChecked = true;
+	}
 }
 
 public class AnimatedCardListViewModel : ViewModel
@@ -291,4 +303,54 @@ public class AnimatedCardListViewModel : ViewModel
 	}
 
 	public bool IsScrollable => !IsScrolledToTop || !IsScrolledToBottom;
+
+	public bool ShowSort
+	{
+		get => GetProp(false);
+		set => SetProp(value);
+	}
+
+	public string SortByCostLabel => LocUtil.Get("SortByCost", useCardLanguage: true);
+	public string SortByWinrateLabel => LocUtil.Get("SortByWinrate", useCardLanguage: true);
+
+	public bool IsSortByCost {
+		get => GetProp(!Config.Instance.SortByWinrate);
+		set
+		{
+			if(IsSortByCost == value)
+			{
+				return;
+			}
+
+			if(value)
+			{
+				IsSortByWinrate = false;
+				Config.Instance.SortByWinrate = false;
+				Config.Save();
+				Core.UpdatePlayerCards(true);
+			}
+			SetProp(value);
+		}
+	}
+
+	public bool IsSortByWinrate {
+		get => GetProp(Config.Instance.SortByWinrate);
+		set
+		{
+			if(IsSortByWinrate == value)
+			{
+				return;
+			}
+
+			if(value)
+			{
+				IsSortByCost = false;
+				Config.Instance.SortByWinrate = true;
+				Config.Save();
+				Core.UpdatePlayerCards(true);
+			}
+			SetProp(value);
+		}
+	}
+
 }

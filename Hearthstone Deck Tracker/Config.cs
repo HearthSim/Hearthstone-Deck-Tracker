@@ -337,6 +337,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool EnableMulliganGuide = true;
 
 		[DefaultValue(true)]
+		public bool SortByWinrate = true;
+
+		[DefaultValue(true)]
 		public bool ShowExperienceCounter = true;
 
 		[DefaultValue(false)]

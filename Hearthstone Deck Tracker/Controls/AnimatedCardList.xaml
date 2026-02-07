@@ -5,19 +5,87 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              Background="Transparent"
              Unloaded="AnimatedCardList_OnUnloaded"
              extensions:OverlayExtensions.IsOverlayHitTestVisible="{Binding ViewModel.IsScrollable, RelativeSource={RelativeSource Self}}"
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="CardFilterButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#222"/>
+            <Setter Property="BorderBrush" Value="#444"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="#000"/>
+                                <Setter Property="BorderBrush" Value="White"/>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#333"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid ClipToBounds="True">
-        <controls:PassiveScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Margin="0,0,-14,0"
-                      ScrollChanged="ScrollViewer_OnScrollChanged"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Background="Black"
+                Height="40"
+                extensions:OverlayExtensions.IsOverlayHitTestVisible="True"
+                Visibility="{Binding ViewModel.ShowSort, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolToVisibility}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <ToggleButton Grid.Column="0"
+                              IsChecked="{Binding ViewModel.IsSortByCost, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              Click="OnSortButtonClick"
+                              Style="{StaticResource CardFilterButtonStyle}" >
+                    <hearthstoneDeckTracker:OutlinedTextBlock Grid.Column="0" FontSize="12" Text="{Binding ViewModel.SortByCostLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                </ToggleButton>
+
+                <ToggleButton Grid.Column="1"
+                              IsChecked="{Binding ViewModel.IsSortByWinrate, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              Click="OnSortButtonClick"
+                              Style="{StaticResource CardFilterButtonStyle}">
+                    <hearthstoneDeckTracker:OutlinedTextBlock Grid.Column="0" FontSize="12" Text="{Binding ViewModel.SortByWinrateLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                </ToggleButton>
+            </Grid>
+        </Border>
+
+        <controls:PassiveScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Margin="0,0,-14,0"
+                                      ScrollChanged="ScrollViewer_OnScrollChanged"
         >
             <ItemsControl Name="ItemsControl" ItemsSource="{Binding AnimatedCards, RelativeSource={RelativeSource AncestorType=UserControl}}" SizeChanged="ItemsControl_OnSizeChanged"/>
         </controls:PassiveScrollViewer>
 
         <!-- Scroll Shadow Top -->
-        <Border BorderThickness="0,1,0,0" BorderBrush="#000000" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" IsHitTestVisible="False">
+        <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="#000000" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" IsHitTestVisible="False">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="#C0000000" Offset="0"/>
@@ -45,7 +113,7 @@
         </Border>
 
         <!-- Scroll Shadow Bottom -->
-        <Border BorderThickness="0,0,0,1" BorderBrush="#000000" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="25" IsHitTestVisible="False">
+        <Border Grid.Row="1" BorderThickness="0,0,0,1" BorderBrush="#000000" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="25" IsHitTestVisible="False">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="#00000000" Offset="0"/>

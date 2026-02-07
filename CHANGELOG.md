@@ -1,3 +1,8 @@
+## **Unreleased**
+
+**Hearthstone**:
+- Added option to sort the decklist by cost or mulligan winrate in the Mulligan Guide.
+
 ## **Release v1.49.4 - 2026-01-28**
 **Hearthstone**:
 - Fixed Cho'gall related cards appearing twice.

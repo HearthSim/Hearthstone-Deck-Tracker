@@ -143,6 +143,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public async Task UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom, List<Sideboard> sideboards)
 		{
+			ListViewPlayer.UpdateSortButtonsVisibility(!Core.Game.IsMulliganDone && Config.Instance.EnableMulliganGuide && cards.FirstOrDefault()?.CardWinrates != null);
 			var updates = new[]
 			{
 				ListViewPlayer.Update(cards, reset),
