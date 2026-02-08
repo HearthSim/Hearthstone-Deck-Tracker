@@ -2,6 +2,7 @@
 
 **Hearthstone**:
 - Added option to sort the decklist by cost or mulligan winrate in the Mulligan Guide.
+- Added Reminisce related cards.
 
 ## **Release v1.49.4 - 2026-01-28**
 **Hearthstone**:
