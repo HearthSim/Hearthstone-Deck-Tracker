@@ -1,4 +1,4 @@
-## **Release v1.49.6 - 2026-02-09**
+## **Release v1.49.7 - 2026-02-09**
 **Updated for Hearthstone 34.6.0**
 
 **Hearthstone**:
