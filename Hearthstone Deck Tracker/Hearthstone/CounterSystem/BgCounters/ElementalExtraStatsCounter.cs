@@ -14,7 +14,6 @@ public class ElementalsExtraStatsCounter : StatsCounter
 	{
 		HearthDb.CardIds.NonCollectible.Neutral.SandSwirler,
 		HearthDb.CardIds.NonCollectible.Neutral.GlowingCinder,
-		HearthDb.CardIds.NonCollectible.Neutral.AmplifyingLightspawn,
 	};
 
 	public ElementalsExtraStatsCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)

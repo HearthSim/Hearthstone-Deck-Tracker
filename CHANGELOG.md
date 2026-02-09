@@ -1,4 +1,5 @@
-## **Unreleased**
+## **Release v1.49.5 - 2026-02-09**
+**Updated for Hearthstone 34.6.0**
 
 **Hearthstone**:
 - Added option to sort the decklist by cost or mulligan winrate in the Mulligan Guide.
