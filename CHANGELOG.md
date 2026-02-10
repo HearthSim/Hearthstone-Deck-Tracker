@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed opponent's cards destroyed by Warmaster Blackhorn appearing the decklist.
+
 ## **Release v1.49.7 - 2026-02-09**
 **Updated for Hearthstone 34.6.0**
 

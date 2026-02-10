@@ -271,7 +271,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
 						if((gameState.CurrentBlock is { HideShowEntities: true }
 						    && !entity.Info.RevealedOnHistory
-						    && !entity.HasTag(GameTag.DISPLAYED_CREATOR)) || entity.CardId == NonCollectible.Rogue.GaronaHalforcen_KingLlaneToken)
+						    && !entity.HasTag(GameTag.DISPLAYED_CREATOR))
+						   || entity.CardId == NonCollectible.Rogue.GaronaHalforcen_KingLlaneToken)
 						{
 							entity.Info.Hidden = true;
 						}
@@ -1353,6 +1354,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Mage.SpiritGatherer:
 								AddKnownCardId(gameState, NonCollectible.Mage.WispTokenEMERALD_DREAM);
+								break;
+							case Collectible.Neutral.WarmasterBlackhorn:
+								if(gameState.CurrentBlock != null)
+									gameState.CurrentBlock.HideShowEntities = true;
 								break;
 							case NonCollectible.Warrior.EntertheLostCity_LatorviusGazeOfTheCityToken:
 								if(actionStartingEntity?.IsControlledBy(game.Opponent.Id) == true)

@@ -721,8 +721,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
 
+			var hideEntitiy = gameState.CurrentBlock is { HideShowEntities: true } && entity.IsControlledBy(game.Opponent.Id);
+
 			var isStartOfTheGameEffect = gameState.CurrentBlock?.TriggerKeyword == "START_OF_GAME_KEYWORD";
-			entity.Info.Hidden = isStartOfTheGameEffect && entity.IsControlledBy(game.Opponent.Id);
+			entity.Info.Hidden = hideEntitiy || (isStartOfTheGameEffect && entity.IsControlledBy(game.Opponent.Id));
 
 			if(isStartOfTheGameEffect && entity.IsControlledBy(game.Opponent.Id))
 			{
