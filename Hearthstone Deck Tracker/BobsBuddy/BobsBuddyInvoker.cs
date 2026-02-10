@@ -581,6 +581,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				inputPlayer.BeetlesAtkBuff = pBeetle.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
 				inputPlayer.BeetlesHealthBuff = pBeetle.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				Log.Info($"pBeetleAtk={inputPlayer.BeetlesAtkBuff}, pBeetleHealth={inputPlayer.BeetlesHealthBuff}, friendly={friendly}");
+			}
+			var pWhelpBonus = playerAttached.FirstOrDefault(x =>
+				x.CardId == NonCollectible.Neutral.BurgeoningWhelp_WhelpArmyEnchantment);
+			if(pWhelpBonus != null)
+			{
+				inputPlayer.WhelpAttackBonus = pWhelpBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+				inputPlayer.WhelpHealthBonus = pWhelpBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				Log.Info($"pWhelpAttack={inputPlayer.WhelpAttackBonus}, pWhelpHealth={inputPlayer.WhelpHealthBonus}, friendly={friendly}");
 			}
 
 			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);
