@@ -2,6 +2,13 @@
 **Hearthstone**:
 - Fixed opponent's cards destroyed by Warmaster Blackhorn appearing the decklist.
 
+**Battlegrounds**:
+- Fixed incorrect simulation results due to:\
+  *Photobomber, Stoneshell Guardian, Defiant Shipwright, Lovesick Balladist, Timewarped Collector, Timewarped Astrogrill and Peggy Sturdybone*
+- Added simulation support for:\
+  *Timewarped StoneDrake and Timewarped Magnanimoose*
+- Added simulation support for Burgeoning Whelp's global extra stats to whelps.
+
 ## **Release v1.49.7 - 2026-02-09**
 **Updated for Hearthstone 34.6.0**
 
@@ -98,7 +105,7 @@
 
 ## **Release v1.48.16 - 2025-12-08**
 **Hearthstone**:
-- Add unknown cards shuffled by Sky Mother Aviana, Blasteroid, Academic Espionage and Agency Espionage. This way the player can know how many were drawn and how many are left in the deck.
+- Add unknown cards shuffled by Sky Mother Aviana, Blasteroid, Academic Espionage, and Agency Espionage. This way the player can know how many were drawn and how many are left in the deck.
 
 ## **Release v1.48.15 - 2025-12-05**
 **Bob's Buddy**:
@@ -149,7 +156,7 @@
 ## **Release v1.48.7 - 2025-11-17**
 **Battlegrounds**:
 - New Tier7 feature: Tavern Pinning! Never miss a card you want again.\
-  *You'll be able to pin individual cards, whole comps or even whole minion types.*
+  *You'll be able to pin individual cards, whole comps, or even whole minion types.*
 - New Tier7 feature: Comp Key Pieces Pinning! Always know when available Comp key pieces are offered.\
   *Comp Key Pieces are based on Jeef's "When to Commit" and "Common Enablers" for all available Comps in the lobby.*
 
@@ -553,7 +560,7 @@
 
 ## **Release v1.43.2 - 2025-03-25**
 **Hearthstone**:
-- Added card highlights, counters and related cards to Discover:
+- Added card highlights, counters, and related cards to Discover:
   - This means you'll now be shown appropriate information before you choose your card.
 - Improved the Fatigue counter:
   - Made the new Fatigue counter appear for the opponent's side when you have Encroaching Insanity or Curse of Agony.
@@ -640,7 +647,7 @@
 ## **Release v1.41.2 - 2025-02-20**
 **Battlegrounds**:
 - Add Bob's Buddy support for: \
-  *Cosmic Duality, Bellowing Tyrant, Colossus and Carrier.*\
+  *Cosmic Duality, Bellowing Tyrant, Colossus, and Carrier.*\
 \
 *Battlecruiser is not supported yet, we are working on it! It will be available in the next update.*
 
@@ -727,7 +734,7 @@
 - Added counters to Protoss minions cost reduction and Alien Encounters.
 - Added related card tooltips to Starlight Whelp. \
   *We will continue adding more tooltips in the coming updates*
-- Added active effects to Warp Gate, Shield Battery and Construct Pylons.
+- Added active effects to Warp Gate, Shield Battery, and Construct Pylons.
 
 ## **Release v1.38.2 - 2025-01-21**
 **Updated for Hearthstone 31.4**
@@ -767,7 +774,7 @@
 - New Tier7 feature: Click on any minion in the minion browser to see how top players include that card in their lineups.\
   *You'll also find a button on the new Comp Guides to see typical final boards for that Comp.*
 - New Tier7 feature: Added additional filtering and a tier preview to the (new) Comp Guides tab.
-- Added counters for Beetle stats, Spells played and the Undead attack bonus.
+- Added counters for Beetle stats, Spells played, and the Undead attack bonus.
 - Fixed the latest games in the session recap showing the wrong hero after rerolling a skin.
 - Fixed Sleeping Sea Glass appearing in the available minion list in Duos.
 - Fixed the Tier7 hero picking stats not updating when rerolling a skin.
@@ -789,7 +796,7 @@
 - Fixed forge icon not appearing when the forged card was drawn by another card.
 - Fixed The Ceaseless Expanse counter not increasing when fracking is played.
 - Fixed some active effects appearing on the wrong side.
-- Fixed Pro gamer's Rock, Paper and Scissors cards appearing in the decklist.
+- Fixed Pro gamer's Rock, Paper, and Scissors cards appearing in the decklist.
 
 **Updater Improvements**:
 - Improved reliability and download speeds for users in China.
@@ -871,7 +878,7 @@
 **Hearthstone**:
 - Added new-style counters! They will automatically pop up when they're relevant in a game and feature rich tooltips appropriate to the current game state.\
   *We're still working on making them individually configurable but wanted to share our current progress with you. The old counters are still temporarily available but have been moved to the Advanced options.*
-- Added counters for: Abyssal Curse, Astral Automaton, Chaotic Tendril, C'Thun, Elemental turns in a row, Excavate, Fatigue, Galakrond, Jade Display, Jade Golems, Librams, Played Spell Schools, Played Spells, Pogo Hopper, Damage taken on your turns, Summoned Dragons and Wheel of Death.
+- Added counters for: Abyssal Curse, Astral Automaton, Chaotic Tendril, C'Thun, Elemental turns in a row, Excavate, Fatigue, Galakrond, Jade Display, Jade Golems, Librams, Played Spell Schools, Played Spells, Pogo Hopper, Damage taken on your turns, Summoned Dragons, and Wheel of Death.
 - Added filtering to "Drawn By" card marks in the opponent's hand to cut down on unimportant information (such as non-tutored draws).
 - Added a new icon to the opponents hand to better differentiate a card's identity from the identity of the card that drew it.
 - Fixed an info leak related to forged cards that where shuffled into the opponents deck and drawn again later.
@@ -1126,7 +1133,7 @@ This issue is resolved for now as this update contains the new cards, but we'll 
 ## **Release v1.27.3 - 2024-05-13**
 **New**:
 - Switched the tiers shown in Battlegrounds hero picking overlay to a new and improved methodology.\
-  *Hero tiers are now one of S, A, B, C, D and F. The S and F tiers are very rare and will only appear for true outliers.*
+  *Hero tiers are now one of S, A, B, C, D, and F. The S and F tiers are very rare and will only appear for true outliers.*
 - Visual improvements to the Battlegrounds hero picking overlay.
 
 **Bob's Buddy**:
@@ -1263,7 +1270,7 @@ This issue is resolved for now as this update contains the new cards, but we'll 
 - The Battlegrounds Quest Picking Overlay will return as soon as there's enough data for quests.
 
 **New**:
-- Added an in-game Mulligan Guide for HSReplay.net Premium subscribers! This feature is available in Ranked, Casual, Friendly Challenge and Arena.
+- Added an in-game Mulligan Guide for HSReplay.net Premium subscribers! This feature is available in Ranked, Casual, Friendly Challenge, and Arena.
 
 **Fixes**:
 - Fixed an issue where secrets would be incorrectly grayed out when dormant minions or portals were on the board.
@@ -1674,7 +1681,7 @@ This issue is resolved for now as this update contains the new cards, but we'll 
 - Added an option to disable the Battlegrounds Quest Reward Composition stats.
 
 **Fixes**:
-- Fix an issue where the Tier7 Pre-Game overlay could cover parts of the in-game Shop, Season Rewards, Friendslist and Quest UIs.
+- Fix an issue where the Tier7 Pre-Game overlay could cover parts of the in-game Shop, Season Rewards, Friendslist, and Quest UIs.
 
 ## **Release v1.19.2 - 2022-12-05**
 **New**:
@@ -1872,7 +1879,7 @@ Dredge support coming soon!
 
 ## **Release v1.17.2 - 2022-01-25**
 **Bob's Buddy**:
-- Fixed various issues related to Spirit Raptor, Baby Y'Shaarj, Sr. Tomb Diver and Eclipsion Illidari.
+- Fixed various issues related to Spirit Raptor, Baby Y'Shaarj, Sr. Tomb Diver, and Eclipsion Illidari.
 - Fixed an issue with the resolution order of Bru'Kan's Hero Power.
 - Fixed an issue with the interaction between golden Tarecgosa and Whelp Smuggler.
 - Fixed an issue introduced in today's update where Fragrant Phylactery would trigger without being activated.
@@ -2461,7 +2468,7 @@ Dredge support coming soon!
 
 ## **Release v1.11.6 - 2020-04-29**
 **New**:
-- Added Bob's Buddy: A Battlegrounds combat simulator showing the likelihood to win, tie or lose.  [Learn more.](https://articles.hsreplay.net/2020/04/24/introducing-bobs-buddy/)
+- Added Bob's Buddy: A Battlegrounds combat simulator showing the likelihood to win, tie, or lose.  [Learn more.](https://articles.hsreplay.net/2020/04/24/introducing-bobs-buddy/)
 
 **Fixes**:
 - Fixed an issue where running other deck trackers in parallel may have caused HDT to stop working in some cases.
@@ -2486,7 +2493,7 @@ Dredge support coming soon!
 **Updated for 17.0.0.45310**
 
 **Fixes**:
-- Fixed an issue where Snipe, Explosive Runes, Potion of Polymorph and Repentance would get greyed out when playing a dormant minion.
+- Fixed an issue where Snipe, Explosive Runes, Potion of Polymorph, and Repentance would get greyed out when playing a dormant minion.
 - Fixed an issue where dormant minions would sometimes count towards damage on board.
 - Fixed an issue where Al'ar, when resurrected from his ashes, would count towards damage on board.
 - Fixed an issue where linked Twitch accounts were not detected correctly in some cases.
@@ -2912,7 +2919,7 @@ __New__:
 __Fixes__:
 - Fixed an issue where deck tracking would no longer work after playing Prince Liam.
 - Fixed an issue where secret tracking for Hidden Wisdom and Rat Trap did not work correctly.
-- Fixed an issue where Ice Block, Molten Giant and Coldlight Oracle were still considered Standard.
+- Fixed an issue where Ice Block, Molten Giant, and Coldlight Oracle were still considered Standard.
 
 
 ## __Release v1.6.2 - 2018-04-12__
@@ -2996,7 +3003,7 @@ __New:__
 - Added filters for dungeon and brawl decks to the decks list filters.
 
 __Fixes:__
-- Fixed tracking for cards created by: Fal'dorei Strider, Kingsbane and Scroll of Wonders.
+- Fixed tracking for cards created by: Fal'dorei Strider, Kingsbane, and Scroll of Wonders.
 - Fixed an issue where Sudden Betrayal would sometimes grey out when attacking with the hero.
 - Fixed an issue where the The Darkness token would count towards the attack counter.
 - Fixed a performance issue when "Advanced window search" was enabled.
