@@ -786,6 +786,28 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
+		internal async void UpdateTimewarpedMagnanimoose(List<Entity> summonedEntities, int magnanimooseEntityId, bool isPlayerMinion)		{
+			if(_input == null || State != BobsBuddyState.Combat)
+				return;
+
+			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
+			var minion = targetPlayer.Side.FirstOrDefault(m => m.game_id == magnanimooseEntityId);
+
+			if(minion == null)
+				return;
+
+			var simulator = new Simulator();
+			var summonedMinions = summonedEntities
+				.Select(e => GetMinionFromEntity(simulator, isPlayerMinion, e, GetAttachedEntities(e.Id)))
+				.ToList();
+			if(simulator.EnchantmentFactory.Create(TimewarpedMagnanimooseEnchantment.CardId, minion.ControlledByPlayer) is TimewarpedMagnanimooseEnchantment enchantment)   			{
+				enchantment.SummonedMinions = summonedMinions;
+				minion.AttachEnchantment(enchantment);
+			}
+
+			await TryRerun();
+		}
+
 		internal async void UpdateNelliesShipEnchantment(int[] cardDbfids, int attachedToEntityId, bool isPlayerMinion)
 		{
 			if(_input == null || State != BobsBuddyState.Combat)

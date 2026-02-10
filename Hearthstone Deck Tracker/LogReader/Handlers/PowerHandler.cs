@@ -1531,6 +1531,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber()).UpdateMinionEnchantment(enchantment, sourceEntity.Id, false);
 						}
 					}
+					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TimewarpedMagnanimoose, TriggerKeyword: "DEATHRATTLE" })
+					{
+						var magnanimooseEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
+						if(magnanimooseEntity != null)
+						{
+							var summonedEntities = game.Entities.Values
+								.Where(e =>
+									e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
+									e.GetTag(GameTag.CREATOR) == magnanimooseEntity.GetTag(GameTag.CREATOR) &&
+									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY
+								).ToList();
+
+							if(summonedEntities.Any())
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+									.UpdateTimewarpedMagnanimoose(summonedEntities, magnanimooseEntity.Id, magnanimooseEntity.IsControlledBy(game.Player.Id));
+						}
+					}
 					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TimewarpedNelliesShipToken1, TriggerKeyword: "DEATHRATTLE" })
 					{
 						var nelliesEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
