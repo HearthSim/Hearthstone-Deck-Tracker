@@ -522,6 +522,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			AbyssalCurseCount = 0;
 			PastHeroPowers.Clear();
 			DeadMinionsCards.Clear();
+			IsPlayingWhizbang = false;
 		}
 
 		public void Draw(Entity entity, int turn)

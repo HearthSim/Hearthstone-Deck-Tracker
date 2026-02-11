@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -433,6 +434,26 @@ namespace Hearthstone_Deck_Tracker
 				if (hero != null)
 					_game.CurrentGameStats.PlayerHeroClasses = hero.GetClasses().ToArray();
 			}
+
+			if(_game.Player.IsPlayingWhizbang && heroName != null)
+			{
+				if(WhizbangDecks.SplendiferousWhizbangDecks.TryGetValue(heroName, out var whizbangDeck)
+				   && DeckList.Instance.ActiveDeck == null)
+				{
+					DeckList.Instance.ActiveDeck = new Deck
+					{
+						Cards = new ObservableCollection<Card>(
+							whizbangDeck
+								.GroupBy(id => id)
+								.Select(g => new Card(g.Key)
+								{
+									Count = g.Count()
+								})
+						)
+					};
+				}
+			}
+
 			Log.Info("Player=" + heroName);
 		}
 
@@ -743,6 +764,11 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.HideMulliganToast(false);
 					Core.Game.Player.MulliganCardStats = null;
 					Core.Overlay.HideMulliganGuideStats();
+					if(_game.Opponent.IsPlayingWhizbang)
+					{
+						_game.Opponent.IsPlayingWhizbang = false;
+						Player.KnownOpponentDeck = null;
+					}
 				}
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -837,6 +838,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
+
+			if(entity.CardId == Collectible.Neutral.SplendiferousWhizbang)
+			{
+				if(value == game.Player.Id)
+				{
+					game.Player.IsPlayingWhizbang = true;
+				}
+			}
+
 			if(prevValue <= 0)
 			{
 				entity.Info.OriginalController = value;

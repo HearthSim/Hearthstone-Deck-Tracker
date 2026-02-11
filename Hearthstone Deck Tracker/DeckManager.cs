@@ -57,6 +57,10 @@ namespace Hearthstone_Deck_Tracker
 			var notFound = GetMissingCards(cardEntites, deck);
 			if(notFound.Any())
 			{
+				if(Core.Game.Player.IsPlayingWhizbang)
+				{
+					NotFoundCards.Clear();
+				}
 				var activeVersion = deck.Version;
 				AutoImport(false);
 				if(activeVersion != deck.Version && cardEntites.All(ce => deck.GetSelectedDeckVersion().Cards.Any(c => c.Id == ce.Key && c.Count >= ce.Count())))

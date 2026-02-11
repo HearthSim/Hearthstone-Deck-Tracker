@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using HearthDb.Enums;
@@ -339,6 +340,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							game.Opponent.HasDeathKnightTourist = true;
 							Core.UpdateOpponentResourcesWidget();
+						}
+
+						if(entity.CardId == Collectible.Neutral.SplendiferousWhizbang
+						   && entity.IsControlledBy(game.Opponent.Id))
+						{
+							game.Opponent.IsPlayingWhizbang = true;
+							if(game.Opponent.OriginalClass != null &&
+							   WhizbangDecks.SplendiferousWhizbangDecks.TryGetValue(game.Opponent.OriginalClass, out var whizbangDeck))
+							{
+								Player.KnownOpponentDeck = new Deck
+								{
+									Cards = new ObservableCollection<Card>(whizbangDeck.Select(c => new Card(c)))
+								};
+							}
 						}
 
 					}
