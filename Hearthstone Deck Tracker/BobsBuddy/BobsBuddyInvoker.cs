@@ -584,7 +584,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				Log.Info($"pBeetleAtk={inputPlayer.BeetlesAtkBuff}, pBeetleHealth={inputPlayer.BeetlesHealthBuff}, friendly={friendly}");
 			}
 			var pWhelpBonus = playerAttached.FirstOrDefault(x =>
-				x.CardId == NonCollectible.Neutral.BurgeoningWhelp_WhelpArmyEnchantment);
+				x.CardId == NonCollectible.Neutral.BurgeoningWhelp_WhelpBuffPlayerEnchantDnt);
 			if(pWhelpBonus != null)
 			{
 				inputPlayer.WhelpAttackBonus = pWhelpBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
