@@ -13,14 +13,6 @@ public class ShopBuffStatsCounter : StatsCounter
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.NomiKitchenNightmare;
 	public override string[] RelatedCards => new string[]
 	{
-		// HearthDb.CardIds.NonCollectible.Neutral.NomiKitchenNightmare_NomiPlayerEnchantDnt,
-		// HearthDb.CardIds.NonCollectible.Neutral.DazzlingLightspawn_DazzlingLightspawnPlayerEnchantDnt,
-		// HearthDb.CardIds.NonCollectible.Neutral.DancingBarnstormer_DancingBarnstormerPlayerEnchantDnt,
-		// HearthDb.CardIds.NonCollectible.Neutral.LivingAzerite_LivingAzeritePlayerEnchantDntEnchantment,
-		// HearthDb.CardIds.NonCollectible.Neutral.NomiSticker_NomiStickerPlayerEnchantDnt,
-		// HearthDb.CardIds.NonCollectible.Neutral.DuneDweller_DuneDwellerPlayerEnchantDnt,
-		// HearthDb.CardIds.NonCollectible.Neutral.BlazingGreasefire_BlazingGreasefirePlayerEnchantDnt,
-		// HearthDb.CardIds.NonCollectible.Neutral.AligntheElements_AlignTheElementsPlayerEnchDnt,
 		HearthDb.CardIds.NonCollectible.Neutral.ElementalShopBuffPlayerEnchantmentDnt,
 	};
 

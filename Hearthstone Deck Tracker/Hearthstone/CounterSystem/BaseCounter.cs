@@ -94,6 +94,7 @@ public abstract class BaseCounter : INotifyPropertyChanged
 	private readonly string[] _alwaysAvailableCards = {
 		HearthDb.CardIds.NonCollectible.Neutral.BoonofBeetles_BeetleToken1,
 		HearthDb.CardIds.NonCollectible.Neutral.BloodGem1,
+		HearthDb.CardIds.NonCollectible.Neutral.TwilightHatchling_TwilightWhelpToken
 	};
 
 	private HashSet<int>? _availableCardIds;

@@ -18,7 +18,10 @@ public class VolumizerBuffCounter : StatsCounter
 	{
 		HearthDb.CardIds.NonCollectible.Neutral.AutoAccelerator_GreenVolumizerToken1,
 		HearthDb.CardIds.NonCollectible.Neutral.AutoAccelerator_RedVolumizerToken1,
-		HearthDb.CardIds.NonCollectible.Neutral.AutoAccelerator_BlueVolumizerToken1
+		HearthDb.CardIds.NonCollectible.Neutral.AutoAccelerator_BlueVolumizerToken1,
+		HearthDb.CardIds.NonCollectible.Neutral.AutoAccelerator,
+		HearthDb.CardIds.NonCollectible.Neutral.ConveyorConstruct,
+		HearthDb.CardIds.NonCollectible.Neutral.ApexisGuardian
 	};
 
 	public VolumizerBuffCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)

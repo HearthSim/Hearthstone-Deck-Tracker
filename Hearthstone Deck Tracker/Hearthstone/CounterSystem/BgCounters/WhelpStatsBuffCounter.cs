@@ -8,21 +8,20 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.BgCounters;
 
-public class RightMostTavernMinionBuffCounter : StatsCounter
+public class WhelpStatsBuffCounter : StatsCounter
 {
 	public override bool IsBattlegroundsCounter => true;
-	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.WorgenExecutive;
-	public override string LocalizedName => LocUtil.Get("Counter_RightMostTavernMinionBuff", useCardLanguage: true);
+	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.TwilightHatchling_TwilightWhelpToken;
+	public override string LocalizedName => LocUtil.Get("Counter_WhelpBuff", useCardLanguage: true);
+
 	public override string[] RelatedCards => new []
 	{
-		HearthDb.CardIds.NonCollectible.Neutral.WorgenExecutive,
-		HearthDb.CardIds.NonCollectible.Neutral.Waveling,
-		HearthDb.CardIds.NonCollectible.Neutral.EnDjinnBlazer,
-		HearthDb.CardIds.NonCollectible.Neutral.PrehistoricTinkerer,
-		HearthDb.CardIds.NonCollectible.Neutral.EasterlyWinds
+		HearthDb.CardIds.NonCollectible.Neutral.BurgeoningWhelp,
+		HearthDb.CardIds.NonCollectible.Neutral.TwilightHatchling_TwilightWhelpToken,
+		HearthDb.CardIds.NonCollectible.Neutral.BlueWhelp
 	};
 
-	public RightMostTavernMinionBuffCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
+	public WhelpStatsBuffCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
 
@@ -31,6 +30,7 @@ public class RightMostTavernMinionBuffCounter : StatsCounter
 	public override string[] GetCardsToDisplay() => RelatedCards;
 
 	public override string ValueToShow() => $"+{AttackCounter} / +{HealthCounter}";
+
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
 	{
 		if(!Game.IsBattlegroundsMatch)
@@ -39,7 +39,7 @@ public class RightMostTavernMinionBuffCounter : StatsCounter
 		if(entity.IsControlledBy(Game.Player.Id) != IsPlayerCounter)
 			return;
 
-		if(entity.Card.Id != HearthDb.CardIds.NonCollectible.Neutral.RightMostTavernMinionBuffPlayerEnchDnt)
+		if(entity.Card.Id != HearthDb.CardIds.NonCollectible.Neutral.BurgeoningWhelp_WhelpBuffPlayerEnchantDnt)
 			return;
 
 		if(tag == GameTag.TAG_SCRIPT_DATA_NUM_1)
@@ -47,6 +47,5 @@ public class RightMostTavernMinionBuffCounter : StatsCounter
 
 		if(tag == GameTag.TAG_SCRIPT_DATA_NUM_2)
 			HealthCounter = value;
-
 	}
 }

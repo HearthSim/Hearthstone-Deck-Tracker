@@ -30,6 +30,7 @@ public class UndeadAttackBonusCounter : NumericCounter
 			HearthDb.CardIds.NonCollectible.Neutral.AnubarakNerubianKing,
 			HearthDb.CardIds.NonCollectible.Neutral.ChampionOfThePrimus,
 			HearthDb.CardIds.NonCollectible.Neutral.Butchering,
+			HearthDb.CardIds.NonCollectible.Neutral.ForsakenWeaver
 		};
 	}
 

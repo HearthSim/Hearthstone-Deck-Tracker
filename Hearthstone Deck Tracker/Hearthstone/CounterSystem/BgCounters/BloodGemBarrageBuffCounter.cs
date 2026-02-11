@@ -13,7 +13,9 @@ public class BloodGemBarrageBuffCounter : StatsCounter
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.BloodGemBarrage;
 	public override string[] RelatedCards => new []
 	{
-		HearthDb.CardIds.NonCollectible.Neutral.BloodGemBarrage
+		HearthDb.CardIds.NonCollectible.Neutral.BloodGemBarrage,
+		HearthDb.CardIds.NonCollectible.Neutral.BriarbackDrummer,
+		HearthDb.CardIds.NonCollectible.Neutral.RazorfenFlapper
 	};
 
 	public BloodGemBarrageBuffCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)

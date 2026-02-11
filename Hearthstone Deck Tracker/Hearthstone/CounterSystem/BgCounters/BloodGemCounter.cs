@@ -10,7 +10,15 @@ public class BloodGemCounter : StatsCounter
 {
 	public override bool IsBattlegroundsCounter => true;
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.BloodGem1;
-	public override string[] RelatedCards => new string[] {};
+	public override string[] RelatedCards => new []
+	{
+		HearthDb.CardIds.NonCollectible.Neutral.BloodGem1,
+		HearthDb.CardIds.NonCollectible.Neutral.MoonBaconJazzer,
+		HearthDb.CardIds.NonCollectible.Neutral.PricklyPiper,
+		HearthDb.CardIds.NonCollectible.Neutral.FearlessFoodie,
+		HearthDb.CardIds.NonCollectible.Neutral.SanguineRefiner,
+		HearthDb.CardIds.NonCollectible.Neutral.SanguineChampion
+	};
 
 	public BloodGemCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
@@ -27,13 +35,7 @@ public class BloodGemCounter : StatsCounter
 		return AttackCounter > 3 || HealthCounter > 3 || boardHasQuillboar || handHasQuillboar;
 	}
 
-	public override string[] GetCardsToDisplay()
-	{
-		return new []
-		{
-			HearthDb.CardIds.NonCollectible.Neutral.BloodGem1
-		};
-	}
+	public override string[] GetCardsToDisplay() => RelatedCards;
 
 	public override string ValueToShow() => $"+{Math.Max(1, AttackCounter)} / +{Math.Max(1, HealthCounter)}";
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)

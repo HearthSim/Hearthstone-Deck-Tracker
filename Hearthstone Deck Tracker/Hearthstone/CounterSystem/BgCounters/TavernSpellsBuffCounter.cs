@@ -23,12 +23,12 @@ public class TavernSpellsBuffCounter : StatsCounter
 		return new[]
 		{
 			HearthDb.CardIds.NonCollectible.Neutral.IntrepidBotanist,
-			HearthDb.CardIds.NonCollectible.Neutral.TranquilMeditative,
-			HearthDb.CardIds.NonCollectible.Neutral.ShoalfinMystic,
-			HearthDb.CardIds.NonCollectible.Neutral.Humongozz,
-			HearthDb.CardIds.NonCollectible.Neutral.FelfireConjurer,
 			HearthDb.CardIds.NonCollectible.Neutral.BlueWhelp,
-			HearthDb.CardIds.NonCollectible.Neutral.FriendlyGeist
+			HearthDb.CardIds.NonCollectible.Neutral.ShoalfinMystic,
+			HearthDb.CardIds.NonCollectible.Neutral.FriendlyGeist,
+			HearthDb.CardIds.NonCollectible.Neutral.Humongozz,
+			HearthDb.CardIds.NonCollectible.Neutral.TranquilMeditative,
+			HearthDb.CardIds.NonCollectible.Neutral.FelfireConjurer
 		};
 	}
 

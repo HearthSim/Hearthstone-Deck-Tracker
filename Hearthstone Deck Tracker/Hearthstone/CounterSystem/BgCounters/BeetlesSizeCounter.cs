@@ -65,6 +65,5 @@ public class BeetlesSizeCounter : StatsCounter
 
 		if(tag == GameTag.TAG_SCRIPT_DATA_NUM_2)
 			HealthCounter = _beetleBaseHealth + value;
-
 	}
 }
