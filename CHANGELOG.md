@@ -1,5 +1,6 @@
-## **Unreleased**
+## **Release v1.49.8 - 2026-02-10**
 **Hearthstone**:
+- Added support to Splendiferous Whizbang's Decks.
 - Fixed opponent's cards destroyed by Warmaster Blackhorn appearing the decklist.
 
 **Battlegrounds**:
