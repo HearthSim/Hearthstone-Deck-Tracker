@@ -1,3 +1,10 @@
+## **Release v1.49.9 - 2026-02-11**
+**Battlegrounds**:
+- Added Whelp Buff counter to the overlay.
+- Fixed incorrect simulation results due to Burgeoning Whelp not considering itself for the Whelp buff.
+- Fixed incorrect simulation results due to Burgeoning Whelp buff not being applied to the Whelps summoned during combat.
+- Fixed incorrect simulation results due to Twilight Hatchling and Whelp Watcher summoning Whelps in the wrong ordering scope.
+
 ## **Release v1.49.8 - 2026-02-10**
 **Hearthstone**:
 - Added support to Splendiferous Whizbang's Decks.
