@@ -1,3 +1,8 @@
+## **Release v1.49.10 - 2026-02-13**
+**Battlegrounds**:
+- Fixed incorrect simulation results due to Timewarped Promo Drake not buffing correctly.
+- Fixed an error in simulations due to Timewarped Ragnaros trying to deal damage to an empty board.
+
 ## **Release v1.49.9 - 2026-02-11**
 **Battlegrounds**:
 - Added Whelp Buff counter to the overlay.
