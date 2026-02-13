@@ -53,6 +53,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.ScriptDataNum1 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
 			minion.ScriptDataNum2 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
 			minion.ScriptDataNum3 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);
+			minion.ScriptDataNum4 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_4);
 
 			var dbfId = entity.Card.DbfId;
 			var m1 = entity.GetTag(GameTag.MODULAR_ENTITY_PART_1);
