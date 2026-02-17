@@ -38,6 +38,9 @@ public class FreeRefreshCounter : NumericCounter
         if (entity.IsControlledBy(Game.Player.Id) != IsPlayerCounter)
             return;
 
+        if(entity.GetTag(GameTag.ZONE) == (int)Zone.SETASIDE)
+			return;
+
 	    if(tag == GameTag.BACON_FREE_REFRESH_COUNT)
 	    {
 		    Counter = value;
