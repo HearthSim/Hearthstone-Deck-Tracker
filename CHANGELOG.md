@@ -1,3 +1,10 @@
+## **Release v1.49.11 - 2026-02-17**
+**Updated for Hearthstone 34.6.1**
+
+**Battlegrounds**:
+- Fixed Free Refresh Counter getting stuck when a Free Refresh option is just offered.
+- Fixed incorrect simulation results due to Photobomber not dealing deathrattle damage after reborning.
+
 ## **Release v1.49.10 - 2026-02-13**
 **Battlegrounds**:
 - Fixed incorrect simulation results due to Timewarped Promo Drake not buffing correctly.
