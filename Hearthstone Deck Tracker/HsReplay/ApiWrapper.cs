@@ -296,6 +296,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
+		public static async Task PostMulliganGuideFeedback(MulliganV2FeedbackParams parameters)
+		{
+			try
+			{
+				await Client.PostMulliganV2Feedback(parameters);
+			}
+			catch(Exception e)
+			{
+#if(DEBUG)
+				Log.Error(e);
+#endif
+			}
+		}
+
 		public static async Task PostBattlegroundsHeroPickFeedback(
 			BattlegroundsHeroPickFeedbackParams parameters, bool isDuos
 		)

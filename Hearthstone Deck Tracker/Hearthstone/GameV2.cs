@@ -594,6 +594,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			);
 		}
 
+		public MulliganV2FeedbackParams? GetMulliganV2FeedbackParams()
+		{
+			if(_mulliganGuideParams == null)
+				return null;
+
+			var activeDeck = DeckList.Instance.ActiveDeck;
+			if(activeDeck == null)
+				return null;
+
+			var playerClass = Player.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+			var playerDeck = activeDeck.Cards.SelectMany(c => Enumerable.Repeat(c.DbfId, c.Count)).ToArray();
+
+			return new MulliganV2FeedbackParams
+			{
+				Deckstring = _mulliganGuideParams.Deckstring,
+				DeckCards = playerDeck,
+				PlayerClass = playerClass.ToString(),
+				OpponentClass = _mulliganGuideParams.OpponentClass,
+				GameType = _mulliganGuideParams.GameType,
+				FormatType = _mulliganGuideParams.FormatType,
+				PlayerInitiative = _mulliganGuideParams.PlayerInitiative,
+				PlayerStarLevel = _mulliganGuideParams.PlayerStarLevel,
+				PlayerRegion = _mulliganGuideParams.PlayerRegion,
+
+				OfferedCards = MulliganState.OfferedCards?.Select(x => x.Card.DbfId).ToArray(),
+				KeptCards = MulliganState.KeptCards?.Select(x => x.Card.DbfId).ToArray(),
+				FinalCardsInHand = MulliganState.FinalCardsInHand?.Select(x => x.Card.DbfId).ToArray(),
+				MulliganGuideVisible = Metrics.ConstructedMulliganGuideOverlayDisplayed,
+				PlayState = PlayerEntity?.GetTag(GameTag.PLAYSTATE) ?? 0,
+			};
+		}
+
 		public List<Entity>? GetMulliganSwappedCards()
 		{
 			var offered = MulliganState.OfferedCards;

@@ -1659,6 +1659,13 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			ApiWrapper.PostMulliganGuideFeedback(parameters).Forget();
+
+			var v2Parameters = _game.GetMulliganV2FeedbackParams();
+
+			if(v2Parameters is null)
+				return;
+
+			ApiWrapper.PostMulliganGuideFeedback(v2Parameters).Forget();
 		}
 
 		private async Task<MulliganGuideData?> GetMulliganGuideData()
