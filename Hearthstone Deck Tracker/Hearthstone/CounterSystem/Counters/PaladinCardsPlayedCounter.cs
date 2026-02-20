@@ -56,6 +56,10 @@ public class PaladinCardsPlayedCounter : NumericCounter
 		if(gameState.CurrentBlock?.Type != "PLAY")
 			return;
 
+		var originCard = new Card(gameState.CurrentBlock?.CardId ?? "");
+		if(originCard.Type == "Hero Power")
+			return;
+
 		if(entity.GetTag(GameTag.CLASS) != (int)CardClass.PALADIN)
 			return;
 
