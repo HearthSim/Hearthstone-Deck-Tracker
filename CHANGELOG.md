@@ -1,3 +1,7 @@
+## **Release v1.49.12 - 2026-02-20**
+**Hearthstone**:
+- Fixed Lightray Counter wrongly increasing on Hero Power.
+
 ## **Release v1.49.11 - 2026-02-17**
 **Updated for Hearthstone 34.6.1**
 
