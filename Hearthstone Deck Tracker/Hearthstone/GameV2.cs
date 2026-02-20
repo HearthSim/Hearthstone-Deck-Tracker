@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 		private MulliganGuideParams? _mulliganGuideParams;
+		private CardClass? _playerClass;
 		internal QueueEvents QueueEvents { get; }
 
 		private BattlegroundsSessionViewModel? _battlegroundsSessionViewModel;
@@ -557,6 +558,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
 				var starsPerWin = PlayerMedalInfo?.StarsPerWin ?? 0;
 
+				_playerClass = Player.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+
 				_mulliganGuideParams = new MulliganGuideParams
 				{
 					Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck), false),
@@ -603,14 +606,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(activeDeck == null)
 				return null;
 
-			var playerClass = Player.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
 			var playerDeck = activeDeck.Cards.SelectMany(c => Enumerable.Repeat(c.DbfId, c.Count)).ToArray();
 
 			return new MulliganV2FeedbackParams
 			{
 				Deckstring = _mulliganGuideParams.Deckstring,
 				DeckCards = playerDeck,
-				PlayerClass = playerClass.ToString(),
+				PlayerClass = _playerClass.ToString(),
 				OpponentClass = _mulliganGuideParams.OpponentClass,
 				GameType = _mulliganGuideParams.GameType,
 				FormatType = _mulliganGuideParams.FormatType,

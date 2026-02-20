@@ -1660,6 +1660,12 @@ namespace Hearthstone_Deck_Tracker
 
 			ApiWrapper.PostMulliganGuideFeedback(parameters).Forget();
 
+			if(_game.CurrentGameMode != Ranked)
+				return;
+
+			if(_game.CurrentFormat != Format.Standard)
+				return;
+
 			var v2Parameters = _game.GetMulliganV2FeedbackParams();
 
 			if(v2Parameters is null)
