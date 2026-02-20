@@ -1,3 +1,5 @@
+## **Release v1.49.13 - 2026-02-20**
+
 ## **Release v1.49.12 - 2026-02-20**
 **Hearthstone**:
 - Fixed Lightray Counter wrongly increasing on Hero Power.
