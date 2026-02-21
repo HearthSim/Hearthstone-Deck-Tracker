@@ -607,6 +607,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return null;
 
 			var playerDeck = activeDeck.Cards.SelectMany(c => Enumerable.Repeat(c.DbfId, c.Count)).ToArray();
+			var turns = GetTurnNumber();
 
 			return new MulliganV2FeedbackParams
 			{
@@ -625,6 +626,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				FinalCardsInHand = MulliganState.FinalCardsInHand?.Select(x => x.Card.DbfId).ToArray(),
 				MulliganGuideVisible = Metrics.ConstructedMulliganGuideOverlayDisplayed,
 				PlayState = PlayerEntity?.GetTag(GameTag.PLAYSTATE) ?? 0,
+				Turns = turns
 			};
 		}
 
