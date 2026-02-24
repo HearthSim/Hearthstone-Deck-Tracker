@@ -17,9 +17,6 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("battlegrounds_short_names")]
 			public List<CardShortName>? BattlegroundsShortNames { get; set; }
 
-			[JsonProperty("battlegrounds_tag_overrides")]
-			public List<TagOverride>? BattlegroundsTagOverrides { get; set; }
-
 			[JsonProperty("bobs_buddy")]
 			public BobsBuddyData? BobsBuddy { get; set; }
 

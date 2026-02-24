@@ -26,11 +26,11 @@ public class BattlegroundsDb
 
 	public BattlegroundsDb()
 	{
-		Update(Remote.Config.Data?.BattlegroundsTagOverrides);
-		Remote.Config.Loaded += d => Update(d?.BattlegroundsTagOverrides);
+		Update(Remote.BattlegroundsTagOverrides.Data);
+		Remote.BattlegroundsTagOverrides.Loaded += d => Update(d);
 		CardDefsManager.CardsChanged += () =>
 		{
-			Update(Remote.Config.Data?.BattlegroundsTagOverrides);
+			Update(Remote.BattlegroundsTagOverrides.Data);
 		};
 	}
 
