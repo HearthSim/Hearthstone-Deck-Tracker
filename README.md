@@ -10,15 +10,14 @@ Hearthstone Deck Tracker is an automatic deck tracker and deck manager for Heart
 - [Download and run the installer](https://hsdecktracker.net/download/).
 
 ## Community & Troubleshooting
-- [Follow HDT on Twitter](https://twitter.com/hsdecktracker)
-- Join the Community Discord: [![Join HearthSim Community Discord](https://discordapp.com/api/guilds/265636998700728321/widget.png)](https://discord.gg/hearthsim)
+- [Follow HDT on X](https://twitter.com/hsdecktracker)
+- Join the Community Discord: [![Join HearthSim Community Discord](https://discordapp.com/api/guilds/265636998700728321/widget.png)](https://hsreplay.net/discord)
 - You can find the [FAQ here](https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/FAQ).
 - Streamers: Please read [Streaming instructions for OBS and XSplit](https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Streaming-Instructions) and [Twitch extension setup](https://hsdecktracker.net/twitch/setup/).
-- HSReplay.net integration: Please email <support@hsdecktracker.net> for support.
+- HSReplay.net integration: Please email <support@hsreplay.net> for support.
 
 ## Contributing
 - Please read the [coding style and Commit/Pull Request guidelines](https://github.com/HearthSim/Hearthstone-Deck-Tracker/blob/master/CONTRIBUTING.md).
-- Developer Discord: [![joindeveloper#hdt](https://discordapp.com/api/guilds/195326447118712832/widget.png)](https://discord.gg/hearthsim-devs)
 - Hearthstone Deck Tracker is a [HearthSim](https://hearthsim.info) project.
 
 ## Features
