@@ -16,5 +16,5 @@ public class BarakKodobane : ICardWithHighlight
 
 public class BarakKodobaneCore : BarakKodobane
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Hunter.BarakKodobaneCore;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Hunter.BarakKodobaneCorePlaceholder;
 }

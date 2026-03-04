@@ -19,5 +19,5 @@ public class SpiritGuide : ICardWithHighlight, ISpellSchoolTutor
 
 public class SpiritGuideCorePlaceholder : SpiritGuide
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Priest.SpiritGuideCore;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Priest.SpiritGuideCorePlaceholder;
 }

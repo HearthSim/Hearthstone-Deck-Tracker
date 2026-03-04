@@ -13,5 +13,5 @@ public class RaidingParty : ICardWithHighlight
 
 public class RaidingPartyCore : RaidingParty
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Rogue.RaidingPartyCore;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Rogue.RaidingPartyCorePlaceholder;
 }
