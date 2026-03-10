@@ -1439,6 +1439,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								};
 								AddKnownCardId(gameState, createdByAgencyEspionage.Serialize(), count: 10);
 								break;
+							case Collectible.Druid.AzsharasTriumph:
+								var createdByAzsharasTriumph = new FakeCard(Collectible.Druid.AzsharasTriumph)
+								{
+									Type = CardType.MINION
+								};
+								AddKnownCardId(gameState, createdByAzsharasTriumph.Serialize(), count: 5);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower

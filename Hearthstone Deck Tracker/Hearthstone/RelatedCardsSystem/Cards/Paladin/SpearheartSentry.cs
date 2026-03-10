@@ -1,11 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
 using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Paladin;
 
-public class BattleVicar : ICardGenerator
+public class SpearheartSentry : ICardGenerator
 {
-	public virtual string GetCardId() => HearthDb.CardIds.Collectible.Paladin.BattleVicar;
+	public string GetCardId() => HearthDb.CardIds.Collectible.Paladin.SpearheartSentry;
 
 	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
 	{
@@ -18,9 +18,4 @@ public class BattleVicar : ICardGenerator
 	{
 		return card.Ids.Any(c => IsInGeneratorPool(new Card(c), gameMode, format));
 	}
-}
-
-public class BattleVicarCore : BattleVicar
-{
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Paladin.BattleVicarCorePlaceholder;
 }
