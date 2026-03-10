@@ -13,5 +13,5 @@ public class MastersCall : ICardWithHighlight
 
 public class MastersCallCore : MastersCall
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Hunter.MastersCallCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Hunter.MastersCallCore;
 }

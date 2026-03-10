@@ -12,6 +12,6 @@ public class RedscaleDragontamer : ICardWithHighlight
 
 public class RedscaleDragontamerCorePlaceholder : RedscaleDragontamer
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Paladin.RedscaleDragontamerCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Paladin.RedscaleDragontamerCore;
 
 }

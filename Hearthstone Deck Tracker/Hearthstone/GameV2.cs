@@ -593,7 +593,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				MulliganState.KeptCards?.Select(x => x.Card.DbfId).ToArray(),
 				MulliganState.FinalCardsInHand?.Select(x => x.Card.DbfId).ToArray(),
 				Metrics.ConstructedMulliganGuideOverlayDisplayed,
-				PlayerEntity?.GetTag(GameTag.PLAYSTATE) ?? 0
+				PlayerEntity?.GetTag(GameTag.PLAYSTATE) ?? 0,
+				true,
+				false
 			);
 		}
 

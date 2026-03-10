@@ -249,7 +249,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard FreezingTrap = new MultiIdCard(Collectible.Hunter.FreezingTrap, Collectible.Hunter.FreezingTrapCore, Collectible.Hunter.FreezingTrapVanilla);
 				public static readonly MultiIdCard HiddenCache = new MultiIdCard(Collectible.Hunter.HiddenCache);
 				public static readonly MultiIdCard HiddenMeaning = new MultiIdCard(Collectible.Hunter.HiddenMeaning);
-				public static readonly MultiIdCard IceTrap = new MultiIdCard(Collectible.Hunter.IceTrap, Collectible.Hunter.IceTrapCorePlaceholder);
+				public static readonly MultiIdCard IceTrap = new MultiIdCard(Collectible.Hunter.IceTrap, Collectible.Hunter.IceTrapCore);
 				public static readonly MultiIdCard Misdirection = new MultiIdCard(Collectible.Hunter.Misdirection, Collectible.Hunter.MisdirectionVanilla);
 				public static readonly MultiIdCard MotionDenied = new MultiIdCard(Collectible.Hunter.MotionDenied);
 				public static readonly MultiIdCard OpenTheCages = new MultiIdCard(Collectible.Hunter.OpenTheCages);
