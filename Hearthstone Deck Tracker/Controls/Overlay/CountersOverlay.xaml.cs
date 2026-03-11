@@ -42,8 +42,8 @@ public partial class CountersOverlay
 		{
 			if(!visibleCounters.Contains(counter))
 			{
+				counter.CounterChanged -= OnCounterValueChanged;
 				VisibleCounters.Remove(counter);
-				OnPropertyChanged(nameof(VisibleCounters));
 			}
 		}
 
@@ -51,9 +51,26 @@ public partial class CountersOverlay
 		{
 			if(!VisibleCounters.Contains(counter))
 			{
+				counter.CounterChanged += OnCounterValueChanged;
 				VisibleCounters.Add(counter);
-				OnPropertyChanged(nameof(VisibleCounters));
 			}
+		}
+
+		SortVisibleCounters();
+	}
+
+	private void OnCounterValueChanged(object? sender, EventArgs e) => SortVisibleCounters();
+
+	private void SortVisibleCounters()
+	{
+		if(!Core.Game.IsBattlegroundsMatch)
+			return;
+		var sorted = VisibleCounters.OrderByDescending(c => c.SortValue).ToList();
+		for(var i = 0; i < sorted.Count; i++)
+		{
+			var current = VisibleCounters.IndexOf(sorted[i]);
+			if(current != i)
+				VisibleCounters.Move(current, i);
 		}
 	}
 
@@ -74,6 +91,23 @@ public partial class CountersOverlay
 	{
 		VisibleCounters.Clear();
 		UpdateVisibleCounters();
+	}
+
+	private const int BattlegroundsWrapThreshold = 2;
+
+	public double WrapWidth
+	{
+		get
+		{
+			if(!Core.Game.IsBattlegroundsMatch || VisibleCounters.Count <= BattlegroundsWrapThreshold)
+				return double.PositiveInfinity;
+
+			var maxPerRow = (int)Math.Ceiling(VisibleCounters.Count / 2.0);
+			if(_elementWidths.Count >= maxPerRow)
+				return _elementWidths.Take(maxPerRow).Sum() + InnerMargin * 2 * maxPerRow;
+
+			return double.PositiveInfinity;
+		}
 	}
 
 	private readonly List<double> _elementWidths = new List<double>();
@@ -100,6 +134,8 @@ public partial class CountersOverlay
 				}
 			}
 		}
+
+		CountersItemsControl.MaxWidth = WrapWidth;
 	}
 
 	private static T? FindVisualChild<T>(DependencyObject parent) where T : DependencyObject

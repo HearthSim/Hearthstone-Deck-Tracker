@@ -38,6 +38,7 @@ public class BloodGemCounter : StatsCounter
 	public override string[] GetCardsToDisplay() => RelatedCards;
 
 	public override string ValueToShow() => $"+{Math.Max(1, AttackCounter)} / +{Math.Max(1, HealthCounter)}";
+	public override int SortValue => Math.Max(1, AttackCounter) + Math.Max(1, HealthCounter);
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
 	{
 		if(!Game.IsBattlegroundsMatch)

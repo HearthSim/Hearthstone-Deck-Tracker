@@ -27,6 +27,8 @@ public abstract class NumericCounter : BaseCounter
 
 	public override string ValueToShow() => Counter.ToString();
 
+	public override int SortValue => Counter;
+
 	protected Entity? LastEntityToCount;
 
 	protected bool DiscountIfCantPlay(GameTag tag, int value, Entity entity)

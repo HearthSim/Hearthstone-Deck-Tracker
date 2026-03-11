@@ -42,6 +42,8 @@ public abstract class BaseCounter : INotifyPropertyChanged
 
 	public string CounterValue => ValueToShow();
 
+	public virtual int SortValue => 0;
+
 	public virtual bool IsDisplayValueLong => false;
 
 	public virtual void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue){}
