@@ -663,6 +663,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(_game.IsBattlegroundsMatch)
 			{
+				Remote.Config.Load();
 				if(_game.CurrentGameStats != null)
 					_game.CurrentGameStats.BattlegroundsDetails = new BattlegroundsLobbyDetails();
 				Core.Overlay.BattlegroundsSessionViewModelVM.Update();
