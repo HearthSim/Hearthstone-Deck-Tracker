@@ -1,3 +1,11 @@
+## **Release v1.50.2 - 2026-03-12**
+**Battlegrounds**:
+- Fixed incorrect simulation results where:
+  - Tavish’s Hero Power would not trigger at the start of combat when the opponent had no minions.
+  - Minions targeted by Tasmin’s Hero Power could incorrectly buff themselves when their Deathrattle was triggered by another minion.
+  - Twilight Whelp tokens would not attack when summoned by Twilight Hatchling.
+  - Beetles summoned by Boon of Beetles were missing Taunt.
+
 ## **Release v1.50.1 - 2026-03-12**
 **Hearthstone**:
 - Added trial cards to collection syncing.
