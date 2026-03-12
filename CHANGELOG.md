@@ -1,4 +1,7 @@
-## **Unreleased**
+## **Release v1.50.1 - 2026-03-12**
+**Hearthstone**:
+- Added trial cards to collection syncing.
+
 **Battlegrounds**:
 - Added counter sorting by numerical value. This improves the visibility of important counters.
 - Added secondary counters row. This allows displaying more counters without overcrowding the UI.
