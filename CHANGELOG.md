@@ -1,4 +1,4 @@
-## **Release v1.50.3 - 2026-03-17**
+## **Release v1.50.4 - 2026-03-17**
 **Updated for Hearthstone 35.0.1**
 
 ## **Release v1.50.2 - 2026-03-12**
