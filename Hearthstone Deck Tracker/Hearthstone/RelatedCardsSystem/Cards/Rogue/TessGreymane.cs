@@ -22,5 +22,5 @@ public class TessGreymane: ICardWithRelatedCards
 
 public class TessGreymaneCore: TessGreymane
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Rogue.TessGreymaneCore;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Rogue.TessGreymaneCorePlaceholder;
 }

@@ -22,5 +22,5 @@ public class BattleVicar : ICardGenerator
 
 public class BattleVicarCore : BattleVicar
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Paladin.BattleVicarCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Paladin.BattleVicarCore;
 }

@@ -5,7 +5,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.EffectSystem.Effects.DemonHunter;
 public class TichondriusEnchantment : EntityBasedEffect
 {
 	public override string CardId => HearthDb.CardIds.NonCollectible.Demonhunter.Tichondrius_DemonicSummoningEnchantment;
-	protected override string CardIdToShowInUI => HearthDb.CardIds.Collectible.Demonhunter.TichondriusCorePlaceholder;
+	protected override string CardIdToShowInUI => HearthDb.CardIds.Collectible.Demonhunter.TichondriusCore;
 
 	public TichondriusEnchantment(int entityId, bool isControlledByPlayer) : base(entityId, isControlledByPlayer)
 	{

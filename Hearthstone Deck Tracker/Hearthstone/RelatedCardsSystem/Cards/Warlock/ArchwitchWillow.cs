@@ -12,5 +12,5 @@ public class ArchwitchWillow : ICardWithHighlight
 
 public class ArchwitchWillowCorePlaceholder : ArchwitchWillow
 {
-	public override string GetCardId() => HearthDb.CardIds.Collectible.Warlock.ArchwitchWillowCorePlaceholder;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Warlock.ArchwitchWillowCore;
 }
