@@ -1,5 +1,11 @@
+## **Release v1.50.5 - 2026-03-17**
+**Updated for CATACLYSM expansion**
+
+- Added Herald Counter.
+- Added Deathwing Worldbreaker discount given by Ultraxion.
+
 ## **Release v1.50.4 - 2026-03-17**
-**Updated for Hearthstone 35.0.1**
+**Updated for Hearthstone 35.0.0.238003**
 
 ## **Release v1.50.2 - 2026-03-12**
 **Battlegrounds**:
