@@ -1,3 +1,22 @@
+## **Release v1.50.6 - 2026-03-18**
+**Battlegrounds**:
+- Fixed incorrect simulation results where:
+	- Drek'Thar and Vandar Stormpike Hero Powers summoned minions in incorrect positions instead of adjacent to their targets.
+	- Pack Tactics summoned its minion in an incorrect position instead of adjacent to the target.
+	- Certain start-of-combat Hero Powers triggered after Illidan Stormrage instead of before.
+	- Elder Taggawag Buddy overcounted dual-type minions.
+	- Goldenizing a minion during combat failed to account for added stats from effects (e.g., Sinestra).
+	- The active player did not update correctly when minions died at the start of combat (e.g., Irate Rooster).
+	- Soulsplitter behavior did not match its updated card text.
+	- A Windfury minion summoned by Tavish Stormpike Hero Power failed to attack a second time if its first attack killed the target.
+	- Arid Atrocity golem tokens overcounted distinct minion types.
+	- Fireforged Evoker did not buff itself at the start of combat.
+	- All-Seeing Elder gained Attack instead of Health from the right-most minion.
+	- Timewarped Chameleon failed to copy the golden status of its target.
+	- Photobomber Deathrattle dealt no damage when triggered by Fish of N'Zoth.
+	- Profound Thinker with Divine Shield incorrectly cast Glowscale on itself instead of another friendly target.
+- Added simulation support for Timewarped Embalmer.
+
 ## **Release v1.50.5 - 2026-03-17**
 **Updated for CATACLYSM expansion**
 
