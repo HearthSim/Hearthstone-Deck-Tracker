@@ -1561,7 +1561,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							var summonedEntities = game.Entities.Values
 								.Where(e =>
 									e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
-									e.GetTag(GameTag.CREATOR) == magnanimooseEntity.GetTag(GameTag.CREATOR) &&
+									e.GetTag(GameTag.CREATOR) == magnanimooseEntity.Id &&
 									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY
 								).ToList();
 
@@ -1575,16 +1575,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						var nelliesEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
 						if(nelliesEntity != null)
 						{
-							var summonedEntities = game.Entities.Values
+							var summonedDbfIds = game.Entities.Values
 								.Where(e =>
 									e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
-						            e.GetTag(GameTag.CREATOR) == nelliesEntity.GetTag(GameTag.CREATOR) &&
+						            e.GetTag(GameTag.CREATOR) == nelliesEntity.Id &&
 									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY
 								).Select(x => x.Card.DbfId).ToArray();
 
-							if(summonedEntities.Any())
+							if(summonedDbfIds.Any())
 								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
-									.UpdateNelliesShipEnchantment(summonedEntities, nelliesEntity.Id, nelliesEntity.IsControlledBy(game.Player.Id));
+									.UpdateNelliesShipEnchantment(summonedDbfIds, nelliesEntity.Id, nelliesEntity.IsControlledBy(game.Player.Id));
 						}
 					}
 				}
