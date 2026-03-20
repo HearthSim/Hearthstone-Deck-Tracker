@@ -1185,7 +1185,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			Influx.OnBobsBuddySimulationCompleted(
-				result, Output, _turn, _input?.Anomaly, terminalCase,
+				result, Output, _turn, _game.CurrentRegion.ToString(), _input?.Anomaly, terminalCase,
 				isDuos:_game.IsBattlegroundsDuosMatch, isOpposingAkazamzarak: IsOpposingAkazamzarak()
 			);
 

@@ -272,7 +272,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		}
 
 		public static void OnBobsBuddySimulationCompleted(
-			CombatResult result, Output output, int turn, Anomaly? anomaly, bool terminalCase,
+			CombatResult result, Output output, int turn, string region, Anomaly? anomaly, bool terminalCase,
 			bool isDuos, bool isOpposingAkazamzarak
 		)
 		{
@@ -283,7 +283,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.HighPrecision()
 				.Tag("result", result.ToString())
 				.Tag("terminal_case", terminalCase.ToString())
-				.Tag("turn", turn)
+				.Tag("turn", Math.Min(turn, 20))
+				.Tag("region", region)
 				.Tag("bb_version", BobsBuddyUtils.VersionString)
 				.Tag("is_duos", isDuos.ToString())
 				.Field("iterations", output.simulationCount)
