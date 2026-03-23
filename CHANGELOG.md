@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed some wild decks being considered standard.
+
 ## **Release v1.50.6 - 2026-03-18**
 **Battlegrounds**:
 - Fixed incorrect simulation results where:
