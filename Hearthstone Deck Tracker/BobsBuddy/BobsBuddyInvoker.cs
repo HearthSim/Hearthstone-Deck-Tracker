@@ -525,7 +525,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				inputPlayer.SetSecrets(gamePlayer.Secrets.Select(x => (int?)x.Card.DbfId).ToList());
 
-				foreach(var e in gamePlayer.Hand)
+				var friendlyHandEntities = GetOrderedHandEntities(gamePlayer.Hand);
+				foreach(var e in friendlyHandEntities)
 				{
 					if(e.IsMinion)
 					{
@@ -554,7 +555,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						.ToList()
 				);
 
-				_opponentHand = gamePlayer.Hand.ToList();
+				_opponentHand = GetOrderedHandEntities(gamePlayer.Hand).ToList();
 				inputPlayer.Hand.Clear();
 				inputPlayer.Hand.AddRange(GetOpponentHandEntities(simulator));
 			}

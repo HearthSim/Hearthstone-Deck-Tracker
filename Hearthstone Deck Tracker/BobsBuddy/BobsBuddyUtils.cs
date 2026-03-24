@@ -194,6 +194,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal static IOrderedEnumerable<Entity> GetOrderedMinions(IEnumerable<Entity> board)
 			=> board.Where(x => x.IsMinion).Select(x => x.Clone()).OrderBy(x => x.GetTag(GameTag.ZONE_POSITION));
 
+		internal static IOrderedEnumerable<Entity> GetOrderedHandEntities(IEnumerable<Entity> hand)
+			=> hand.OrderBy(x => x.GetTag(GameTag.ZONE_POSITION));
+
 		private static string? _versionString;
 		internal static string VersionString => _versionString ??= "v" + typeof(SimulationRunner).Assembly.GetName().Version.ToVersionString();
 	}
