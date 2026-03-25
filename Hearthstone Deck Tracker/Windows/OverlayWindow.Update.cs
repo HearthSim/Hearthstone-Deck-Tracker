@@ -65,6 +65,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				ArenaPreDraftViewModel.OnFocus();
 			}
+
+			if(_game.CurrentMode == Mode.TOURNAMENT)
+			{
+				ConstructedMulliganPreLobbyWidgetViewModel.OnFocus();
+			}
 		}
 
 		public void Update(bool refresh)
@@ -649,6 +654,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_arenaPreLobbyBehavior.UpdatePosition();
 			_arenaPreLobbyBehavior.UpdateScaling();
 
+			_constructedPreLobbyWidgetBehavior.UpdatePosition();
+			_constructedPreLobbyWidgetBehavior.UpdateScaling();
+
 			BattlegroundsHeroPickingViewModel.Scaling = scaling;
 			BattlegroundsHeroPicking.Width = Width / scaling;
 			BattlegroundsHeroPicking.Height = Height / scaling;
@@ -664,6 +672,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ConstructedMulliganGuideViewModel.Scaling = scaling;
 			ConstructedMulliganGuide.Width = Width / scaling;
 			ConstructedMulliganGuide.Height = Height / scaling;
+
+			ConstructedMulliganGuideV2ViewModel.Scaling = scaling;
+			ConstructedMulliganGuideV2.Width = Width / scaling;
+			ConstructedMulliganGuideV2.Height = Height / scaling;
 
 			BattlegroundsMinionPinningViewModel.Scaling = scaling;
 			BgsMinionPinningShop.Width = Width / scaling;
@@ -752,26 +764,32 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		public void UpdateMulliganGuidePreLobbyVisibility()
+		public async void UpdateMulliganGuidePreLobbyVisibility()
 		{
-			var isPremium = HSReplayNetOAuth.AccountData?.IsPremium ?? false;;
+			var acc = Reflection.Client.GetAccountId();
+			if(acc != null)
+			{
+				await MulliganGuideTrial.Update(acc.Hi, acc.Lo);
+			}
+
 			var show = (
 				_game.IsRunning &&
 				_game.IsInMenu &&
 				SceneHandler.Scene == Mode.TOURNAMENT &&
-				Config.Instance.EnableMulliganGuide &&
-				Config.Instance.ShowMulliganGuidePreLobby &&
-				isPremium
+				Config.Instance.ShowMulliganGuidePreLobby
 			);
 
 			if(show)
 			{
 				_constructedMulliganGuidePreLobbyBehaviour.Show();
 				ConstructedMulliganGuidePreLobbyViewModel.EnsureLoaded().Forget();
+				_constructedPreLobbyWidgetBehavior.Show();
+				ConstructedMulliganPreLobbyWidgetViewModel.Update().Forget();
 			}
 			else
 			{
 				_constructedMulliganGuidePreLobbyBehaviour.Hide();
+				_constructedPreLobbyWidgetBehavior.Hide();
 			}
 		}
 

@@ -118,6 +118,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(!Cache.TryGetValue(cacheKey, out var str))
 			{
 				str = LocalizeDictionary.Instance.GetLocalizedObject("HearthstoneDeckTracker", "Strings", key, culture)?.ToString();
+				if(str != null)
+					str = str.Replace("\\n", Environment.NewLine);
 				Cache[cacheKey] = str;
 			}
 			if(str == null)

@@ -889,6 +889,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			DEFAULT,
 			BATTLEGROUNDS,
+			MULLIGAN_CONFIDENCE,
 		}
 
 		private static double AdjustSaturation(double originalSaturation, double multiplier)
@@ -925,6 +926,11 @@ namespace Hearthstone_Deck_Tracker
 					positive = new[] { 120d, AdjustSaturation(32d, saturationMultiplier), 44d };
 					neutral = new[] { 60d, AdjustSaturation(32d, saturationMultiplier), 44d };
 					negative = new[] { 0d, AdjustSaturation(32d, saturationMultiplier), 44d };
+					break;
+				case ColorStringMode.MULLIGAN_CONFIDENCE:
+					positive = new[] { 120d, AdjustSaturation(55d, saturationMultiplier), 30d };
+					neutral  = new[] {  50d, AdjustSaturation(80d, saturationMultiplier), 45d };
+					negative = new[] {   0d, AdjustSaturation(80d, saturationMultiplier), 40d };
 					break;
 				default:
 					throw new ArgumentOutOfRangeException(nameof(mode), mode, null);

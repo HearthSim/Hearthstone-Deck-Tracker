@@ -59,6 +59,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 					if(startArenaAction.OverlayVisible)
 						yield return new ValueMoment(VMName.ArenasmithOverlay, ValueMoment.VMKind.Paid);
 					break;
+				case MulliganGV2OnboardingAction _:
+					yield return new ValueMoment(VMName.HSMulliganOnboarding, ValueMoment.VMKind.Free);
+					break;
 			};
 		}
 
@@ -71,8 +74,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 
 			yield return new ValueMoment(VMName.HSDecklistVisible, ValueMoment.VMKind.Free);
 
+			var isMulliganTrialActivated = hearthstoneAction.TrialsActivated != null && hearthstoneAction.TrialsActivated.Contains(VMHearthstoneAction.MulliganGuideOverlay);
+
 			if(hearthstoneAction.MulliganGuideOverlayDisplayed)
-				yield return new ValueMoment(VMName.HSMulliganGuideOverlay, ValueMoment.VMKind.Paid);
+				yield return new ValueMoment(VMName.HSMulliganGuideOverlay, !isMulliganTrialActivated);
 
 			if(hearthstoneAction.ShowedOpponentArenaPackage)
 				yield return new ValueMoment(VMName.ArenaOpponentPackage, ValueMoment.VMKind.Paid);

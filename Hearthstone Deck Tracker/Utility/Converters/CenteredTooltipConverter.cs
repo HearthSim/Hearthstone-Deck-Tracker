@@ -14,4 +14,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 
 		public object[]? ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => null;
 	}
+
+	public class HalfWidthNegativeConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (value is double width)
+				return -width / 2;
+
+			return 0;
+		}
+
+		public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
+	}
 }

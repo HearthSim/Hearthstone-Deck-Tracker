@@ -219,13 +219,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 
 		public string? Username { get => GetProp<string?>(null); set => SetProp(value); }
 
-		private bool _isUpdatingAccount;
 		public async Task Update()
 		{
 			if(UserState == UserState.Disabled)
 				return;
 
-			if(_isUpdatingAccount)
+			if(BattlegroundsGameMode == SelectedBattlegroundsGameMode.UNKNOWN)
+				return;
+
+			if(HSReplayNetOAuth.AccountUpdateInProgress)
 			{
 				// AccountDataUpdated event was likely triggered by the
 				// UpdateAccountData request below. Skip this update.
@@ -240,13 +242,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 					// This will fire a HSReplayNetOAuth.AccountDataUpdated event. We
 					// set a flag for the duration of the update check to avoid
 					// infinite recursion here.
-					_isUpdatingAccount = true;
+					HSReplayNetOAuth.AccountUpdateInProgress = true;
 					// (Unrelativ to the event) If we want to cut down the request
 					// volume here in the future we can only make this request for
 					// tier7 subscribers (still need to happen right here, not below to
 					// handle the case where tier7 ran out).
 					await HSReplayNetOAuth.UpdateAccountData();
-					_isUpdatingAccount = false;
+					HSReplayNetOAuth.AccountUpdateInProgress = false;
 				}
 
 				IsAuthenticated = true;
@@ -301,6 +303,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			AllTimeHighMMR = null;
 			TrialTimeRemaining = null;
 			Username = null;
+			BattlegroundsGameMode = SelectedBattlegroundsGameMode.UNKNOWN;
 		}
 
 		public bool? IsAuthenticated

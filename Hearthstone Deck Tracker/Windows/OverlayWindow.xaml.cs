@@ -44,6 +44,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Quests;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Trinkets;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.PlayerResourcesWidget;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
@@ -54,6 +55,7 @@ using Hearthstone_Deck_Tracker.Utility.RegionDrawer;
 using Hearthstone_Deck_Tracker.Utility.Themes;
 using HearthWatcher.EventArgs;
 using HSReplay.Responses;
+using SingleCardStats = Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.SingleCardStats;
 
 #endregion
 
@@ -105,6 +107,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _battlegroundsInspirationBehavior;
 		private OverlayElementBehavior _arenaOverlayBehavior;
 		private OverlayElementBehavior _arenaPreLobbyBehavior;
+		private OverlayElementBehavior _constructedPreLobbyWidgetBehavior;
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
@@ -126,11 +129,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public ConstructedMulliganGuidePreLobbyViewModel ConstructedMulliganGuidePreLobbyViewModel { get; } = new();
 		public ConstructedMulliganGuideViewModel ConstructedMulliganGuideViewModel { get; } = new();
+		public ConstructedMulliganGuideV2ViewModel ConstructedMulliganGuideV2ViewModel { get; } = new();
 		public PlayerResourcesViewModel PlayerResourcesViewModel { get; } = new();
 		public PlayerResourcesViewModel OpponentResourcesViewModel { get; } = new();
 
 		public ArenaPickHelperViewModel ArenaPickHelperViewModel { get; } = new();
 		public ArenaPreDraftViewModel ArenaPreDraftViewModel { get; } = new();
+		public ConstructedMulliganPreLobbyWidgetViewModel ConstructedMulliganPreLobbyWidgetViewModel { get; } = new();
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
 		public Tier7PreLobbyViewModel Tier7PreLobbyViewModel { get; } = new Tier7PreLobbyViewModel();
@@ -306,6 +311,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ExitAnimation = AnimationType.Slide,
 				Fade = true,
 				Distance = 50,
+				HideCallback = () =>
+				{
+					Tier7PreLobbyViewModel.Reset();
+				},
 			};
 
 			_constructedMulliganGuidePreLobbyBehaviour = new OverlayElementBehavior(ConstructedMulliganGuidePreLobby)
@@ -377,6 +386,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 				HideCallback = () =>
 				{
 					ArenaPreDraftViewModel.Reset();
+				},
+			};
+
+			_constructedPreLobbyWidgetBehavior = new OverlayElementBehavior(ConstructedPreLobbyWidget)
+			{
+				GetLeft = () => Helper.GetScaledXPos(0.034, (int)Width, ScreenRatio),
+				GetTop = () => Height * 0.03,
+				GetScaling = () => Height / 1080,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+				Fade = true,
+				Distance = 50,
+				HideCallback = () =>
+				{
+					ConstructedMulliganPreLobbyWidgetViewModel.Reset();
 				},
 			};
 
@@ -1011,9 +1036,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ConstructedMulliganGuideViewModel.SetMulliganData(stats, maxRank, selectedParams);
 		}
 
+		internal void ShowMulliganV2Stats(MulliganV2Data data)
+		{
+			ConstructedMulliganGuideV2ViewModel.SetMulliganData(data);
+		}
+
+		internal void ShowMulliganV2StatsAfterMulligan(MulliganV2Data data)
+		{
+			ConstructedMulliganGuideV2ViewModel.UpdateMulliganDataAfterMulligan(data);
+		}
+
 		internal void HideMulliganGuideStats()
 		{
 			ConstructedMulliganGuideViewModel.Reset();
+			ConstructedMulliganGuideV2ViewModel.Reset();
 		}
 
 		internal void UpdateArenaPickHelperVisibility()
@@ -1384,6 +1420,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ConstructedMulliganGuidePreLobbyViewModel.DecksOnPage = decksList.ToList();
 			ConstructedMulliganGuidePreLobbyViewModel.VisualsFormatType = vft;
 			ConstructedMulliganGuidePreLobbyViewModel.IsModalOpen = isModalOpen;
+			ConstructedMulliganPreLobbyWidgetViewModel.VisualsFormatType = vft;
 		}
 
 		internal void SetBaconState(SelectedBattlegroundsGameMode mode)

@@ -355,7 +355,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static HearthDb.Deckstrings.Deck? ToHearthDbDeck(Deck deck)
+		public static HearthDb.Deckstrings.Deck? ToHearthDbDeck(Deck deck, FormatType? format = null)
 		{
 			var card = Database.GetHeroCardFromClass(deck.Class);
 			if(card?.DbfId > 0)
@@ -363,7 +363,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return new HearthDb.Deckstrings.Deck
 				{
 					Name = deck.Name,
-					Format = deck.GuessFormatType(),
+					Format = format ?? deck.GuessFormatType(),
 					ZodiacYear = (ZodiacYear)Enum.GetValues(typeof(ZodiacYear)).Cast<int>().OrderByDescending(x => x).First(),
 					HeroDbfId = card.DbfId,
 					CardDbfIds = deck.Cards.ToDictionary(c => c.DbfId, c => c.Count),

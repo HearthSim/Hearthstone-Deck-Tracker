@@ -500,14 +500,17 @@ namespace Hearthstone_Deck_Tracker
 					Helper.ClearCachedHearthstoneBuild();
 					TurnTimer.Instance.Stop();
 					Tier7Trial.Clear();
+					MulliganGuideTrial.Clear();
 					Overlay.Tier7PreLobbyViewModel.Reset();
 					Overlay.ArenaPreDraftViewModel.Reset();
+					Overlay.ConstructedMulliganPreLobbyWidgetViewModel.Reset();
 					Overlay.BattlegroundsHeroPickingViewModel.Reset();
 					Overlay.BattlegroundsQuestPickingViewModel.Reset();
 					Overlay.BattlegroundsTrinketPickingViewModel.Reset();
 					Overlay.HideBattlegroundsHeroPanel();
 					Overlay.HideBattlegroundsTimewarpPanel();
 					Overlay.ConstructedMulliganGuideViewModel.Reset();
+					Overlay.ConstructedMulliganGuideV2ViewModel.Reset();
 					Overlay.ConstructedMulliganGuidePreLobbyViewModel.Reset();
 					Overlay.BattlegroundsCompsGuidesVM.Reset();
 					Overlay.ChinaModuleVM.Reset();

@@ -27,6 +27,7 @@
                     </TreeViewItem>
                     <TreeViewItem Header="{lex:LocText Options_Overlay_Header}">
                         <TreeViewItem Name="TreeViewItemOverlayGeneral" Header="{lex:LocText Options_Overlay_General_Header}" Selected="TreeViewItemGeneralOverlay_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemOverlayMulligan" Header="{lex:LocText Options_Overlay_Mulligan_Header}" Selected="TreeViewItemMulliganOverlay_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemOverlayDeckWindows" Header="{lex:LocText Options_Overlay_Windows_Header}" Selected="TreeViewItemOverlayDeckWindows_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemOverlayPlayer" Header="{lex:LocText Options_Overlay_Player_Header}" Selected="TreeViewItemOverlayPlayer_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemOverlayOpponent" Header="{lex:LocText Options_Overlay_Opponent_Header}" Selected="TreeViewItemOverlayOpponent_OnSelected"/>

@@ -61,7 +61,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "game_type", 1 },
 				{ "star_level", 1 },
 				{ "showed_opponent_arena_package", false },
-				{ "hdt_hsconstructed_settings_enabled", new []{ "hide_timers", "mulligan_guide_overlay", "mulligan_guide_overlay_auto_expand", "mulligan_guide_toast" }},
+				{ "hdt_hsconstructed_settings_enabled", new []{ "hide_timers", "mulligan_guide_overlay", "mulligan_gv2_overlay", "mulligan_guide_overlay_auto_expand", "mulligan_guide_toast" }},
 				{ "hdt_hsconstructed_settings_disabled", new []{ "hide_decks" }},
 				{ "action_source", "app" },
 				{ "action_name", "end_match" },
@@ -88,7 +88,8 @@ namespace HDTTests.Utility.ValueMoments.Actions
 					"highlight_deck_synergies",
 					"player_max_resources_widget",
 					"opponent_max_resources_widget",
-					"mulligan_overlay"
+					"mulligan_overlay",
+					"mulligan_gv2_overlay"
 				}},
 				{ "hdt_general_settings_disabled", new []{
 					"overlay_hide_completely",

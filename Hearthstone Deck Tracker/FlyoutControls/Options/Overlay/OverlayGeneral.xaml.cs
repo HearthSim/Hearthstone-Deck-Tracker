@@ -48,13 +48,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxOverlayUseAnimations.IsChecked = Config.Instance.OverlayCardAnimations;
 			CheckBoxRemoveSecrets.IsChecked = Config.Instance.RemoveSecretsFromList;
 
-			var isPremium = (HSReplayNetOAuth.AccountData?.IsPremium ?? false);
-			var mulliganGuideDisabled = Remote.Config.Data?.MulliganGuide?.Disabled ?? false;
-			CheckboxEnableMulliganGuide.IsChecked = Config.Instance.EnableMulliganGuide;
-			CheckboxAutoShowMulliganGuide.IsChecked = Config.Instance.AutoShowMulliganGuide;
-			CheckboxShowMulliganGuidePreLobby.IsChecked = Config.Instance.ShowMulliganGuidePreLobby;
-			StackPanelMulliganGuide.Visibility = isPremium && !mulliganGuideDisabled ? Visibility.Visible : Visibility.Collapsed;
-
 			_initialized = true;
 		}
 
@@ -432,61 +425,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.RemoveSecretsFromList = false;
 			Config.Save();
-		}
-
-		private void CheckboxEnableMulliganGuide_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.EnableMulliganGuide = true;
-			Config.Save();
-			Core.Overlay.UpdateMulliganGuidePreLobbyVisibility();
-		}
-
-		private void CheckboxEnableMulliganGuide_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.EnableMulliganGuide = false;
-			Config.Save();
-			Core.Overlay.HideMulliganGuideStats();
-			// Clear the Mulligan overlay if it's visible
-			Core.Game.Player.MulliganCardStats = null;
-			Core.Overlay.UpdateMulliganGuidePreLobbyVisibility();
-		}
-
-		private void CheckboxAutoShowMulliganGuide_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AutoShowMulliganGuide = true;
-			Config.Save();
-		}
-
-		private void CheckboxAutoShowMulliganGuide_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AutoShowMulliganGuide = false;
-			Config.Save();
-		}
-
-		private void CheckboxShowMulliganGuidePreLobby_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowMulliganGuidePreLobby = true;
-			Config.Save();
-			Core.Overlay.UpdateMulliganGuidePreLobbyVisibility();
-		}
-
-		private void CheckboxShowMulliganGuidePreLobby_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowMulliganGuidePreLobby = false;
-			Config.Save();
-			Core.Overlay.UpdateMulliganGuidePreLobbyVisibility();
 		}
 	}
 }

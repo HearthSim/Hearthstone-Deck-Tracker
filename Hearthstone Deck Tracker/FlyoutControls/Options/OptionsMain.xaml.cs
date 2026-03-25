@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly HSReplayCollection OptionsHSReplayCollection = new HSReplayCollection();
 		public readonly StreamingTwitchExtension OptionsStreamingTwitchExtension = new StreamingTwitchExtension();
 		public readonly StreamingCapturableOverlay OptionsStreamingCapturableOverlay = new StreamingCapturableOverlay();
+		public readonly OverlayMulligan OptionsOverlayMulligan = new OverlayMulligan();
 		public readonly OverlayBattlegrounds OptionsOverlayBattlegrounds = new OverlayBattlegrounds();
 		public readonly OverlayArena OptionsOverlayArena = new OverlayArena();
 		public readonly OverlayMercenaries OptionsOverlayMercenaries = new OverlayMercenaries();
@@ -97,6 +98,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsTrackerAppearance.Load();
 			OptionsTrackerBackups.Load();
 			OptionsTrackerNotifications.Load();
+			OptionsOverlayMulligan.Load();
 			OptionsOverlayBattlegrounds.Load();
 			OptionsOverlayArena.Load();
 			OptionsOverlayMercenaries.Load();
@@ -221,6 +223,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			ContentHeader = LocUtil.Get("Options_HSReplay_Account_Header");
 			OptionsContent = OptionsHSReplayAccount;
+		}
+
+		private void TreeViewItemMulliganOverlay_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Overlay_Mulligan_Header");
+			OptionsContent = OptionsOverlayMulligan;
+			OptionsOverlayMulligan.Load();
 		}
 
 		private void TreeViewItemHSReplayReplays_OnSelected(object sender, RoutedEventArgs e)

@@ -162,8 +162,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 			//
 			// You want to ensure this issue does not affect production, and/or fix it.
 			// Alternatively consider changing the Log.Error() call to Log.Warn(), if this is not a serious issue.
-			if(Debugger.IsAttached)
-				Debugger.Break();
+			// if(Debugger.IsAttached)
+			// 	Debugger.Break();
 #endif
 		}
 
@@ -176,8 +176,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 			//
 			// You want to ensure this issue does not affect production, and/or fix it.
 			// Alternatively consider changing the Log.Error() call to Log.Warn(), if this is not a serious issue.
-			if(Debugger.IsAttached)
-				Debugger.Break();
+			// if(Debugger.IsAttached)
+			// 	Debugger.Break();
 #endif
 		}
 	}

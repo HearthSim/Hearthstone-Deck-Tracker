@@ -999,7 +999,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
 				{
-					CaptureMulliganGuideFeedback();
+					CaptureMulliganGuideFeedback(_game.CurrentFormatType);
 				}
 
 				if(_game.IsBattlegroundsMatch)
@@ -1025,6 +1025,7 @@ namespace Hearthstone_Deck_Tracker
 				await SaveReplays(_game.CurrentGameStats);
 
 				if(_game.IsConstructedMatch || _game.CurrentGameMode is GameMode.Arena or GameMode.Duels)
+				{
 					HSReplayNetClientAnalytics.OnConstructedMatchEnds(
 						_game.CurrentGameStats,
 						_game.CurrentGameMode,
@@ -1032,6 +1033,8 @@ namespace Hearthstone_Deck_Tracker
 						_game.Spectator,
 						_game.Metrics
 					);
+					MulliganGuideTrial.Clear();
+				}
 
 				if(_game.IsBattlegroundsMatch)
 				{
@@ -1326,21 +1329,41 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.HideMulliganToast(false);
 
 				var openingHand = _game.SnapshotOpeningHand();
+				var isV2 = _game.CurrentFormatType is FormatType.FT_STANDARD &&
+				            _game.CurrentGameType is GameType.GT_RANKED or GameType.GT_VS_FRIEND;
 
-				if(_game.MulliganCardStats != null && Config.Instance.EnableMulliganGuide)
+				if((isV2 || _game.MulliganCardStats != null) && (Config.Instance.EnableMulliganGuide || Config.Instance.EnableMulliganGV2))
 				{
 					var numSwappedCards = _game.GetMulliganSwappedCards()?.Count ?? 0;
 					if(numSwappedCards > 0)
 					{
-						// Show the updated cards
-						var dbfIds = openingHand.Select(x => x.Card.DeckbuildingCard.DbfId).ToList();
-						if(dbfIds.Any())
+						if(isV2)
 						{
-							Core.Overlay.ShowMulliganGuideStats(
-								dbfIds.Select(dbfId => _game.MulliganCardStats.TryGetValue(dbfId, out var stats) ? stats : new SingleCardStats(dbfId)),
-								_game.MulliganCardStats.Count,
-								null
-							);
+							var dbfIds = openingHand.Select(x => x.Card.DeckbuildingCard.DbfId).ToArray();
+							_game.CacheMulliganGuideParams(isV2, dbfIds);
+							MulliganV2Data? mulliganGuideData = null;
+							if(Config.Instance.EnableMulliganGV2)
+							{
+								mulliganGuideData = await GetMulliganV2Data(isMulliganDone: true);
+							}
+
+							if(mulliganGuideData is { } data)
+							{
+								Core.Overlay.ShowMulliganV2StatsAfterMulligan(data);
+							}
+						}
+						else
+						{
+							// Show the updated cards
+							var dbfIds = openingHand.Select(x => x.Card.DeckbuildingCard.DbfId).ToList();
+							if(dbfIds.Any())
+							{
+								Core.Overlay.ShowMulliganGuideStats(
+									dbfIds.Select(dbfId => _game.MulliganCardStats!.TryGetValue(dbfId, out var stats) ? stats : new SingleCardStats(dbfId)),
+									_game.MulliganCardStats!.Count,
+									null
+								);
+							}
 						}
 					}
 
@@ -1557,122 +1580,157 @@ namespace Hearthstone_Deck_Tracker
 				if(step > (int)Step.BEGIN_MULLIGAN)
 					break;
 
+				var isV2 = _game.CurrentFormatType is FormatType.FT_STANDARD &&
+				                    _game.CurrentGameType is GameType.GT_RANKED or GameType.GT_VS_FRIEND;
+
 				_game.SnapshotMulligan();
-				_game.CacheMulliganGuideParams();
+				_game.CacheMulliganGuideParams(isV2);
 
 				var showToast = Config.Instance.ShowMulliganToast && !_game.IsArenaMatch;
-				if(showToast || Config.Instance.EnableMulliganGuide)
+				if(showToast || (isV2 && Config.Instance.EnableMulliganGV2) || (!isV2 && Config.Instance.EnableMulliganGuide))
 				{
-					// Show Mulligan Guide Elements (Overlay and/or Toast)
-					var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
-					if(!string.IsNullOrEmpty(shortId))
+					if(isV2)
 					{
-						var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created);
-						var dbfIds = cards.OrderBy(x => x.ZonePosition).Select(x => x.Card.DeckbuildingCard.DbfId).ToArray();
-
-						MulliganGuideData? mulliganGuideData = null;
-						if(Config.Instance.EnableMulliganGuide)
+						// Show Mulligan Guide Elements (Overlay and/or Toast)
+						var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
+						if(!string.IsNullOrEmpty(shortId))
 						{
-							mulliganGuideData = await GetMulliganGuideData();
-						}
+							var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created);
+							var dbfIds = cards.OrderBy(x => x.ZonePosition).Select(x => x.Card.DeckbuildingCard.DbfId).ToArray();
 
-						if(mulliganGuideData is MulliganGuideData data)
-						{
-							// Show mulligan guide with parameters as selected by the API
-							if(showToast)
+							MulliganV2Data? mulliganGuideData = null;
+							if(Config.Instance.EnableMulliganGV2)
 							{
-								Core.Overlay.ShowMulliganToast(shortId!, dbfIds, data.Toast?.Parameters, true);
-								showToast = false;
+								mulliganGuideData = await GetMulliganV2Data();
 							}
 
-							// Wait for the mulligan to be ready
-							await WaitForMulliganStart();
-
-							Dictionary<int, SingleCardStats>? cardStats = null;
-							// GroupBy before ToDictionary to deal with (unsupported) dbfId duplicates from the server
-							var grouped = data.DeckDbfIdList.GroupBy(x => x.DbfId).ToDictionary(x => x.Key, x => x.First());
-							try
+							if(mulliganGuideData is { } data)
 							{
-								cardStats = SingleCardStats.GroupCardStats(grouped, data.BaseWinrate);
+								await WaitForMulliganStart();
+
+								Core.Overlay.ShowMulliganV2Stats(data);
 							}
-							catch(Exception e)
-							{
-								Log.Error(e);
-								cardStats = null;
-							}
-
-							if(cardStats != null)
-							{
-								_game.MulliganCardStats = cardStats;
-								Core.Game.Player.MulliganCardStats = cardStats.Values;
-								Core.Overlay.ShowMulliganGuideStats(
-									dbfIds.Select(dbfId =>
-										cardStats.TryGetValue(dbfId, out var stats) ? stats
-											: new SingleCardStats(dbfId)),
-									cardStats.Count,
-									data.SelectedParams
-								);
-							}
-							// Something went wrong generating the card stats, continue to locally generated toast (if enabled)
-						}
-
-						if(showToast)
-						{
-							Dictionary<string, string>? parameters = null;
-							if(HsReplayDataManager.Decks.AvailableDecks.Contains(shortId!))
-							{
-								var opponentClass = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
-								var isFirst = _game.PlayerEntity?.GetTag(GameTag.FIRST_PLAYER) == 1;
-
-								// Show mulligan toast with locally sourced parameters
-								parameters = new Dictionary<string, string>
-								{
-									["opponentClasses"] = opponentClass.ToString(),
-									["playerInitiative"] = isFirst ? "FIRST" : "COIN"
-								};
-
-								var playerStarLevel = _game.PlayerMedalInfo?.StarLevel ?? 0;
-								if(playerStarLevel > 0)
-								{
-									parameters.Add("mulliganPlayerStarLevel", playerStarLevel.ToString());
-								}
-
-								// Let the website do it's thing and fallback for non-Premium users
-								parameters.Add("mulliganAutoFilter", "yes");
-							}
-
-							Core.Overlay.ShowMulliganToast(shortId!, dbfIds, parameters);
 						}
 					}
+					else
+					{
+						// Show Mulligan Guide Elements (Overlay and/or Toast)
+						var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
+						if(!string.IsNullOrEmpty(shortId))
+						{
+							var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created);
+							var dbfIds = cards.OrderBy(x => x.ZonePosition).Select(x => x.Card.DeckbuildingCard.DbfId).ToArray();
+
+							MulliganGuideData? mulliganGuideData = null;
+							if(Config.Instance.EnableMulliganGuide)
+							{
+								mulliganGuideData = await GetMulliganGuideData();
+							}
+
+							if(mulliganGuideData is MulliganGuideData data)
+							{
+								// Show mulligan guide with parameters as selected by the API
+								if(showToast)
+								{
+									Core.Overlay.ShowMulliganToast(shortId!, dbfIds, data.Toast?.Parameters, true);
+									showToast = false;
+								}
+
+								// Wait for the mulligan to be ready
+								await WaitForMulliganStart();
+
+								Dictionary<int, SingleCardStats>? cardStats = null;
+								// GroupBy before ToDictionary to deal with (unsupported) dbfId duplicates from the server
+								var grouped = data.DeckDbfIdList.GroupBy(x => x.DbfId).ToDictionary(x => x.Key, x => x.First());
+								try
+								{
+									cardStats = SingleCardStats.GroupCardStats(grouped, data.BaseWinrate);
+								}
+								catch(Exception e)
+								{
+									Log.Error(e);
+									cardStats = null;
+								}
+
+								if(cardStats != null)
+								{
+									if(data.Recommendation == null)
+									{
+										_game.MulliganCardStats = cardStats;
+										Core.Game.Player.MulliganCardStats = cardStats.Values;
+									}
+									Core.Overlay.ShowMulliganGuideStats(
+										dbfIds.Select(dbfId =>
+											cardStats.TryGetValue(dbfId, out var stats) ? stats
+												: new SingleCardStats(dbfId)),
+										cardStats.Count,
+										data.SelectedParams
+									);
+								}
+								// Something went wrong generating the card stats, continue to locally generated toast (if enabled)
+							}
+
+							if(showToast)
+							{
+								Dictionary<string, string>? parameters = null;
+								if(HsReplayDataManager.Decks.AvailableDecks.Contains(shortId!))
+								{
+									var opponentClass = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+									var isFirst = _game.PlayerEntity?.GetTag(GameTag.FIRST_PLAYER) == 1;
+
+									// Show mulligan toast with locally sourced parameters
+									parameters = new Dictionary<string, string>
+									{
+										["opponentClasses"] = opponentClass.ToString(),
+										["playerInitiative"] = isFirst ? "FIRST" : "COIN"
+									};
+
+									var playerStarLevel = _game.PlayerMedalInfo?.StarLevel ?? 0;
+									if(playerStarLevel > 0)
+									{
+										parameters.Add("mulliganPlayerStarLevel", playerStarLevel.ToString());
+									}
+
+									// Let the website do it's thing and fallback for non-Premium users
+									parameters.Add("mulliganAutoFilter", "yes");
+								}
+
+								Core.Overlay.ShowMulliganToast(shortId!, dbfIds, parameters);
+							}
+						}
+					}
+
 				}
 
 				break;
 			}
 		}
 
-		private void CaptureMulliganGuideFeedback()
+		private void CaptureMulliganGuideFeedback(FormatType format)
 		{
 			if(!Config.Instance.GoogleAnalytics || _game.Spectator)
 				return;
+
+			var isV2 = format is FormatType.FT_STANDARD;
+			if(isV2)
+			{
+				if(_game.CurrentGameMode != Ranked)
+					return;
+
+				var v2Parameters = _game.GetMulliganV2FeedbackParams();
+
+				if(v2Parameters is null)
+					return;
+
+				ApiWrapper.PostMulliganGuideFeedback(v2Parameters).Forget();
+				return;
+			}
 
 			var parameters = _game.GetMulliganGuideFeedbackParams();
 			if(parameters is null)
 				return;
 
 			ApiWrapper.PostMulliganGuideFeedback(parameters).Forget();
-
-			if(_game.CurrentGameMode != Ranked)
-				return;
-
-			if(_game.CurrentFormat != Format.Standard)
-				return;
-
-			var v2Parameters = _game.GetMulliganV2FeedbackParams();
-
-			if(v2Parameters is null)
-				return;
-
-			ApiWrapper.PostMulliganGuideFeedback(v2Parameters).Forget();
 		}
 
 		private async Task<MulliganGuideData?> GetMulliganGuideData()
@@ -1680,15 +1738,21 @@ namespace Hearthstone_Deck_Tracker
 			if(Core.Game.Spectator)
 				return null;
 
+			if(!Config.Instance.EnableMulliganGuide)
+			{
+				return null;
+			}
+
 			if(Remote.Config.Data?.MulliganGuide?.Disabled ?? false)
 			{
 				return null;
 			}
 
 			var userOwnsPremium = HSReplayNetOAuth.AccountData?.IsPremium ?? false;
-			if(!userOwnsPremium)
+			Core.Game.Metrics.IsSubscribed = userOwnsPremium;
+
+			if(!userOwnsPremium && (MulliganGuideTrial.RemainingTrials ?? 0) == 0)
 			{
-				// No trial support yet
 				return null;
 			}
 
@@ -1699,12 +1763,99 @@ namespace Hearthstone_Deck_Tracker
 				return null;
 			}
 
+			// Use a trial if we can
+			string? token = null;
+			if(!userOwnsPremium)
+			{
+				if(!IsDeckAvailableForMulliganGuide((BnetGameType)parameters.GameType, parameters.Deckstring))
+					return null;
+
+				var acc = Reflection.Client.GetAccountId();
+				token = acc != null ? await MulliganGuideTrial.ActivateOrContinue(acc.Hi, acc.Lo, _game.MetaData.ServerInfo?.GameHandle) : null;
+				if(token == null)
+					return null;
+
+				Core.Game.Metrics.MulliganGuideTrialsRemaining = Math.Max(0, (MulliganGuideTrial.RemainingTrials ?? 0) - 1);
+			}
+
 #if(DEBUG)
 			var json = JsonConvert.SerializeObject(parameters);
 			Log.Debug($"Fetching Mulligan Guide with parameters={json}...");
 #endif
 
-			return await HSReplayNetOAuth.MakeRequest(c => c.GetConstructedMulliganGuide(parameters));
+			var isUsingTrials = token != null && !userOwnsPremium;
+
+			return isUsingTrials ? await ApiWrapper.GetConstructedMulliganGuide(token!, parameters) :
+				await HSReplayNetOAuth.MakeRequest(c => c.GetConstructedMulliganGuide(parameters));
+		}
+
+		private async Task<MulliganV2Data?> GetMulliganV2Data(bool isMulliganDone = false)
+		{
+			if(Core.Game.Spectator)
+				return null;
+
+			if(!Config.Instance.EnableMulliganGV2)
+			{
+				return null;
+			}
+
+			if(Remote.Config.Data?.MulliganGuide?.Disabled ?? false)
+			{
+				return null;
+			}
+
+			var userOwnsPremium = HSReplayNetOAuth.AccountData?.IsPremium ?? false;
+			Core.Game.Metrics.IsSubscribed = userOwnsPremium;
+
+			if(!userOwnsPremium && (MulliganGuideTrial.RemainingTrials ?? 0) == 0)
+			{
+				return null;
+			}
+
+			// Assemble request
+			var parameters = _game.GetMulliganV2Params();
+			if(parameters == null)
+			{
+				return null;
+			}
+
+			parameters.MulliganState = isMulliganDone ? (int)Mulligan.DONE : (int)Mulligan.INPUT;
+
+			// Use a trial if we can
+			string? token = null;
+			if(!userOwnsPremium)
+			{
+				if(!IsDeckAvailableForMulliganGuide((BnetGameType)parameters.GameType, parameters.Deckstring))
+					return null;
+
+				var acc = Reflection.Client.GetAccountId();
+				token = acc != null ? await MulliganGuideTrial.ActivateOrContinue(acc.Hi, acc.Lo, _game.MetaData.ServerInfo?.GameHandle) : null;
+				if(token == null)
+					return null;
+
+				Core.Game.Metrics.MulliganGuideTrialsRemaining = Math.Max(0, (MulliganGuideTrial.RemainingTrials ?? 0) - 1);
+			}
+
+#if(DEBUG)
+			var json = JsonConvert.SerializeObject(parameters);
+			Log.Debug($"Fetching Mulligan V2 with parameters={json}...");
+#endif
+
+			var isUsingTrials = token != null && !userOwnsPremium;
+
+			return isUsingTrials ? await ApiWrapper.GetConstructedMulliganV2(token!, parameters) :
+				await HSReplayNetOAuth.MakeRequest(c => c.GetConstructedMulliganV2(parameters));
+		}
+
+		private bool IsDeckAvailableForMulliganGuide(BnetGameType gameType, string deckString)
+		{
+			if(Core.Overlay.ConstructedMulliganGuidePreLobbyViewModel.DeckStatusByDeckstring.TryGetValue(gameType, out var statusByDeckstring)
+			   && statusByDeckstring.TryGetValue(deckString, out var status))
+			{
+				return status is SingleDeckState.V1_READY or SingleDeckState.V2_READY or SingleDeckState.V2_PARTIAL;
+			}
+
+			return false;
 		}
 
 		private async Task WaitForMulliganStart(int timeout = 60)
@@ -1848,6 +1999,9 @@ namespace Hearthstone_Deck_Tracker
 				throw new HeroPickingDisabledException("Hero picking remotely disabled");
 
 			var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
+			Core.Game.Metrics.IsSubscribed = userOwnsTier7;
+
+
 			if(!userOwnsTier7 && (Tier7Trial.RemainingTrials ?? 0) == 0)
 				return null;
 

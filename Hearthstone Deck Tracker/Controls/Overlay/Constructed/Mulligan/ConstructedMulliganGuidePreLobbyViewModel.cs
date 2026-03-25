@@ -25,7 +25,9 @@ public enum SingleDeckState
 	INVALID,
 	LOADING, // indicates that a task is currently fetching some
 	NO_DATA,
-	READY,
+	V1_READY,
+	V2_READY,
+	V2_PARTIAL,
 }
 
 public class SingleDeckStatus
@@ -55,7 +57,7 @@ public class SingleDeckStatus
 	{
 		get => State switch
 		{
-			SingleDeckState.READY or SingleDeckState.NO_DATA or SingleDeckState.LOADING => Visibility.Visible,
+			SingleDeckState.V1_READY or SingleDeckState.V2_READY or SingleDeckState.NO_DATA or SingleDeckState.LOADING or SingleDeckState.V2_PARTIAL => Visibility.Visible,
 			_ => Visibility.Collapsed,
 		};
 	}
@@ -72,14 +74,18 @@ public class SingleDeckStatus
 	public string BorderBrush => State switch
 	{
 		SingleDeckState.NO_DATA => "#CCE3D000",
-		SingleDeckState.READY => "#CC00AA00",
+		SingleDeckState.V2_PARTIAL => "#CCCCAA00",
+		SingleDeckState.V1_READY => "#CC00AA00",
+		SingleDeckState.V2_READY => "#CC00AA00",
 		_ => "#CC555555"
 	};
 
 	public string Background => State switch
 	{
 		SingleDeckState.NO_DATA => "#CC1A1100",
-		SingleDeckState.READY => "#CC002200",
+		SingleDeckState.V2_PARTIAL => "#CC373700",
+		SingleDeckState.V1_READY => "#CC002200",
+		SingleDeckState.V2_READY => "#CC002200",
 		_ => "#CC000000",
 	};
 
@@ -87,7 +93,9 @@ public class SingleDeckStatus
 	{
 		SingleDeckState.LOADING => LocUtil.Get("ConstructedMulliganGuidePreLobby_Status_Loading"),
 		SingleDeckState.NO_DATA => LocUtil.Get("ConstructedMulliganGuidePreLobby_Status_NoData"),
-		SingleDeckState.READY => LocUtil.Get("ConstructedMulliganGuidePreLobby_Status_Ready"),
+		SingleDeckState.V2_PARTIAL => LocUtil.Get("ConstructedMulliganGuidePreLobby_Status_Partial"),
+		SingleDeckState.V1_READY => LocUtil.Get("ConstructedMulliganGuidePreLobby_Status_V1Ready"),
+		SingleDeckState.V2_READY => LocUtil.Get("ConstructedMulliganGuidePreLobby_Status_V2Ready"),
 		_ => State.ToString(),
 	};
 
@@ -96,7 +104,7 @@ public class SingleDeckStatus
 
 public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 {
-	private Dictionary<BnetGameType, Dictionary<string, SingleDeckState>> _deckStatusByDeckstring = new();
+	public Dictionary<BnetGameType, Dictionary<string, SingleDeckState>> DeckStatusByDeckstring = new();
 
 	public ConstructedMulliganGuidePreLobbyViewModel()
 	{
@@ -136,6 +144,7 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 	{
 		public string Deckstring;
 		public bool HasRunes;
+		public int[] CardsDbfIds;
 	}
 
 	private Dictionary<FormatType, Dictionary<long, DeckData>> _decksByFormatAndDeckId = new();
@@ -172,6 +181,7 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 					hearthDbDeck.GetHero()?.Class == CardClass.DEATHKNIGHT ||
 					hearthDbDeck.GetCards().Keys.Any(x => x.Entity.GetTag(GameTag.DEATH_KNIGHT_TOURIST) > 0)
 				),
+				CardsDbfIds = hearthDbDeck.CardDbfIds.SelectMany(kvp => Enumerable.Repeat(kvp.Key, kvp.Value)).ToArray(),
 			};
 		}
 
@@ -247,32 +257,128 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 		}
 	}
 
-	public Visibility Visibility => IsModalOpen || IsInQueue ? Visibility.Hidden : Visibility.Visible;
+	public bool IsOutOfTrials
+	{
+		get { return GetProp(false); }
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(Visibility));
+		}
+	}
+
+	public Visibility Visibility => IsModalOpen || IsInQueue || IsOutOfTrials ? Visibility.Hidden : Visibility.Visible;
 	#endregion
 
-	private static async Task<Dictionary<string, MulliganGuideStatusData.Status>> LoadMulliganGuideStatus(
-		BnetGameType gameType,
-		int? starLevel,
-		IEnumerable<string> deckstrings
-	)
+	private static async Task<Dictionary<string, SingleDeckState>> LoadMulliganGuideStatus(
+    BnetGameType gameType,
+    int? starLevel,
+    IEnumerable<MulliganStatusDeck> deckData)
 	{
-		var dss = deckstrings.Distinct().ToArray();
-		if(!dss.Any())
-			return new Dictionary<string, MulliganGuideStatusData.Status>();
+	    var distinctDecks = deckData?
+	        .Distinct()
+	        .ToArray() ?? Array.Empty<MulliganStatusDeck>();
 
-		var parameters = new MulliganGuideStatusParams()
+	    if (distinctDecks.Length == 0)
+	        return new Dictionary<string, SingleDeckState>();
+
+	    var deckstrings = distinctDecks
+	        .Select(d => d.Deckstring)
+	        .ToArray();
+
+	    var isV2 = gameType == BnetGameType.BGT_RANKED_STANDARD;
+
+	    if (isV2)
+	        return await LoadV2Status(gameType, starLevel, distinctDecks, deckstrings);
+
+	    return await LoadV1Status(gameType, starLevel, deckstrings);
+	}
+
+	private static async Task<Dictionary<string, SingleDeckState>> LoadV2Status(
+	    BnetGameType gameType,
+	    int? starLevel,
+	    MulliganStatusDeck[] distinctDecks,
+	    string[] deckstrings)
+	{
+	    var region = ((BnetRegion)await Helper.GetCurrentRegion()).ToString();
+
+	    var parameters = new MulliganV2StatusParams
+	    {
+	        Decks = distinctDecks,
+	        GameType = (int)gameType,
+	        PlayerStarLevel = starLevel,
+	        PlayerRegion = region
+	    };
+
+#if(DEBUG)
+	    var json = JsonConvert.SerializeObject(parameters);
+	    Log.Debug($"Fetching Mulligan V2 Status with parameters={json}...");
+#endif
+
+	    var result = await ApiWrapper.GetMulliganGuideStatus(parameters);
+
+	    var resultDecks = result?.Decks ?? Enumerable.Empty<MulliganV2StatusData.Deck>();
+
+	    return deckstrings.ToDictionary(
+	        deckstring => deckstring,
+	        deckstring =>
+	        {
+	            var status = resultDecks
+	                .FirstOrDefault(d => d.Deckstring == deckstring)?.Status
+	                ?? MulliganV2StatusData.Status.NONE;
+
+	            return MapV2Status(status);
+	        });
+	}
+
+	private static async Task<Dictionary<string, SingleDeckState>> LoadV1Status(
+	    BnetGameType gameType,
+	    int? starLevel,
+	    string[] deckstrings)
+	{
+	    var parameters = new MulliganGuideStatusParams
+	    {
+	        Decks = deckstrings,
+	        GameType = (int)gameType,
+	        PlayerStarLevel = starLevel
+	    };
+
+	    var result = await ApiWrapper.GetMulliganGuideStatus(parameters);
+	    var resultDecks = result?.Decks;
+
+	    return deckstrings.ToDictionary(
+		    deckstring => deckstring,
+		    deckstring =>
+		    {
+			    var status = resultDecks != null && resultDecks.TryGetValue(deckstring, out var deck)
+				    ? deck.Status
+				    : MulliganGuideStatusData.Status.NO_DATA;
+
+			    return MapV1Status(status);
+		    }
+	    );
+	}
+
+	private static SingleDeckState MapV2Status(
+	    MulliganV2StatusData.Status status)
+	{
+	    return status switch
+	    {
+	        MulliganV2StatusData.Status.SUPPORTED => SingleDeckState.V2_READY,
+	        MulliganV2StatusData.Status.PARTIAL   => SingleDeckState.V2_PARTIAL,
+	        _                                     => SingleDeckState.NO_DATA
+	    };
+	}
+
+	private static SingleDeckState MapV1Status(
+		MulliganGuideStatusData.Status status)
+	{
+		return status switch
 		{
-			Decks = dss,
-			GameType = (int)gameType,
-			PlayerStarLevel = starLevel,
+			MulliganGuideStatusData.Status.READY => SingleDeckState.V1_READY,
+			MulliganGuideStatusData.Status.NO_DATA   => SingleDeckState.NO_DATA,
+			_                                     => SingleDeckState.NO_DATA
 		};
-
-		var result = await ApiWrapper.GetMulliganGuideStatus(parameters);
-
-		// Select from dss so that if the API messes up we still have *some* status (NO_DATA)
-		return dss.ToDictionary(x => x,
-			x => result?.Decks?.TryGetValue(x, out var deck) ?? false ? deck.Status : MulliganGuideStatusData.Status.NO_DATA
-		);
 	}
 
 	public async Task EnsureLoaded()
@@ -280,7 +386,6 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 		try
 		{
 			await Update(true);
-			await Update();
 		}
 		catch(Exception ex)
 		{
@@ -299,10 +404,10 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 			: CacheDecks(FormatType);
 
 		// Assemble the deck strings that are not known yet
-		if(!_deckStatusByDeckstring.ContainsKey(GameType))
-			_deckStatusByDeckstring[GameType] = new();
+		if(!DeckStatusByDeckstring.ContainsKey(GameType))
+			DeckStatusByDeckstring[GameType] = new();
 
-		List<string> toLoad = new();
+		List<MulliganStatusDeck> toLoad = new();
 		if(onlyVisiblePage)
 		{
 			if(ValidDecksOnPage is null)
@@ -311,10 +416,14 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 			{
 				if(box?.DeckId is not long deckId)
 					continue;
-				if(deckboxes.TryGetValue(deckId, out var deckData) && !_deckStatusByDeckstring[GameType].ContainsKey(deckData.Deckstring))
+				if(deckboxes.TryGetValue(deckId, out var deckData) && !DeckStatusByDeckstring[GameType].ContainsKey(deckData.Deckstring))
 				{
-					toLoad.Add(deckData.Deckstring);
-					_deckStatusByDeckstring[GameType][deckData.Deckstring] = SingleDeckState.LOADING;
+					toLoad.Add(new MulliganStatusDeck
+					{
+						Deckstring = deckData.Deckstring,
+						DbfIds = deckData.CardsDbfIds
+					});
+					DeckStatusByDeckstring[GameType][deckData.Deckstring] = SingleDeckState.LOADING;
 				}
 			}
 		}
@@ -322,10 +431,14 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 		{
 			foreach(var deckbox in deckboxes.Values)
 			{
-				if(!_deckStatusByDeckstring[GameType].ContainsKey(deckbox.Deckstring))
+				if(!DeckStatusByDeckstring[GameType].ContainsKey(deckbox.Deckstring))
 				{
-					toLoad.Add(deckbox.Deckstring);
-					_deckStatusByDeckstring[GameType][deckbox.Deckstring] = SingleDeckState.LOADING;
+					toLoad.Add(new MulliganStatusDeck
+					{
+						Deckstring = deckbox.Deckstring,
+						DbfIds = deckbox.CardsDbfIds
+					});
+					DeckStatusByDeckstring[GameType][deckbox.Deckstring] = SingleDeckState.LOADING;
 				}
 			}
 		}
@@ -361,11 +474,7 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 			);
 			foreach(var result in results)
 			{
-				_deckStatusByDeckstring[theGameType][result.Key] = result.Value switch
-				{
-					MulliganGuideStatusData.Status.READY => SingleDeckState.READY,
-					_ => SingleDeckState.NO_DATA,
-				};
+				DeckStatusByDeckstring[theGameType][result.Key] = result.Value;
 			}
 
 			OnPropertyChanged(nameof(PageStatus));
@@ -381,7 +490,7 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 				ValidDecksOnPage is null ||
 				FormatType == FormatType.FT_UNKNOWN ||
 				!_decksByFormatAndDeckId.TryGetValue(FormatType, out var deckMap) ||
-				!_deckStatusByDeckstring.TryGetValue(GameType, out var allDecks)
+				!DeckStatusByDeckstring.TryGetValue(GameType, out var allDecks)
 			)
 				return new();
 
@@ -444,7 +553,7 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 	public void Reset()
 	{
 		_decksByFormatAndDeckId = new();
-		_deckStatusByDeckstring = new();
+		DeckStatusByDeckstring = new();
 	}
 
 	public string HSReplayIcon => "/HearthstoneDeckTracker;component/Resources/hsreplay_logo_white.png";

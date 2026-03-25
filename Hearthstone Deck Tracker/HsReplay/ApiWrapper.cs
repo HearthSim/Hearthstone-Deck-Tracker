@@ -282,6 +282,32 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
+		public static async Task<MulliganGuideData?> GetConstructedMulliganGuide(string token, MulliganGuideParams parameters)
+		{
+			try
+			{
+				return await Client.GetConstructedMulliganGuide(token, parameters);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<MulliganV2Data?> GetConstructedMulliganV2(string token, MulliganV2Params parameters)
+		{
+			try
+			{
+				return await Client.GetConstructedMulliganV2(token, parameters);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
 		public static async Task PostMulliganGuideFeedback(MulliganGuideFeedbackParams parameters)
 		{
 			try
@@ -350,6 +376,19 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			try
 			{
 				return await Client.GetMulliganGuideStatus(parameters);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<MulliganV2StatusData?> GetMulliganGuideStatus(MulliganV2StatusParams parameters)
+		{
+			try
+			{
+				return await Client.GetMulliganV2Status(parameters);
 			}
 			catch(Exception e)
 			{

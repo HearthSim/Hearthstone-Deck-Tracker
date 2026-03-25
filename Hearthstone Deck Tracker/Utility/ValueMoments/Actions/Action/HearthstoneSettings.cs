@@ -14,6 +14,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("mulligan_guide_overlay")]
 		public bool MulliganGuideOverlay { get => Config.Instance.EnableMulliganGuide; }
 
+		[JsonProperty("mulligan_gv2_overlay")]
+		public bool MulliganGV2Overlay { get => Config.Instance.EnableMulliganGV2; }
+
 		[JsonProperty("mulligan_guide_overlay_auto_expand")]
 		public bool MulliganGuideOverlayAutoExpand { get => Config.Instance.AutoShowMulliganGuide; }
 

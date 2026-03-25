@@ -56,6 +56,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
 			BattlegroundsLeaderboardWatcher.Change += (sender, args) => Core.Overlay.SetHoveredBattlegroundsLeaderboardEntityId(args.HoveredEntityId);
 			MulliganTooltipWatcher.Change += OnMulliganTooltipChange;
+			MulliganStateWatcher.Change += OnMulliganStateChange;
 		}
 
 		internal static void Stop()
@@ -80,6 +81,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BattlegroundsTeammateBoardStateWatcher.Stop();
 			BattlegroundsLeaderboardWatcher.Stop();
 			MulliganTooltipWatcher.Stop();
+			MulliganStateWatcher.Stop();
 		}
 
 		private static readonly Dictionary<long, Dictionary<int, (string[] choices, string[][]? packages, string pickStartTime)>> _currentArenaDraftInfo = new();
@@ -259,6 +261,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var isCriticalUiOpen = args.IsShopOpen || args.IsJournalOpen || args.IsPopupShowing || args.IsBlurActive;
 			Core.Overlay.Tier7PreLobbyViewModel.IsGameCriticalUiOpen = isCriticalUiOpen;
 			Core.Overlay.ArenaPreDraftViewModel.IsGameCriticalUiOpen = isCriticalUiOpen;
+			Core.Overlay.ConstructedMulliganPreLobbyWidgetViewModel.IsGameCriticalUiOpen = isCriticalUiOpen;
 			Core.Overlay.SetFriendListOpacityMask(args.IsFriendsListVisible);
 		}
 
@@ -324,6 +327,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			);
 
 			Core.Overlay.SetHeroGuidesTrigger(args.ZoneSize, args.ZonePosition, args.IsTooltipOnRight, args.TooltipCards, buddiesEnabled);
+		}
+
+		internal static void OnMulliganStateChange(object sender, HearthMirror.Objects.MulliganState state)
+		{
+			Core.Overlay.ConstructedMulliganGuideV2ViewModel.UpdateMulliganState(state);
 		}
 
 		internal static void OnDeckPickerChange(object sender, HearthWatcher.EventArgs.DeckPickerEventArgs args)
@@ -392,6 +400,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static BattlegroundsTeammateBoardStateWatcher BattlegroundsTeammateBoardStateWatcher { get; } = new(new HearthMirrorBattlegroundsTeammateBoardStateProvider());
 		public static BattlegroundsLeaderboardWatcher BattlegroundsLeaderboardWatcher { get; } = new(new HearthMirrorBattlegroundsLeaderboardProvider());
 		public static MulliganTooltipWatcher MulliganTooltipWatcher { get; } = new(new HearthMirrorMulliganTooltipProvider());
+		public static MulliganStateWatcher MulliganStateWatcher { get; } = new(new HearthMirrorMulliganStateProvider());
 	}
 
 	public class GameDataProvider : IGameDataProvider
@@ -518,5 +527,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorOpponentBoardStateProvider : IOpponentBoardProvider
 	{
 		public OpponentBoardState? OpponentBoardState => Reflection.Client.GetOpponentBoardState();
+	}
+
+	public class HearthMirrorMulliganStateProvider : IMulliganStateProvider
+	{
+		public HearthMirror.Objects.MulliganState? State => Reflection.Client.GetMulliganState();
 	}
 }

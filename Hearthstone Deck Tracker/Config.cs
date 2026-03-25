@@ -337,6 +337,12 @@ namespace Hearthstone_Deck_Tracker
 		public bool EnableMulliganGuide = true;
 
 		[DefaultValue(true)]
+		public bool EnableMulliganGV2 = true;
+
+		[DefaultValue(false)]
+		public bool MulliganGV2OnboardingSeen = false;
+
+		[DefaultValue(true)]
 		public bool SortByWinrate = true;
 
 		[DefaultValue(true)]

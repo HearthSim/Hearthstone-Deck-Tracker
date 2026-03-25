@@ -50,6 +50,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 		private MulliganGuideParams? _mulliganGuideParams;
 		private CardClass? _playerClass;
+		private MulliganV2Params? _mulliganV2Params;
 		internal QueueEvents QueueEvents { get; }
 
 		private BattlegroundsSessionViewModel? _battlegroundsSessionViewModel;
@@ -543,26 +544,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Entity> SnapshotMulliganChoices(IHsCompletedChoice choice) => MulliganState.SnapshotMulliganChoices(choice);
 		public List<Entity> SnapshotOpeningHand() => MulliganState.SnapshotOpeningHand();
 
-		public void CacheMulliganGuideParams()
+		public void CacheMulliganGuideParams(bool isV2, int[]? dbfIds = null)
 		{
-			if(_mulliganGuideParams != null)
+			if(_mulliganGuideParams != null && dbfIds == null)
 				return;
 
 			var activeDeck = DeckList.Instance.ActiveDeck;
 			if(activeDeck == null)
 				return;
 
+			_playerClass = Player.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+
+			if(isV2)
+			{
+				CacheMulliganV2Params(activeDeck, dbfIds);
+			}
+			else
+			{
+				CacheMulliganV1Params(activeDeck);
+			}
+		}
+
+		private void CacheMulliganV1Params(Deck activeDeck)
+		{
 			try
 			{
 				var opponentClass = Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
 				var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
 				var starsPerWin = PlayerMedalInfo?.StarsPerWin ?? 0;
 
-				_playerClass = Player.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
-
 				_mulliganGuideParams = new MulliganGuideParams
 				{
-					Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck), false),
+					Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck, CurrentFormatType), false),
 					OpponentClass = opponentClass.ToString(),
 					PlayerInitiative = PlayerEntity?.GetTag(GameTag.FIRST_PLAYER) == 1 ? "FIRST" : "COIN",
 					PlayerRegion = ((BnetRegion)CurrentRegion).ToString(),
@@ -580,9 +593,45 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		private void CacheMulliganV2Params(Deck activeDeck, int[]? dbfIds = null)
+		{
+			try
+			{
+				var playerDeck = activeDeck.Cards.SelectMany(c => Enumerable.Repeat(c.DbfId, c.Count)).ToArray();
+				var opponentClass = Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+				var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
+				var starsPerWin = PlayerMedalInfo?.StarsPerWin ?? 0;
+
+				_mulliganV2Params = new MulliganV2Params
+				{
+					Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck), false),
+					PlayerClass = _playerClass.ToString(),
+					DeckCards = playerDeck,
+					OpponentClass = opponentClass.ToString(),
+					PlayerInitiative = PlayerEntity?.GetTag(GameTag.FIRST_PLAYER) == 1 ? "FIRST" : "COIN",
+					PlayerRegion = ((BnetRegion)CurrentRegion).ToString(),
+					PlayerStarLevel = starLevel > 0 ? starLevel : null,
+					PlayerStarMultiplier = starsPerWin > 0 ? starsPerWin : null,
+					GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
+					FormatType = (int)CurrentFormatType,
+					OfferedCards = dbfIds ?? MulliganState.OfferedCards?.Select(x => x.Card.DbfId).ToArray()
+				};
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				Influx.OnMulliganGuideDeckSerializationError(e.GetType().Name, e.Message);
+			}
+		}
+
 		public MulliganGuideParams? GetMulliganGuideParams()
 		{
 			return _mulliganGuideParams;
+		}
+
+		public MulliganV2Params? GetMulliganV2Params()
+		{
+			return _mulliganV2Params;
 		}
 
 		public MulliganGuideFeedbackParams? GetMulliganGuideFeedbackParams()
@@ -594,14 +643,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				MulliganState.FinalCardsInHand?.Select(x => x.Card.DbfId).ToArray(),
 				Metrics.ConstructedMulliganGuideOverlayDisplayed,
 				PlayerEntity?.GetTag(GameTag.PLAYSTATE) ?? 0,
-				true,
-				false
+				Metrics.IsSubscribed,
+				Metrics.MulliganGuideTrialActivated
 			);
 		}
 
 		public MulliganV2FeedbackParams? GetMulliganV2FeedbackParams()
 		{
-			if(_mulliganGuideParams == null)
+			if(_mulliganV2Params == null)
 				return null;
 
 			var activeDeck = DeckList.Instance.ActiveDeck;
@@ -613,22 +662,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			return new MulliganV2FeedbackParams
 			{
-				Deckstring = _mulliganGuideParams.Deckstring,
+				Deckstring = _mulliganV2Params.Deckstring,
 				DeckCards = playerDeck,
 				PlayerClass = _playerClass.ToString(),
-				OpponentClass = _mulliganGuideParams.OpponentClass,
-				GameType = _mulliganGuideParams.GameType,
-				FormatType = _mulliganGuideParams.FormatType,
-				PlayerInitiative = _mulliganGuideParams.PlayerInitiative,
-				PlayerStarLevel = _mulliganGuideParams.PlayerStarLevel,
-				PlayerRegion = _mulliganGuideParams.PlayerRegion,
+				OpponentClass = _mulliganV2Params.OpponentClass,
+				GameType = _mulliganV2Params.GameType,
+				FormatType = _mulliganV2Params.FormatType,
+				PlayerInitiative = _mulliganV2Params.PlayerInitiative,
+				PlayerStarLevel = _mulliganV2Params.PlayerStarLevel,
+				PlayerRegion = _mulliganV2Params.PlayerRegion,
 
 				OfferedCards = MulliganState.OfferedCards?.Select(x => x.Card.DbfId).ToArray(),
 				KeptCards = MulliganState.KeptCards?.Select(x => x.Card.DbfId).ToArray(),
 				FinalCardsInHand = MulliganState.FinalCardsInHand?.Select(x => x.Card.DbfId).ToArray(),
 				MulliganGuideVisible = Metrics.ConstructedMulliganGuideOverlayDisplayed,
 				PlayState = PlayerEntity?.GetTag(GameTag.PLAYSTATE) ?? 0,
-				Turns = turns
+				Turns = turns,
+				IsPremium = Metrics.IsSubscribed,
+				IsTrial = Metrics.MulliganGuideTrialActivated
 			};
 		}
 

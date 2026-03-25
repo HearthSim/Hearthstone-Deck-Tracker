@@ -28,6 +28,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private static readonly Lazy<OAuthData> Data;
 		private static readonly Dictionary<string, CacheObj> Cache = new Dictionary<string, CacheObj>();
 
+		public static bool AccountUpdateInProgress;
+
 		private static readonly int[] Ports = { 17781, 17782, 17783, 17784, 17785, 17786, 17787, 17788, 17789 };
 		private const string HSReplayNetClientId = "jIpNwuUWLFI6S3oeQkO3xlW6UCnfogw1IpAbFXqq";
 		private const string TwitchExtensionId = "apwln3g3ia45kk690tzabfp525h9e1";

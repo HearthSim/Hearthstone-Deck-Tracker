@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			// HS-Constructed
 			public const string HSDecklistVisible = "Overlay Decklist Visible";
 			public const string HSMulliganGuideOverlay = "Support Mulligan Choice";
+			public const string HSMulliganOnboarding = "Onboarded Mulligan GV-2";
 
 			// Arena
 			public const string ArenasmithOverlay = "Used Arenasmith Overlay during Draft";

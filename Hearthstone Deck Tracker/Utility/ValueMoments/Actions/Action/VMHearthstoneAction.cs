@@ -9,6 +9,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 {
 	public abstract class VMHearthstoneAction : VMEndMatchAction
 	{
+		public const string MulliganGuideOverlay = "MulliganGuideOverlay";
+
 		protected VMHearthstoneAction(
 			Franchise franchise, int? maxDailyOccurrences,
 			int heroDbfId, string heroName, GameResult matchResult, GameMode gameMode, GameType gameType, int starLevel, GameMetrics gameMetrics
@@ -28,6 +30,11 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			GameType = gameType;
 			StarLevel = starLevel;
 			MulliganGuideOverlayDisplayed = gameMetrics.ConstructedMulliganGuideOverlayDisplayed;
+			if(gameMetrics.MulliganGuideTrialActivated)
+				TrialsActivated = new[] { MulliganGuideOverlay };
+			if(gameMetrics.MulliganGuideTrialsRemaining.HasValue)
+				TrialsRemaining = new[] { $"{MulliganGuideOverlay}:{gameMetrics.MulliganGuideTrialsRemaining}" };
+
 			ShowedOpponentArenaPackage = gameMetrics.ArenaShowedOpponentPackage;
 			HearthstoneSettings = new HearthstoneSettings();
 		}
@@ -49,6 +56,12 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonIgnore]
 		public bool MulliganGuideOverlayDisplayed { get; }
+
+		[JsonProperty("trials_activated", NullValueHandling = NullValueHandling.Ignore)]
+		public string[]? TrialsActivated { get; }
+
+		[JsonProperty("trials_remaining", NullValueHandling = NullValueHandling.Ignore)]
+		public string[]? TrialsRemaining { get; }
 
 		[JsonIgnore]
 		public HearthstoneSettings HearthstoneSettings { get; }

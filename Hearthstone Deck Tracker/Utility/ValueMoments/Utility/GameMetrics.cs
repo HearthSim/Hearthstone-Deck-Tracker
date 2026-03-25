@@ -2,7 +2,10 @@
 {
 	public class GameMetrics
 	{
+		public bool IsSubscribed { get; set; }
 		public bool ConstructedMulliganGuideOverlayDisplayed { get; set; }
+		public bool MulliganGuideTrialActivated { get; set; }
+		public int? MulliganGuideTrialsRemaining { get; set; }
 		public bool ArenaShowedOpponentPackage { get; set; }
 		public int BattlegroundsMinionTiersClicks { get; private set; }
 		public int BattlegroundsMinionsByMinionTypeFilterClicks { get; private set; }

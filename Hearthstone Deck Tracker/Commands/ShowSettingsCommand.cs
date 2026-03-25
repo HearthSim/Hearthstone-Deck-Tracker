@@ -12,6 +12,8 @@ public class ShowSettingsCommand : ICommand
 		Battlegrounds,
 		Notifications,
 		Arena,
+		General,
+		Mulligan,
 	}
 
 	private Focus? ParseParameter(object? parameter)
@@ -47,6 +49,12 @@ public class ShowSettingsCommand : ICommand
 				break;
 			case Focus.Arena:
 				Core.MainWindow.Options.TreeViewItemOverlayArena.IsSelected = true;
+				break;
+			case Focus.General:
+				Core.MainWindow.Options.TreeViewItemOverlayGeneral.IsSelected = true;
+				break;
+			case Focus.Mulligan:
+				Core.MainWindow.Options.TreeViewItemOverlayMulligan.IsSelected = true;
 				break;
 		}
 		Core.MainWindow.FlyoutOptions.IsOpen = true;

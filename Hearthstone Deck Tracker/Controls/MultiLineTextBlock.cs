@@ -78,6 +78,11 @@ namespace Hearthstone_Deck_Tracker
 			                                                                                             TextWrapping.Wrap,
 			                                                                                             OnFormattedTextUpdated));
 
+		public static readonly DependencyProperty AutoShrinkFontProperty =
+			DependencyProperty.Register("AutoShrinkFont", typeof(bool), typeof(MultiLineTextBlock),
+				new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+
 		private FormattedText? _formattedText;
 
 		public MultiLineTextBlock()
@@ -169,6 +174,12 @@ namespace Hearthstone_Deck_Tracker
 			get => 2;
 		}
 
+		public bool AutoShrinkFont
+		{
+			get => (bool)GetValue(AutoShrinkFontProperty);
+			set => SetValue(AutoShrinkFontProperty, value);
+		}
+
 		protected override void OnRender(DrawingContext drawingContext)
 		{
 			EnsureFormattedText();
@@ -199,12 +210,18 @@ namespace Hearthstone_Deck_Tracker
 
 			var fontSize = FontSize;
 
-			while((_formattedText.Height / (fontSize * 1.8)) > MaxLines && fontSize > 5)
-				_formattedText.SetFontSize(fontSize--);
+			if(AutoShrinkFont)
+			{
+				while((_formattedText.Height / (fontSize * 1.8)) > MaxLines && fontSize > 5)
+					_formattedText.SetFontSize(fontSize--);
 
-			if((int)fontSize == (int)FontSize && singleLineRatio < 1)
-				_formattedText.SetFontSize((int)(fontSize * singleLineRatio));
-
+				if((int)fontSize == (int)FontSize && singleLineRatio < 1)
+					_formattedText.SetFontSize((int)(fontSize * singleLineRatio));
+			}
+			else
+			{
+				_formattedText.SetFontSize(FontSize);
+			}
 			return new Size(_formattedText.Width, _formattedText.Height + 2);
 		}
 

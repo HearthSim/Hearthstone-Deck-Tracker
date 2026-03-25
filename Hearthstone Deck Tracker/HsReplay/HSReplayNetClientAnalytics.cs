@@ -188,6 +188,26 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			TrackAction(new ArenaDraftStartAction(draftInfo, arenaOverlayVisible, trialsActivated, trialsRemaining));
 		}
 
+		public static void OnOnboardingNotificationShowed()
+		{
+			TrackAction(new MulliganGV2OnboardingAction(Franchise.HSConstructed, MulliganGV2OnboardingAction.Action.ShowedOnboardingNotification));
+		}
+
+		public static void OnOnboardingNotificationDismissed()
+		{
+			TrackAction(new MulliganGV2OnboardingAction(Franchise.HSConstructed, MulliganGV2OnboardingAction.Action.DismissedOnboardingNotification));
+		}
+
+		public static void OnLearnMoreOnboardingNotification()
+		{
+			TrackAction(new MulliganGV2OnboardingAction(Franchise.HSConstructed, MulliganGV2OnboardingAction.Action.LearnMoreOnboardingNotification));
+		}
+
+		public static void OnOpenedOnboardingModal()
+		{
+			TrackAction(new MulliganGV2OnboardingAction(Franchise.HSConstructed, MulliganGV2OnboardingAction.Action.OpenedOnboardingModal));
+		}
+
 		public static void TryTrackToastClick(Franchise franchise, ToastAction.Toast toastNameEnum)
 		{
 			TrackAction(new ToastAction(franchise, toastNameEnum));

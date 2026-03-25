@@ -12,6 +12,7 @@
         xmlns:battlegroundsSession="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session"
         xmlns:battlegroundsTrinkets="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.TrinketPicking"
         xmlns:mulligan="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan"
+        xmlns:mulliganV2="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2"
         xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
         xmlns:mercenaries="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries"
         xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
@@ -406,12 +407,18 @@
                     x:Name="ConstructedMulliganGuide"
                     DataContext="{Binding ConstructedMulliganGuideViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                 />
+                <mulliganV2:ConstructedMulliganGuideV2
+                    x:Name="ConstructedMulliganGuideV2"
+                    DataContext="{Binding ConstructedMulliganGuideV2ViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
                 <mulligan:ConstructedMulliganGuidePreLobby
                     x:Name="ConstructedMulliganGuidePreLobby"
                     Canvas.Top="0" Canvas.Left="0"
                     DataContext="{Binding ConstructedMulliganGuidePreLobbyViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                 />
 
+                <mulligan:ConstructedMulliganPreLobbyWidget x:Name="ConstructedPreLobbyWidget" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed"
+                                     DataContext="{Binding ConstructedMulliganPreLobbyWidgetViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <tier7:Tier7PreLobby x:Name="Tier7PreLobby" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed"
                                      DataContext="{Binding Tier7PreLobbyViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <arena:ArenaPreDraft x:Name="ArenaPreLobby" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed"
