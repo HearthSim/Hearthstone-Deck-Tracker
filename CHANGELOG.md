@@ -1,6 +1,29 @@
-## **Unreleased**
+## **Release v1.51.0 - 2026-03-25**
 **Hearthstone**:
+- New Premium feature: Mulligan G-V2!\
+  *As a free user, you can try it for 5 games per week.*
 - Fixed some wild decks being considered standard.
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results where:
+  - Timewapred Festergut cards added to hand were not counting stats for Dramaloc
+  - Timewarped Red Whelp start of combat attacks were each missing 3 points of damage
+  - Timewarped Embalmer ability was not resetting when made golden during combat
+  - Irate Rooster was sometimes causing incorrect second attacker when Wingmen hero power was present
+  - Golden Twilight Broodmother was incorrectly summoning golden whelps
+  - Bird Buddy avenge triggers in a mirror match were not resolving in the correct order
+  - Multiple twilight hatchling triggers could cause a Fish of N'zoth killed within "attack immediately" scope to receive the wrong number of deathrattles
+  - Reborn minions killed within a twilight hatchling "attack immediately" scope were not saving Jelly Belly
+  - Fixed Teron Gorefiend hero power resummoned minion position in cases when the minion destroyed summons multiple minions from reborn and/or deathrattle
+  - Grease Bot and Timewarped Guard were missing divine shield after being reborn in combat
+  - Icesnarl ability could prevent it form being killed
+  - Timewarped Warghoul was not identifying minions with bonus deathrattles as candidates to trigger
+  - Golden Timewarped Stonedrake start of combat ability was being double applied
+  - Timewarped Whirl-O-Tron was not properly copying Stitched Salvager
+  - Show Cyclist deathrattle was bot being copied properly to Fish of N'Zoth
+  - The minion chosen from Thorim Stormlord hero power was appearing in the wrong hand position when a Flighty Scout was also purchased on the first turn. This was causing Expert Aviator rallies to apply to the wrong minion in hand.
+  - Timewarped Magnanimoose and Timewarped Nellie's Ship were not identifying the correct summoned candidate(s) for the friendly player.
+- Added simulation support for Baby N'Zoth.
 
 ## **Release v1.50.6 - 2026-03-18**
 **Battlegrounds**:
