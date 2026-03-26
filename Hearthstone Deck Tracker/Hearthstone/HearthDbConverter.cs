@@ -377,7 +377,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static HearthDb.Deckstrings.Deck? ToHearthDbDeck(HearthMirror.Objects.Deck deck, FormatType format)
 		{
-			var heroCard = Database.GetCardFromId(deck.Hero);
+			var heroClass = Database.GetHeroNameFromId(deck.Hero, false);
+			var heroCard = Database.GetHeroCardFromClass(heroClass);
 			if(heroCard == null)
 				return null;
 
