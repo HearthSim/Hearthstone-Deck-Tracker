@@ -1,4 +1,4 @@
-## **Release v1.51.0 - 2026-03-25**
+## **Release v1.51.1 - 2026-03-26**
 **Hearthstone**:
 - New Premium feature: Mulligan G-V2!\
   *As a free user, you can try it for 5 games per week.*
