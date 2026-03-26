@@ -78,7 +78,7 @@ public class ConstructedMulliganGuideV2ViewModel : ViewModel
 		}
 		else
 		{
-			Error = LocUtil.Get("Mulligan V2 Not Available for this Deck");
+			Error = LocUtil.Get("MulliganGV2_Error_NotAvailable");
 		}
 	}
 
