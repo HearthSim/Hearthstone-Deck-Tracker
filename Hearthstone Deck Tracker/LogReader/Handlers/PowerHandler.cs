@@ -272,8 +272,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
 						if((gameState.CurrentBlock is { HideShowEntities: true }
 						    && !entity.Info.RevealedOnHistory
-						    && !entity.HasTag(GameTag.DISPLAYED_CREATOR))
-						   || entity.CardId == NonCollectible.Rogue.GaronaHalforcen_KingLlaneToken)
+						    && !entity.HasTag(GameTag.DISPLAYED_CREATOR)))
 						{
 							entity.Info.Hidden = true;
 						}
