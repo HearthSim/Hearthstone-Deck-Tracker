@@ -7,7 +7,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 
 public class ImbueCounter : NumericCounter
 {
-	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Neutral.MalorneTheWaywatcher;
+	protected override string? CardIdToShowInUI => IsHamuul ?
+		HearthDb.CardIds.NonCollectible.Druid.DreamboundDisciple_BlessingOfTheGolem :
+		HearthDb.CardIds.Collectible.Neutral.MalorneTheWaywatcher;
+
 	public override string LocalizedName => LocUtil.Get("Counter_Imbue", useCardLanguage: true);
 
 	public override string[] RelatedCards => new string[]
@@ -40,12 +43,37 @@ public class ImbueCounter : NumericCounter
 			FilterCardsByClassAndFormat(RelatedCards, Game.Opponent.OriginalClass);
 	}
 
-	public override string ValueToShow() => Counter.ToString();
+	public override string ValueToShow() => IsHamuul ? $"{Counter}  {SubCounter}/2" : Counter.ToString();
+
+	private bool IsHamuul = false;
+	private int SubCounter = 0;
 
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
 	{
 		if(!Game.IsTraditionalHearthstoneMatch)
 			return;
+
+		var controller = entity.GetTag(GameTag.CONTROLLER);
+		var isCounterFromController = controller == Game.Player.Id && IsPlayerCounter
+		                               || controller == Game.Opponent.Id && !IsPlayerCounter;
+
+		if(!isCounterFromController)
+			return;
+
+		if(entity.CardId == HearthDb.CardIds.Collectible.Druid.HamuulRunetotem &&
+		   tag == GameTag.HAS_ACTIVATE_POWER && value == 1
+		)
+		{
+			IsHamuul = true;
+			return;
+		}
+
+		if(tag == GameTag.IMBUE_SUB_COUNTER && IsHamuul)
+		{
+			SubCounter = value;
+			OnCounterChanged();
+			return;
+		}
 
 		if(tag != (GameTag)3527)
 			return;
@@ -53,11 +81,6 @@ public class ImbueCounter : NumericCounter
 		if(value == 0)
 			return;
 
-		var controller = entity.GetTag(GameTag.CONTROLLER);
-
-		if(controller == Game.Player.Id && IsPlayerCounter || controller == Game.Opponent.Id && !IsPlayerCounter)
-		{
-			Counter = value;
-		}
+		Counter = value;
 	}
 }
