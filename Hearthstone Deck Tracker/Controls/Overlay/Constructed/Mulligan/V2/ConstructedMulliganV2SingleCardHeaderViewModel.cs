@@ -475,8 +475,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 				_ => ""
 			};
 
-			BaseKeepRate = string.Format("Base Keep Rate: {0}%", baseKeepRate);
-			AdjustedKeepRate = string.Format("Adjusted Keep Rate: {0}%", adjustedKeepRate);
+			BaseKeepRate = string.Format(LocUtil.Get("MulliganGV2_Tooltip_BaseKeepRate"), baseKeepRate);
+			AdjustedKeepRate = string.Format(LocUtil.Get("MulliganGV2_Tooltip_AdjustedKeepRate"), adjustedKeepRate);
 
 		}
 
