@@ -31,6 +31,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static NewUserOnboardingViewModel OnboardingViewModel { get; } = new();
 
+		private static int _mulliganGV2OnboardingViews = 0;
+
 		static HSReplayNetClientAnalytics()
 		{
 			Client = new Lazy<ClientAnalyticsClient>(LoadClient);
@@ -190,6 +192,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static void OnOnboardingNotificationShowed()
 		{
+			_mulliganGV2OnboardingViews++;
+			if(_mulliganGV2OnboardingViews > 1) return;
 			TrackAction(new MulliganGV2OnboardingAction(Franchise.HSConstructed, MulliganGV2OnboardingAction.Action.ShowedOnboardingNotification));
 		}
 
