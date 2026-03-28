@@ -757,7 +757,7 @@ public class ArenaPickHelperViewModel : ViewModel
 		}
 	}
 
-	private readonly Dictionary<(long? deckId, int redraftNumber), ArenaCardStats?> _arenaCardStatsCache = new();
+	private Dictionary<(long? deckId, int redraftNumber), ArenaCardStats?> _arenaCardStatsCache = new();
 
 	public async void OnDeckEditing()
 	{
@@ -794,8 +794,8 @@ public class ArenaPickHelperViewModel : ViewModel
 			var deck = originalDeck.Length == 35 ? originalDeck : originalDeck.Concat(redraftDeck);
 
 			stats = await MakeRequestEditDeck(deck, _chosenHero, redraftNumber, ArenaSeasonId, arenaInfo?.Deck.Id ?? -1, accountId, IsUnderground);
-			Log.Info(stats?.ToString() ?? "");
-			 _arenaCardStatsCache.Add((deckId, redraftNumber), stats);
+			var key = (deckId, redraftNumber);
+			_arenaCardStatsCache[key] = stats;
 		}
 
 		RedraftDiscardVisibility = Config.Instance.ShowArenaRedraftDiscard ? Visibility.Visible : Visibility.Collapsed;
