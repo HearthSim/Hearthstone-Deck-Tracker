@@ -254,7 +254,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard MotionDenied = new MultiIdCard(Collectible.Hunter.MotionDenied);
 				public static readonly MultiIdCard OpenTheCages = new MultiIdCard(Collectible.Hunter.OpenTheCages);
 				public static readonly MultiIdCard PackTactics = new MultiIdCard(Collectible.Hunter.PackTactics);
-				public static readonly MultiIdCard PressurePlate = new MultiIdCard(Collectible.Hunter.PressurePlate);
+				public static readonly MultiIdCard PressurePlate = new MultiIdCard(Collectible.Hunter.PressurePlate, Collectible.Hunter.PressurePlateCore);
 				public static readonly MultiIdCard RatTrap = new MultiIdCard(Collectible.Hunter.RatTrap, Collectible.Hunter.RatTrapCore);
 				public static readonly MultiIdCard SnakeTrap = new MultiIdCard(Collectible.Hunter.SnakeTrap, Collectible.Hunter.SnakeTrapCorePlaceholder, Collectible.Hunter.SnakeTrapVanilla);
 				public static readonly MultiIdCard Snipe = new MultiIdCard(Collectible.Hunter.SnipeExpert1, Collectible.Hunter.SnipeVanilla, Collectible.Hunter.SnipeWONDERS);

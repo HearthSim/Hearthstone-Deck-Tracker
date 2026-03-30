@@ -1,6 +1,7 @@
 ## **Unreleased**
 **Hearthstone**:
 - Druid Imbue Counter now shows spell progress.
+- Fixed Pressure Plate not appearing in the secrets helper.
 - Fixed King Llane appearing in the wrong player's decklist.
 
 ## **Release v1.51.1 - 2026-03-26**
