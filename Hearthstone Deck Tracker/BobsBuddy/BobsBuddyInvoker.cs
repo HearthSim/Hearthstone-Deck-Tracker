@@ -610,11 +610,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			Log.Info($"pPirates={inputPlayer.PiratesSummonCounter}, pBeasts={inputPlayer.BeastsSummonCounter}, pDeadLastCombat={inputPlayer.FriendlyMinionsDeadLastCombatCounter}, pBattlecry={inputPlayer.BattlecryCounter}, friendly={friendly}");
 
 			inputPlayer.BloodGemAtkBuff = playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFATKVALUE);
-			inputPlayer.BloodGemHealthBuff =playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);
+			inputPlayer.BloodGemHealthBuff = playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);
 
 			Log.Info($"pBloodGem=+{inputPlayer.BloodGemAtkBuff}/+{inputPlayer.BloodGemHealthBuff}, friendly={friendly}");
-		}
 
+			inputPlayer.TavernSpellAtkBuff = playerEntity.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE);
+			inputPlayer.TavernSpellHealthBuff = playerEntity.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE);
+		}
 
 		private void SnapshotBoardState(int turn)
 		{
