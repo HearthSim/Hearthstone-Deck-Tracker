@@ -95,6 +95,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_TheLostCity")]
 		THE_LOST_CITY = 1952,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_AcrossTheTimeways")]
-		TIME_TRAVEL = 1952
+		TIME_TRAVEL = 1957,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_CATACLYSM")]
+		CATACLYSM = 1980,
 	}
 }

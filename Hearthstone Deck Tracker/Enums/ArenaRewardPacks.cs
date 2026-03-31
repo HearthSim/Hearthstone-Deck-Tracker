@@ -102,5 +102,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_AcrossTheTimeways")]
 		AcrossTheTimeways = CardSet.TIME_TRAVEL,
+
+		[LocDescription("Enum_ArenaRewardPacks_CATACLYSM")]
+		CATACLYSM = CardSet.CATACLYSM,
 	}
 }

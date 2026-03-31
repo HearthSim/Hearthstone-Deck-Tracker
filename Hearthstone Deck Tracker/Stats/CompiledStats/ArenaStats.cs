@@ -88,6 +88,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountAcrossTheTimeways => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.AcrossTheTimeways));
 
+		public int PacksCountCataclysm => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.CATACLYSM));
 
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
