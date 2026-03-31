@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.51.2 - 2026-03-31**
 **Hearthstone**:
 - Druid Imbue Counter now shows spell progress.
 - Fixed Pressure Plate not appearing in the secrets helper.
