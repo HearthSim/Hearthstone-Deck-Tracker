@@ -110,7 +110,7 @@ public class ConstructedMulliganGuideV2ViewModel : ViewModel
 
 		foreach (var cardByPosition in data.Data.CardsByPosition)
 		{
-			if(int.TryParse(cardByPosition.Key, out var position))
+			if(int.TryParse(cardByPosition.Key, out var position) && position > 0 && position <= CardStats.Count)
 			{
 				CardStats[position - 1]?.CardHeaderVM.UpdateCard(cardByPosition.Value);
 			}
