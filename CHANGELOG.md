@@ -1,3 +1,26 @@
+## **Release v1.51.3 - 2026-04-02**
+**Updated for Hearthstone 35.0.3**
+
+**Hearthstone**:
+- Fixed crashes related to Mulligan G-V2.
+- Fixed an issue where CATACLYSM packs were missing as an arena reward.
+
+**Battlegrounds**:
+- Fixed incorrect simulation results where:
+	- Bile Spitter could target itself as a candidate for venomous
+	- Hackerfin buff was missing base stats when counting keywords
+	- Lovesick Balladist was not targeting opponent minions and was missing health buff in some conditions
+	- Timewarped Chameleon was not properly copying an activated Stitched Salvager deathratte
+	- Timewapred Embalmer was not checking the correct parameter to determine if a minion already had reborn
+	- Passive attack buffs increased during combat (e.g., Timewarped Caretaker, Humming Bird) were not triggering cards like Tentacle of C'thun
+	- An opponent Malorne made golden during combat was missing stats
+	- Some buffs were being applied too soon on Twilight Hatchlings before they attacked
+	- Defiant Shipwright was sometimes saving itself from being killed
+	- Tavish hero power could target minions with stealth
+- Added simulation support to reset trigger counters for certain minions goldenized in combat (e.g., Stalwart Kodo, Timewarped Sea Glass)
+- Added simulation support for Magicfin Apprenice and Tavern Spells to trigger during combat
+- Added simulation support for tavern spell attack and health bonus to be added to tavern spells cast during combat
+
 ## **Release v1.51.2 - 2026-03-31**
 **Hearthstone**:
 - Druid Imbue Counter now shows spell progress.
