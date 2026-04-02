@@ -14,6 +14,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public AccountId? AccountId { get; set; }
 
+		public BattlegroundsLobbyInfo? BattlegroundsLobbyInfo { get; set; }
+
 		public int? HearthstoneBuild
 		{
 			get
@@ -33,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			_hearthstoneBuild = _hearthstoneBuild,
 			AccountId = AccountId,
+			BattlegroundsLobbyInfo = BattlegroundsLobbyInfo,
 			EnqueueTime = EnqueueTime,
 			HearthstoneBuild = HearthstoneBuild,
 			Reconnected = Reconnected,

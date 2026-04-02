@@ -50,6 +50,7 @@ public class SceneHandler
 		{
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 			Watchers.BattlegroundsTeammateBoardStateWatcher.Stop();
+			Watchers.BattlegroundsLobbyInfoWatcher.Stop();
 			Watchers.BaconWatcher.Stop();
 			Watchers.BigCardWatcher.Stop();
 			Watchers.ChoicesWatcher.Stop();

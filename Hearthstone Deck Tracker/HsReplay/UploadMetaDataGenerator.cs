@@ -84,6 +84,19 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					metaData.BattlegroundsDetails.LobbyRawHeroDbfIds = game.BattlegroundsDetails.LobbyRawHeroDbfIds.ToArray();
 				}
 
+				if(gameMetaData?.BattlegroundsLobbyInfo != null)
+				{
+					var lobbyInfo = gameMetaData.BattlegroundsLobbyInfo;
+					metaData.BattlegroundsDetails.GameUuid = lobbyInfo.GameUuid;
+					metaData.BattlegroundsDetails.LobbyPlayers = lobbyInfo.Players.Select(p => new UploadMetaData.BattlegroundsLobbyStatePlayer
+					{
+						HeroCardId = p.HeroCardId,
+						PlayerName = p.Name,
+						AccountHi = p.AccountId?.Hi,
+						AccountLo = p.AccountId?.Lo,
+					}).ToList();
+				}
+
 				metaData.BattlegroundsRaces = BattlegroundsUtils.GetAvailableRaces(game.GameId).Cast<int>().OrderBy(x => x).ToArray();
 			}
 			if(game?.GameMode == GameMode.Mercenaries)

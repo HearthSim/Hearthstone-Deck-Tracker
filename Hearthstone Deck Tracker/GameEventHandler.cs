@@ -717,6 +717,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.BattlegroundsTrinketGuideListViewModel.Update();
 					Core.Overlay.BattlegroundsQuestGuideListViewModel.Update();
 					Watchers.BattlegroundsLeaderboardWatcher.Run();
+					Watchers.BattlegroundsLobbyInfoWatcher.Run();
 					if(_game.IsBattlegroundsDuosMatch)
 						Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
 				}
@@ -1873,6 +1874,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void HandleBattlegroundsStart()
 		{
 			Watchers.BattlegroundsLeaderboardWatcher.Run();
+			Watchers.BattlegroundsLobbyInfoWatcher.Run();
 			OpponentDeadForTracker.Reset();
 			Core.Overlay.BattlegroundsInspirationViewModel.Reset();
 
