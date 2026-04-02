@@ -616,6 +616,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			inputPlayer.TavernSpellAtkBuff = playerEntity.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE);
 			inputPlayer.TavernSpellHealthBuff = playerEntity.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE);
+
+			var pHaunted = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.HauntedCarapace_HauntedCarapacePlayerEnchantDnt);
+			if(pHaunted != null)
+			{
+				inputPlayer.HauntedAtkBuff = pHaunted.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+				inputPlayer.HauntedHealthBuff = pHaunted.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				Log.Info($"pHauntedAtk={inputPlayer.HauntedAtkBuff}, pHauntedHealth={inputPlayer.HauntedHealthBuff}, friendly={friendly}");
+			}
 		}
 
 		private void SnapshotBoardState(int turn)
