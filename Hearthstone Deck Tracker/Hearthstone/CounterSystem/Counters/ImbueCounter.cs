@@ -43,7 +43,7 @@ public class ImbueCounter : NumericCounter
 			FilterCardsByClassAndFormat(RelatedCards, Game.Opponent.OriginalClass);
 	}
 
-	public override string ValueToShow() => IsHamuul ? $"{Counter}  {SubCounter}/2" : Counter.ToString();
+	public override string ValueToShow() => IsHamuul ? $"{Counter}  {SubCounter}/3" : Counter.ToString();
 
 	private bool IsHamuul = false;
 	private int SubCounter = 0;
