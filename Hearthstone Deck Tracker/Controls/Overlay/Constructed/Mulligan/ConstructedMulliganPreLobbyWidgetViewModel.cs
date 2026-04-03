@@ -307,11 +307,14 @@ public class ConstructedMulliganPreLobbyWidgetViewModel : ViewModel
 
 	public ICommand SubscribeNowCommand => new Command(() =>
 	{
-		var url = Helper.BuildHsReplayNetUrl("premium/", "constructed_lobby_subscribe");
+		var isStandard = FormatType == FormatType.FT_STANDARD;
+		var campaign = isStandard ? "constructed_lobby_subscribe" : "constructed_lobby_subscribe_wild";
+		var url = Helper.BuildHsReplayNetUrl("premium/", campaign);
 		Helper.TryOpenUrl(url);
 		PossiblySubscribed = true;
+		var button = isStandard ? ClickSubscribeNowAction.Button.ConstructedPreLobby : ClickSubscribeNowAction.Button.ConstructedPreLobbyWild;
 		HSReplayNetClientAnalytics.OnClickSubscribeNowLink(
-			Franchise.HSConstructed, ClickSubscribeNowAction.Button.ConstructedPreLobby, TrialUsesRemaining
+			Franchise.HSConstructed, button, TrialUsesRemaining
 		);
 	});
 

@@ -15,6 +15,8 @@ public class ClickSubscribeNowAction : VMAction
 		BattlegroundsPreLobby,
 		[JsonProperty("constructed_pre_lobby")]
 		ConstructedPreLobby,
+		[JsonProperty("constructed_pre_lobby_wild")]
+		ConstructedPreLobbyWild,
 	}
 
 	public ClickSubscribeNowAction(
