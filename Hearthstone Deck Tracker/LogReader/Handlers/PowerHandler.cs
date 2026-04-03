@@ -1445,6 +1445,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								};
 								AddKnownCardId(gameState, createdByAzsharasTriumph.Serialize(), count: 5);
 								break;
+							case NonCollectible.Neutral.EnthrallToken:
+								var createdByDeathwing = new FakeCard(Collectible.Invalid.DeathwingWorldbreakerHeroic)
+								{
+									Type = CardType.MINION,
+									Rarity = Rarity.LEGENDARY,
+									Cost = 1,
+									Tags = new Dictionary<string, int>
+									{
+										{ GameTag.ELITE.ToString(), 1 },
+										{ GameTag.CARDRACE.ToString(), (int)Race.DRAGON }
+									}
+								};
+								AddKnownCardId(gameState, createdByDeathwing.Serialize(), count: 5);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
