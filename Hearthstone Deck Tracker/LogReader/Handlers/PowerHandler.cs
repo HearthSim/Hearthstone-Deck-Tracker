@@ -191,6 +191,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					entity.Info.CopyOfCardId = copyOfCardId;
 
+					var block = gameState.CurrentBlock;
+					if(block?.SourceEntityId != null && game.Entities.TryGetValue(block.SourceEntityId, out var blockEntity) && blockEntity.HasTag(GameTag.SHATTERED))
+					{
+						entity.Info.ShatterCombined = true;
+					}
+
 					game.Entities.Add(id, entity);
 
 					if(gameState.CurrentBlock != null && zone == Zone.DECK)

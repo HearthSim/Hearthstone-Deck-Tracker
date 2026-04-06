@@ -26,6 +26,12 @@ namespace Hearthstone_Deck_Tracker.Enums
 		Kept = 'K',
 
 		[AssetName("/Images/card-icon-forged.png")]
-		Forged = 'F'
+		Forged = 'F',
+
+		[AssetName("/Images/shatter-split.png")]
+		Shattered = 's',
+
+		[AssetName("/Images/shatter-combined.png")]
+		ShatterCombined = 'S',
 	}
 }
