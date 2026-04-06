@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.51.5 - 2026-04-06**
 **Hearthstone**:
 - Added unknown cards shuffled by Deathwing Worldbreaker.
 - Added icons that indicate shattered cards.
