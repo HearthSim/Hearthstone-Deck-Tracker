@@ -3,6 +3,18 @@
 - Added unknown cards shuffled by Deathwing Worldbreaker.
 - Added icons that indicate shattered cards.
 
+**Bob's Buddy**:
+- Fixed incorrect simulation results where:
+  - Slithid Burrower deathrattle was not copied properly by Fish of N'Zoth
+  - Slithid Burrower deathrattle bonus was not reset on reborn
+  - Timewarped Tamuzo was not properly buffing Beetles
+  - Titanic Guardians were triggering each other
+  - Summon location of a Flighty Scout summoned a second time was incorrect
+  - Minions like Defiant Shipwright were not receiving health buff immediately from Illidan hero power
+  - Crocheted Sungill trinkets had outdated behavior
+  - Baleful Incense trinket was not considering all undead candidates
+  - A windfury minion summoned with Tavish hero power was only attacking the same target on the second attack
+
 ## **Release v1.51.4 - 2026-04-02**
 **Updated for Hearthstone 35.0.3**
 
