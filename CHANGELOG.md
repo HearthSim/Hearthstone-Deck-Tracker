@@ -1,3 +1,6 @@
+## **Release v1.51.6 - 2026-04-14**
+**Updated for Hearthstone 35.2.0**
+
 ## **Release v1.51.5 - 2026-04-06**
 **Hearthstone**:
 - Added unknown cards shuffled by Deathwing Worldbreaker.
