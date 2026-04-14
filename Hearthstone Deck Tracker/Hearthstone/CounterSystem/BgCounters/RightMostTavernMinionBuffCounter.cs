@@ -8,11 +8,11 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.BgCounters;
 
-public class RightMostTavernMinionBuffCounter : StatsCounter
+public class RandomTavernMinionBuffCounter : StatsCounter
 {
 	public override bool IsBattlegroundsCounter => true;
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.WorgenExecutive;
-	public override string LocalizedName => LocUtil.Get("Counter_RightMostTavernMinionBuff", useCardLanguage: true);
+	public override string LocalizedName => LocUtil.Get("Counter_RandomTavernMinionBuff", useCardLanguage: true);
 	public override string[] RelatedCards => new []
 	{
 		HearthDb.CardIds.NonCollectible.Neutral.WorgenExecutive,
@@ -22,7 +22,7 @@ public class RightMostTavernMinionBuffCounter : StatsCounter
 		HearthDb.CardIds.NonCollectible.Neutral.EasterlyWinds
 	};
 
-	public RightMostTavernMinionBuffCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
+	public RandomTavernMinionBuffCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
 
@@ -39,7 +39,7 @@ public class RightMostTavernMinionBuffCounter : StatsCounter
 		if(entity.IsControlledBy(Game.Player.Id) != IsPlayerCounter)
 			return;
 
-		if(entity.Card.Id != HearthDb.CardIds.NonCollectible.Neutral.RightMostTavernMinionBuffPlayerEnchDnt)
+		if(entity.Card.Id != HearthDb.CardIds.NonCollectible.Neutral.RandomMinionTavernMinionBuffPlayerEnchDnt)
 			return;
 
 		if(tag == GameTag.TAG_SCRIPT_DATA_NUM_1)
