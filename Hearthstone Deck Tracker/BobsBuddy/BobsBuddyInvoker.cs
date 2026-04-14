@@ -437,6 +437,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			inputPlayer.Tier = playerGameHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
 
 			var playerHeroPowers = gamePlayer.Board.Where(x => x.IsHeroPower).Take(2).ToList();
+			var claimedHeroPowerTargets = new HashSet<int>();
 			foreach(var heroPower in playerHeroPowers)
 			{
 				var pHpData = heroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
@@ -450,9 +451,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					var attachedToEntityId = gamePlayer.PlayerEntities
 						.Where(x => x.CardId == NonCollectible.Neutral.TeronGorefiend_ImpendingDeath && (!friendly || (x.IsInPlay && friendly)))
 						.Select(x => x.GetTag(GameTag.ATTACHED))
-						.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
+						.FirstOrDefault(x => minionsInPlay.Any(y => y == x) && !claimedHeroPowerTargets.Contains(x));
 					if(attachedToEntityId > 0)
+					{
 						pHpData = attachedToEntityId;
+						claimedHeroPowerTargets.Add(attachedToEntityId);
+					}
 				}
 
 				if(heroPower?.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop)
@@ -461,9 +465,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					var attachedToEntityId = gamePlayer.PlayerEntities
 						.Where(x => x.CardId == NonCollectible.Neutral.FlobbidinousFloop_InTheGloop && (!friendly || (x.IsInPlay && friendly)))
 						.Select(x => x.GetTag(GameTag.ATTACHED))
-						.FirstOrDefault(x => minionsInPlay.Any(y => y == x));
+						.FirstOrDefault(x => minionsInPlay.Any(y => y == x) && !claimedHeroPowerTargets.Contains(x));
 					if(attachedToEntityId > 0)
+					{
 						pHpData = attachedToEntityId;
+						claimedHeroPowerTargets.Add(attachedToEntityId);
+					}
 				}
 
 				if(heroPower?.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad)

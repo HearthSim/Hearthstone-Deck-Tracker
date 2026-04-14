@@ -1554,7 +1554,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{ NonCollectible.Neutral.ChoralMrrrglr, NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment },
 						{ NonCollectible.Neutral.TimewarpedMrrrglr, NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment },
 						{ NonCollectible.Neutral.CostumeEnthusiast, NonCollectible.Neutral.CostumeEnthusiast_EnthusiasticEnchantment },
-						{ NonCollectible.Neutral.Dramaloc, NonCollectible.Neutral.Dramaloc_DramaticEnchantment }
+						{ NonCollectible.Neutral.Dramaloc, NonCollectible.Neutral.Dramaloc_DramaticEnchantment },
+						{ NonCollectible.Neutral.DramalocSticker, NonCollectible.Neutral.DramalocSticker_DramaticEnchantment }
 					};
 
 					if(gameState.CurrentBlock?.CardId != null && enchantmentMapping.TryGetValue(gameState.CurrentBlock.CardId, out var enchantmentCardId))
