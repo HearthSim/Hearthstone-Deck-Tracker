@@ -1781,7 +1781,7 @@ namespace Hearthstone_Deck_Tracker
 
 #if(DEBUG)
 			var json = JsonConvert.SerializeObject(parameters);
-			Log.Debug($"Fetching Mulligan Guide with parameters={json}...");
+			Log.Info($"Fetching Mulligan Guide with parameters={json}...");
 #endif
 
 			var isUsingTrials = token != null && !userOwnsPremium;
@@ -1839,7 +1839,7 @@ namespace Hearthstone_Deck_Tracker
 
 #if(DEBUG)
 			var json = JsonConvert.SerializeObject(parameters);
-			Log.Debug($"Fetching Mulligan V2 with parameters={json}...");
+			Log.Info($"Fetching Mulligan V2 with parameters={json}...");
 #endif
 
 			var isUsingTrials = token != null && !userOwnsPremium;
