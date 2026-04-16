@@ -602,6 +602,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
 				var starsPerWin = PlayerMedalInfo?.StarsPerWin ?? 0;
 
+				Log.Info($"--- Caching Mulligan Params ---");
+
 				_mulliganV2Params = new MulliganV2Params
 				{
 					Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck), false),
@@ -616,6 +618,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					FormatType = (int)CurrentFormatType,
 					OfferedCards = dbfIds ?? MulliganState.OfferedCards?.Select(x => x.Card.DbfId).ToArray()
 				};
+
+				Log.Info($"PlayerClass: {_mulliganV2Params.PlayerClass} - OpponentClass: {_mulliganV2Params.OpponentClass} - PlayerInitiative: {_mulliganV2Params.PlayerInitiative} - Deckstring: {_mulliganV2Params.Deckstring} - OfferedCards : {_mulliganV2Params.OfferedCards}");
+
 			}
 			catch(Exception e)
 			{
