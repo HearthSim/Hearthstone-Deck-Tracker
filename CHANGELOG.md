@@ -1,6 +1,17 @@
-## **Unreleased**
+## **Release v1.51.7 - 2026-04-17**
 **Hearthstone**:
 - Added card icon to Eternal Firebolt that returned to hand at the end of the turn.
+
+**Battlegrounds**:
+- Fixed incorrect simulation results where:
+	- Scarlet Savior was not receiving divine shield when buffed at start of combat
+    - Tide Raiser was not buffing properly when adjacent minions were killed via cleave damage
+    - Deep Blue Spellcraft spell stats were outdated
+    - Tavish Stormpike hero power trigger order was outdated
+    - Golden Expert Aviator could cause the simulator to fail
+- Added simulation support for Maelstrom Emergent
+- Added simulation support for Balinda Stonehearth
+- Added simulation support for Lorewalker Scroll trinket
 
 ## **Release v1.51.6 - 2026-04-14**
 **Updated for Hearthstone 35.2.0**
