@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Added card icon to Eternal Firebolt that returned to hand at the end of the turn.
+
 ## **Release v1.51.6 - 2026-04-14**
 **Updated for Hearthstone 35.2.0**
 

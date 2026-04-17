@@ -861,6 +861,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case NonCollectible.Neutral.Corpsicle_CorpsicleEnchantment:
 								AddKnownCardId(gameState, Collectible.Deathknight.Corpsicle);
 								break;
+							case NonCollectible.Neutral.EternalFirebolt_EternalFireboltEnchantment:
+								AddKnownCardId(gameState, Collectible.Invalid.EternalFirebolt);
+								break;
 							case Collectible.Mage.CommanderSivara:
 							case Collectible.Neutral.TidepoolPupil:
 								if(
