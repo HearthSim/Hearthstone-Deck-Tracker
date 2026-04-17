@@ -1,4 +1,4 @@
-## **Release v1.51.7 - 2026-04-17**
+## **Release v1.51.8 - 2026-04-17**
 **Hearthstone**:
 - Added card icon to Eternal Firebolt that returned to hand at the end of the turn.
 
