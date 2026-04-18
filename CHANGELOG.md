@@ -1,3 +1,19 @@
+## **Release v1.51.9 - 2026-04-18**
+**Bob's Buddy**:
+- Fixed issue that caused high usage of cpu.
+- Fixed incorrect simulation results where:
+  - Determined Defender deathrattle was not buffing adjacent minions properly when killed via cleave damage
+  - Skulking Bristlemane deathrattle was not properly playing blood gems on adjacent minions when killed via cleave damage
+  - Greater Lorewalker Scroll trinket was being used in place of Lesser Lorewalker Scroll trinket
+  - Sinrunner Blanchy was missing additional passive stats on reborn
+  - Bloodbound Earrings trinket was causing the simulator to fail
+  - War Drum trinket remaining uses per turn was not checked correctly
+  - Lurking Leviathan was missing initial/base attack buff
+- Added simulation support for Bubble Crown trinket
+- Added simulation support for Chef's Choice tavern spell
+- Added simulation support for Temporal Tampering quest reward
+- Added simulation support for Lesser Lorewalker Scroll trinket
+
 ## **Release v1.51.8 - 2026-04-17**
 **Hearthstone**:
 - Added card icon to Eternal Firebolt that returned to hand at the end of the turn.
