@@ -139,7 +139,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					case NonCollectible.Neutral.JarredFrostling_FrostyGlobeEnchantment:
 						minion.AdditionalDeathrattles.Add(JarredFrostling.Deathrattle());
 						break;
-					case NonCollectible.Neutral.BloodGem2:
+					case NonCollectible.Neutral.BloodGems:
 						var atk = attached.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
 						var health = attached.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
 						minion.SetBloodGemStats(atk, health);
