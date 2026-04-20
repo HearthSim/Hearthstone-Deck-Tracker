@@ -24,7 +24,8 @@ public class FreeRefreshCounter : NumericCounter
         {
             HearthDb.CardIds.NonCollectible.Neutral.RefreshingAnomaly,
             HearthDb.CardIds.NonCollectible.Neutral.GhostlyYmirjar,
-            HearthDb.CardIds.NonCollectible.Neutral.LeafThroughThePages
+            HearthDb.CardIds.NonCollectible.Neutral.LeafThroughThePages,
+            HearthDb.CardIds.NonCollectible.Neutral.WyvernOutrider,
         };
     }
 

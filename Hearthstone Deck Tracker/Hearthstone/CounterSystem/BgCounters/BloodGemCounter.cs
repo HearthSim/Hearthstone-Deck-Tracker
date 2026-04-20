@@ -17,7 +17,8 @@ public class BloodGemCounter : StatsCounter
 		HearthDb.CardIds.NonCollectible.Neutral.PricklyPiper,
 		HearthDb.CardIds.NonCollectible.Neutral.FearlessFoodie,
 		HearthDb.CardIds.NonCollectible.Neutral.SanguineRefiner,
-		HearthDb.CardIds.NonCollectible.Neutral.SanguineChampion
+		HearthDb.CardIds.NonCollectible.Neutral.SanguineChampion,
+		HearthDb.CardIds.NonCollectible.Neutral.Vinespeaker,
 	};
 
 	public BloodGemCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)

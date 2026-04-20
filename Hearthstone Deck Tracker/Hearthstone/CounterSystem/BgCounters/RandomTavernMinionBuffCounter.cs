@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.BgCounters;
 public class RandomTavernMinionBuffCounter : StatsCounter
 {
 	public override bool IsBattlegroundsCounter => true;
-	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.WorgenExecutive;
+	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.Waveling;
 	public override string LocalizedName => LocUtil.Get("Counter_RandomTavernMinionBuff", useCardLanguage: true);
 	public override string[] RelatedCards => new []
 	{
