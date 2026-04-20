@@ -624,6 +624,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			inputPlayer.TavernSpellAtkBuff = playerEntity.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE);
 			inputPlayer.TavernSpellHealthBuff = playerEntity.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE);
 
+			inputPlayer.DeathrattleCounter = playerEntity.GetTag((GameTag)4639);
+
 			var pHaunted = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.HauntedCarapace_HauntedCarapacePlayerEnchantDnt);
 			if(pHaunted != null)
 			{
