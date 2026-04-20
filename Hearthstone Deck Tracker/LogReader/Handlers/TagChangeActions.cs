@@ -287,7 +287,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			   entity.GetTag(CONTROLLER) == game.Opponent.Id && entity.IsInZone(PLAY))
 			{
 				if(game.CurrentGameStats != null)
-					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateOpponentHeroPower(entity);
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateOpponentLockAndLoadHeroPower(entity);
 			}
 
 			if(!game.Entities.TryGetValue(value, out var targetEntity))

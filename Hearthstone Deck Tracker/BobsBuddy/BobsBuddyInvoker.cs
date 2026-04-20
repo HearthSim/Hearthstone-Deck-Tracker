@@ -762,7 +762,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
-		internal async void UpdateOpponentHeroPower(Entity attachedEntity)
+		internal async void UpdateOpponentLockAndLoadHeroPower(Entity attachedEntity)
 		{
 			if(_input == null || State != BobsBuddyState.Combat)
 				return;

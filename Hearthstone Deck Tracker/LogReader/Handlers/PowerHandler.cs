@@ -1610,6 +1610,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									.UpdateNelliesShipEnchantment(summonedDbfIds, nelliesEntity.Id, nelliesEntity.IsControlledBy(game.Player.Id));
 						}
 					}
+					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TavishStormpike_LockAndLoad, TriggerKeyword: "TRIGGER_VISUAL" })
+					{
+						var lockAndLoadEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
+						if(lockAndLoadEntity != null && lockAndLoadEntity.IsControlledBy(game.Opponent.Id))
+						{
+							var summonedEntity = game.Entities.Values
+								.Where(e =>
+									e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
+						            e.GetTag(GameTag.CREATOR) == lockAndLoadEntity.Id &&
+									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY
+								).ToArray().FirstOrDefault();
+
+							if(summonedEntity != null)
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+									.UpdateOpponentLockAndLoadHeroPower(summonedEntity);
+						}
+					}
 				}
 				gameState.BlockEnd();
 			}
