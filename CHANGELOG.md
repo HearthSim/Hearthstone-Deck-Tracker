@@ -1,3 +1,27 @@
+## **Release v1.51.10 - 2026-04-20**
+**Hearthstone**:
+- Fixed issue that caused HDT top stop working after rewind.
+
+**Battlegrounds**:
+- Added counter for Demon Fodder.
+- Updated all counters.
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results where:
+  - Blood gems played during combat were incorrectly triggering certain trinkets
+  - Banana Slamma and Slamma Sticker trinket were incorrectly buffing health
+  - Not properly taking into account presence of multiple hero damaged rewind effects
+  - Stomping Stegodon rallys could multiply extensively and cause OutOfMemory exception
+  - Falling Sky Golem was missing stats from deathrattle counter when reborn or resummoned
+- Revised/Added full support for all cards that generate minions to hand during combat
+- Generated minion pool has been scoped to player tier and races in the lobby (when relevant)
+- Ensured minions added to hand this way can also be summoned (e.g., via Expert Aviator)
+- Updated relevant minion changes for Hotfix Patch 35.2.1
+- Added simulation support for Repicating Cathedral trinket
+- Added simulation support for Rewinder Portrait trinket
+- Added simulation support for Tichondrius
+- Added simulation support for Old Soul
+
 ## **Release v1.51.9 - 2026-04-18**
 **Bob's Buddy**:
 - Fixed issue that caused high usage of cpu.
