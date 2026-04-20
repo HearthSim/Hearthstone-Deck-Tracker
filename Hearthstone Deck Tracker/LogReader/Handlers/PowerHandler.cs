@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				else if(int.TryParse(rawEntity, out int entityId))
 					_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, entityId, match.Groups["value"].Value, game);
-				else
+				else // players
 				{
 					var entity = game.Entities.FirstOrDefault(x => x.Value.Name == rawEntity);
 
@@ -115,6 +115,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							tmpEntity.SetTag(tag, value);
 							var player = game.Player.Name == tmpEntity.Name ? game.Player
 										: (game.Opponent.Name == tmpEntity.Name ? game.Opponent : null);
+
+							if(player == null && tmpEntity.Name == "UNKNOWN HUMAN PLAYER"
+							                  && !string.IsNullOrEmpty(game.Player.Name)
+							                  && string.IsNullOrEmpty(game.Opponent.Name))
+							{
+								player = game.Opponent;
+							}
+
 							if(player != null)
 							{
 								var playerEntity = game.Entities.FirstOrDefault(x => x.Value.GetTag(GameTag.PLAYER_ID) == player.Id).Value;
@@ -1501,7 +1509,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					gameState.GameTriggerCount++;
 			}
 			else if(logLine.Contains("CREATE_GAME"))
-				_tagChangeHandler.ClearQueuedActions();
+				Reset();
 			else if(logLine.Contains("BLOCK_END"))
 			{
 				if(gameState.GameTriggerCount < 10 && (game.GameEntity?.HasTag(GameTag.TURN) ?? false))
@@ -1713,7 +1721,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 		}
 
-		internal void Reset() => _tagChangeHandler.ClearQueuedActions();
+		internal void Reset()
+		{
+			_tmpEntities.Clear();
+			_tagChangeHandler.ClearQueuedActions();
+		}
 	}
 
 	public enum DeckLocation

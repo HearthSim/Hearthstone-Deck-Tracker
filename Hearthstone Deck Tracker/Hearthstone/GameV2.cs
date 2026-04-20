@@ -326,7 +326,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(!_matchInfoCacheInvalid)
 				return;
 
-			var missingMedals = 0;
 			MatchInfo? matchInfo = null;
 			for(var i = 0; i <= 30; i++)
 			{
@@ -344,8 +343,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(!IsValidPlayerInfo(matchInfo.LocalPlayer) || !IsValidPlayerInfo(matchInfo.OpposingPlayer, IsMercenariesMatch))
 					continue;
 
-				// sometimes the opponent player info is incomplete for a moment, give it a chance
-				if(missingMedals++ < 2 && IsMedalInfoPresent(matchInfo.LocalPlayer) != IsMedalInfoPresent(matchInfo.OpposingPlayer))
+				// wait for some medal info to be present.
+				// opponent may not have medal info in case of UNKNOWN HUMAN PLAYER
+				if(!IsMedalInfoPresent(matchInfo.LocalPlayer) && !IsMedalInfoPresent(matchInfo.OpposingPlayer))
 					continue;
 
 				// looking good
