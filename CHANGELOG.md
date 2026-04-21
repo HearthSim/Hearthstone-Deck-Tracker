@@ -1,3 +1,8 @@
+## **Release v1.51.11 - 2026-04-21**
+**Bob's Buddy**:
+- Fixed incorrect simulation results where Sly Raptor was not considering the correct pool of minions in the lobby to summon.
+- Added Support for Living Azerite and Azerite Portrait Trinket.
+
 ## **Release v1.51.10 - 2026-04-20**
 **Hearthstone**:
 - Fixed issue that caused HDT top stop working after rewind.
