@@ -774,6 +774,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(tavishLockAndLoad == null)
 				return;
 
+			if (tavishLockAndLoad.AttachedMinion != null)
+				return;
+
 			tavishLockAndLoad.AttachedMinion = GetMinionFromEntity(new Simulator(), false, attachedEntity,
 				GetAttachedEntities(attachedEntity.Id));
 
