@@ -288,7 +288,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.CurrentBlock?.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad &&
 				entity.IsMinion &&
 				entity.GetTag(CONTROLLER) == game.Opponent.Id &&
-				gameState.CurrentBlock?.Id == entity.GetTag(CREATOR) &&
+				gameState.CurrentBlock?.SourceEntityId == entity.GetTag(CREATOR) &&
 				entity.IsInZone(PLAY)
 			)
 			{
