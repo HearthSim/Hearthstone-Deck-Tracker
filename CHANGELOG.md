@@ -1,3 +1,29 @@
+## **Release v1.51.12 - 2026-04-24**
+**Bob's Buddy**:
+- Fixed incorrect simulation results where:
+  - Opponent Tavish Hero power was missing the attached minion
+  - Artisanal Urn trinket, Protective Ring trinket, and Lesser Artisanal Urn trinket were outdated
+  - Pufferquill was sometimes failing to get venomous from a blood gem played on it
+  - Bubble Crown trinket was counting up instead of down
+  - Old Soul in-hand effect was counting up instead of down
+  - Baleful Incense trinket was considering all undead minions for reborn
+  - Golden Lurking Leviathan was buffing too much
+  - Minions made golden from Captain Sanders were missing stats
+  - Sinrunner Blanchy was missing divine shield when reborn if it was granted divine shield earlier (e.g., from Swatting Insects hero power)
+  - Diremuck Forager second summoned minion was wrong
+  - Papa Mrrglton incorrectly buffing self
+  - Octosari Wrap God buff stats were incorrect
+  - Tidemistress Athissa now buffs all friendly naga
+  - Ship Jumper golden behavior was incorrect
+  - Pack Tactics trigger was incorrect
+- Added simulation support for Trusty Crowbar trinket
+- Added simulation support for Miniature Ship trinket
+- Added simulation support for Felburned Ledger trinket
+- Added simulation support for Czarina Portrait trinket
+- Added simulation support for Nalaa the Redeemer and Redeemer Portrait trinket
+- Added simulation support for Timecap'n Hooktail
+- Added simulation support for Nathaniel Blightcaller
+
 ## **Release v1.51.11 - 2026-04-21**
 **Bob's Buddy**:
 - Fixed incorrect simulation results where Sly Raptor was not considering the correct pool of minions in the lobby to summon.
