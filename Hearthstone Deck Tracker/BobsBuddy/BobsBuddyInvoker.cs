@@ -626,6 +626,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			inputPlayer.TavernSpellAtkBuff = playerEntity.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE);
 			inputPlayer.TavernSpellHealthBuff = playerEntity.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE);
 
+			var pBackToBack = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.BackToBackBATTLEGROUNDS);
+			if(pBackToBack != null)
+				inputPlayer.BackToBackCounter = playerEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);
+
 			inputPlayer.DeathrattleCounter = playerEntity.GetTag((GameTag)4639);
 
 			var pHaunted = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.HauntedCarapace_HauntedCarapacePlayerEnchantDnt);
