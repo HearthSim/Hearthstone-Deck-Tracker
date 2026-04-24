@@ -484,7 +484,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							GetAttachedEntities(attachedEntityId));
 					}
 				}
-
 				inputPlayer.AddHeroPower(heroPower?.CardId ?? "", friendly, WasHeroPowerActivated(heroPower), pHpData, pHpData2, pHpData3, pHpAttachedMinion);
 			}
 
@@ -553,6 +552,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 			else
 			{
+				if(IsOpponentHeroKelThuzad())
+					inputPlayer.SetHeroIsKelThuzad();
+
 				var secrets = gamePlayer.Secrets.ToList();
 				_opponentSecrets = secrets;
 				inputPlayer.SetSecrets(
@@ -1226,7 +1228,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			|| result == LethalResult.OpponentDied && Output?.theirDeathRate == 0;
 
 		private bool OpposingKelThuzadDied(LethalResult result)
-			=> result == LethalResult.OpponentDied && _input != null && (_input?.OpponentTeammate?.HeroPowers.Any(hp => hp.CardId == HeroPowerIds.KelThuzad) ?? false);
+		{
+			if(
+				result == LethalResult.OpponentDied && _input != null
+				&& (
+					(_input?.OpponentTeammate?.HeroPowers.Any(hp => hp.CardId == HeroPowerIds.KelThuzad) ?? false)
+					|| (_input?.Opponent?.HeroIsKelThuzad ?? false)
+				)
+			) return true;
+			return false;
+		}
 
 		private bool IsOpposingAkazamzarak()
 			=> (_input?.Opponent.HeroPowers.Any(hp => hp.CardId == HeroPowerIds.Azamarak) ?? false)

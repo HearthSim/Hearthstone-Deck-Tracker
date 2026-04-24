@@ -188,6 +188,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return trinket;
 		}
 
+		internal static bool IsOpponentHeroKelThuzad()
+		{
+			var heroEntityId = Core.Game.OpponentEntity?.GetTag(GameTag.HERO_ENTITY);
+			var heroEntity = Core.Game.Opponent.PlayerEntities?.FirstOrDefault(x => x.Id == heroEntityId);
+			return heroEntity?.CardId == NonCollectible.Neutral.KelthuzadTavernBrawl2;
+		}
+
 		internal static bool WasHeroPowerActivated(Entity? heroPower)
 			=> heroPower != null && (heroPower.HasTag(GameTag.EXHAUSTED) || heroPower.HasTag(GameTag.BACON_HERO_POWER_ACTIVATED));
 
