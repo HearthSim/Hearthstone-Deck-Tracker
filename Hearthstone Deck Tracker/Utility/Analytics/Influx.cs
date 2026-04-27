@@ -273,7 +273,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void OnBobsBuddySimulationCompleted(
 			CombatResult result, Output output, int turn, string region, Anomaly? anomaly, bool terminalCase,
-			bool isDuos, bool isOpposingAkazamzarak
+			bool isDuos, bool isOpposingAkazamzarak, bool isOpposingKelThuzad
 		)
 		{
 #if(SQUIRREL)
@@ -299,6 +299,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				point.Tag("anomaly", anomaly.CardID);
 
 			point.Tag("opposing_akazamzarak", isOpposingAkazamzarak.ToString());
+			point.Tag("opposing_kelthuzad", isOpposingKelThuzad.ToString());
 
 			_queue.Add(point.Build());
 #endif
