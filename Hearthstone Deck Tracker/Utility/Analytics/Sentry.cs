@@ -179,6 +179,32 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		}
 
+		public static void SendQueuedBobsBuddyEventsStateCompleteFalse(string? shortId)
+		{
+#if(SQUIRREL)
+			while(BobsBuddyEvents.Count > 0)
+			{
+				if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
+				{
+					ClearBobsBuddyEvents();
+					break;
+				}
+				var e = BobsBuddyEvents.Dequeue();
+				((BobsBuddyData)e.Extra).ShortId = shortId;
+
+				var msg = new SentryMessage($"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: StateCompleteFalse");
+				var recodedBbEvent = new SentryEvent(msg)
+				{
+					Level = e.Level,
+					Tags = e.Tags,
+					Extra = e.Extra,
+				};
+				Client.Capture(recodedBbEvent);
+				BobsBuddyEventsSent++;
+			}
+#endif
+		}
+
 		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, bool isDuos)
 		{
 #if(SQUIRREL)

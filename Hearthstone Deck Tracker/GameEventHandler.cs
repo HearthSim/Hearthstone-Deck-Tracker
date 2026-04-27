@@ -1042,6 +1042,8 @@ namespace Hearthstone_Deck_Tracker
 					if(LogContainsStateComplete)
 						Sentry.SendQueuedBattlegroundsEvents(_game.CurrentGameStats.HsReplay.UploadId);
 					else
+						if(!_game.IsBattlegroundsDuosMatch)
+							Sentry.SendQueuedBobsBuddyEventsStateCompleteFalse(_game.CurrentGameStats.HsReplay.UploadId);
 						Sentry.ClearBattlegroundsEvents();
 					RecordBattlegroundsGame();
 					Tier7Trial.Clear();
