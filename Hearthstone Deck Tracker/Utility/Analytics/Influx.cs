@@ -436,7 +436,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
-		public static void OnBobsBuddyUnsupportedInteraction(string? cardId, string message, int turn, bool isDuos)
+		public static void OnBobsBuddyUnsupportedInteraction(string? cardId, string message, int turn, bool isDuos, bool? friendly)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
@@ -448,6 +448,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			if(cardId != null)
 				point.Field("card_id", cardId);
+			if(friendly != null)
+				point.Tag("is_friendly", friendly.ToString());
 
 			WritePoint(point.Build());
 		}
