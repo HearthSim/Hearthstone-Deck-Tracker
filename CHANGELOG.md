@@ -1,3 +1,6 @@
+## **Release v1.51.14 - 2026-04-28**
+**Updated for Hearthstone 35.2.2**
+
 ## **Release v1.51.13 - 2026-04-28**
 **Bob's Buddy**:
 - Fixed incorrect simulation results where:
