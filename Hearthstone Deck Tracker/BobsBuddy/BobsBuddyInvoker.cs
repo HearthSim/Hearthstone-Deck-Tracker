@@ -770,21 +770,31 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
-		internal async void UpdateOpponentLockAndLoadHeroPower(Entity attachedEntity)
+		internal async void UpdateLockAndLoadHeroPower(Entity attachedEntity, bool friendly)
 		{
 			if(_input == null || State != BobsBuddyState.Combat)
 				return;
 
-			var tavishLockAndLoad = _input.Opponent.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
-
-			if(tavishLockAndLoad == null)
-				return;
-
-			if (tavishLockAndLoad.AttachedMinion != null)
-				return;
-
-			tavishLockAndLoad.AttachedMinion = GetMinionFromEntity(new Simulator(), false, attachedEntity,
-				GetAttachedEntities(attachedEntity.Id));
+			if(friendly)
+			{
+				var tavishLockAndLoad = _input.Player.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
+				if(tavishLockAndLoad == null && _input.PlayerTeammate != null)
+					tavishLockAndLoad = _input.PlayerTeammate.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
+				if(tavishLockAndLoad == null || tavishLockAndLoad.AttachedMinion != null)
+					return;
+				tavishLockAndLoad.AttachedMinion = GetMinionFromEntity(new Simulator(), true, attachedEntity,
+					GetAttachedEntities(attachedEntity.Id));
+			}
+			else
+			{
+				var tavishLockAndLoadOp = _input.Opponent.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
+				if(tavishLockAndLoadOp == null && _input.OpponentTeammate != null)
+					tavishLockAndLoadOp = _input.OpponentTeammate.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
+				if(tavishLockAndLoadOp == null || tavishLockAndLoadOp.AttachedMinion != null)
+					return;
+				tavishLockAndLoadOp.AttachedMinion = GetMinionFromEntity(new Simulator(), false, attachedEntity,
+					GetAttachedEntities(attachedEntity.Id));
+			}
 
 			await TryRerun();
 		}

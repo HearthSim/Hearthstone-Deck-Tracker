@@ -1632,7 +1632,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 							if(summonedEntity != null)
 								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
-									.UpdateOpponentLockAndLoadHeroPower(summonedEntity);
+									.UpdateLockAndLoadHeroPower(summonedEntity, false);
 						}
 					}
 				}

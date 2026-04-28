@@ -287,13 +287,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				game.CurrentGameMode == GameMode.Battlegrounds &&
 				gameState.CurrentBlock?.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad &&
 				entity.IsMinion &&
-				entity.GetTag(CONTROLLER) == game.Opponent.Id &&
 				gameState.CurrentBlock?.SourceEntityId == entity.GetTag(CREATOR) &&
 				entity.IsInZone(PLAY)
 			)
 			{
 				if(game.CurrentGameStats != null)
-					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateOpponentLockAndLoadHeroPower(entity);
+				{
+					if(entity.IsControlledBy(game.Player.Id))
+						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateLockAndLoadHeroPower(entity, true);
+					else if(entity.IsControlledBy(game.Opponent.Id))
+						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateLockAndLoadHeroPower(entity, false);
+				}
 			}
 
 			if(!game.Entities.TryGetValue(value, out var targetEntity))
