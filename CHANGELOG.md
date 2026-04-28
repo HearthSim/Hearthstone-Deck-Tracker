@@ -1,3 +1,16 @@
+## **Release v1.51.13 - 2026-04-28**
+**Bob's Buddy**:
+- Fixed incorrect simulation results where:
+  - Opponent Lock and Load were still not tracking the attached minion properly
+  - Sinrunner Blanchy was keeping all enchantments on reborn, instead of just bonus keywords
+  - Stomping Stegodon summoned during combat was missing its Rally ability
+  - Mothership and Timewarped mothership were not adding protoss minions to hand
+  - Bloodbound Earrings trinkets were counting up instead of down
+  - Scarlet Survivor reborn was not resetting divine shield check
+  - Scarlet Survivor golden reborn was not automatically giving itself divine shield
+  - Health Lost During Combat could be limited by the damage cap
+- Added simulation support for Back to Back tavern spell
+
 ## **Release v1.51.12 - 2026-04-24**
 **Bob's Buddy**:
 - Fixed incorrect simulation results where:
