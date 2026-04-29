@@ -176,6 +176,15 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			LoadPluginSettings();
 		}
 
+		// Blizzard has kindly asked us to stop supporting reconnector plugins
+		private readonly string[] _prohibitedPluginNames =
+		{
+			"Reconnector",
+			"Recunnector",
+			"HDT-Reconnector",
+			"HSReconnector",
+			"ReconnectPlugin"
+		};
 		public void LoadPlugins(IEnumerable<FileInfo> files)
 		{
 			foreach(var file in files.Where(f => f.Extension.Equals(".dll")))
@@ -183,8 +192,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				var plugins = GetModule(file.FullName, typeof(IPlugin));
 				foreach(var p in plugins)
 				{
-					// Blizzard has kindly asked us to stop supporting this plugin
-					if(p.Name == "Reconnector")
+					if(_prohibitedPluginNames.Contains(p.Name))
 					{
 						Log.Info($"Refusing to load plugin: {p.Name}");
 						continue;
@@ -197,7 +205,11 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		private static string NormalizeImport(string import) => import.Replace(".dll", "").Trim().ToLowerInvariant();
 
 		// Blizzard has kindly asked us to stop supporting reconnector plugins
-		private readonly string[] _prohibitedImports = { "iphlpapi" };
+		private readonly string[] _prohibitedImports =
+		{
+			"iphlpapi",
+			"lovepapi"
+		};
 		private IEnumerable<PluginWrapper> GetModule(string pFileName, Type pTypeInterface)
 		{
 			var plugins = new List<PluginWrapper>();
@@ -305,8 +317,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		}
 
 		// Triggers an assembly with embedded dependencies to load its internal assembly
-		// resolver by instantiating a known type (TriggerType) in the default namespace, 
-		// this avoids errors when using reflection. Costura.Fody and other tools can 
+		// resolver by instantiating a known type (TriggerType) in the default namespace,
+		// this avoids errors when using reflection. Costura.Fody and other tools can
 		// create these kinds of merged assemblies.
 		private void TriggerAssembly(Assembly assembly)
 		{
