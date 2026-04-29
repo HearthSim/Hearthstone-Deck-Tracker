@@ -1,3 +1,7 @@
+## **Release v1.51.15 - 2026-04-29**
+**Plugins**:
+- Minor changes to the plugin system
+
 ## **Release v1.51.14 - 2026-04-28**
 **Updated for Hearthstone 35.2.2**
 
