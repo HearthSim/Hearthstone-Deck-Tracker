@@ -293,10 +293,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				if(game.CurrentGameStats != null)
 				{
-					if(entity.IsControlledBy(game.Player.Id))
-						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateLockAndLoadHeroPower(entity, true);
+					if(game.IsBattlegroundsDuosMatch)
+						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateDuosLockAndLoadHeroPower(entity.Card.DbfId);
 					else if(entity.IsControlledBy(game.Opponent.Id))
-						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateLockAndLoadHeroPower(entity, false);
+						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateOpponentLockAndLoadHeroPower(entity);
 				}
 			}
 
