@@ -44,6 +44,7 @@ public class ConstructedMulliganGuideV2ViewModel : ViewModel
 		CardStats = null;
 		StatsVisibility = Collapsed;
 		MulliganState = null;
+		Error = null;
 		Message.Clear();
 	}
 
