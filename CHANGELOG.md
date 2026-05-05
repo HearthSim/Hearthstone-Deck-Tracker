@@ -1,3 +1,18 @@
+## **Release v1.52.0 - 2026-04-29**
+**Updated for Hearthstone 35.4**
+
+**Hearthstone**
+- Fixed issue where Mulligan G-V2 error message doesn't disappear after mulligan.
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results where:
+   - Stomping Stegodon summoned in combat was not triggering its rally when attacking
+   - Minions summoned from multiple secrets at once were not in the correct order
+   - Duos: Tavsih hero power was missing the attached minion for any player
+   - Bubble Crown trinket was missing tavern spell buffs on the opponent side
+   - In rare cases, two of the same secret could be set for the same player
+   - Twilight Hatchlings killing each other in a mirror match was copying the deathrattle to Fish of N'Zoth
+
 ## **Release v1.51.15 - 2026-04-29**
 **Plugins**:
 - Minor changes to the plugin system
