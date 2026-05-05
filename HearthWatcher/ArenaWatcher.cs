@@ -28,6 +28,7 @@ namespace HearthWatcher
 		private int _prevChoicesVersion = -1;
 		private ArenaInfo? _prevInfo;
 		private bool? _prevIsUnderground = null;
+		private bool _isDualClass;
 		private ArenaSessionState _prevArenaSessionState = ArenaSessionState.INVALID;
 		private const int MaxDeckSize = 30;
 		private const int MaxRedraftDeckSize = 5;
@@ -65,6 +66,7 @@ namespace HearthWatcher
 			_prevChoicesVersion = -1;
 			_prevPackages = null;
 			_prevIsUnderground = null;
+			_isDualClass = false;
 			_prevArenaSessionState = ArenaSessionState.INVALID;
 			while(_watch)
 			{
@@ -90,7 +92,8 @@ namespace HearthWatcher
 					var numCards = arenaInfo.Deck.Cards.Sum(x => x.Count);
 					if(numCards == MaxDeckSize)
 					{
-						if(_prevSlot == MaxDeckSize)
+						var lastSlot = _isDualClass ? MaxDeckSize + 1 : MaxDeckSize;
+						if(_prevSlot == lastSlot)
 							CardPicked(arenaInfo);
 					}
 				}
@@ -138,9 +141,13 @@ namespace HearthWatcher
 			OnChoicesChanged?.Invoke(this,
 				new ChoicesChangedEventArgs(choices.Choices.ToArray(), arenaInfo.Deck, arenaInfo.CurrentSlot, arenaInfo.IsUnderground, choices.Packages));
 
+			_isDualClass = _isDualClass ||
+			               (!string.IsNullOrEmpty(arenaInfo.Deck.HeroPower) && string.IsNullOrEmpty(arenaInfo.Deck.Hero));
 			// we need to check _prevIsUnderground == arenaInfo.IsUnderground
 			// otherwise changing arena mode would trigger Hero/CardPicked
-			if(_prevSlot == 0 && arenaInfo.CurrentSlot == 1 && _prevIsUnderground == arenaInfo.IsUnderground)
+			if(
+				((_prevSlot == 0 && arenaInfo.CurrentSlot == 1) || (_isDualClass && _prevSlot == 1 && arenaInfo.CurrentSlot == 2))
+			   && _prevIsUnderground == arenaInfo.IsUnderground)
 				HeroPicked(arenaInfo);
 			else if(_prevSlot > 0 && _prevIsUnderground == arenaInfo.IsUnderground)
 				CardPicked(arenaInfo);
@@ -190,7 +197,18 @@ namespace HearthWatcher
 		{
 			var hero = _prevChoices?.FirstOrDefault(x => x.Id == arenaInfo.Deck.Hero);
 			if(hero != null)
+			{
 				OnCardPicked?.Invoke(this, new CardPickedEventArgs(hero, _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground, null));
+				return;
+			}
+			// dual-class
+			_isDualClass = true;
+			var heroPower = _prevChoices?.FirstOrDefault(x => x.Id == arenaInfo.Deck.HeroPower);
+			if(heroPower != null)
+			{
+				OnCardPicked?.Invoke(this, new CardPickedEventArgs(heroPower, _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground, null));
+			}
+
 		}
 
 		private void CardPicked(ArenaInfo arenaInfo)
