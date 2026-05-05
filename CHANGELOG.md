@@ -1,4 +1,8 @@
-## **Release v1.52.0 - 2026-04-29**
+## **Release v1.52.1 - 2026-05-05**
+**Hearthstone**
+- Fixed an issue in the upload of Dual-Class Arena games.
+
+## **Release v1.52.0 - 2026-05-05**
 **Updated for Hearthstone 35.4**
 
 **Hearthstone**
