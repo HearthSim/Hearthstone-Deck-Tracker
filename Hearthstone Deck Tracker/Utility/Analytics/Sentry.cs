@@ -93,6 +93,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				$"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: {result}"
 			);
 
+			if(!isDuos && turn > 5 && testInput.Player.Side.Count == 0 && testInput.Opponent.Side.Count == 0)
+				msg = new SentryMessage($"BobsBuddy {BobsBuddyUtils.VersionString}: Both Sides Empty: {result}");
+
 			var data = new BobsBuddyData()
 			{
 				ShortId = "",
