@@ -24,6 +24,7 @@ public class ArenaStateWatcher
 	private List<Card>? _redraftDeckList;
 	private int? _redraftDeckListVersion;
 	private string _hero = "";
+	private string _heroPower = "";
 	private long _deckId;
 	private ArenaState.ActorInfo? _zoomedHero;
 	private bool _isAnimating;
@@ -52,6 +53,7 @@ public class ArenaStateWatcher
 	public event Action<(ArenaClientStateType ClientState, ArenaSessionState SessionState)>? OnClientStateChanged;
 	public event Action<bool>? OnIsAnimatingChanged;
 	public event Action<string>? OnHeroPicked;
+	public event Action<string>? OnHeroPowerPicked;
 	public event Action<ArenaState.BigCard?>? OnTrayBigCardChanged;
 	public event Action<(List<float>, int)?>? OnTooltipChanged;
 	public event Action<bool>? OnIsUndergroundChanged;
@@ -83,6 +85,7 @@ public class ArenaStateWatcher
 		_redraftDeckList = null;
 		_redraftDeckListVersion = null;
 		_hero = "";
+		_heroPower = "";
 		_zoomedHero = null;
 		_isAnimating = false;
 		_isPackageSelectOpen = false;
@@ -147,6 +150,12 @@ public class ArenaStateWatcher
 		{
 			_zoomedHero = state.ZoomedHero;
 			OnHeroZoomed?.Invoke(_zoomedHero);
+		}
+
+		if(_heroPower != state.ChosenHeroPower)
+		{
+			_heroPower = state.ChosenHeroPower;
+			OnHeroPowerPicked?.Invoke(_heroPower);
 		}
 
 		if(_hero != state.ChosenHero)

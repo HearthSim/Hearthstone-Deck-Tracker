@@ -167,6 +167,7 @@ public class ArenaPickHelperViewModel : ViewModel
 		Watchers.ArenaStateWatcher.OnHeroZoomed += UpdateHeroZoomed;
 		Watchers.ArenaStateWatcher.OnChoicesChanged += UpdateChoices;
 		Watchers.ArenaStateWatcher.OnHeroPicked += UpdateHero;
+		Watchers.ArenaStateWatcher.OnHeroPowerPicked += UpdateHeroPower;
 		Watchers.ArenaStateWatcher.OnTrayBigCardChanged += UpdateTrayBigCard;
 		HSReplayNetOAuth.LoggedOut += () => Reset(true);
 		HSReplayNetOAuth.AccountDataUpdated += () =>
@@ -209,6 +210,14 @@ public class ArenaPickHelperViewModel : ViewModel
 	{
 		_chosenHero = chosenHero;
 	}
+
+	private string _chosenHeroPower = "";
+	private void UpdateHeroPower(string chosenHeroPower)
+	{
+		_chosenHeroPower = chosenHeroPower;
+	}
+
+	private bool _isDualClass = false;
 
 	private List<ArenaState.DraftChoice>? _choices;
 	private async void UpdateChoices(List<ArenaState.DraftChoice> choices)
@@ -262,7 +271,7 @@ public class ArenaPickHelperViewModel : ViewModel
 		if(accountId == null || !deckId.HasValue)
 			return;
 
-		if(string.IsNullOrEmpty(_chosenHero))
+		if(string.IsNullOrEmpty(_chosenHero) && string.IsNullOrEmpty(_chosenHeroPower))
 		{
 			await ArenaTrial.EnsureLoaded(accountId.Hi, accountId.Lo);
 			var (starter, recurring) = ArenaTrial.RemainingTrials ?? (0, 0);
@@ -299,9 +308,10 @@ public class ArenaPickHelperViewModel : ViewModel
 				Reset();
 
 			var card = new Hearthstone.Card(choices.First().Actor.CardId);
-			if(card.TypeEnum != CardType.HERO)
+			if(card.TypeEnum != CardType.HERO && card.TypeEnum != CardType.HERO_POWER)
 				return;
 
+			_isDualClass = card.TypeEnum == CardType.HERO_POWER;
 
 			// Loading state
 			HeroStats = offered.Select(_ => new ArenaPickSingleHeroOptionViewModel(IsUnderground)).ToList();
@@ -359,6 +369,48 @@ public class ArenaPickHelperViewModel : ViewModel
 			}
 		}
 
+		// dual-class arena
+		if(!string.IsNullOrEmpty(_chosenHeroPower) && string.IsNullOrEmpty(_chosenHero))
+		{
+			var card = new Hearthstone.Card(choices.First().Actor.CardId);
+			if(card.TypeEnum != CardType.HERO && card.TypeEnum != CardType.HERO_POWER)
+				return;
+
+			// Loading state
+			HeroStats = offered.Select(_ => new ArenaPickSingleHeroOptionViewModel(IsUnderground)).ToList();
+
+			var heroData = await MakeRequestHeroPick(offered, ArenaSeasonId, deckId.Value, accountId, IsUnderground);
+			ArenaTrial.Clear();
+
+			if(heroData == null)
+			{
+				ShowErrorMessage = true;
+				return;
+			}
+
+			ShowErrorMessage = false;
+
+			// @todo: fix this v
+			// Api returns class ids in ascending order
+			// we need to display them on the same position they were offered to the player
+			var offeredClasses = choices.Select(x => Database.GetHeroNameFromId(x.Actor.CardId)).ToArray();
+			var idToObjectMap =
+				heroData.Data.ToDictionary(d => HearthDbConverter.ConvertClass((CardClass)d.DeckClass));
+
+			var ordered = offeredClasses
+				.Select(c => c != null && idToObjectMap.TryGetValue(c, out var obj) ? obj : null)
+				.ToArray();
+
+			HeroStats = ordered.Select(s => new ArenaPickSingleHeroOptionViewModel(s, IsUnderground)).ToList();
+			HeroPickVisibility = Config.Instance.ShowArenaHeroPicking ? Visibility.Visible : Visibility.Collapsed;
+			RelatedCardsVisibility = Config.Instance.ShowArenaRelatedCards ? Visibility.Visible : Visibility.Collapsed;
+
+			IsOverlayVisible = HeroPickVisibility == Visibility.Visible;
+
+			return;
+		}
+
+
 		// Loading state
 		CardStats = offered.Select(cardId => new ArenaPickSingleCardOptionViewModel(cardId, IsUnderground)).ToList();
 		ArenasmithScoreVisibility = Config.Instance.ShowArenasmithScore ? Visibility.Visible : Visibility.Collapsed;
@@ -374,7 +426,16 @@ public class ArenaPickHelperViewModel : ViewModel
 			if(picked.Length == 30)
 				return;
 
-			var data = await MakeRequestCardPick(offered,  _chosenHero, picked, ArenaSeasonId, deckId.Value, accountId, IsUnderground);
+			var data = await MakeRequestCardPick(
+				offered,
+				_chosenHeroPower == "" ? _chosenHero : _chosenHeroPower,
+				picked,
+				ArenaSeasonId,
+				deckId.Value,
+				accountId,
+				IsUnderground,
+				_chosenHeroPower == "" ? null : _chosenHero
+			);
 
 			pickData = data?.Data;
 		}
@@ -387,7 +448,18 @@ public class ArenaPickHelperViewModel : ViewModel
 			var picked = _pickedRedraftDeck?.ToArray() ?? new string[] {};
 
 			var redraftNumber = arenaInfo?.Losses ?? 1;
-			var data = await MakeRequestRedraftCardPick(offered,  _chosenHero, picked, deckCards, redraftNumber, ArenaSeasonId, deckId.Value, accountId, IsUnderground);
+			var data = await MakeRequestRedraftCardPick(
+				offered,
+				_chosenHeroPower == "" ? _chosenHero : _chosenHeroPower,
+				picked,
+				deckCards,
+				redraftNumber,
+				ArenaSeasonId,
+				deckId.Value,
+				accountId,
+				IsUnderground,
+				_chosenHeroPower == "" ? null : _chosenHero
+			);
 
 			pickData = data?.Data;
 
@@ -1166,6 +1238,7 @@ public class ArenaPickHelperViewModel : ViewModel
 		if(!keepGameState)
 		{
 			_chosenHero = "";
+			_chosenHeroPower = "";
 		}
 	}
 
@@ -1174,11 +1247,12 @@ public class ArenaPickHelperViewModel : ViewModel
 		int arenaSeasonId,
 		long deckId,
 		AccountId accountId,
-		bool isUnderground
+		bool isUnderground,
+		List<string>? pickedHeroCardIds = null
 	)
 	{
 		var parameters = new ArenaHeroPickParams(
-			new List<string>(), // TODO dual class arena
+			pickedHeroCardIds ?? new List<string>(),
 			offeredHeroes
 		)
 		{
@@ -1202,7 +1276,8 @@ public class ArenaPickHelperViewModel : ViewModel
 		int arenaSeasonId,
 		long deckId,
 		AccountId accountId,
-		bool isUnderground
+		bool isUnderground,
+		string? pickedHeroPowerCardId
 	)
 	{
 		var parameters = new ArenaCardPickParams(pickedHero, pickedDeck, offeredCards)
@@ -1212,6 +1287,7 @@ public class ArenaPickHelperViewModel : ViewModel
 			AccountLo = accountId.Lo,
 			DeckId = deckId,
 			GameType = isUnderground ? (int)BnetGameType.BGT_UNDERGROUND_ARENA : (int)BnetGameType.BGT_ARENA,
+			PickedHeroPowerCardId = pickedHeroPowerCardId
 		};
 
 		var parametersJson = JsonConvert.SerializeObject(parameters);
@@ -1234,7 +1310,8 @@ public class ArenaPickHelperViewModel : ViewModel
 		int arenaSeasonId,
 		long deckId,
 		AccountId accountId,
-		bool isUnderground
+		bool isUnderground,
+		string? pickedHeroPowerCardId
 	)
 	{
 		var parameters = new ArenaCardPickParams(pickedHero, pickedRedraftDeck, offeredCards)
@@ -1245,7 +1322,8 @@ public class ArenaPickHelperViewModel : ViewModel
 			DeckId = deckId,
 			GameType = isUnderground ? (int)BnetGameType.BGT_UNDERGROUND_ARENA : (int)BnetGameType.BGT_ARENA,
 			RedraftNumber = redraftNumber,
-			DeckCardIds = deckCardIds
+			DeckCardIds = deckCardIds,
+			PickedHeroPowerCardId = pickedHeroPowerCardId
 		};
 
 		var parametersJson = JsonConvert.SerializeObject(parameters);
