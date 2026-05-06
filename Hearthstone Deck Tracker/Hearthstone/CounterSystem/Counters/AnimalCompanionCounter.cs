@@ -1,6 +1,7 @@
 ﻿using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 
@@ -32,17 +33,15 @@ public class AnimalCompanionCounter : NumericCounter
 	public override bool ShouldShow()
 	{
 		if(!Game.IsTraditionalHearthstoneMatch) return false;
-		if(IsPlayerCounter)
-			return InPlayerDeckOrKnown(RelatedCards);
-		return Counter > 0 || Companions[0] != HearthDb.CardIds.NonCollectible.Hunter.HufferLegacy;
+		return Counter > 3;
 	}
 
 	public override string[] GetCardsToDisplay()
 	{
-		return Companions;
+		return IsPlayerCounter ? Companions : new string[] {};
 	}
 
-	public override string ValueToShow() => (Counter + 1).ToString();
+	public override string ValueToShow() => string.Format(LocUtil.Get("Counter_AnimalCompanionCost"), Counter.ToString());
 
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
 	{
@@ -68,26 +67,15 @@ public class AnimalCompanionCounter : NumericCounter
 			{
 				case GameTag.TAG_SCRIPT_DATA_NUM_4:
 					Companions[0] = card.Id;
-					OnCounterChanged();
 					break;
 				case GameTag.TAG_SCRIPT_DATA_NUM_5:
 					Companions[1] = card.Id;
-					OnCounterChanged();
 					break;
 				case GameTag.TAG_SCRIPT_DATA_NUM_6:
 					Companions[2] = card.Id;
-					OnCounterChanged();
 					break;
 			}
-			return;
+			Counter = card.Cost;
 		}
-
-		if((int)tag != 4629)
-			return;
-
-		if(value == 0)
-			return;
-
-		Counter = value;
 	}
 }
