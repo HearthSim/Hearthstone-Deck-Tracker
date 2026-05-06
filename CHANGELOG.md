@@ -1,3 +1,9 @@
+## **Release v1.52.2 - 2026-05-06**
+**Hearthstone**
+- Added Animal Companion Counter.
+- Added Silver Hand Recruit Buff Counter.
+- Added Leyline Counters.
+
 ## **Release v1.52.1 - 2026-05-05**
 **Hearthstone**
 - Fixed an issue in the upload of Dual-Class Arena games.
