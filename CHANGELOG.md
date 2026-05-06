@@ -1,3 +1,9 @@
+## **Release v1.52.3 - 2026-05-06**
+**Hearthstone**
+- Split Extra Animal Companion Summons and Animal Companion's Beasts Cost into different counters.
+- Add Animal Companion Pools on Hover to card that summon them.
+- Fix opponent's companion pool leak.
+
 ## **Release v1.52.2 - 2026-05-06**
 **Hearthstone**
 - Added Animal Companion Counter.
