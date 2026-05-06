@@ -93,9 +93,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				$"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: {result}"
 			);
 
-			if(!isDuos && turn > 5 && testInput.Player.Side.Count == 0 && testInput.Opponent.Side.Count == 0)
-				msg = new SentryMessage($"BobsBuddy {BobsBuddyUtils.VersionString}: Both Sides Empty: {result}");
-
 			var data = new BobsBuddyData()
 			{
 				ShortId = "",
@@ -176,7 +173,27 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				}
 				var e = BobsBuddyEvents.Dequeue();
 				((BobsBuddyData)e.Extra).ShortId = shortId;
-				Client.Capture(e);
+
+				var bbData = (BobsBuddyData)e.Extra;
+				if(
+					bbData != null && bbData.Input != null &&
+					bbData.Turn > 5 &&
+					bbData.Input.Player.Side.Count == 0 &&
+					bbData.Input.Opponent.Side.Count == 0
+				)
+				{
+					var msg = new SentryMessage($"BobsBuddy {BobsBuddyUtils.VersionString}: Both Sides Empty");
+					var recodedBbEvent = new SentryEvent(msg)
+					{
+						Level = e.Level,
+						Tags = e.Tags,
+						Extra = e.Extra,
+					};
+					Client.Capture(recodedBbEvent);
+				}
+				else
+					Client.Capture(e);
+
 				BobsBuddyEventsSent++;
 			}
 #endif
