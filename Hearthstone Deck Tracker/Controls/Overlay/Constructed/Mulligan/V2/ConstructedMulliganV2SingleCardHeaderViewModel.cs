@@ -219,7 +219,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 		private float? CalculateConfidence()
 		{
 			{
-				if(Justifications == null)
+				if(Justifications == null || Justifications.Count == 0)
 					return null;
 
 				ContextualConfidence = (float?)Justifications.Last().Confidence;
