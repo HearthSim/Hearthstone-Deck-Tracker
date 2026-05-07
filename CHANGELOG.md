@@ -1,3 +1,7 @@
+## **Release v1.52.4 - 2026-05-07**
+**Hearthstone**
+- Fix Animal Companion Counter not updating the pool.
+
 ## **Release v1.52.3 - 2026-05-06**
 **Hearthstone**
 - Split Extra Animal Companion Summons and Animal Companion's Beasts Cost into different counters.
