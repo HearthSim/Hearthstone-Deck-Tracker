@@ -67,12 +67,15 @@ public class AnimalCompanionCounter : NumericCounter
 			{
 				case GameTag.TAG_SCRIPT_DATA_NUM_4:
 					Companions[0] = card.Id;
+					OnCounterChanged();
 					break;
 				case GameTag.TAG_SCRIPT_DATA_NUM_5:
 					Companions[1] = card.Id;
+					OnCounterChanged();
 					break;
 				case GameTag.TAG_SCRIPT_DATA_NUM_6:
 					Companions[2] = card.Id;
+					OnCounterChanged();
 					break;
 			}
 			Counter = card.Cost;
