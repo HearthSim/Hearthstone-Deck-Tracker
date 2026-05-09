@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
@@ -35,6 +36,36 @@ public class ArenaPlaqueViewModel : ViewModel
 			new FlameData(RandomScale(29), RandomScale(1), RandomScale(.75)),
 		};
 	}
+
+	public ArenaPlaqueViewModel(string score, int level, int randomSeed, bool isUnderground, Thickness margin)
+	{
+		_seed = randomSeed;
+		Score = score;
+		Level = level;
+		IsUnderground = isUnderground;
+		Margin = margin;
+
+		var random = new Random(_seed);
+		double RandomScale(double value)
+		{
+			return value * (1 + (random.NextDouble() * 0.1 - 0.05));
+		}
+
+		InnerFlames = new[]
+		{
+			new FlameData(RandomScale(25), RandomScale(-1), RandomScale(.8)),
+			new FlameData(RandomScale(25), RandomScale(-1), RandomScale(.7)),
+			new FlameData(RandomScale(4), RandomScale(-1.2), RandomScale(1)),
+		};
+
+		OuterFlames = new[]
+		{
+			new FlameData(RandomScale(-30), RandomScale(1), RandomScale(1)),
+			new FlameData(RandomScale(29), RandomScale(1), RandomScale(.75)),
+		};
+	}
+
+	public Thickness Margin { get; }
 
 	public string Score { get; }
 

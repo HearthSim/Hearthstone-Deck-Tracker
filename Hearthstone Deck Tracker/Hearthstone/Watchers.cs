@@ -138,7 +138,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				arenasmithScores: Core.Overlay.ArenaPickHelperViewModel.ArenasmithScores
 			);
 
-			const int lastPickSlot = 30;
+			var isDualClass = !string.IsNullOrEmpty(args.Deck.HeroPower) &&
+				Database.GetHeroNameFromId(args.Deck.HeroPower) != Database.GetHeroNameFromId(args.Deck.Hero);
+			var lastPickSlot = isDualClass ? 31 : 30;
 			if(args.Slot == lastPickSlot)
 			{
 				Core.Overlay.HideArenaPickHelper();
@@ -541,7 +543,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		public BattlegroundsLobbyInfo? BattlegroundsLobbyInfo => Reflection.Client.GetBattlegroundsLobbyInfo();
   }
-  
+
 	public class HearthMirrorMulliganStateProvider : IMulliganStateProvider
 	{
 		public HearthMirror.Objects.MulliganState? State => Reflection.Client.GetMulliganState();

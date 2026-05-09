@@ -255,6 +255,32 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
 
+                    <ItemsControl Grid.Column="1" ItemsSource="{Binding HeroPowerStats}" Margin="10,0,10,0" Visibility="{Binding HeroPowerPickVisibility}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:ArenaPickSingleHeroPowerOption />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+                    <ItemsControl Grid.Column="1" ItemsSource="{Binding DualClassHeroStats}" Margin="10,0,10,0" Visibility="{Binding DualClassHeroPickVisibility}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:ArenaPickSingleDualClassHeroOption />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
                     <ItemsControl Grid.Column="1" ItemsSource="{Binding CardStats}" Margin="10,0,10,0">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -383,7 +409,7 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="18.5,79,0,118" ClipToBounds="True">
+            <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="18.5,85,0,118" ClipToBounds="True">
                 <ItemsControl ItemsSource="{Binding RedraftTileViewModels}" Margin="{Binding RedraftScrollOffset}"
                               Visibility="{Binding SynergiesVisibility}">
                     <ItemsControl.ItemsPanel>
