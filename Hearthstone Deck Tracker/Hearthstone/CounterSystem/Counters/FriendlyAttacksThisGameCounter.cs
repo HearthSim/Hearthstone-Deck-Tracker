@@ -31,7 +31,7 @@ public class FriendlyAttacksThisGameCounter : NumericCounter
 		return RelatedCards;
 	}
 
-	public override string ValueToShow() => string.Format(LocUtil.Get("Counter_AnimalCompanionCost"),
+	public override string ValueToShow() => string.Format(LocUtil.Get("Counter_MuradinLastStand"),
 		Math.Max(9 - Counter, 0));
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
 	{
