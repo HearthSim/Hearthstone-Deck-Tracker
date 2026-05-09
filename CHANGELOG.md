@@ -1,6 +1,7 @@
 ## **Unreleased**
 **Hearthstone**
 - Start tracking opponent's Animal Companion Pool.
+- Add Muradin's Last Stand Counter.
 
 ## **Release v1.52.4 - 2026-05-07**
 **Hearthstone**
