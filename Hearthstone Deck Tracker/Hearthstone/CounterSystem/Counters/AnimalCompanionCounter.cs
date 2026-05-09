@@ -1,4 +1,6 @@
-﻿using HearthDb.Enums;
+﻿using System.Collections.Generic;
+using System.Linq;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility;
@@ -10,13 +12,18 @@ public class AnimalCompanionCounter : NumericCounter
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Hunter.AnimalCompanionCore;
 	public override string[] RelatedCards => new string[]
 	{
-		HearthDb.CardIds.Collectible.Hunter.TalyaEarthstrider,
-		HearthDb.CardIds.Collectible.Hunter.TamePet,
-		HearthDb.CardIds.Collectible.Hunter.RoamFree,
-		HearthDb.CardIds.Collectible.Hunter.MigratingElekk,
 		HearthDb.CardIds.Collectible.Hunter.AnimalCompanionCore,
 		HearthDb.CardIds.Collectible.Hunter.AnimalCompanionLegacy,
 		HearthDb.CardIds.Collectible.Hunter.AnimalCompanionVanilla,
+		HearthDb.CardIds.Collectible.Hunter.BrollBearmantle,
+		HearthDb.CardIds.Collectible.Hunter.CallOfTheWild,
+		HearthDb.CardIds.Collectible.Hunter.CallOfTheWildCore,
+		HearthDb.CardIds.Collectible.Hunter.OpenTheCages,
+		HearthDb.CardIds.Collectible.Hunter.PatchworkPals,
+		HearthDb.CardIds.Collectible.Hunter.RoamFree,
+		HearthDb.CardIds.Collectible.Hunter.Spiritspeaker,
+		HearthDb.CardIds.Collectible.Hunter.ToMySide,
+
 	};
 
 	public string[] Companions = new[]
@@ -25,6 +32,8 @@ public class AnimalCompanionCounter : NumericCounter
 		HearthDb.CardIds.NonCollectible.Hunter.LeokkLegacy,
 		HearthDb.CardIds.NonCollectible.Hunter.MishaLegacy,
 	};
+
+	private HashSet<string> _opponentKnownCompanions = new HashSet<string>();
 
 	public AnimalCompanionCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
@@ -38,7 +47,7 @@ public class AnimalCompanionCounter : NumericCounter
 
 	public override string[] GetCardsToDisplay()
 	{
-		return IsPlayerCounter ? Companions : new string[] {};
+		return IsPlayerCounter ? Companions : _opponentKnownCompanions.ToArray();
 	}
 
 	public override string ValueToShow() => string.Format(LocUtil.Get("Counter_AnimalCompanionCost"), Counter.ToString());
@@ -63,6 +72,11 @@ public class AnimalCompanionCounter : NumericCounter
 			if(!HearthDb.Cards.AllByDbfId.TryGetValue(value, out var card))
 				return;
 
+			if(!IsPlayerCounter)
+			{
+				_opponentKnownCompanions.Clear();
+			}
+
 			switch(tag)
 			{
 				case GameTag.TAG_SCRIPT_DATA_NUM_4:
@@ -80,5 +94,35 @@ public class AnimalCompanionCounter : NumericCounter
 			}
 			Counter = card.Cost;
 		}
+
+		if(IsPlayerCounter)
+			return;
+
+		if(HandleOpponentSummon(tag, gameState, entity, value, prevValue))
+		{
+			OnCounterChanged();
+		}
+	}
+
+	private bool HandleOpponentSummon(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
+	{
+		if(tag != GameTag.ZONE)
+			return false;
+
+		if(value != (int)Zone.PLAY)
+			return false;
+
+		if(!RelatedCards.Contains(gameState.CurrentBlock?.CardId))
+			return false;
+
+		if(!entity.Card.IsBeast())
+			return false;
+
+		if(entity.Card.Cost != Counter)
+			return false;
+
+		_opponentKnownCompanions.Add(entity.Card.Id);
+
+		return true;
 	}
 }

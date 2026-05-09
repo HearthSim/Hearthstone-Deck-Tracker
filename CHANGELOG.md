@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**
+- Start tracking opponent's Animal Companion Pool.
+
 ## **Release v1.52.4 - 2026-05-07**
 **Hearthstone**
 - Fix Animal Companion Counter not updating the pool.
