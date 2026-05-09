@@ -872,6 +872,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case NonCollectible.Neutral.EternalFirebolt_EternalFireboltEnchantment:
 								AddKnownCardId(gameState, Collectible.Invalid.EternalFirebolt);
 								break;
+							case Collectible.Demonhunter.GorishiWasp:
+								AddKnownCardId(gameState, NonCollectible.Demonhunter.GorishiWasp_GorishiStingerToken);
+								break;
 							case Collectible.Mage.CommanderSivara:
 							case Collectible.Neutral.TidepoolPupil:
 								if(
@@ -1389,6 +1392,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.WarmasterBlackhorn:
 								if(gameState.CurrentBlock != null)
 									gameState.CurrentBlock.HideShowEntities = true;
+								break;
+							case Collectible.Demonhunter.Infestation:
+								AddKnownCardId(gameState, NonCollectible.Demonhunter.GorishiWasp_GorishiStingerToken, 2);
 								break;
 							case NonCollectible.Warrior.EntertheLostCity_LatorviusGazeOfTheCityToken:
 								if(actionStartingEntity?.IsControlledBy(game.Opponent.Id) == true)

@@ -2,6 +2,7 @@
 **Hearthstone**
 - Start tracking opponent's Animal Companion Pool.
 - Add Muradin's Last Stand Counter.
+- Identify Gorishi Stinger added to opponent's hand.
 
 ## **Release v1.52.4 - 2026-05-07**
 **Hearthstone**
