@@ -1,4 +1,7 @@
-## **Unreleased**
+## **Release v1.52.5 - 2026-05-09**
+**Arenasmith**
+- Add support to Dual-Class Arena.
+
 **Hearthstone**
 - Start tracking opponent's Animal Companion Pool.
 - Add Muradin's Last Stand Counter.
