@@ -586,7 +586,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void Window_SourceInitialized_1(object sender, EventArgs e)
 		{
 			var hwnd = new WindowInteropHelper(this).Handle;
-			User32.SetWindowExStyle(hwnd, User32.WsExToolWindow | User32.WsExNoActivate | User32.WsExTransparent);
+			User32.SetWindowExStyle(hwnd, User32.WsExNoActivate | User32.WsExTransparent);
 		}
 
 		private bool _clickthrough = false;
