@@ -575,7 +575,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				inputPlayer.EternalKnightCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
 			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
 			if(pUndeadBonus != null)
+			{
 				inputPlayer.UndeadAttackBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+				inputPlayer.UndeadHealthBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+			}
+
 			var pBeastBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TimewarpedGoldrinn_TimewarpedGoldrinnPlayerEnchantDnt);
 			if(pBeastBonus != null)
 			{
