@@ -11,7 +11,7 @@ public class UndeadBuffCounter : StatsCounter
 {
 	public override bool IsBattlegroundsCounter => true;
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.NerubianDeathswarmer;
-	public override string LocalizedName => LocUtil.Get("Counter_UndeadAttackBonus", useCardLanguage: true);
+	public override string LocalizedName => LocUtil.Get("Counter_UndeadBuff", useCardLanguage: true);
 	public override string[] RelatedCards => new string[] {};
 
 	public UndeadBuffCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
