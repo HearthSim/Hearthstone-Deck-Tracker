@@ -777,6 +777,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									player.PredictUniqueCardInDeck(NonCollectible.Neutral.CThuntheShattered_HeartOfCthunToken, true);
 								}
 								break;
+							case Collectible.Neutral.DragonSoulShattered:
+								// The pieces are created in random order. So we can not assign predicted ids to entities the way we usually do.
+								if (actionStartingEntity != null)
+								{
+									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Player : game.Opponent;
+									player.PredictUniqueCardInDeck(NonCollectible.Neutral.DragonSoulShattered_BlackAspectEssenceToken, true);
+									player.PredictUniqueCardInDeck(NonCollectible.Neutral.DragonSoulShattered_BlueAspectEssenceToken, true);
+									player.PredictUniqueCardInDeck(NonCollectible.Neutral.DragonSoulShattered_BronzeAspectEssenceToken, true);
+									player.PredictUniqueCardInDeck(NonCollectible.Neutral.DragonSoulShattered_GreenAspectEssenceToken, true);
+									player.PredictUniqueCardInDeck(NonCollectible.Neutral.DragonSoulShattered_RedAspectEssenceToken, true);
+									player.PredictUniqueCardInDeck(NonCollectible.Neutral.DragonSoulShattered_StormAspectEssenceToken, true);
+								}
+								break;
 							case Collectible.Priest.MidaPureLight:
 								AddKnownCardId(gameState, NonCollectible.Priest.MidaPureLight_FragmentOfMidaToken);
 								break;

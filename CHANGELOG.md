@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**
+- Fixed *Dragon Soul, Shattered* Essences not being added to the deck at the start of the game.
+
 ## **Release v1.52.6 - 2026-05-11**
 **Updated for Hearthstone 35.4.1**
 
