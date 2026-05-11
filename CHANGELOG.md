@@ -1,3 +1,11 @@
+## **Release v1.52.6 - 2026-05-11**
+**Updated for Hearthstone 35.4.1**
+
+**Battlegrounds**
+- Updated the Undead buff counter to also show health bonus (when improved via Tavern Spell buffs and Butchering).
+- Fixed the order of the Undead minions shown when hovering the Undead buff counter.
+- Fixed some incorrect simulation results related to Undead health buffs, Stormcoil Sticker, Malorne, Scarlet Survivor, Roaring Recruiter and Ship Jumper.
+
 ## **Release v1.52.5 - 2026-05-09**
 **Arenasmith**
 - Add support to Dual-Class Arena.
