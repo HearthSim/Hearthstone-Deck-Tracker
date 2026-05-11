@@ -1627,7 +1627,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TavishStormpike_LockAndLoad, TriggerKeyword: "TRIGGER_VISUAL" })
 					{
 						var lockAndLoadEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
-						if(lockAndLoadEntity != null && lockAndLoadEntity.IsControlledBy(game.Opponent.Id))
+						if(lockAndLoadEntity != null)
 						{
 							var summonedEntity = game.Entities.Values
 								.Where(e =>
@@ -1637,8 +1637,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								).ToArray().FirstOrDefault();
 
 							if(summonedEntity != null)
-								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
-									.UpdateOpponentLockAndLoadHeroPower(summonedEntity);
+							{
+								if(game.IsBattlegroundsDuosMatch)
+									BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+										.UpdateDuosLockAndLoadHeroPower(summonedEntity.Card.DbfId);
+								else if(lockAndLoadEntity.IsControlledBy(game.Opponent.Id))
+									BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+										.UpdateOpponentLockAndLoadHeroPower(summonedEntity);
+							}
 						}
 					}
 				}
