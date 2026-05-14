@@ -189,6 +189,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			var trinket = factory.Create(entity.CardId ?? "", player);
 			SetScriptDataProperties(trinket, entity);
+
+			// Special handling for replica cathedral
+			if(entity.CardId == NonCollectible.Neutral.ReplicaCathedral)
+				trinket.ScriptDataNum1 = entity.GetTag((GameTag)4696);
+
 			return trinket;
 		}
 
