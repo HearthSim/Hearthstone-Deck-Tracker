@@ -295,7 +295,7 @@ public partial class OverlayWindow
 
 		vm.Cards = new List<Card> { card };
 
-		GuidesTooltipTrigger.UpdateLayout();
+		DiscoveryGuidesTooltipTrigger.UpdateLayout();
 		UpdateHoverable();
 
 		var bgTrinketPickWidth = 0.192;
@@ -316,8 +316,6 @@ public partial class OverlayWindow
 	{
 		var vm = (CardGridTooltipViewModel)DiscoveryGuidesTooltipTrigger.DataContext;
 
-		vm.Reset();
-
 		if(state.EntityId is null or 0)
 			return;
 
@@ -333,9 +331,10 @@ public partial class OverlayWindow
 		if(questRewardCard.TypeEnum != CardType.BATTLEGROUND_QUEST_REWARD)
 			return;
 
+		vm.Reset();
 		vm.Cards = new List<Card> { questRewardCard };
 
-		GuidesTooltipTrigger.UpdateLayout();
+		DiscoveryGuidesTooltipTrigger.UpdateLayout();
 		UpdateHoverable();
 
 		var bgQuestPickWidth = 0.270;
