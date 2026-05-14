@@ -1453,6 +1453,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 				}
 
+				if(_game.IsBattlegroundsCombatPhase)
+					return;
+				
 				var cards = cardIdList.Select(Database.GetCardFromId).WhereNotNull().ToList();
 
 				if(cards.All(x => x.TypeEnum == CardType.MINION))
