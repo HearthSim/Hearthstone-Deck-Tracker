@@ -62,7 +62,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				var modularCard = Database.GetCardFromDbfId(m1 == dbfId ? m2 : m1, false);
 				if(modularCard != null)
-					minion.AttachModularEntity(modularCard.Id);
+				{
+					var modularMinion = sim.MinionFactory.CreateFromCardId(modularCard.Id, player);
+					minion.AttachedModularEntity = modularMinion;
+					modularMinion.AttachedTo = minion;
+				}
 			}
 
 			//Vanilla health
