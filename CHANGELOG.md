@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.52.7 - 2026-05-15**
 **Mulligan G-V2**
 - Added tips for player initiative and opponent class.
 
