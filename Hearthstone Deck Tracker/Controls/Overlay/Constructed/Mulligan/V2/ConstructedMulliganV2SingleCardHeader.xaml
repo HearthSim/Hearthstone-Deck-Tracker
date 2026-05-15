@@ -59,13 +59,7 @@
                                          Stroke="Black"
                                          StrokeThickness="2">
                                     <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{Binding CardAsset.Asset}">
-                                            <ImageBrush.Transform>
-                                                <ScaleTransform ScaleX="1.6"
-                                                                ScaleY="1.6"
-                                                                CenterX="16"
-                                                                CenterY="12"/>
-                                            </ImageBrush.Transform>
+                                        <ImageBrush ImageSource="{Binding Image}" Transform="{Binding DisplayImageTransform}" >
                                         </ImageBrush>
                                     </Ellipse.Fill>
                                 </Ellipse>

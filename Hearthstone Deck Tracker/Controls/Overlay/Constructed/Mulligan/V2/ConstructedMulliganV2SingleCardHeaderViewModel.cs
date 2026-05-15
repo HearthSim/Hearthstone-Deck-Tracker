@@ -4,16 +4,20 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using HearthDb;
+using HearthDb.Enums;
 using HearthMirror.Enums;
-using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using HSReplay.Responses;
+using MulliganState = HearthMirror.Objects.MulliganState;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 {
@@ -422,8 +426,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 
 	public class MulliganTipViewModel
 	{
-		public CardAssetViewModel? CardAsset { get; set; }
-
 		public ObservableCollection<ArrowIndicator> ArrowIndicators { get; }
 			= new ();
 
@@ -433,6 +435,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 
 		public string? BaseKeepRate { get; set; }
 		public string? AdjustedKeepRate { get; set; }
+
+		public ImageSource? Image { get; set; }
+
+		public Transform? DisplayImageTransform { set; get; }
 
 		public MulliganTipViewModel(MulliganTip tip, Hearthstone.Card? ownerCard)
 		{
@@ -448,20 +454,54 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 				});
 			}
 
-			if (!Cards.AllByDbfId.TryGetValue(tip.DbfId, out var dbCard) || dbCard == null)
-				return;
+			switch (tip.TipType)
+			{
+				case TipType.KEPT_LESS or
+					TipType.KEPT_MORE or
+					TipType.KEPT_LESS_2ND_COPY or
+					TipType.KEPT_MORE_2ND_COPY:
+					HandleCardTips(tip, ownerCard);
+					break;
+				case TipType.KEPT_LESS_VS_THIS_OPPONENT or
+					TipType.KEPT_MORE_VS_THIS_OPPONENT:
+					HandleOpponentClassTips(tip, ownerCard);
+					break;
+				case TipType.KEPT_LESS_GOING_FIRST or
+					TipType.KEPT_MORE_GOING_FIRST or
+					TipType.KEPT_LESS_GOING_SECOND or
+					TipType.KEPT_MORE_GOING_SECOND:
+					HandleInitiativeTips(tip, ownerCard);
+					break;
+			}
 
+		}
+
+		private void HandleCardTips(MulliganTip tip, Hearthstone.Card? ownerCard)
+		{
+
+			if(tip is not
+			   {
+				   DbfId: not null,
+				   BaseKeepRate: not null,
+				   AdjustedKeepRate: not null
+			   })
+			{
+				return;
+			}
+
+			if (!Cards.AllByDbfId.TryGetValue(tip.DbfId.Value, out var dbCard) || dbCard == null)
+				return;
 
 			var card =  new Hearthstone.Card(dbCard);
 
-			CardAsset = new CardAssetViewModel(card, CardAssetType.Portrait);
+			Image =  new CardAssetViewModel(card, CardAssetType.Portrait).Asset;
+			DisplayImageTransform = new ScaleTransform(1.6, 1.6, 16, 12);
 
-			var baseKeepRate = Format(tip.BaseKeepRate);
-			var adjustedKeepRate = Format(tip.AdjustedKeepRate);
-			var delta = adjustedKeepRate - baseKeepRate;
+			var formattedBaseKeepRate = Format(tip.BaseKeepRate.Value);
+			var formattedAdjustedKeepRate = Format(tip.AdjustedKeepRate.Value);
+			var delta = formattedAdjustedKeepRate - formattedBaseKeepRate;
 
 			TooltipTitle = string.Format(LocUtil.Get("MulliganGV2_IconTooltip_Title"), delta > 0 ? "+" : "-", Math.Abs(delta));
-
 			TooltipText = tip.TipType switch
 			{
 				TipType.KEPT_LESS => string.Format(LocUtil.Get("MulliganGV2_IconTooltip_KeptLess"),
@@ -475,9 +515,91 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 				_ => ""
 			};
 
-			BaseKeepRate = string.Format(LocUtil.Get("MulliganGV2_Tooltip_BaseKeepRate"), baseKeepRate);
-			AdjustedKeepRate = string.Format(LocUtil.Get("MulliganGV2_Tooltip_AdjustedKeepRate"), adjustedKeepRate);
+			BaseKeepRate = string.Format(LocUtil.Get("MulliganGV2_Tooltip_BaseKeepRate"), formattedBaseKeepRate);
+			AdjustedKeepRate = string.Format(LocUtil.Get("MulliganGV2_Tooltip_AdjustedKeepRate"), formattedAdjustedKeepRate);
+		}
 
+		private void HandleOpponentClassTips(MulliganTip tip, Hearthstone.Card? ownerCard)
+		{
+			if(tip is not
+			   {
+				   OpponentClass: not null,
+				   ThisOpponentKeepRate: not null,
+				   OtherOpponentKeepRate: not null
+			   })
+			{
+				return;
+			}
+
+
+			var formattedBaseKeepRate = Format(tip.OtherOpponentKeepRate.Value);
+			var formattedAdjustedKeepRate = Format(tip.ThisOpponentKeepRate.Value);
+			var delta = formattedAdjustedKeepRate - formattedBaseKeepRate;
+
+			var opponentClass = Enum.TryParse<CardClass>(tip.OpponentClass, out var result) ? result
+				: CardClass.INVALID;
+
+			var className = LocUtil.Get(Database.CardClassName.TryGetValue(opponentClass, out var cardClass) ? cardClass : "");
+
+			var classImage = ImageCache.GetClassIcon(className);
+			Image = classImage;
+			DisplayImageTransform = new ScaleTransform(1.2, 1.2, 16, 12);
+
+			TooltipTitle = string.Format(LocUtil.Get("MulliganGV2_IconTooltip_Title_Opponent"), delta > 0 ? "+" : "-", Math.Abs(delta));
+			TooltipText = tip.TipType switch
+			{
+				TipType.KEPT_LESS_VS_THIS_OPPONENT => string.Format(LocUtil.Get("MulliganGV2_IconTooltip_KeptLess_Opponent"),
+					ownerCard?.LocalizedName, Math.Abs(delta), className),
+				TipType.KEPT_MORE_VS_THIS_OPPONENT => string.Format(LocUtil.Get("MulliganGV2_IconTooltip_KeptMore_Opponent"),
+					ownerCard?.LocalizedName, Math.Abs(delta), className),
+				_ => ""
+			};
+
+			BaseKeepRate = string.Format(LocUtil.Get("MulliganGV2_Tooltip_OtherOpponentKeepRate"), formattedBaseKeepRate);
+			AdjustedKeepRate = string.Format(LocUtil.Get("MulliganGV2_Tooltip_ThisOpponentKeepRate"), className, formattedAdjustedKeepRate);
+		}
+
+		private void HandleInitiativeTips(MulliganTip tip, Hearthstone.Card? ownerCard)
+		{
+			if(tip is not
+			   {
+				   ThisInitiativeKeepRate: not null,
+				   OtherInitiativeKeepRate: not null
+			   })
+			{
+				return;
+			}
+
+			var formattedBaseKeepRate = Format(tip.OtherInitiativeKeepRate.Value);
+			var formattedAdjustedKeepRate = Format(tip.ThisInitiativeKeepRate.Value);
+			var delta = formattedAdjustedKeepRate - formattedBaseKeepRate;
+
+			const string goingFirstIconSource = "pack://application:,,,/Resources/going_first.png";
+			const string goingSecondIconSource = "pack://application:,,,/Resources/going_second.png";
+			var isCoin = tip.TipType is TipType.KEPT_LESS_GOING_SECOND or TipType.KEPT_MORE_GOING_SECOND;
+
+			Image = new BitmapImage(new Uri(isCoin ? goingSecondIconSource : goingFirstIconSource, UriKind.Absolute));
+			DisplayImageTransform = Transform.Identity;
+
+			TooltipTitle = string.Format(LocUtil.Get("MulliganGV2_IconTooltip_Title_Initiative"), delta > 0 ? "+" : "-", Math.Abs(delta));
+			TooltipText = tip.TipType switch
+			{
+				TipType.KEPT_LESS_GOING_FIRST => string.Format(LocUtil.Get("MulliganGV2_IconTooltip_KeptLess_First"),
+					ownerCard?.LocalizedName, Math.Abs(delta)),
+				TipType.KEPT_MORE_GOING_FIRST => string.Format(LocUtil.Get("MulliganGV2_IconTooltip_KeptMore_First"),
+					ownerCard?.LocalizedName, Math.Abs(delta)),
+				TipType.KEPT_LESS_GOING_SECOND => string.Format(LocUtil.Get("MulliganGV2_IconTooltip_KeptLess_Coin"),
+					ownerCard?.LocalizedName, Math.Abs(delta)),
+				TipType.KEPT_MORE_GOING_SECOND => string.Format(LocUtil.Get("MulliganGV2_IconTooltip_KeptMore_Coin"),
+					ownerCard?.LocalizedName, Math.Abs(delta)),
+				_ => ""
+			};
+
+			const string goingFirstString = "MulliganGV2_Tooltip_GoingFirstKeepRate";
+			const string goingSecondString = "MulliganGV2_Tooltip_GoingSecondKeepRate";
+
+			BaseKeepRate = string.Format(LocUtil.Get(isCoin ? goingFirstString : goingSecondString), formattedBaseKeepRate);
+			AdjustedKeepRate = string.Format(LocUtil.Get(isCoin ? goingSecondString : goingFirstString), formattedAdjustedKeepRate);
 		}
 
 		private static int Format(double value)
