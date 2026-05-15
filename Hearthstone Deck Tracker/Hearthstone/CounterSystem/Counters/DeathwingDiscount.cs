@@ -54,7 +54,7 @@ public class DeathwingDiscount : NumericCounter
 
 		if(controller == Game.Player.Id && IsPlayerCounter || controller == Game.Opponent.Id && !IsPlayerCounter)
 		{
-			Counter = -value;
+			Counter -= value;
 		}
 	}
 }

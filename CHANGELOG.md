@@ -1,5 +1,9 @@
 ## **Unreleased**
+**Mulligan G-V2**
+- Added tips for player initiative and opponent class.
+
 **Hearthstone**
+- Fixed Deathwing Discount Counter not working with multiple Ultraxion effects.
 - Fixed *Dragon Soul, Shattered* Essences not being added to the deck at the start of the game.
 
 **Battlegrounds**
