@@ -774,18 +774,27 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
-		internal async void UpdateOpponentLockAndLoadHeroPower(Entity attachedEntity)
+		internal async void UpdateLockAndLoadHeroPower(Entity attachedEntity, bool isOpponent)
 		{
 			if(_input == null || State != BobsBuddyState.Combat)
 				return;
 
-			var tavishLockAndLoad = _input.Opponent.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
-			if(tavishLockAndLoad == null || tavishLockAndLoad.AttachedMinion != null)
-				return;
-
-			tavishLockAndLoad.AttachedMinion = GetMinionFromEntity(new Simulator(), false, attachedEntity, GetAttachedEntities(attachedEntity.Id));
-
-			await TryRerun();
+			var tryDuos = _game.IsBattlegroundsDuosMatch;
+			var tryRerun = false;
+			if(isOpponent && !tryDuos){  // Try to obtain for opponent when not duos
+				var tavishLockAndLoad = _input.Opponent.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
+				if(tavishLockAndLoad == null)
+					tryDuos = true; // Will fallback and try duos anyways
+				else if(tavishLockAndLoad.AttachedMinion == null)
+				{
+					tavishLockAndLoad.AttachedMinion = GetMinionFromEntity(new Simulator(), false, attachedEntity, GetAttachedEntities(attachedEntity.Id));
+					tryRerun = true;
+				}
+			}
+			if(tryDuos)
+				UpdateDuosLockAndLoadHeroPower(attachedEntity.Card.DbfId);
+			if(tryRerun)
+				await TryRerun();
 		}
 
 		internal async void UpdateDuosLockAndLoadHeroPower(int cardDbfid)
