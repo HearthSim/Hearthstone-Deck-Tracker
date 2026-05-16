@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
 using BobsBuddy.Enchantments;
+using BobsBuddy.Minions.Duos;
 using BobsBuddy.Utils;
 using BobsBuddyPlayer = BobsBuddy.Simulation.Player;
 
@@ -815,6 +816,32 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 
 			tavishLockAndLoad.Data3 = cardDbfid;
+
+			await TryRerun();
+		}
+
+		internal async void UpdateSandyTransformDuos(Entity attachedEntity, int sandyEntityId)
+		{
+			if(_input == null || State != BobsBuddyState.Combat)
+				return;
+
+			var friendly = true;
+			var sandyMinion = _input.Player.Side.FirstOrDefault(m => m.game_id == sandyEntityId);
+			if(sandyMinion == null && _input.PlayerTeammate != null)
+				sandyMinion = _input.PlayerTeammate.Side.FirstOrDefault(m => m.game_id == sandyEntityId);
+			if(sandyMinion == null)
+			{
+				friendly = false;
+				sandyMinion = _input.Opponent.Side.FirstOrDefault(m => m.game_id == sandyEntityId);
+			}
+			if(sandyMinion == null && _input.OpponentTeammate != null)
+				sandyMinion = _input.OpponentTeammate.Side.FirstOrDefault(m => m.game_id == sandyEntityId);
+			if(sandyMinion == null)
+				return;
+			if(((Sandy)sandyMinion).AttachedMinion != null)
+				return;
+
+			((Sandy)sandyMinion).AttachedMinion = GetMinionFromEntity(new Simulator(), friendly, attachedEntity, GetAttachedEntities(attachedEntity.Id));
 
 			await TryRerun();
 		}
