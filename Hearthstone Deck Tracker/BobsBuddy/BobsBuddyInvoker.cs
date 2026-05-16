@@ -846,6 +846,30 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
+		internal async void UpdateFlobbidinousFloopTransformDuos(Entity attachedEntity)
+		{
+			if(_input == null || State != BobsBuddyState.Combat)
+				return;
+
+			var friendly = true;
+			var flobbidinousFloop = _input.Player.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+			if(flobbidinousFloop == null && _input.PlayerTeammate != null)
+				flobbidinousFloop = _input.PlayerTeammate.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+			if(flobbidinousFloop == null)
+			{
+				friendly = false;
+				flobbidinousFloop = _input.Opponent.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+			}
+			if(flobbidinousFloop == null && _input.OpponentTeammate != null)
+				flobbidinousFloop = _input.OpponentTeammate.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+			if(flobbidinousFloop == null || flobbidinousFloop.AttachedMinion != null)
+				return;
+
+			flobbidinousFloop.AttachedMinion = GetMinionFromEntity(new Simulator(), friendly, attachedEntity, GetAttachedEntities(attachedEntity.Id));
+
+			await TryRerun();
+		}
+
 		internal async void UpdateMinionEnchantment(Entity enchantmentEntity, int attachedToEntityId, bool isPlayerMinion)
 		{
 			if(_input == null || State != BobsBuddyState.Combat)
