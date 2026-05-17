@@ -194,6 +194,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(entity.CardId == NonCollectible.Neutral.ReplicaCathedral)
 				trinket.ScriptDataNum1 = entity.GetTag((GameTag)4696);
 
+			trinket.game_id = entity.Id;
+
 			return trinket;
 		}
 

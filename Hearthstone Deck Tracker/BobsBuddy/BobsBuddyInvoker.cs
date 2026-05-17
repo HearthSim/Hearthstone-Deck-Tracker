@@ -485,7 +485,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							GetAttachedEntities(attachedEntityId));
 					}
 				}
-				inputPlayer.AddHeroPower(heroPower?.CardId ?? "", friendly, WasHeroPowerActivated(heroPower), pHpData, pHpData2, pHpData3, pHpAttachedMinion);
+				inputPlayer.AddHeroPower(heroPower?.CardId ?? "", friendly, WasHeroPowerActivated(heroPower), pHpData, pHpData2, pHpData3, pHpAttachedMinion, heroPower?.Id ?? 0);
 			}
 
 			foreach(var quest in gamePlayer.Quests)
