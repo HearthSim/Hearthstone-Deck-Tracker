@@ -1,3 +1,6 @@
+## **Release v1.52.8 - 2026-05-19**
+**Updated for Hearthstone 35.4.2**
+
 ## **Release v1.52.7 - 2026-05-15**
 **Mulligan G-V2**
 - Added tips for player initiative and opponent class.
