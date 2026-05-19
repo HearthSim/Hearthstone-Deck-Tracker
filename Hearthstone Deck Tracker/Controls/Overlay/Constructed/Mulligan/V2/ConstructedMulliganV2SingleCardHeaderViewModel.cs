@@ -578,7 +578,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 			const string goingSecondIconSource = "pack://application:,,,/Resources/going_second.png";
 			var isCoin = tip.TipType is TipType.KEPT_LESS_GOING_SECOND or TipType.KEPT_MORE_GOING_SECOND;
 
-			Image = new BitmapImage(new Uri(isCoin ? goingSecondIconSource : goingFirstIconSource, UriKind.Absolute));
+			var bitmap = new BitmapImage();
+
+			bitmap.BeginInit();
+			bitmap.UriSource = new Uri(
+				isCoin ? goingSecondIconSource : goingFirstIconSource,
+				UriKind.Absolute);
+			bitmap.CacheOption = BitmapCacheOption.OnLoad;
+			bitmap.EndInit();
+			bitmap.Freeze();
+
+			Image = bitmap;
+
 			DisplayImageTransform = Transform.Identity;
 
 			TooltipTitle = string.Format(LocUtil.Get("MulliganGV2_IconTooltip_Title_Initiative"), delta > 0 ? "+" : "-", Math.Abs(delta));
