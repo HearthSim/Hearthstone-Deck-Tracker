@@ -1,3 +1,7 @@
+## **Release v1.52.9 - 2026-05-19**
+**Hearthstone**
+- Fixed crashes related to Mulligan G-V2.
+
 ## **Release v1.52.8 - 2026-05-19**
 **Updated for Hearthstone 35.4.2**
 
