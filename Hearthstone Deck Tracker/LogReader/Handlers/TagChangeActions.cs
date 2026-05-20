@@ -319,6 +319,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateFlobbidinousFloopTransformDuos(entity);
 			}
 
+			if(
+				game.CurrentGameMode == GameMode.Battlegrounds &&
+				(gameState.CurrentBlock?.CardId == NonCollectible.Neutral.SummoningSphere || gameState.CurrentBlock?.CardId == NonCollectible.Neutral.LesserTrinket) &&
+				entity.IsMinion &&
+				gameState.CurrentBlock?.SourceEntityId == entity.GetTag(CREATOR) &&
+				entity.IsInZone(SETASIDE)
+			)
+			{
+				if(game.CurrentGameStats != null)
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateSummoningSphereDuos(entity, entity.GetTag(CREATOR));
+			}
+
 			if(!game.Entities.TryGetValue(value, out var targetEntity))
 				return;
 

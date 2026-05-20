@@ -17,6 +17,7 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
 using BobsBuddy.Enchantments;
 using BobsBuddy.Minions.Duos;
+using BobsBuddy.Trinkets;
 using BobsBuddy.Utils;
 using BobsBuddyPlayer = BobsBuddy.Simulation.Player;
 
@@ -866,6 +867,32 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 
 			flobbidinousFloop.AttachedMinion = GetMinionFromEntity(new Simulator(), friendly, attachedEntity, GetAttachedEntities(attachedEntity.Id));
+
+			await TryRerun();
+		}
+
+		internal async void UpdateSummoningSphereDuos(Entity attachedEntity, int trinketEntityId)
+		{
+			if(_input == null || State != BobsBuddyState.Combat)
+				return;
+
+			var friendly = true;
+			var summoningSphereTrinket = _input.Player.Trinkets.FirstOrDefault(t => t.game_id == trinketEntityId && t.CardID == NonCollectible.Neutral.SummoningSphere);
+			if(summoningSphereTrinket == null && _input.PlayerTeammate != null)
+				summoningSphereTrinket = _input.PlayerTeammate.Trinkets.FirstOrDefault(t => t.game_id == trinketEntityId && t.CardID == NonCollectible.Neutral.SummoningSphere);
+			if(summoningSphereTrinket == null)
+			{
+				friendly = false;
+				summoningSphereTrinket = _input.Opponent.Trinkets.FirstOrDefault(t => t.game_id == trinketEntityId && t.CardID == NonCollectible.Neutral.SummoningSphere);
+			}
+			if(summoningSphereTrinket == null && _input.OpponentTeammate != null)
+				summoningSphereTrinket = _input.OpponentTeammate.Trinkets.FirstOrDefault(t => t.game_id == trinketEntityId && t.CardID == NonCollectible.Neutral.SummoningSphere);
+			if(summoningSphereTrinket == null)
+				return;
+			if(((SummoningSphere)summoningSphereTrinket).AttachedMinion != null)
+				return;
+
+			((SummoningSphere)summoningSphereTrinket).AttachedMinion = GetMinionFromEntity(new Simulator(), friendly, attachedEntity, GetAttachedEntities(attachedEntity.Id));
 
 			await TryRerun();
 		}
