@@ -578,17 +578,27 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 			const string goingSecondIconSource = "pack://application:,,,/Resources/going_second.png";
 			var isCoin = tip.TipType is TipType.KEPT_LESS_GOING_SECOND or TipType.KEPT_MORE_GOING_SECOND;
 
-			var bitmap = new BitmapImage();
+			try
+			{
+				var bitmap = new BitmapImage();
 
-			bitmap.BeginInit();
-			bitmap.UriSource = new Uri(
-				isCoin ? goingSecondIconSource : goingFirstIconSource,
-				UriKind.Absolute);
-			bitmap.CacheOption = BitmapCacheOption.OnLoad;
-			bitmap.EndInit();
-			bitmap.Freeze();
+				bitmap.BeginInit();
+				bitmap.UriSource = new Uri(
+					isCoin ? goingSecondIconSource : goingFirstIconSource,
+					UriKind.Absolute);
+				bitmap.CacheOption = BitmapCacheOption.OnLoad;
+				bitmap.EndInit();
+				bitmap.Freeze();
+				
+				Image = bitmap;
+			}
+			catch (Exception ex)
+			{
+				var imgSource = isCoin ? goingSecondIconSource : goingFirstIconSource;
+				Log.Error($"Failed loading image: {imgSource}. Exception: {ex}");
+				Image = null;
+			}
 
-			Image = bitmap;
 
 			DisplayImageTransform = Transform.Identity;
 
