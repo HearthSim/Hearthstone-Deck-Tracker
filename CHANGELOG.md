@@ -1,6 +1,15 @@
+## **Release v1.52.10 - 2026-05-20**
+**Hearthstone**
+- Tentatively fixed crashes related to Mulligan G-V2.
+
+**Bob's Buddy**
+- Fixed incorrect simulation results where:
+- Stitched minions from Build-An-Undead were being given bonus keywords of both minions even when some were removed (e.g., reborn, taunt)
+- Improved Summoning Sphere for Duos to better discover the attached minion
+
 ## **Release v1.52.9 - 2026-05-19**
 **Hearthstone**
-- Fixed crashes related to Mulligan G-V2.
+- Tentatively fixed crashes related to Mulligan G-V2.
 
 ## **Release v1.52.8 - 2026-05-19**
 **Updated for Hearthstone 35.4.2**
