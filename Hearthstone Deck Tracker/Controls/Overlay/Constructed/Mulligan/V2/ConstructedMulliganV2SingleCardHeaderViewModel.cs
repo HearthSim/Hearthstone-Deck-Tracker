@@ -479,7 +479,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 					TipType.KEPT_MORE_GOING_FIRST or
 					TipType.KEPT_LESS_GOING_SECOND or
 					TipType.KEPT_MORE_GOING_SECOND:
-					HandleInitiativeTips(tip, ownerCard);
+					// disabled temporarely due to bitmapImage crashes
+					// HandleInitiativeTips(tip, ownerCard);
 					break;
 			}
 
