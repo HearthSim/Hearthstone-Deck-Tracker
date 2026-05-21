@@ -1,3 +1,7 @@
+## **Release v1.52.11 - 2026-05-21**
+**Hearthstone**
+- Tentatively fixed crashes related to Mulligan G-V2.
+
 ## **Release v1.52.10 - 2026-05-20**
 **Hearthstone**
 - Tentatively fixed crashes related to Mulligan G-V2.
