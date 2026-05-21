@@ -203,36 +203,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 
 				MulliganState = mulliganState;
 
-				var tips = new List<MulliganTip>(data.Tips);
-
-				for(int i = 0; i < 10; i++)
-				{
-					tips.Add(new MulliganTip
-					{
-						TipType = TipType.KEPT_MORE,
-						DbfId = 122976,
-						BaseKeepRate = 0.5,
-						AdjustedKeepRate = 0.7,
-						Arrows = 2,
-					});
-					tips.Add(new MulliganTip
-					{
-						TipType = TipType.KEPT_LESS_VS_THIS_OPPONENT,
-						OpponentClass = "SHAMAN",
-						ThisOpponentKeepRate = 0.5,
-						OtherOpponentKeepRate = 0.7,
-						Arrows = 2,
-					});
-					tips.Add(new MulliganTip
-					{
-						TipType = TipType.KEPT_MORE_GOING_SECOND,
-						ThisInitiativeKeepRate = 0.5,
-						OtherInitiativeKeepRate = 0.7,
-						Arrows = 2,
-					});
-				}
-
-				MulliganTips = new ObservableCollection<MulliganTipViewModel>(tips.Select(t => new MulliganTipViewModel(t, Card)));
+				MulliganTips = new ObservableCollection<MulliganTipViewModel>(data.Tips.Select(t => new MulliganTipViewModel(t, Card)));
 			}
 		}
 
@@ -473,6 +444,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 
 		public string? BaseKeepRate { get; set; }
 		public string? AdjustedKeepRate { get; set; }
+		public CardAssetViewModel? CardAssetViewModel { get; private set; }
 
 		public ImageSource? Image { get; set; }
 
@@ -532,7 +504,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 
 			var card =  new Hearthstone.Card(dbCard);
 
-			Image =  Helper.NormalizeImage(new CardAssetViewModel(card, CardAssetType.Portrait).Asset);
+			CardAssetViewModel = new CardAssetViewModel(card, CardAssetType.Portrait);
+
+			Image =  Helper.NormalizeImage(CardAssetViewModel.Asset);
 			DisplayImageTransform = new ScaleTransform(1.6, 1.6, 16, 12);
 
 			var formattedBaseKeepRate = Format(tip.BaseKeepRate.Value);
