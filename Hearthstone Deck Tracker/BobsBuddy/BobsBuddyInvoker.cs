@@ -350,11 +350,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return true;
 		}
 
-		private bool IsUnsupportedCard(Entity e) =>
-			e.Card.Id == NonCollectible.Neutral.ProfessorPutricide_Festergut1 || e.Card.Id == NonCollectible.Neutral.ProfessorPutricide_Festergut2
-			|| e.Card.Id == NonCollectible.Neutral.Sneed_PilotedWhirlOTron1 || e.Card.Id == NonCollectible.Neutral.Sneed_PilotedWhirlOTron2;
-
-
 		internal void UpdateAttackingEntities(Entity attacker, Entity defender)
 		{
 			if(!attacker.IsHero || !defender.IsHero)
@@ -414,12 +409,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						ErrorState = BobsBuddyErrorState.UnknownCards;
 						throw new ArgumentException("Board has cards with changed text. Exiting.");
 					}
-				}
-
-				if(IsUnsupportedCard(entity))
-				{
-					ErrorState = BobsBuddyErrorState.UnsupportedCards;
-					throw new ArgumentException("Board has unsupported cards. Exiting.");
 				}
 			}
 
