@@ -154,5 +154,14 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("dbf_id")]
 			public int DbfId { get; set; }
 		}
+
+		internal class MetaPeriod
+		{
+			[JsonProperty("period_start")]
+			public long PeriodStart { get; set; }
+
+			[JsonProperty("mechanics")]
+			public List<string>? Mechanics { get; set; }
+		}
 	}
 }

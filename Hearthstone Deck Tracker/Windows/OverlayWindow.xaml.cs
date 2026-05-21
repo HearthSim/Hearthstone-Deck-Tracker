@@ -1470,18 +1470,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var boardCards = args.BoardCards;
 
-			// var gameId = _game.MetaData.ServerInfo?.GameHandle;
-			// var userHasTier7 = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) || Tier7Trial.IsTrialForCurrentGameActive(gameId);
+			var gameId = _game.MetaData.ServerInfo?.GameHandle;
+			var userHasTier7 = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) || Tier7Trial.IsTrialForCurrentGameActive(gameId);
+			var currentPeriod = Remote.BattlegroundsMetaPeriods.Data?
+				.OrderByDescending(p => p.PeriodStart)
+				.FirstOrDefault();
+			var hasTimewarpMechanic = currentPeriod?.Mechanics?.Contains("timewarp") ?? false;
 
-			// Disable Timewarp for now
-			// if(args.IsActive && boardCards.Count > 0 && userHasTier7)
-			// {
-			// 	ShowBattlegroundsTimewarpPanel(boardCards);
-			// }
-			// else
-			// {
-			HideBattlegroundsTimewarpPanel();
-			// }
+			if(args.IsActive && boardCards.Count > 0 && userHasTier7 && hasTimewarpMechanic)
+			{
+				ShowBattlegroundsTimewarpPanel(boardCards);
+			}
+			else
+			{
+				HideBattlegroundsTimewarpPanel();
+			}
 
 			Core.Overlay.BattlegroundsMinionPinningViewModel.OnShopChange(boardCards, args.MousedOverSlot);
 		}
