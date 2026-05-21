@@ -1038,6 +1038,51 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		public static ImageSource? NormalizeImage(ImageSource? source)
+		{
+			if(source == null)
+				return null;
+
+			try
+			{
+				// Fast path
+				if(source is BitmapSource bmp)
+				{
+					var clone = bmp.Clone();
+
+					if(clone.CanFreeze)
+						clone.Freeze();
+
+					return clone;
+				}
+
+				// Fallback render path
+				var drawingVisual = new DrawingVisual();
+
+				using(var ctx = drawingVisual.RenderOpen())
+					ctx.DrawImage(source, new Rect(0, 0, source.Width, source.Height));
+
+				var rendered = new RenderTargetBitmap(
+					(int)Math.Ceiling(source.Width),
+					(int)Math.Ceiling(source.Height),
+					96,
+					96,
+					PixelFormats.Pbgra32);
+
+				rendered.Render(drawingVisual);
+
+				if(rendered.CanFreeze)
+					rendered.Freeze();
+
+				return rendered;
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+				return null;
+			}
+		}
+
 		public static string ToCardLanguage(Language lang) => lang switch
 		{
 			Language.ptPT => "ptBR", // Not supported

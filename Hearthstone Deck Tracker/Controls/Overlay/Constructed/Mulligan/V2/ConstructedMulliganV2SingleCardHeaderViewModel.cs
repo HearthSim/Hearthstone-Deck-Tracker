@@ -203,7 +203,36 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 
 				MulliganState = mulliganState;
 
-				MulliganTips = new ObservableCollection<MulliganTipViewModel>(data.Tips.Select(t => new MulliganTipViewModel(t, Card)));
+				var tips = new List<MulliganTip>(data.Tips);
+
+				for(int i = 0; i < 10; i++)
+				{
+					tips.Add(new MulliganTip
+					{
+						TipType = TipType.KEPT_MORE,
+						DbfId = 122976,
+						BaseKeepRate = 0.5,
+						AdjustedKeepRate = 0.7,
+						Arrows = 2,
+					});
+					tips.Add(new MulliganTip
+					{
+						TipType = TipType.KEPT_LESS_VS_THIS_OPPONENT,
+						OpponentClass = "SHAMAN",
+						ThisOpponentKeepRate = 0.5,
+						OtherOpponentKeepRate = 0.7,
+						Arrows = 2,
+					});
+					tips.Add(new MulliganTip
+					{
+						TipType = TipType.KEPT_MORE_GOING_SECOND,
+						ThisInitiativeKeepRate = 0.5,
+						OtherInitiativeKeepRate = 0.7,
+						Arrows = 2,
+					});
+				}
+
+				MulliganTips = new ObservableCollection<MulliganTipViewModel>(tips.Select(t => new MulliganTipViewModel(t, Card)));
 			}
 		}
 
@@ -447,7 +476,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 
 		public ImageSource? Image { get; set; }
 
-		public Transform? DisplayImageTransform { set; get; }
+		public Transform DisplayImageTransform { set; get; } = Transform.Identity;
 
 		public MulliganTipViewModel(MulliganTip tip, Hearthstone.Card? ownerCard)
 		{
@@ -479,8 +508,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 					TipType.KEPT_MORE_GOING_FIRST or
 					TipType.KEPT_LESS_GOING_SECOND or
 					TipType.KEPT_MORE_GOING_SECOND:
-					// disabled temporarely due to bitmapImage crashes
-					// HandleInitiativeTips(tip, ownerCard);
+					HandleInitiativeTips(tip, ownerCard);
 					break;
 			}
 
@@ -504,7 +532,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 
 			var card =  new Hearthstone.Card(dbCard);
 
-			Image =  new CardAssetViewModel(card, CardAssetType.Portrait).Asset;
+			Image =  Helper.NormalizeImage(new CardAssetViewModel(card, CardAssetType.Portrait).Asset);
 			DisplayImageTransform = new ScaleTransform(1.6, 1.6, 16, 12);
 
 			var formattedBaseKeepRate = Format(tip.BaseKeepRate.Value);
@@ -552,7 +580,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 			var className = LocUtil.Get(Database.CardClassName.TryGetValue(opponentClass, out var cardClass) ? cardClass : "");
 
 			var classImage = ImageCache.GetClassIcon(className);
-			Image = classImage;
+			Image = Helper.NormalizeImage(classImage);
 			DisplayImageTransform = new ScaleTransform(1.2, 1.2, 16, 12);
 
 			TooltipTitle = string.Format(LocUtil.Get("MulliganGV2_IconTooltip_Title_Opponent"), delta > 0 ? "+" : "-", Math.Abs(delta));
@@ -588,7 +616,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 			var isCoin = tip.TipType is TipType.KEPT_LESS_GOING_SECOND or TipType.KEPT_MORE_GOING_SECOND;
 
 			var bitmap = isCoin ? GoingSecondImage.Value : GoingFirstImage.Value;
-			Image = bitmap;
+			Image = Helper.NormalizeImage(bitmap);
 
 
 			DisplayImageTransform = Transform.Identity;
