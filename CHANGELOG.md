@@ -1,3 +1,7 @@
+## **Release v1.52.12 - 2026-05-21**
+**Hearthstone**
+- Temporarily disabled Mulligan G-V2 player initiative tips that were causing crashed at the start of the game.
+
 ## **Release v1.52.11 - 2026-05-21**
 **Hearthstone**
 - Tentatively fixed crashes related to Mulligan G-V2.
