@@ -38,6 +38,7 @@ using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
+using Application = System.Windows.Application;
 
 #endregion
 
@@ -1003,6 +1004,38 @@ namespace Hearthstone_Deck_Tracker
 			bmp.StreamSource = ms;
 			bmp.EndInit();
 			return bmp;
+		}
+
+		public static BitmapImage? LoadBitmapImage(string uri)
+		{
+			try
+			{
+				var sri = Application.GetResourceStream(new Uri(uri, UriKind.Absolute));
+
+				if(sri == null)
+					return null;
+
+				using var ms = new MemoryStream();
+				sri.Stream.CopyTo(ms);
+				ms.Position = 0;
+
+				var bmp = new BitmapImage();
+
+				bmp.BeginInit();
+				bmp.CacheOption = BitmapCacheOption.OnLoad;
+				bmp.StreamSource = ms;
+				bmp.EndInit();
+
+				if(bmp.CanFreeze)
+					bmp.Freeze();
+
+				return bmp;
+			}
+			catch(Exception ex)
+			{
+				Log.Error($"Failed to load image at {uri}: {ex}");
+				return null;
+			}
 		}
 
 		public static string ToCardLanguage(Language lang) => lang switch

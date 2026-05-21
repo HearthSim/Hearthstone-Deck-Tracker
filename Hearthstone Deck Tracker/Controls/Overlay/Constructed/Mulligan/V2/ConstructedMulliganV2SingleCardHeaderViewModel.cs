@@ -429,6 +429,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 		public ObservableCollection<ArrowIndicator> ArrowIndicators { get; }
 			= new ();
 
+		const string GoingFirstIconSource = "pack://application:,,,/Resources/going_first.png";
+		const string GoingSecondIconSource = "pack://application:,,,/Resources/going_second.png";
+
+		private static readonly Lazy<ImageSource?> GoingFirstImage =
+			new(() => Helper.LoadBitmapImage(GoingFirstIconSource));
+
+		private static readonly Lazy<ImageSource?> GoingSecondImage =
+			new(() =>  Helper.LoadBitmapImage(GoingSecondIconSource));
+
 		public string? TooltipText { get; set; }
 
 		public string? TooltipTitle { get; set; }
@@ -574,30 +583,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2
 			var formattedAdjustedKeepRate = Format(tip.ThisInitiativeKeepRate.Value);
 			var delta = formattedAdjustedKeepRate - formattedBaseKeepRate;
 
-			const string goingFirstIconSource = "pack://application:,,,/Resources/going_first.png";
-			const string goingSecondIconSource = "pack://application:,,,/Resources/going_second.png";
+
 			var isCoin = tip.TipType is TipType.KEPT_LESS_GOING_SECOND or TipType.KEPT_MORE_GOING_SECOND;
 
-			try
-			{
-				var bitmap = new BitmapImage();
-
-				bitmap.BeginInit();
-				bitmap.UriSource = new Uri(
-					isCoin ? goingSecondIconSource : goingFirstIconSource,
-					UriKind.Absolute);
-				bitmap.CacheOption = BitmapCacheOption.OnLoad;
-				bitmap.EndInit();
-				bitmap.Freeze();
-				
-				Image = bitmap;
-			}
-			catch (Exception ex)
-			{
-				var imgSource = isCoin ? goingSecondIconSource : goingFirstIconSource;
-				Log.Error($"Failed loading image: {imgSource}. Exception: {ex}");
-				Image = null;
-			}
+			var bitmap = isCoin ? GoingSecondImage.Value : GoingFirstImage.Value;
+			Image = bitmap;
 
 
 			DisplayImageTransform = Transform.Identity;
