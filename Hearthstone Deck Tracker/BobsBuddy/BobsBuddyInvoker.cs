@@ -787,7 +787,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				var tavishLockAndLoad = _input.Opponent.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
 				if(tavishLockAndLoad == null)
 					tryDuos = true; // Will fallback and try duos anyways
-				else if(tavishLockAndLoad.AttachedMinion == null)
+				else if(tavishLockAndLoad.AttachedMinion == null && tavishLockAndLoad.Data3 == 0)
 				{
 					tavishLockAndLoad.AttachedMinion = GetMinionFromEntity(new Simulator(), false, attachedEntity, GetAttachedEntities(attachedEntity.Id));
 					tryRerun = true;
