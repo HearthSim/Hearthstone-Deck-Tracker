@@ -870,6 +870,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OpacityMaskOverlay.AddMaskedRegion("DiscoverCard", rect);
 		}
 
+		public void SetTrinketPickingOpacityMask(int zoneSize)
+		{
+			OpacityMaskOverlay.RemoveMaskedRegion("DiscoverCard");
+
+			if(zoneSize == 0)
+				return;
+
+			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
+			var rects = regionDrawer.DrawTrinketPickingRegions(zoneSize);
+
+			using var _ = OpacityMaskOverlay.StartBatchUpdate();
+			foreach(var rect in rects)
+				OpacityMaskOverlay.AddMaskedRegion("DiscoverCard", rect);
+		}
+
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
@@ -1440,6 +1455,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateTier7PreLobbyVisibility();
 		}
 
+		private IReadOnlyList<string>? _pendingBgsCombatChoices;
+
 		internal void SetChoicesVisible(bool choicesVisible, IEnumerable<string>? cardIds)
 		{
 			BattlegroundsTrinketPickingViewModel.ChoicesVisible = choicesVisible;
@@ -1449,18 +1466,38 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var cardIdList = (cardIds ?? Array.Empty<string>()).ToList();
 				if(!choicesVisible || !cardIdList.Any())
 				{
+					_pendingBgsCombatChoices = null;
 					OpacityMaskOverlay.RemoveMaskedRegion("DiscoverCard");
 					return;
 				}
 
 				if(_game.IsBattlegroundsCombatPhase)
+				{
+					_pendingBgsCombatChoices = cardIdList;
 					return;
-				
-				var cards = cardIdList.Select(Database.GetCardFromId).WhereNotNull().ToList();
+				}
 
-				if(cards.All(x => x.TypeEnum == CardType.MINION))
-					SetDiscoverCardOpacityMask(cards.Count);
+				_pendingBgsCombatChoices = null;
+				ApplyDiscoverCardMask(cardIdList);
 			}
+		}
+
+		internal void OnBattlegroundsShoppingStart()
+		{
+			if(_pendingBgsCombatChoices is { } pending)
+			{
+				_pendingBgsCombatChoices = null;
+				ApplyDiscoverCardMask(pending);
+			}
+		}
+
+		private void ApplyDiscoverCardMask(IReadOnlyList<string> cardIds)
+		{
+			var cards = cardIds.Select(Database.GetCardFromId).WhereNotNull().ToList();
+			if(cards.All(x => x.TypeEnum == CardType.BATTLEGROUND_TRINKET))
+				SetTrinketPickingOpacityMask(cards.Count);
+			else if(cards.All(x => x.TypeEnum == CardType.MINION || x.TypeEnum == CardType.BATTLEGROUND_SPELL || x.TypeEnum == CardType.SPELL))
+				SetDiscoverCardOpacityMask(cards.Count);
 		}
 
 		internal void HandleSpecialShop(SpecialShopChoicesArgs args)

@@ -385,5 +385,27 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 
 			return regions;
 		}
+
+		public List<Rect> DrawTrinketPickingRegions(int zoneSize)
+		{
+			if(zoneSize == 0)
+				return new List<Rect>();
+
+			const double trinketPickCardSpacing = 0.192;
+			const double cardY = 0.32;
+			const double cardHeight = 0.320;
+
+			var totalWidth = zoneSize * trinketPickCardSpacing;
+			var leftEdge = 0.51 - totalWidth / 2;
+
+			var firstCard = DrawCardRegion(leftEdge, cardY, cardHeight, TrinketAspectRatio);
+			var lastCard = DrawCardRegion(leftEdge + (zoneSize - 1) * trinketPickCardSpacing, cardY, cardHeight, TrinketAspectRatio);
+
+			var x = firstCard.X;
+			var right = lastCard.X + lastCard.Width;
+			var block = new Rect(x, firstCard.Y, right - x, firstCard.Height);
+
+			return new List<Rect> { block };
+		}
 	}
 }
