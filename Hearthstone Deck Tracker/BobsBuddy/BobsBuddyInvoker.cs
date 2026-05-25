@@ -1342,7 +1342,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		}
 
 		private bool IsOpposingAkazamzarak()
-			=> (_input?.Opponent.HeroPowers.Any(hp => hp.CardId == HeroPowerIds.Azamarak) ?? false)
+			=> (_input?.Opponent?.HeroPowers.Any(hp => hp.CardId == HeroPowerIds.Azamarak) ?? false)
 			   || (_input?.OpponentTeammate?.HeroPowers.Any(hp => hp.CardId == HeroPowerIds.Azamarak) ?? false);
 
 		private void AlertWithLastInputOutput(string result)
