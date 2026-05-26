@@ -1,3 +1,20 @@
+## **Release v1.52.15 - 2026-05-26**
+**Battlegrounds**
+- Fixed Timewarp tavern button visibility based on current meta.
+- Improved overlay mask handling for choices during combat.
+- Added overly masking support during Trinket Picking.
+
+**Bob's Buddy**
+- Improved simulation accuracy for cast spell interactions.
+- Fixed Deathly Phylactery trinket deathrattle simulation behavior.
+- Fixed Humon'gozz incorrectly applying extra tavern spell buffs.
+- Fixed hero power ordering when Tavish appears before Brukan's Lightning.
+- Fixed incorrect attack/health bonuses when opponent hero is Kel'Thuzad.
+- Fixed Leeroy Jenkins incorrectly targeting friendly Stitched Salvager.
+- Fixed Sly Raptor summon pool to correctly include Rylak.
+- Fixed Time Management showing both options as always valid.
+- Fixed Friendly Geist interaction with Tavern Spell buffs.
+
 ## **Release v1.52.14 - 2026-05-21**
 **Hearthstone**
 - Tentatively fixed crashes related to Mulligan G-V2.
