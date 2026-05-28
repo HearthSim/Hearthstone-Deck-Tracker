@@ -1658,6 +1658,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						}
 					}
 				}
+				if(game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null
+					&& gameState.CurrentBlock?.Type == "POWER" && gameState.CurrentBlock.CardId == NonCollectible.Neutral.BackToBackBATTLEGROUNDS)
+				{
+					var backToBackEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
+					if(backToBackEntity != null)
+					{
+						var backToBackEnchantmentEntity = game.Entities.Values
+							.Where(e =>
+								e.CardId == NonCollectible.Neutral.BacktoBack_GotYourBackEnchantment &&
+								e.GetTag(GameTag.CREATOR) == backToBackEntity.Id
+							).ToArray().FirstOrDefault();
+
+						if(backToBackEnchantmentEntity != null)
+							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+								.UpdateBackToBackSpellBonus(backToBackEnchantmentEntity, backToBackEntity.IsControlledBy(game.Opponent.Id));
+					}
+				}
 				gameState.BlockEnd();
 			}
 

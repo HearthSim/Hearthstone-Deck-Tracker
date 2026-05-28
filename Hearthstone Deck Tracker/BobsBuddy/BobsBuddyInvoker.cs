@@ -621,10 +621,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			inputPlayer.TavernSpellAtkBuff = playerEntity.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE);
 			inputPlayer.TavernSpellHealthBuff = playerEntity.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE);
 
-			var pBackToBack = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.BackToBackBATTLEGROUNDS);
-			if(pBackToBack != null)
-				inputPlayer.BackToBackCounter = playerEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);
-
 			inputPlayer.DeathrattleCounter = playerEntity.GetTag((GameTag)4639);
 
 			var pHaunted = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.HauntedCarapace_HauntedCarapacePlayerEnchantDnt);
@@ -806,6 +802,34 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 
 			tavishLockAndLoad.Data3 = cardDbfid;
+
+			await TryRerun();
+		}
+
+		internal async void UpdateBackToBackSpellBonus(Entity backToBackEnchantmentEntity, bool isOpponent)
+		{
+			if(_input == null || State != BobsBuddyState.Combat)
+				return;
+
+			if(isOpponent){
+				if(_input.Opponent.BackToBackAtk == 0 && _input.Opponent.BackToBackHealth == 0)
+				{
+					_input.Opponent.BackToBackAtk = backToBackEnchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+					_input.Opponent.BackToBackHealth = backToBackEnchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				}
+				else
+					return;
+			}
+			else
+			{
+				if(_input.Player.BackToBackAtk == 0 && _input.Player.BackToBackHealth == 0)
+				{
+					_input.Player.BackToBackAtk = backToBackEnchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+					_input.Player.BackToBackHealth = backToBackEnchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				}
+				else
+					return;
+			}
 
 			await TryRerun();
 		}
