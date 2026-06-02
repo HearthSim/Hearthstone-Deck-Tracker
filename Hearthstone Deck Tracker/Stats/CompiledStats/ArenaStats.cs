@@ -90,6 +90,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountCataclysm => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.CATACLYSM));
 
+		public int PacksCountEscapeFromVioletHold => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.EscapeFromVioletHold));
+
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
 		public double PacksCountAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.PackCount).DefaultIfEmpty(0).Average(), 2);

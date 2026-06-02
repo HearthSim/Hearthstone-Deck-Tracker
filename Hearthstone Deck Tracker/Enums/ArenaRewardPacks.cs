@@ -105,5 +105,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_CATACLYSM")]
 		CATACLYSM = CardSet.CATACLYSM,
+
+		[LocDescription("Enum_ArenaRewardPacks_EscapeFromVioletHold")]
+		EscapeFromVioletHold = CardSet.ESCAPEFROM_VIOLET_HOLD,
 	}
 }

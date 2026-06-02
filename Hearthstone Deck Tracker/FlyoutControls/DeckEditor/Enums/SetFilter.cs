@@ -98,5 +98,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		TIME_TRAVEL = 1957,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_CATACLYSM")]
 		CATACLYSM = 1980,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_EscapeFromVioletHold")]
+		ESCAPEFROM_VIOLET_HOLD = 1988,
 	}
 }

@@ -75,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{(int)CardSet.THE_LOST_CITY, "The Lost City" },
 			{(int)CardSet.TIME_TRAVEL, "Across the Timeways" },
 			{(int)CardSet.CATACLYSM, "Cataclysm" },
+			{(int)CardSet.ESCAPEFROM_VIOLET_HOLD, "Escape from Violet Hold" },
 			{(int)CardSet.TB_DEV, "Tavern Brawl (Dev)"},
 			{(int)CardSet.EVENT, "Event" },
 		};
