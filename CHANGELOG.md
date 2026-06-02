@@ -1,3 +1,6 @@
+## **Release v1.52.16 - 2026-06-02**
+**Updated for Hearthstone 35.6.0**
+
 ## **Release v1.52.15 - 2026-05-26**
 **Battlegrounds**
 - Fixed Timewarp tavern button visibility based on current meta.
