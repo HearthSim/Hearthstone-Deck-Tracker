@@ -766,7 +766,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var hideEntitiy = gameState.CurrentBlock is { HideShowEntities: true } && entity.IsControlledBy(game.Opponent.Id);
 
 			var isStartOfTheGameEffect = gameState.CurrentBlock?.TriggerKeyword == "START_OF_GAME_KEYWORD";
-			entity.Info.Hidden = hideEntitiy || (isStartOfTheGameEffect && entity.IsControlledBy(game.Opponent.Id));
+
+			// cultivating sprite's bulb is set to not revealed, but it is a known card
+			var isCultivatingSpriteBulb = gameState.CurrentBlock?.CardId == Collectible.Neutral.CultivatingSprite
+			                          && entity.CardId == NonCollectible.Neutral.CultivatingSprite_BloomingBulbToken;
+
+			entity.Info.Hidden = !isCultivatingSpriteBulb && (hideEntitiy
+			                                                  || (isStartOfTheGameEffect
+			                                                      && entity.IsControlledBy(game.Opponent.Id)));
 
 			if(isStartOfTheGameEffect && entity.IsControlledBy(game.Opponent.Id))
 			{

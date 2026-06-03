@@ -1409,6 +1409,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Demonhunter.Infestation:
 								AddKnownCardId(gameState, NonCollectible.Demonhunter.GorishiWasp_GorishiStingerToken, 2);
 								break;
+							case Collectible.Neutral.CultivatingSprite:
+								AddKnownCardId(gameState, NonCollectible.Neutral.CultivatingSprite_BloomingBulbToken);
+								break;
 							case NonCollectible.Warrior.EntertheLostCity_LatorviusGazeOfTheCityToken:
 								if(actionStartingEntity?.IsControlledBy(game.Opponent.Id) == true)
 								{
