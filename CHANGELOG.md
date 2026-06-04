@@ -1,3 +1,9 @@
+## **Unreleased**
+**Hearthstone**
+- Added Card Mark to Prepare cards in the opponent's hand.
+- Added Deck Highlight to Forge of Souls.
+- Fixed an issue where Cultivating Sprite Bulb would not appear in opponent's hand.
+
 ## **Release v1.52.17 - 2026-06-02**
 **Updated for Hearthstone 35.6.0**
 
