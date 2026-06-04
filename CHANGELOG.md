@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.52.18 - 2026-06-04**
 **Hearthstone**
 - Added Card Mark to Prepare cards in the opponent's hand.
 - Added Deck Highlight to Forge of Souls.
