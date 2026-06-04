@@ -33,5 +33,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[AssetName("/Images/shatter-combined.png")]
 		ShatterCombined = 'S',
+
+		[AssetName("/Images/prepare.png")]
+		Prepared = 'P',
 	}
 }

@@ -109,6 +109,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case FORGE_REVEALED:
 						OnForgeRevealed(gameState, id, game, value, prevValue);
 						break;
+					case PREPARE_REVEALED:
+						OnPrepareRevealed(gameState, id, game, value, prevValue);
+						break;
 					case REVEALED:
 						OnRevealed(gameState, id, game, value, prevValue);
 						break;
@@ -756,6 +759,22 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				entity.Info.Hidden = false;
 			}
 
+		}
+
+		private void OnPrepareRevealed(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			if(prevValue > value)
+				return;
+
+			if(entity.IsControlledBy(game.Opponent.Id) && entity.IsInZone(HAND))
+			{
+				entity.Info.Prepared = value + 1;
+				entity.Info.CostReduction += entity.Info.Prepared;
+				entity.Info.Hidden = false;
+			}
 		}
 
 		private void OnRevealed(IHsGameState gameState, int id, IGame game, int value, int prevValue)

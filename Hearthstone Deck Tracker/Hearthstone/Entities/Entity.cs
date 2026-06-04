@@ -278,6 +278,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				CopyOfCardId = CopyOfCardId,
 				ExtraInfo = ExtraInfo,
 				ShatterCombined = ShatterCombined,
+				Prepared = Prepared,
 			};
 		}
 
@@ -295,6 +296,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 					return Mulliganed ? CardMark.Mulliganed : CardMark.None;
 				}
 
+				if(Prepared > 0)
+					return CardMark.Prepared;
 				if(ShatterCombined)
 					return CardMark.ShatterCombined;
 				if(_entity.HasTag(SHATTERED))
@@ -362,6 +365,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public int CostReduction { get; set; }
 		public bool Forged { get; set; }
 		public bool ShatterCombined { get; set; }
+		public int Prepared { get; set; }
 		public Zone? OriginalZone { get; set; }
 		public string? OriginalCardId { get; private set; }
 		public bool WasTransformed => !string.IsNullOrEmpty(OriginalCardId);
@@ -421,6 +425,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				sb.Append(", shattered=true");
 			if(ShatterCombined)
 				sb.Append(", shatterCombined=true");
+			if(Prepared > 0)
+				sb.Append(", prepared=true");
 			if(CopyOfCardId != null)
 				sb.Append(", copyOf=" + CopyOfCardId);
 			if(ExtraInfo != null)

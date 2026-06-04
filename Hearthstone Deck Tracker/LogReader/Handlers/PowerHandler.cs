@@ -187,6 +187,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						entity.Info.CostReduction = entityInfo.CostReduction;
 						entity.Info.ExtraInfo = entityInfo.ExtraInfo;
 						entity.Info.StoredCardIds = entityInfo.StoredCardIds;
+						entity.Info.Prepared = entityInfo.Prepared;
 					}
 
 					if(guessedCardId)
