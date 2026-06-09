@@ -1,3 +1,15 @@
+## **Release v1.52.19 - 2026-06-09**
+**Bob's Buddy**
+- Added support for Greymane's Champion.
+- Added support for Mooneater's Champion.
+- Added support for Enchanted Sentinel.
+- Added support for Sundered Matriarch.
+- Added support for Glowing Cinder.
+- Fixed Charmwing incorrectly buffing with current health.
+- Fixed RingBearer trigger order.
+- Fixed Ingenious Inventor golden buff amount.
+- Fixed Escape Eruption spellcraft stats.
+
 ## **Release v1.52.18 - 2026-06-04**
 **Hearthstone**
 - Added Card Mark to Prepare cards in the opponent's hand.
