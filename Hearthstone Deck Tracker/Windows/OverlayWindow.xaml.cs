@@ -552,23 +552,37 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_windowHook = IntPtr.Zero;
 		}
 
+		/// <summary>
+		/// Whether the overlay content is currently shown. While the game is running
+		/// the window itself stays visible (with collapsed content) so that it remains
+		/// enumerable and capturable by streaming software such as OBS.
+		/// </summary>
+		public bool IsContentVisible { get; private set; }
+
+		public void HideOverlayWindow()
+		{
+			IsContentVisible = false;
+			GridMain.Visibility = Collapsed;
+			SetClickthrough(true);
+			Hide();
+		}
+
 		public void ShowOverlay(bool enable)
 		{
-			if(enable)
+			IsContentVisible = enable;
+			GridMain.Visibility = enable ? Visible : Collapsed;
+			if(!enable)
+				SetClickthrough(true);
+			try
 			{
-				try
-				{
-					Show();
-				}
-				catch(InvalidOperationException e)
-				{
-					Log.Error(e);
-				}
-				if(User32.GetForegroundWindow() == new WindowInteropHelper(this).Handle)
-					User32.BringHsToForeground();
+				Show();
 			}
-			else
-				Hide();
+			catch(InvalidOperationException e)
+			{
+				Log.Error(e);
+			}
+			if(enable && User32.GetForegroundWindow() == new WindowInteropHelper(this).Handle)
+				User32.BringHsToForeground();
 		}
 
 		private void SetRect(int top, int left, int width, int height)

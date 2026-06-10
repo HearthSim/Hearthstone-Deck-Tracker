@@ -435,7 +435,7 @@ namespace Hearthstone_Deck_Tracker
 						Windows.CapturableOverlay?.UpdateContentVisibility();
 					}
 
-					if(Overlay.IsVisible)
+					if(Overlay.IsContentVisible)
 						Overlay.UpdateBattlegroundsOverlay();
 
 					TrayIcon.MenuItemStartHearthstone.Visible = false;
@@ -478,7 +478,7 @@ namespace Hearthstone_Deck_Tracker
 					Game.IsRunning = false;
 					GameIsRunningChanged?.Invoke(false);
 					Overlay.UnhookGameWindow();
-					Overlay.ShowOverlay(false);
+					Overlay.HideOverlayWindow();
 					Overlay.UpdateVisibilities();
 					Watchers.Stop();
 					if(Windows.CapturableOverlay != null)

@@ -185,7 +185,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private Point? GetCursorPos()
 		{
-			if(!IsVisible)
+			if(!IsContentVisible)
 				return null;
 			try
 			{

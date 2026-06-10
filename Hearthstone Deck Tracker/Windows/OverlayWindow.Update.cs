@@ -156,7 +156,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var oppBoard = Core.Game.Opponent.Board.Where(x => x.TakesBoardSlot).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			var playerBoard = Core.Game.Player.Board.Where(x => x.TakesBoardSlot).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
-			if(!_game.IsInMenu && (_game.IsMulliganDone || _game.IsBattlegroundsMatch || _game.IsMercenariesMatch) && User32.IsHearthstoneInForeground() && IsVisible)
+			if(!_game.IsInMenu && (_game.IsMulliganDone || _game.IsBattlegroundsMatch || _game.IsMercenariesMatch) && User32.IsHearthstoneInForeground() && IsContentVisible)
 				DetectMouseOver(playerBoard, oppBoard);
 			else
 				FlavorTextVisibility = Collapsed;
@@ -314,7 +314,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			                || (Config.Instance.HideOverlayInSpectator && _game.CurrentGameMode == GameMode.Spectator)
 			                || Config.Instance.HideOverlay
 			                || Helper.GameWindowState == WindowState.Minimized);
-			var updatePosition = visible && !IsVisible;
+			var updatePosition = visible && !IsContentVisible;
 			ShowOverlay(visible);
 			if(updatePosition)
 				UpdatePosition();
@@ -326,7 +326,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			//hs window has height 0 if it just launched, screwing things up if the tracker is started before hs is.
 			//this prevents that from happening.
-			if(hsRect.Height == 0 || (Visibility != Visible && Core.Windows.CapturableOverlay == null))
+			if(hsRect.Height == 0 || (!IsContentVisible && Core.Windows.CapturableOverlay == null))
 				return;
 
 			var prevWidth = Width;

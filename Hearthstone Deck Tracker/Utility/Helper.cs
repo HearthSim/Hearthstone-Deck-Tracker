@@ -241,7 +241,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void UpdateEverything(GameV2 game)
 		{
-			if(Core.Overlay.IsVisible || Core.Windows.CapturableOverlay != null)
+			if(Core.Overlay.IsContentVisible || Core.Windows.CapturableOverlay != null)
 				Core.Overlay.Update(false);
 
 			var gameStarted = !game.IsInMenu && game.SetupDone && game.Player.PlayerEntities.Any();
