@@ -1,3 +1,6 @@
+## **Release v1.52.20 - 2026-06-11**
+**Updated for Hearthstone 35.6.2**
+
 ## **Release v1.52.19 - 2026-06-09**
 **Bob's Buddy**
 - Added support for Greymane's Champion.
