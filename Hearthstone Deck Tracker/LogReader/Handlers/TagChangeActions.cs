@@ -1455,6 +1455,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(entityId != game.PlayerEntity?.Id)
 				return;
 			OpponentDeadForTracker.SetNextOpponentPlayerId(playerId, game);
+
+			// Battlegrounds only:
+			// Due to a recent card "Tidecaller Prophet", TAVERN_SPELL_ATTACK/HEALTH_INCREASE for an opponent
+			// can decrease from a previously higher value. If it changed back to zero, no update is sent when
+			// this tag is zero, and BobsBuddyInvoker will have a stale value.
+			// To fix this, clear the two tags here; and non-zero values from an opponent will re-emit
+			// the correct values on reveal.
+			if(game.IsBattlegroundsMatch && playerId > 0 && game.OpponentEntity != null)
+			{
+				game.OpponentEntity.SetTag(TAVERN_SPELL_ATTACK_INCREASE, 0);
+				game.OpponentEntity.SetTag(TAVERN_SPELL_HEALTH_INCREASE, 0);
+			}
 		}
 	}
 }
