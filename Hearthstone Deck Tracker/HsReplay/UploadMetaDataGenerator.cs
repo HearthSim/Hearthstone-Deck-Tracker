@@ -198,7 +198,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					friendly.ArenaRating = game.ArenaRating;
 
 				var draft = ArenaLastDrafts.Instance.Drafts.FirstOrDefault(d => d.DeckId == game.HsDeckId);
-				if(draft != null && ValidateArenaDraft(friendly.DeckList, draft, game.GameType == GameType.GT_UNDERGROUND_ARENA))
+				if(draft != null && friendly.DeckList != null && ValidateArenaDraft(friendly.DeckList, draft, game.GameType == GameType.GT_UNDERGROUND_ARENA))
 				{
 					friendly.ArenaDraft =
 						new UploadMetaData.ArenaDraft
