@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.52.21 - 2026-06-23**
 **Bob's Buddy**
 - Added support for Wildfeather Duster.
 - Fixed Sr. Tomb Diver targeting minions that are no longer alive.
