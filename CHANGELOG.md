@@ -1,3 +1,22 @@
+## **Unreleased**
+**Bob's Buddy**
+- Added support for Wildfeather Duster.
+- Fixed Sr. Tomb Diver targeting minions that are no longer alive.
+- Fixed Banana Slamma not multiplying attack on friendly minion summon and healing reborn beasts incorrectly.
+- Fixed Lord of the Ruins buffing minions that have already died.
+- Fixed Pack Tactics not copying deathrattles correctly.
+- Fixed Deathtouch Apple with multiple copies and charge tracking.
+- Fixed Silent Enforcer golden resolution between triggers.
+- Fixed reborn not always occurring after deathrattle.
+- Fixed beetle passive buff scaling.
+- Fixed Disguised Graverobber destroying an undead instead of itself.
+- Fixed Training Certificate doubling golden Tarecgosa only once.
+- Fixed Scarlet Survivor regaining Divine Shield after being made golden.
+- Fixed max stats from killed passive scaling minions.
+- Fixed goldenized deathrattle trigger order.
+- Fixed Seafloor Recruiter unable to target minions without a tribe.
+- Fixed Shifting Tide with multiple Tentacle of C'Thun triggers.
+
 ## **Release v1.52.20 - 2026-06-11**
 **Updated for Hearthstone 35.6.2**
 
