@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BobsBuddy;
+using BobsBuddy.Enchantments;
 using BobsBuddy.Factory;
 using BobsBuddy.HeroPowers;
 using BobsBuddy.Minions.Beast;
@@ -29,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public const string SneedsEnchantment = NonCollectible.Neutral.Sneed_Replicate;
 		internal const string RebornRite = NonCollectible.Neutral.RebornRitesTavernBrawl;
 
-		internal static Minion GetMinionFromEntity(Simulator sim, bool player, Entity entity, IEnumerable<Entity> attachedEntities)
+		internal static Minion GetMinionFromEntity(Simulator sim, bool player, Entity entity, IEnumerable<Entity> attachedEntities, IReadOnlyDictionary<int, Entity>? allEntities = null)
 		{
 			var cardId = entity.Info.LatestCardId ?? "Unknown";
 			var minion = sim.MinionFactory.CreateFromCardId(cardId, player);
@@ -163,9 +165,41 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 			}
 
+			if(minion.IsMech() && attachedEntities.Any(e => e.HasTag(GameTag.MAGNETIC)))
+				CheckForMagneticDeathrattles(minion, attachedEntities, allEntities);
+
 			minion.game_id = entity.Id;
 
 			return minion;
+		}
+
+		// Magnetic deathrattles can be *hiding* if initially attached to a magnetic minion that was then tripled and magnetized to another mech
+		private static void CheckForMagneticDeathrattles(Minion minion, IEnumerable<Entity> attachedEntities, IReadOnlyDictionary<int, Entity>? allEntities)
+		{
+			// Required to resolve the chain of magnetized
+			if(allEntities == null)
+				return;
+
+			// Specific handling for: Auto Assembler
+			// Each attached enchantment's CREATOR is the magnetic card that produced it; take each distinct id once.
+			foreach(var magneticId in attachedEntities.Select(e => e.GetTag(GameTag.CREATOR)).Where(id => id > 0).Distinct())
+			{
+				if(!allEntities.TryGetValue(magneticId, out var magnetic))
+					continue;
+
+				// Count the Auto Assembler enchantments attached to the magnetic (directly-magnetized Auto Assemblers).
+				var enchantCount = allEntities.Values.Count(x => x.IsAttachedTo(magneticId) && x.CardId == AutoAssemblerEnchantment.CardId);
+				if(enchantCount == 0)
+					continue;
+
+				// A tripled magnetic minion can carry multiple Auto Assemblers and records the total on tag 4741.
+				// Take that tag or the enchant count, whichever is larger
+				var maxAssemblers = Math.Max(magnetic.GetTag((GameTag)4741), enchantCount);
+				for(var i = 0; i < maxAssemblers; i++)
+					minion.AdditionalDeathrattles.Add(AutoAssembler.Deathrattle(false));
+			}
+
+			// Future magnetic deathrattles can be added/handled here.
 		}
 
 		private static void SetScriptDataProperties(dynamic item, Entity entity)

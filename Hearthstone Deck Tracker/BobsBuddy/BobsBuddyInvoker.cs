@@ -514,7 +514,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			var playerSide = GetOrderedMinions(gamePlayer.Board)
 				.Where(e => e.IsControlledBy(gamePlayer.Id))
-				.Select(e => GetMinionFromEntity(simulator, friendly, e, GetAttachedEntities(e.Id)));
+				.Select(e => GetMinionFromEntity(simulator, friendly, e, GetAttachedEntities(e.Id), _game.Entities));
 			foreach(var m in playerSide)
 				inputPlayer.Side.Add(m);
 
