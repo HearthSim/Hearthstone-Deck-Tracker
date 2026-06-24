@@ -204,6 +204,8 @@ namespace HearthWatcher.LogReader
 					try
 					{
 						fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+						if(fs.Length < _offset)
+							_offset = 0;
 						fs.Seek(_offset, SeekOrigin.Begin);
 						if(fs.Length == _offset)
 						{
