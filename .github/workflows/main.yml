@@ -29,21 +29,21 @@ jobs:
           echo "::set-output name=packageVersion::$packageVersion"
 
       - name: Build (Release)
-        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x64"
 
       - name: Setup VSTest
         uses: Malcolmnixon/Setup-VSTest@v4
 
       - name: Test
         run: |
-          vstest.console "HearthWatcher.Test\bin\x86\Release\HearthWatcher.Test.dll"
+          vstest.console "HearthWatcher.Test\bin\x64\Release\HearthWatcher.Test.dll"
           $exit1 = $LASTEXITCODE
-          vstest.console "HDTTests\bin\x86\Release\HDTTests.dll"
+          vstest.console "HDTTests\bin\x64\Release\HDTTests.dll"
           $exit2 = $LASTEXITCODE
           if ($exit1 -ne 0 -or $exit2 -ne 0) { exit 1 }
 
       - name: Build (Squirrel)
-        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x64"
 
       - name: Setup SM_CLIENT_CERT_FILE from base64 secret data
         if: startsWith(github.ref, 'refs/tags/v')

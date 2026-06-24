@@ -203,26 +203,6 @@
                         IsChecked="{Binding CheckForDevUpdates, Source={StaticResource ConfigWrapper}}" />
                 </StatusBarItem>
             </StatusBar>
-
-            <StatusBar Name="StatusBar32BitSupport" DockPanel.Dock="Top" Visibility="Collapsed" Background="{DynamicResource AccentBaseColorBrush}">
-                <StatusBarItem Margin="0,5,0,5" HorizontalAlignment="Center">
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="16" Height="16">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_warning}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <TextBlock VerticalAlignment="Center" FontSize="14" Margin="5,0,0,0">
-                            <Run FontWeight="SemiBold" Text="{lex:Loc MainWindow_StatusBar32BitSupport_NoLongerSupported}"/>
-                            <Run FontWeight="SemiBold">-</Run>
-                            <Hyperlink Foreground="White" FontWeight="Bold" Click="Hyperlink32BitLearnMore_OnClick">
-                                <Run Text="{lex:Loc MainWindow_StatusBar32BitSupport_LearnMore}"/>
-                            </Hyperlink>
-                        </TextBlock>
-                    </StackPanel>
-                </StatusBarItem>
-            </StatusBar>
-
             <StatusBar DataContext="{x:Static utility:Updater.Status}" DockPanel.Dock="Top" Margin="1,1,1,0" Visibility="{Binding StatusBarVisibility}" Background="{DynamicResource AccentBaseColorBrush}">
                 <StatusBarItem Margin="0,5,0,5" HorizontalAlignment="Center">
                     <Grid>

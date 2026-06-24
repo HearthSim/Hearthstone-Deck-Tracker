@@ -14,9 +14,8 @@
     <AssemblyVersion>1.52.23</AssemblyVersion>
     <FileVersion>1.52.23</FileVersion>
     <UseWPF>true</UseWPF>
-    <PlatformTarget>x86</PlatformTarget>
-    <Platforms>x86</Platforms>
-    <Prefer32Bit>true</Prefer32Bit>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -31,16 +30,16 @@
     <WarningsAsErrors>nullable</WarningsAsErrors>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DebugType>full</DebugType>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Squirrel|x86'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Squirrel|x64'">
     <DefineConstants>TRACE;SQUIRREL</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>

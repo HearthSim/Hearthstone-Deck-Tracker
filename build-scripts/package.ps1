@@ -11,7 +11,7 @@ $initialLocation = $(Get-Location).Path
 $DEV_LATEST = "https://api.github.com/repos/HearthSim/HDT-dev-builds/releases/latest"
 $PROD_LATEST = "https://api.github.com/repos/HearthSim/HDT-Releases/releases/latest"
 
-$buildDir = "$baseDir\Hearthstone Deck Tracker\bin\x86"
+$buildDir = "$baseDir\Hearthstone Deck Tracker\bin\x64"
 $hdtReleaseDir = "$buildDir\Hearthstone Deck Tracker"
 $squirrelTools = "$baseDir\packages\squirrel.windows\1.9.1\tools"
 $squirrel = "$squirrelTools\Squirrel.exe"

@@ -4,8 +4,8 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <PlatformTarget>x86</PlatformTarget>
-    <Platforms>x86</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <Target Name="Bootstrap">
@@ -17,7 +17,7 @@
     <HDTDirectory>$(SlnDirectory)/Hearthstone Deck Tracker</HDTDirectory>
 
     <HearthDbUrl>https://libs.hearthsim.net/hdt/HearthDb.zip</HearthDbUrl>
-    <HearthMirrorUrl>https://libs.hearthsim.net/hdt/HearthMirror.zip</HearthMirrorUrl>
+    <HearthMirrorUrl>https://libs.hearthsim.net/hdt/HearthMirror.x64.zip</HearthMirrorUrl>
     <HSReplayUrl>https://libs.hearthsim.net/hdt/HSReplay.dll</HSReplayUrl>
     <BobsBuddyUrl>https://libs.hearthsim.net/hdt/BobsBuddy.zip</BobsBuddyUrl>
   </PropertyGroup>
@@ -43,8 +43,8 @@
   </Target>
 
 	<Target Name="UnpackHearthMirrorDeps" BeforeTargets="Bootstrap" DependsOnTargets="DownloadDeps">
-		<Unzip SourceFiles="$(SlnDirectory)/lib/HearthMirror.zip" DestinationFolder="$(SlnDirectory)/lib" />
-		<Delete Files="$(SlnDirectory)/lib/HearthMirror.zip" />
+		<Unzip SourceFiles="$(SlnDirectory)/lib/HearthMirror.x64.zip" DestinationFolder="$(SlnDirectory)/lib" />
+		<Delete Files="$(SlnDirectory)/lib/HearthMirror.x64.zip" />
 	</Target>
 
   <Target Name="UnpackHearthDbDeps" BeforeTargets="Bootstrap" DependsOnTargets="DownloadDeps">

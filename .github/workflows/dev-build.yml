@@ -27,18 +27,18 @@ jobs:
           echo "::set-output name=packageVersion::$packageVersion"
 
       - name: Build (Release)
-        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x64"
 
       - name: Setup VSTest
         uses: Malcolmnixon/Setup-VSTest@v4
 
       - name: Test
         run: |
-          vstest.console "HearthWatcher.Test\bin\x86\Release\HearthWatcher.Test.dll"
-          vstest.console "HDTTests\bin\x86\Release\HDTTests.dll"
+          vstest.console "HearthWatcher.Test\bin\x64\Release\HearthWatcher.Test.dll"
+          vstest.console "HDTTests\bin\x64\Release\HDTTests.dll"
 
       - name: Build (Dev)
-        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x86" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x86\Squirrel\"
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x64" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x64\Squirrel\"
 
       - name: Setup SM_CLIENT_CERT_FILE from base64 secret data
         shell: bash
