@@ -1,3 +1,9 @@
+## **Release v1.52.22 - 2026-06-25**
+**Bob's Buddy**
+- Fixed hero power trigger order at the start of combat.
+- Fixed Soul Fermenter triggering before other effects.
+- Fixed Tarecgosa with Training Certificate to mirror in-game behavior.
+
 ## **Release v1.52.21 - 2026-06-23**
 **Bob's Buddy**
 - Added support for Wildfeather Duster.
