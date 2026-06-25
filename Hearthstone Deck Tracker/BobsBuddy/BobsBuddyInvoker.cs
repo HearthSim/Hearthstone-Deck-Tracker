@@ -106,6 +106,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private bool DoNotReport { get; set; } = true;
 
+		// The unsupported interaction (if any) from the most recently completed simulation run.
+		// If TryRerun() is triggered by newer game state, the latest run's outcome supersedes
+		// all earlier ones; i.e., every new completion overwrites this field.
+		private (UnsupportedInteractionException ex, string message)? _pendingUnsupportedInteraction;
+
+		// Whether an unsupported interaction was already reported for this combat round.
+		// A rerun still in flight when shopping starts could fail with the same exception.
+		private bool _unsupportedInteractionReported;
+
 		public BobsBuddyErrorState ErrorState { get; private set; }
 
 		private BobsBuddyState _state;
@@ -300,6 +309,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			try
 			{
+				// Combat is over, report if there's an unsupported interaction and it wasn't resolved by TryRerun()
+				ReportPendingUnsupportedInteraction();
+
 				if(!ShouldRun())
 					return;
 				DebugLog(_instanceKey);
@@ -339,6 +351,28 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch);
 				return;
 			}
+		}
+
+		// Reports an unsupported interaction that was deferred during combat and never resolved by TryRerun()
+		// Note: if combat never reaches StartShoppingAsync (e.g. disconnect, or game abandoned
+		// mid-combat) the pending report is silently dropped.
+		private void ReportPendingUnsupportedInteraction()
+		{
+			if(_pendingUnsupportedInteraction is not {} pending)
+				return;
+			_pendingUnsupportedInteraction = null;
+
+			// Only ever report once per combat - a failing rerun that was still in flight when the
+			// first report went out could potentially be reported again on a later flush.
+			if(_unsupportedInteractionReported)
+				return;
+			_unsupportedInteractionReported = true;
+
+			var isDuos = _game.IsBattlegroundsDuosMatch;
+			if(ReportErrors)
+				Sentry.CaptureBobsBuddyException(pending.ex, _input, _turn, isDuos);
+			Influx.OnBobsBuddyUnsupportedInteraction(
+				pending.ex.Entity?.CardID, pending.message, _turn, isDuos, pending.ex.Entity?.ControlledByPlayer);
 		}
 
 		private bool HasErrorState([CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
@@ -1186,6 +1220,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				Output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount, timeAlloted);
 				DoNotReport = false;
 
+				// Simulation completed without an unsupported interaction, any previously deferred unsupported
+				// interaction (i.e. prior to a possible TryRerun() this combat) was a false positive. Discard it.
+				_pendingUnsupportedInteraction = null;
+
 				DebugLog("----- Simulation Output -----");
 				DebugLog($"Duration={(DateTime.Now - start).TotalMilliseconds}ms, " +
 					$"ExitCondition={Output.myExitCondition}, " +
@@ -1208,9 +1246,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				var cardName = Database.GetCardFromId(ex.Entity?.CardID)?.LocalizedName;
 				var message = (cardName != null ? $"{cardName}: " : "") + ex.Message;
 				BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.UnsupportedInteraction, message);
-				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(ex, _input, _turn, _game.IsBattlegroundsDuosMatch);
-				Influx.OnBobsBuddyUnsupportedInteraction(ex.Entity?.CardID, message, _turn, _game.IsBattlegroundsDuosMatch, ex.Entity?.ControlledByPlayer);
+
+				// Defer sending the unsupported interaction to influx and sentry since a later TryRerun() may resolve it.
+				// If resolved, the pending message will be cleared; otherwise they will be sent once combat ends.
+				_pendingUnsupportedInteraction = (ex, message);
 				Output = null;
 				return null;
 			}
