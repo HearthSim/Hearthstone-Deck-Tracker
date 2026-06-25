@@ -111,6 +111,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			mixpanelPayload.Remove("is_authenticated");
 			mixpanelPayload.Remove("screen_height");
 			mixpanelPayload.Remove("screen_width");
+			mixpanelPayload.Remove("os_arch");
 
 			Assert.AreEqual(
 				$"{JsonConvert.SerializeObject(expectedDict)}",

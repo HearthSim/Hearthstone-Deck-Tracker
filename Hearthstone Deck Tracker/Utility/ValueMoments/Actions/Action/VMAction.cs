@@ -2,6 +2,7 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -98,6 +99,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("appearance_language")]
 		public string AppearanceLanguage => Config.Instance.Localization.ToString();
+
+		[JsonProperty("os_arch")]
+		public string OsArch => RuntimeInformation.OSArchitecture.ToString().ToLower();
 
 		[JsonProperty("hdt_plugins")]
 		public string?[] HDTPlugins => PluginManager.Instance.Plugins.Where(x => x.IsEnabled).Select(x => x.Name).ToArray();

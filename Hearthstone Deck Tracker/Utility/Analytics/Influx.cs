@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using BobsBuddy.Anomalies;
@@ -47,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("clean_shutdown", cleanShutdown)
 				.Tag("skipped_splashscreen", skippedSplashscreen)
 				.Tag("forced_software_rendering", forceSoftwareRendering)
+				.Tag("os_arch", RuntimeInformation.OSArchitecture.ToString().ToLower())
 				.Field("num_plugins", numPlugins)
 				.Field("startup_duration", startupDuration);
 #if(SQUIRREL)
