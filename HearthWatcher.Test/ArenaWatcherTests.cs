@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using HearthMirror.Enums;
 using HearthMirror.Objects;
 using HearthWatcher.Providers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -73,7 +74,8 @@ namespace HearthWatcher.Test
 			SetupWatcher();
 			_watcher.Run();
 			_provider.ArenaInfo = new ArenaInfo {
-				Deck = new Deck() { Id = 1, Hero = "HERO_02", Cards = new List<Card> { NewCard("AT_001", 30) } }
+				Deck = new Deck() { Id = 1, Hero = "HERO_02", Cards = new List<Card> { NewCard("AT_001", 30) } },
+				SessionState = ArenaSessionState.MIDRUN
 			};
 			Thread.Sleep(100);
 			Assert.IsNotNull(_currentArenaInfo);
@@ -93,7 +95,8 @@ namespace HearthWatcher.Test
 			_watcher.Run();
 			_watcher.Run();
 			_provider.ArenaInfo = new ArenaInfo {
-				Deck = new Deck() { Id = 1, Hero = "HERO_02", Cards = new List<Card> { NewCard("AT_001", 30) } }
+				Deck = new Deck() { Id = 1, Hero = "HERO_02", Cards = new List<Card> { NewCard("AT_001", 30) } },
+				SessionState = ArenaSessionState.MIDRUN
 			};
 			Thread.Sleep(100);
 			Assert.IsNotNull(_currentArenaInfo);
@@ -304,7 +307,8 @@ namespace HearthWatcher.Test
 		{
 			_provider.ArenaInfo = new ArenaInfo {
 				Deck = new Deck() { Id = 1, Hero = "HERO_02", Cards = new List<Card> { NewCard("AT_001", 29) } },
-				CurrentSlot = 30
+				CurrentSlot = 30,
+				SessionState = ArenaSessionState.DRAFTING
 			};
 			_provider.DraftChoices = new DraftChoices
 			{
@@ -317,7 +321,8 @@ namespace HearthWatcher.Test
 			_currentChoices = null;
 			_provider.ArenaInfo = new ArenaInfo {
 				Deck = new Deck() { Id = 1, Hero = "HERO_02", Cards = new List<Card> { NewCard("AT_001", 30) } },
-				CurrentSlot = 31
+				CurrentSlot = 31,
+				SessionState = ArenaSessionState.MIDRUN
 			};
 			_watcher.Update();
 			_provider.DraftChoices = null;
@@ -334,7 +339,8 @@ namespace HearthWatcher.Test
 			_provider.ArenaInfo = new ArenaInfo
 			{
 				Deck = new Deck() {Id = 1, Hero = "HERO_02", Cards = new List<Card> {NewCard("AT_001", 30)}},
-				Rewards = new List<RewardData> {new GoldRewardData(50)}
+				Rewards = new List<RewardData> {new GoldRewardData(50)},
+				SessionState = ArenaSessionState.MIDRUN
 			};
 			var exit = _watcher.Update();
 			Assert.IsTrue(exit);
