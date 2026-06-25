@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -143,6 +144,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			if(RuntimeInformation.OSArchitecture == Architecture.X86)
+				StatusBar32BitSupport.Visibility = Visible;
 
 			if(Config.Instance.TrackerWindowTop.HasValue)
 				Top = Config.Instance.TrackerWindowTop.Value;
@@ -676,5 +680,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			foreach(var flyout in Helper.FindVisualChildren<Flyout>(this))
 				flyout.AreAnimationsEnabled = Config.Instance.UseAnimations;
 		}
+
+		private void Hyperlink32BitLearnMore_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsdecktracker.net/32-bit/unsupported/");
 	}
 }
