@@ -37,7 +37,10 @@ jobs:
       - name: Test
         run: |
           vstest.console "HearthWatcher.Test\bin\x86\Release\HearthWatcher.Test.dll"
+          $exit1 = $LASTEXITCODE
           vstest.console "HDTTests\bin\x86\Release\HDTTests.dll"
+          $exit2 = $LASTEXITCODE
+          if ($exit1 -ne 0 -or $exit2 -ne 0) { exit 1 }
 
       - name: Build (Squirrel)
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
