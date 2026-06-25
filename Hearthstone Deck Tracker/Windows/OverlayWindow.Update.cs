@@ -164,7 +164,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StackPanelPlayer.Opacity = Config.Instance.PlayerOpacity / 100;
 			StackPanelOpponent.Opacity = Config.Instance.OpponentOpacity / 100;
 			SecretsContainer.Opacity = Config.Instance.SecretsOpacity / 100;
-			Opacity = Config.Instance.OverlayOpacity / 100;
+			// Keep GridMain rendered but hidden, so that the capturable overlay still works
+			Opacity = IsContentVisible ? Config.Instance.OverlayOpacity / 100 : 0;
 
 			var inBattlegrounds = _game.IsBattlegroundsMatch || Core.Game.CurrentMode == Mode.BACON;
 			var inMercenaries = _game.IsMercenariesMatch;

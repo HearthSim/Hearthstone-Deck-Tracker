@@ -562,7 +562,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void HideOverlayWindow()
 		{
 			IsContentVisible = false;
-			GridMain.Visibility = Collapsed;
 			SetClickthrough(true);
 			Hide();
 		}
@@ -570,7 +569,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void ShowOverlay(bool enable)
 		{
 			IsContentVisible = enable;
-			GridMain.Visibility = enable ? Visible : Collapsed;
+			Opacity = enable ? Config.Instance.OverlayOpacity / 100 : 0;
 			if(!enable)
 				SetClickthrough(true);
 			try
