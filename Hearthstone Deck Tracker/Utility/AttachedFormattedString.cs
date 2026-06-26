@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			try
 			{
 				//<w> is a wrapper so it gets read as an XElement
-				element = XElement.Parse("<w>" + Regex.Replace(value, @"\<(\w+?)\>", x => x.Captures[0].Value.ToLower()) + "</w>");
+				element = XElement.Parse("<w>" + Regex.Replace(value, @"</?(?:b|i)>|[&<>]", EscapeXmlText) + "</w>");
 			}
 			catch(Exception e)
 			{
@@ -66,6 +66,20 @@ namespace Hearthstone_Deck_Tracker.Utility
 						yield return new Run(xText.Value) { FontStyle = FontStyles.Italic };
 				}
 			}
+		}
+
+		private static string EscapeXmlText(Match match)
+		{
+			var value = match.Value;
+			if(value.Length > 1)
+				return value.ToLowerInvariant();
+			if(value == "&")
+				return "&amp;";
+			if(value == "<")
+				return "&lt;";
+			if(value == ">")
+				return "&gt;";
+			return value;
 		}
 
 		public static string GetFormattedText(DependencyObject dependencyObject)
