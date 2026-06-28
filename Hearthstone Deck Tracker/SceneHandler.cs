@@ -13,6 +13,14 @@ public class SceneHandler
 
 	private static bool? Transitioning = null;
 
+	public static void Reset()
+	{
+		LastScene = null;
+		Scene = null;
+		NextScene = null;
+		Transitioning = null;
+	}
+
 	public static void OnSceneUpdate(Mode prevMode, Mode mode, bool sceneLoaded, bool transitioning)
 	{
 		if(Transitioning is null || transitioning)
@@ -23,6 +31,13 @@ public class SceneHandler
 
 		if(!transitioning && sceneLoaded)
 		{
+			// We settled on a new scene without ever observing the transition start
+			// (e.g. the transitioning frame was missed, or stale state leaked across a
+			// game restart). Run the leave logic for the scene we are coming from so its
+			// overlays get hidden.
+			if(Transitioning == false && Scene != null && Scene != mode)
+				OnSceneTransitionStart(Scene.Value, mode);
+
 			OnSceneTransitionComplete(prevMode, mode);
 			Transitioning = false;
 		}

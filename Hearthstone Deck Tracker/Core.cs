@@ -483,6 +483,7 @@ namespace Hearthstone_Deck_Tracker
 					GameIsRunningChanged?.Invoke(false);
 					Overlay.UnhookGameWindow();
 					Overlay.HideOverlayWindow();
+					SceneHandler.Reset();
 					Overlay.UpdateVisibilities();
 					Watchers.Stop();
 					if(Windows.CapturableOverlay != null)
