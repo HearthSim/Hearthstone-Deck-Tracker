@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using BobsBuddy;
 using BobsBuddy.Simulation;
@@ -61,6 +62,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			exception.Tags.Add("squirrel", "false");
 #endif
 			exception.Tags.Add("hearthstone", Helper.GetHearthstoneBuild()?.ToString());
+			exception.Tags.Add("os_arch", RuntimeInformation.OSArchitecture.ToString().ToLower());
 
 			return Client.Capture(exception);
 		}
