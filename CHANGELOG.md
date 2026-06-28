@@ -1,3 +1,14 @@
+## **Release v1.52.23 - 2026-06-28**
+**Streaming**:
+- Fixed the capturable overlay turning invisible when Hearthstone loses focus.
+- Fixed the capturable overlay not showing menu overlays until the first match.
+
+**Overlay**:
+- Fixed menu overlays sometimes remaining visible after restarting Hearthstone.
+
+**Bob's Buddy**:
+- Fixed various minor simulation issues.
+
 ## **Release v1.52.22 - 2026-06-25**
 **Bob's Buddy**
 - Fixed hero power trigger order at the start of combat.
