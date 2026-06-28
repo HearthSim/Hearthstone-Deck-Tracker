@@ -427,12 +427,12 @@ namespace Hearthstone_Deck_Tracker
 					}
 					Overlay.UpdateVisibility(); // Always run, this handles the game being in background, etc
 
-					if(!Game.IsRunning)
+					var gameStarted = !Game.IsRunning;
+					if(gameStarted)
 					{
 						Overlay.HookGameWindow();
 						Overlay.UpdatePosition(); // Only needs to be called once, HookGameWindow will trigger subsequent position updates.
 						Overlay.Update(true);
-						Windows.CapturableOverlay?.UpdateContentVisibility();
 					}
 
 					if(Overlay.IsContentVisible)
@@ -442,6 +442,10 @@ namespace Hearthstone_Deck_Tracker
 
 					Game.IsRunning = true;
 					GameIsRunningChanged?.Invoke(true);
+
+					// ContentVisibility depends on Game.IsRunning, so notify only after it is set.
+					if(gameStarted)
+						Windows.CapturableOverlay?.UpdateContentVisibility();
 
 					Helper.GameWindowState = User32.GetHearthstoneWindowState();
 					Windows.CapturableOverlay?.Update();
