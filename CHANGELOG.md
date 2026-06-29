@@ -1,3 +1,11 @@
+## **Release v1.53.0 - 2026-06-29**
+**General**:
+- HDT is now a native 64-bit application, for continued compatibility with Hearthstone
+  *This may fix certain crashes, but should otherwise not be noticeable.*
+
+**Bob's Buddy**:
+- Fixed various minor simulation issues.
+
 ## **Release v1.52.23 - 2026-06-28**
 **Streaming**:
 - Fixed the capturable overlay turning invisible when Hearthstone loses focus.
