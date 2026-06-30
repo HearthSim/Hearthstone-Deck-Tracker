@@ -413,7 +413,7 @@
                 />
                 <mulligan:ConstructedMulliganGuidePreLobby
                     x:Name="ConstructedMulliganGuidePreLobby"
-                    Canvas.Top="0" Canvas.Left="0"
+                    Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed"
                     DataContext="{Binding ConstructedMulliganGuidePreLobbyViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                 />
 
