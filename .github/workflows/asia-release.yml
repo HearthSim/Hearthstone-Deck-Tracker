@@ -30,6 +30,3 @@ jobs:
 
       - name: Publish
         run: aws s3 sync tmp_asset_downloads "s3://${{ secrets.AWS_S3_BUCKET }}"
-
-      - name: Publish to legacy bucket
-        run: aws s3 sync tmp_asset_downloads "s3://${{ secrets.AWS_LEGACY_S3_BUCKET }}" --acl public-read --region ap-northeast-2
