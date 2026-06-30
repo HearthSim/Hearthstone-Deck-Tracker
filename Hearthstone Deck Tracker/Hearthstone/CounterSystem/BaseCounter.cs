@@ -100,11 +100,13 @@ public abstract class BaseCounter : INotifyPropertyChanged
 	};
 
 	private HashSet<int>? _availableCardIds;
-	private HashSet<int> GetAvailableCardIds()
+	private HashSet<int>? GetAvailableCardIds()
 	{
 		if (_availableCardIds == null)
 		{
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+			if (availableRaces == null)
+				return null;
 			var currentRaces = new HashSet<Race>(availableRaces.Concat(new[] { Race.ALL, Race.INVALID }));
 			var availableCards = BattlegroundsDbSingleton.Instance.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch)
 				.Concat(BattlegroundsDbSingleton.Instance.GetSpells(Core.Game.IsBattlegroundsDuosMatch));
@@ -118,6 +120,7 @@ public abstract class BaseCounter : INotifyPropertyChanged
 	{
 		get
 		{
+			var availableCardIds = GetAvailableCardIds();
 			foreach(var cardId in GetCardsToDisplay())
 			{
 				var card = Database.GetCardFromId(cardId);
@@ -126,7 +129,8 @@ public abstract class BaseCounter : INotifyPropertyChanged
 
 				if(
 					IsBattlegroundsCounter &&
-					!GetAvailableCardIds().Contains(card.DbfId) &&
+					availableCardIds != null &&
+					!availableCardIds.Contains(card.DbfId) &&
 					!_alwaysAvailableCards.Contains(cardId)
 				)
 					continue;
