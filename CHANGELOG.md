@@ -1,3 +1,15 @@
+## **Release v1.53.1 - 2026-06-30**
+**General**
+- Fixed the Meta deck pop-up briefly appearing when starting HDT while mid-game.
+- Fixed various crashes and memory leaks.
+
+**Hearthstone**
+- Added related card highlighting for Sketchy Information.
+- Added related card highlighting for Ice Fishing.
+
+**Battlegrounds**
+- Fixed a race condition that could cause the Battlegrounds session widget to miss a match.
+
 ## **Release v1.53.0 - 2026-06-29**
 **General**:
 - HDT is now a native 64-bit application, for continued compatibility with Hearthstone
