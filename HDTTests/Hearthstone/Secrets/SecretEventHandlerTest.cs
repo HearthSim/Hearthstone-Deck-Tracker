@@ -195,7 +195,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.FreezingTrap, HunterSecrets.WanderingMonster);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard, MageSecrets.VengefulVisage);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard, MageSecrets.VengefulVisage, MageSecrets.MysticMisdirection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.JudgmentOfJustice);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.ShadowClone);
 
@@ -203,7 +203,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard, MageSecrets.VengefulVisage);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard, MageSecrets.VengefulVisage, MageSecrets.MysticMisdirection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.JudgmentOfJustice);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.SuddenBetrayal, RogueSecrets.ShadowClone);
 		}
@@ -226,7 +226,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _opponentMinion1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap,
 				HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics, HunterSecrets.BaitAndSwitch);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.SplittingImage, MageSecrets.OasisAlly);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.SplittingImage, MageSecrets.OasisAlly, MageSecrets.MysticMisdirection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.AutodefenseMatrix, PaladinSecrets.JudgmentOfJustice);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Bamboozle);
 		}
@@ -238,7 +238,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _opponentDivineShieldMinion);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap,
 				HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics, HunterSecrets.BaitAndSwitch);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.SplittingImage, MageSecrets.OasisAlly);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.SplittingImage, MageSecrets.OasisAlly, MageSecrets.MysticMisdirection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.JudgmentOfJustice);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Bamboozle);
 		}
@@ -586,7 +586,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.WanderingMonster);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.VengefulVisage);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.VengefulVisage, MageSecrets.MysticMisdirection);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.JudgmentOfJustice);
 			VerifySecrets(3, RogueSecrets.All);
 		}

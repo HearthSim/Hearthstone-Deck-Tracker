@@ -27,6 +27,7 @@ public class CardsPlayedThisTurnCounter: NumericCounter
 		HearthDb.CardIds.Collectible.Rogue.ScribblingStenographer,
 		HearthDb.CardIds.Collectible.Rogue.ScribblingStenographerCorePlaceholder,
 		HearthDb.CardIds.Collectible.Neutral.FrostwolfWarmaster,
+		HearthDb.CardIds.Collectible.Rogue.DefiasWannabe,
 	};
 
 	public CardsPlayedThisTurnCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)

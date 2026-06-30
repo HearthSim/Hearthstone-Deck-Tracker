@@ -71,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			else
 			{
 				exclude.Add(Paladin.JudgmentOfJustice);
+				exclude.Add(Mage.MysticMisdirection);
 			}
 
 			if(defender.IsHero)

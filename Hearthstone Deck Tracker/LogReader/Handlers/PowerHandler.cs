@@ -889,6 +889,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Demonhunter.GorishiWasp:
 								AddKnownCardId(gameState, NonCollectible.Demonhunter.GorishiWasp_GorishiStingerToken);
 								break;
+							case Collectible.Demonhunter.StardustScythe:
+							case Collectible.Demonhunter.ViciousVoidscale:
+								AddKnownCardId(gameState, Collectible.Demonhunter.VoidSoul);
+								break;
 							case Collectible.Mage.CommanderSivara:
 							case Collectible.Neutral.TidepoolPupil:
 								if(
@@ -1412,6 +1416,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Neutral.CultivatingSprite:
 								AddKnownCardId(gameState, NonCollectible.Neutral.CultivatingSprite_BloomingBulbToken);
+								break;
+							case Collectible.Neutral.RecklessDetective:
+								AddKnownCardId(gameState, NonCollectible.Neutral.RecklessDetective_DetectivesClothesToken);
+								break;
+							case Collectible.Rogue.LotusBookie:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+							case Collectible.Demonhunter.VoidBlast:
+								AddKnownCardId(gameState, Collectible.Demonhunter.VoidSoul);
 								break;
 							case NonCollectible.Warrior.EntertheLostCity_LatorviusGazeOfTheCityToken:
 								if(actionStartingEntity?.IsControlledBy(game.Opponent.Id) == true)
