@@ -25,7 +25,7 @@ public class Pool<T> where T : new()
 
 	public void Return(T item)
 	{
-		if(_items.Count <= _capacity)
+		if(_items.Count < _capacity)
 		{
 			(item as IPoolItem)?.OnReturnToPool();
 			_items.Push(item);
