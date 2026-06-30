@@ -147,9 +147,11 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 		var sb = (Storyboard)FindResource(key);
 		var tcs = new TaskCompletionSource<bool>();
 		_runningStoryBoards[key] = tcs;
-		sb.Completed += (_, __) => tcs.TrySetResult(true);
+		EventHandler handler = (_, __) => tcs.TrySetResult(true);
+		sb.Completed += handler;
 		sb.Begin();
 		var completed = await tcs.Task;
+		sb.Completed -= handler;
 		sb.Remove();
 		_runningStoryBoards.Remove(key);
 		return completed;
