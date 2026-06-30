@@ -1022,6 +1022,10 @@ namespace Hearthstone_Deck_Tracker
 							_game.CurrentGameStats.BattlegroundsDetails.LobbyRawHeroDbfIds.Add(lobbyHero.Card.DbfId);
 						}
 					}
+
+					RecordBattlegroundsGame();
+					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
+					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 				}
 
 				await SaveReplays(_game.CurrentGameStats);
@@ -1046,10 +1050,7 @@ namespace Hearthstone_Deck_Tracker
 						if(!_game.IsBattlegroundsDuosMatch)
 							Sentry.SendQueuedBobsBuddyEventsStateCompleteFalse(_game.CurrentGameStats.HsReplay.UploadId);
 						Sentry.ClearBattlegroundsEvents();
-					RecordBattlegroundsGame();
 					Tier7Trial.Clear();
-					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
-					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 					Core.Overlay.BattlegroundsGuidesTabsViewModel.Reset();
 					Core.Overlay.BattlegroundsMinionPinningViewModel.Reset();
 					Core.Overlay.BattlegroundsHeroGuideListViewModel.Reset();
