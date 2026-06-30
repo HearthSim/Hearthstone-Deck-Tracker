@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
@@ -81,6 +82,13 @@ public class CounterManager
 		{
 			opponentCounter.HandleChoicePicked(choice);
 		}
+	}
+
+	public void HandleAbyssalCurse(bool controlledByPlayer, int value)
+	{
+		var counters = controlledByPlayer ? PlayerCounters : OpponentCounters;
+		foreach(var counter in counters.OfType<AbyssalCurseCounter>())
+			counter.UpdateAbyssalCurse(value);
 	}
 
 	public void Reset()

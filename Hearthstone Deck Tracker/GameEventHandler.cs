@@ -2786,8 +2786,17 @@ namespace Hearthstone_Deck_Tracker
 				card.Info.CostReduction += value;
 		}
 
-		void HandlePlayerAbyssalCurse(int value) => _game.Player.UpdateAbyssalCurse(value);
-		void HandleOpponentAbyssalCurse(int value) => _game.Opponent.UpdateAbyssalCurse(value);
+		void HandlePlayerAbyssalCurse(int value)
+		{
+			_game.Player.UpdateAbyssalCurse(value);
+			_game.CounterManager.HandleAbyssalCurse(false, value);
+		}
+
+		void HandleOpponentAbyssalCurse(int value)
+		{
+			_game.Opponent.UpdateAbyssalCurse(value);
+			_game.CounterManager.HandleAbyssalCurse(true, value);
+		}
 
 		#endregion
 
