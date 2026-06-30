@@ -12,8 +12,6 @@
              ToolTipService.Placement="Right"
              ToolTipService.InitialShowDelay="100"
              mc:Ignorable="d"
-             Loaded="CardTile_OnLoaded"
-             Unloaded="CardTile_OnUnloaded"
              MaxHeight="34"
              d:DataContext="{d:DesignInstance controls:CardTileViewModel}"
              extensions:OverlayExtensions.ToolTip="{x:Type tooltips:CardTooltip}"

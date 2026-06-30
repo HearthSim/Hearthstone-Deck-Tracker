@@ -16,6 +16,7 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 	public AnimatedCard()
 	{
 		InitializeComponent();
+		CardTileControl.Subscribe();
 		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged += OnPinsChanged;
 	}
 
@@ -44,6 +45,7 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 
 	public void OnReuseFromPool()
 	{
+		CardTileControl.Subscribe();
 		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged += OnPinsChanged;
 	}
 
@@ -58,6 +60,7 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 		foreach(var sb in _runningStoryBoards.Values.ToList())
 			sb.TrySetResult(false);
 		_runningStoryBoards.Clear();
+		CardTileControl.Unsubscribe();
 		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged -= OnPinsChanged;
 	}
 

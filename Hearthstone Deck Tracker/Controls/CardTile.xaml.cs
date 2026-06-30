@@ -21,25 +21,26 @@ public partial class CardTile
 		InitializeComponent();
 	}
 
-	private void CardTile_OnLoaded(object sender, RoutedEventArgs e)
+	public void Subscribe()
 	{
+		Unsubscribe();
 		CardDefsManager.CardsChanged += OnCardChanged;
 		CardDefsManager.InitialDefsLoaded += OnCardChanged;
 		ThemeManager.ThemeChanged += OnCardChanged;
 		Helper.CardLanguageChanged += OnCardChanged;
 	}
 
-	private void OnCardChanged()
-	{
-		(DataContext as CardTileViewModel)?.OnCardChanged();
-	}
-
-	private void CardTile_OnUnloaded(object sender, RoutedEventArgs e)
+	public void Unsubscribe()
 	{
 		CardDefsManager.CardsChanged -= OnCardChanged;
 		CardDefsManager.InitialDefsLoaded -= OnCardChanged;
 		ThemeManager.ThemeChanged -= OnCardChanged;
 		Helper.CardLanguageChanged -= OnCardChanged;
+	}
+
+	private void OnCardChanged()
+	{
+		(DataContext as CardTileViewModel)?.OnCardChanged();
 	}
 }
 

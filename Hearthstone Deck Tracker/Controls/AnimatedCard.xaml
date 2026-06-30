@@ -114,7 +114,7 @@
         <ScaleTransform ScaleY="1" ScaleX="1" />
     </UserControl.LayoutTransform>
     <Grid Name="Grid" MouseEnter="Grid_OnMouseEnter" MouseLeave="Grid_OnMouseLeave">
-        <local:CardTile DataContext="{Binding CardTileViewModel, RelativeSource={RelativeSource AncestorType=local:AnimatedCard}}" />
+        <local:CardTile x:Name="CardTileControl" DataContext="{Binding CardTileViewModel, RelativeSource={RelativeSource AncestorType=local:AnimatedCard}}" />
         <!-- Highlight that flashes when user draws a card -->
         <Rectangle Name="RectHighlight" Fill="{Binding Highlight}" Height="34" Width="217" RenderOptions.BitmapScalingMode="Fant"
                    Opacity="0" VerticalAlignment="Center" IsHitTestVisible="False" />
