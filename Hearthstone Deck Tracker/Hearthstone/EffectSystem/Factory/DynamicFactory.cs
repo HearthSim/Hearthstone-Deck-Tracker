@@ -13,7 +13,16 @@ public abstract class DynamicFactory<T>
 
 	static DynamicFactory()
 	{
-		var subClasses = Assembly.GetAssembly(typeof(T)).GetTypes().Where(t => t.IsClass && t.IsSubclassOf(typeof(T)));
+		Type[] allTypes;
+		try
+		{
+			allTypes = Assembly.GetAssembly(typeof(T)).GetTypes();
+		}
+		catch(ReflectionTypeLoadException ex)
+		{
+			allTypes = ex.Types.Where(t => t != null).ToArray();
+		}
+		var subClasses = allTypes.Where(t => t.IsClass && t.IsSubclassOf(typeof(T)));
 		foreach(var entity in subClasses)
 		{
 			var instance = Activator.CreateInstance(entity, new object[] { 0, true }); // Assuming a default constructor with entityId = 0
