@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Utility;
 
@@ -29,6 +30,8 @@ public class Pool<T> where T : new()
 			(item as IPoolItem)?.OnReturnToPool();
 			_items.Push(item);
 		}
+		else
+			(item as IDisposable)?.Dispose();
 	}
 }
 

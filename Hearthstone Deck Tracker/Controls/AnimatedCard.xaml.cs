@@ -11,7 +11,7 @@ using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.Controls;
 
-public partial class AnimatedCard : IPoolItem, INotifyPropertyChanged
+public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChanged
 {
 	public AnimatedCard()
 	{
@@ -47,7 +47,11 @@ public partial class AnimatedCard : IPoolItem, INotifyPropertyChanged
 		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged += OnPinsChanged;
 	}
 
-	public void OnReturnToPool()
+	public void OnReturnToPool() => Cleanup();
+
+	public void Dispose() => Cleanup();
+
+	private void Cleanup()
 	{
 		DataContext = null;
 		CardTileViewModel = null;
