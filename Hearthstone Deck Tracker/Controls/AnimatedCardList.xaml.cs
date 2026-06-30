@@ -56,6 +56,7 @@ public partial class AnimatedCardList
 		ViewModel.ShowSort = shouldShow;
 	}
 
+	private readonly HashSet<AnimatedCard> _removingCards = new();
 	private Task? _activeUpdate;
 	private object? _pendingUpdate;
 	public async Task Update(List<Hearthstone.Card> cards, bool reset)
@@ -193,8 +194,10 @@ public partial class AnimatedCardList
 
 	private async Task RemoveCard(AnimatedCard card, bool fadeOut)
 	{
+		_removingCards.Add(card);
 		if(fadeOut && card.Card != null)
 			await card.FadeOut(card.Card.Count > 0);
+		_removingCards.Remove(card);
 		_animatedCardPool.Return(card);
 		AnimatedCards.Remove(card);
 	}
@@ -256,7 +259,10 @@ public partial class AnimatedCardList
 	private void AnimatedCardList_OnUnloaded(object sender, RoutedEventArgs e)
 	{
 		foreach(var card in AnimatedCards)
-			_animatedCardPool.Return(card);
+		{
+			if(!_removingCards.Contains(card))
+				_animatedCardPool.Return(card);
+		}
 		AnimatedCards.Clear();
 	}
 
