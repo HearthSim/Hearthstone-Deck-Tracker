@@ -11,7 +11,7 @@ public partial class CompGuide : INotifyPropertyChanged
 {
 	public event EventHandler? BackButtonClicked;
 
-	private void Button_OnClick(object sender, RoutedEventArgs e)
+	private void Back_Click(object sender, RoutedEventArgs e)
 	{
 		BackButtonClicked?.Invoke(this, EventArgs.Empty);
 	}

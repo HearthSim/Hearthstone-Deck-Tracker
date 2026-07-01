@@ -69,7 +69,35 @@ namespace HDTTests.Battlegrounds
 				"Use overlay-compatible controls (Border with MouseLeftButtonUp) instead. " +
 				"Standard WPF Button controls are unreliable in WS_EX_TRANSPARENT overlay windows under Wine.");
 		}
+
+		[TestMethod]
+		public void GuidesTabsContent_ShouldNotUseWpfButtonControls()
+		{
+			var relativePaths = new[]
+			{
+				Path.Combine("Hearthstone Deck Tracker", "Controls", "Overlay", "Battlegrounds", "Minions", "BattlegroundsMinionsExtraFilters.xaml"),
+				Path.Combine("Hearthstone Deck Tracker", "Controls", "Overlay", "Battlegrounds", "Guides", "Comps", "CompGuideList.xaml"),
+				Path.Combine("Hearthstone Deck Tracker", "Controls", "Overlay", "Battlegrounds", "Guides", "Comps", "CompButton.xaml"),
+				Path.Combine("Hearthstone Deck Tracker", "Controls", "Overlay", "Battlegrounds", "Guides", "Comps", "CompGuide.xaml"),
+				Path.Combine("Hearthstone Deck Tracker", "Controls", "Overlay", "Battlegrounds", "Inspiration", "BattlegroundsInspiration.xaml"),
+			};
+
+			foreach(var relativePath in relativePaths)
+			{
+				var xamlPath = Path.GetFullPath(Path.Combine(TestContextHelper.GetProjectRoot(), relativePath));
+				Assert.IsTrue(File.Exists(xamlPath), $"Overlay XAML file not found at {xamlPath}");
+
+				var xaml = File.ReadAllText(xamlPath);
+				var buttonMatches = Regex.Matches(xaml, @"<\s*Button[\s>]", RegexOptions.IgnoreCase);
+				var count = buttonMatches.Count;
+
+				Assert.AreEqual(0, count,
+					$"{Path.GetFileName(xamlPath)} contains {count} WPF Button element(s). " +
+					"Use overlay-compatible controls (Border with MouseLeftButtonUp) instead. " +
+					"Standard WPF Button controls are unreliable in WS_EX_TRANSPARENT overlay windows under Wine.");
+			}
 		}
+	}
 
 	internal static class TestContextHelper
 	{

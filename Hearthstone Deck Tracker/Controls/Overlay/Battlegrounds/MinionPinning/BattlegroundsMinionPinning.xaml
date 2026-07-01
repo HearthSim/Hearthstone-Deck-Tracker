@@ -255,14 +255,14 @@
                                                 Margin="0,0,0,0"/>
 
                                         </StackPanel>
-                                        <Border
+                                        <battlegrounds:OverlayButton
                                             DockPanel.Dock="Bottom"
                                             HorizontalAlignment="Right"
                                             Padding="16,6"
                                             Margin="0,16,0,0"
                                             CornerRadius="3"
                                             Cursor="Hand"
-                                            MouseLeftButtonUp="BtnGotIt_Click">
+                                            Click="BtnGotIt_Click">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Background" Value="#4A5256"/>
@@ -280,7 +280,7 @@
                                                 FontSize="11"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center" />
-                                        </Border>
+                                        </battlegrounds:OverlayButton>
                                     </DockPanel>
                                 </Border>
                                 <Border Background="#2E3235" CornerRadius="3" Padding="4" Margin="0,0,0,4">
@@ -461,7 +461,8 @@
                     </StackPanel>
                 </Border>
 
-                <Border
+                <battlegrounds:OverlayButton
+                        Command="{Binding ToggleRecommendedCommand}"
                         Margin="0,0,248,0"
                         Width="55"
                         Height="54.2"
@@ -473,7 +474,6 @@
                         Cursor="Hand"
                         MouseEnter="RecommendComp_MouseEnter"
                         MouseLeave="RecommendComp_MouseLeave"
-                        MouseLeftButtonUp="ToggleRecommended_MouseLeftButtonUp"
                         >
                     <Border.Style>
                         <Style TargetType="Border">
@@ -532,9 +532,10 @@
                             </TextBlock>
                         </Border>
                     </Grid>
-                </Border>
+                </battlegrounds:OverlayButton>
 
-                <Border
+                <battlegrounds:OverlayButton
+                        Command="{Binding ToggleExpandCommand}"
                         Margin="0,0,194,0"
                         Width="55" Height="54.2"
                         HorizontalAlignment="Right"
@@ -543,7 +544,6 @@
                         BorderThickness="1,1,1,0"
                         Background="#141617"
                         Cursor="Hand"
-                        MouseLeftButtonUp="ToggleExpand_MouseLeftButtonUp"
                         >
                     <Border.Style>
                         <Style TargetType="Border">
@@ -561,7 +561,7 @@
                     <Grid>
                         <Image Source="/HearthstoneDeckTracker;component/Resources/pin.png" Width="28" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="Fant"/>
                     </Grid>
-                </Border>
+                </battlegrounds:OverlayButton>
             </Grid>
         </Border>
 
@@ -642,14 +642,14 @@
                                                         </Grid>
                                                     </Border>
                                                 </StackPanel>
-                                                <Border
+                                                <battlegrounds:OverlayButton
                                                     DockPanel.Dock="Bottom"
                                                     HorizontalAlignment="Right"
                                                     Padding="16,6"
                                                     Margin="0,8,0,0"
                                                     CornerRadius="3"
                                                     Cursor="Hand"
-                                                    MouseLeftButtonUp="BtnCompGuidesMarkerGotIt_Click">
+                                                    Click="BtnCompGuidesMarkerGotIt_Click">
                                                     <Border.Style>
                                                         <Style TargetType="Border">
                                                             <Setter Property="Background" Value="#4A5256"/>
@@ -667,7 +667,7 @@
                                                         FontSize="11"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center" />
-                                                </Border>
+                                                </battlegrounds:OverlayButton>
                                             </DockPanel>
                                         </Border>
                                     </StackPanel>
@@ -709,12 +709,12 @@
                                                     TextWrapping="Wrap"
                                                     Margin="0,0,0,8"/>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Border
+                                                    <battlegrounds:OverlayButton
                                                         CornerRadius="3"
                                                         Padding="16,4"
                                                         Margin="0,0,8,0"
                                                         Cursor="Hand"
-                                                        MouseLeftButtonUp="BtnAutoEnableNo_Click">
+                                                        Click="BtnAutoEnableNo_Click">
                                                         <Border.Style>
                                                             <Style TargetType="Border">
                                                                 <Setter Property="Background" Value="#4A5256"/>
@@ -732,12 +732,12 @@
                                                             FontSize="10"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center" />
-                                                    </Border>
-                                                    <Border
+                                                    </battlegrounds:OverlayButton>
+                                                    <battlegrounds:OverlayButton
                                                         CornerRadius="3"
                                                         Padding="16,4"
                                                         Cursor="Hand"
-                                                        MouseLeftButtonUp="BtnAutoEnableYes_Click">
+                                                        Click="BtnAutoEnableYes_Click">
                                                         <Border.Style>
                                                             <Style TargetType="Border">
                                                                 <Setter Property="Background" Value="#CC4CAF50"/>
@@ -755,7 +755,7 @@
                                                             FontSize="10"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center" />
-                                                    </Border>
+                                                    </battlegrounds:OverlayButton>
                                                 </StackPanel>
                                             </StackPanel>
                                         </Border>

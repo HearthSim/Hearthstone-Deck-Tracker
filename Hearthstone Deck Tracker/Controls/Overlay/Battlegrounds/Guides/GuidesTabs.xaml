@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
              xmlns:comps="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
@@ -17,11 +18,9 @@
              >
         <StackPanel extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Background="#2C3135">
-            <Border x:Name="TabMinions"
-                    Cursor="Hand"
-                    MouseEnter="Tab_MouseEnter"
-                    MouseLeave="Tab_MouseLeave"
-                    MouseLeftButtonUp="TabMinions_MouseLeftButtonUp">
+            <battlegrounds:OverlayButton x:Name="TabMinions"
+                    Command="{Binding ShowMinionsCommand}"
+                    Cursor="Hand">
                 <Border.Style>
                     <Style TargetType="Border">
                         <Setter Property="Background" Value="#141617" />
@@ -30,6 +29,9 @@
                         <Setter Property="Width" Value="83" />
                         <Setter Property="Height" Value="49" />
                         <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2C3135" />
+                            </Trigger>
                             <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type minions:BattlegroundsMinionsViewModel}">
                                 <Setter Property="Background" Value="#23272A" />
                                 <Setter Property="BorderThickness" Value="1,0,0,0" />
@@ -44,13 +46,11 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Grid>
-            </Border>
+            </battlegrounds:OverlayButton>
 
-            <Border x:Name="TabComps"
-                    Cursor="Hand"
-                    MouseEnter="Tab_MouseEnter"
-                    MouseLeave="Tab_MouseLeave"
-                    MouseLeftButtonUp="TabComps_MouseLeftButtonUp">
+            <battlegrounds:OverlayButton x:Name="TabComps"
+                    Command="{Binding ShowCompsCommand}"
+                    Cursor="Hand">
                 <Border.Style>
                     <Style TargetType="Border">
                         <Setter Property="Background" Value="#141617" />
@@ -59,6 +59,9 @@
                         <Setter Property="Width" Value="83" />
                         <Setter Property="Height" Value="49" />
                         <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2C3135" />
+                            </Trigger>
                             <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type local:BattlegroundsCompsGuidesViewModel}">
                                 <Setter Property="Background" Value="#23272A" />
                                 <Setter Property="BorderThickness" Value="1,0,0,0" />
@@ -73,13 +76,11 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Grid>
-            </Border>
+            </battlegrounds:OverlayButton>
 
-            <Border x:Name="TabHeroes"
-                    Cursor="Hand"
-                    MouseEnter="Tab_MouseEnter"
-                    MouseLeave="Tab_MouseLeave"
-                    MouseLeftButtonUp="TabHeroes_MouseLeftButtonUp">
+            <battlegrounds:OverlayButton x:Name="TabHeroes"
+                    Command="{Binding ShowHeroesCommand}"
+                    Cursor="Hand">
                 <Border.Style>
                     <Style TargetType="Border">
                         <Setter Property="Background" Value="#141617" />
@@ -88,6 +89,9 @@
                         <Setter Property="Width" Value="83" />
                         <Setter Property="Height" Value="49" />
                         <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2C3135" />
+                            </Trigger>
                             <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type heroes:BattlegroundsHeroGuideListViewModel}">
                                 <Setter Property="Background" Value="#23272A" />
                                 <Setter Property="BorderThickness" Value="1,0,0,0" />
@@ -123,7 +127,7 @@
                         </Rectangle.Style>
                     </Rectangle>
                 </Grid>
-            </Border>
+            </battlegrounds:OverlayButton>
         </StackPanel>
         <Border Visibility="{Binding ActiveViewModel, Converter={StaticResource NullableToVisibility}}"
                 x:Name="TabsContent"
