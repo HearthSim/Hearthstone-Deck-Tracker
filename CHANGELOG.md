@@ -1,4 +1,6 @@
 ## **Release v1.53.1 - 2026-06-30**
+**Updated for Hearthstone 36.0**
+
 **General**
 - Fixed the Meta deck pop-up briefly appearing when starting HDT while mid-game.
 - Fixed various crashes and memory leaks.
