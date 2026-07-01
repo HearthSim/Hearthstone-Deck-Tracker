@@ -15,41 +15,20 @@
              d:DesignHeight="249" d:DesignWidth="249"
              d:DataContext="{d:DesignInstance local:BattlegroundsGuidesTabsViewModel}"
              >
-    <UserControl.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Background" Value="#141617" />
-            <Setter Property="BorderThickness" Value="1,0,0,1" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Width="83"
-                                Height="49"
-                                BorderBrush="#3f4346"
-                        >
-                            <ContentPresenter
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#2C3135" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
-
-    <StackPanel extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
+        <StackPanel extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Background="#2C3135">
-            <Button Command="{Binding ShowMinionsCommand}">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Border x:Name="TabMinions"
+                    Cursor="Hand"
+                    MouseEnter="Tab_MouseEnter"
+                    MouseLeave="Tab_MouseLeave"
+                    MouseLeftButtonUp="TabMinions_MouseLeftButtonUp">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="#141617" />
+                        <Setter Property="BorderThickness" Value="1,0,0,1" />
+                        <Setter Property="BorderBrush" Value="#3f4346" />
+                        <Setter Property="Width" Value="83" />
+                        <Setter Property="Height" Value="49" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type minions:BattlegroundsMinionsViewModel}">
                                 <Setter Property="Background" Value="#23272A" />
@@ -57,20 +36,28 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Button.Style>
-                <Grid Width="83"
-                      Height="49">
+                </Border.Style>
+                <Grid Width="83" Height="49">
                     <Rectangle Fill="White" Height="23" Width="18.2">
                         <Rectangle.OpacityMask>
                             <VisualBrush Visual="{DynamicResource icon_card}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Grid>
-            </Button>
+            </Border>
 
-            <Button Command="{Binding ShowCompsCommand}">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Border x:Name="TabComps"
+                    Cursor="Hand"
+                    MouseEnter="Tab_MouseEnter"
+                    MouseLeave="Tab_MouseLeave"
+                    MouseLeftButtonUp="TabComps_MouseLeftButtonUp">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="#141617" />
+                        <Setter Property="BorderThickness" Value="1,0,0,1" />
+                        <Setter Property="BorderBrush" Value="#3f4346" />
+                        <Setter Property="Width" Value="83" />
+                        <Setter Property="Height" Value="49" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type local:BattlegroundsCompsGuidesViewModel}">
                                 <Setter Property="Background" Value="#23272A" />
@@ -78,20 +65,28 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Button.Style>
-                <Grid Width="83"
-                      Height="49">
+                </Border.Style>
+                <Grid Width="83" Height="49">
                     <Rectangle Fill="White" Height="23" Width="31">
                         <Rectangle.OpacityMask>
                             <VisualBrush Visual="{DynamicResource icon_comp}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Grid>
-            </Button>
+            </Border>
 
-            <Button Command="{Binding ShowHeroesCommand}">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Border x:Name="TabHeroes"
+                    Cursor="Hand"
+                    MouseEnter="Tab_MouseEnter"
+                    MouseLeave="Tab_MouseLeave"
+                    MouseLeftButtonUp="TabHeroes_MouseLeftButtonUp">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="#141617" />
+                        <Setter Property="BorderThickness" Value="1,0,0,1" />
+                        <Setter Property="BorderBrush" Value="#3f4346" />
+                        <Setter Property="Width" Value="83" />
+                        <Setter Property="Height" Value="49" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type heroes:BattlegroundsHeroGuideListViewModel}">
                                 <Setter Property="Background" Value="#23272A" />
@@ -99,9 +94,8 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Button.Style>
-                <Grid Width="83"
-                      Height="49">
+                </Border.Style>
+                <Grid Width="83" Height="49">
                     <Rectangle Fill="White">
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
@@ -129,7 +123,7 @@
                         </Rectangle.Style>
                     </Rectangle>
                 </Grid>
-            </Button>
+            </Border>
         </StackPanel>
         <Border Visibility="{Binding ActiveViewModel, Converter={StaticResource NullableToVisibility}}"
                 x:Name="TabsContent"
