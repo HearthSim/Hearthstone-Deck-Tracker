@@ -59,6 +59,7 @@ namespace Hearthstone_Deck_Tracker
 		private Entity? _attackingEntity;
 		private Entity? _defendingEntity;
 		private bool _handledGameEnd;
+		private PendingBattlegroundsGame? _pendingBattlegroundsGame;
 		private GameStats? _lastGame;
 		private DateTime _lastGameStart;
 
@@ -1023,9 +1024,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 
-					RecordBattlegroundsGame();
-					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
-					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
+					CaptureBattlegroundsGame();
 				}
 
 				await SaveReplays(_game.CurrentGameStats);
@@ -1044,6 +1043,10 @@ namespace Hearthstone_Deck_Tracker
 
 				if(_game.IsBattlegroundsMatch)
 				{
+					RecordBattlegroundsGame();
+					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
+					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
+
 					if(LogContainsStateComplete)
 						Sentry.SendQueuedBattlegroundsEvents(_game.CurrentGameStats.HsReplay.UploadId);
 					else
@@ -1103,44 +1106,76 @@ namespace Hearthstone_Deck_Tracker
 				await Task.Delay(100);
 		}
 
-		private void RecordBattlegroundsGame()
+		private sealed class PendingBattlegroundsGame
 		{
-			if (Core.Game.Spectator)
+			public PendingBattlegroundsGame(GameStats stats, string heroCardId, int placement, Entity[] finalBoard, bool friendlyGame, bool duos)
+			{
+				Stats = stats;
+				HeroCardId = heroCardId;
+				Placement = placement;
+				FinalBoard = finalBoard;
+				FriendlyGame = friendlyGame;
+				Duos = duos;
+			}
+
+			public GameStats Stats { get; }
+			public string HeroCardId { get; }
+			public int Placement { get; }
+			public Entity[] FinalBoard { get; }
+			public bool FriendlyGame { get; }
+			public bool Duos { get; }
+		}
+
+		// Capture entity-derived data before the SaveReplays await, since a return to menu or
+		// the next game start can clear _game.Entities (and reset the game type) meanwhile.
+		private void CaptureBattlegroundsGame()
+		{
+			_pendingBattlegroundsGame = null;
+
+			if(Core.Game.Spectator)
 				return;
 
+			var stats = _game.CurrentGameStats;
 			var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
-			var startTime = _game.CurrentGameStats?.StartTime.ToString("o");
-			var endTime = _game.CurrentGameStats?.EndTime.ToString("o");
 			var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
-			var rating = _game.CurrentGameStats?.BattlegroundsRating;
-			var ratingAfter = _game.CurrentGameStats?.BattlegroundsRatingAfter;
+			var duos = _game.IsBattlegroundsDuosMatch;
+			var placement = Math.Min(hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0, duos ? 4 : 8);
+
+			if(stats == null || heroCardId == null || placement <= 0)
+			{
+				Log.Error("Missing data while trying to record battleground game");
+				return;
+			}
+
 			var finalBoard = _game.Entities.Values
 				.Where(x => x.IsMinion && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Player.Id))
 				.Select(x => x.Clone())
 				.ToArray();
 			var friendlyGame = _game.CurrentGameType is GameType.GT_BATTLEGROUNDS_FRIENDLY or GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY;
-			var duos = _game.IsBattlegroundsDuosMatch;
-			var placement = Math.Min(hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0, duos ? 4 : 8);
 
-			if(startTime != null && endTime != null && heroCardId != null && rating != null && ratingAfter != null && placement > 0)
-			{
-				BattlegroundsLastGames.Instance.AddGame(
-					startTime,
-					endTime,
-					heroCardId,
-					(int)rating,
-					(int)ratingAfter,
-					placement,
-					finalBoard,
-					friendlyGame,
-					duos,
-					save: true
-				);
-			}
-			else
-			{
-				Log.Error("Missing data while trying to record battleground game");
-			}
+			_pendingBattlegroundsGame = new PendingBattlegroundsGame(stats, heroCardId, placement, finalBoard, friendlyGame, duos);
+		}
+
+		// Persist the captured game once SaveReplays has populated the post-game rating.
+		private void RecordBattlegroundsGame()
+		{
+			var pending = _pendingBattlegroundsGame;
+			_pendingBattlegroundsGame = null;
+			if(pending == null)
+				return;
+
+			BattlegroundsLastGames.Instance.AddGame(
+				pending.Stats.StartTime.ToString("o"),
+				pending.Stats.EndTime.ToString("o"),
+				pending.HeroCardId,
+				pending.Stats.BattlegroundsRating,
+				pending.Stats.BattlegroundsRatingAfter,
+				pending.Placement,
+				pending.FinalBoard,
+				pending.FriendlyGame,
+				pending.Duos,
+				save: true
+			);
 		}
 
 		private void LogEvent(string type, string id = "", int turn = 0, int from = -1, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
