@@ -22,31 +22,6 @@
     <UserControl.Resources>
         <utility:ConfigWrapper x:Key="ConfigWrapper"/>
         <CubicEase x:Key="Ease" EasingMode="EaseOut"/>
-        <Style TargetType="Button">
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Background" Value="#141617" />
-            <Setter Property="BorderThickness" Value="1,1,1,0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Width="55"
-                                Height="54.2"
-                                BorderBrush="#3f4346"
-                        >
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#2C3135" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </UserControl.Resources>
     <Grid>
         <!-- Tavern Markers Panel -->
@@ -280,41 +255,32 @@
                                                 Margin="0,0,0,0"/>
 
                                         </StackPanel>
-                                        <Button
+                                        <Border
                                             DockPanel.Dock="Bottom"
-                                            Content="{lex:Loc BattlegroundsTavernPinning_GotIt}"
-                                            Click="BtnGotIt_Click"
                                             HorizontalAlignment="Right"
                                             Padding="16,6"
                                             Margin="0,16,0,0"
-                                            Background="#4A5256"
-                                            FontWeight="SemiBold"
-                                            Foreground="White"
-                                            BorderThickness="0"
+                                            CornerRadius="3"
                                             Cursor="Hand"
-                                            FontSize="11">
-                                            <Button.Style>
-                                                <Style TargetType="Button">
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate TargetType="Button">
-                                                                <Border x:Name="border"
-                                                                        Background="{TemplateBinding Background}"
-                                                                        CornerRadius="3"
-                                                                        Padding="{TemplateBinding Padding}">
-                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                </Border>
-                                                                <ControlTemplate.Triggers>
-                                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                                        <Setter TargetName="border" Property="Background" Value="#5A6266"/>
-                                                                    </Trigger>
-                                                                </ControlTemplate.Triggers>
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
+                                            MouseLeftButtonUp="BtnGotIt_Click">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="#4A5256"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#5A6266"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
                                                 </Style>
-                                            </Button.Style>
-                                        </Button>
+                                            </Border.Style>
+                                            <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                Text="{lex:Loc BattlegroundsTavernPinning_GotIt}"
+                                                FontWeight="SemiBold"
+                                                Foreground="White"
+                                                FontSize="11"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
+                                        </Border>
                                     </DockPanel>
                                 </Border>
                                 <Border Background="#2E3235" CornerRadius="3" Padding="4" Margin="0,0,0,4">
@@ -495,14 +461,29 @@
                     </StackPanel>
                 </Border>
 
-                <Button Command="{Binding ToggleRecommendedCommand}"
+                <Border
                         Margin="0,0,248,0"
+                        Width="55"
+                        Height="54.2"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
+                        BorderBrush="#3f4346"
                         BorderThickness="1,1,0,0"
+                        Background="#141617"
+                        Cursor="Hand"
                         MouseEnter="RecommendComp_MouseEnter"
                         MouseLeave="RecommendComp_MouseLeave"
+                        MouseLeftButtonUp="ToggleRecommended_MouseLeftButtonUp"
                         >
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2C3135"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
                     <Grid>
                         <Grid>
                             <Grid.Style>
@@ -551,28 +532,36 @@
                             </TextBlock>
                         </Border>
                     </Grid>
-                </Button>
+                </Border>
 
-                <Button Command="{Binding ToggleExpandCommand}"
+                <Border
                         Margin="0,0,194,0"
                         Width="55" Height="54.2"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
+                        BorderBrush="#3f4346"
+                        BorderThickness="1,1,1,0"
+                        Background="#141617"
+                        Cursor="Hand"
+                        MouseLeftButtonUp="ToggleExpand_MouseLeftButtonUp"
                         >
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Border.Style>
+                        <Style TargetType="Border">
                             <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2C3135"/>
+                                </Trigger>
                                 <DataTrigger Binding="{Binding IsExpanded}" Value="True">
                                     <Setter Property="Background" Value="#23272A" />
                                     <Setter Property="BorderThickness" Value="1,0,1,0" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </Button.Style>
+                    </Border.Style>
                     <Grid>
                         <Image Source="/HearthstoneDeckTracker;component/Resources/pin.png" Width="28" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="Fant"/>
                     </Grid>
-                </Button>
+                </Border>
             </Grid>
         </Border>
 
@@ -653,41 +642,32 @@
                                                         </Grid>
                                                     </Border>
                                                 </StackPanel>
-                                                <Button
+                                                <Border
                                                     DockPanel.Dock="Bottom"
-                                                    Content="{lex:Loc BattlegroundsTavernPinning_GotIt}"
-                                                    Click="BtnCompGuidesMarkerGotIt_Click"
                                                     HorizontalAlignment="Right"
-                                                    FontWeight="SemiBold"
                                                     Padding="16,6"
                                                     Margin="0,8,0,0"
-                                                    Background="#4A5256"
-                                                    Foreground="White"
-                                                    BorderThickness="0"
+                                                    CornerRadius="3"
                                                     Cursor="Hand"
-                                                    FontSize="11">
-                                                    <Button.Style>
-                                                        <Style TargetType="Button">
-                                                            <Setter Property="Template">
-                                                                <Setter.Value>
-                                                                    <ControlTemplate TargetType="Button">
-                                                                        <Border x:Name="border"
-                                                                                Background="{TemplateBinding Background}"
-                                                                                CornerRadius="3"
-                                                                                Padding="{TemplateBinding Padding}">
-                                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                        </Border>
-                                                                        <ControlTemplate.Triggers>
-                                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                                <Setter TargetName="border" Property="Background" Value="#5A6266"/>
-                                                                            </Trigger>
-                                                                        </ControlTemplate.Triggers>
-                                                                    </ControlTemplate>
-                                                                </Setter.Value>
-                                                            </Setter>
+                                                    MouseLeftButtonUp="BtnCompGuidesMarkerGotIt_Click">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Background" Value="#4A5256"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="#5A6266"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
                                                         </Style>
-                                                    </Button.Style>
-                                                </Button>
+                                                    </Border.Style>
+                                                    <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                        Text="{lex:Loc BattlegroundsTavernPinning_GotIt}"
+                                                        FontWeight="SemiBold"
+                                                        Foreground="White"
+                                                        FontSize="11"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center" />
+                                                </Border>
                                             </DockPanel>
                                         </Border>
                                     </StackPanel>
@@ -729,71 +709,53 @@
                                                     TextWrapping="Wrap"
                                                     Margin="0,0,0,8"/>
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Button
-                                                        Content="NO"
-                                                        Click="BtnAutoEnableNo_Click"
+                                                    <Border
+                                                        CornerRadius="3"
                                                         Padding="16,4"
-                                                        FontWeight="Bold"
                                                         Margin="0,0,8,0"
-                                                        Background="#4A5256"
-                                                        Foreground="White"
-                                                        BorderThickness="0"
                                                         Cursor="Hand"
-                                                        FontSize="10">
-                                                        <Button.Style>
-                                                            <Style TargetType="Button">
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="Button">
-                                                                            <Border x:Name="border"
-                                                                                    Background="{TemplateBinding Background}"
-                                                                                    CornerRadius="3"
-                                                                                    Padding="{TemplateBinding Padding}">
-                                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                            </Border>
-                                                                            <ControlTemplate.Triggers>
-                                                                                <Trigger Property="IsMouseOver" Value="True">
-                                                                                    <Setter TargetName="border" Property="Background" Value="#5A6266"/>
-                                                                                </Trigger>
-                                                                            </ControlTemplate.Triggers>
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
+                                                        MouseLeftButtonUp="BtnAutoEnableNo_Click">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="#4A5256"/>
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter Property="Background" Value="#5A6266"/>
+                                                                    </Trigger>
+                                                                </Style.Triggers>
                                                             </Style>
-                                                        </Button.Style>
-                                                    </Button>
-                                                    <Button
-                                                        Content="YES"
-                                                        Click="BtnAutoEnableYes_Click"
+                                                        </Border.Style>
+                                                        <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                            Text="NO"
+                                                            FontWeight="Bold"
+                                                            Foreground="White"
+                                                            FontSize="10"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center" />
+                                                    </Border>
+                                                    <Border
+                                                        CornerRadius="3"
                                                         Padding="16,4"
-                                                        Background="#CC4CAF50"
-                                                        FontWeight="SemiBold"
-                                                        Foreground="White"
-                                                        BorderThickness="0"
                                                         Cursor="Hand"
-                                                        FontSize="10">
-                                                        <Button.Style>
-                                                            <Style TargetType="Button">
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="Button">
-                                                                            <Border x:Name="border"
-                                                                                    Background="{TemplateBinding Background}"
-                                                                                    CornerRadius="3"
-                                                                                    Padding="{TemplateBinding Padding}">
-                                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                            </Border>
-                                                                            <ControlTemplate.Triggers>
-                                                                                <Trigger Property="IsMouseOver" Value="True">
-                                                                                    <Setter TargetName="border" Property="Background" Value="#5CB860"/>
-                                                                                </Trigger>
-                                                                            </ControlTemplate.Triggers>
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
+                                                        MouseLeftButtonUp="BtnAutoEnableYes_Click">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="#CC4CAF50"/>
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter Property="Background" Value="#5CB860"/>
+                                                                    </Trigger>
+                                                                </Style.Triggers>
                                                             </Style>
-                                                        </Button.Style>
-                                                    </Button>
+                                                        </Border.Style>
+                                                        <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                            Text="YES"
+                                                            FontWeight="SemiBold"
+                                                            Foreground="White"
+                                                            FontSize="10"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center" />
+                                                    </Border>
                                                 </StackPanel>
                                             </StackPanel>
                                         </Border>

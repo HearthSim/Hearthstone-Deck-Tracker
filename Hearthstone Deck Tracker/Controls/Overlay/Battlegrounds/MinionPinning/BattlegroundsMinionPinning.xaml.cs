@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility;
@@ -178,13 +179,13 @@ public partial class BattlegroundsMinionPinning : INotifyPropertyChanged
 			DismissGuide();
 	}
 
-	private void BtnGotIt_Click(object sender, RoutedEventArgs e)
+	private void BtnGotIt_Click(object sender, MouseButtonEventArgs e)
 	{
 		DismissGuide();
 		Core.Game.Metrics.TavernMarkersQuickGuideDismissed = true;
 	}
 
-	private void BtnCompGuidesMarkerGotIt_Click(object sender, RoutedEventArgs e)
+	private void BtnCompGuidesMarkerGotIt_Click(object sender, MouseButtonEventArgs e)
 	{
 		DismissCompGuidesMarkerQuickGuide();
 		IsQuickCompGuideVisible = false;
@@ -206,7 +207,7 @@ public partial class BattlegroundsMinionPinning : INotifyPropertyChanged
 		}
 	}
 
-	private void BtnAutoEnableYes_Click(object sender, RoutedEventArgs e)
+	private void BtnAutoEnableYes_Click(object sender, MouseButtonEventArgs e)
 	{
 		ConfigWrapper.AutoEnableTavernMarkersRecommended = true;
 		ConfigWrapper.DismissedAutoEnablePopup = true;
@@ -214,12 +215,24 @@ public partial class BattlegroundsMinionPinning : INotifyPropertyChanged
 		Core.Game.Metrics.TavernMarkersAutoEnableResponse = "yes";
 	}
 
-	private void BtnAutoEnableNo_Click(object sender, RoutedEventArgs e)
+	private void BtnAutoEnableNo_Click(object sender, MouseButtonEventArgs e)
 	{
 		ConfigWrapper.AutoEnableTavernMarkersRecommended = false;
 		ConfigWrapper.DismissedAutoEnablePopup = true;
 		IsAutoEnableMessageVisible = false;
 		Core.Game.Metrics.TavernMarkersAutoEnableResponse = "no";
+	}
+
+	private void ToggleRecommended_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+	{
+		if (DataContext is BattlegroundsMinionPinningViewModel vm)
+			vm.ToggleRecommendedCommand.Execute(null);
+	}
+
+	private void ToggleExpand_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+	{
+		if (DataContext is BattlegroundsMinionPinningViewModel vm)
+			vm.ToggleExpandCommand.Execute(null);
 	}
 }
 

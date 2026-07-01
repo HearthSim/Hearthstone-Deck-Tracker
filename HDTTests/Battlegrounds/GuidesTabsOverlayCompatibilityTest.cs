@@ -1,0 +1,97 @@
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace HDTTests.Battlegrounds
+{
+	[TestClass]
+	public class GuidesTabsOverlayCompatibilityTest
+	{
+		[TestMethod]
+		public void GuidesTabs_ShouldNotUseWpfButtonControls()
+		{
+			// GuidesTabs is displayed in the Battlegrounds overlay which is a
+			// WS_EX_TRANSPARENT click-through overlay window. Standard WPF Button
+			// controls do not fire click events reliably under Wine/Linux in this
+			// configuration. The tab triggers must use overlay-compatible click
+			// handling (e.g. MouseLeftButtonUp on Border/UserControl).
+			var xamlPath = Path.GetFullPath(Path.Combine(
+				TestContextHelper.GetProjectRoot(),
+				"Hearthstone Deck Tracker",
+				"Controls",
+				"Overlay",
+				"Battlegrounds",
+				"Guides",
+				"GuidesTabs.xaml"
+			));
+
+			Assert.IsTrue(File.Exists(xamlPath), $"GuidesTabs.xaml not found at {xamlPath}");
+
+			var xaml = File.ReadAllText(xamlPath);
+
+			var buttonMatches = Regex.Matches(xaml, @"<\s*Button[\s>]", RegexOptions.IgnoreCase);
+			var count = buttonMatches.Count;
+
+			Assert.AreEqual(0, count,
+				$"GuidesTabs.xaml contains {count} WPF Button element(s). " +
+				"Use overlay-compatible controls (Border with MouseLeftButtonUp) instead. " +
+				"Standard WPF Button controls are unreliable in WS_EX_TRANSPARENT overlay windows under Wine.");
+		}
+
+		[TestMethod]
+		public void BattlegroundsMinionPinning_ShouldNotUseWpfButtonControls()
+		{
+			// BattlegroundsMinionPinning is displayed in the Battlegrounds overlay
+			// which is a WS_EX_TRANSPARENT click-through overlay window. Standard
+			// WPF Button controls do not fire click events reliably under Wine/Linux
+			// in this configuration. All interactive triggers must use overlay-
+			// compatible click handling (e.g. MouseLeftButtonUp on Border).
+			var xamlPath = Path.GetFullPath(Path.Combine(
+				TestContextHelper.GetProjectRoot(),
+				"Hearthstone Deck Tracker",
+				"Controls",
+				"Overlay",
+				"Battlegrounds",
+				"MinionPinning",
+				"BattlegroundsMinionPinning.xaml"
+			));
+
+			Assert.IsTrue(File.Exists(xamlPath), $"BattlegroundsMinionPinning.xaml not found at {xamlPath}");
+
+			var xaml = File.ReadAllText(xamlPath);
+
+			var buttonMatches = Regex.Matches(xaml, @"<\s*Button[\s>]", RegexOptions.IgnoreCase);
+			var count = buttonMatches.Count;
+
+			Assert.AreEqual(0, count,
+				$"BattlegroundsMinionPinning.xaml contains {count} WPF Button element(s). " +
+				"Use overlay-compatible controls (Border with MouseLeftButtonUp) instead. " +
+				"Standard WPF Button controls are unreliable in WS_EX_TRANSPARENT overlay windows under Wine.");
+		}
+		}
+	}
+
+	internal static class TestContextHelper
+	{
+		/// <summary>
+		/// Walk up from the test assembly location to find the repo root
+		/// (the directory containing the .sln file).
+		/// </summary>
+		public static string GetProjectRoot()
+		{
+			var dir = Path.GetDirectoryName(typeof(TestContextHelper).Assembly.Location);
+			while(dir != null)
+			{
+				if(Directory.GetFiles(dir, "*.sln").Any())
+					return dir;
+				dir = Path.GetDirectoryName(dir);
+			}
+			// Fallback: use relative from repo structure
+			return Path.GetFullPath(Path.Combine(
+				Path.GetDirectoryName(typeof(TestContextHelper).Assembly.Location) ?? ".",
+				"..", "..", "..", ".."
+			));
+		}
+	}
+}
