@@ -9,9 +9,11 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using HSReplay.Requests;
+using HSReplay.Responses;
 using static System.Windows.Visibility;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
@@ -111,9 +113,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				return;
 			}
 
-			var questData = Tier7Trial.Token != null
-				? await ApiWrapper.GetTier7QuestStats(Tier7Trial.Token, requestParams)
-				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7QuestPickStats(requestParams));
+			BattlegroundsQuestPickStats[]? questData;
+			using(new TimedSection("Fetching Quest Stats"))
+				questData = Tier7Trial.Token != null
+					? await ApiWrapper.GetTier7QuestStats(Tier7Trial.Token, requestParams)
+					: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7QuestPickStats(requestParams));
 			if(questData == null)
 			{
 				Message.Error();

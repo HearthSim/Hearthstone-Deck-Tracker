@@ -19,6 +19,7 @@ using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -1515,9 +1516,11 @@ namespace Hearthstone_Deck_Tracker
 			if(!userOwnsTier7 && Tier7Trial.Token == null)
 				return null;
 
-			var result = Tier7Trial.Token != null
-				? await ApiWrapper.GetTier7TrinketPickStats(Tier7Trial.Token, requestParams)
-				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7TrinketPickStats(requestParams));
+			BattlegroundsTrinketPickStats? result;
+			using(new TimedSection("Fetching Trinket Stats"))
+				result = Tier7Trial.Token != null
+					? await ApiWrapper.GetTier7TrinketPickStats(Tier7Trial.Token, requestParams)
+					: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7TrinketPickStats(requestParams));
 
 			return result;
 		}
@@ -2072,13 +2075,15 @@ namespace Hearthstone_Deck_Tracker
 			// At this point the user either owns tier7 or has an active trial!
 
 			var isDuos = Core.Game.IsBattlegroundsDuosMatch;
-			var stats = token != null && !userOwnsTier7
-				? isDuos
-					? await ApiWrapper.GetTier7DuosHeroPickStats(token, parameters)
-					: await ApiWrapper.GetTier7HeroPickStats(token, parameters)
-				: await HSReplayNetOAuth.MakeRequest(c =>
-					isDuos ? c.GetTier7DuosHeroPickStats(parameters) : c.GetTier7HeroPickStats(parameters)
-				);
+			BattlegroundsHeroPickStats? stats;
+			using(new TimedSection("Fetching Hero Pick Stats"))
+				stats = token != null && !userOwnsTier7
+					? isDuos
+						? await ApiWrapper.GetTier7DuosHeroPickStats(token, parameters)
+						: await ApiWrapper.GetTier7HeroPickStats(token, parameters)
+					: await HSReplayNetOAuth.MakeRequest(c =>
+						isDuos ? c.GetTier7DuosHeroPickStats(parameters) : c.GetTier7HeroPickStats(parameters)
+					);
 
 			if(stats == null)
 				throw new HeroPickingException("Invalid server response");
