@@ -1,3 +1,7 @@
+## **Release v1.53.3 - 2026-07-01**
+**Hearthstone**
+- Fixed Animal Companion Counter not updating.
+
 ## **Release v1.53.2 - 2026-07-01**
 **Battlegrounds**
 - Fixed the session widget not showing per-match MMR gain/loss.
