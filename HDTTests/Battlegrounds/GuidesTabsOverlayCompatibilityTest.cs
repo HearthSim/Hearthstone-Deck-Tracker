@@ -70,7 +70,6 @@ namespace HDTTests.Battlegrounds
 				"Standard WPF Button controls are unreliable in WS_EX_TRANSPARENT overlay windows under Wine.");
 		}
 		}
-	}
 
 	internal static class TestContextHelper
 	{
