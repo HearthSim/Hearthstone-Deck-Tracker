@@ -66,7 +66,7 @@ public class AnimalCompanionCounter : NumericCounter
 		   or HearthDb.CardIds.Collectible.Hunter.MigratingElekk
 		   or HearthDb.CardIds.Collectible.Hunter.RoamFree)
 		{
-			if(tag != GameTag.TAG_SCRIPT_DATA_NUM_4 && tag != GameTag.TAG_SCRIPT_DATA_NUM_5 && tag != GameTag.TAG_SCRIPT_DATA_NUM_6)
+			if(tag != GameTag.HIDDEN_SCRIPT_DATA_4 && tag != GameTag.HIDDEN_SCRIPT_DATA_5 && tag != GameTag.HIDDEN_SCRIPT_DATA_6)
 				return;
 
 			if(!HearthDb.Cards.AllByDbfId.TryGetValue(value, out var card))
@@ -79,15 +79,15 @@ public class AnimalCompanionCounter : NumericCounter
 
 			switch(tag)
 			{
-				case GameTag.TAG_SCRIPT_DATA_NUM_4:
+				case GameTag.HIDDEN_SCRIPT_DATA_4:
 					Companions[0] = card.Id;
 					OnCounterChanged();
 					break;
-				case GameTag.TAG_SCRIPT_DATA_NUM_5:
+				case GameTag.HIDDEN_SCRIPT_DATA_5:
 					Companions[1] = card.Id;
 					OnCounterChanged();
 					break;
-				case GameTag.TAG_SCRIPT_DATA_NUM_6:
+				case GameTag.HIDDEN_SCRIPT_DATA_6:
 					Companions[2] = card.Id;
 					OnCounterChanged();
 					break;
