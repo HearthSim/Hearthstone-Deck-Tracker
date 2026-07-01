@@ -190,17 +190,19 @@
                                         Visibility="{Binding CompStatsWaitingMsgVisibility, FallbackValue=Collapsed}"
                                         Margin="0 26 0 26"
                                     />
-                                    <TextBlock
-                                        Text="{lex:Loc Battlegrounds_Session_CompStats_ErrorMessage}"
-                                        Foreground="#FFFFFF"
-                                        Opacity=".5"
-                                        TextWrapping="WrapWithOverflow"
-                                        TextAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Visibility="{Binding CompStatsErrorVisibility, FallbackValue=Collapsed}"
-                                        Margin="0 26 0 26"
-                                    />
+                                    <StackPanel Orientation="Vertical" Visibility="{Binding CompStatsErrorVisibility, FallbackValue=Collapsed}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 16 0 16">
+                                        <TextBlock
+                                            Text="{lex:Loc Battlegrounds_Session_CompStats_ErrorMessage}"
+                                            Foreground="#FFFFFF"
+                                            Opacity=".5"
+                                            TextWrapping="WrapWithOverflow"
+                                            TextAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            Margin="4 0 4 8"
+                                        />
+                                        <Button Content="Retry" Command="{Binding RetryCompStatsCommand}" Width="64" HorizontalAlignment="Center" Style="{StaticResource Tier7ButtonStyle}" Cursor="Hand" />
+                                        <TextBlock Text="{Binding CompStatsDebugInfo}" Visibility="{Binding CompStatsDebugVisibility, FallbackValue=Collapsed}" Foreground="#FFFFFF" Opacity=".6" FontSize="10" TextWrapping="Wrap" Margin="6,6,6,0" />
+                                    </StackPanel>
                                 </Grid>
                             </StackPanel>
                         </StackPanel>
