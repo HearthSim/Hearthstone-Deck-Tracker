@@ -19,6 +19,11 @@ on:
         description: "Custom BobsBuddy.zip URL (optional)"
         required: false
         type: string
+      sign_build:
+        description: "Code sign executables with DigiCert secrets"
+        required: false
+        type: boolean
+        default: false
 
 defaults:
   run:
@@ -91,12 +96,14 @@ jobs:
           exit 0
 
       - name: Setup SM_CLIENT_CERT_FILE from base64 secret data
+        if: ${{ inputs.sign_build }}
         shell: bash
         run: |
           echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > ${RUNNER_TEMP}/sm_client_cert.p12
           echo "SM_CLIENT_CERT_FILE=${RUNNER_TEMP}/sm_client_cert.p12" >> $GITHUB_ENV
 
       - name: Setup Software Trust Manager
+        if: ${{ inputs.sign_build }}
         uses: digicert/code-signing-software-trust-action@v1.0.1
         with:
           simple-signing-mode: true
@@ -107,12 +114,13 @@ jobs:
           SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
 
       - name: Sign executables
+        if: ${{ inputs.sign_build }}
         shell: pwsh
         run: |
           $hdtReleaseDir = "Hearthstone Deck Tracker\bin\x64\Hearthstone Deck Tracker"
           smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUpdate.exe"
-          smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUninstaller.exe"
           smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\Hearthstone Deck Tracker.exe"
+          smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUninstaller.exe"
         env:
           SM_HOST: ${{ vars.SM_HOST }}
           SM_API_KEY: ${{ secrets.SM_API_KEY }}
