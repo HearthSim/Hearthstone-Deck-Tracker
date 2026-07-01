@@ -37,6 +37,11 @@ public class AbyssalCurseCounter : NumericCounter
 
 	public override string ValueToShow() => Counter.ToString();
 
+	internal void UpdateAbyssalCurse(int value)
+	{
+		Counter = value > 0 ? value : Counter + 1;
+	}
+
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
 	{
 		if(!Game.IsTraditionalHearthstoneMatch)
@@ -50,7 +55,7 @@ public class AbyssalCurseCounter : NumericCounter
 
 		var controller = entity.GetTag(GameTag.CONTROLLER);
 
-		if((controller == Game.Player.Id && IsPlayerCounter) || (controller == Game.Opponent.Id && !IsPlayerCounter))
+		if((controller == Game.Opponent.Id && IsPlayerCounter) || (controller == Game.Player.Id && !IsPlayerCounter))
 			Counter = value;
 	}
 }
