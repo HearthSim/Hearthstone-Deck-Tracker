@@ -16,6 +16,7 @@ public class CounterManager
 	public CounterManager(IGame game)
 	{
 		Game = game;
+		DeckList.Instance.ActiveDeckChanged += _ => NotifyCountersChanged();
 	}
 
 	private void Initialize()

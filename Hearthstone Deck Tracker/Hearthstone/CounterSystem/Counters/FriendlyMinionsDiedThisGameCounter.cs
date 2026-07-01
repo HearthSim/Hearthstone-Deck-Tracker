@@ -18,6 +18,11 @@ public class FriendlyMinionsDiedThisGameCounter: NumericCounter
 		HearthDb.CardIds.Collectible.Mage.Starsurge
 	};
 
+	private static readonly string[] PlayerGeneratorCards = new[]
+	{
+		HearthDb.CardIds.Collectible.Neutral.MalorneTheWaywatcher
+	};
+
 	public FriendlyMinionsDiedThisGameCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
@@ -26,7 +31,7 @@ public class FriendlyMinionsDiedThisGameCounter: NumericCounter
 	{
 		if(!Game.IsTraditionalHearthstoneMatch) return false;
 		if(IsPlayerCounter)
-			return InPlayerDeckOrKnown(RelatedCards);
+			return InPlayerDeckOrKnown(RelatedCards) || InPlayerDeckOrKnown(PlayerGeneratorCards);
 
 		var couldBeGenerated = Game.Opponent.PlayerEntities.Any(e =>
 		{
@@ -51,7 +56,15 @@ public class FriendlyMinionsDiedThisGameCounter: NumericCounter
 	public override string[] GetCardsToDisplay()
 	{
 		if(IsPlayerCounter)
-			return GetCardsInDeckOrKnown(RelatedCards).ToArray();
+		{
+			var cardsInDeckOrKnown = GetCardsInDeckOrKnown(RelatedCards).ToArray();
+			if(cardsInDeckOrKnown.Any())
+				return cardsInDeckOrKnown;
+
+			return InPlayerDeckOrKnown(PlayerGeneratorCards)
+				? new[] { HearthDb.CardIds.Collectible.Mage.Aessina }
+				: new string[] {};
+		}
 
 		var cardsFilteredByClassAndFormat = FilterCardsByClassAndFormat(RelatedCards, Game.Opponent.OriginalClass);
 		return cardsFilteredByClassAndFormat.IsEmpty() ? new[] { HearthDb.CardIds.Collectible.Mage.Aessina } : cardsFilteredByClassAndFormat;
