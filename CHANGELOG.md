@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**
+- Added support to Commander Beatrix.
+
 ## **Release v1.53.3 - 2026-07-01**
 **Hearthstone**
 - Fixed Animal Companion Counter not updating.
