@@ -210,6 +210,8 @@ namespace HearthWatcher.LogReader
 							Thread.Sleep(LogWatcher.UpdateDelay);
 							continue;
 						}
+						// Note: Hearthstone will only ever append to the log file. When it restarts, it moves the file and creates a new, empty one.
+						// As such we don't need to worry about the Length being smaller than the offset.
 						using(var sr = new StreamReader(fs))
 						{
 							string line;
