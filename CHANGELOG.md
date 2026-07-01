@@ -1,3 +1,7 @@
+## **Release v1.53.2 - 2026-07-01**
+**Battlegrounds**
+- Fixed the session widget not showing per-match MMR gain/loss.
+
 ## **Release v1.53.1 - 2026-06-30**
 **Updated for Hearthstone 36.0**
 
