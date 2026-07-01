@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              xmlns:minions="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
              xmlns:comps="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
@@ -27,96 +28,61 @@
             <Setter Property="HorizontalOffset" Value="0" />
         </Style>
 
-        <Style x:Key="MetaSnapshotButtonStyle" TargetType="Button">
+        <Style x:Key="MetaSnapshotButtonStyle" TargetType="Border">
             <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="TextElement.Foreground" Value="White" />
+            <Setter Property="TextElement.FontSize" Value="12" />
+            <Setter Property="TextElement.FontWeight" Value="Bold" />
             <Setter Property="Padding" Value="8,7,8,7" />
-            <Setter Property="Template">
+            <Setter Property="BorderBrush" Value="{StaticResource Tier7Purple}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="Background">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Border"
-                                BorderBrush="{StaticResource Tier7Purple}"
-                                BorderThickness="1"
-                                CornerRadius="3"
-                                Padding="{TemplateBinding Padding}"
-                        >
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Offset="0" Color="#7636A8" />
-                                    <GradientStop Offset="1" Color="#661E9F" />
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background">
-                                    <Setter.Value>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                            <GradientStop Offset="0" Color="#9143D5" />
-                                            <GradientStop Offset="1" Color="#7E22CE" />
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#7636A8" />
+                        <GradientStop Offset="1" Color="#661E9F" />
+                    </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-        <Style TargetType="Button">
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Background" Value="#141617" />
-            <Setter Property="BorderThickness" Value="1,0,0,1" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Width="83"
-                                Height="49"
-                                BorderBrush="#3f4346"
-                        >
-                            <ContentPresenter
-                                x:Name="Content"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#2C3135" />
-                            </Trigger>
-                            <!-- after the hover trigger, so it wins while the button is disabled -->
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Border" Property="Background" Value="#141617" />
-                                <Setter TargetName="Content" Property="Opacity" Value="0.4" />
-                                <Setter Property="Cursor" Value="Arrow" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Offset="0" Color="#9143D5" />
+                                <GradientStop Offset="1" Color="#7E22CE" />
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
 
     <StackPanel extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
         <!-- the bar hangs off the right edge, so a hidden tab has to give up its space there -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#2C3135">
-            <Button Command="{Binding ShowMinionsCommand}">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <battlegrounds:OverlayButton Command="{Binding ShowMinionsCommand}">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="Background" Value="#141617" />
+                        <Setter Property="BorderThickness" Value="1,0,0,1" />
+                        <Setter Property="BorderBrush" Value="#3f4346" />
+                        <Setter Property="Width" Value="83" />
+                        <Setter Property="Height" Value="49" />
                         <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2C3135" />
+                            </Trigger>
                             <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type minions:BattlegroundsMinionsViewModel}">
                                 <Setter Property="Background" Value="#23272A" />
                                 <Setter Property="BorderThickness" Value="1,0,0,0" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Button.Style>
+                </Border.Style>
                 <Grid Width="83"
                       Height="49">
                     <Rectangle Fill="White" Height="23" Width="18.2">
@@ -125,19 +91,28 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Grid>
-            </Button>
+            </battlegrounds:OverlayButton>
 
-            <Button Command="{Binding ShowCompsCommand}">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <battlegrounds:OverlayButton Command="{Binding ShowCompsCommand}">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="Background" Value="#141617" />
+                        <Setter Property="BorderThickness" Value="1,0,0,1" />
+                        <Setter Property="BorderBrush" Value="#3f4346" />
+                        <Setter Property="Width" Value="83" />
+                        <Setter Property="Height" Value="49" />
                         <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2C3135" />
+                            </Trigger>
                             <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type local:BattlegroundsCompsGuidesViewModel}">
                                 <Setter Property="Background" Value="#23272A" />
                                 <Setter Property="BorderThickness" Value="1,0,0,0" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Button.Style>
+                </Border.Style>
                 <Grid Width="83"
                       Height="49">
                     <Rectangle Fill="White" Height="23" Width="31">
@@ -146,7 +121,7 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Grid>
-            </Button>
+            </battlegrounds:OverlayButton>
 
             <Border Background="Transparent" ToolTipService.InitialShowDelay="500"
                     Visibility="{Binding HeroesTabVisible, Converter={StaticResource BoolToVisibility}}">
@@ -156,19 +131,42 @@
                         Style="{StaticResource TabTooltipStyle}"
                         Content="{lex:Loc Battlegrounds_GuidesTabs_Heroes_Disabled_Tooltip}" />
                 </Border.ToolTip>
-                <Button Command="{Binding ShowHeroesCommand}" IsEnabled="{Binding HeroesTabEnabled}">
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <battlegrounds:OverlayButton Command="{Binding ShowHeroesCommand}" IsEnabled="{Binding HeroesTabEnabled}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Background" Value="#141617" />
+                            <Setter Property="BorderThickness" Value="1,0,0,1" />
+                            <Setter Property="BorderBrush" Value="#3f4346" />
+                            <Setter Property="Width" Value="83" />
+                            <Setter Property="Height" Value="49" />
                             <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2C3135" />
+                                </Trigger>
                                 <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type heroes:BattlegroundsHeroGuideListViewModel}">
                                     <Setter Property="Background" Value="#23272A" />
                                     <Setter Property="BorderThickness" Value="1,0,0,0" />
                                 </DataTrigger>
+                                <!-- after the hover trigger, so it wins while the tab is disabled -->
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Background" Value="#141617" />
+                                    <Setter Property="Cursor" Value="Arrow" />
+                                </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </Button.Style>
+                    </Border.Style>
                     <Grid Width="83"
                           Height="49">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HeroesTabEnabled}" Value="False">
+                                        <Setter Property="Opacity" Value="0.4" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
                         <Rectangle Fill="White">
                             <Rectangle.Style>
                                 <Style TargetType="Rectangle">
@@ -196,7 +194,7 @@
                             </Rectangle.Style>
                         </Rectangle>
                     </Grid>
-                </Button>
+                </battlegrounds:OverlayButton>
             </Border>
         </StackPanel>
         <!-- the fade would keep reserving space, so opening a tab collapses the panel through this wrapper instead -->
@@ -218,9 +216,9 @@
                                TextWrapping="Wrap"
                                Margin="0,0,0,8"
                         />
-                    <Button Command="{Binding MetaSnapshotCommand}"
+                    <battlegrounds:OverlayButton Command="{Binding MetaSnapshotCommand}"
                             Style="{StaticResource MetaSnapshotButtonStyle}">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Rectangle Fill="White" Width="13.5" Height="17" Margin="0,0,5,0" VerticalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Visual="{DynamicResource appbar_hsreplay}" />
@@ -228,7 +226,7 @@
                             </Rectangle>
                             <TextBlock Text="{lex:Loc Battlegrounds_GuidesTabs_MetaSnapshot_Button}" VerticalAlignment="Center" Margin="0,-1,0,1" />
                         </StackPanel>
-                    </Button>
+                    </battlegrounds:OverlayButton>
                 </StackPanel>
             </Border>
         </Grid>
