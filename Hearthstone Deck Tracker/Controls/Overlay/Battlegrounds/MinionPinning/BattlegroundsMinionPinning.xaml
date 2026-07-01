@@ -276,7 +276,7 @@
                                             <hearthstoneDeckTracker:HearthstoneTextBlock
                                                 Text="{lex:Loc BattlegroundsTavernPinning_GotIt}"
                                                 FontWeight="SemiBold"
-                                                Foreground="White"
+                                                Fill="White"
                                                 FontSize="11"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center" />
@@ -663,7 +663,7 @@
                                                     <hearthstoneDeckTracker:HearthstoneTextBlock
                                                         Text="{lex:Loc BattlegroundsTavernPinning_GotIt}"
                                                         FontWeight="SemiBold"
-                                                        Foreground="White"
+                                                        Fill="White"
                                                         FontSize="11"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center" />
@@ -728,7 +728,7 @@
                                                         <hearthstoneDeckTracker:HearthstoneTextBlock
                                                             Text="NO"
                                                             FontWeight="Bold"
-                                                            Foreground="White"
+                                                            Fill="White"
                                                             FontSize="10"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center" />
@@ -751,7 +751,7 @@
                                                         <hearthstoneDeckTracker:HearthstoneTextBlock
                                                             Text="YES"
                                                             FontWeight="SemiBold"
-                                                            Foreground="White"
+                                                            Fill="White"
                                                             FontSize="10"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center" />
