@@ -277,7 +277,7 @@
                             />
                             <Label
                                 Grid.Column="1"
-                                Content="{lex:Loc Battlegrounds_Session_Games_Label_Final}"
+                                Content="{lex:Loc Battlegrounds_Session_Games_Label_Place}"
                                 Foreground="#FFFFFF"
                                 Opacity=".55"
                                 FontSize="11"
