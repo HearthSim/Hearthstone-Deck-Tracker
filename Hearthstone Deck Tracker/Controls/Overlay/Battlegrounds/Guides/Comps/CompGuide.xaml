@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
@@ -82,107 +83,6 @@
         </Style>
 
         <Style x:Key="BgsTooltipStyle" TargetType="ToolTip" BasedOn="{StaticResource BgsLeftTooltipStyle}"/>
-        <Style x:Key="StyledBackButton" TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border BorderThickness="0" Margin="0,-9,0,0" Background="Transparent" Height="39.5">
-                            <StackPanel Orientation="Horizontal">
-                                <Rectangle Width="9" Height="9">
-                                    <Rectangle.Fill>
-                                        <VisualBrush Visual="{StaticResource guides_back_arrow}" />
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                                <TextBlock x:Name="BackButtonText"
-                                           Foreground="White"
-                                           Text="{lex:Loc Battlegrounds_CompGuide_Back_Button}"
-                                           VerticalAlignment="Center"
-                                           FontSize="10"
-                                           Margin="5,0,0,0" />
-                            </StackPanel>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="BackButtonText" Property="Opacity" Value="1" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="False">
-                                <Setter TargetName="BackButtonText" Property="Opacity" Value="0.6" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="InspirationButtonStyle" TargetType="{x:Type ButtonBase}">
-            <Setter Property="Background" Value="{StaticResource Tier7YellowButtonBackground}" />
-            <Setter Property="Foreground" Value="{StaticResource Tier7YellowButtonForeground}" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="FontSize" Value="11" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="4" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border CornerRadius="3" Background="{TemplateBinding Background}" Padding="4">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <tier7:Tier7Logo x:Name="logo" Width="14" Height="14" Margin="0,0,4,-2" LogoBrush="Black"/>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="UIElement.IsMouseOver" Value="true">
-                                <Setter Property="Background" Value="{StaticResource Tier7YellowButtonBackgroundHover}" />
-                            </Trigger>
-                            <Trigger Property="UIElement.IsEnabled" Value="false">
-                                <Setter Property="Background">
-                                    <Setter.Value>
-                                        <SolidColorBrush Color="#FFFFFF" Opacity="0.08" />
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="Foreground">
-                                    <Setter.Value>
-                                        <SolidColorBrush Color="#FFFFFF" Opacity="0.2" />
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter TargetName="logo" Property="LogoBrush">
-                                    <Setter.Value>
-                                        <SolidColorBrush Color="#FFFFFF" Opacity="0.3" />
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="Cursor" Value="Arrow" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="PinIconButtonStyle" TargetType="{x:Type ButtonBase}">
-            <Setter Property="Width" Value="30" />
-            <Setter Property="Height" Value="30" />
-            <Setter Property="Background" Value="#23272a" />
-            <Setter Property="BorderBrush" Value="#141617" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border x:Name="border" CornerRadius="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="UIElement.IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="#43474a" />
-                            </Trigger>
-                            <Trigger Property="UIElement.IsEnabled" Value="false">
-                                <Setter TargetName="border" Property="Opacity" Value="0.5" />
-                                <Setter Property="Cursor" Value="Arrow" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <Style TargetType="controls:BattlegroundsMinion">
             <Setter Property="Width" Value="70"/>
             <Setter Property="Height" Value="70"/>
@@ -222,8 +122,32 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Button Click="Button_OnClick" Style="{StaticResource StyledBackButton}" Cursor="Hand">
-        </Button>
+        <battlegrounds:OverlayButton BorderThickness="0" Margin="0,-9,0,0" Background="Transparent" Height="39.5" Cursor="Hand" Click="Back_Click">
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Width="9" Height="9">
+                    <Rectangle.Fill>
+                        <VisualBrush Visual="{StaticResource guides_back_arrow}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock
+                    Text="{lex:Loc Battlegrounds_CompGuide_Back_Button}"
+                    VerticalAlignment="Center"
+                    FontSize="10"
+                    Margin="5,0,0,0">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Opacity" Value="0.6" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Border}}" Value="True">
+                                    <Setter Property="Opacity" Value="1" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+        </battlegrounds:OverlayButton>
         <Border Grid.Row="1" BorderBrush="#4F565B" BorderThickness="1" CornerRadius="3" Background="#292d30">
             <Grid>
                 <Grid.RowDefinitions>
@@ -262,28 +186,42 @@
                                     TextTrimming="None"
                                     FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
                                 />
-                                <Button x:Name="BtnPinAllCompCards"
+                                <battlegrounds:OverlayButton x:Name="BtnPinAllCompCards"
                                         Grid.Column="1"
                                         Command="{Binding PinAllCompCardsCommand}"
+                                        Width="30"
+                                        Height="30"
                                         VerticalAlignment="Center"
                                         Margin="0,0,6,0"
                                         Opacity="0"
                                         RenderTransformOrigin="0.5,0.5"
+                                        BorderBrush="#141617"
+                                        BorderThickness="1"
+                                        CornerRadius="3"
+                                        Cursor="Hand"
                                         Visibility="{Binding BgsMinionPinningVisibility, RelativeSource={RelativeSource AncestorType={x:Type windows:OverlayWindow}}}">
-                                    <Button.RenderTransform>
+                                    <battlegrounds:OverlayButton.RenderTransform>
                                         <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
-                                    </Button.RenderTransform>
-                                    <Button.Style>
-                                        <Style TargetType="Button" BasedOn="{StaticResource PinIconButtonStyle}">
+                                    </battlegrounds:OverlayButton.RenderTransform>
+                                    <battlegrounds:OverlayButton.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="#23272a" />
                                             <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#43474a" />
+                                                </Trigger>
                                                 <DataTrigger Binding="{Binding AreAllCompCardsPinned}" Value="True">
                                                     <Setter Property="Background" Value="#141617" />
                                                 </DataTrigger>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Opacity" Value="0.5" />
+                                                    <Setter Property="Cursor" Value="Arrow" />
+                                                </Trigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </Button.Style>
+                                    </battlegrounds:OverlayButton.Style>
                                     <Image Source="/HearthstoneDeckTracker;component/Resources/pin.png" Width="22" Height="22" RenderOptions.BitmapScalingMode="Fant"/>
-                                </Button>
+                                </battlegrounds:OverlayButton>
                                 <Border Grid.Column="2" VerticalAlignment="Center" Background="{Binding TierColor}" CornerRadius="3" Padding="8,2,8,5" HorizontalAlignment="Right">
                                     <TextBlock
                                         Text="{Binding TierText}"
@@ -336,13 +274,71 @@
                                             Content="{lex:Loc Battlegrounds_CompGuide_CoreCards_Tier7_Tooltip}"
                                             VerticalOffset="-8" />
                                     </Border.ToolTip>
-                                    <Button Style="{StaticResource InspirationButtonStyle}"
-                                            Content="{lex:Loc Battlegrounds_CompGuide_Inspiration_Button}"
+                                    <battlegrounds:OverlayButton
                                             Command="{Binding ShowExampleBoardsCommand}"
                                             Margin="9,0"
-                                            IsEnabled="{Binding ExampleBoardsButtonEnabled}"
-                                    >
-                                    </Button>
+                                            Padding="4"
+                                            CornerRadius="3"
+                                            Cursor="Hand"
+                                            IsEnabled="{Binding ExampleBoardsButtonEnabled}">
+                                        <battlegrounds:OverlayButton.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="{StaticResource Tier7YellowButtonBackground}" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource Tier7YellowButtonBackgroundHover}" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsEnabled" Value="False">
+                                                        <Setter Property="Background">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="#FFFFFF" Opacity="0.08" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter Property="Cursor" Value="Arrow" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </battlegrounds:OverlayButton.Style>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <tier7:Tier7Logo Width="14" Height="14" Margin="0,0,4,-2">
+                                                <tier7:Tier7Logo.Style>
+                                                    <Style TargetType="tier7:Tier7Logo">
+                                                        <Setter Property="LogoBrush" Value="Black" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Border}}" Value="False">
+                                                                <Setter Property="LogoBrush">
+                                                                    <Setter.Value>
+                                                                        <SolidColorBrush Color="#FFFFFF" Opacity="0.3" />
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </tier7:Tier7Logo.Style>
+                                            </tier7:Tier7Logo>
+                                            <TextBlock
+                                                Text="{lex:Loc Battlegrounds_CompGuide_Inspiration_Button}"
+                                                FontWeight="Bold"
+                                                FontSize="11"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground" Value="{StaticResource Tier7YellowButtonForeground}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Border}}" Value="False">
+                                                                <Setter Property="Foreground">
+                                                                    <Setter.Value>
+                                                                        <SolidColorBrush Color="#FFFFFF" Opacity="0.2" />
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </battlegrounds:OverlayButton>
                                 </Border>
                             </StackPanel>
                         </Border>
