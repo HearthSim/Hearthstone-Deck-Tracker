@@ -187,13 +187,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(!allEntities.TryGetValue(magneticId, out var magnetic))
 					continue;
 
-				// Count the Auto Assembler enchantments attached to the magnetic (directly-magnetized Auto Assemblers).
 				var enchantCount = allEntities.Values.Count(x => x.IsAttachedTo(magneticId) && x.CardId == AutoAssemblerEnchantment.CardId);
-				if(enchantCount == 0)
-					continue;
+				var goldenEnchantCount = allEntities.Values.Count(x => x.IsAttachedTo(magneticId) && x.CardId == AutoAssemblerEnchantmentGolden.CardId);
 
 				for(var i = 0; i < enchantCount; i++)
 					minion.AdditionalDeathrattles.Add(AutoAssembler.Deathrattle(false));
+				for(var i = 0; i < goldenEnchantCount; i++)
+					minion.AdditionalDeathrattles.Add(AutoAssembler.Deathrattle(true));
 			}
 
 			// Future magnetic deathrattles can be added/handled here.
