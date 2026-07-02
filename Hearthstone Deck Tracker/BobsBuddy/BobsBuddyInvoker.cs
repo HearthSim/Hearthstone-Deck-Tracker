@@ -653,8 +653,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			Log.Info($"pBloodGem=+{inputPlayer.BloodGemAtkBuff}/+{inputPlayer.BloodGemHealthBuff}, friendly={friendly}");
 
 			var pTagTransfer = friendly ? null : playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TagtransferplayerenchantDnt && x.IsInPlay);
-			inputPlayer.TavernSpellAtkBuff = pTagTransfer?.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE) ?? playerEntity.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE);
-			inputPlayer.TavernSpellHealthBuff = pTagTransfer?.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE) ?? playerEntity.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE);
+			inputPlayer.TavernSpellAtkBuff = playerEntity.HasTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE)
+				? playerEntity.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE)
+				: pTagTransfer?.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE) ?? 0;
+			inputPlayer.TavernSpellHealthBuff = playerEntity.HasTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE)
+				? playerEntity.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE)
+				: pTagTransfer?.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE) ?? 0;
 			Log.Info($"pTavernSpell=+{inputPlayer.TavernSpellAtkBuff}/+{inputPlayer.TavernSpellHealthBuff} (opponentTransferEnchant={pTagTransfer != null}), friendly={friendly}");
 
 			inputPlayer.TavernSpellCounter = playerEntity.GetTag((GameTag)3088);
