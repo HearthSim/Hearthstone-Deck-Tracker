@@ -387,13 +387,16 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private readonly int[] _lastTurnStart = new int[2];
+
+		internal ActivePlayer CurrentTurnActivePlayer => _game.PlayerEntity?.IsCurrentPlayer == true ? ActivePlayer.Player : ActivePlayer.Opponent;
+
 		public void HandleTurnsInPlayChange(Entity entity, int turn)
 		{
-			if(_game.OpponentEntity == null)
+			if(_game.PlayerEntity == null)
 				return;
 			if(entity.IsHero)
 			{
-				var player = _game.OpponentEntity.IsCurrentPlayer ? ActivePlayer.Opponent : ActivePlayer.Player;
+				var player = CurrentTurnActivePlayer;
 				if(_lastTurnStart[(int)player] >= turn)
 					return;
 				_lastTurnStart[(int)player] = turn;
