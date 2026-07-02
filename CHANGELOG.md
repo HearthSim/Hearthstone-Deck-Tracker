@@ -1,4 +1,7 @@
 ## **Unreleased**
+**General**
+- Fixed the overlay not starting up properly for some users.
+
 **Hearthstone**
 - Added support to Commander Beatrix.
 
