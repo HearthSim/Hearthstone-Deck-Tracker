@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,7 +20,10 @@ public class ViewModel : INotifyPropertyChanged
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 
-	private readonly Dictionary<string, object?> _data = new();
+	// Properties are read from the UI thread via data binding and written from arbitrary
+	// background threads (async continuations, game event handlers), so this needs to be
+	// thread-safe to avoid corrupting the backing store's internal state.
+	private readonly ConcurrentDictionary<string, object?> _data = new();
 
 	protected T? GetProp<T>(T defaultValue, [CallerMemberName] string memberName = "")
 	{
