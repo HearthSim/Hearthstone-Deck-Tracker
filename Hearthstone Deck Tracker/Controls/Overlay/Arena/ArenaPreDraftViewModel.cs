@@ -293,7 +293,7 @@ public class ArenaPreDraftViewModel : ViewModel
 
 	public string? Username { get => GetProp<string?>(null); set => SetProp(value); }
 
-	private bool _isUpdatingAccount;
+	private Task? _accountUpdateTask;
 	public async Task Update()
 	{
 		if(DraftState is DraftState.PreDraft or DraftState.MidDraft && !_updatingAvailability)
@@ -309,28 +309,27 @@ public class ArenaPreDraftViewModel : ViewModel
 			}
 		}
 
-		if(_isUpdatingAccount)
-		{
-			// AccountDataUpdated event was likely triggered by the
-			// UpdateAccountData request below. Skip this update.
-			return;
-		}
-
 		var ownsPremium = false;
 		if(HSReplayNetOAuth.IsFullyAuthenticated && HSReplayNetOAuth.AccountData != null)
 		{
 			if(UserState == UserState.Loading)
 			{
-				// This will fire a HSReplayNetOAuth.AccountDataUpdated event. We
-				// set a flag for the duration of the update check to avoid
-				// infinite recursion here.
-				_isUpdatingAccount = true;
-				// (Unrelativ to the event) If we want to cut down the request
-				// volume here in the future we can only make this request for
-				// tier7 subscribers (still need to happen right here, not below to
-				// handle the case where tier7 ran out).
-				await HSReplayNetOAuth.UpdateAccountData();
-				_isUpdatingAccount = false;
+				// UpdateAccountData fires HSReplayNetOAuth.AccountDataUpdated,
+				// whose handler calls Update() again. Storing the in-flight task
+				// lets that reentrant call (and any concurrent caller) await the
+				// same request instead of starting a new one or being dropped.
+				// If we want to cut down the request volume here in the future we
+				// can only make this request for Premium subscribers (still needs
+				// to happen right here, not below, to handle the case where
+				// Premium ran out).
+				try
+				{
+					await (_accountUpdateTask ??= HSReplayNetOAuth.UpdateAccountData());
+				}
+				finally
+				{
+					_accountUpdateTask = null;
+				}
 			}
 
 			IsAuthenticated = true;
