@@ -1,3 +1,7 @@
+# Unreleased
+**Battlegrounds**
+- Fixed some cards showing a star icon in the minion browser.
+
 ## **Release v1.53.4 - 2026-07-02**
 **General**
 - Fixed the overlay not starting up properly for some users.

@@ -212,7 +212,7 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 
 	public bool IsCountVisible => IsCountTextVisible || IsLegendaryIconVisible;
 	public bool IsCountTextVisible => !IsLegendaryIconVisible && Count > 1;
-	public bool IsLegendaryIconVisible => Count == 1 && (Card.Rarity == Rarity.LEGENDARY || (Card.Rarity == Rarity.INVALID && Card.GetTag(GameTag.ELITE) > 0));
+	public bool IsLegendaryIconVisible => !Card.BaconCard && Count == 1 && (Card.Rarity == Rarity.LEGENDARY || (Card.Rarity == Rarity.INVALID && Card.GetTag(GameTag.ELITE) > 0));
 	public bool IsCostVisible => !Card.BaconCard;
 	public bool IsDarkened => Count == 0 || Card.Jousted;
 
