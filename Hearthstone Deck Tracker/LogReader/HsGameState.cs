@@ -71,6 +71,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			LastCardPlayed = 0;
 			LastEntityChosenOnDiscover = 0;
 			LastPlayBlockTime = null;
+			BeatrixCardIds.Clear();
+			BeatrixCopiedCard = null;
 		}
 
 		public void SetCurrentEntity(int id)
@@ -106,6 +108,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool IsInsideMetaDataHistoryTarget { get; set; }
 
 		public DateTime? LastPlayBlockTime { get; set; }
+		public HashSet<int> BeatrixCardIds { get; } = new();
+		public string? BeatrixCopiedCard { get; set; }
 
 	}
 

@@ -1,3 +1,14 @@
+## **Release v1.53.4 - 2026-07-02**
+**General**
+- Fixed the overlay not starting up properly for some users.
+
+**Hearthstone**
+- Added support to Commander Beatrix.
+
+## **Release v1.53.3 - 2026-07-01**
+**Hearthstone**
+- Fixed Animal Companion Counter not updating.
+
 ## **Release v1.53.2 - 2026-07-01**
 **Battlegrounds**
 - Fixed the session widget not showing per-match MMR gain/loss.

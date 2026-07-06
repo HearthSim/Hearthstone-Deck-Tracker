@@ -188,6 +188,7 @@ Resources/Tiles/
 /lib/msvcp140.dll
 /lib/ucrtbase.dll
 /lib/vcruntime140.dll
+/lib/vcruntime140_1.dll
 
 # Rider config files
 .idea/
