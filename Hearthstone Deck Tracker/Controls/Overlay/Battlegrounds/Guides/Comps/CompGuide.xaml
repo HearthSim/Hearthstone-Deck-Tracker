@@ -139,7 +139,7 @@
                             <Setter Property="Foreground" Value="White" />
                             <Setter Property="Opacity" Value="0.6" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Border}}" Value="True">
+                                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=battlegrounds:OverlayButton}}" Value="True">
                                     <Setter Property="Opacity" Value="1" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -305,7 +305,7 @@
                                                     <Style TargetType="tier7:Tier7Logo">
                                                         <Setter Property="LogoBrush" Value="Black" />
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Border}}" Value="False">
+                                                            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=battlegrounds:OverlayButton}}" Value="False">
                                                                 <Setter Property="LogoBrush">
                                                                     <Setter.Value>
                                                                         <SolidColorBrush Color="#FFFFFF" Opacity="0.3" />
@@ -326,7 +326,7 @@
                                                     <Style TargetType="TextBlock">
                                                         <Setter Property="Foreground" Value="{StaticResource Tier7YellowButtonForeground}" />
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Border}}" Value="False">
+                                                            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=battlegrounds:OverlayButton}}" Value="False">
                                                                 <Setter Property="Foreground">
                                                                     <Setter.Value>
                                                                         <SolidColorBrush Color="#FFFFFF" Opacity="0.2" />
