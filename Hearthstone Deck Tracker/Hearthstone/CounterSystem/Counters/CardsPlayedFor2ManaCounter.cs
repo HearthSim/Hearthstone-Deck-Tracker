@@ -60,10 +60,7 @@ public class CardsPlayedFor2ManaCounter: NumericCounter
 
 		var playedCard = new Card(gameState.CurrentBlock.CardId ?? "");
 
-		if(playedCard.TypeEnum != CardType.SPELL &&
-		   playedCard.TypeEnum != CardType.LOCATION &&
-		   playedCard.TypeEnum != CardType.MINION &&
-		   playedCard.TypeEnum != CardType.WEAPON)
+		if(playedCard.TypeEnum == CardType.HERO_POWER)
 			return;
 
 		LastEntityToCount = entity;
