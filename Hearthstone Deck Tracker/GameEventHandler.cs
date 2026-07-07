@@ -1552,10 +1552,15 @@ namespace Hearthstone_Deck_Tracker
 						if(chosen.Count == 1)
 						{
 							var hero = chosen.Single();
+							var heroPowers = new List<string>();
 							var heroPower = Database.GetCardFromDbfId(hero.GetTag(GameTag.HERO_POWER), collectible: false)
 								?.Id;
 							if(heroPower is string hp)
-								Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(new List<string>() { hp });
+								heroPowers.Add(hp);
+							var additionalHeroPowerId = hero.GetTag(GameTag.ADDITIONAL_HERO_POWER_ENTITY_1);
+							if(additionalHeroPowerId > 0 && _game.Entities.TryGetValue(additionalHeroPowerId, out var additionalHeroPower))
+								heroPowers.Add(additionalHeroPower.Card.Id);
+							Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(heroPowers);
 						}
 						else
 						{
@@ -1580,8 +1585,9 @@ namespace Hearthstone_Deck_Tracker
 							Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Concat(chosen).Select(x => x.Card.Id));
 							_game.SnapshotChosenTrinket(choice);
 						}
+						// the entity of a chosen hero power is only created after the choice completes, concat the chosen one
 						Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(
-							_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id)
+							_game.Player.Board.Where(x => x.IsHeroPower).Concat(chosen.Where(x => x.IsHeroPower)).Select(x => x.Card.Id)
 						);
 
 						// Quest choice
