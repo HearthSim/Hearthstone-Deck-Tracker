@@ -1,6 +1,12 @@
-## **Unreleased**
+## **Release v1.53.5 - 2026-07-07**
 **General**
 - Fixed the app not properly working on Windows 7.
+
+**Hearthstone**
+- Added Counter for Cards played for 2 Mana (Jade Guardians)
+- Added Void Soul Counter
+- Added Active Effect for Jilhouse Manastorm
+- Fixed Animal Companion Counter not appearing for the opponent.
 
 **Battlegrounds**
 - The minion browser now shows Tavern Tier 7 automatically in more cases.
