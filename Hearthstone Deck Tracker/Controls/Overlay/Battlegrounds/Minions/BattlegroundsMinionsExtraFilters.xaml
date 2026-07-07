@@ -105,7 +105,7 @@
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding Active}" Value="True"/>
-                                                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Border}}" Value="True"/>
+                                                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=battlegrounds:OverlayButton}}" Value="True"/>
                                                     </MultiDataTrigger.Conditions>
                                                     <Setter Property="Opacity" Value="0.3"/>
                                                 </MultiDataTrigger>

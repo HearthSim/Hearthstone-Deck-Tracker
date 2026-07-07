@@ -14,7 +14,7 @@
                     <Style TargetType="Rectangle">
                         <Setter Property="Opacity" Value="0.2" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Border}}" Value="True">
+                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=battlegrounds:OverlayButton}}" Value="True">
                                 <Setter Property="Opacity" Value="0.4" />
                             </DataTrigger>
                         </Style.Triggers>
