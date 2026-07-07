@@ -28,15 +28,10 @@ public class CardsPlayedFor2ManaCounter: NumericCounter
 
 	public override string[] GetCardsToDisplay()
 	{
-		return GetCardsInDeckOrKnown(RelatedCards).ToArray();
+		return RelatedCards;
 	}
 
 	public override string ValueToShow() => Counter.ToString();
-
-	private CardType[] CardTypges => new CardType[]
-	{
-		CardType.SPELL, CardType.LOCATION, CardType.MINION, CardType.WEAPON
-	};
 
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
 	{
