@@ -1,4 +1,7 @@
 ## **Unreleased**
+**General**
+- Fixed the app not properly working on Windows 7.
+
 **Battlegrounds**
 - Fixed some cards showing a star icon in the minion browser.
 - Fixed the hero guide sometimes not showing for the picked hero.
