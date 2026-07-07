@@ -22,6 +22,14 @@
     <UserControl.Resources>
         <utility:ConfigWrapper x:Key="ConfigWrapper"/>
         <CubicEase x:Key="Ease" EasingMode="EaseOut"/>
+        <Style x:Key="SecondaryButtonStyle" TargetType="Border">
+            <Setter Property="Background" Value="#4A5256"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#5A6266"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <!-- Tavern Markers Panel -->
@@ -264,14 +272,7 @@
                                             Cursor="Hand"
                                             Click="BtnGotIt_Click">
                                             <Border.Style>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="Background" Value="#4A5256"/>
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="#5A6266"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
+                                                <Style TargetType="Border" BasedOn="{StaticResource SecondaryButtonStyle}" />
                                             </Border.Style>
                                             <hearthstoneDeckTracker:HearthstoneTextBlock
                                                 Text="{lex:Loc BattlegroundsTavernPinning_GotIt}"
@@ -651,14 +652,7 @@
                                                     Cursor="Hand"
                                                     Click="BtnCompGuidesMarkerGotIt_Click">
                                                     <Border.Style>
-                                                        <Style TargetType="Border">
-                                                            <Setter Property="Background" Value="#4A5256"/>
-                                                            <Style.Triggers>
-                                                                <Trigger Property="IsMouseOver" Value="True">
-                                                                    <Setter Property="Background" Value="#5A6266"/>
-                                                                </Trigger>
-                                                            </Style.Triggers>
-                                                        </Style>
+                                                        <Style TargetType="Border" BasedOn="{StaticResource SecondaryButtonStyle}" />
                                                     </Border.Style>
                                                     <hearthstoneDeckTracker:HearthstoneTextBlock
                                                         Text="{lex:Loc BattlegroundsTavernPinning_GotIt}"
@@ -716,14 +710,7 @@
                                                         Cursor="Hand"
                                                         Click="BtnAutoEnableNo_Click">
                                                         <Border.Style>
-                                                            <Style TargetType="Border">
-                                                                <Setter Property="Background" Value="#4A5256"/>
-                                                                <Style.Triggers>
-                                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                                        <Setter Property="Background" Value="#5A6266"/>
-                                                                    </Trigger>
-                                                                </Style.Triggers>
-                                                            </Style>
+                                                            <Style TargetType="Border" BasedOn="{StaticResource SecondaryButtonStyle}" />
                                                         </Border.Style>
                                                         <hearthstoneDeckTracker:HearthstoneTextBlock
                                                             Text="NO"
