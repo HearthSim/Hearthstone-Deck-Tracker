@@ -1,3 +1,7 @@
+## Unreleased
+**General**:
+- Fixed an issue that could cause card images to not load.
+
 ## **Release v1.54.1 - 2026-07-30**
 **Hearthstone**:
 - Added an option to show the order cards entered the board, numbering each minion and weapon.\

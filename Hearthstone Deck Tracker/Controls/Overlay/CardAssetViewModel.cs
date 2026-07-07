@@ -20,26 +20,32 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Card = card;
 			CardAssetType = type;
 			_assetDownloader = AssetDownloaders.GetCardAssetDownloader(type);
-			if(card != null)
-				Asset = _assetDownloader?.TryGetAssetData(card);
 
-			if(Asset == null)
+			var cached = card != null ? _assetDownloader?.TryGetAssetData(card) : null;
+			if(cached != null)
 			{
-				if(card != null && type == CardAssetType.FullImage)
-				{
-					Asset = Application.Current.TryFindResource(card.TypeEnum switch
-					{
-						CardType.HERO => "LoadingHero",
-						CardType.MINION => "LoadingMinion",
-						CardType.WEAPON => "LoadingWeapon",
-						_ => "LoadingSpell",
-					}) as ImageSource;
-				}
-				else if(card != null && type == CardAssetType.Hero)
-					Asset = Application.Current.TryFindResource("LoadingHeroFrame") as ImageSource;
-				else
-					Asset = _assetDownloader?.PlaceholderAsset;
+				_resolved = true;
+				Asset = cached;
 			}
+			else
+				Asset = Placeholder(card, type);
+		}
+
+		private ImageSource? Placeholder(Hearthstone.Card? card, CardAssetType type)
+		{
+			if(card != null && type == CardAssetType.FullImage)
+			{
+				return Application.Current.TryFindResource(card.TypeEnum switch
+				{
+					CardType.HERO => "LoadingHero",
+					CardType.MINION => "LoadingMinion",
+					CardType.WEAPON => "LoadingWeapon",
+					_ => "LoadingSpell",
+				}) as ImageSource;
+			}
+			if(card != null && type == CardAssetType.Hero)
+				return Application.Current.TryFindResource("LoadingHeroFrame") as ImageSource;
+			return _assetDownloader?.PlaceholderAsset;
 		}
 
 		public ImageSource? Asset
@@ -48,24 +54,36 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{
 				if(Card == null)
 					return null;
-				var value =  GetProp<ImageSource?>(null);
-				if(value == null)
+				// Asset holds a placeholder until the real asset resolves, so gate loading on
+				// _resolved rather than on the stored value. This keeps retrying on a transient
+				// failure instead of leaving the placeholder up permanently.
+				if(!_resolved)
 					LoadAsset().Forget();
-				return value;
+				return GetProp<ImageSource?>(null);
 			}
 			private set => SetProp(value);
 		}
 
+		private bool _resolved;
 		private bool _loading;
 		private async Task LoadAsset()
 		{
-			if(_loading || Card == null || _assetDownloader == null)
+			if(_loading || _resolved || Card == null || _assetDownloader == null)
 				return;
 			_loading = true;
-			var asset = await _assetDownloader.GetAssetData(Card);
-			if(asset != null)
-				Asset = asset;
-			_loading = false;
+			try
+			{
+				var asset = await _assetDownloader.GetAssetData(Card);
+				if(asset != null)
+				{
+					_resolved = true;
+					Asset = asset;
+				}
+			}
+			finally
+			{
+				_loading = false;
+			}
 		}
 	}
 }

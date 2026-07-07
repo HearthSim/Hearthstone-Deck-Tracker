@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker;
@@ -72,6 +73,46 @@ namespace HDTTests.ImageDownloading
 			// to load from disk
 			var asset2 = assetDownloader2.TryGetAssetData(ValidCardId);
 			Assert.IsNotNull(asset2);
+
+			Directory.Delete(path, true);
+		}
+
+		// A file can end up on disk without a matching cache-index entry: eviction removes the index
+		// entry (and attempts to delete the file, which can fail while the image is in use), or the
+		// LRU index is trimmed to its cap on load. Such a file must still be served rather than
+		// treated as missing (which would show the Faceless placeholder and never recover).
+		[TestMethod]
+		public void TryGetAssetData_FileOnDiskWithoutCacheEntry_ServesFromDisk()
+		{
+			var path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+			Directory.CreateDirectory(path);
+			File.WriteAllText(Path.Combine(path, "FOO.txt"), "hello");
+
+			var assetDownloader = new AssetDownloader<string, string>(
+				path, key => $"http://127.0.0.1:1/{key}", key => $"{key}.txt", bytes => Encoding.UTF8.GetString(bytes));
+
+			var data = assetDownloader.TryGetAssetData("FOO");
+
+			Assert.AreEqual("hello", data);
+
+			Directory.Delete(path, true);
+		}
+
+		[TestMethod]
+		public async Task GetAssetData_FileOnDiskWithoutCacheEntry_ServesFromDiskWithoutDownloading()
+		{
+			var path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+			Directory.CreateDirectory(path);
+			File.WriteAllText(Path.Combine(path, "FOO.txt"), "hello");
+
+			// The url points at a closed port: if this ever tries to download instead of reading the
+			// existing file, it returns null and the assert fails.
+			var assetDownloader = new AssetDownloader<string, string>(
+				path, key => $"http://127.0.0.1:1/{key}", key => $"{key}.txt", bytes => Encoding.UTF8.GetString(bytes));
+
+			var data = await assetDownloader.GetAssetData("FOO");
+
+			Assert.AreEqual("hello", data);
 
 			Directory.Delete(path, true);
 		}

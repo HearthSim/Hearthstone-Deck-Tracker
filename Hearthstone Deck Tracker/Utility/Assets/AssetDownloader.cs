@@ -189,7 +189,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			{
 				if(_lruCache.Count <= _maxCacheSize)
 					return;
-				var items = _lruCache.Where(x => !_alwaysKeepCached.Contains(x.File)).ToList();
+				// never evict (and delete the file of) an asset whose download is still in flight
+				var items = _lruCache.Where(x => !_alwaysKeepCached.Contains(x.File) && !_inProgressDownloads.ContainsKey(x.File)).ToList();
 				if(items.Count > _maxCacheSize)
 					items.GetRange((int)_maxCacheSize.Value, items.Count - (int)_maxCacheSize.Value).ForEach(TryDeleteFile);
 
@@ -321,11 +322,26 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			var filename = _getFilename(obj);
 			if(!_lruLookup.TryGetValue(filename, out var entry))
 			{
-				var success = await DownloadAsset(obj);
-				if(!success)
-					return default;
-				if(!_lruLookup.TryGetValue(filename, out entry))
-					return default;
+				// Prefer a file already on disk (evicted index or orphan) over re-downloading it
+				entry = TryAdoptFromDisk(obj);
+				if(entry == null)
+				{
+					var success = await DownloadAsset(obj);
+					if(!success)
+						return default;
+					if(!_lruLookup.TryGetValue(filename, out entry))
+					{
+						// The entry was evicted between download and use. Recover from disk if the
+						// file survived, otherwise we would silently return null and the caller would
+						// be stuck on a placeholder with no indication of what went wrong.
+						entry = TryAdoptFromDisk(obj);
+						if(entry == null)
+						{
+							Log.Error($"Downloaded {filename} but its cache entry was evicted before use");
+							return default;
+						}
+					}
+				}
 			}
 
 			if(!entry.Validated)
@@ -355,7 +371,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		public U? TryGetAssetData(T obj, bool validate = true)
 		{
 			if(!_lruLookup.TryGetValue(_getFilename(obj), out var entry))
-				return default;
+			{
+				// The file can be on disk without an index entry (evicted index, or a delete that
+				// failed while the asset was in use). Serve it rather than treating it as missing.
+				entry = TryAdoptFromDisk(obj);
+				if(entry == null)
+					return default;
+			}
 			if(entry.Data == null)
 			{
 				// This will populate entry.Data
@@ -383,6 +405,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			_lruCache.Insert(0, entry);
 			_lruLookup[filename] = entry;
 			return entry;
+		}
+
+		// adopt a file that exists on disk but has no index entry, loading its data
+		private LRUCache<U>.Entry? TryAdoptFromDisk(T obj)
+		{
+			var filename = _getFilename(obj);
+			if(!File.Exists(Path.Combine(_storageDestination, filename)))
+				return null;
+			if(!_lruLookup.ContainsKey(filename))
+				CreateEmptyAssetEntry(obj); // unvalidated, so it revalidates against the server
+			return LoadAssetFromDiskSync(obj);
 		}
 
 		private LRUCache<U>.Entry? LoadAssetFromDiskSync(T obj)
