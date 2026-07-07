@@ -274,10 +274,10 @@
                                             <Border.Style>
                                                 <Style TargetType="Border" BasedOn="{StaticResource SecondaryButtonStyle}" />
                                             </Border.Style>
-                                            <hearthstoneDeckTracker:HearthstoneTextBlock
+                                            <TextBlock
                                                 Text="{lex:Loc BattlegroundsTavernPinning_GotIt}"
                                                 FontWeight="SemiBold"
-                                                Fill="White"
+                                                Foreground="White"
                                                 FontSize="11"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center" />
@@ -654,10 +654,10 @@
                                                     <Border.Style>
                                                         <Style TargetType="Border" BasedOn="{StaticResource SecondaryButtonStyle}" />
                                                     </Border.Style>
-                                                    <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                    <TextBlock
                                                         Text="{lex:Loc BattlegroundsTavernPinning_GotIt}"
                                                         FontWeight="SemiBold"
-                                                        Fill="White"
+                                                        Foreground="White"
                                                         FontSize="11"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center" />
@@ -712,10 +712,10 @@
                                                         <Border.Style>
                                                             <Style TargetType="Border" BasedOn="{StaticResource SecondaryButtonStyle}" />
                                                         </Border.Style>
-                                                        <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                        <TextBlock
                                                             Text="NO"
                                                             FontWeight="Bold"
-                                                            Fill="White"
+                                                            Foreground="White"
                                                             FontSize="10"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center" />
@@ -735,10 +735,10 @@
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </Border.Style>
-                                                        <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                        <TextBlock
                                                             Text="YES"
                                                             FontWeight="SemiBold"
-                                                            Fill="White"
+                                                            Foreground="White"
                                                             FontSize="10"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center" />
