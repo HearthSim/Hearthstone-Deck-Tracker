@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using Newtonsoft.Json;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action;
 using Newtonsoft.Json.Linq;
 using NuGet;
 
@@ -21,6 +22,22 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		public void TestInitialize()
 		{
 			Config.Instance.ResetAll();
+			VMAction.Environment = new FakeVMActionEnvironment();
+		}
+
+		[TestCleanup]
+		public void TestCleanup()
+		{
+			VMAction.Environment = new VMActionEnvironment();
+		}
+
+		private class FakeVMActionEnvironment : IVMActionEnvironment
+		{
+			public bool IsAuthenticated => false;
+			public int ScreenHeight => 1080;
+			public int ScreenWidth => 1920;
+			public string OsArch => "x64";
+			public string OsVersion => "Windows 11";
 		}
 
 		[TestMethod]
@@ -67,8 +84,13 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "action_name", "end_match" },
 				{ "domain", "hsreplay.net" },
 				{ "franchise", new [] { "HS-Constructed" } },
+				{ "is_authenticated", false },
+				{ "screen_height", 1080 },
+				{ "screen_width", 1920 },
 				{ "card_language", "enUS" },
 				{ "appearance_language", "enUS" },
+				{ "os_arch", "x64" },
+				{ "os_version", "Windows 11" },
 				{ "hdt_plugins", new string[]{ } },
 				{ "hdt_general_settings_enabled", new []{
 					"upload_my_collection_automatically",
@@ -107,12 +129,6 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			};
 
 			var mixpanelPayload = JObject.Parse(JsonConvert.SerializeObject(action));
-			// Remove some properties to avoid issues when running tests on CI
-			mixpanelPayload.Remove("is_authenticated");
-			mixpanelPayload.Remove("screen_height");
-			mixpanelPayload.Remove("screen_width");
-			mixpanelPayload.Remove("os_arch");
-			mixpanelPayload.Remove("os_version");
 
 			Assert.AreEqual(
 				$"{JsonConvert.SerializeObject(expectedDict)}",
