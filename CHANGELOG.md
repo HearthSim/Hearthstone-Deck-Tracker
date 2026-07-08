@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**
+- Fixed rare crash when editing game notes.
+
 ## **Release v1.53.5 - 2026-07-07**
 **General**
 - Fixed the app not properly working on Windows 7.
