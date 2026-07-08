@@ -120,6 +120,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						break;
 					case HEALTH:
 						HealthChange(gameState, id, game, value, prevValue);
+						DrBoomsMonsterRebornHealth(id, value, game);
 						break;
 					case MAXRESOURCES:
 						MaxResourcesChange(gameState, id, game, value, prevValue);
@@ -262,6 +263,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(value != 1)
 				return;
+		}
+
+		private void DrBoomsMonsterRebornHealth(int id, int value, IGame game)
+		{
+			if(!BobsBuddyInvoker.CurrentCombatHasDrBoomsMonster || game.CurrentGameStats == null)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			if(entity.CardId != NonCollectible.Neutral.DrBoomsMonster
+				&& entity.CardId != NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1)
+				return;
+			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+				?.UpdateDrBoomsMonsterReborn(entity.GetTag(CREATOR), value, entity.IsControlledBy(game.Player.Id));
 		}
 
 		private void OnTagScriptDataNum1(int id, int value, IGame game, IHsGameState gameState)
