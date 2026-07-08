@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("skipped_splashscreen", skippedSplashscreen)
 				.Tag("forced_software_rendering", forceSoftwareRendering)
 				.Tag("os_arch", RuntimeInformation.OSArchitecture.ToString().ToLower())
+				.Tag("os_version", Helper.GetWindowsMajorVersionName())
 				.Field("num_plugins", numPlugins)
 				.Field("startup_duration", startupDuration);
 #if(SQUIRREL)

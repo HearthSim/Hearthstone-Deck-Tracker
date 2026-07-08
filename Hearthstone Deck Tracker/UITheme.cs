@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker
 		public static async Task InitializeTheme()
 		{
 			UpdateIconColors();
-			if(Helper.IsWindows8() || Helper.IsWindows10())
+			if(Helper.GetWindowsMajorVersion() >= 8)
 				await CreateWindowsAccentStyle();
 			else if(Config.Instance.AccentName == WindowAccentName)
 			{

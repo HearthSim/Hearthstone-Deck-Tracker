@@ -112,6 +112,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			mixpanelPayload.Remove("screen_height");
 			mixpanelPayload.Remove("screen_width");
 			mixpanelPayload.Remove("os_arch");
+			mixpanelPayload.Remove("os_version");
 
 			Assert.AreEqual(
 				$"{JsonConvert.SerializeObject(expectedDict)}",

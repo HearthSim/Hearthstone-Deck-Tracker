@@ -468,30 +468,40 @@ namespace Hearthstone_Deck_Tracker
 			return (T)(object)parent;
 		}
 
-		public static bool IsWindows10()
+		public static string GetWindowsMajorVersionName()
+		{
+			var version = GetWindowsMajorVersion();
+			return version == 0 ? "Unknown" : $"Windows {version}";
+		}
+
+		// returns the Windows major version (7, 8, 10, 11) or 0 if it cannot be determined
+		public static int GetWindowsMajorVersion()
 		{
 			try
 			{
 				var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
-				return reg != null && ((string)reg.GetValue("ProductName")).Contains("Windows 10");
+				if(reg == null)
+					return 0;
+				var productName = reg.GetValue("ProductName") as string ?? "";
+				if(productName.Contains("Windows 11"))
+					return 11;
+				if(productName.Contains("Windows 10"))
+				{
+					// ProductName still reports "Windows 10" on Windows 11, distinguish by build
+					if(int.TryParse(reg.GetValue("CurrentBuild") as string, out var build) && build >= 22000)
+						return 11;
+					return 10;
+				}
+				if(productName.Contains("Windows 8"))
+					return 8;
+				if(productName.Contains("Windows 7"))
+					return 7;
+				return 0;
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				return false;
-			}
-		}
-		public static bool IsWindows8()
-		{
-			try
-			{
-				var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
-				return reg != null && ((string)reg.GetValue("ProductName")).Contains("Windows 8");
-			}
-			catch (Exception ex)
-			{
-				Log.Error(ex);
-				return false;
+				return 0;
 			}
 		}
 

@@ -103,6 +103,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("os_arch")]
 		public string OsArch => RuntimeInformation.OSArchitecture.ToString().ToLower();
 
+		[JsonProperty("os_version")]
+		public string OsVersion => Helper.GetWindowsMajorVersionName();
+
 		[JsonProperty("hdt_plugins")]
 		public string?[] HDTPlugins => PluginManager.Instance.Plugins.Where(x => x.IsEnabled).Select(x => x.Name).ToArray();
 
