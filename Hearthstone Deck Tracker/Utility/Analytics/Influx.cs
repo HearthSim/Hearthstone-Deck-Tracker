@@ -18,6 +18,8 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Utility.Analytics
 {
+	// new measurement names must also be whitelisted server-side,
+	// otherwise they are silently dropped
 	internal class Influx
 	{
 		private static DateTime _appStartTime;
