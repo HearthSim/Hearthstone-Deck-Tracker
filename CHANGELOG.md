@@ -1,5 +1,7 @@
 ## **Unreleased**
 **Hearthstone**
+- Added support to Azalina Soulsever decks.
+- Fixed Mulligan G-V2 not working for Commander Beatrix decks.
 - Changed Aessina counter to display when Malorne is in the deck and 10 or more minions had died.
 - Fixed Abyssal Curse counter not updating.
 - Fixed rare crash when editing game notes.
