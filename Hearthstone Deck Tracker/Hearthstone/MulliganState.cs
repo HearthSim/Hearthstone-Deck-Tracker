@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -21,7 +22,7 @@ internal class MulliganState
 
 	public List<Entity> SnapshotMulligan()
 	{
-		OfferedCards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).OrderBy(x => x.ZonePosition).ToList();
+		OfferedCards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.HasTag(GameTag.COIN_CARD)).OrderBy(x => x.ZonePosition).ToList();
 		return OfferedCards;
 	}
 
@@ -36,7 +37,7 @@ internal class MulliganState
 
 	public List<Entity> SnapshotOpeningHand()
 	{
-		FinalCardsInHand = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).OrderBy(x => x.ZonePosition).ToList();
+		FinalCardsInHand = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.HasTag(GameTag.COIN_CARD)).OrderBy(x => x.ZonePosition).ToList();
 		return FinalCardsInHand;
 	}
 }
