@@ -789,7 +789,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateOpponentHand(Entity entity, Entity copy)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			_opponentHandMap[entity] = copy;
@@ -824,7 +824,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateLockAndLoadHeroPower(Entity attachedEntity, bool isOpponent)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			var tryDuos = _game.IsBattlegroundsDuosMatch;
@@ -848,7 +848,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateDuosLockAndLoadHeroPower(int cardDbfid)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			var tavishLockAndLoad = _input.Player.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
@@ -870,7 +870,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateBackToBackSpellBonus(Entity backToBackEnchantmentEntity, bool isOpponent)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			if(isOpponent){
@@ -898,7 +898,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateSandyTransformDuos(Entity attachedEntity, int sandyEntityId)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			var friendly = true;
@@ -924,7 +924,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateFlobbidinousFloopTransformDuos(Entity attachedEntity)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			var friendly = true;
@@ -948,7 +948,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateSummoningSphereDuos(Entity attachedEntity, int trinketEntityId)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			var friendly = true;
@@ -974,7 +974,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateMinionEnchantment(Entity enchantmentEntity, int attachedToEntityId, bool isPlayerMinion)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
@@ -1000,7 +1000,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateDrBoomsMonsterReborn(int sourceEntityId, int rebornMaxHealth, bool isPlayerMinion)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			// We need to know the magnetized count when a Dr. Boom's Monster is reborn
@@ -1023,7 +1023,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		}
 
 		internal async void UpdateTimewarpedMagnanimoose(List<Entity> summonedEntities, int magnanimooseEntityId, bool isPlayerMinion)		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
@@ -1046,7 +1046,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateNelliesShipEnchantment(int[] cardDbfids, int attachedToEntityId, bool isPlayerMinion)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
 				return;
 
 			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
