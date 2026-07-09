@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using HearthMirror;
 using HearthMirror.Enums;
+using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
@@ -151,6 +152,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			else if(logLine.Line.Contains("MulliganManager.HandleGameStart") && logLine.Line.Contains("IsPastBeginPhase()=True"))
 			{
+				// Notify BobsBuddy of the reconnect. Must also run when ChinaModule active.
+				// Prevents incorrect CombatResult.Tie terminals from firing.
+				BobsBuddyInvoker.OnGameReconnect();
 				if(Core.Game.IsChinaModuleActive)
 					return;
 				gameState.GameHandler?.HandleGameReconnect(logLine.Time);

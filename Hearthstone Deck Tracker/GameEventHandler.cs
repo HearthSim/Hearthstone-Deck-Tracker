@@ -696,10 +696,6 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			_lastReconnectStartTimestamp = timestamp;
 
-			// Let Bob's Buddy know a reconnect happened, so a combat in progress is not validated
-			// against a log that is missing its outcome events.
-			BobsBuddyInvoker.OnGameReconnect();
-
 			for(var i = 0; i < 20 && (_game.GameEntity is null || _game.CurrentMode != Mode.GAMEPLAY); i++)
 				await Task.Delay(500);
 
