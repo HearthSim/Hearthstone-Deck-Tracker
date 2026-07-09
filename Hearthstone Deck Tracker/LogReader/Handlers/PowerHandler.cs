@@ -1457,6 +1457,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Demonhunter.VoidBlast:
 								AddKnownCardId(gameState, Collectible.Demonhunter.VoidSoul);
 								break;
+							case Collectible.Neutral.WizenedTruthseeker:
+								if(actionStartingEntity != null)
+									if(actionStartingEntity.IsControlledBy(game.Player.Id))
+										gameState.GameHandler?.HandleOpponentHandCostReduction(1);
+								break;
 							case NonCollectible.Warrior.EntertheLostCity_LatorviusGazeOfTheCityToken:
 								if(actionStartingEntity?.IsControlledBy(game.Opponent.Id) == true)
 								{

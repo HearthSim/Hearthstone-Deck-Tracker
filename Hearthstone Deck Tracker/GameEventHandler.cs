@@ -2836,6 +2836,12 @@ namespace Hearthstone_Deck_Tracker
 				card.Info.CostReduction += value;
 		}
 
+		void ResetOpponentHandCostReduction()
+		{
+			foreach(var card in _game.Opponent.Hand)
+				card.Info.CostReduction = 0;
+		}
+
 		void HandlePlayerAbyssalCurse(int value) => _game.Player.UpdateAbyssalCurse(value);
 		void HandleOpponentAbyssalCurse(int value) => _game.Opponent.UpdateAbyssalCurse(value);
 
@@ -2924,6 +2930,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentLibramReduction(int value) => HandleOpponentLibramReduction(value);
 		void IGameHandler.HandlePlayerHandCostReduction(int value) => HandlePlayerHandCostReduction(value);
 		void IGameHandler.HandleOpponentHandCostReduction(int value) => HandleOpponentHandCostReduction(value);
+		void IGameHandler.ResetOpponentHandCostReduction() => ResetOpponentHandCostReduction();
 		void IGameHandler.HandleMercenariesStateChange() => HandleMercenariesStateChange();
 		void IGameHandler.HandlePlayerDredge() => HandlePlayerDredge();
 		void IGameHandler.HandlePlayerUnknownCardAddedToDeck() => HandlePlayerUnknownCardAddedToDeck();
