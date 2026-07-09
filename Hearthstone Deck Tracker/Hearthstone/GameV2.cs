@@ -593,11 +593,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		// Azalina Soulsever locks the deck to 20 cards. The Mulligan Guide API expects a
+		// full 30-card list, so Azalina decks are padded with 10 unknown-card tokens.
+		private const int UnknownCardDbfId = -2;
+
+		internal static int[] PadMulliganDeckCards(int[] dbfIds)
+		{
+			var azalinaDbfId = Database.GetCardFromId(HearthDb.CardIds.Collectible.Priest.AzalinaSoulsever)?.DbfId;
+			if(azalinaDbfId is int azalina && dbfIds.Contains(azalina))
+				return dbfIds.Concat(Enumerable.Repeat(UnknownCardDbfId, 10)).ToArray();
+			return dbfIds;
+		}
+
 		private void CacheMulliganV2Params(Deck activeDeck, int[]? dbfIds = null)
 		{
 			try
 			{
-				var playerDeck = activeDeck.Cards.SelectMany(c => Enumerable.Repeat(c.DbfId, c.Count)).ToArray();
+				var playerDeck = PadMulliganDeckCards(activeDeck.Cards.SelectMany(c => Enumerable.Repeat(c.DbfId, c.Count)).ToArray());
 				var opponentClass = Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
 				var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
 				var starsPerWin = PlayerMedalInfo?.StarsPerWin ?? 0;
@@ -662,7 +674,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(activeDeck == null)
 				return null;
 
-			var playerDeck = activeDeck.Cards.SelectMany(c => Enumerable.Repeat(c.DbfId, c.Count)).ToArray();
+			var playerDeck = PadMulliganDeckCards(activeDeck.Cards.SelectMany(c => Enumerable.Repeat(c.DbfId, c.Count)).ToArray());
 			var turns = GetTurnNumber();
 
 			return new MulliganV2FeedbackParams

@@ -175,7 +175,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			}
 		}
 
-		public string CardCount => $"{Deck.Cards.Sum(x => x.Count)} / {(Cards.Any(x => x.Id is HearthDb.CardIds.Collectible.Neutral.PrinceRenathal or HearthDb.CardIds.Collectible.Neutral.PrinceRenathalCorePlaceholder) ? 40 : 30)}";
+		public string CardCount => $"{Deck.Cards.Sum(x => x.Count)} / {TargetCardCount}";
+
+		private int TargetCardCount
+		{
+			get
+			{
+				if(Cards.Any(x => x.Id is HearthDb.CardIds.Collectible.Neutral.PrinceRenathal or HearthDb.CardIds.Collectible.Neutral.PrinceRenathalCorePlaceholder))
+					return 40;
+				if(Cards.Any(x => x.Id == HearthDb.CardIds.Collectible.Priest.AzalinaSoulsever))
+					return 20;
+				return 30;
+			}
+		}
 
 		public CostFilter SelectedCostFilter
 		{
@@ -427,26 +439,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		private void UpdateCardCountWarning()
 		{
 			var count = Cards.Sum(x => x.Count);
-			if(Cards.Any(x => x.Id is HearthDb.CardIds.Collectible.Neutral.PrinceRenathal or HearthDb.CardIds.Collectible.Neutral.PrinceRenathalCorePlaceholder))
-			{
-				Warnings &= ~(DeckEditorWarnings.LessThan30Cards | DeckEditorWarnings.MoreThan30Cards);
-				if(count == 40)
-					Warnings &= ~(DeckEditorWarnings.LessThan40Cards | DeckEditorWarnings.MoreThan40Cards);
-				else if(count > 40)
-					Warnings |= DeckEditorWarnings.MoreThan40Cards;
-				else
-					Warnings |= DeckEditorWarnings.LessThan40Cards;
-			}
+			var target = TargetCardCount;
+			Warnings &= ~(DeckEditorWarnings.LessThan20Cards | DeckEditorWarnings.MoreThan20Cards
+				| DeckEditorWarnings.LessThan30Cards | DeckEditorWarnings.MoreThan30Cards
+				| DeckEditorWarnings.LessThan40Cards | DeckEditorWarnings.MoreThan40Cards);
+			if(count == target)
+				return;
+			if(target == 40)
+				Warnings |= count > target ? DeckEditorWarnings.MoreThan40Cards : DeckEditorWarnings.LessThan40Cards;
+			else if(target == 20)
+				Warnings |= count > target ? DeckEditorWarnings.MoreThan20Cards : DeckEditorWarnings.LessThan20Cards;
 			else
-			{
-				Warnings &= ~(DeckEditorWarnings.LessThan40Cards | DeckEditorWarnings.MoreThan40Cards);
-				if(count == 30)
-					Warnings &= ~(DeckEditorWarnings.LessThan30Cards | DeckEditorWarnings.MoreThan30Cards);
-				else if(count > 30)
-					Warnings |= DeckEditorWarnings.MoreThan30Cards;
-				else
-					Warnings |= DeckEditorWarnings.LessThan30Cards;
-			}
+				Warnings |= count > target ? DeckEditorWarnings.MoreThan30Cards : DeckEditorWarnings.LessThan30Cards;
 		}
 
 		private void UpdateTouristWarning()
