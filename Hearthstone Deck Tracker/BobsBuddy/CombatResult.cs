@@ -5,6 +5,7 @@
 		Invalid,
 		Win,
 		Loss,
-		Tie
+		Tie,
+		Reconnect
 	}
 }

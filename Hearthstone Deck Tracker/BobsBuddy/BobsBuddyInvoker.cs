@@ -56,6 +56,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		// detection in TagChangeActions can skip the entity lookup for the (vast majority of) combats without one.
 		internal static bool CurrentCombatHasDrBoomsMonster;
 
+		// Incremented on every detected game reconnect. Each combat snapshot records the current value;
+		// a mismatch at validation time means the reconnect happened after this combat started, so the
+		// absence of the combat's outcome should not be deemed as CombatResult.Tie.
+		private static int _reconnectCounter;
+		internal static void OnGameReconnect() => _reconnectCounter++;
+		private int _reconnectCounterAtSnapshot;
+
 		private int _turn;
 		private Entity? _attackingHero;
 		private Entity? _defendingHero;
@@ -104,6 +111,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			_game = Core.Game;
 			_instanceKey = key;
+			_reconnectCounterAtSnapshot = _reconnectCounter;
 		}
 
 
@@ -683,6 +691,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			DebugLog("Snapshotting board state...");
 			LastAttackingHero = null;
+			_reconnectCounterAtSnapshot = _reconnectCounter;
 			var simulator = new Simulator();
 			var input = new Input();
 
@@ -1324,7 +1333,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private CombatResult GetLastCombatResult()
 		{
 			if(LastAttackingHero == null)
+			{
+				if(_reconnectCounterAtSnapshot != _reconnectCounter)
+					return CombatResult.Reconnect;
 				return CombatResult.Tie;
+			}
 			if(LastAttackingHero.IsControlledBy(_game.Player.Id))
 				return CombatResult.Win;
 			else
