@@ -220,7 +220,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false));
 				return;
 			}
 		}
@@ -353,7 +353,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false));
 				return;
 			}
 		}
@@ -373,7 +373,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			_unsupportedInteractionReported = true;
 
-			var isDuos = _game.IsBattlegroundsDuosMatch;
+			var isDuos = _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false);
 			if(ReportErrors)
 				Sentry.CaptureBobsBuddyException(pending.ex, _input, _turn, isDuos);
 			Influx.OnBobsBuddyUnsupportedInteraction(
@@ -1299,7 +1299,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false));
 				Output = null;
 				return null;
 			}
@@ -1418,7 +1418,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			Influx.OnBobsBuddySimulationCompleted(
 				result, Output, _turn, _game.CurrentRegion.ToString(), _input?.Anomaly, terminalCase,
-				isDuos:_game.IsBattlegroundsDuosMatch, isOpposingAkazamzarak: IsOpposingAkazamzarak(),
+				isDuos:_game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), isOpposingAkazamzarak: IsOpposingAkazamzarak(),
 				isOpposingKelThuzad: (_input?.Opponent?.HeroIsKelThuzad ?? false)
 			);
 
@@ -1457,7 +1457,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_input != null && Output != null)
 				Sentry.QueueBobsBuddyTerminalCase(
 					_input, Output, result, _turn, _game.CurrentRegion,
-					isDuos: _game.IsBattlegroundsDuosMatch, isOpposingAkazamzarak: IsOpposingAkazamzarak()
+					isDuos: _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), isOpposingAkazamzarak: IsOpposingAkazamzarak()
 				);
 		}
 
