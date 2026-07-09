@@ -1,5 +1,7 @@
 ## **Unreleased**
 **Hearthstone**
+- Changed Aessina counter to display when Malorne is in the deck and 10 or more minions had died.
+- Fixed Abyssal Curse counter not updating.
 - Fixed rare crash when editing game notes.
 
 ## **Release v1.53.5 - 2026-07-07**
