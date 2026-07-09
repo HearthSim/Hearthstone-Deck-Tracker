@@ -1,10 +1,24 @@
-## **Unreleased**
+## **Release v1.53.6 - 2026-07-09**
 **Hearthstone**
 - Added support to Azalina Soulsever decks.
 - Fixed Mulligan G-V2 not working for Commander Beatrix decks.
 - Changed Aessina counter to display when Malorne is in the deck and 10 or more minions had died.
 - Fixed Abyssal Curse counter not updating.
 - Fixed rare crash when editing game notes.
+
+**Bob's Buddy**
+- Fixed incorrect simulation results where:
+  - Multiple minions killed by Tunnel Blaster could fail apply a deathrattle tavern spell
+  - Multiple replica cathedrals were triggering more than once per spell
+  - Diremuck Forager was failing to summon a minion added to hand mid-combat
+  - Player attack order was not rechecking when Illidan Wingmen resulted in larger boards from summons
+  - Rokara hero power was not granting stats for some attacks immediately scopes
+  - Minions destroyed by Soul Fermenter were not adhering to deathrattle then reborn order
+  - Ingenious Inventor deathrattle was not being copied properly
+  - Secrets in duos games were triggering for teammates
+  - Lesser/Greater crystal ball was failing to capture charges/state for certain copied trinkets
+- Added simulation support for Dr. Boom's Monster
+- Added Bobs Buddy quality tracking metrics improvements
 
 ## **Release v1.53.5 - 2026-07-07**
 **General**
