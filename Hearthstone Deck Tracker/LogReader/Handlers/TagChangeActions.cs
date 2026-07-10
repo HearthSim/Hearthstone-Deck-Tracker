@@ -1045,7 +1045,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(copiedFrom > 0 && game.Entities.TryGetValue(copiedFrom, out var source) && source.IsInHand && !source.HasCardId)
 						{
 							if(game.CurrentGameStats != null)
-								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateOpponentHand(source, entity);
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateCardOpponentHand(source, entity);
 						}
 					}
 					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);

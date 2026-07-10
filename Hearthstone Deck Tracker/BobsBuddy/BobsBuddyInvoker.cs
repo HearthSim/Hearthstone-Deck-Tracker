@@ -143,6 +143,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 		}
 
+		// BobsBuddy states during which a revealed card can be added to simulator input
+		private bool UpdateRevealedEntityValidStates => State is BobsBuddyState.Initial or BobsBuddyState.Combat or BobsBuddyState.CombatPartial;
+
 		public bool ShouldRun()
 		{
 			if(!Config.Instance.RunBobsBuddy)
@@ -767,6 +770,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private Task TryRerun()
 		{
+			if(State == BobsBuddyState.Initial)
+				// For duos, revealed cards can happen during BobsBuddyState.Initial since the entire first
+				// fight parses before any state is assigned. The upcoming partial/full simulator run will have
+				// this updated input, so there is no need to continue with TryRerun()
+				return Task.CompletedTask;
 			if(_reRunCount++ <= 10)
 			{
 				DebugLog($"Input changed, re-running simulation! (#{_reRunCount})");
@@ -787,9 +795,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return Task.CompletedTask;
 		}
 
-		internal async void UpdateOpponentHand(Entity entity, Entity copy)
+		internal async void UpdateCardOpponentHand(Entity entity, Entity copy)
 		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			_opponentHandMap[entity] = copy;
@@ -824,7 +832,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateLockAndLoadHeroPower(Entity attachedEntity, bool isOpponent)
 		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var tryDuos = _game.IsBattlegroundsDuosMatch;
@@ -848,7 +856,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateDuosLockAndLoadHeroPower(int cardDbfid)
 		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var tavishLockAndLoad = _input.Player.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
@@ -870,7 +878,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateBackToBackSpellBonus(Entity backToBackEnchantmentEntity, bool isOpponent)
 		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			if(isOpponent){
@@ -898,7 +906,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateSandyTransformDuos(Entity attachedEntity, int sandyEntityId)
 		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var friendly = true;
@@ -924,7 +932,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateFlobbidinousFloopTransformDuos(Entity attachedEntity)
 		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var friendly = true;
@@ -948,7 +956,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateSummoningSphereDuos(Entity attachedEntity, int trinketEntityId)
 		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var friendly = true;
@@ -974,7 +982,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateMinionEnchantment(Entity enchantmentEntity, int attachedToEntityId, bool isPlayerMinion)
 		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
@@ -1000,7 +1008,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateDrBoomsMonsterReborn(int sourceEntityId, int rebornMaxHealth, bool isPlayerMinion)
 		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			// We need to know the magnetized count when a Dr. Boom's Monster is reborn
@@ -1022,8 +1030,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
-		internal async void UpdateTimewarpedMagnanimoose(List<Entity> summonedEntities, int magnanimooseEntityId, bool isPlayerMinion)		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+		internal async void UpdateTimewarpedMagnanimoose(List<Entity> summonedEntities, int magnanimooseEntityId, bool isPlayerMinion)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
@@ -1046,7 +1055,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateNelliesShipEnchantment(int[] cardDbfids, int attachedToEntityId, bool isPlayerMinion)
 		{
-			if(_input == null || (State != BobsBuddyState.Combat && State != BobsBuddyState.CombatPartial))
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
