@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**
+- Fixed cases where opponent's Commander Beatrix would be revealed before Mulligan in Arena.
+
 ## **Release v1.53.6 - 2026-07-09**
 **Hearthstone**
 - Added support to Azalina Soulsever decks.

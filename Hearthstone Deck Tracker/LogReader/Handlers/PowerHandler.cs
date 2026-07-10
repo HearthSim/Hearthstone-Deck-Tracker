@@ -218,7 +218,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.CurrentBlock.EntitiesCreatedInDeck.Add((entity, new HashSet<int>()));
 					}
 
-					if(gameState.CurrentBlock is {  Type: "TRIGGER" } &&
+					// Beatrix cards are added before mulligan step
+					if(gameState.CurrentBlock is { Type: "TRIGGER" } &&
 					   game.GameEntity?.GetTag(GameTag.STEP) == (int)Step.INVALID)
 					{
 						gameState.BeatrixCardIds.Add(id);
@@ -296,16 +297,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-						if((gameState.CurrentBlock is { HideShowEntities: true }
-						    && !entity.Info.RevealedOnHistory
-						    && !entity.HasTag(GameTag.DISPLAYED_CREATOR)))
-						{
-							entity.Info.Hidden = true;
-						}
-						else
-						{
-							entity.Info.Hidden = false;
-						}
+
+						var shouldHideForBlock =
+							gameState.CurrentBlock is { HideShowEntities: true }
+							&& !entity.Info.RevealedOnHistory
+							&& !entity.HasTag(GameTag.DISPLAYED_CREATOR);
+
+						var beforeMulligan =
+							game.GameEntity?.GetTag(GameTag.STEP) < (int)Step.BEGIN_MULLIGAN;
+
+						entity.Info.Hidden = shouldHideForBlock || beforeMulligan;
 
 						if(entity.Info.DeckIndex < 0 && gameState.CurrentBlock != null && gameState.CurrentBlock.SourceEntityId != 0)
 						{
