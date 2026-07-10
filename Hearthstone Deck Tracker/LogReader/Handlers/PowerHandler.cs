@@ -955,6 +955,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.Meadowstrider:
 								AddKnownCardId(gameState, Collectible.Neutral.Meadowstrider, 1, DeckLocation.Bottom);
 								break;
+							case Collectible.Warlock.ImpGangStooge:
+								AddKnownCardId(gameState, NonCollectible.Warlock.ImpGangStooge_GrandmotherImpToken, 1, DeckLocation.Bottom);
+								break;
 							case Collectible.Paladin.IdoOfTheThreshfleet:
 								AddKnownCardId(gameState, NonCollectible.Paladin.IdooftheThreshfleet_CallTheThreshfleetToken);
 								break;
