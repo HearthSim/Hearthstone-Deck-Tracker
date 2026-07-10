@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.53.7 - 2026-07-10**
 **Hearthstone**
 - Added Imp Gang Stooge's token to the bottom of the deck.
 - Fixed cases where opponent's Commander Beatrix would be revealed before Mulligan in Arena.
