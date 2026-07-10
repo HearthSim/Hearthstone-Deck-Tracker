@@ -474,6 +474,38 @@ namespace Hearthstone_Deck_Tracker
 			return version == 0 ? "Unknown" : $"Windows {version}";
 		}
 
+		// matches mixpanel-unity's SystemInfo.operatingSystem format, e.g. "Windows 11 (10.0.22631)"
+		public static string GetFullWindowsVersion()
+		{
+			try
+			{
+				var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+				if(reg == null)
+					return "Unknown";
+
+				var build = reg.GetValue("CurrentBuild") as string ?? "";
+
+				string versionNumber;
+				var majorObj = reg.GetValue("CurrentMajorVersionNumber");
+				var minorObj = reg.GetValue("CurrentMinorVersionNumber");
+				if(majorObj is int major && minorObj is int minor)
+					versionNumber = $"{major}.{minor}.{build}";
+				else
+					versionNumber = $"{reg.GetValue("CurrentVersion")}.{build}";
+
+				var name = GetWindowsMajorVersionName();
+				if(name == "Unknown" && versionNumber.Length > 0)
+					name = "Windows";
+
+				return $"{name} ({versionNumber})";
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+				return "Unknown";
+			}
+		}
+
 		// returns the Windows major version (7, 8, 10, 11) or 0 if it cannot be determined
 		public static int GetWindowsMajorVersion()
 		{

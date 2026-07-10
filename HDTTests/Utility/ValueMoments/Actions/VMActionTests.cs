@@ -37,7 +37,9 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			public int ScreenHeight => 1080;
 			public int ScreenWidth => 1920;
 			public string OsArch => "x64";
-			public string OsVersion => "Windows 11";
+			public string OsMajor => "Windows 11";
+			public string OsVersion => "Windows 11 (10.0.22631)";
+			public string AppVersion => "1.53.0";
 		}
 
 		[TestMethod]
@@ -90,7 +92,9 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "card_language", "enUS" },
 				{ "appearance_language", "enUS" },
 				{ "os_arch", "x64" },
-				{ "os_version", "Windows 11" },
+				{ "os_major", "Windows 11" },
+				{ "$os_version", "Windows 11 (10.0.22631)" },
+				{ "$app_version_string", "1.53.0" },
 				{ "hdt_plugins", new string[]{ } },
 				{ "hdt_general_settings_enabled", new []{
 					"upload_my_collection_automatically",
