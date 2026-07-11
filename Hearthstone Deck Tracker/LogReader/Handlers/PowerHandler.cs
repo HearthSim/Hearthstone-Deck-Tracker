@@ -1694,6 +1694,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									.UpdateNelliesShipEnchantment(summonedDbfIds, nelliesEntity.Id, nelliesEntity.IsControlledBy(game.Player.Id));
 						}
 					}
+					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.Magnanimoose, TriggerKeyword: "DEATHRATTLE" })
+					{
+						var magnanimooseEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
+						if(magnanimooseEntity != null)
+						{
+							var summonedEntities = game.Entities.Values
+								.Where(e =>
+									e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
+									e.GetTag(GameTag.CREATOR) == magnanimooseEntity.Id &&
+									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY
+								).ToList();
+
+							if(summonedEntities.Any())
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+									.UpdateMagnanimooseSummonPoolDuos(summonedEntities, magnanimooseEntity.Id, magnanimooseEntity.IsControlledBy(game.Player.Id));
+						}
+					}
 					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TavishStormpike_LockAndLoad, TriggerKeyword: "TRIGGER_VISUAL" })
 					{
 						var lockAndLoadEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;

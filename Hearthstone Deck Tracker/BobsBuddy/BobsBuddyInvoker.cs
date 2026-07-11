@@ -980,6 +980,73 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
+		internal async void UpdateMagnanimooseSummonPoolDuos(List<Entity> summonedEntities, int magnanimooseEntityId, bool isPlayerMinion)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+
+			// Determine which of the four players owns this Magnanimoose by finding its entity id on one of the captured boards.
+			BobsBuddyPlayer? playerToUpdate = null;
+			if(isPlayerMinion)
+			{
+				if(_input.Player.Side.FirstOrDefault(m => m.game_id == magnanimooseEntityId) != null)
+					playerToUpdate = _input.Player;
+				else if(_input.PlayerTeammate?.Side.FirstOrDefault(m => m.game_id == magnanimooseEntityId) != null)
+					playerToUpdate = _input.PlayerTeammate;
+			}
+			else
+			{
+				if(_input.Opponent.Side.FirstOrDefault(m => m.game_id == magnanimooseEntityId) != null)
+					playerToUpdate = _input.Opponent;
+				else if(_input.OpponentTeammate?.Side.FirstOrDefault(m => m.game_id == magnanimooseEntityId) != null)
+					playerToUpdate = _input.OpponentTeammate;
+			}
+
+			if(playerToUpdate == null)
+			{
+				// A Magnanimoose summoned during combat is not on any captured board; match its controller to the correct player.
+				var controller = _game.Entities.TryGetValue(magnanimooseEntityId, out var mEnt)
+					? mEnt.GetTag(GameTag.CONTROLLER) : 0;
+				playerToUpdate = ControllingPlayer(controller, isPlayerMinion);
+			}
+
+			// Last resort if the controller could not be matched (e.g. a teammate board not yet snapshot).
+			playerToUpdate ??= isPlayerMinion ? _input.Player : _input.Opponent;
+
+			var simulator = new Simulator();
+			var summonedMinions = summonedEntities
+				.Select(e =>
+				{
+					var minion = GetMinionFromEntity(simulator, isPlayerMinion, e, GetAttachedEntities(e.Id));
+					var copiedFrom = e.GetTag(GameTag.COPIED_FROM_ENTITY_ID);
+					if(copiedFrom > 0)
+						minion.game_id = copiedFrom;
+					return minion;
+				})
+				.ToList();
+			playerToUpdate.MagnanimooseSummonPoolDuos.AddRange(summonedMinions);
+
+			await TryRerun();
+		}
+
+		private BobsBuddyPlayer? ControllingPlayer(int controller, bool isPlayerMinion)
+		{
+			if(_input == null || controller == 0)
+				return null;
+			var relevantSides = isPlayerMinion
+				? new[] { _input.Player, _input.PlayerTeammate }
+				: new[] { _input.Opponent, _input.OpponentTeammate };
+			foreach(var player in relevantSides)
+			{
+				if(player == null)
+					continue;
+				foreach(var minion in player.Side)
+					if(_game.Entities.TryGetValue(minion.game_id, out var entity) && entity.GetTag(GameTag.CONTROLLER) == controller)
+						return player;
+			}
+			return null;
+		}
+
 		internal async void UpdateMinionEnchantment(Entity enchantmentEntity, int attachedToEntityId, bool isPlayerMinion)
 		{
 			if(_input == null || !UpdateRevealedEntityValidStates)
