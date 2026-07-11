@@ -510,9 +510,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			Canvas.SetLeft(LinkOpponentDeckDisplay, Width * Config.Instance.OpponentDeckLeft / 100);
 
-			var OpponentStackVisibleHeight = (CanvasOpponentCount
-				.ActualHeight + CanvasOpponentChance.ActualHeight + ListViewOpponent
-				.ActualHeight + OpponentPackageCardsDeckLens.ActualHeight + OpponentRelatedCardsDeckLens.ActualHeight)
+			var OpponentStackVisibleHeight = (CanvasOpponentCount.ActualHeight +
+			                                  CanvasOpponentChance.ActualHeight +
+			                                  ListViewOpponent.ActualHeight +
+			                                  OpponentPackageCardsDeckLens.ActualHeight +
+			                                  OpponentRelatedCardsDeckLens.ActualHeight +
+			                                  OpponentGodfreyCardsDeckLens.ActualHeight)
 				* Config.Instance.OverlayOpponentScaling / 100;
 
 			if(BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 10 + LinkOpponentDeckDisplay.ActualHeight < Height)

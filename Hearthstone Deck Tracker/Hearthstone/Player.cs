@@ -61,6 +61,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public HashSet<SpellSchool> PlayedSpellSchools { get; private set; } = new HashSet<SpellSchool>();
 		public int AbyssalCurseCount { get; private set; }
 		public List<Entity> SecretsTriggeredCards { get; } = new();
+		public List<GodfreyOverdrawnCard> GodfreyCards { get; } = new();
 
 		public bool HasCoin => Hand.Any(e => e.IsTheCoin);
 		public int HandCount => Hand.Count();
@@ -523,6 +524,64 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PastHeroPowers.Clear();
 			DeadMinionsCards.Clear();
 			IsPlayingWhizbang = false;
+			GodfreyCards.Clear();
+		}
+
+		public void AddGodfreyNewEntityId(int entityId) => GodfreyCards.Add(new GodfreyOverdrawnCard { NewEntityId = entityId });
+
+		public void AddGodfreyCopiedEntityId(int entityId)
+		{
+			var overdrawnCard = GodfreyCards.FirstOrDefault(c => c.CopiedEntityId == null);
+			if(overdrawnCard != null)
+				overdrawnCard.CopiedEntityId = entityId;
+			else
+				GodfreyCards.Add(new GodfreyOverdrawnCard { CopiedEntityId = entityId });
+		}
+
+		public void ReturnGodfreyCard(int newEntityId, int copiedEntityId)
+		{
+			var returnedCard = GodfreyCards.FirstOrDefault(c => c.NewEntityId == newEntityId || (copiedEntityId > 0 && c.CopiedEntityId == copiedEntityId));
+			if(returnedCard == null)
+				return;
+			// The opponent's returned entity is not revealed, so the user should not learn which card
+			// left the void. Keep showing all candidates until the entity is revealed, unless there
+			// is no ambiguity.
+			if(IsLocalPlayer || GodfreyCards.Count == 1)
+			{
+				MarkReturnedGodfreyCard(returnedCard);
+				GodfreyCards.Remove(returnedCard);
+			}
+			else
+				returnedCard.ReturnedToHand = true;
+		}
+
+		private void MarkReturnedGodfreyCard(GodfreyOverdrawnCard returnedCard)
+		{
+			if(IsLocalPlayer)
+				return;
+			if(returnedCard.NewEntityId is not int newEntityId || returnedCard.CopiedEntityId is not int copiedEntityId)
+				return;
+			if(!_game.Entities.TryGetValue(newEntityId, out var newEntity) || !_game.Entities.TryGetValue(copiedEntityId, out var copiedEntity))
+				return;
+			newEntity.CardId = copiedEntity.CardId;
+			newEntity.Info.Hidden = false;
+			newEntity.Info.GuessedCardState = GuessedCardState.Guessed;
+			newEntity.Info.CostReduction += 1;
+		}
+
+		public List<int> GetGodfreyCardIdsToDisplay()
+		{
+			GodfreyCards.RemoveAll(c => c.ReturnedToHand && c.NewEntityId is int newEntityId
+			                            && _game.Entities.TryGetValue(newEntityId, out var entity) && entity.HasCardId);
+			// If every remaining card has returned to hand, the void is empty.
+			if(GodfreyCards.Count > 0 && GodfreyCards.All(c => c.ReturnedToHand))
+			{
+				// A single remaining candidate is no longer ambiguous.
+				if(GodfreyCards.Count == 1)
+					MarkReturnedGodfreyCard(GodfreyCards[0]);
+				GodfreyCards.Clear();
+			}
+			return GodfreyCards.Where(c => c.CopiedEntityId.HasValue).Select(c => c.CopiedEntityId!.Value).ToList();
 		}
 
 		public void Draw(Entity entity, int turn)
@@ -956,5 +1015,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[Obsolete("Use OriginalClass or CurrentClass instead", true)]
 		public string? Class => OriginalClass;
+	}
+
+	public class GodfreyOverdrawnCard
+	{
+		public int? NewEntityId { get; set; }
+		public int? CopiedEntityId { get; set; }
+		public bool ReturnedToHand { get; set; }
 	}
 }

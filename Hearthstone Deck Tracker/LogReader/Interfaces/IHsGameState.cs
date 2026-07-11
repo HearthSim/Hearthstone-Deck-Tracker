@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		Dictionary<int, List<IHsChoice>> ChoicesByTaskList { get; }
 		bool TriangulatePlayed { get; set; }
 		bool IsInsideMetaDataHistoryTarget { get; set; }
+		bool IsInsideMetaDataBurnedCard { get; set; }
 		List<int?> StarshipLauchBlockIds { get; }
 		List<string> MinionsInPlay { get; }
 		DateTime? LastPlayBlockTime { get; set; }

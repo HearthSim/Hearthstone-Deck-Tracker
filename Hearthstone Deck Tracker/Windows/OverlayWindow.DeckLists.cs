@@ -49,6 +49,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 						break;
 				}
 			}
+
+			StackPanelPlayer.Children.Add(PlayerGodfreyCardsDeckLens);
+
 		}
 
 		public void UpdateOpponentLayout()
@@ -82,6 +85,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				StackPanelOpponent.Children.Add(OpponentRelatedCardsDeckLens);
 			}
+
+			StackPanelOpponent.Children.Add(OpponentGodfreyCardsDeckLens);
+
 		}
 
 		public void SetWinRates()
@@ -141,7 +147,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
 		}
 
-		public async Task UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom, List<Sideboard> sideboards)
+		public async Task UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom, List<Sideboard> sideboards, List<int> godfreyCardIds)
 		{
 			ListViewPlayer.UpdateSortButtonsVisibility(!Core.Game.IsMulliganDone && Config.Instance.EnableMulliganGuide && cards.FirstOrDefault()?.CardWinrates != null);
 			var updates = new[]
@@ -150,11 +156,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 				PlayerTopDeckLens.Update(top, reset),
 				PlayerBottomDeckLens.Update(bottom, reset),
 				PlayerSideboards.Update(sideboards, reset),
+				PlayerGodfreyCardsDeckLens.Update(GetCardsFromEntityIds(godfreyCardIds), reset),
 			};
 			await Task.WhenAll(updates);
 		}
 
-		public async Task UpdateOpponentCards(List<Card> cards, List<Card> cardsWithRelatedCards, (Card? packageKey, IEnumerable<Card> packageCards) arenaPackage, bool reset)
+		public async Task UpdateOpponentCards(
+			List<Card> cards,
+			List<Card> cardsWithRelatedCards,
+			(Card? packageKey, IEnumerable<Card> packageCards) arenaPackage,
+			List<int> godfreyCardIds,
+			bool reset)
 		{
 			var arenaPacakges = arenaPackage.packageCards.Where(card => cards.All(c => c.Id != card.Id))
 				.ToSortedCardList();
@@ -175,19 +187,36 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ListViewOpponent.Update(cards, reset),
 				OpponentPackageCardsDeckLens.Update(arenaPacakges, reset),
 				OpponentRelatedCardsDeckLens.Update(relatedCards, reset),
+				OpponentGodfreyCardsDeckLens.Update(GetCardsFromEntityIds(godfreyCardIds), reset),
 			};
 			await Task.WhenAll(updates);
 		}
 
-		public async Task UpdateOpponentCards(List<Card> cards, List<Card> cardsWithRelatedCards, bool reset)
+		public async Task UpdateOpponentCards(List<Card> cards, List<Card> cardsWithRelatedCards, List<int> godfreyCardIds, bool reset)
 		{
 			var updates = new[]
 			{
 				ListViewOpponent.Update(cards, reset),
 				OpponentRelatedCardsDeckLens.Update(cardsWithRelatedCards.Where(card => cards.All(c => c.Id != card.Id)).ToList(), reset),
 				OpponentPackageCardsDeckLens.Update(new List<Card>(), reset),
+				OpponentGodfreyCardsDeckLens.Update(GetCardsFromEntityIds(godfreyCardIds), reset),
 			};
 			await Task.WhenAll(updates);
+		}
+
+		private List<Card> GetCardsFromEntityIds(List<int> entityIds)
+		{
+			return entityIds
+				.Select(id => _game.Entities.TryGetValue(id, out var entity) ? entity.Card : null)
+				.WhereNotNull()
+				.GroupBy(c => c.Id)
+				.Select(g =>
+				{
+					var card = (Card)g.First().Clone();
+					card.Count = g.Count();
+					return card;
+				})
+				.ToSortedCardList();
 		}
 
 		public void HighlightPlayerDeckCards(string? highlightSourceCardId)

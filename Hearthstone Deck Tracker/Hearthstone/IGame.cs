@@ -7,6 +7,7 @@ using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
+using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
@@ -46,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		Mode CurrentMode { get; set; }
 		Mode PreviousMode { get; set; }
 		GameTime GameTime { get; }
+		ActiveEffects ActiveEffects { get; }
 		void Reset(bool resetStats = true, bool updateUI = true);
 		void StoreGameState();
 		string GetStoredPlayerName(int id);

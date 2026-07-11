@@ -6,6 +6,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
+using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
@@ -51,6 +52,8 @@ namespace HDTTests.Hearthstone.Secrets
 		public Mode CurrentMode { get; set; }
 		public Mode PreviousMode { get; set; }
 		public GameTime GameTime { get; set; }
+		public ActiveEffects ActiveEffects { get; }
+
 		public void Reset(bool resetStats = true, bool updateUI = true)
 		{
 			throw new NotImplementedException();
