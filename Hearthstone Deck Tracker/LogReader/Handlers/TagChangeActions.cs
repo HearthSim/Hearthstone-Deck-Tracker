@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.PerformanceData;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -1063,6 +1064,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					gameState.MinionsInPlay.Add(e.CardId ?? "");
 				}
+			}
+
+			if((Zone)value == HAND && game.Entities.TryGetValue(id, out var en)
+			                       && en.CardId == Collectible.Rogue.LotusTroublemaker
+			                       && controller == game.Player.Id)
+			{
+				game.CounterManager.AddLotusTroublemakerCounter(id);
 			}
 		}
 

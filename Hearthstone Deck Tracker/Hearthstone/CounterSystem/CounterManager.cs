@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
@@ -40,6 +41,12 @@ public class CounterManager
 				OpponentCounters.Add(opponentCounter);
 			}
 		}
+	}
+
+	public void AddLotusTroublemakerCounter(int id)
+	{
+		var counter = new LotusTroublemakerCounter(id, true, (GameV2)Game);
+		PlayerCounters.Add(counter);
 	}
 
 	public List<BaseCounter> GetVisibleCounters(bool controlledByPlayer)
