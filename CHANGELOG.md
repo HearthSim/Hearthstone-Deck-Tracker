@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.53.8 - 2026-07-12**
 **Hearthstone**
 - Added support to Godfrey the Betrayer.
 - Added Lotus Troublemaker Counter for the player.
