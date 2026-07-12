@@ -182,9 +182,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							var lastCardDrawnEntity = game.Entities.TryGetValue(lastCardDrawnId ?? -1, out var e) ? e : null;
 							copyOfCardId = lastCardDrawnEntity?.Info.CopyOfCardId ?? lastCardDrawnId.ToString();
 						}
-						else if(gameState.BeatrixCardIds.Contains(id))
+						else if(game.Player.BeatrixCardIds.Contains(id))
 						{
-							cardId = gameState.BeatrixCopiedCard ?? "";
+							cardId = game.Player.BeatrixCopiedCard ?? "";
+						}
+						else if(game.Opponent.BeatrixCardIds.Contains(id))
+						{
+							cardId = game.Opponent.BeatrixCopiedCard ?? "";
 						}
 					}
 					var entity = new Entity(id) { CardId = cardId };
@@ -224,7 +228,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(block is { Type: "TRIGGER" } &&
 					   game.GameEntity?.GetTag(GameTag.STEP) < (int)Step.BEGIN_MULLIGAN)
 					{
-						gameState.BeatrixCardIds.Add(id);
+						if(game.Entities.TryGetValue(block.SourceEntityId, out var beatrixEntity))
+						{
+							var player = beatrixEntity.IsControlledBy(game.Player.Id) ? game.Player : game.Opponent;
+							player.BeatrixCardIds.Add(id);
+						}
 					}
 
 					if(block is
@@ -562,15 +570,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 							if(gameState.CurrentBlock is { CardId: Collectible.Paladin.CommanderBeatrix, Type: "TRIGGER" })
 							{
-								foreach(var cId in gameState.BeatrixCardIds)
+								var isControlledByPlayer = entity.IsControlledBy(Core.Game.Player.Id);
+
+								var beatrixCardIds = isControlledByPlayer
+									? game.Player.BeatrixCardIds
+									: game.Opponent.BeatrixCardIds;
+
+								foreach (var cardId in beatrixCardIds)
 								{
-									if(game.Entities.TryGetValue(cId, out var e))
+									if (game.Entities.TryGetValue(cardId, out var beatrixEntity))
 									{
-										e.CardId = entity.CardId;
+										beatrixEntity.CardId = entity.CardId;
 									}
 								}
 
-								if(entity.IsControlledBy(Core.Game.Player.Id))
+								if (isControlledByPlayer)
 								{
 									Core.UpdatePlayerCards();
 								}

@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**
+- Fixed cases where Commander Beatrix would not add cards to the deck.
+
 ## **Release v1.53.8 - 2026-07-12**
 **Hearthstone**
 - Added support to Godfrey the Betrayer.

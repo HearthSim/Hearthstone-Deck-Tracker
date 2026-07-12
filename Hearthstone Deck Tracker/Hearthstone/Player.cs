@@ -62,6 +62,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int AbyssalCurseCount { get; private set; }
 		public List<Entity> SecretsTriggeredCards { get; } = new();
 		public List<GodfreyOverdrawnCard> GodfreyCards { get; } = new();
+		public HashSet<int> BeatrixCardIds { get; } = new();
+		public string? BeatrixCopiedCard { get; set; }
 
 		public bool HasCoin => Hand.Any(e => e.IsTheCoin);
 		public int HandCount => Hand.Count();
@@ -525,6 +527,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DeadMinionsCards.Clear();
 			IsPlayingWhizbang = false;
 			GodfreyCards.Clear();
+			BeatrixCardIds.Clear();
+			BeatrixCopiedCard = null;
 		}
 
 		public void AddGodfreyNewEntityId(int entityId) => GodfreyCards.Add(new GodfreyOverdrawnCard { NewEntityId = entityId });

@@ -71,8 +71,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			LastCardPlayed = 0;
 			LastEntityChosenOnDiscover = 0;
 			LastPlayBlockTime = null;
-			BeatrixCardIds.Clear();
-			BeatrixCopiedCard = null;
 			IsInsideMetaDataHistoryTarget = false;
 			IsInsideMetaDataBurnedCard = false;
 		}
@@ -111,8 +109,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool IsInsideMetaDataBurnedCard { get; set; }
 
 		public DateTime? LastPlayBlockTime { get; set; }
-		public HashSet<int> BeatrixCardIds { get; } = new();
-		public string? BeatrixCopiedCard { get; set; }
 	}
 
 	public class Block
