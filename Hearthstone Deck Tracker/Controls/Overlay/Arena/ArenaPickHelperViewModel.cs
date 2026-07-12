@@ -318,14 +318,7 @@ public class ArenaPickHelperViewModel : ViewModel
 			_isDualClass = card.TypeEnum == CardType.HERO_POWER;
 
 			// Loading state
-			if(!_isDualClass)
-			{
-				HeroStats = offered.Select(_ => new ArenaPickSingleHeroOptionViewModel(IsUnderground)).ToList();
-			}
-			else
-			{
-				HeroPowerStats = offered.Select((_, index) => new ArenaPickSingleHeroPowerOptionViewModel(IsUnderground, index)).ToList();
-			}
+			HeroPowerStats = offered.Select((_, index) => new ArenaPickSingleHeroPowerOptionViewModel(IsUnderground, index)).ToList();
 
 			var heroData = await MakeRequestHeroPick(offered, ArenaSeasonId, deckId.Value, accountId, IsUnderground);
 
@@ -350,16 +343,8 @@ public class ArenaPickHelperViewModel : ViewModel
 				.Select(c => c != null && idToObjectMap.TryGetValue(c, out var obj) ? obj : null)
 				.ToArray();
 
-			if(!_isDualClass)
-			{
-				HeroStats = ordered.Select(s => new ArenaPickSingleHeroOptionViewModel(s, IsUnderground)).ToList();
-				HeroPickVisibility = Config.Instance.ShowArenaHeroPicking ? Visibility.Visible : Visibility.Collapsed;
-			}
-			else
-			{
-				HeroPowerStats = ordered.Select((s, index) => new ArenaPickSingleHeroPowerOptionViewModel(s, IsUnderground, index)).ToList();
-				HeroPowerPickVisibility = Config.Instance.ShowArenaHeroPicking ? Visibility.Visible : Visibility.Collapsed;
-			}
+			HeroPowerStats = ordered.Select((s, index) => new ArenaPickSingleHeroPowerOptionViewModel(s, IsUnderground, index)).ToList();
+			HeroPowerPickVisibility = Config.Instance.ShowArenaHeroPicking ? Visibility.Visible : Visibility.Collapsed;
 
 			RelatedCardsVisibility = Config.Instance.ShowArenaRelatedCards ? Visibility.Visible : Visibility.Collapsed;
 

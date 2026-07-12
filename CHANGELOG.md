@@ -1,6 +1,7 @@
 ## **Unreleased**
 **Hearthstone**
 - Fixed cases where Commander Beatrix would not add cards to the deck.
+- Fixed Arenasmith Hero Pick Overlay positioning.
 
 ## **Release v1.53.8 - 2026-07-12**
 **Hearthstone**
