@@ -1,3 +1,8 @@
+## **Unreleased**
+**Hearthstone**
+- Added support to Godfrey the Betrayer.
+- Added Lotus Troublemaker Counter for the player.
+
 ## **Release v1.53.7 - 2026-07-10**
 **Hearthstone**
 - Added Imp Gang Stooge's token to the bottom of the deck.
