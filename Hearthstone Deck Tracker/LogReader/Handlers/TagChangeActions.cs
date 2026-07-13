@@ -325,12 +325,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateSandyTransformDuos(entity, entity.GetTag(CREATOR));
 			}
 
+			// Glorious Gloop transforms the chosen minion into the teammate's highest-Tier minion. Capture the
+			// transformed minion: the minion in PLAY copies from a SETASIDE entity
 			if(
 				game.CurrentGameMode == GameMode.Battlegrounds &&
 				gameState.CurrentBlock?.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop &&
 				entity.IsMinion &&
-				gameState.CurrentBlock?.SourceEntityId == entity.GetTag(CREATOR) &&
-				entity.IsInZone(SETASIDE)
+				entity.IsInZone(PLAY) &&
+				game.Entities.TryGetValue(value, out var floopCopySource) && floopCopySource.IsInZone(SETASIDE)
 			)
 			{
 				if(game.CurrentGameStats != null)
@@ -342,7 +344,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				(gameState.CurrentBlock?.CardId == NonCollectible.Neutral.SummoningSphere || gameState.CurrentBlock?.CardId == NonCollectible.Neutral.LesserTrinket) &&
 				entity.IsMinion &&
 				gameState.CurrentBlock?.SourceEntityId == entity.GetTag(CREATOR) &&
-				entity.IsInZone(SETASIDE)
+				(entity.IsInZone(SETASIDE) || entity.IsInZone(PLAY))
 			)
 			{
 				if(game.CurrentGameStats != null)
