@@ -33,7 +33,24 @@ namespace Hearthstone_Deck_Tracker.Controls
 					ETCContainer.Visibility = Visibility.Visible;
 			}
 
-			Visibility = ETCContainer.Visibility;
+			KingOfTheUnderbellyContainer.Visibility = Visibility.Collapsed;
+			var kingOfTheUnderbellySideboard =
+				sideboards.FirstOrDefault(s => s.OwnerCardId == CardIds.Collectible.Hunter.KingOfTheUnderbelly);
+			if(kingOfTheUnderbellySideboard != null)
+			{
+				await KingOfTheUnderbellyCardList.Update(kingOfTheUnderbellySideboard.Cards, reset);
+				if(kingOfTheUnderbellySideboard.Cards.Count > 0)
+				{
+					KingOfTheUnderbellyLabel.Text =
+						Database.GetCardFromId(CardIds.Collectible.Hunter.KingOfTheUnderbelly)?.LocalizedName
+						?? "King of the Underbelly";
+					KingOfTheUnderbellyContainer.Visibility = Visibility.Visible;
+				}
+			}
+
+			Visibility = ETCContainer.Visibility == Visibility.Visible
+				|| KingOfTheUnderbellyContainer.Visibility == Visibility.Visible
+					? Visibility.Visible : Visibility.Collapsed;
 		}
 	}
 
