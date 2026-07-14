@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.PerformanceData;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -120,6 +121,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						break;
 					case HEALTH:
 						HealthChange(gameState, id, game, value, prevValue);
+						DrBoomsMonsterRebornHealth(id, value, game);
 						break;
 					case MAXRESOURCES:
 						MaxResourcesChange(gameState, id, game, value, prevValue);
@@ -262,6 +264,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(value != 1)
 				return;
+		}
+
+		private void DrBoomsMonsterRebornHealth(int id, int value, IGame game)
+		{
+			if(!BobsBuddyInvoker.CurrentCombatHasDrBoomsMonster || game.CurrentGameStats == null)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			if(entity.CardId != NonCollectible.Neutral.DrBoomsMonster
+				&& entity.CardId != NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1)
+				return;
+			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+				?.UpdateDrBoomsMonsterReborn(entity.GetTag(CREATOR), value, entity.IsControlledBy(game.Player.Id));
 		}
 
 		private void OnTagScriptDataNum1(int id, int value, IGame game, IHsGameState gameState)
@@ -1031,7 +1046,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(copiedFrom > 0 && game.Entities.TryGetValue(copiedFrom, out var source) && source.IsInHand && !source.HasCardId)
 						{
 							if(game.CurrentGameStats != null)
-								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateOpponentHand(source, entity);
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateCardOpponentHand(source, entity);
 						}
 					}
 					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
@@ -1049,6 +1064,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					gameState.MinionsInPlay.Add(e.CardId ?? "");
 				}
+			}
+
+			if((Zone)value == HAND && game.Entities.TryGetValue(id, out var en)
+			                       && en.CardId == Collectible.Rogue.LotusTroublemaker
+			                       && controller == game.Player.Id)
+			{
+				game.CounterManager.AddLotusTroublemakerCounter(id);
 			}
 		}
 

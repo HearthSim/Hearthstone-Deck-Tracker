@@ -18,6 +18,8 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Utility.Analytics
 {
+	// new measurement names must also be whitelisted server-side,
+	// otherwise they are silently dropped
 	internal class Influx
 	{
 		private static DateTime _appStartTime;
@@ -40,8 +42,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("authenticated", authenticated)
 				.Tag("premium", premium)
 				.Tag("collection_syncing", Config.Instance.SyncCollection)
-				.Tag("collections_uploaded", Account.Instance.CollectionState.Count)
-				.Tag("mercs_collections_uploaded", Account.Instance.MercenariesCollectionState.Count)
+				.Tag("collection_uploaded", Account.Instance.CollectionState.Count > 0)
+				.Tag("mercs_collection_uploaded", Account.Instance.MercenariesCollectionState.Count > 0)
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
 				.Tag("lang_card", Helper.GetCardLanguage())
 				.Tag("lang_ui", Config.Instance.Localization.ToString())
@@ -49,8 +51,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("skipped_splashscreen", skippedSplashscreen)
 				.Tag("forced_software_rendering", forceSoftwareRendering)
 				.Tag("os_arch", RuntimeInformation.OSArchitecture.ToString().ToLower())
+				.Tag("os_version", Helper.GetWindowsMajorVersionName())
 				.Field("num_plugins", numPlugins)
-				.Field("startup_duration", startupDuration);
+				.Field("startup_duration", startupDuration)
+				.Field("collections_uploaded", Account.Instance.CollectionState.Count)
+				.Field("mercs_collections_uploaded", Account.Instance.MercenariesCollectionState.Count);
 #if(SQUIRREL)
 			point.Tag("squirrel", true);
 #else
@@ -295,10 +300,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Field("result_loss", result == CombatResult.Loss ? 1 : 0)
 				.Field("win_rate", output.winRate * 100)
 				.Field("tie_rate", output.tieRate * 100)
-				.Field("loss_rate", output.lossRate * 100);
-
-			if(anomaly != null)
-				point.Tag("anomaly", anomaly.CardID);
+				.Field("loss_rate", output.lossRate * 100)
+				.Field("anomaly", anomaly?.CardID ?? "");
 
 			point.Tag("opposing_akazamzarak", isOpposingAkazamzarak.ToString());
 			point.Tag("opposing_kelthuzad", isOpposingKelThuzad.ToString());

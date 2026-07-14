@@ -73,6 +73,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			LastPlayBlockTime = null;
 			BeatrixCardIds.Clear();
 			BeatrixCopiedCard = null;
+			IsInsideMetaDataHistoryTarget = false;
+			IsInsideMetaDataBurnedCard = false;
 		}
 
 		public void SetCurrentEntity(int id)
@@ -106,11 +108,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public List<string> MinionsInPlay { get; } = new();
 
 		public bool IsInsideMetaDataHistoryTarget { get; set; }
+		public bool IsInsideMetaDataBurnedCard { get; set; }
 
 		public DateTime? LastPlayBlockTime { get; set; }
 		public HashSet<int> BeatrixCardIds { get; } = new();
 		public string? BeatrixCopiedCard { get; set; }
-
 	}
 
 	public class Block

@@ -51,6 +51,18 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		}
 
 		private Input? _input;
+
+		// True while the current Battlegrounds combat contains a Dr. Boom's Monster, so the per-HEALTH-change reborn
+		// detection in TagChangeActions can skip the entity lookup for the (vast majority of) combats without one.
+		internal static bool CurrentCombatHasDrBoomsMonster;
+
+		// Incremented on every detected game reconnect. Each combat snapshot records the current value;
+		// a mismatch at validation time means the reconnect happened after this combat started, so the
+		// absence of the combat's outcome should not be deemed as CombatResult.Tie.
+		private static int _reconnectCounter;
+		internal static void OnGameReconnect() => _reconnectCounter++;
+		private int _reconnectCounterAtSnapshot;
+
 		private int _turn;
 		private Entity? _attackingHero;
 		private Entity? _defendingHero;
@@ -99,6 +111,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			_game = Core.Game;
 			_instanceKey = key;
+			_reconnectCounterAtSnapshot = _reconnectCounter;
 		}
 
 
@@ -129,6 +142,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog($"New State: {value}");
 			}
 		}
+
+		// BobsBuddy states during which a revealed card can be added to simulator input
+		private bool UpdateRevealedEntityValidStates => State is BobsBuddyState.Initial or BobsBuddyState.Combat or BobsBuddyState.CombatPartial;
 
 		public bool ShouldRun()
 		{
@@ -215,7 +231,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false));
 				return;
 			}
 		}
@@ -348,7 +364,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false));
 				return;
 			}
 		}
@@ -368,7 +384,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			_unsupportedInteractionReported = true;
 
-			var isDuos = _game.IsBattlegroundsDuosMatch;
+			var isDuos = _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false);
 			if(ReportErrors)
 				Sentry.CaptureBobsBuddyException(pending.ex, _input, _turn, isDuos);
 			Influx.OnBobsBuddyUnsupportedInteraction(
@@ -678,6 +694,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			DebugLog("Snapshotting board state...");
 			LastAttackingHero = null;
+			_reconnectCounterAtSnapshot = _reconnectCounter;
 			var simulator = new Simulator();
 			var input = new Input();
 
@@ -741,6 +758,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_input = input;
 			_turn = turn;
 
+			// Flag checking for Dr. Boom's Monster (to optimize redundantly checking in TagChangeAction)
+			CurrentCombatHasDrBoomsMonster =
+				input.Player.Side.Concat(input.Opponent.Side).Any(m => m.CardID == NonCollectible.Neutral.DrBoomsMonster || m.CardID == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1)
+				|| input.Player.Hand.Concat(input.Opponent.Hand).Any(h => h.Id == NonCollectible.Neutral.DrBoomsMonster || h.Id == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1);
+
 			DebugLog("Successfully snapshotted board state");
 		}
 
@@ -748,6 +770,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private Task TryRerun()
 		{
+			if(State == BobsBuddyState.Initial)
+				// For duos, revealed cards can happen during BobsBuddyState.Initial since the entire first
+				// fight parses before any state is assigned. The upcoming partial/full simulator run will have
+				// this updated input, so there is no need to continue with TryRerun()
+				return Task.CompletedTask;
 			if(_reRunCount++ <= 10)
 			{
 				DebugLog($"Input changed, re-running simulation! (#{_reRunCount})");
@@ -768,9 +795,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return Task.CompletedTask;
 		}
 
-		internal async void UpdateOpponentHand(Entity entity, Entity copy)
+		internal async void UpdateCardOpponentHand(Entity entity, Entity copy)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			_opponentHandMap[entity] = copy;
@@ -805,7 +832,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateLockAndLoadHeroPower(Entity attachedEntity, bool isOpponent)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var tryDuos = _game.IsBattlegroundsDuosMatch;
@@ -817,6 +844,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				else if(tavishLockAndLoad.AttachedMinion == null && tavishLockAndLoad.Data3 == 0)
 				{
 					tavishLockAndLoad.AttachedMinion = GetMinionFromEntity(new Simulator(), false, attachedEntity, GetAttachedEntities(attachedEntity.Id));
+					tavishLockAndLoad.AttachedMinionCapturedDuringCombat = true;
 					tryRerun = true;
 				}
 			}
@@ -828,7 +856,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateDuosLockAndLoadHeroPower(int cardDbfid)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var tavishLockAndLoad = _input.Player.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
@@ -850,7 +878,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateBackToBackSpellBonus(Entity backToBackEnchantmentEntity, bool isOpponent)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			if(isOpponent){
@@ -878,7 +906,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateSandyTransformDuos(Entity attachedEntity, int sandyEntityId)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var friendly = true;
@@ -904,7 +932,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateFlobbidinousFloopTransformDuos(Entity attachedEntity)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var friendly = true;
@@ -928,7 +956,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateSummoningSphereDuos(Entity attachedEntity, int trinketEntityId)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var friendly = true;
@@ -952,9 +980,76 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
+		internal async void UpdateMagnanimooseSummonPoolDuos(List<Entity> summonedEntities, int magnanimooseEntityId, bool isPlayerMinion)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+
+			// Determine which of the four players owns this Magnanimoose by finding its entity id on one of the captured boards.
+			BobsBuddyPlayer? playerToUpdate = null;
+			if(isPlayerMinion)
+			{
+				if(_input.Player.Side.FirstOrDefault(m => m.game_id == magnanimooseEntityId) != null)
+					playerToUpdate = _input.Player;
+				else if(_input.PlayerTeammate?.Side.FirstOrDefault(m => m.game_id == magnanimooseEntityId) != null)
+					playerToUpdate = _input.PlayerTeammate;
+			}
+			else
+			{
+				if(_input.Opponent.Side.FirstOrDefault(m => m.game_id == magnanimooseEntityId) != null)
+					playerToUpdate = _input.Opponent;
+				else if(_input.OpponentTeammate?.Side.FirstOrDefault(m => m.game_id == magnanimooseEntityId) != null)
+					playerToUpdate = _input.OpponentTeammate;
+			}
+
+			if(playerToUpdate == null)
+			{
+				// A Magnanimoose summoned during combat is not on any captured board; match its controller to the correct player.
+				var controller = _game.Entities.TryGetValue(magnanimooseEntityId, out var mEnt)
+					? mEnt.GetTag(GameTag.CONTROLLER) : 0;
+				playerToUpdate = ControllingPlayer(controller, isPlayerMinion);
+			}
+
+			// Last resort if the controller could not be matched (e.g. a teammate board not yet snapshot).
+			playerToUpdate ??= isPlayerMinion ? _input.Player : _input.Opponent;
+
+			var simulator = new Simulator();
+			var summonedMinions = summonedEntities
+				.Select(e =>
+				{
+					var minion = GetMinionFromEntity(simulator, isPlayerMinion, e, GetAttachedEntities(e.Id));
+					var copiedFrom = e.GetTag(GameTag.COPIED_FROM_ENTITY_ID);
+					if(copiedFrom > 0)
+						minion.game_id = copiedFrom;
+					return minion;
+				})
+				.ToList();
+			playerToUpdate.MagnanimooseSummonPoolDuos.AddRange(summonedMinions);
+
+			await TryRerun();
+		}
+
+		private BobsBuddyPlayer? ControllingPlayer(int controller, bool isPlayerMinion)
+		{
+			if(_input == null || controller == 0)
+				return null;
+			var relevantSides = isPlayerMinion
+				? new[] { _input.Player, _input.PlayerTeammate }
+				: new[] { _input.Opponent, _input.OpponentTeammate };
+			foreach(var player in relevantSides)
+			{
+				if(player == null)
+					continue;
+				foreach(var minion in player.Side)
+					if(_game.Entities.TryGetValue(minion.game_id, out var entity) && entity.GetTag(GameTag.CONTROLLER) == controller)
+						return player;
+			}
+			return null;
+		}
+
 		internal async void UpdateMinionEnchantment(Entity enchantmentEntity, int attachedToEntityId, bool isPlayerMinion)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
@@ -978,8 +1073,33 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
-		internal async void UpdateTimewarpedMagnanimoose(List<Entity> summonedEntities, int magnanimooseEntityId, bool isPlayerMinion)		{
-			if(_input == null || State != BobsBuddyState.Combat)
+		internal async void UpdateDrBoomsMonsterReborn(int sourceEntityId, int rebornMaxHealth, bool isPlayerMinion)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+
+			// We need to know the magnetized count when a Dr. Boom's Monster is reborn
+			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
+			if(targetPlayer.MagnetizeCounter != null)
+				return;
+
+			var source = targetPlayer.Side.FirstOrDefault(m => m.game_id == sourceEntityId
+				&& (m.CardID == NonCollectible.Neutral.DrBoomsMonster || m.CardID == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1));
+			if(source == null)
+				return;
+
+			var statsGrantedPerMagnetize = source.golden ? 4 : 2;
+			var count = (rebornMaxHealth - statsGrantedPerMagnetize) / statsGrantedPerMagnetize;
+			if(count <= 0)
+				return;
+
+			targetPlayer.MagnetizeCounter = count;
+			await TryRerun();
+		}
+
+		internal async void UpdateTimewarpedMagnanimoose(List<Entity> summonedEntities, int magnanimooseEntityId, bool isPlayerMinion)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
@@ -1002,7 +1122,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal async void UpdateNelliesShipEnchantment(int[] cardDbfids, int attachedToEntityId, bool isPlayerMinion)
 		{
-			if(_input == null || State != BobsBuddyState.Combat)
+			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
@@ -1264,7 +1384,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false));
 				Output = null;
 				return null;
 			}
@@ -1289,7 +1409,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private CombatResult GetLastCombatResult()
 		{
 			if(LastAttackingHero == null)
+			{
+				if(_reconnectCounterAtSnapshot != _reconnectCounter)
+					return CombatResult.Reconnect;
 				return CombatResult.Tie;
+			}
 			if(LastAttackingHero.IsControlledBy(_game.Player.Id))
 				return CombatResult.Win;
 			else
@@ -1383,7 +1507,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			Influx.OnBobsBuddySimulationCompleted(
 				result, Output, _turn, _game.CurrentRegion.ToString(), _input?.Anomaly, terminalCase,
-				isDuos:_game.IsBattlegroundsDuosMatch, isOpposingAkazamzarak: IsOpposingAkazamzarak(),
+				isDuos:_game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), isOpposingAkazamzarak: IsOpposingAkazamzarak(),
 				isOpposingKelThuzad: (_input?.Opponent?.HeroIsKelThuzad ?? false)
 			);
 
@@ -1422,7 +1546,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_input != null && Output != null)
 				Sentry.QueueBobsBuddyTerminalCase(
 					_input, Output, result, _turn, _game.CurrentRegion,
-					isDuos: _game.IsBattlegroundsDuosMatch, isOpposingAkazamzarak: IsOpposingAkazamzarak()
+					isDuos: _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), isOpposingAkazamzarak: IsOpposingAkazamzarak()
 				);
 		}
 

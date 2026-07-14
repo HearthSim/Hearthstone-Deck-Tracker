@@ -178,7 +178,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(game.MercenariesRatingAfter > 0)
 					friendly.MercenariesRatingAfter = game.MercenariesRatingAfter;
 			}
-			else if(playerDeckSize == 30 || playerDeckSize == 40 || game.IsPVPDungeonMatch || game.IsDungeonMatch == true && game.DeckId != Guid.Empty)
+			else if(playerDeckSize == 30 || playerDeckSize == 40
+				|| playerDeckSize == 20 && game.PlayerCards.Any(x => x.Id == HearthDb.CardIds.Collectible.Priest.AzalinaSoulsever)
+				|| game.IsPVPDungeonMatch || game.IsDungeonMatch == true && game.DeckId != Guid.Empty)
 			{
 				friendly.DeckList = game.PlayerCards.Where(x => x.Id != null).SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
 				friendly.Sideboards = game.PlayerSideboards.Select(s =>

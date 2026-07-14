@@ -127,7 +127,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
-	public bool IsThorimRelevant
+	public bool HasTier7HeroPower
 	{
 		get => GetProp(false);
 		set
@@ -137,7 +137,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
-	public bool IsPaglesFishingRodRelevant
+	public bool HasTier7Trinket
 	{
 		get => GetProp(false);
 		set
@@ -146,7 +146,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 			UpdateTavernTier7Visibility();
 		}
 	}
-	public bool IsNorgannonsRewardRelevant
+	public bool HasTier7QuestReward
 	{
 		get => GetProp(false);
 		set
@@ -156,7 +156,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
-	private bool ShowTavernTier7 => Config.Instance.AlwaysShowBattlegroundsTavernTier7 || IsThorimRelevant || IsPaglesFishingRodRelevant || IsNorgannonsRewardRelevant;
+	private bool ShowTavernTier7 => Config.Instance.AlwaysShowBattlegroundsTavernTier7 || HasTier7HeroPower || HasTier7Trinket || HasTier7QuestReward;
 
 	public void UpdateTavernTier7Visibility()
 	{
@@ -455,20 +455,23 @@ public class BattlegroundsMinionsViewModel : ViewModel
 
 	public void OnHeroPowers(IEnumerable<string> heroPowers)
 	{
-		IsThorimRelevant = heroPowers.Any(
+		HasTier7HeroPower = heroPowers.Any(
 			x => x is HearthDb.CardIds.NonCollectible.Neutral.ThorimStormlord_ChooseYourChampion
 		);
 	}
 
 	public void OnTrinkets(IEnumerable<string> trinkets)
 	{
-		IsPaglesFishingRodRelevant = trinkets.Contains(HearthDb.CardIds.NonCollectible.Neutral.PaglesFishingRod);
+		HasTier7Trinket = trinkets.Any(
+			x => x is HearthDb.CardIds.NonCollectible.Neutral.PaglesFishingRod
+				or HearthDb.CardIds.NonCollectible.Neutral.Kaleidoscope
+		);
 	}
 
 	public void OnQuests(IEnumerable<string> quests)
 	{
 		var questList = quests?.ToList() ?? new List<string>();
-		IsNorgannonsRewardRelevant = questList.Contains(HearthDb.CardIds.NonCollectible.Neutral.NorgannonsReward);
+		HasTier7QuestReward = questList.Contains(HearthDb.CardIds.NonCollectible.Neutral.NorgannonsReward);
 	}
 
 	public Visibility UnavailableMinionTypesVisibility => ActiveTier is null || ActiveMinionType != null || ActiveMinionKeyword != null || !UnavailableRaces.Any() ? Visibility.Collapsed : Visibility.Visible;
@@ -498,9 +501,9 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		ActiveMinionKeyword = null;
 		IsDuos = false;
 		Anomaly = null;
-		IsThorimRelevant = false;
-		IsPaglesFishingRodRelevant = false;
-		IsNorgannonsRewardRelevant = false;
+		HasTier7HeroPower = false;
+		HasTier7Trinket = false;
+		HasTier7QuestReward = false;
 	}
 
 	private bool _preloadedCardTiles;

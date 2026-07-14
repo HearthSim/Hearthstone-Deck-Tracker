@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -37,6 +38,7 @@ public class AnimalCompanionCounter : NumericCounter
 
 	public AnimalCompanionCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
+		Counter = 3;
 	}
 
 	public override bool ShouldShow()
@@ -66,6 +68,22 @@ public class AnimalCompanionCounter : NumericCounter
 		   or HearthDb.CardIds.Collectible.Hunter.MigratingElekk
 		   or HearthDb.CardIds.Collectible.Hunter.RoamFree)
 		{
+
+			if(!IsPlayerCounter && tag == GameTag.ZONE && value == (int)Zone.PLAY)
+			{
+				_opponentKnownCompanions.Clear();
+
+				var delta = entity.CardId switch
+				{
+					HearthDb.CardIds.Collectible.Hunter.TamePet => 1,
+					HearthDb.CardIds.Collectible.Hunter.MigratingElekk => 1,
+					HearthDb.CardIds.Collectible.Hunter.RoamFree => 2,
+					_ => 0
+				};
+
+				Counter = Math.Min(Counter + delta, 10);
+			}
+
 			if(tag != GameTag.HIDDEN_SCRIPT_DATA_4 && tag != GameTag.HIDDEN_SCRIPT_DATA_5 && tag != GameTag.HIDDEN_SCRIPT_DATA_6)
 				return;
 

@@ -218,11 +218,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal static Trinket GetTrinketFromEntity(TrinketFactory factory, bool player, Entity entity)
 		{
-			var trinket = factory.Create(entity.CardId ?? "", player);
+			// Use LatestCardId, not CardId. A Lesser/Greater Crystal Ball that has transformed into a
+			// copy of a trinket keeps its stale token CardId (BACON trinket entities are not updated by
+			// CHANGE_ENTITY), while LatestCardId always reflects the copied card.
+			var cardId = entity.Info.LatestCardId ?? entity.CardId ?? "";
+			var trinket = factory.Create(cardId, player);
 			SetScriptDataProperties(trinket, entity);
 
 			// Special handling for replica cathedral
-			if(entity.CardId == NonCollectible.Neutral.ReplicaCathedral)
+			if(cardId == NonCollectible.Neutral.ReplicaCathedral)
 				trinket.ScriptDataNum1 = entity.GetTag((GameTag)4696);
 
 			trinket.game_id = entity.Id;

@@ -113,6 +113,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentLibramReduction(int value);
 		void HandlePlayerHandCostReduction(int value);
 		void HandleOpponentHandCostReduction(int value);
+		void ResetOpponentHandCostReduction();
 		void HandleMercenariesStateChange();
 		void HandleBattlegroundsPlayerTechLevel(int id, int value);
 		void HandleBattlegroundsPlayerTriples(int id, int value);

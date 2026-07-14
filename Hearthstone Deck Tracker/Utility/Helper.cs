@@ -468,30 +468,72 @@ namespace Hearthstone_Deck_Tracker
 			return (T)(object)parent;
 		}
 
-		public static bool IsWindows10()
+		public static string GetWindowsMajorVersionName()
+		{
+			var version = GetWindowsMajorVersion();
+			return version == 0 ? "Unknown" : $"Windows {version}";
+		}
+
+		// matches mixpanel-unity's SystemInfo.operatingSystem format, e.g. "Windows 11 (10.0.22631)"
+		public static string GetFullWindowsVersion()
 		{
 			try
 			{
 				var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
-				return reg != null && ((string)reg.GetValue("ProductName")).Contains("Windows 10");
+				if(reg == null)
+					return "Unknown";
+
+				var build = reg.GetValue("CurrentBuild") as string ?? "";
+
+				string versionNumber;
+				var majorObj = reg.GetValue("CurrentMajorVersionNumber");
+				var minorObj = reg.GetValue("CurrentMinorVersionNumber");
+				if(majorObj is int major && minorObj is int minor)
+					versionNumber = $"{major}.{minor}.{build}";
+				else
+					versionNumber = $"{reg.GetValue("CurrentVersion")}.{build}";
+
+				var name = GetWindowsMajorVersionName();
+				if(name == "Unknown" && versionNumber.Length > 0)
+					name = "Windows";
+
+				return $"{name} ({versionNumber})";
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				return false;
+				return "Unknown";
 			}
 		}
-		public static bool IsWindows8()
+
+		// returns the Windows major version (7, 8, 10, 11) or 0 if it cannot be determined
+		public static int GetWindowsMajorVersion()
 		{
 			try
 			{
 				var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
-				return reg != null && ((string)reg.GetValue("ProductName")).Contains("Windows 8");
+				if(reg == null)
+					return 0;
+				var productName = reg.GetValue("ProductName") as string ?? "";
+				if(productName.Contains("Windows 11"))
+					return 11;
+				if(productName.Contains("Windows 10"))
+				{
+					// ProductName still reports "Windows 10" on Windows 11, distinguish by build
+					if(int.TryParse(reg.GetValue("CurrentBuild") as string, out var build) && build >= 22000)
+						return 11;
+					return 10;
+				}
+				if(productName.Contains("Windows 8"))
+					return 8;
+				if(productName.Contains("Windows 7"))
+					return 7;
+				return 0;
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				Log.Error(ex);
-				return false;
+				return 0;
 			}
 		}
 

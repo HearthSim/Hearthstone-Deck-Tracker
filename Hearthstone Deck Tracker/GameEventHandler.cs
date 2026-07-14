@@ -387,13 +387,16 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private readonly int[] _lastTurnStart = new int[2];
+
+		internal ActivePlayer CurrentTurnActivePlayer => _game.PlayerEntity?.IsCurrentPlayer == true ? ActivePlayer.Player : ActivePlayer.Opponent;
+
 		public void HandleTurnsInPlayChange(Entity entity, int turn)
 		{
-			if(_game.OpponentEntity == null)
+			if(_game.PlayerEntity == null)
 				return;
 			if(entity.IsHero)
 			{
-				var player = _game.OpponentEntity.IsCurrentPlayer ? ActivePlayer.Opponent : ActivePlayer.Player;
+				var player = CurrentTurnActivePlayer;
 				if(_lastTurnStart[(int)player] >= turn)
 					return;
 				_lastTurnStart[(int)player] = turn;
@@ -1549,10 +1552,15 @@ namespace Hearthstone_Deck_Tracker
 						if(chosen.Count == 1)
 						{
 							var hero = chosen.Single();
+							var heroPowers = new List<string>();
 							var heroPower = Database.GetCardFromDbfId(hero.GetTag(GameTag.HERO_POWER), collectible: false)
 								?.Id;
 							if(heroPower is string hp)
-								Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(new List<string>() { hp });
+								heroPowers.Add(hp);
+							var additionalHeroPowerId = hero.GetTag(GameTag.ADDITIONAL_HERO_POWER_ENTITY_1);
+							if(additionalHeroPowerId > 0 && _game.Entities.TryGetValue(additionalHeroPowerId, out var additionalHeroPower))
+								heroPowers.Add(additionalHeroPower.Card.Id);
+							Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(heroPowers);
 						}
 						else
 						{
@@ -1577,8 +1585,9 @@ namespace Hearthstone_Deck_Tracker
 							Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Concat(chosen).Select(x => x.Card.Id));
 							_game.SnapshotChosenTrinket(choice);
 						}
+						// the entity of a chosen hero power is only created after the choice completes, concat the chosen one
 						Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(
-							_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id)
+							_game.Player.Board.Where(x => x.IsHeroPower).Concat(chosen.Where(x => x.IsHeroPower)).Select(x => x.Card.Id)
 						);
 
 						// Quest choice
@@ -2827,6 +2836,12 @@ namespace Hearthstone_Deck_Tracker
 				card.Info.CostReduction += value;
 		}
 
+		void ResetOpponentHandCostReduction()
+		{
+			foreach(var card in _game.Opponent.Hand)
+				card.Info.CostReduction = 0;
+		}
+
 		void HandlePlayerAbyssalCurse(int value) => _game.Player.UpdateAbyssalCurse(value);
 		void HandleOpponentAbyssalCurse(int value) => _game.Opponent.UpdateAbyssalCurse(value);
 
@@ -2915,6 +2930,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentLibramReduction(int value) => HandleOpponentLibramReduction(value);
 		void IGameHandler.HandlePlayerHandCostReduction(int value) => HandlePlayerHandCostReduction(value);
 		void IGameHandler.HandleOpponentHandCostReduction(int value) => HandleOpponentHandCostReduction(value);
+		void IGameHandler.ResetOpponentHandCostReduction() => ResetOpponentHandCostReduction();
 		void IGameHandler.HandleMercenariesStateChange() => HandleMercenariesStateChange();
 		void IGameHandler.HandlePlayerDredge() => HandlePlayerDredge();
 		void IGameHandler.HandlePlayerUnknownCardAddedToDeck() => HandlePlayerUnknownCardAddedToDeck();

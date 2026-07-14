@@ -84,7 +84,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 			try
 			{
 				var count = deck.Cards.Sum(c => c.Count);
-				return IsExactlyWhizbang(deck) || count == 30 || count == 40;
+				return IsExactlyWhizbang(deck) || count == 30 || count == 40
+					|| (count == 20 && deck.Cards.Any(c => c.Id == HearthDb.CardIds.Collectible.Priest.AzalinaSoulsever));
 			}
 			catch(OverflowException e)
 			{
@@ -125,7 +126,12 @@ namespace Hearthstone_Deck_Tracker.Importing
 				var existing = localDecks.Where(x => otherDecks.All(d => d.Id != x.HsId)).Select(x =>
 				{
 					var mainDeckMatch = x.VersionsIncludingSelf.Select(x.GetVersion)
-						.Where(v => v.Cards.Sum(c => c.Count) == 30)
+						.Where(v =>
+						{
+							var count = v.Cards.Sum(c => c.Count);
+							return count == 30
+								|| (count == 20 && v.Cards.Any(c => c.Id == HearthDb.CardIds.Collectible.Priest.AzalinaSoulsever));
+						})
 						.Any(v => deck.Cards.All(c => v.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)));
 					var sideboardMatch = x.VersionsIncludingSelf.Select(x.GetVersion).Where(v =>
 							v.Sideboards.Select(s => s.OwnerCardId).SequenceEqual(deck.Sideboards.Keys))

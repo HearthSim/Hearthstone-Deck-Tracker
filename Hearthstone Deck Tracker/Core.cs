@@ -578,7 +578,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			var top = dredged.Where(x => x.Info.DeckIndex > 0).Select(toCard).ToList();
 			var bottom = dredged.Where(x => x.Info.DeckIndex < 0).Select(toCard).ToList();
-			Overlay.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset, top, bottom, new List<Sideboard>(Game.Player.PlayerSideboardsDict));
+			Overlay.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset, top, bottom, new List<Sideboard>(Game.Player.PlayerSideboardsDict),
+				Game.Player.GetGodfreyCardIdsToDisplay());
 			if(Windows.PlayerWindow.IsVisible)
 				await Windows.PlayerWindow.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset, top, bottom, new List<Sideboard>(Game.Player.PlayerSideboardsDict));
 		}
@@ -598,11 +599,13 @@ namespace Hearthstone_Deck_Tracker
 			if(Game.IsArenaMatch)
 			{
 				var arenaPackages = Game.ArenaPackagesManager.GetOpponentsPackageCards(Game.Opponent.OpponentCardList);
-				Overlay.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), cardWithRelatedCards, arenaPackages, reset);
+				Overlay.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), cardWithRelatedCards, arenaPackages,
+					Game.Opponent.GetGodfreyCardIdsToDisplay(), reset);
 			}
 			else
 			{
-				Overlay.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), cardWithRelatedCards, reset);
+				Overlay.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), cardWithRelatedCards,
+					Game.Opponent.GetGodfreyCardIdsToDisplay(), reset);
 			}
 
 			if(Windows.OpponentWindow.IsVisible)

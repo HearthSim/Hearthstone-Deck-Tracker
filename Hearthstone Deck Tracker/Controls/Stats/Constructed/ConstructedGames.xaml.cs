@@ -95,9 +95,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 
 		private async void ButtonEditNote_OnClick(object sender, RoutedEventArgs e)
 		{
-			if(SelectedGame == null)
+			var game = SelectedGame;
+			if(game == null)
 				return;
-			var settings = new MessageDialogs.Settings {DefaultText = SelectedGame.Note};
+			var settings = new MessageDialogs.Settings {DefaultText = game.Note};
 			string? newNote = null;
 			var window = Window.GetWindow(this);
 			if(window is StatsWindow statsWindow)
@@ -106,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 				newNote = await mainWindow.ShowInputAsync("Note", "", settings);
 			if(newNote == null)
 				return;
-			SelectedGame.Note = newNote;
+			game.Note = newNote;
 			DeckStatsList.Save();
 			DefaultDeckStats.Save();
 		}

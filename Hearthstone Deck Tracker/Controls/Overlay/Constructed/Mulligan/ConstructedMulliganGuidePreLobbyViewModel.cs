@@ -181,7 +181,7 @@ public class ConstructedMulliganGuidePreLobbyViewModel : ViewModel
 					hearthDbDeck.GetHero()?.Class == CardClass.DEATHKNIGHT ||
 					hearthDbDeck.GetCards().Keys.Any(x => x.Entity.GetTag(GameTag.DEATH_KNIGHT_TOURIST) > 0)
 				),
-				CardsDbfIds = hearthDbDeck.CardDbfIds.SelectMany(kvp => Enumerable.Repeat(kvp.Key, kvp.Value)).ToArray(),
+				CardsDbfIds = GameV2.PadMulliganDeckCards(hearthDbDeck.CardDbfIds.SelectMany(kvp => Enumerable.Repeat(kvp.Key, kvp.Value)).ToArray()),
 			};
 		}
 

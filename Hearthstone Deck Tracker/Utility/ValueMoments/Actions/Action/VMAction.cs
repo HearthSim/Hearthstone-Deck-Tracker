@@ -2,7 +2,6 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -24,10 +23,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			SubFranchise = subFranchise;
 			GeneralSettings = new GeneralSettings();
 			PersonalStatsSettings = withPersonalStatsSettings ? new PersonalStatsSettings() : null;
-
-			var rect = Helper.GetHearthstoneMonitorRect();
-			ScreenHeight = rect.Height;
-			ScreenWidth = rect.Width;
 
 			if(maxDailyOccurrences != null)
 			{
@@ -85,14 +80,16 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonConverter(typeof(EnumJsonConverter))]
 		public SubFranchise[]? SubFranchise { get; }
 
+		internal static IVMActionEnvironment Environment { get; set; } = new VMActionEnvironment();
+
 		[JsonProperty("is_authenticated")]
-		public bool IsAuthenticated => HSReplayNetOAuth.IsFullyAuthenticated;
+		public bool IsAuthenticated => Environment.IsAuthenticated;
 
 		[JsonProperty("screen_height")]
-		public int ScreenHeight { get; }
+		public int ScreenHeight => Environment.ScreenHeight;
 
 		[JsonProperty("screen_width")]
-		public int ScreenWidth { get; }
+		public int ScreenWidth => Environment.ScreenWidth;
 
 		[JsonProperty("card_language")]
 		public string CardLanguage => Helper.GetCardLanguage();
@@ -101,7 +98,16 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public string AppearanceLanguage => Config.Instance.Localization.ToString();
 
 		[JsonProperty("os_arch")]
-		public string OsArch => RuntimeInformation.OSArchitecture.ToString().ToLower();
+		public string OsArch => Environment.OsArch;
+
+		[JsonProperty("os_major")]
+		public string OsMajor => Environment.OsMajor;
+
+		[JsonProperty("$os_version")]
+		public string MixpanelOsVersion => Environment.OsVersion;
+
+		[JsonProperty("$app_version_string")]
+		public string MixpanelAppVersionString => Environment.AppVersion;
 
 		[JsonProperty("hdt_plugins")]
 		public string?[] HDTPlugins => PluginManager.Instance.Plugins.Where(x => x.IsEnabled).Select(x => x.Name).ToArray();

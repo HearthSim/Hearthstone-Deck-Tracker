@@ -227,6 +227,7 @@
                         <controls:AnimatedCardList x:Name="ListViewPlayer" Width="217"/>
                         <controls:DeckLens x:Name="PlayerBottomDeckLens" Label="{lex:Loc DeckLens_Label_OnBottom}" />
                         <controls:DeckSideboards x:Name="PlayerSideboards" />
+                        <controls:DeckLens x:Name="PlayerGodfreyCardsDeckLens" Label="{lex:Loc DeckLens_Label_Overdrawn}" />
                         <Canvas Name="CanvasPlayerCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.CardCounterFrame, Source={StaticResource ThemeManager}}">
                             <local:HearthstoneTextBlock x:Name="LblCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
                             <local:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
@@ -243,6 +244,7 @@
                        utility:CardListHelper.AutoScaleCardTiles="True" >
                         <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="15" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
                         <controls:AnimatedCardList x:Name="ListViewOpponent" Width="217" />
+                        <controls:DeckLens x:Name="OpponentGodfreyCardsDeckLens" Label="{lex:Loc DeckLens_Label_Overdrawn}" />
                         <controls:DeckLens x:Name="OpponentPackageCardsDeckLens" Visibility="Collapsed" Icon="Arenasmith" IsPremium="True" />
                         <controls:DeckLens x:Name="OpponentRelatedCardsDeckLens" Label="{lex:Loc Related_Cards}" />
                         <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.CardCounterFrame, Source={StaticResource ThemeManager}}">

@@ -49,8 +49,7 @@ public class BattlegroundsHeroGuideListViewModel : ViewModel
 
 	public async void Update()
 	{
-		if(Core.Game.BattlegroundsHeroPickState.PickedHeroDbfId != null)
-			OnMulliganEnded();
+		UpdateSelectedHero();
 
 		if(HeroGuides != null)
 			return;
@@ -62,6 +61,7 @@ public class BattlegroundsHeroGuideListViewModel : ViewModel
 				return;
 
 			HeroGuides = data.ToDictionary(h => h.Hero);
+			UpdateSelectedHero();
 		}
 		catch(Exception e)
 		{
@@ -79,7 +79,9 @@ public class BattlegroundsHeroGuideListViewModel : ViewModel
 
 	public BattlegroundsHeroGuideViewModel SelectedHero { get; } = new ();
 
-	public void OnMulliganEnded()
+	public void OnMulliganEnded() => UpdateSelectedHero();
+
+	private void UpdateSelectedHero()
 	{
 		var heroDbfid = Core.Game.BattlegroundsHeroPickState.PickedHeroDbfId;
 

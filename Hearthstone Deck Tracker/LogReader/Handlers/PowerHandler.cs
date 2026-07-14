@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -30,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		public void Handle(string logLine, DateTime logLineTime, IHsGameState gameState, IGame game)
 		{
 			var isInsideMetaDataHistoryTarget = false;
+			var isInsideMetaDataBurnedCard = false;
 			var creationTag = false;
 			if(GameEntityRegex.IsMatch(logLine))
 			{
@@ -218,10 +220,31 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.CurrentBlock.EntitiesCreatedInDeck.Add((entity, new HashSet<int>()));
 					}
 
-					if(gameState.CurrentBlock is {  Type: "TRIGGER" } &&
-					   game.GameEntity?.GetTag(GameTag.STEP) == (int)Step.INVALID)
+					// Beatrix cards are added before mulligan step
+					if(block is { Type: "TRIGGER" } &&
+					   game.GameEntity?.GetTag(GameTag.STEP) < (int)Step.BEGIN_MULLIGAN)
 					{
 						gameState.BeatrixCardIds.Add(id);
+					}
+
+					if(block is
+					   {
+						   CardId: NonCollectible.Neutral.GodfreytheBetrayer_GodfreysAtlasEnchantment, Type: "TRIGGER",
+						   TriggerKeyword: "TRIGGER_VISUAL"
+					   } && game.Entities.TryGetValue(block.SourceEntityId, out var blockEntit))
+					{
+						var isControlledByPlayer = blockEntit.IsControlledBy(game.Player.Id);
+						var player = isControlledByPlayer ? game.Player : game.Opponent;
+						player.AddGodfreyNewEntityId(id);
+						if(isControlledByPlayer)
+						{
+							Core.UpdatePlayerCards();
+						}
+						else
+						{
+							Core.UpdateOpponentCards();
+						}
+
 					}
 
 					if(gameState.CurrentBlock != null && (entity.CardId?.ToUpper().Contains("HERO") ?? false))
@@ -296,16 +319,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-						if((gameState.CurrentBlock is { HideShowEntities: true }
-						    && !entity.Info.RevealedOnHistory
-						    && !entity.HasTag(GameTag.DISPLAYED_CREATOR)))
-						{
-							entity.Info.Hidden = true;
-						}
-						else
-						{
-							entity.Info.Hidden = false;
-						}
+
+						var shouldHideForBlock =
+							gameState.CurrentBlock is { HideShowEntities: true }
+							&& !entity.Info.RevealedOnHistory
+							&& !entity.HasTag(GameTag.DISPLAYED_CREATOR);
+
+						var beforeMulligan =
+							game.GameEntity?.GetTag(GameTag.STEP) < (int)Step.BEGIN_MULLIGAN;
+
+						entity.Info.Hidden = shouldHideForBlock || beforeMulligan;
 
 						if(entity.Info.DeckIndex < 0 && gameState.CurrentBlock != null && gameState.CurrentBlock.SourceEntityId != 0)
 						{
@@ -519,11 +542,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.IsInsideMetaDataHistoryTarget = true;
 				isInsideMetaDataHistoryTarget = true;
 			}
+			else if(logLine.Contains("META_DATA - Meta=BURNED_CARD"))
+			{
+				gameState.IsInsideMetaDataBurnedCard = true;
+				isInsideMetaDataBurnedCard = true;
+			}
 			else if(MetaInfoRegex.IsMatch(logLine))
 			{
+				var match = MetaInfoRegex.Match(logLine);
 				if(gameState.IsInsideMetaDataHistoryTarget)
 				{
-					var match = MetaInfoRegex.Match(logLine);
 					try
 					{
 						var entityId = int.Parse(match.Groups["id"].Value);
@@ -560,6 +588,38 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 					isInsideMetaDataHistoryTarget = true;
 				}
+				else if(gameState.IsInsideMetaDataBurnedCard)
+				{
+					try
+					{
+						var entityId = int.Parse(match.Groups["id"].Value);
+						if(game.Entities.TryGetValue(entityId, out var entity))
+						{
+							var isControlledByPlayer = entity.IsControlledBy(game.Player.Id);
+							var activeEffects = game.ActiveEffects.GetVisibleEffects(isControlledByPlayer);
+							if(activeEffects.Any(e =>
+								   e.CardId == NonCollectible.Neutral.GodfreytheBetrayer_GodfreysAtlasEnchantment))
+							{
+								var player = isControlledByPlayer ? game.Player : game.Opponent;
+								player.AddGodfreyCopiedEntityId(entityId);
+								if(isControlledByPlayer)
+								{
+									Core.UpdatePlayerCards();
+								}
+								else
+								{
+									Core.UpdateOpponentCards();
+								}
+							}
+						}
+					}
+					catch(FormatException e)
+					{
+						Log.Info(e.Message);
+					}
+
+					isInsideMetaDataBurnedCard = true;
+				}
 
 			}
 			else if(SubSpellStartRegex.IsMatch(logLine))
@@ -577,6 +637,25 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							var copyOfCardId = lastCardDrawnEntity?.Info.CopyOfCardId ?? lastCardDrawnId.ToString();
 							AddKnownCardId(gameState, "", copyOfCardId: copyOfCardId);
 						}
+
+						if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.GodfreytheBetrayer_GodfreysAtlasEnchantment, Type: "TRIGGER" }
+						   && game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var blockEntity))
+						{
+							var isControlledByPlayer = blockEntity.IsControlledBy(game.Player.Id);
+							var player = isControlledByPlayer ? game.Player : game.Opponent;
+
+							player.ReturnGodfreyCard(entity.Id, entity.GetTag(GameTag.COPIED_FROM_ENTITY_ID));
+
+							if(isControlledByPlayer)
+							{
+								Core.UpdatePlayerCards();
+							}
+							else
+							{
+								Core.UpdateOpponentCards();
+							}
+						}
+
 					}
 				}
 				catch(FormatException e)
@@ -586,6 +665,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 
 			gameState.IsInsideMetaDataHistoryTarget = isInsideMetaDataHistoryTarget;
+			gameState.IsInsideMetaDataBurnedCard = isInsideMetaDataBurnedCard;
 
 			if(logLine.Contains("End Spectator") && !game.IsInMenu)
 				gameState.GameHandler?.HandleGameEnd(false);
@@ -953,6 +1033,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Neutral.Meadowstrider:
 								AddKnownCardId(gameState, Collectible.Neutral.Meadowstrider, 1, DeckLocation.Bottom);
+								break;
+							case Collectible.Warlock.ImpGangStooge:
+								AddKnownCardId(gameState, NonCollectible.Warlock.ImpGangStooge_GrandmotherImpToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Paladin.IdoOfTheThreshfleet:
 								AddKnownCardId(gameState, NonCollectible.Paladin.IdooftheThreshfleet_CallTheThreshfleetToken);
@@ -1457,6 +1540,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Demonhunter.VoidBlast:
 								AddKnownCardId(gameState, Collectible.Demonhunter.VoidSoul);
 								break;
+							case Collectible.Neutral.WizenedTruthseeker:
+								if(actionStartingEntity != null)
+									if(actionStartingEntity.IsControlledBy(game.Player.Id))
+										gameState.GameHandler?.HandleOpponentHandCostReduction(1);
+								break;
 							case NonCollectible.Warrior.EntertheLostCity_LatorviusGazeOfTheCityToken:
 								if(actionStartingEntity?.IsControlledBy(game.Opponent.Id) == true)
 								{
@@ -1683,6 +1771,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							if(summonedDbfIds.Any())
 								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
 									.UpdateNelliesShipEnchantment(summonedDbfIds, nelliesEntity.Id, nelliesEntity.IsControlledBy(game.Player.Id));
+						}
+					}
+					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.Magnanimoose, TriggerKeyword: "DEATHRATTLE" })
+					{
+						var magnanimooseEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
+						if(magnanimooseEntity != null)
+						{
+							var summonedEntities = game.Entities.Values
+								.Where(e =>
+									e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
+									e.GetTag(GameTag.CREATOR) == magnanimooseEntity.Id &&
+									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY
+								).ToList();
+
+							if(summonedEntities.Any())
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+									.UpdateMagnanimooseSummonPoolDuos(summonedEntities, magnanimooseEntity.Id, magnanimooseEntity.IsControlledBy(game.Player.Id));
 						}
 					}
 					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TavishStormpike_LockAndLoad, TriggerKeyword: "TRIGGER_VISUAL" })

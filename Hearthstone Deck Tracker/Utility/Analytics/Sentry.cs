@@ -68,8 +68,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		}
 
 #if(SQUIRREL)
-		private const int MaxBobsBuddyEvents = 10;
-		private const int MaxBobsBuddyExceptions = 1;
+		private const int MaxBobsBuddyEventsPerGame = 5;
+		private const int MaxBobsBuddyExceptionsPerGame = 2;
 		private const int MaxHDTToolsEvents = 10;
 		private static int BobsBuddyEventsSent;
 		private static int BobsBuddyExceptionsSent;
@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		)
 		{
 #if(SQUIRREL)
-			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
+			if(BobsBuddyEventsSent >= MaxBobsBuddyEventsPerGame)
 				return;
 
 			// Clean up data
@@ -168,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #if(SQUIRREL)
 			while(BobsBuddyEvents.Count > 0)
 			{
-				if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
+				if(BobsBuddyEventsSent >= MaxBobsBuddyEventsPerGame)
 				{
 					ClearBobsBuddyEvents();
 					break;
@@ -206,7 +206,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #if(SQUIRREL)
 			while(BobsBuddyEvents.Count > 0)
 			{
-				if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
+				if(BobsBuddyEventsSent >= MaxBobsBuddyEventsPerGame)
 				{
 					ClearBobsBuddyEvents();
 					break;
@@ -230,7 +230,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, bool isDuos)
 		{
 #if(SQUIRREL)
-			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptions)
+			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptionsPerGame)
 				return;
 			if(input == null)
 				return;
@@ -343,6 +343,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			ClearBobsBuddyEvents();
 			ClearHDTToolsEvents();
+#if(SQUIRREL)
+			// Reset the counters after each game
+			BobsBuddyEventsSent = 0;
+			BobsBuddyExceptionsSent = 0;
+#endif
 		}
 
 		private class HDTToolsData
