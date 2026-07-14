@@ -3,6 +3,7 @@
 - Added King Of The Underbelly Band to the decklist.
 - Fixed cases where Commander Beatrix would not add cards to the deck.
 - Fixed Arenasmith Hero Pick Overlay positioning.
+- Fixed Wizened Truthseeker wrongly adding discount to opponent's hand.
 
 ## **Release v1.53.8 - 2026-07-12**
 **Hearthstone**
