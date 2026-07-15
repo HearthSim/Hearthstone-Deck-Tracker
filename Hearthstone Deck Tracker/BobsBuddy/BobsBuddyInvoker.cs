@@ -414,7 +414,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			Hearthstone.Player gamePlayer,
 			BobsBuddyPlayer inputPlayer,
 			Entity? playerEntity,
-			bool friendly
+			bool friendly,
+			bool isDuosTeammate = false
 			)
 		{
 			var playerGameHero = gamePlayer.Hero;
@@ -610,82 +611,94 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				inputPlayer.Hand.AddRange(GetOpponentHandEntities(simulator));
 			}
 
-			var playerAttached = GetAttachedEntities(playerEntity.Id).ToList();
+			// DUOS TEAMMATE (validated/verified against 276 duos combats):
+			// Per-player enchants only ever attach to the two Player entities (Player and Opponent). When the
+			// displayed warband swaps to the teammate's, the game creates FRESH copies of the teammate's per-player
+			// enchants attached to the same Player entity in zone PLAY, and moves the local player's own copies
+			// to SETASIDE; therefore filter to to IsInPlay.
+			var playerAttached = isDuosTeammate
+				? GetAttachedEntities(playerEntity.Id).Where(x => x.IsInPlay).ToList()
+				: GetAttachedEntities(playerEntity.Id).ToList();
+
+			// captured inputPlayer values below are marked as either 'attached' or 'direct'
+			// attached: obtained from GetAttachedEntities (requires isDuosTeammate to work properly in duos games)
+			// direct: comes directly from the playerEntity using GetTag (no special handling needed for duos)
+
 			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.EternalKnight_EternalKnightPlayerEnchantDnt);
 			if(pEternalLegion != null)
-				inputPlayer.EternalKnightCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+				inputPlayer.EternalKnightCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
 			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
 			if(pUndeadBonus != null)
 			{
-				inputPlayer.UndeadAttackBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-				inputPlayer.UndeadHealthBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				inputPlayer.UndeadAttackBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+				inputPlayer.UndeadHealthBonus = pUndeadBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);   // attached
 			}
 
 			var pBeastBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TimewarpedGoldrinn_TimewarpedGoldrinnPlayerEnchantDnt);
 			if(pBeastBonus != null)
 			{
-				inputPlayer.BeastAttackBonus = pBeastBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-				inputPlayer.BeastHealthBonus = pBeastBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				inputPlayer.BeastAttackBonus = pBeastBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+				inputPlayer.BeastHealthBonus = pBeastBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);   // attached
 				Log.Info($"pBeastAttack={inputPlayer.BeastAttackBonus}, pBeastHealth={inputPlayer.BeastHealthBonus}, friendly={friendly}");
 			}
 			var pAncestralAutomaton = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomatonPlayerEnchantDnt);
 			if(pAncestralAutomaton != null)
-				inputPlayer.AncestralAutomatonCounter = pAncestralAutomaton.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+				inputPlayer.AncestralAutomatonCounter = pAncestralAutomaton.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
 			var pBeetle = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.RunedProgenitor_BeetleArmyPlayerEnchantDnt);
 			if(pBeetle != null)
 			{
-				inputPlayer.BeetlesAtkBuff = pBeetle.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-				inputPlayer.BeetlesHealthBuff = pBeetle.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				inputPlayer.BeetlesAtkBuff = pBeetle.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+				inputPlayer.BeetlesHealthBuff = pBeetle.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);   // attached
 				Log.Info($"pBeetleAtk={inputPlayer.BeetlesAtkBuff}, pBeetleHealth={inputPlayer.BeetlesHealthBuff}, friendly={friendly}");
 			}
 			var pWhelpBonus = playerAttached.FirstOrDefault(x =>
 				x.CardId == NonCollectible.Neutral.BurgeoningWhelp_WhelpBuffPlayerEnchantDnt);
 			if(pWhelpBonus != null)
 			{
-				inputPlayer.WhelpAttackBonus = pWhelpBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-				inputPlayer.WhelpHealthBonus = pWhelpBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				inputPlayer.WhelpAttackBonus = pWhelpBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+				inputPlayer.WhelpHealthBonus = pWhelpBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);   // attached
 				Log.Info($"pWhelpAttack={inputPlayer.WhelpAttackBonus}, pWhelpHealth={inputPlayer.WhelpHealthBonus}, friendly={friendly}");
 			}
 
-			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);
+			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);   // direct
 
 			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, friendly={friendly}");
 
-			inputPlayer.PiratesSummonCounter = playerEntity.GetTag((GameTag)2358);
+			inputPlayer.PiratesSummonCounter = playerEntity.GetTag((GameTag)2358);   // direct
 
-			inputPlayer.ResourcesSpentThisGame = playerEntity.GetTag(GameTag.NUM_RESOURCES_SPENT_THIS_GAME);
+			inputPlayer.ResourcesSpentThisGame = playerEntity.GetTag(GameTag.NUM_RESOURCES_SPENT_THIS_GAME);   // direct
 
-			inputPlayer.BeastsSummonCounter = playerEntity.GetTag((GameTag)3962);
+			inputPlayer.BeastsSummonCounter = playerEntity.GetTag((GameTag)3962);   // direct
 
-			inputPlayer.FriendlyMinionsDeadLastCombatCounter = playerEntity.GetTag((GameTag)2717);
+			inputPlayer.FriendlyMinionsDeadLastCombatCounter = playerEntity.GetTag((GameTag)2717);   // direct
 
-			inputPlayer.BattlecryCounter = playerEntity.GetTag((GameTag)3236);
+			inputPlayer.BattlecryCounter = playerEntity.GetTag((GameTag)3236);   // direct
 
 			Log.Info($"pPirates={inputPlayer.PiratesSummonCounter}, pBeasts={inputPlayer.BeastsSummonCounter}, pDeadLastCombat={inputPlayer.FriendlyMinionsDeadLastCombatCounter}, pBattlecry={inputPlayer.BattlecryCounter}, friendly={friendly}");
 
-			inputPlayer.BloodGemAtkBuff = playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFATKVALUE);
-			inputPlayer.BloodGemHealthBuff = playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);
+			inputPlayer.BloodGemAtkBuff = playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFATKVALUE);   // direct
+			inputPlayer.BloodGemHealthBuff = playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);   // direct
 
 			Log.Info($"pBloodGem=+{inputPlayer.BloodGemAtkBuff}/+{inputPlayer.BloodGemHealthBuff}, friendly={friendly}");
 
-			var pTagTransfer = friendly ? null : playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TagtransferplayerenchantDnt && x.IsInPlay);
+			var pTagTransfer = friendly ? null : playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.TagtransferplayerenchantDnt && x.IsInPlay);   // attached (opponent-only transfer enchant)
 			inputPlayer.TavernSpellAtkBuff = playerEntity.HasTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE)
-				? playerEntity.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE)
-				: pTagTransfer?.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE) ?? 0;
+				? playerEntity.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE)   // direct
+				: pTagTransfer?.GetTag(GameTag.TAVERN_SPELL_ATTACK_INCREASE) ?? 0;   // attached (fallback)
 			inputPlayer.TavernSpellHealthBuff = playerEntity.HasTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE)
-				? playerEntity.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE)
-				: pTagTransfer?.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE) ?? 0;
+				? playerEntity.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE)   // direct
+				: pTagTransfer?.GetTag(GameTag.TAVERN_SPELL_HEALTH_INCREASE) ?? 0;   // attached (fallback)
 			Log.Info($"pTavernSpell=+{inputPlayer.TavernSpellAtkBuff}/+{inputPlayer.TavernSpellHealthBuff} (opponentTransferEnchant={pTagTransfer != null}), friendly={friendly}");
 
-			inputPlayer.TavernSpellCounter = playerEntity.GetTag((GameTag)3088);
+			inputPlayer.TavernSpellCounter = playerEntity.GetTag((GameTag)3088);   // direct
 
-			inputPlayer.DeathrattleCounter = playerEntity.GetTag((GameTag)4639);
+			inputPlayer.DeathrattleCounter = playerEntity.GetTag((GameTag)4639);   // direct
 
 			var pHaunted = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.HauntedCarapace_HauntedCarapacePlayerEnchantDnt);
 			if(pHaunted != null)
 			{
-				inputPlayer.HauntedAtkBuff = pHaunted.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-				inputPlayer.HauntedHealthBuff = pHaunted.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+				inputPlayer.HauntedAtkBuff = pHaunted.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+				inputPlayer.HauntedHealthBuff = pHaunted.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);   // attached
 				Log.Info($"pHauntedAtk={inputPlayer.HauntedAtkBuff}, pHauntedHealth={inputPlayer.HauntedHealthBuff}, friendly={friendly}");
 			}
 		}
@@ -724,12 +737,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				{
 					if(_game.DuosWasPlayerHeroModified && DuosInputPlayerTeammate == null && input.PlayerTeammate != null)
 					{
-						SetupInputPlayer(simulator, _game.Player, input.PlayerTeammate, _game.PlayerEntity, true);
+						SetupInputPlayer(simulator, _game.Player, input.PlayerTeammate, _game.PlayerEntity, true, isDuosTeammate: true);
 						DuosInputPlayerTeammate = input.PlayerTeammate;
 					}
 					if(_game.DuosWasOpponentHeroModified && DuosInputOpponentTeammate == null && input.OpponentTeammate != null)
 					{
-						SetupInputPlayer(simulator, _game.Opponent, input.OpponentTeammate, _game.OpponentEntity, false);
+						SetupInputPlayer(simulator, _game.Opponent, input.OpponentTeammate, _game.OpponentEntity, false, isDuosTeammate: true);
 						DuosInputOpponentTeammate = input.OpponentTeammate;
 					}
 				}
