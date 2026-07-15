@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.53.9 - 2026-07-15**
 **Hearthstone**
 - Added King Of The Underbelly Band to the decklist.
 - Fixed cases where Commander Beatrix would not add cards to the deck.
