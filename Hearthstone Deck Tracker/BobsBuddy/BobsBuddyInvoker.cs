@@ -56,6 +56,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		// detection in TagChangeActions can skip the entity lookup for the (vast majority of) combats without one.
 		internal static bool CurrentCombatHasDrBoomsMonster;
 
+		// True in games where an opponent Malorne can be summoned during the current combat (the Bring in the Buddies anomaly)
+		internal static bool CurrentCombatMayHaveOpponentMalorne;
+
 		// Incremented on every detected game reconnect. Each combat snapshot records the current value;
 		// a mismatch at validation time means the reconnect happened after this combat started, so the
 		// absence of the combat's outcome should not be deemed as CombatResult.Tie.
@@ -668,6 +671,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			inputPlayer.ResourcesSpentThisGame = playerEntity.GetTag(GameTag.NUM_RESOURCES_SPENT_THIS_GAME);   // direct
 
+			// The tag is never sent for the opponent — derive the value if there is a Malorne on their board.
+			if(inputPlayer.ResourcesSpentThisGame == 0 && !friendly)
+			{
+				var malorne = gamePlayer.Board.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.ForestLordCenarius_Malorne1
+					|| e.CardId == NonCollectible.Neutral.ForestLordCenarius_Malorne2);
+				if(malorne != null)
+					inputPlayer.ResourcesSpentThisGame = GetResourcesSpentThisGameFromMalorne(malorne, GetAttachedEntities(malorne.Id));   // derived
+			}
+
 			inputPlayer.BeastsSummonCounter = playerEntity.GetTag((GameTag)3962);   // direct
 
 			inputPlayer.FriendlyMinionsDeadLastCombatCounter = playerEntity.GetTag((GameTag)2717);   // direct
@@ -775,6 +787,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			CurrentCombatHasDrBoomsMonster =
 				input.Player.Side.Concat(input.Opponent.Side).Any(m => m.CardID == NonCollectible.Neutral.DrBoomsMonster || m.CardID == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1)
 				|| input.Player.Hand.Concat(input.Opponent.Hand).Any(h => h.Id == NonCollectible.Neutral.DrBoomsMonster || h.Id == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1);
+
+			// Flag checking it's possible to summon Malorne during combat (to optimize redundantly checking in TagChangeAction).
+			CurrentCombatMayHaveOpponentMalorne = input.Anomaly?.CardID == NonCollectible.Neutral.BringInTheBuddies;
 
 			DebugLog("Successfully snapshotted board state");
 		}
@@ -1107,6 +1122,30 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 
 			targetPlayer.MagnetizeCounter = count;
+			await TryRerun();
+		}
+
+		internal async void UpdateOpponentResourcesSpentThisGame(int malorneEntityId, int prevAtk, int atk, bool golden)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+			if(_input.Opponent.ResourcesSpentThisGame > 0)
+				return;
+
+			// The entity's creation also carries as tag change (prevAtk=0 -> atk=base_attack).
+			// The buff we care about is the first ATK change after that (once Power of Ancients is attached).
+			if(prevAtk <= 0)
+				return;
+			if(!GetAttachedEntities(malorneEntityId).Any(x => x.CardId == NonCollectible.Neutral.ForestLordCenarius_PowerOfAncients))
+				return;
+
+			var powerOfAncientsbuff = atk - prevAtk;
+			if(golden)
+				powerOfAncientsbuff /= 2;
+			if(powerOfAncientsbuff <= 0)
+				return;
+
+			_input.Opponent.ResourcesSpentThisGame = powerOfAncientsbuff * 3;
 			await TryRerun();
 		}
 

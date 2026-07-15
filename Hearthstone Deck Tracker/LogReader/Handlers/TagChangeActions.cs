@@ -123,6 +123,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						HealthChange(gameState, id, game, value, prevValue);
 						DrBoomsMonsterRebornHealth(id, value, game);
 						break;
+					case ATK:
+						OpponentMalorneAtkChange(id, value, prevValue, game);
+						break;
 					case MAXRESOURCES:
 						MaxResourcesChange(gameState, id, game, value, prevValue);
 						break;
@@ -277,6 +280,22 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
 				?.UpdateDrBoomsMonsterReborn(entity.GetTag(CREATOR), value, entity.IsControlledBy(game.Player.Id));
+		}
+
+		private void OpponentMalorneAtkChange(int id, int value, int prevValue, IGame game)
+		{
+			if(!BobsBuddyInvoker.CurrentCombatMayHaveOpponentMalorne || game.CurrentGameStats == null)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			if(entity.CardId != NonCollectible.Neutral.ForestLordCenarius_Malorne1
+				&& entity.CardId != NonCollectible.Neutral.ForestLordCenarius_Malorne2)
+				return;
+			if(entity.IsControlledBy(game.Player.Id))
+				return;
+			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+				?.UpdateOpponentResourcesSpentThisGame(id, prevValue, value,
+					entity.CardId == NonCollectible.Neutral.ForestLordCenarius_Malorne2);
 		}
 
 		private void OnTagScriptDataNum1(int id, int value, IGame game, IHsGameState gameState)

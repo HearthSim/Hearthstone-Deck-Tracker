@@ -241,6 +241,24 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return heroEntity?.CardId == NonCollectible.Neutral.KelthuzadTavernBrawl2;
 		}
 
+		// NUM_RESOURCES_SPENT_THIS_GAME is never set for the opponent, but can be inferred from Malorne
+		internal static int GetResourcesSpentThisGameFromMalorne(Entity malorne, IEnumerable<Entity> attachedEntities)
+		{
+			var enchantments = attachedEntities
+				.Where(x => x.CardId != NonCollectible.Neutral.ForestLordCenarius_PowerOfAncients)
+				.ToList();
+			var attackBuffs = enchantments.Sum(x => x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1));
+			var healthBuffs = enchantments.Sum(x => x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2));
+			// GetTag(HEALTH) is the max health, unaffected by damage. Taking the min of the two increases accuracy
+			// in case there is a buff that never appears as an enchantment attached to the minion.
+			var aura = Math.Min(
+				malorne.GetTag(GameTag.ATK) - malorne.Card.Attack - attackBuffs,
+				malorne.GetTag(GameTag.HEALTH) - malorne.Card.Health - healthBuffs);
+			if(malorne.CardId == NonCollectible.Neutral.ForestLordCenarius_Malorne2)
+				aura /= 2;
+			return aura > 0 ? aura * 3 : 0;
+		}
+
 		internal static bool WasHeroPowerActivated(Entity? heroPower)
 			=> heroPower != null && (heroPower.HasTag(GameTag.EXHAUSTED) || heroPower.HasTag(GameTag.BACON_HERO_POWER_ACTIVATED));
 
