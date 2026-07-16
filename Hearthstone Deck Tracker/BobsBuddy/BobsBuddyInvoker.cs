@@ -877,29 +877,67 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 			}
 			if(tryDuos)
-				UpdateDuosLockAndLoadHeroPower(attachedEntity.Card.DbfId);
+				UpdateDuosLockAndLoadHeroPower(attachedEntity);
 			if(tryRerun)
 				await TryRerun();
 		}
 
-		internal async void UpdateDuosLockAndLoadHeroPower(int cardDbfid)
+		internal async void UpdateDuosLockAndLoadHeroPower(Entity firedMinionEntity)
 		{
 			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
-			var tavishLockAndLoad = _input.Player.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
-			if(tavishLockAndLoad == null && _input.PlayerTeammate != null)
-				tavishLockAndLoad = _input.PlayerTeammate.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
+			var creatorId = firedMinionEntity.GetTag(GameTag.CREATOR);
+			var sides = new (IEnumerable<HeroPowerData>? heroPowers, bool friendly)[]
+			{
+				(_input.Player.HeroPowers, true),
+				(_input.PlayerTeammate?.HeroPowers, true),
+				(_input.Opponent.HeroPowers, false),
+				(_input.OpponentTeammate?.HeroPowers, false),
+			};
+
+			HeroPowerData? tavishLockAndLoad = null;
+			var friendly = true;
+			foreach(var (heroPowers, sideFriendly) in sides)
+			{
+				var match = heroPowers?.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad && hp.game_id == creatorId);
+				if(match != null)
+				{
+					tavishLockAndLoad = match;
+					friendly = sideFriendly;
+					break;
+				}
+			}
 			if(tavishLockAndLoad == null)
-				tavishLockAndLoad = _input.Opponent.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
-			if(tavishLockAndLoad == null && _input.OpponentTeammate != null)
-				tavishLockAndLoad = _input.OpponentTeammate.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
+			{
+				foreach(var (heroPowers, sideFriendly) in sides)
+				{
+					var match = heroPowers?.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.TavishStormpike_LockAndLoad);
+					if(match != null)
+					{
+						tavishLockAndLoad = match;
+						friendly = sideFriendly;
+						break;
+					}
+				}
+			}
 			if(tavishLockAndLoad == null)
 				return;
 			if(tavishLockAndLoad.AttachedMinion != null || tavishLockAndLoad.Data3 > 0)
 				return;
 
-			tavishLockAndLoad.Data3 = cardDbfid;
+			// COPIED_FROM_ENTITY_ID capture (TagChangeActions) fires before the fired minion attacks,
+			// so its stats are clean. The BLOCK_END capture (PowerHandler) can run after the shot, and the minion
+			// may carry damage or already be dead, and the simulation replays the shot, if so, fall back to dbf_id.
+			if(firedMinionEntity.GetTag(GameTag.DAMAGE) == 0 && firedMinionEntity.IsInZone(Zone.PLAY))
+			{
+				tavishLockAndLoad.AttachedMinion = GetMinionFromEntity(new Simulator(), friendly, firedMinionEntity, GetAttachedEntities(firedMinionEntity.Id));
+				tavishLockAndLoad.AttachedMinionCapturedDuringCombat = true;
+			}
+			else if(tavishLockAndLoad.Data3 == 0)
+				tavishLockAndLoad.Data3 = firedMinionEntity.Card.DbfId;
+			else
+				return;
 
 			await TryRerun();
 		}
