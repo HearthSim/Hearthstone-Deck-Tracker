@@ -71,13 +71,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 			}
 
-			//Vanilla health
-			if(minion.golden && MinionFactory.cardIdsWithoutPremiumImplementations.Contains(cardId))
-			{
-				minion.vanillaAttack *= 2;
-				minion.vanillaHealth *= 2;
-			}
-
 			foreach(var attached in attachedEntities)
 			{
 				switch(attached.CardId)
