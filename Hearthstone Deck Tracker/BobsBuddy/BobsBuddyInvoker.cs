@@ -735,8 +735,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			try
 			{
-				if(_input == null)
+				// In solos, each invoker instance snapshots exactly once, and _input=null here is the expected case.
+				// Only a duos teammate re-snapshot will legitimately arrive with _input set.
+				// However, a non-null solos _input CAN occur from a third-party plugin that saves/restores input
+				// mid-combat. Allowing setup to always proceed for solos, regardless of _input, solves this.
+				if(_input == null || !_game.IsBattlegroundsDuosMatch)
 				{
+					if(_input != null)
+						DebugLog("Input was already set before this instance's first snapshot; Rebuilding the input from the current game state.");
 					SetupInputPlayer(simulator, _game.Player, input.Player, _game.PlayerEntity, true);
 					SetupInputPlayer(simulator, _game.Opponent, input.Opponent, _game.OpponentEntity, false);
 					DuosInputPlayer = input.Player;
