@@ -332,16 +332,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateLockAndLoadHeroPower(entity, entity.IsControlledBy(game.Opponent.Id));
 			}
 
+			// Sandy transforms into a copy of the teammate's highest-Health minion. Capture from Sandy's own
+			// PLAY entity: when COPIED_FROM_ENTITY_ID lands on it.
+			// *Note: The SETASIDE copy source is unusable for an opponent-side Sandy: it is created hidden
+			// (no CARDTYPE/CREATOR) and only revealed after the transform, with its zone already REMOVEDFROMGAME.
 			if(
 				game.CurrentGameMode == GameMode.Battlegrounds &&
 				gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Sandy &&
 				entity.IsMinion &&
-				gameState.CurrentBlock?.SourceEntityId == entity.GetTag(CREATOR) &&
-				entity.IsInZone(SETASIDE)
+				gameState.CurrentBlock?.SourceEntityId == entity.Id &&
+				entity.IsInZone(PLAY) &&
+				value != 0
 			)
 			{
 				if(game.CurrentGameStats != null)
-					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateSandyTransformDuos(entity, entity.GetTag(CREATOR));
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateSandyTransformDuos(entity);
 			}
 
 			// Glorious Gloop transforms the chosen minion into the teammate's highest-Tier minion. Capture the
