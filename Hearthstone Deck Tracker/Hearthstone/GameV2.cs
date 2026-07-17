@@ -155,8 +155,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			: CurrentGameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(CurrentGameStats?.OpponentHeroCardId);
 
 		public bool IsBattlegroundsMatch => IsBattlegroundsSoloMatch || IsBattlegroundsDuosMatch;
-		public bool IsBattlegroundsSoloMatch =>
-			CurrentGameType is
+		public bool IsBattlegroundsSoloMatch => IsSoloBattlegroundsGameType(CurrentGameType);
+
+		private static bool IsSoloBattlegroundsGameType(GameType gameType) =>
+			gameType is
 				GameType.GT_BATTLEGROUNDS or
 				GameType.GT_BATTLEGROUNDS_FRIENDLY or
 				GameType.GT_BATTLEGROUNDS_AI_VS_AI or
@@ -259,19 +261,57 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		private GameType _currentGameType;
+		private bool _gameTypeDuosCorrectionCheckCompleted;
 		public GameType CurrentGameType
 		{
 			get
 			{
 				if(_currentGameType != GameType.GT_UNKNOWN)
+				{
+					if(_gameTypeDuosCorrectionCheckCompleted)
+						return _currentGameType;
+					if(IsSoloBattlegroundsGameType(_currentGameType))
+						TryCorrectMisreadSoloGameType();
 					return _currentGameType;
+				}
 				if(_currentMode == Mode.GAMEPLAY)
 				{
 					_currentGameType = (GameType)HearthMirror.Reflection.Client.GetGameType();
+					if(_gameTypeDuosCorrectionCheckCompleted)
+						return _currentGameType;
+					if(IsSoloBattlegroundsGameType(_currentGameType))
+						TryCorrectMisreadSoloGameType();
 					return _currentGameType;
 				}
 				return GameType.GT_UNKNOWN;
 			}
+		}
+
+		/// <summary>
+		/// The mirror can report a stale solo game type for a Duos game (confirmed to be a longstanding issue
+		/// via Sentry). The likely cause, the previous game's game_type was read during the menu-to-gameplay
+		/// transition, which then locks the game into solo mode.
+		/// The fix: check all player entities for any nonzero BACON_DUO_TEAM_ID tag.
+		/// </summary>
+		private void TryCorrectMisreadSoloGameType()
+		{
+			var duoGameTypeEquivalent = _currentGameType switch
+			{
+				GameType.GT_BATTLEGROUNDS => GameType.GT_BATTLEGROUNDS_DUO,
+				GameType.GT_BATTLEGROUNDS_FRIENDLY => GameType.GT_BATTLEGROUNDS_DUO_FRIENDLY,
+				GameType.GT_BATTLEGROUNDS_AI_VS_AI => GameType.GT_BATTLEGROUNDS_DUO_AI_VS_AI,
+				GameType.GT_BATTLEGROUNDS_PLAYER_VS_AI => GameType.GT_BATTLEGROUNDS_DUO_VS_AI,
+			};
+			var hasDuoTeamId = Entities.Values
+				.Any(e => e.HasTag(GameTag.PLAYER_ID) && e.GetTag(GameTag.BACON_DUO_TEAM_ID) > 0);
+			if(hasDuoTeamId)
+			{
+				Log.Warn($"Correcting misread solo game type {_currentGameType} to {duoGameTypeEquivalent} (player entity has BACON_DUO_TEAM_ID)");
+				_currentGameType = duoGameTypeEquivalent;
+				_gameTypeDuosCorrectionCheckCompleted = true;
+			}
+			else if(SetupDone)  // All player entities now exist, the game is genuinely solo.
+				_gameTypeDuosCorrectionCheckCompleted = true;
 		}
 
 		public MatchInfo MatchInfo => _matchInfo ??= HearthMirror.Reflection.Client.GetMatchInfo();
@@ -380,8 +420,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal async void CacheGameType()
 		{
-			while((_currentGameType = (GameType)HearthMirror.Reflection.Client.GetGameType()) == GameType.GT_UNKNOWN)
+			GameType gameType;
+			while((gameType = (GameType)HearthMirror.Reflection.Client.GetGameType()) == GameType.GT_UNKNOWN)
 				await Task.Delay(1000);
+
+			if(!_gameTypeDuosCorrectionCheckCompleted)  // Do not let a late mirror overwrite a bg game type already corrected by TryCorrectMisreadSoloGameType.
+				_currentGameType = gameType;
 		}
 
 		internal void CacheSpectator() => _spectator = HearthMirror.Reflection.Client.IsSpectating();
@@ -426,6 +470,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_spectator = null;
 			_currentGameMode = GameMode.None;
 			_currentGameType = GameType.GT_UNKNOWN;
+			_gameTypeDuosCorrectionCheckCompleted = false;
 			_currentFormatType = FormatType.FT_UNKNOWN;
 			if(!IsInMenu && resetStats)
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
