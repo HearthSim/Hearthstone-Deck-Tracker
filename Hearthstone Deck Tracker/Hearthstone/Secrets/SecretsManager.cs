@@ -239,6 +239,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					}
 
 				}
+				else if(creator is { CardId: HearthDb.CardIds.NonCollectible.Mage.TheForbiddenSequence_TheOriginStoneToken })
+				{
+					var storedIds = secret.Entity.Info.StoredCardIds;
+
+					if(!storedIds.IsEmpty())
+					{
+						// The Origin Stone revealed the copy it cast, so the exact secret is known.
+						secretsCreated.AddRange(GetFilteredSecrets(secret, storedIds.ToHashSet()));
+					}
+					else if(TryGetOriginStoneSourceGenerator(secret) is { } sourceGenerator)
+					{
+						var creatableSecrets = GetCreatableSecretsFromGenerator(sourceGenerator, gameMode, format);
+						secretsCreated.AddRange(GetFilteredSecrets(secret, creatableSecrets));
+					}
+					else
+					{
+						secretsCreated.AddRange(GetFilteredSecrets(secret, availableSecrets));
+					}
+				}
 				else if (creator != null && _relatedCardsManager.CardGeneratorCards.TryGetValue(creator.CardId ?? "", out var generator))
 				{
 					var creatableSecrets = GetCreatableSecretsFromGenerator(generator, gameMode, format);
@@ -376,6 +395,31 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		private Entity? TryGetDrawer(Secret secret) =>
 			Game.Opponent.RevealedEntities.FirstOrDefault(e => e.Id == secret.Entity.Info.GetDrawerId());
+
+		private ICardGenerator? TryGetOriginStoneSourceGenerator(Secret secret)
+		{
+			// The Origin Stone casts copies of unchosen discover options: it reveals a copy of the
+			// option immediately before the cast entity is created. Trace that copy back to the
+			// discover source to reuse its generator pool.
+			var revealedCast = Game.Opponent.RevealedEntities
+				.Where(e => e.Id < secret.Entity.Id && e.IsSecret
+							&& e.GetTag(GameTag.COPIED_FROM_ENTITY_ID) > 0
+							&& e.IsInZone(Zone.SETASIDE))
+				.OrderByDescending(e => e.Id)
+				.FirstOrDefault();
+			if(revealedCast is null)
+				return null;
+
+			var discoverOption = Game.Opponent.RevealedEntities
+				.FirstOrDefault(e => e.Id == revealedCast.GetTag(GameTag.COPIED_FROM_ENTITY_ID));
+			var discoverSource = Game.Opponent.RevealedEntities
+				.FirstOrDefault(e => e.Id == discoverOption?.GetTag(GameTag.CREATOR));
+
+			return discoverSource?.CardId is { } generatorCardId
+				   && _relatedCardsManager.CardGeneratorCards.TryGetValue(generatorCardId, out var sourceGenerator)
+				? sourceGenerator
+				: null;
+		}
 
 		private HashSet<string> GetCreatableSecretsFromGenerator(ICardGenerator generator, GameType gameMode, FormatType format)
 		{

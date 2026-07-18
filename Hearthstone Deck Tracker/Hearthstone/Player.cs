@@ -779,6 +779,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 
 				}
+				else if(creator.CardId == NonCollectible.Mage.TheForbiddenSequence_TheOriginStoneToken)
+				{
+					// The Origin Stone reveals a copy of each unchosen discover option immediately
+					// before casting it, so the secret it puts into play is public information.
+					var revealedCast = _game.Entities.Values
+						.Where(e => e.Id < entity.Id && e.IsSecret && e.HasCardId
+									&& e.IsControlledBy(entity.GetTag(GameTag.CONTROLLER))
+									&& e.GetTag(GameTag.COPIED_FROM_ENTITY_ID) > 0
+									&& e.IsInZone(Zone.SETASIDE))
+						.OrderByDescending(e => e.Id)
+						.FirstOrDefault();
+					if(revealedCast?.CardId is not null)
+						entity.Info.StoredCardIds.Add(revealedCast.CardId);
+				}
 			}
 		}
 

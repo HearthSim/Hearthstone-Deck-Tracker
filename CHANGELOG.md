@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**
+- Improve secret tracker with secrets created by Mage's Quest reward The Origin Stone.
+
 ## **Release v1.53.10 - 2026-07-18**
 **Hearthstone**
 - Fixed Related Cards and Counters not considering transformed cards, such as Hex's frog.

@@ -870,5 +870,141 @@ namespace HDTTests.Hearthstone.Secrets
 			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.IceBarrier == c.Id && c.Count == 1));
 
 		}
+
+		[TestMethod]
+		public void CreatedByTheOriginStone_KnownCard()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_WILD
+			};
+			game.Player = new Player(game, true) { Id = 1 };
+			game.Opponent = new Player(game, false) { Id = 2 };
+
+			var creator = new Entity(10);
+			creator.CardId = HearthDb.CardIds.NonCollectible.Mage.TheForbiddenSequence_TheOriginStoneToken;
+			creator.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			game.Entities.Add(10, creator);
+
+			// The Origin Stone revealed a copy of Mana Bind before casting it,
+			// captured into StoredCardIds by Player.CreateInSecret.
+			var createdSecret = new Entity(30);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.CREATOR, 10);
+			createdSecret.Info.Created = true;
+			createdSecret.Info.StoredCardIds.Add(HearthDb.CardIds.Collectible.Mage.ManaBind);
+			game.Entities.Add(30, createdSecret);
+
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// We should know the secret is Mana Bind
+			Assert.AreEqual(1, cards.Count);
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.ManaBind == c.Id && c.Count == 1));
+		}
+
+		[TestMethod]
+		public void CreatedByTheOriginStone_FallbackToDiscoverSourceGenerator()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_WILD
+			};
+			game.Player = new Player(game, true) { Id = 1 };
+			game.Opponent = new Player(game, false) { Id = 2 };
+
+			var alterTime = new Entity(20);
+			alterTime.CardId = HearthDb.CardIds.Collectible.Mage.AlterTime;
+			alterTime.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			game.Entities.Add(20, alterTime);
+
+			// Unchosen discover option, revealed when the discover resolved
+			var discoverOption = new Entity(25);
+			discoverOption.CardId = HearthDb.CardIds.Collectible.Mage.ManaBind;
+			discoverOption.SetTag(GameTag.SECRET, 1);
+			discoverOption.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			discoverOption.SetTag(GameTag.CREATOR, 20);
+			discoverOption.SetTag(GameTag.ZONE, (int)Zone.GRAVEYARD);
+			game.Entities.Add(25, discoverOption);
+
+			var creator = new Entity(10);
+			creator.CardId = HearthDb.CardIds.NonCollectible.Mage.TheForbiddenSequence_TheOriginStoneToken;
+			creator.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			game.Entities.Add(10, creator);
+
+			// Copy of the unchosen option, revealed by The Origin Stone before casting it
+			var revealedCast = new Entity(30);
+			revealedCast.CardId = HearthDb.CardIds.Collectible.Mage.ManaBind;
+			revealedCast.SetTag(GameTag.SECRET, 1);
+			revealedCast.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			revealedCast.SetTag(GameTag.COPIED_FROM_ENTITY_ID, 25);
+			revealedCast.SetTag(GameTag.ZONE, (int)Zone.SETASIDE);
+			game.Entities.Add(30, revealedCast);
+
+			// StoredCardIds was not captured, e.g. HDT (re)started mid-game
+			var createdSecret = new Entity(40);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.CREATOR, 10);
+			createdSecret.Info.Created = true;
+			game.Entities.Add(40, createdSecret);
+
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// Only Alter Time's pool (wild/classic-only Arcane spells) should be included
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.ManaBind == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.SplittingImage == c.Id && c.Count == 1));
+			// Counterspell has a Core version, so it is not exclusive to the past
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+			// Non-Arcane secrets should not be included
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.IceBarrier == c.Id && c.Count == 1));
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
+		}
+
+		[TestMethod]
+		public void CreatedByTheOriginStone_NoInfo()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_WILD
+			};
+			game.Player = new Player(game, true) { Id = 1 };
+			game.Opponent = new Player(game, false) { Id = 2 };
+
+			var creator = new Entity(10);
+			creator.CardId = HearthDb.CardIds.NonCollectible.Mage.TheForbiddenSequence_TheOriginStoneToken;
+			creator.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			game.Entities.Add(10, creator);
+
+			var createdSecret = new Entity(30);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.CREATOR, 10);
+			createdSecret.Info.Created = true;
+			game.Entities.Add(30, createdSecret);
+
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// Without any information about the cast copy, all available secrets remain possible
+			Assert.AreEqual(Mage.All.Count, cards.Count);
+		}
 	}
 }
