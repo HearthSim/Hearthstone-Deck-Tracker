@@ -52,7 +52,9 @@ public abstract class BaseCounter : INotifyPropertyChanged
 
 	private bool InDeckOrKnown(string cardId)
 	{
-		var deckContains = DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId) ?? false;
+		var activeDeck = DeckList.Instance.ActiveDeck;
+		var deckContains = activeDeck?.Cards.Any(x => x.Id == cardId) ?? false;
+		var sideboardsContain = activeDeck?.Sideboards.Any(sb => sb.Cards.Any(x => x.Id == cardId)) ?? false;
 
 		var playerEntitiesContains = Game.Player.PlayerEntities.Any(x =>
 			x.CardId == cardId &&
@@ -63,7 +65,7 @@ public abstract class BaseCounter : INotifyPropertyChanged
 
 		var discoverEntitiesContains = Game.Player.OfferedEntities.Any(x => x.CardId == cardId);
 
-		return deckContains || playerEntitiesContains || discoverEntitiesContains;
+		return deckContains || sideboardsContain || playerEntitiesContains || discoverEntitiesContains;
 	}
 
 	protected bool InPlayerDeckOrKnown(string[] cardIds) => cardIds.Any(InDeckOrKnown);
