@@ -946,7 +946,7 @@ public class ArenaPickHelperViewModel : ViewModel
 		set => SetProp(value);
 	}
 
-	private const double ScrollBottomPadding = 0.1275;
+	private const double ScrollBottomPadding = 0.8275;
 	private const double VisibleScrollItems = 21.5;
 	private const double ScrollItemHeight = 40.75;
 	private const double RedraftPanelHeightPx = 251.0;

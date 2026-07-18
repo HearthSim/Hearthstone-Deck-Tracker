@@ -1,6 +1,7 @@
 ## **Unreleased**
 **Hearthstone**
 - Improve secret tracker with secrets created by Mage's Quest reward The Origin Stone.
+- Fix Arenasmith tiles positioning in hover and redraft.
 
 ## **Release v1.53.10 - 2026-07-18**
 **Hearthstone**
