@@ -1,3 +1,24 @@
+## **Release v1.53.10 - 2026-07-18**
+**Hearthstone**
+- Fixed Related Cards and Counters not considering transformed cards, such as Hex's frog.
+
+**Bob's Buddy**:
+- Fixed incorrect simulation results where:
+- Twilight Hatching with reborn landed in the wrong position
+- Bring in the Buddies Anomlay was missing buddies in the summon pool
+- Opponent trinkets start-of-combat trigger order was incorrect
+- Redemption secret was redeeming the wrong minion inside an "attacks immediately" context
+- Some Build-An-Undead minion choices that cannot be made golden were
+- Cards with "Double stats" on the same stats trigger were overdoubling
+- Illidan hero power was not always selecting the correct first attacker in regular combat
+- Flesheating Ghoul was failing to trigger on killed opponent minions
+- A Malorne summoned mid-combat could have incorrect stats
+
+Duos:
+- Fixed Sandy so its transform is detected and updated mid-combat
+- Improved Lock and Load detection at start-of-combat
+- Fixed a infrequent scenario where a duos game was detected as the wrong game type
+
 ## **Release v1.53.9 - 2026-07-15**
 **Hearthstone**
 - Added King Of The Underbelly Band to the decklist.
