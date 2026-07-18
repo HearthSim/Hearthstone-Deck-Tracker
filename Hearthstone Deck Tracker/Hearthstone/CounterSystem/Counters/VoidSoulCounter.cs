@@ -40,7 +40,7 @@ public class VoidSoulCounter: NumericCounter
 		if(!Game.IsTraditionalHearthstoneMatch)
 			return;
 
-		if(entity.CardId != HearthDb.CardIds.Collectible.Demonhunter.VoidSoul)
+		if(entity.Info.LatestCardId != HearthDb.CardIds.Collectible.Demonhunter.VoidSoul)
 			return;
 
 		if(entity.IsControlledBy(Game.Player.Id) != IsPlayerCounter)

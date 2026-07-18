@@ -50,7 +50,7 @@ public class PogoHopperCounter : NumericCounter
 		if(!isCurrentController)
 			return;
 
-		if(entity.Card.Id != HearthDb.CardIds.Collectible.Rogue.PogoHopper)
+		if(entity.LatestCard.Id != HearthDb.CardIds.Collectible.Rogue.PogoHopper)
 			return;
 
 		Counter++;

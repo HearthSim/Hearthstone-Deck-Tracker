@@ -162,6 +162,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		[JsonIgnore]
 		public Card Card => _cachedCard ??= new Card(CardId ?? "");
 
+		/// <Summary>
+		/// Unlike Card, this reflects in-place transforms via CHANGE_ENTITY (e.g. Hex, shifting cards),
+		/// where CardId intentionally keeps the originally revealed card for deck-list attribution.
+		/// </Summary>
+		[JsonIgnore]
+		public Card LatestCard => Info.LatestCardId == CardId ? Card : new Card(Info.LatestCardId ?? "");
+
 		[JsonIgnore]
 		public int Attack => GetTag(GameTag.ATK);
 

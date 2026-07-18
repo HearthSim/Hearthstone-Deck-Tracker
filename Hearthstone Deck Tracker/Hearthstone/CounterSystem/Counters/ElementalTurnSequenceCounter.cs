@@ -58,7 +58,7 @@ public class ElementalTurnSequenceCounter : NumericCounter
 		if(!isCurrentController)
 			return;
 
-		if(!entity.Card.IsElemental())
+		if(!entity.LatestCard.IsElemental())
 			return;
 
 		if(PlayedThisTurn)

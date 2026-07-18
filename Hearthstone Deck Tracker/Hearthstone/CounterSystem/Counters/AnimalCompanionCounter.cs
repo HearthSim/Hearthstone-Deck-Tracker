@@ -64,7 +64,7 @@ public class AnimalCompanionCounter : NumericCounter
 		if(isPlayerController != IsPlayerCounter)
 			return;
 
-		if(entity.CardId is HearthDb.CardIds.Collectible.Hunter.TamePet
+		if(entity.Info.LatestCardId is HearthDb.CardIds.Collectible.Hunter.TamePet
 		   or HearthDb.CardIds.Collectible.Hunter.MigratingElekk
 		   or HearthDb.CardIds.Collectible.Hunter.RoamFree)
 		{
@@ -73,7 +73,7 @@ public class AnimalCompanionCounter : NumericCounter
 			{
 				_opponentKnownCompanions.Clear();
 
-				var delta = entity.CardId switch
+				var delta = entity.Info.LatestCardId switch
 				{
 					HearthDb.CardIds.Collectible.Hunter.TamePet => 1,
 					HearthDb.CardIds.Collectible.Hunter.MigratingElekk => 1,
@@ -133,13 +133,13 @@ public class AnimalCompanionCounter : NumericCounter
 		if(!RelatedCards.Contains(gameState.CurrentBlock?.CardId))
 			return false;
 
-		if(!entity.Card.IsBeast())
+		if(!entity.LatestCard.IsBeast())
 			return false;
 
-		if(entity.Card.Cost != Counter)
+		if(entity.LatestCard.Cost != Counter)
 			return false;
 
-		_opponentKnownCompanions.Add(entity.Card.Id);
+		_opponentKnownCompanions.Add(entity.LatestCard.Id);
 
 		return true;
 	}

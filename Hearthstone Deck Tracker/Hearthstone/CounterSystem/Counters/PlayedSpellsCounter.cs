@@ -69,7 +69,7 @@ public class PlayedSpellsCounter : NumericCounter
 		if(!entity.IsSpell)
 			return;
 
-		if(_ignoredCards.Contains(entity.CardId))
+		if(_ignoredCards.Contains(entity.Info.LatestCardId))
 			return;
 
 		var controller = entity.GetTag(GameTag.CONTROLLER);

@@ -61,10 +61,10 @@ public class TimethiefRafaamCounter : NumericCounter
 		if(!isCurrentController)
 			return;
 
-		if(!_rafaams.Contains(entity.Card.Id) || _playedRafaams.ContainsValue(entity.Card.Id))
+		if(!_rafaams.Contains(entity.LatestCard.Id) || _playedRafaams.ContainsValue(entity.LatestCard.Id))
 			return;
 
-		_playedRafaams.Add(entity.Card.Cost, entity.Card.Id);
+		_playedRafaams.Add(entity.LatestCard.Cost, entity.LatestCard.Id);
 		Counter++;
 	}
 }

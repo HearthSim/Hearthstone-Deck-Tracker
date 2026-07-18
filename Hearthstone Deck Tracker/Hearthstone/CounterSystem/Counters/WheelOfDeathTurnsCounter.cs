@@ -33,7 +33,7 @@ public class WheelOfDeathTurnsCounter : NumericCounter
 
 		if(tag == GameTag.ZONE &&
 		   value == (int)Zone.PLAY &&
-		   entity.Card.Id == HearthDb.CardIds.Collectible.Warlock.WheelOfDeath &&
+		   entity.LatestCard.Id == HearthDb.CardIds.Collectible.Warlock.WheelOfDeath &&
 		   entity.GetTag(GameTag.CONTROLLER) == (IsPlayerCounter ? Game.Player.Id : Game.Opponent.Id))
 		{
 			IsWheelOfDeathInPlay = true;

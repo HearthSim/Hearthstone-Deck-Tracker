@@ -30,7 +30,7 @@ public class DiveTheGolakkaDepthsBuffCounter : StatsCounter
 		if(!Game.IsTraditionalHearthstoneMatch)
 			return;
 
-		if(entity.Card.Id != HearthDb.CardIds.Collectible.Paladin.DiveTheGolakkaDepths)
+		if(entity.LatestCard.Id != HearthDb.CardIds.Collectible.Paladin.DiveTheGolakkaDepths)
 			return;
 
 		if(entity.IsControlledBy(Game.Player.Id) != IsPlayerCounter)

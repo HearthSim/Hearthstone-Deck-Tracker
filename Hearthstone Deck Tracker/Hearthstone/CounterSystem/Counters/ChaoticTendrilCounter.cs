@@ -45,7 +45,7 @@ public class ChaoticTendrilCounter : NumericCounter
 		if(!isCurrentController)
 			return;
 
-		if(entity.Card.Id != HearthDb.CardIds.Collectible.Neutral.ChaoticTendril)
+		if(entity.LatestCard.Id != HearthDb.CardIds.Collectible.Neutral.ChaoticTendril)
 			return;
 
 		Counter++;

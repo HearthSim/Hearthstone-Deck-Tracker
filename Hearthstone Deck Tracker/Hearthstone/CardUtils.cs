@@ -99,11 +99,13 @@ public static class CardUtils
 
 	public static Card? GetProcessedCardFromEntity(Entity entity, Player player)
 	{
-		if(IsStarship(entity.CardId))
+		// LatestCardId, not CardId: the entity may have transformed in place (e.g. Hex via CHANGE_ENTITY)
+		var cardId = entity.Info.LatestCardId;
+		if(IsStarship(cardId))
 		{
 			return HandleStarship(entity, player);
 		}
-		var card = Database.GetCardFromId(entity.CardId);
+		var card = Database.GetCardFromId(cardId);
 		return card?.HandleZilliax3000(player);
 	}
 

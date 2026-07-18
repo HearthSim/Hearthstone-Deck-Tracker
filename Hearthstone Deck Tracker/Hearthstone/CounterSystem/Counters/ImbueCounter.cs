@@ -60,7 +60,7 @@ public class ImbueCounter : NumericCounter
 		if(!isCounterFromController)
 			return;
 
-		if(entity.CardId == HearthDb.CardIds.Collectible.Druid.HamuulRunetotem &&
+		if(entity.Info.LatestCardId == HearthDb.CardIds.Collectible.Druid.HamuulRunetotem &&
 		   tag == GameTag.HAS_ACTIVATE_POWER && value == 1
 		)
 		{

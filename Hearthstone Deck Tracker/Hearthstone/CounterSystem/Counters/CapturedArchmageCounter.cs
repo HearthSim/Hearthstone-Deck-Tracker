@@ -38,7 +38,7 @@ public class CapturedArchmageCounter : NumericCounter
 		if(!Game.IsMulliganDone)
 			return;
 
-		if(entity.CardId != HearthDb.CardIds.Collectible.Neutral.CapturedArchmage) return;
+		if(entity.Info.LatestCardId != HearthDb.CardIds.Collectible.Neutral.CapturedArchmage) return;
 
 		if(tag != GameTag.ZONE) return;
 

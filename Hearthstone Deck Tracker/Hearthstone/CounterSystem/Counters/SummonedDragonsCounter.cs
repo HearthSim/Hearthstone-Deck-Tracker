@@ -46,7 +46,7 @@ public class SummonedDragonsCounter : NumericCounter
 		if(!entity.IsMinion)
 			return;
 
-		if(!entity.Card.IsDragon())
+		if(!entity.LatestCard.IsDragon())
 			return;
 
 		if(tag != GameTag.ZONE)

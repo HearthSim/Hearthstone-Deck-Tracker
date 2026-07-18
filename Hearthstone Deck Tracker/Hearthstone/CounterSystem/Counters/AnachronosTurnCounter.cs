@@ -133,19 +133,20 @@ public class AnachronosTurnCounter : NumericCounter
 		if(value != (int)Zone.SETASIDE)
 			return;
 
-		if(entity.CardId == null)
+		var cardId = entity.Info.LatestCardId;
+		if(cardId == null)
 			return;
 
 		var controller = entity.GetTag(GameTag.CONTROLLER);
 
 		if(controller == Game.Player.Id)
 		{
-			_playerMinions.Add(entity.CardId);
+			_playerMinions.Add(cardId);
 			OnCounterChanged();
 		}
 		else if(controller == Game.Opponent.Id)
 		{
-			_opponentMinions.Add(entity.CardId);
+			_opponentMinions.Add(cardId);
 			OnCounterChanged();
 		}
 

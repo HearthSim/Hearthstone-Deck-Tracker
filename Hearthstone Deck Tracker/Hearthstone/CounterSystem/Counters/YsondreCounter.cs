@@ -41,7 +41,7 @@ public class YsondreCounter: NumericCounter
 		if(!Game.IsMulliganDone)
 			return;
 
-		if(entity.CardId != HearthDb.CardIds.Collectible.Warrior.Ysondre) return;
+		if(entity.Info.LatestCardId != HearthDb.CardIds.Collectible.Warrior.Ysondre) return;
 
 		if(tag != GameTag.ZONE) return;
 
