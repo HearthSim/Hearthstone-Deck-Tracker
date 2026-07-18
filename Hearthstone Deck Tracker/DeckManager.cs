@@ -393,7 +393,7 @@ namespace Hearthstone_Deck_Tracker
 				// update NOOOOOO! cards after expansion release
 				Log.Info("...but we already know that id. Checking for changes...");
 
-				if(matchingHsId.Cards.All(c => deck.Deck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
+				if(MatchesMirrorDeck(matchingHsId, deck.Deck))
 				{
 					Log.Info("No changes found.");
 					return;
@@ -411,6 +411,7 @@ namespace Hearthstone_Deck_Tracker
 				}).WhereNotNull();
 				foreach(var card in cards)
 					matchingHsId.Cards.Add(card);
+				matchingHsId.Sideboards = ConvertSideboards(deck.Deck.Sideboards);
 				DeckList.Instance.ActiveDeck = matchingHsId;
 				return;
 			}
@@ -446,6 +447,7 @@ namespace Hearthstone_Deck_Tracker
 					card.Count = x.Count;
 					return card;
 				}).WhereNotNull()),
+				Sideboards = ConvertSideboards(deck.Sideboards),
 				LastEdited = DateTime.Now,
 				IsArenaDeck = true
 			};
@@ -453,6 +455,38 @@ namespace Hearthstone_Deck_Tracker
 			Log.Info($"Saving new arena deck: {arenaDeck.Name} ({arenaDeck.HsId})");
 			DeckList.Instance.Decks.Add(arenaDeck);
 			DeckList.Instance.ActiveDeck = arenaDeck;
+		}
+
+		private static List<Sideboard> ConvertSideboards(Dictionary<string, List<HearthMirror.Objects.Card>>? sideboards) =>
+			sideboards?.Select(x => new Sideboard(x.Key, x.Value.Select(c =>
+			{
+				var card = Database.GetCardFromId(c.Id);
+				if(card == null)
+					return null;
+				card.Count = c.Count;
+				return card;
+			}).WhereNotNull().ToList())).ToList() ?? new List<Sideboard>();
+
+		private static bool MatchesMirrorDeck(Deck deck, HearthMirror.Objects.Deck mirrorDeck)
+		{
+			if(!deck.Cards.All(c => mirrorDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
+				return false;
+			// Missing sideboards from the mirror may just be a partial read - don't treat
+			// that as a change, or a transient bad read would wipe saved sideboards.
+			if(mirrorDeck.Sideboards == null || mirrorDeck.Sideboards.Count == 0)
+				return true;
+			if(deck.Sideboards.Count != mirrorDeck.Sideboards.Count)
+				return false;
+			foreach(var sideboard in deck.Sideboards)
+			{
+				if(!mirrorDeck.Sideboards.TryGetValue(sideboard.OwnerCardId, out var mirrorCards))
+					return false;
+				if(sideboard.Cards.Sum(c => c.Count) != mirrorCards.Sum(c => c.Count))
+					return false;
+				if(!sideboard.Cards.All(c => mirrorCards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
+					return false;
+			}
+			return true;
 		}
 
 		public static void AutoSelectTemplateDeckByDeckTemplateId(IGame game, int deckTemplateId)
