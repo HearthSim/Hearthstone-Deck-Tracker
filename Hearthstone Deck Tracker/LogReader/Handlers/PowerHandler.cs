@@ -1753,7 +1753,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber()).UpdateMinionEnchantment(enchantment, sourceEntity.Id, false);
 						}
 					}
-					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TimewarpedMagnanimoose, TriggerKeyword: "DEATHRATTLE" })
+					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TimewarpedMagnanimoose or NonCollectible.Neutral.TimewarpedMagnanimoose_TimewarpedMagnanimoose, TriggerKeyword: "DEATHRATTLE" })
 					{
 						var magnanimooseEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
 						if(magnanimooseEntity != null)
@@ -1770,7 +1770,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									.UpdateTimewarpedMagnanimoose(summonedEntities, magnanimooseEntity.Id, magnanimooseEntity.IsControlledBy(game.Player.Id));
 						}
 					}
-					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TimewarpedNelliesShipToken1, TriggerKeyword: "DEATHRATTLE" })
+					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TimewarpedNelliesShipToken1 or NonCollectible.Neutral.TimewarpedNelliesShipToken2, TriggerKeyword: "DEATHRATTLE" })
 					{
 						var nelliesEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
 						if(nelliesEntity != null)
@@ -1787,7 +1787,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									.UpdateNelliesShipEnchantment(summonedDbfIds, nelliesEntity.Id, nelliesEntity.IsControlledBy(game.Player.Id));
 						}
 					}
-					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.Magnanimoose, TriggerKeyword: "DEATHRATTLE" })
+					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.Magnanimoose or NonCollectible.Neutral.Magnanimoose_Magnanimoose, TriggerKeyword: "DEATHRATTLE" })
 					{
 						var magnanimooseEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
 						if(magnanimooseEntity != null)

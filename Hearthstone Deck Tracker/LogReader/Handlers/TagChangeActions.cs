@@ -338,7 +338,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			// (no CARDTYPE/CREATOR) and only revealed after the transform, with its zone already REMOVEDFROMGAME.
 			if(
 				game.CurrentGameMode == GameMode.Battlegrounds &&
-				gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Sandy &&
+				(gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Sandy || gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Sandy_Sandy) &&
 				entity.IsMinion &&
 				gameState.CurrentBlock?.SourceEntityId == entity.Id &&
 				entity.IsInZone(PLAY) &&
