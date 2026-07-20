@@ -1092,12 +1092,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 			}
 
-			if((Zone)value == HAND && game.Entities.TryGetValue(id, out var en)
-			                       && en.CardId == Collectible.Rogue.LotusTroublemaker
-			                       && controller == game.Player.Id)
-			{
-				game.CounterManager.AddLotusTroublemakerCounter(id);
-			}
 		}
 
 		// The last heropower is created after the last hero, therefore +1

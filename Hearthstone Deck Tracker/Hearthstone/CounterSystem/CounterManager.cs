@@ -43,12 +43,6 @@ public class CounterManager
 		}
 	}
 
-	public void AddLotusTroublemakerCounter(int id)
-	{
-		var counter = new LotusTroublemakerCounter(id, true, (GameV2)Game);
-		PlayerCounters.Add(counter);
-	}
-
 	public List<BaseCounter> GetVisibleCounters(bool controlledByPlayer)
 	{
 		var counters = controlledByPlayer ? PlayerCounters : OpponentCounters;

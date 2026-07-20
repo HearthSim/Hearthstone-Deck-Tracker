@@ -12,6 +12,7 @@ public class CardsPlayedFor2ManaCounter: NumericCounter
 	public override string[] RelatedCards => new string[]
 	{
 		HearthDb.CardIds.Collectible.Rogue.JadeGuardians,
+		HearthDb.CardIds.Collectible.Rogue.LotusTroublemaker
 	};
 
 	public CardsPlayedFor2ManaCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
