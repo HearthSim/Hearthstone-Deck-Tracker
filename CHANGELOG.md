@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.53.11 - 2026-07-20**
 **Hearthstone**
 - Improve secret tracker with secrets created by Mage's Quest reward The Origin Stone.
 - Added a counter for Infest the Scullery.
