@@ -616,6 +616,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							{
 								var player = isControlledByPlayer ? game.Player : game.Opponent;
 								player.AddGodfreyCopiedEntityId(entityId);
+								entity.Info.Hidden = false;
 								if(isControlledByPlayer)
 								{
 									Core.UpdatePlayerCards();
