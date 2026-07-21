@@ -1,5 +1,7 @@
-## **Release v1.53.12 - 2026-07-21**
+## **Release v1.53.13 - 2026-07-21**
 **Updated for Hearthstone 36.0.3**
+
+## **Release v1.53.12 - 2026-07-21**
 
 **Hearthstone**
 - Fixed decklist not updating correctly after cards being overdrawn by Shrine of Twilight.
