@@ -1,3 +1,7 @@
+## **Release v1.53.14 - 2026-07-22**
+**Hearthstone**
+- Fixed some cards missing the Deathrattle tag, resulting in them not appearing in Endbringer Umbra and Ravenous Felhunter related cards.
+
 ## **Release v1.53.13 - 2026-07-21**
 **Updated for Hearthstone 36.0.3**
 
