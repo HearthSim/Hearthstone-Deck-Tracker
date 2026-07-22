@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:inspiration="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Inspiration"
+        xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
         xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
@@ -28,13 +29,30 @@
                         <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc BattlegroundsInspiration_Title}" FontSize="16" VerticalAlignment="Center"/>
                     </StackPanel>
                     <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding TitleText}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <Button Style="{DynamicResource AccentedSquareButtonStyle}" VerticalAlignment="Center" Command="{Binding CloseCommand}" HorizontalAlignment="Right">
+                    <battlegrounds:OverlayButton
+                        Command="{Binding CloseCommand}"
+                        Width="28"
+                        Height="28"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Cursor="Hand"
+                        CornerRadius="3">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Rectangle Width="16" Height="16" Margin="2">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_close_white}" />
                             </Rectangle.Fill>
                         </Rectangle>
-                    </Button>
+                    </battlegrounds:OverlayButton>
                 </Grid>
             </Border>
             <Border DockPanel.Dock="Top" BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
@@ -53,21 +71,43 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Margin="4,0" Width="40"
+                                <battlegrounds:OverlayButton
                                         Command="{Binding Path=DataContext.SetPageCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                        CommandParameter="{Binding Page}">
-                                    <Button.Style>
-                                        <Style BasedOn="{StaticResource SquareButtonStyle}" TargetType="Button">
+                                        CommandParameter="{Binding Page}"
+                                        Margin="4,0"
+                                        Width="40"
+                                        Height="28"
+                                        Cursor="Hand"
+                                        CornerRadius="3">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="#4A5256" />
                                             <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#5A6266" />
+                                                </Trigger>
                                                 <DataTrigger Binding="{Binding IsActive}" Value="True">
-                                                    <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}"/>
                                                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </Button.Style>
-                                    <TextBlock Text="{Binding Page}"/>
-                                </Button>
+                                    </Border.Style>
+                                    <TextBlock
+                                        Text="{Binding Page}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </battlegrounds:OverlayButton>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

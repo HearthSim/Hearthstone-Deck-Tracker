@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -46,79 +47,84 @@
                 <hearthstoneDeckTracker:OutlinedTextBlock HorizontalAlignment="Center" FontSize="13" Text="{lex:Loc Battlegrounds_Browser_Filter_Mechanics}" Margin="9,0,0,0" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
             </Border>
             <ItemsControl Name="KeywordIcons" ItemsSource="{Binding KeywordButtons}">
-                <ItemsControl.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Grid>
-                                        <Border x:Name="border"
-                                                BorderThickness="0,1,0,0"
-                                                BorderBrush="#3f4346">
-                                            <Grid Background="Transparent">
-                                                <TextBlock x:Name="contentText"
-                                                          Text="{TemplateBinding Content}"
-                                                          HorizontalAlignment="Center"
-                                                          VerticalAlignment="Center"
-                                                          Foreground="{TemplateBinding Foreground}"
-                                                          FontSize="{TemplateBinding FontSize}"
-                                                          FontWeight="{TemplateBinding FontWeight}"
-                                                          />
-                                            </Grid>
-                                        </Border>
-                                        <!-- Left and Right triangle indicators -->
-                                        <Grid x:Name="selectedGrid" Visibility="Collapsed">
-                                            <Path HorizontalAlignment="Left"
-                                                  VerticalAlignment="Center"
-                                                  Fill="#ffffcc"
-                                                  Data="M 0,14 L 7,7 L 0,0 Z"
-                                                  Margin="0,0,0,0" />
-
-
-                                            <Path HorizontalAlignment="Right"
-                                                  VerticalAlignment="Center"
-                                                  Fill="#ffffcc"
-                                                  Data="M 7,14 L 0,7 L 7,0 Z"
-                                                  Margin="0,0,0,0" />
-                                        </Grid>
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <battlegrounds:OverlayButton
+                            Command="{Binding SetActiveKeywordCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinionsExtraFilters}}"
+                            CommandParameter="{Binding Keyword}"
+                            Cursor="Hand"
+                            Height="30"
+                            BorderThickness="0,1,0,0"
+                            BorderBrush="#3f4346">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#2C3135"/>
+                                            <Setter Property="Background" Value="#2C3135"/>
                                         </Trigger>
                                         <DataTrigger Binding="{Binding Active}" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#36393f"/>
-                                            <Setter TargetName="selectedGrid" Property="Visibility" Value="Visible"/>
-                                            <Setter Property="Foreground" Value="#ffffcc"/>
+                                            <Setter Property="Background" Value="#36393f"/>
                                         </DataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding Active}" Value="True"/>
                                                 <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
-                                            <Setter TargetName="selectedGrid" Property="Opacity" Value="0.3"/>
                                             <Setter Property="Opacity" Value="0.6"/>
                                         </MultiDataTrigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Foreground" Value="#dcddde"/>
-                        <Setter Property="FontSize" Value="11"/>
-                        <Setter Property="FontWeight" Value="Bold" />
-                        <Setter Property="Cursor" Value="Hand"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                        <Setter Property="Height" Value="30"/>
-                    </Style>
-                </ItemsControl.Resources>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button
-                            Content="{Binding KeywordName}"
-                            Tag="{Binding Keyword}"
-                            Command="{Binding SetActiveKeywordCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinionsExtraFilters}}"
-                            CommandParameter="{Binding Keyword}"
-                        />
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid Background="Transparent">
+                                <TextBlock
+                                    Text="{Binding KeywordName}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="11"
+                                    FontWeight="Bold">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="#dcddde"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Active}" Value="True">
+                                                    <Setter Property="Foreground" Value="#ffffcc"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <!-- Left and Right triangle indicators -->
+                                <Grid>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Active}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Active}" Value="True"/>
+                                                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=battlegrounds:OverlayButton}}" Value="True"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Opacity" Value="0.3"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Path HorizontalAlignment="Left"
+                                          VerticalAlignment="Center"
+                                          Fill="#ffffcc"
+                                          Data="M 0,14 L 7,7 L 0,0 Z"
+                                          Margin="0,0,0,0" />
+                                    <Path HorizontalAlignment="Right"
+                                          VerticalAlignment="Center"
+                                          Fill="#ffffcc"
+                                          Data="M 7,14 L 0,7 L 7,0 Z"
+                                          Margin="0,0,0,0" />
+                                </Grid>
+                            </Grid>
+                        </battlegrounds:OverlayButton>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
