@@ -1,5 +1,5 @@
-﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
@@ -10,7 +10,7 @@ public class ArenaPickSingleHeroOptionViewModel : ViewModel
 {
 	private static readonly List<string> Tiers = new() { "A", "B", "C", "D" };
 
-	public ArenaPickSingleHeroOptionViewModel(ArenaHeroPickApiResponse.ResponseData? data, bool isUnderground)
+	public ArenaPickSingleHeroOptionViewModel(ArenaHeroPickApiResponse.ResponseData? data, bool isUnderground, Thickness plaqueMargin = default)
 	{
 		Data = data;
 		IsUnderground = isUnderground;
@@ -20,14 +20,14 @@ public class ArenaPickSingleHeroOptionViewModel : ViewModel
 
 		var tier = data?.Tier?.ToUpperInvariant() ?? "-";
 		var plaqueLevel = (int)MathUtil.Clamp(5 - Tiers.IndexOf(tier), 1, 5);
-		PlaqueViewModel = new ArenaPlaqueViewModel(tier, plaqueLevel, data?.DeckClass ?? 0, isUnderground);
+		PlaqueViewModel = new ArenaPlaqueViewModel(tier, plaqueLevel, data?.DeckClass ?? 0, isUnderground, plaqueMargin);
 	}
 
 	// Loading State
-	public ArenaPickSingleHeroOptionViewModel(bool isUnderground)
+	public ArenaPickSingleHeroOptionViewModel(bool isUnderground, Thickness plaqueMargin = default)
 	{
 		IsUnderground = isUnderground;
-		PlaqueViewModel = new ArenaPlaqueViewModel("", 0, 0, isUnderground);
+		PlaqueViewModel = new ArenaPlaqueViewModel("", 0, 0, isUnderground, plaqueMargin);
 	}
 
 	public ArenaHeroPickApiResponse.ResponseData? Data { get; }
