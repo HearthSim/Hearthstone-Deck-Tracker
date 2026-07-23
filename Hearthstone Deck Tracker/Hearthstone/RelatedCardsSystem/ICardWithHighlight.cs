@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 

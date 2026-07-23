@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
-using MahApps.Metro;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {

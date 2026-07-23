@@ -17,13 +17,7 @@ using Hearthstone_Deck_Tracker.Utility;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.TrinketPicking;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -48,8 +42,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private double LeaderboardTop => Height * 0.15;
 		private const int MaxHandSize = 10;
 		private const int MaxBoardSize = 7;
-		public int? _leaderboardHoveredEntityId = null;
-		private bool _mouseIsOverLeaderboardIcon = false;
+		private int? _leaderboardHoveredEntityId;
 		private const int MouseLeaveEventDelay = 200;
 
 		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);

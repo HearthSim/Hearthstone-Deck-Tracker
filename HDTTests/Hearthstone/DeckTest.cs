@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HearthDb.Enums;
 
 namespace HDTTests.Hearthstone
 {

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Warlock;
 

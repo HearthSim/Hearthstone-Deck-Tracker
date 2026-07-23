@@ -1,7 +1,4 @@
 ﻿using System.Threading.Tasks;
-using HearthMirror.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility;
 using HSReplay.Responses;
 
 namespace Hearthstone_Deck_Tracker.HsReplay;

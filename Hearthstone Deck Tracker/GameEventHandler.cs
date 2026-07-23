@@ -30,22 +30,14 @@ using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
-using ControlzEx.Standard;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
-using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
-using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Newtonsoft.Json;
-using HSReplay.Requests;
 using HSReplay.Responses;
-using static HSReplay.Responses.MulliganGuideData;
 
 #endregion
 
@@ -2000,9 +1992,10 @@ namespace Hearthstone_Deck_Tracker
 					await Task.WhenAll(statsTask, appearTask);
 					battlegroundsHeroPickStats = await statsTask;
 				}
-				catch(Exception)
+				catch(Exception e)
 				{
-					// pass
+					// expected e.g. when hero picking is disabled; statsTask.Exception is inspected below
+					Log.Debug($"Could not get hero pick stats: {e.Message}");
 				}
 
 				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
@@ -2117,9 +2110,9 @@ namespace Hearthstone_Deck_Tracker
 				{
 					battlegroundsHeroPickStats = await GetBattlegroundsHeroPickStats();
 				}
-				catch(Exception)
+				catch(Exception e)
 				{
-					// pass
+					Log.Debug($"Could not get hero pick stats: {e.Message}");
 				}
 
 				// another task has updated them since (fast reroll)
@@ -2130,7 +2123,6 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.GameEntity?.GetTag(STEP) > (int)Step.BEGIN_MULLIGAN || _game.IsInMenu || Core.Overlay.BattlegroundsHeroPickingViewModel.HeroStats == null)
 					return;
 
-				Dictionary<string, string>? toastParams = null;
 				if(battlegroundsHeroPickStats is BattlegroundsHeroPickStats stats)
 				{
 					var heroIds = heroes.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
@@ -2897,7 +2889,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentDraw(Entity entity, int turn, string? cardId, int? drawerId) => HandleOpponentDraw(entity, turn, cardId, drawerId);
 		void IGameHandler.HandleOpponentMulligan(Entity entity, int @from) => HandleOpponentMulligan(entity, @from);
 		void IGameHandler.HandleOpponentGet(Entity entity, int turn, int id) => HandleOpponentGet(entity, turn, id);
-		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string? cardId, int @from, int turn, Zone fromZone, int otherId, int? creatorId = null) => HandleOpponentSecretPlayed(entity, cardId, @from, turn, fromZone, otherId, creatorId);
+		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string? cardId, int @from, int turn, Zone fromZone, int otherId, int? creatorId) => HandleOpponentSecretPlayed(entity, cardId, @from, turn, fromZone, otherId, creatorId);
 		void IGameHandler.HandleOpponentHandToDeck(Entity entity, string? cardId, IHsGameState gamestate) => HandleOpponentHandToDeck(entity, cardId, gamestate);
 		void IGameHandler.HandleOpponentPlayToHand(Entity entity, string? cardId, int turn, int id) => HandleOpponentPlayToHand(entity, cardId, turn, id);
 		void IGameHandler.HandleOpponentSecretTrigger(Entity entity, string? cardId, int turn, int otherId) => HandleOpponentSecretTrigger(entity, cardId, turn, otherId);

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using HearthMirror.Objects;
+﻿using HearthMirror.Objects;
 
 namespace HearthWatcher.EventArgs;
 

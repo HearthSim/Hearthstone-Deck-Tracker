@@ -1,6 +1,5 @@
 #region
 
-using System;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay;

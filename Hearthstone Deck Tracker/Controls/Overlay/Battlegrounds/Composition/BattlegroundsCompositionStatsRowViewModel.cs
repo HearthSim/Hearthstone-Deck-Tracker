@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using System;
+﻿using System;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 

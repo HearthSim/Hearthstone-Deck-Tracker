@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Importing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

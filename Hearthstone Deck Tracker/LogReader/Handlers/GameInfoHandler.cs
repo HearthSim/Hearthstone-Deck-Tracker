@@ -1,6 +1,5 @@
 ﻿using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 using static Hearthstone_Deck_Tracker.LogReader.LogConstants.GameInfo;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers;

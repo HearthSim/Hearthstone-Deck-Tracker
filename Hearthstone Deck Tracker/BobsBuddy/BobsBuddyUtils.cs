@@ -8,7 +8,6 @@ using BobsBuddy.HeroPowers;
 using BobsBuddy.Minions.Beast;
 using BobsBuddy.Minions.Mech;
 using BobsBuddy.Minions.Pirate;
-using BobsBuddy.Minions.Undead;
 using BobsBuddy.Simulation;
 using BobsBuddy.Spells;
 using BobsBuddy.Trinkets;

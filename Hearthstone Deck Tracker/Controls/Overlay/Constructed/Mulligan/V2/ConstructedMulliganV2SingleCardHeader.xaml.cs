@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2;
 

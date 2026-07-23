@@ -9,7 +9,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using HearthMirror;
-using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
