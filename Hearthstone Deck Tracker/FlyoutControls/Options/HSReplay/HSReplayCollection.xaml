@@ -61,6 +61,13 @@
                 <TextBlock Text="{lex:Loc Banner_CollectionSyncing_Subtitle}" VerticalAlignment="Center" TextWrapping="Wrap"
                            HorizontalAlignment="Center" FontSize="14" Margin="20,4"/>
             </Button>
+            <Button Style="{DynamicResource AccentedSquareButtonStyle}" HorizontalAlignment="Center"
+                    Command="{Binding ExportCollectionCommand}"
+                    BorderThickness="1" BorderBrush="White" Foreground="White" MinWidth="200"
+                    Margin="0,15,0,0" Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}">
+                <TextBlock Text="{lex:Loc Options_HSReplay_Collection_ExportToFile}" VerticalAlignment="Center" TextWrapping="Wrap"
+                           HorizontalAlignment="Center" FontSize="14" Margin="20,4"/>
+            </Button>
             <StackPanel Margin="0,40,0,0" Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}">
                 <CheckBox Content="{lex:Loc Options_HSReplay_Collection_UploadSetting}" HorizontalAlignment="Center"
                           IsChecked="{Binding CollectionSyncingEnabled}"/>

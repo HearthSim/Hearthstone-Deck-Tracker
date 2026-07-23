@@ -1,11 +1,18 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Commands;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Windows;
+using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 {
@@ -75,6 +82,46 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 
 		public object HSReplayDecksCommand => new Command(()
 			=> HSReplayNetHelper.OpenDecksUrlWithCollection("collection_syncing_banner"));
+
+		private bool _isExporting;
+
+		public object ExportCollectionCommand => new Command(() => ExportCollection().Forget());
+
+		private async Task ExportCollection()
+		{
+			if(_isExporting)
+				return;
+			_isExporting = true;
+			try
+			{
+				var collection = await CollectionHelpers.Hearthstone.GetCollection();
+				if(collection == null)
+				{
+					await Core.MainWindow.ShowMessage(
+						LocUtil.Get("Options_HSReplay_Collection_Export_Error_Title"),
+						LocUtil.Get("Options_HSReplay_Collection_Export_Error_NoCollection"));
+					return;
+				}
+
+				var fileName = Helper.ShowSaveFileDialog(
+					Helper.RemoveInvalidFileNameChars($"HDT_Collection_{collection.BattleTag}"), "json");
+				if(fileName == null)
+					return;
+
+				var json = JsonConvert.SerializeObject(collection, Formatting.Indented);
+				File.WriteAllText(fileName, json);
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+				await Core.MainWindow.ShowMessage(
+					LocUtil.Get("Options_HSReplay_Collection_Export_Error_Title"), ex.Message);
+			}
+			finally
+			{
+				_isExporting = false;
+			}
+		}
 
 		public bool CollectionSyncingEnabled
 		{
