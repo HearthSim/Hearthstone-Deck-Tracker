@@ -1,0 +1,88 @@
+#!/bin/sh
+# Pre-commit whitespace/style checks aligned with .editorconfig.
+# - Auto-fixes trailing whitespace on staged files and re-stages them,
+#   except markdown (line-break semantics) and partially-staged files.
+# - Blocks (does not auto-fix) CRLF and wrong indentation on staged lines.
+# Only staged content is inspected, so existing code is left untouched.
+# Bypass with: git commit --no-verify
+
+IFS='
+'
+fail=0
+fixed=
+
+is_partially_staged() {
+	git diff --name-only -- "$1" | grep -qxF -- "$1"
+}
+
+for f in $(git diff --cached --name-only --diff-filter=ACM); do
+	# Skip binary files (numstat reports "-" for added/deleted counts).
+	case "$(git diff --cached --numstat -- "$f" | cut -f1)" in
+		-) continue ;;
+	esac
+
+	# Auto-fix trailing whitespace (whole file), except markdown and partial stages.
+	case "$f" in
+		*.md) ;;
+		*)
+			if ! is_partially_staged "$f"; then
+				tmp="$f.pre-commit.$$"
+				sed 's/[[:blank:]]*$//' "$f" > "$tmp"
+				if ! cmp -s "$f" "$tmp"; then
+					cat "$tmp" > "$f"
+					git add -- "$f"
+					fixed="$fixed $f"
+				fi
+				rm -f "$tmp"
+			fi
+			;;
+	esac
+
+	# .editorconfig: xml/xaml indent with spaces, everything else with tabs.
+	case "$f" in
+		*.xml|*.xaml) indent=space ;;
+		*) indent=tab ;;
+	esac
+
+	# Detect (block) remaining issues on staged added lines.
+	msg=$(git diff --cached --unified=0 -- "$f" | awk -v file="$f" -v indent="$indent" '
+		BEGIN { CR = sprintf("%c", 13); TAB = sprintf("%c", 9) }
+		/^\+\+\+/ { next }
+		/^@@/ {
+			match($0, /\+[0-9]+/)
+			ln = substr($0, RSTART + 1, RLENGTH - 1) + 0
+			next
+		}
+		substr($0, 1, 1) == "+" {
+			s = substr($0, 2)
+			lc = substr(s, length(s), 1)
+			fc = substr(s, 1, 1)
+			if (lc == CR)
+				printf "%s:%d: carriage return (use LF)\n", file, ln
+			else if (lc == " " || lc == TAB)
+				printf "%s:%d: trailing whitespace\n", file, ln
+			if (indent == "tab" && fc == " ")
+				printf "%s:%d: space indentation (use tabs)\n", file, ln
+			else if (indent == "space" && fc == TAB)
+				printf "%s:%d: tab indentation (use spaces)\n", file, ln
+			ln++
+			next
+		}
+	')
+
+	if [ -n "$msg" ]; then
+		printf '%s\n' "$msg"
+		fail=1
+	fi
+done
+
+if [ -n "$fixed" ]; then
+	echo "pre-commit: auto-fixed trailing whitespace (re-staged):$fixed"
+fi
+
+if [ "$fail" -ne 0 ]; then
+	echo
+	echo "pre-commit: fix the issues above (see .editorconfig), or bypass with: git commit --no-verify"
+	exit 1
+fi
+exit 0
