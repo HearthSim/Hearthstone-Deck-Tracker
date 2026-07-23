@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 
@@ -147,9 +148,9 @@ public partial class CompGuide : INotifyPropertyChanged
 			var sb = (Storyboard)FindResource(key);
 			sb.Begin();
 		}
-		catch(Exception)
+		catch(Exception e)
 		{
-			// ignored
+			Log.Debug($"Could not run storyboard {key}: {e.Message}");
 		}
 	}
 
