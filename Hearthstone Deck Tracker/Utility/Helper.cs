@@ -905,9 +905,9 @@ namespace Hearthstone_Deck_Tracker
 					if(value != null)
 						return value;
 				}
-				catch
+				catch(Exception e)
 				{
-					// Try again!
+					Log.Debug($"Attempt {i + 1} failed, trying again: {e.Message}");
 				}
 				await Task.Delay(delay);
 			}
