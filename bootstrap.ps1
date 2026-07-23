@@ -24,5 +24,8 @@ catch {
 	"Git was not found and is required to run bootstrap.bat. Download git from https://git-scm.com/download and during installation choose `"Use Git from the Windows Command Prompt`"."
 }
 
+# Enable the shared git hooks (see .githooks).
+git config core.hooksPath .githooks
+
 Invoke-Expression "msbuild Bootstrap/Bootstrap.csproj /p:Configuration=Debug"
 Invoke-Expression "msbuild 'Hearthstone Deck Tracker/Hearthstone Deck Tracker.csproj' /p:Configuration=Debug"

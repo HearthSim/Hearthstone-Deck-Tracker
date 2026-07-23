@@ -64,6 +64,8 @@ We would like to avoid wasting your time, so for non-trivial changes or fixes pl
 Also see: [How to name things in programming](http://www.slideshare.net/pirhilton/how-to-name-things-the-hardest-problem-in-programming)
 6. Know when to make exceptions.
 
+A pre-commit hook in `.githooks/` checks these whitespace rules on staged changes (auto-fixing trailing whitespace, flagging wrong indentation). `bootstrap.ps1` enables it; otherwise run `git config core.hooksPath .githooks` once.
+
 ## Commits and Pull Requests 
 
 Keep the commit log as healthy as the code. It is one of the first places new contributors will look at the project.
