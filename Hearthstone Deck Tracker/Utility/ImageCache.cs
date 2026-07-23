@@ -1,18 +1,11 @@
 #region
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Resources;
 using System.Text;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 

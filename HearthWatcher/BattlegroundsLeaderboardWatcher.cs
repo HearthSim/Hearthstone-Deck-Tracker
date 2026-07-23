@@ -1,9 +1,7 @@
 ﻿using HearthWatcher.EventArgs;
 using HearthWatcher.Providers;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using HearthMirror.Objects;
 
 namespace HearthWatcher
 {

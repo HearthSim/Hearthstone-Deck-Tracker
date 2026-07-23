@@ -1,7 +1,5 @@
-﻿using System;
-using Hearthstone_Deck_Tracker.Controls.Overlay;
+﻿using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Microsoft.Build.Framework;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.EffectSystem;

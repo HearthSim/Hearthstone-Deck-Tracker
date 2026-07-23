@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Hearthstone_Deck_Tracker.Annotations;
+﻿using Hearthstone_Deck_Tracker.Annotations;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;

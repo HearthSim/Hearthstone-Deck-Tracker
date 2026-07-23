@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 

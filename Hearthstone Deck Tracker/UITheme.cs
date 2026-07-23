@@ -114,7 +114,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				ThemeManager.AddAccent(WindowAccentName, resourceDictionary.Source);
 			}
-			catch (IOException e)
+			catch (IOException)
 			{
 				await Task.Delay(500);
 				try
