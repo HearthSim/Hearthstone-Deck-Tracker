@@ -1,8 +1,6 @@
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Plugins;
 using Newtonsoft.Json;

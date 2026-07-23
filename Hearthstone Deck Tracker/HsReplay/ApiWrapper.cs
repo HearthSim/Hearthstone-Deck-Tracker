@@ -316,9 +316,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 			catch(Exception e)
 			{
-#if(DEBUG)
-				Log.Error(e);
-#endif
+				Log.Debug($"Failed to post feedback: {e.Message}");
 			}
 		}
 
@@ -330,9 +328,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 			catch(Exception e)
 			{
-#if(DEBUG)
-				Log.Error(e);
-#endif
+				Log.Debug($"Failed to post feedback: {e.Message}");
 			}
 		}
 
@@ -349,9 +345,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 			catch(Exception e)
 			{
-#if(DEBUG)
-				Log.Error(e);
-#endif
+				Log.Debug($"Failed to post feedback: {e.Message}");
 			}
 		}
 
@@ -365,9 +359,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 			catch(Exception e)
 			{
-#if(DEBUG)
-				Log.Error(e);
-#endif
+				Log.Debug($"Failed to post feedback: {e.Message}");
 			}
 		}
 

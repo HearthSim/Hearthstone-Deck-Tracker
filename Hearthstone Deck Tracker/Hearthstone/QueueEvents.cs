@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HearthMirror;
-using HearthMirror.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility.Assets;

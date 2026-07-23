@@ -1,12 +1,8 @@
 #region
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 

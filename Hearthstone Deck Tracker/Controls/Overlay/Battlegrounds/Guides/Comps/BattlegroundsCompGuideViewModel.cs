@@ -14,7 +14,6 @@ using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using HSReplay.Responses;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 

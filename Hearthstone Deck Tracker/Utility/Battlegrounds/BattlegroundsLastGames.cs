@@ -50,8 +50,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			if (playerId == null)
 				return new List<GameItem>();
 
-			return Games.Where(g => (g.Player == null || g.Player == playerId) && (g.Duos == duos || (g.Duos == null && !duos))).ToList();
+			return FilterPlayerGames(Games, playerId, duos);
 		}
+
+		internal static List<GameItem> FilterPlayerGames(IEnumerable<GameItem> games, string playerId, bool duos) =>
+			games.Where(g => (g.Player == null || g.Player == playerId) && g.Duos == duos).ToList();
 
 		public async void AddGame(
 			string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, bool duos, bool save = true

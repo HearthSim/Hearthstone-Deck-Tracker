@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using Hearthstone_Deck_Tracker.Utility.MVVM;
+﻿using Hearthstone_Deck_Tracker.Utility.MVVM;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Utility;
 

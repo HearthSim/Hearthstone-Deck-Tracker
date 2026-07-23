@@ -1,5 +1,4 @@
-﻿using System;
-using Hearthstone_Deck_Tracker;
+﻿using Hearthstone_Deck_Tracker;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HDTTests.Utility

@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using BobsBuddy.Simulation;
 using BobsBuddy.Utils;
 using HearthDb;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HDTTests.Battlegrounds

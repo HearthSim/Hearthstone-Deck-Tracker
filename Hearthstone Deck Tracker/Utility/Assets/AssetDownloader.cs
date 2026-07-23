@@ -172,8 +172,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			{
 				File.Delete(Path.Combine(_storageDestination, entry.File));
 			}
-			catch(IOException)
+			catch(IOException e)
 			{
+				Log.Debug($"Could not delete file {entry.File}: {e.Message}");
 			}
 			catch(Exception e)
 			{

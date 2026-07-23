@@ -30,17 +30,17 @@
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <DebugType>full</DebugType>
     <LangVersion>5</LangVersion>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>  </PropertyGroup>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <DebugType>pdbonly</DebugType>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>  </PropertyGroup>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Squirrel|x64'">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>  </PropertyGroup>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Data.DataSetExtensions" />

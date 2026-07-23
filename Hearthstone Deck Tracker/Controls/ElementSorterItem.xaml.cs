@@ -3,7 +3,6 @@
 using System;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Utility.Animations;
 using static Hearthstone_Deck_Tracker.Enums.SortDirection;
 
 #endregion

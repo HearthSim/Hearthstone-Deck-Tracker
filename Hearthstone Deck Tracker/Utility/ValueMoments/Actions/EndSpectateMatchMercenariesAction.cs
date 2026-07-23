@@ -1,10 +1,8 @@
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Utility.ValueMoments;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
-using Newtonsoft.Json;
 
 namespace Mercenaries_Deck_Tracker.Utility.ValueMoments.Actions
 {

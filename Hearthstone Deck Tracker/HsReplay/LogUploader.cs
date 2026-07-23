@@ -7,7 +7,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HsReplay.Utility;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Logging;

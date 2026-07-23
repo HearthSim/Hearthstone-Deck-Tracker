@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BobsBuddy.Simulation;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 

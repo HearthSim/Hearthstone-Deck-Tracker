@@ -417,8 +417,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 							return ClaimBlizzardAccountResponse.TokenAlreadyClaimed;
 					}
 				}
-				catch
+				catch(Exception ex)
 				{
+					Log.Debug($"Could not parse error response: {ex.Message}");
 				}
 				return ClaimBlizzardAccountResponse.Error;
 			}

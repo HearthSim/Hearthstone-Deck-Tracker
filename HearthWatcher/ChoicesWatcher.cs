@@ -1,5 +1,4 @@
-﻿using HearthWatcher.EventArgs;
-using HearthWatcher.Providers;
+﻿using HearthWatcher.Providers;
 using System;
 using System.Threading.Tasks;
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem.Factory;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;

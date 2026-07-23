@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Hearthstone_Deck_Tracker.Utility;
 
 public static class MathUtil

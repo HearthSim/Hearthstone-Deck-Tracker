@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls;
-using System.Windows.Media;
 using System.Drawing;
 using System.Windows;
 

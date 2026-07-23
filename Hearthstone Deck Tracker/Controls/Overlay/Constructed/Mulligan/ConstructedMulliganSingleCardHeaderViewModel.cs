@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan
 {
 	public class ConstructedMulliganSingleCardHeaderViewModel : StatsHeaderViewModel
