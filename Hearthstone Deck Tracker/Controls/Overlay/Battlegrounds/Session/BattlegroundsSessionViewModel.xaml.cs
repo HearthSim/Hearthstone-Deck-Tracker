@@ -61,7 +61,9 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 		UpdateMinionTypes();
 
-		var firstGame = await UpdateLatestGames();
+		var (loaded, firstGame) = await UpdateLatestGames();
+		if(!loaded) // keep the current recap if the account can't be resolved
+			return;
 
 		var rating = (IsDuos  ? Core.Game.BattlegroundsRatingInfo?.DuosRating : Core.Game.BattlegroundsRatingInfo?.Rating) ?? 0;
 		var ratingStart = firstGame?.Rating ?? rating;
@@ -332,14 +334,19 @@ public class BattlegroundsSessionViewModel : ViewModel
 		CompStatsWaitingMsgVisibility = Visibility.Hidden;
 	}
 
-	private async Task<GameItem?> UpdateLatestGames()
+	private async Task<(bool Loaded, GameItem? FirstGame)> UpdateLatestGames()
 	{
-		var sortedGames = (await Instance.PlayerGames(IsDuos))
+		var playerGames = await Instance.PlayerGames(IsDuos);
+		if(playerGames == null)
+			return (false, null);
+
+		var sortedGames = playerGames
 			.OrderBy(g => g.StartTime)
 			.ToList();
 		DeleteOldGames(sortedGames);
 
-		var sessionGames = GetSessionGames(sortedGames);
+		var currentRating = IsDuos ? Core.Game.BattlegroundsRatingInfo?.DuosRating : Core.Game.BattlegroundsRatingInfo?.Rating;
+		var sessionGames = GetSessionGames(sortedGames, currentRating, DateTime.Now);
 		var firstGame = sessionGames.FirstOrDefault();
 
 		SessionGames.Clear();
@@ -359,10 +366,10 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 		Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
 
-		return firstGame;
+		return (true, firstGame);
 	}
 
-	private List<GameItem> GetSessionGames(List<GameItem> sortedGames)
+	internal static List<GameItem> GetSessionGames(List<GameItem> sortedGames, int? currentRating, DateTime now)
 	{
 		DateTime? sessionStartTime = null;
 		DateTime? previousGameEndTime = null;
@@ -396,14 +403,13 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 			// Check for MMR reset on last game
 			var ratingResetAfterLastGame = false;
-			if(Core.Game.BattlegroundsRatingInfo?.Rating != null)
+			if(currentRating != null)
 			{
-				var currentMMR = Core.Game.BattlegroundsRatingInfo?.Rating;
 				var sessionLastMMR = lastGame.RatingAfter;
-				ratingResetAfterLastGame = currentMMR < 500 && currentMMR - sessionLastMMR < -500;
+				ratingResetAfterLastGame = currentRating < 500 && currentRating - sessionLastMMR < -500;
 			}
 
-			var ts = DateTime.Now - DateTime.Parse(lastGame.EndTime);
+			var ts = now - DateTime.Parse(lastGame.EndTime);
 
 			if(ts.TotalHours >= 2 || ratingResetAfterLastGame)
 				return new List<GameItem>();

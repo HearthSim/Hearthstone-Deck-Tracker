@@ -44,11 +44,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			return accountId != null ? $"{accountId.Hi}_{accountId.Lo}" : null;
 		}
 
-		public async Task<List<GameItem>> PlayerGames(bool duos)
+		// null (not empty) when the account can't be resolved, so callers can tell that apart from "no games"
+		public async Task<List<GameItem>?> PlayerGames(bool duos)
 		{
 			var playerId = await GetPlayerId();
 			if (playerId == null)
-				return new List<GameItem>();
+				return null;
 
 			return Games.Where(g => (g.Player == null || g.Player == playerId) && (g.Duos == duos || (g.Duos == null && !duos))).ToList();
 		}
