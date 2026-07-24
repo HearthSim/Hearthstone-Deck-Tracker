@@ -688,8 +688,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			Log.Info($"pPirates={inputPlayer.PiratesSummonCounter}, pBeasts={inputPlayer.BeastsSummonCounter}, pDeadLastCombat={inputPlayer.FriendlyMinionsDeadLastCombatCounter}, pBattlecry={inputPlayer.BattlecryCounter}, friendly={friendly}");
 
-			inputPlayer.BloodGemAtkBuff = playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFATKVALUE);   // direct
-			inputPlayer.BloodGemHealthBuff = playerEntity.GetTag(GameTag.BACON_BLOODGEMBUFFHEALTHVALUE);   // direct
+			var pBloodGemBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.MoonBaconJazzer_BloodGemPlayerEnchantDnt);
+			if(pBloodGemBonus != null)
+			{
+				inputPlayer.BloodGemAtkBuff = pBloodGemBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+				inputPlayer.BloodGemHealthBuff = pBloodGemBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);   // attached
+			}
 
 			Log.Info($"pBloodGem=+{inputPlayer.BloodGemAtkBuff}/+{inputPlayer.BloodGemHealthBuff}, friendly={friendly}");
 
