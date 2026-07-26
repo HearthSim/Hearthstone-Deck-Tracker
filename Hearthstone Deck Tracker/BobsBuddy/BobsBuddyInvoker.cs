@@ -1007,26 +1007,48 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
-		internal async void UpdateFlobbidinousFloopTransformDuos(Entity attachedEntity)
+		internal async void UpdateFlobbidinousFloopTransformDuos(Entity attachedEntity, int floopEntityId)
 		{
 			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var friendly = true;
-			var flobbidinousFloop = _input.Player.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+			var flobbidinousFloop = _input.Player.HeroPowers.FirstOrDefault(hp => hp.game_id == floopEntityId && hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
 			if(flobbidinousFloop == null && _input.PlayerTeammate != null)
-				flobbidinousFloop = _input.PlayerTeammate.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+				flobbidinousFloop = _input.PlayerTeammate.HeroPowers.FirstOrDefault(hp => hp.game_id == floopEntityId && hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
 			if(flobbidinousFloop == null)
 			{
 				friendly = false;
-				flobbidinousFloop = _input.Opponent.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+				flobbidinousFloop = _input.Opponent.HeroPowers.FirstOrDefault(hp => hp.game_id == floopEntityId && hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
 			}
 			if(flobbidinousFloop == null && _input.OpponentTeammate != null)
-				flobbidinousFloop = _input.OpponentTeammate.HeroPowers.FirstOrDefault(hp => hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+				flobbidinousFloop = _input.OpponentTeammate.HeroPowers.FirstOrDefault(hp => hp.game_id == floopEntityId && hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
 			if(flobbidinousFloop == null || flobbidinousFloop.AttachedMinion != null)
 				return;
 
 			flobbidinousFloop.AttachedMinion = GetMinionFromEntity(new Simulator(), friendly, attachedEntity, GetAttachedEntities(attachedEntity.Id));
+
+			await TryRerun();
+		}
+
+		// Invoked at the END of Glorious Gloop's Start of Combat trigger block. Set AttachedMinionCapturedDuringCombat
+		// with AttachedMinion still null, so the simulator skips UnsupportedInteractionException.
+		internal async void UpdateFlobbidinousFloopConfirmedNoTransformDuos(int floopEntityId)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+
+			var flobbidinousFloop = _input.Player.HeroPowers.FirstOrDefault(hp => hp.game_id == floopEntityId && hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+			if(flobbidinousFloop == null && _input.PlayerTeammate != null)
+				flobbidinousFloop = _input.PlayerTeammate.HeroPowers.FirstOrDefault(hp => hp.game_id == floopEntityId && hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+			if(flobbidinousFloop == null)
+				flobbidinousFloop = _input.Opponent.HeroPowers.FirstOrDefault(hp => hp.game_id == floopEntityId && hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+			if(flobbidinousFloop == null && _input.OpponentTeammate != null)
+				flobbidinousFloop = _input.OpponentTeammate.HeroPowers.FirstOrDefault(hp => hp.game_id == floopEntityId && hp.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop);
+			if(flobbidinousFloop == null || flobbidinousFloop.AttachedMinion != null || flobbidinousFloop.AttachedMinionCapturedDuringCombat)
+				return;
+
+			flobbidinousFloop.AttachedMinionCapturedDuringCombat = true;
 
 			await TryRerun();
 		}

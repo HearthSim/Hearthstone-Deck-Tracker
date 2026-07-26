@@ -1825,6 +1825,24 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									.UpdateLockAndLoadHeroPower(summonedEntity, lockAndLoadEntity.IsControlledBy(game.Opponent.Id));
 						}
 					}
+					// Glorious Gloop's Start of Combat trigger block always runs, but it transforms nothing when the
+					// teammate has no minion to copy. A transform consumes the chosen minion's "In the Gloop"
+					// enchantment (it leaves PLAY inside this block), so an enchantment still in PLAY on a minion
+					// still in PLAY when the block ends means that minion was left unchanged.
+					if(gameState.CurrentBlock?.CardId == NonCollectible.Neutral.FlobbidinousFloop_GloriousGloop
+						&& game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var floopEntity))
+					{
+						var noTransform = game.Entities.Values.Any(e =>
+							e.CardId == NonCollectible.Neutral.FlobbidinousFloop_InTheGloop
+							&& e.IsInPlay
+							&& e.IsControlledBy(floopEntity.GetTag(GameTag.CONTROLLER))
+							&& game.Entities.TryGetValue(e.GetTag(GameTag.ATTACHED), out var chosen)
+							&& chosen.IsMinion && chosen.IsInPlay);
+
+						if(noTransform)
+							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+								.UpdateFlobbidinousFloopConfirmedNoTransformDuos(gameState.CurrentBlock.SourceEntityId);
+					}
 				}
 				if(game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null
 					&& gameState.CurrentBlock?.Type == "POWER" && gameState.CurrentBlock.CardId == NonCollectible.Neutral.BackToBackBATTLEGROUNDS)

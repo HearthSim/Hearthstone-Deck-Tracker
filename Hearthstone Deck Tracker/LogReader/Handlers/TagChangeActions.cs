@@ -360,7 +360,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			)
 			{
 				if(game.CurrentGameStats != null)
-					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateFlobbidinousFloopTransformDuos(entity);
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateFlobbidinousFloopTransformDuos(entity, gameState.CurrentBlock.SourceEntityId);
 			}
 
 			if(
