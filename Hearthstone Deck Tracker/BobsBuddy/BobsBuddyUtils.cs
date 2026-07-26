@@ -158,16 +158,22 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 			}
 
-			if(minion.IsMech() && attachedEntities.Any(e => e.HasTag(GameTag.MAGNETIC)))
-				CheckForMagneticDeathrattles(minion, attachedEntities, allEntities);
+			if(attachedEntities.Any(e => e.HasTag(GameTag.MAGNETIC)))
+			{
+				if(minion.IsMech())
+					CheckForMagnetizedDeathrattles(minion, attachedEntities, allEntities);
+				// Not just mech here, because Technical Element can magnetize to Elementals
+				CheckForSurfnSurfFromMagnetizedModules(minion, entity, allEntities);
+			}
 
 			minion.game_id = entity.Id;
 
 			return minion;
 		}
 
-		// Magnetic deathrattles can be *hiding* if initially attached to a magnetic minion that was then tripled and magnetized to another mech
-		private static void CheckForMagneticDeathrattles(Minion minion, IEnumerable<Entity> attachedEntities, IReadOnlyDictionary<int, Entity>? allEntities)
+		// Magnetized deathrattles (e.g., Auto Assembler) can be *hiding* if initially attached
+		// to a magnetic minion that was then tripled and magnetized to another mech.
+		private static void CheckForMagnetizedDeathrattles(Minion minion, IEnumerable<Entity> attachedEntities, IReadOnlyDictionary<int, Entity>? allEntities)
 		{
 			// Required to resolve the chain of magnetized
 			if(allEntities == null)
@@ -190,6 +196,40 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			// Future magnetic deathrattles can be added/handled here.
+		}
+
+		// A magnetized module keeps its own attached enchantments, including Surf n' Surf Spellcraft spells
+		// cast on a Technical Element, which is then magnetized to another host minion.
+		// The magnetized module records its host in TAG_SCRIPT_DATA_NUM_1 when it magnetizes.
+		private static void CheckForSurfnSurfFromMagnetizedModules(Minion minion, Entity host, IReadOnlyDictionary<int, Entity>? allEntities)
+		{
+			if(allEntities == null)
+				return;
+
+			var magnetizedModules = allEntities.Values
+				.Where(x => x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) == host.Id
+					&& x.HasTag(GameTag.MAGNETIC)
+					&& x.Card.TypeEnum == CardType.MINION)
+				.OrderBy(x => x.Id);
+
+			foreach(var module in magnetizedModules)
+			{
+				var granted = allEntities.Values
+					.Where(x => x.IsAttachedTo(module.Id))
+					.OrderBy(x => x.Id);
+				foreach(var attached in granted)
+				{
+					switch(attached.CardId)
+					{
+						case NonCollectible.Neutral.SurfnSurf_CrabRidingEnchantment:
+							minion.AdditionalDeathrattles.Add(GenericDeathrattles.Crab);
+							break;
+						case NonCollectible.Neutral.SurfnSurf_CrabRiding:
+							minion.AdditionalDeathrattles.Add(GenericDeathrattles.CrabGolden);
+							break;
+					}
+				}
+			}
 		}
 
 		private static void SetScriptDataProperties(dynamic item, Entity entity)
