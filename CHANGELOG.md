@@ -1,3 +1,32 @@
+## **Release v1.53.15 - 2026-07-27**
+**Bob's Buddy**:
+- Reborn deathrattle minions that summon could result in wrong summoning order
+- Fish of N'Zoth made golden from Sr. Tomb Diver was incorrect
+- Scarlet Survivor gained divine shield to soon for some start of combat hero powers
+- Pack Tactics secret was sometimes skipping the summoned minion from attacking
+- Ini Stormcoil Hero power's counter at start of combat could be incorrect
+- A minion with cleave and venomous was not killing all damaged minions
+- Clunker Junker magnetizing Auto Assembler to itself during combat was not triggering a subsequent deathrattle
+- Oathstone's Summoning anomaly was missing Timewarped minions from the summon pool
+- Jar o' Gems trinket could trigger before a new gem bonus was added
+- An opponent losing remaining health was not counting as a win and not a tie
+- Wildfire elemental was not dealing excess damage soon enough to neighbor(s)
+- Beetles summoned in combat with beetle bonus were not triggering some friendly buffs
+- Upper Hand was interacting incorrectly with Training Certificate
+- Brukan Lightning damage resolution could remove killed minions in the wrong order
+- Build-An-Undead minions should not be made golden
+- Scarlet survivor was not consuming it's threshold when already shielded
+- Tunnel Blaster damage resolution could remove killed minions in the wrong order
+- Blood Golem Sticker summoned before some deathrattles completed
+- Scrapsmith Portrait trinket could trigger before a new gem bonus was added
+- Some Ancestral Automatons summoned from magnetized Auto Assemblers were missing
+- Blood gem health buff when exactly 1, was sometimes captured wrong at start of combat
+- Enchantments on a Technical Element magnetized to an elemental were missing
+
+Duos:
+- Fixed Flobbidinous Floop to detect and update cases when "no-transform happened" at start-of-combat
+
+
 ## **Release v1.53.14 - 2026-07-22**
 **Hearthstone**
 - Fixed some cards missing the Deathrattle tag, resulting in them not appearing in Endbringer Umbra and Ravenous Felhunter related cards.
