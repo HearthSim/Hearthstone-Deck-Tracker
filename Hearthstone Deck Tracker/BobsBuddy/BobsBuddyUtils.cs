@@ -190,9 +190,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				var goldenEnchantCount = allEntities.Values.Count(x => x.IsAttachedTo(magneticId) && x.CardId == AutoAssemblerEnchantmentGolden.CardId);
 
 				for(var i = 0; i < enchantCount; i++)
-					minion.AdditionalDeathrattles.Add(AutoAssembler.Deathrattle(false));
+					minion.AdditionalDeathrattles.Add(AutoAssembler.Deathrattle());
 				for(var i = 0; i < goldenEnchantCount; i++)
-					minion.AdditionalDeathrattles.Add(AutoAssembler.Deathrattle(true));
+					minion.AdditionalDeathrattles.Add(AutoAssembler.GoldenDeathrattle());
 			}
 
 			// Future magnetic deathrattles can be added/handled here.

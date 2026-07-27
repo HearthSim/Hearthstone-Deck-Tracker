@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
 using static HearthDb.Enums.GameTag;
@@ -648,6 +649,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(!game.Entities.TryGetValue(value, out var entity))
 				return;
+
+			// Signal to flush AutoAssembler deathrattles observed during a sequence of Deathrattle Blocks
+			if(BobsBuddyInvoker.CurrentCombatHasPendingAutoAssemblerObservations && game.CurrentGameStats != null)
+			{
+				BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
+					.FlushAndUpdateObservedAutoAssemblerDeathrattlesAsync().Forget();
+			}
+
 			if(entity.IsHero)
 			{
 				Log.Debug($"Saw hero attack from {entity.CardId}");

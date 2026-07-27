@@ -255,6 +255,30 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 					}
 
+					// Used to detect and update hidden magnetized AutoAssembler deathrattles
+					if(  // short-circuit on CardId to minimize frequency of this check
+						(cardId == NonCollectible.Neutral.AncestralAutomaton || cardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomaton)
+						&& game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null
+						&& block is { Type: "TRIGGER", TriggerKeyword: "DEATHRATTLE" }
+						&& game.Entities.TryGetValue(block.SourceEntityId, out var deadMinion)
+						&& deadMinion.IsMinion
+					)
+					{
+						var race = deadMinion.GetTag(GameTag.CARDRACE);
+						if(race == (int)Race.MECHANICAL || race == (int)Race.ALL)
+						{
+							// Extra-deathrattles (e.g., Titus Rivendare) are tracked on the controlling player entity.
+							var controller = deadMinion.GetTag(GameTag.CONTROLLER);
+							var controllerEntity = controller == game.Player.Id ? game.PlayerEntity
+								: controller == game.Opponent.Id ? game.OpponentEntity
+								: game.Entities.Values.FirstOrDefault(e => e.GetTag(GameTag.PLAYER_ID) == controller);
+							var extraDeathrattles = controllerEntity?.GetTag(GameTag.EXTRA_DEATHRATTLES_ADDITIONAL) ?? 0;
+
+							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+								.ObserveMagnetizedAutoAssemblerDeathrattles(block.SourceEntityId, extraDeathrattles);
+						}
+					}
+
 					if(gameState.CurrentBlock != null && (entity.CardId?.ToUpper().Contains("HERO") ?? false))
 						gameState.CurrentBlock.HasFullEntityHeroPackets = true;
 				}

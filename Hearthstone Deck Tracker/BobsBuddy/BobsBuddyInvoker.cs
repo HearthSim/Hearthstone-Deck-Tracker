@@ -17,6 +17,7 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
 using BobsBuddy.Enchantments;
 using BobsBuddy.Minions.Duos;
+using BobsBuddy.Minions.Mech;
 using BobsBuddy.Trinkets;
 using BobsBuddy.Utils;
 using BobsBuddyPlayer = BobsBuddy.Simulation.Player;
@@ -58,6 +59,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		// True in games where an opponent Malorne can be summoned during the current combat (the Bring in the Buddies anomaly)
 		internal static bool CurrentCombatMayHaveOpponentMalorne;
+
+		// True while at least one magnetized AutoAssembler deathrattle observation awaits flushing
+		internal static bool CurrentCombatHasPendingAutoAssemblerObservations;
 
 		// Incremented on every detected game reconnect. Each combat snapshot records the current value;
 		// a mismatch at validation time means the reconnect happened after this combat started, so the
@@ -340,6 +344,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 				}
 				var wasPreviousStateParcial = State == BobsBuddyState.CombatPartial;
+
+				// The last death of the combat has no following attack to trigger a potential flush.
+				if(CurrentCombatHasPendingAutoAssemblerObservations)
+					await FlushAndUpdateObservedAutoAssemblerDeathrattlesAsync();
 
 				if(isGameOver)
 				{
@@ -800,6 +808,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			// Flag checking it's possible to summon Malorne during combat (to optimize redundantly checking in TagChangeAction).
 			CurrentCombatMayHaveOpponentMalorne = input.Anomaly?.CardID == NonCollectible.Neutral.BringInTheBuddies;
+
+			// A stale observation from a combat that never reached StartShoppingAsync (e.g., disconnect) must not trigger flushes in the next combat.
+			CurrentCombatHasPendingAutoAssemblerObservations = false;
 
 			DebugLog("Successfully snapshotted board state");
 		}
@@ -1267,6 +1278,100 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			await TryRerun();
+		}
+
+		// Minions whose deathrattle blocks summoned Ancestral Automatons, awaiting reconciliation.
+		private readonly HashSet<int> _pendingAutoAssemblerSources = new HashSet<int>();
+
+		// Trigger multiplier of minions in _pendingAutoAssemblerSources.
+		private readonly Dictionary<int, int> _autoAssemblerTriggersPerDeathrattle = new Dictionary<int, int>();
+
+		internal void ObserveMagnetizedAutoAssemblerDeathrattles(int sourceEntityId, int extraDeathrattles)
+		{
+			if(!_autoAssemblerTriggersPerDeathrattle.ContainsKey(sourceEntityId))
+				_autoAssemblerTriggersPerDeathrattle[sourceEntityId] = 1 + extraDeathrattles;
+			_pendingAutoAssemblerSources.Add(sourceEntityId);
+			CurrentCombatHasPendingAutoAssemblerObservations = true;
+		}
+
+		internal async Task FlushAndUpdateObservedAutoAssemblerDeathrattlesAsync()
+		{
+			CurrentCombatHasPendingAutoAssemblerObservations = false;
+			if(_pendingAutoAssemblerSources.Count == 0)
+				return;
+			var sources = _pendingAutoAssemblerSources.ToList();
+			_pendingAutoAssemblerSources.Clear();
+
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+
+			var changed = false;
+			foreach(var sourceEntityId in sources)
+				changed |= ReconcileAutoAssemblerDeathrattles(sourceEntityId);
+
+			if(changed)
+				await TryRerun();
+		}
+
+		private bool ReconcileAutoAssemblerDeathrattles(int sourceEntityId)
+		{
+			var sides = new[] { _input!.Player, _input.PlayerTeammate, _input.Opponent, _input.OpponentTeammate };
+			var minion = sides.Where(p => p != null).SelectMany(p => p!.Side).FirstOrDefault(m => m.game_id == sourceEntityId);
+			if(minion == null || minion.MinionUpdatedDuringCombat)
+				return false;
+
+			// Every automaton created in trigger order; entity ids are assigned in creation order (includes SETASIDE)
+			var observedGoldenSequence = _game.Entities.Values
+				.Where(e =>
+					(e.CardId == NonCollectible.Neutral.AncestralAutomaton ||
+						e.CardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomaton) &&
+					e.GetTag(GameTag.CREATOR) == sourceEntityId &&
+					(e.IsInPlay || e.IsInSetAside || e.IsInGraveyard))
+				.OrderBy(e => e.Id)
+				.Select(e => e.CardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomaton)
+				.ToList();
+
+
+			var triggerMultiplier = _autoAssemblerTriggersPerDeathrattle.TryGetValue(sourceEntityId, out var t) ? t : 1;
+			// Extra deathrattles (e.g., Titus Rivendare) resolve as full repeats of the whole deathrattle list —
+			// so the first (observed / triggerMultiplier) summons are the distinct deathrattles in their real order.
+			var automatons = observedGoldenSequence.Take(observedGoldenSequence.Count / triggerMultiplier).ToList();
+
+			// A minion's own innate deathrattles and deathrattles from attached enchantments resolve before these
+			// AdditionalDeathrattles, and appear as the leading elements; drop them so automatons map to AdditionalDeathrattles only.
+			var leadingCaptured = (minion is AutoAssembler ? 1 : 0)
+				+ minion.Enchantments.Count(e => e is AutoAssemblerEnchantment or AutoAssemblerEnchantmentGolden);
+			if(leadingCaptured > 0)
+				automatons = automatons.Skip(leadingCaptured).ToList();
+
+			// Get any existing AutoAssembler deathrattles already tracked on AdditionalDeathrattles
+			var currentIndices = new List<int>();
+			for(var i = 0; i < minion.AdditionalDeathrattles.Count; i++)
+			{
+				var deathrattleAction = minion.AdditionalDeathrattles[i].Method;
+				if(deathrattleAction == AutoAssembler.Deathrattle().Method)
+					currentIndices.Add(i);
+				else if(deathrattleAction == AutoAssembler.GoldenDeathrattle().Method)
+					currentIndices.Add(i);
+			}
+
+			// If observed summons not more than entries already captured — nothing to add.
+			if(automatons.Count <= currentIndices.Count)
+				return false;
+
+			// Replace the Auto Assembler entries with the observed sequence, in place: the simulator
+			// fires AdditionalDeathrattles in list order, so the order decides summon order — board
+			// positions, and which summons no longer fit once the board fills.
+			var insertAt = currentIndices.Count > 0 ? currentIndices[0] : minion.AdditionalDeathrattles.Count;
+			for(var i = currentIndices.Count - 1; i >= 0; i--)
+				minion.AdditionalDeathrattles.RemoveAt(currentIndices[i]);
+			minion.AdditionalDeathrattles.InsertRange(insertAt,
+				automatons.Select(golden => golden ? AutoAssembler.GoldenDeathrattle() : AutoAssembler.Deathrattle()));
+			minion.MinionUpdatedDuringCombat = true;
+
+			DebugLog($"Set {automatons.Count} Auto Assembler deathrattles ({automatons.Count(g => g)} golden) on {minion.CardID} (entity {sourceEntityId}, {observedGoldenSequence.Count} Automatons observed, {triggerMultiplier} triggers per deathrattle)");
+
+			return true;
 		}
 
 		private IEnumerable<CardEntity> GetOpponentHandEntities(Simulator simulator)
