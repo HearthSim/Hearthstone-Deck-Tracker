@@ -1003,6 +1003,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 
 			((Sandy)sandyMinion).AttachedMinion = GetMinionFromEntity(new Simulator(), friendly, transformedSandyEntity, GetAttachedEntities(transformedSandyEntity.Id));
+			sandyMinion.MinionUpdatedDuringCombat = true;
 
 			await TryRerun();
 		}
@@ -1166,6 +1167,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					enchantment.ScriptDataNum1 = enchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
 					enchantment.ScriptDataNum2 = enchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
 					minion.AttachEnchantment(enchantment);
+					minion.MinionUpdatedDuringCombat = true;
 				}
 			}
 
@@ -1238,6 +1240,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(simulator.EnchantmentFactory.Create(TimewarpedMagnanimooseEnchantment.CardId, minion.ControlledByPlayer) is TimewarpedMagnanimooseEnchantment enchantment)   			{
 				enchantment.SummonedMinions = summonedMinions;
 				minion.AttachEnchantment(enchantment);
+				minion.MinionUpdatedDuringCombat = true;
 			}
 
 			await TryRerun();
@@ -1260,6 +1263,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				enchantment.ScriptDataNum1 = cardDbfids.ElementAtOrDefault(0);
 				enchantment.ScriptDataNum2 = cardDbfids.ElementAtOrDefault(1);
 				minion.AttachEnchantment(enchantment);
+				minion.MinionUpdatedDuringCombat = true;
 			}
 
 			await TryRerun();
