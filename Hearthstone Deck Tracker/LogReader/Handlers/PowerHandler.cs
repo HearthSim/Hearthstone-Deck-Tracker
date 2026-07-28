@@ -267,15 +267,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						var race = deadMinion.GetTag(GameTag.CARDRACE);
 						if(race == (int)Race.MECHANICAL || race == (int)Race.ALL)
 						{
-							// Extra-deathrattles (e.g., Titus Rivendare) are tracked on the controlling player entity.
-							var controller = deadMinion.GetTag(GameTag.CONTROLLER);
-							var controllerEntity = controller == game.Player.Id ? game.PlayerEntity
-								: controller == game.Opponent.Id ? game.OpponentEntity
-								: game.Entities.Values.FirstOrDefault(e => e.GetTag(GameTag.PLAYER_ID) == controller);
-							var extraDeathrattles = controllerEntity?.GetTag(GameTag.EXTRA_DEATHRATTLES_ADDITIONAL) ?? 0;
+							var isGolden = cardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomaton;
+							var sourceZone = deadMinion.GetTag(GameTag.ZONE);
+							if(sourceZone == (int)Zone.GRAVEYARD)  // Deathrattles triggered the normal way
+							{
+								// Extra-deathrattles (e.g., Titus Rivendare) are tracked on the controlling player entity.
+								var controller = deadMinion.GetTag(GameTag.CONTROLLER);
+								var controllerEntity = controller == game.Player.Id ? game.PlayerEntity
+									: controller == game.Opponent.Id ? game.OpponentEntity
+									: game.Entities.Values.FirstOrDefault(e => e.GetTag(GameTag.PLAYER_ID) == controller);
+								var extraDeathrattles = controllerEntity?.GetTag(GameTag.EXTRA_DEATHRATTLES_ADDITIONAL) ?? 0;
 
-							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
-								.ObserveMagnetizedAutoAssemblerDeathrattles(block.SourceEntityId, extraDeathrattles);
+								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+									.ObserveMagnetizedAutoAssemblerDeathrattles(block.SourceEntityId, extraDeathrattles, isGolden);
+							}
 						}
 					}
 

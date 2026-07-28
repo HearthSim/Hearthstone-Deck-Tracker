@@ -1283,62 +1283,51 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
-		// Minions whose deathrattle blocks summoned Ancestral Automatons, awaiting reconciliation.
-		private readonly HashSet<int> _pendingAutoAssemblerSources = new HashSet<int>();
+		// Minions whose death firings summoned Ancestral Automatons, awaiting reconciliation:
+		// source entity id -> (trigger multiplier, summoned Automatons in creation order)
+		private readonly Dictionary<int, (int TriggerMultiplier, List<bool> SummonedIsPremium)> _pendingAutoAssemblerDeathrattleSources =
+			new Dictionary<int, (int, List<bool>)>();
 
-		// Trigger multiplier of minions in _pendingAutoAssemblerSources.
-		private readonly Dictionary<int, int> _autoAssemblerTriggersPerDeathrattle = new Dictionary<int, int>();
-
-		internal void ObserveMagnetizedAutoAssemblerDeathrattles(int sourceEntityId, int extraDeathrattles)
+		internal void ObserveMagnetizedAutoAssemblerDeathrattles(int sourceEntityId, int extraDeathrattles, bool isGolden)
 		{
-			if(!_autoAssemblerTriggersPerDeathrattle.ContainsKey(sourceEntityId))
-				_autoAssemblerTriggersPerDeathrattle[sourceEntityId] = 1 + extraDeathrattles;
-			_pendingAutoAssemblerSources.Add(sourceEntityId);
+			if(!_pendingAutoAssemblerDeathrattleSources.TryGetValue(sourceEntityId, out var observation))
+			{
+				observation = (1 + extraDeathrattles, new List<bool>());
+				_pendingAutoAssemblerDeathrattleSources[sourceEntityId] = observation;
+			}
+			observation.SummonedIsPremium.Add(isGolden);
 			CurrentCombatHasPendingAutoAssemblerObservations = true;
 		}
 
 		internal async Task FlushAndUpdateObservedAutoAssemblerDeathrattlesAsync()
 		{
 			CurrentCombatHasPendingAutoAssemblerObservations = false;
-			if(_pendingAutoAssemblerSources.Count == 0)
+			if(_pendingAutoAssemblerDeathrattleSources.Count == 0)
 				return;
-			var sources = _pendingAutoAssemblerSources.ToList();
-			_pendingAutoAssemblerSources.Clear();
+			var sourceThatSummoned = _pendingAutoAssemblerDeathrattleSources.ToList();
+			_pendingAutoAssemblerDeathrattleSources.Clear();
 
 			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var changed = false;
-			foreach(var sourceEntityId in sources)
-				changed |= ReconcileAutoAssemblerDeathrattles(sourceEntityId);
+			foreach(var kv_pair in sourceThatSummoned)
+				changed |= ReconcileAutoAssemblerDeathrattles(kv_pair.Key, kv_pair.Value.TriggerMultiplier, kv_pair.Value.SummonedIsPremium);
 
 			if(changed)
 				await TryRerun();
 		}
 
-		private bool ReconcileAutoAssemblerDeathrattles(int sourceEntityId)
+		private bool ReconcileAutoAssemblerDeathrattles(int sourceEntityId, int triggerMultiplier, List<bool> summonedByIsPremium)
 		{
 			var sides = new[] { _input!.Player, _input.PlayerTeammate, _input.Opponent, _input.OpponentTeammate };
 			var minion = sides.Where(p => p != null).SelectMany(p => p!.Side).FirstOrDefault(m => m.game_id == sourceEntityId);
 			if(minion == null || minion.MinionUpdatedDuringCombat)
 				return false;
 
-			// Every automaton created in trigger order; entity ids are assigned in creation order (includes SETASIDE)
-			var observedGoldenSequence = _game.Entities.Values
-				.Where(e =>
-					(e.CardId == NonCollectible.Neutral.AncestralAutomaton ||
-						e.CardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomaton) &&
-					e.GetTag(GameTag.CREATOR) == sourceEntityId &&
-					(e.IsInPlay || e.IsInSetAside || e.IsInGraveyard))
-				.OrderBy(e => e.Id)
-				.Select(e => e.CardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomaton)
-				.ToList();
-
-
-			var triggerMultiplier = _autoAssemblerTriggersPerDeathrattle.TryGetValue(sourceEntityId, out var t) ? t : 1;
 			// Extra deathrattles (e.g., Titus Rivendare) resolve as full repeats of the whole deathrattle list —
 			// so the first (observed / triggerMultiplier) summons are the distinct deathrattles in their real order.
-			var automatons = observedGoldenSequence.Take(observedGoldenSequence.Count / triggerMultiplier).ToList();
+			var automatons = summonedByIsPremium.Take(summonedByIsPremium.Count / triggerMultiplier).ToList();
 
 			// A minion's own innate deathrattles and deathrattles from attached enchantments resolve before these
 			// AdditionalDeathrattles, and appear as the leading elements; drop them so automatons map to AdditionalDeathrattles only.
@@ -1372,7 +1361,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				automatons.Select(golden => golden ? AutoAssembler.GoldenDeathrattle() : AutoAssembler.Deathrattle()));
 			minion.MinionUpdatedDuringCombat = true;
 
-			DebugLog($"Set {automatons.Count} Auto Assembler deathrattles ({automatons.Count(g => g)} golden) on {minion.CardID} (entity {sourceEntityId}, {observedGoldenSequence.Count} Automatons observed, {triggerMultiplier} triggers per deathrattle)");
+			DebugLog($"Set {automatons.Count} Auto Assembler deathrattles ({automatons.Count(g => g)} golden) on {minion.CardID} (entity {sourceEntityId}, {summonedByIsPremium.Count} Automatons observed, {triggerMultiplier} triggers per deathrattle)");
 
 			return true;
 		}
