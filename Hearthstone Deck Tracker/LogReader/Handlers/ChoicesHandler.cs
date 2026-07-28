@@ -128,7 +128,7 @@ internal class ChoicesHandler
 			var choice = tc.BuildCompletedChoice();
 			gameState.ChoicesById[tc.Id] = choice;
 			if(choice.PlayerId == game.Player.Id)
-				gameState.GameHandler?.HandlePlayerEntitiesChosen(choice);
+				gameState.GameHandler?.HandlePlayerEntitiesChosen(choice, gameState);
 			if(choice.PlayerId == game.Opponent.Id)
 				gameState.GameHandler?.HandleOpponentEntitiesChosen(choice, gameState);
 		}

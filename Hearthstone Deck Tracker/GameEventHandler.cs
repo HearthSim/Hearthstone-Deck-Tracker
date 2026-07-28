@@ -1552,7 +1552,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void HandlePlayerEntitiesChosen(IHsCompletedChoice choice)
+		public void HandlePlayerEntitiesChosen(IHsCompletedChoice choice, IHsGameState gameState)
 		{
 			var chosen = choice.ChosenEntityIds
 				?.Select(id => _game.Entities.TryGetValue(id, out var e) ? e : null)
@@ -1591,6 +1591,7 @@ namespace Hearthstone_Deck_Tracker
 					break;
 				case ChoiceType.GENERAL:
 					_game.CounterManager.HandleChoicePicked(choice);
+					HandleSphereOfSapienceChosen(choice, chosen, source, gameState);
 					if(_game.IsBattlegroundsMatch)
 					{
 						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
@@ -1613,6 +1614,34 @@ namespace Hearthstone_Deck_Tracker
 
 			_game.Player.OfferedEntityIds.Clear();
 			Core.Overlay.PlayerCounters.UpdateVisibleCounters();
+		}
+
+		// Sphere of Sapience offers the top card of the deck, or "A New Fate" to put it on the
+		// bottom. The card in the deck never changes zone, and the offered card is only a copy of
+		// it, so the choice is the only signal we get about the new position.
+		private void HandleSphereOfSapienceChosen(IHsCompletedChoice choice, List<Entity> chosen, Entity? source, IHsGameState gameState)
+		{
+			if(source?.CardId != HearthDb.CardIds.Collectible.Neutral.SphereOfSapience)
+				return;
+
+			var offeredCopy = choice.OfferedEntityIds
+				.Select(id => _game.Entities.TryGetValue(id, out var e) ? e : null)
+				.WhereNotNull()
+				.FirstOrDefault(x => x.CardId != HearthDb.CardIds.NonCollectible.Neutral.SphereofSapience_ANewFateToken);
+			if(offeredCopy == null)
+				return;
+
+			var linkedId = offeredCopy.GetTag(GameTag.LINKED_ENTITY);
+			if(linkedId == 0)
+				linkedId = offeredCopy.GetTag(GameTag.COPIED_FROM_ENTITY_ID);
+			if(!_game.Entities.TryGetValue(linkedId, out var topCard) || !topCard.IsInDeck)
+				return;
+
+			var putOnBottom = chosen.Any(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.SphereofSapience_ANewFateToken);
+			var newIndex = ++gameState.DredgeCounter;
+			topCard.Info.DeckIndex = putOnBottom ? -newIndex : newIndex;
+			Log.Info($"Sphere of Sapience {(putOnBottom ? "Bottom" : "Top")}: {topCard}");
+			Core.UpdatePlayerCards();
 		}
 
 		private void OnQuestChosen(Entity? entity)
@@ -2921,7 +2950,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.SetPlayerHero(string? cardId) => SetPlayerHero(cardId);
 		void IGameHandler.HandleOpponentHeroPower(string cardId, int turn) => HandleOpponentHeroPower(cardId, turn);
 		void IGameHandler.HandlePlayerEntityChoices(IHsChoice choice) => HandlePlayerEntityChoices(choice);
-		void IGameHandler.HandlePlayerEntitiesChosen(IHsCompletedChoice choice) => HandlePlayerEntitiesChosen(choice);
+		void IGameHandler.HandlePlayerEntitiesChosen(IHsCompletedChoice choice, IHsGameState gs) => HandlePlayerEntitiesChosen(choice, gs);
 		void IGameHandler.HandleOpponentEntitiesChosen(IHsCompletedChoice choice, IHsGameState gs) => HandleOpponentEntitiesChosen(choice, gs);
 		void IGameHandler.TurnStart(ActivePlayer player, int turnNumber) => TurnStart(player, turnNumber);
 		void IGameHandler.HandleGameStart(DateTime timestamp) => HandleGameStart(timestamp);

@@ -789,13 +789,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						switch(actionStartingCardId)
 						{
-							case Collectible.Neutral.SphereOfSapience:
-								// These are tricky to implement correctly, so
-								// until the are, we will just reset the state
-								// known about the top/bottom of the deck
-								if(actionStartingEntity?.IsControlledBy(game.Player.Id) ?? false)
-									gameState.GameHandler?.HandlePlayerUnknownCardAddedToDeck();
-								break;
+							// Sphere of Sapience is resolved from the entity choice it offers,
+							// see GameEventHandler.HandleSphereOfSapienceChosen
 
 							case Collectible.Rogue.TradePrinceGallywix:
 								if(!game.Entities.TryGetValue(gameState.LastCardPlayed, out var lastPlayed) || lastPlayed.CardId == null)
@@ -1180,6 +1175,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Shaman.ColdStorage:
 							case Collectible.Priest.PowerChordSynchronize:
 							case Collectible.Rogue.Shadowcaster:
+							case Collectible.Priest.ShatteredReflections:
 								if(target != null)
 									AddKnownCardId(gameState, target);
 								break;

@@ -1,3 +1,8 @@
+## **Unreleased**
+**Hearthstone**:
+- Added cards to the bottom of the deck by Sphere of Sapience.
+- Fixed decklist not updating with the card shuffled by Shattered Reflection.
+
 ## **Release v1.54.0 - 2026-07-28**
 **Hearthstone**:
 - Added The OutFinder, our Discover assistant for Constructed and Arena!\
