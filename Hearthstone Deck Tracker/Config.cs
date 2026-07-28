@@ -849,6 +849,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool SeenBobsBuddyAverageDamage = false;
 
+		[DefaultValue(false)]
+		public bool SeenMulliganGuideTrialsExhausted = false;
+
 		[DefaultValue(true)]
 		public bool ShowMulliganGuidePreLobby = true;
 

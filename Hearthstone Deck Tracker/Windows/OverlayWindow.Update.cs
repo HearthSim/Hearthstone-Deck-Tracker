@@ -816,6 +816,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateMulliganGuideTrialsExhausted()
 		{
+			// Trials refresh every week. This is a one-time heads-up that the free games
+			// have run out, not a weekly reminder, so it is only ever shown once.
+			if(Config.Instance.SeenMulliganGuideTrialsExhausted)
+				return;
+
 			if(!MulliganGuideTrial.ConsumePendingLastTrialAlert())
 				return;
 
@@ -825,6 +830,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			// Trials may have reset while the player was away from the constructed lobby.
 			if((MulliganGuideTrial.RemainingTrials ?? 0) > 0)
 				return;
+
+			Config.Instance.SeenMulliganGuideTrialsExhausted = true;
+			Config.Save();
 
 			ShowMulliganGuideTrialsExhausted(MulliganGuideTrial.TimeRemaining);
 		}
