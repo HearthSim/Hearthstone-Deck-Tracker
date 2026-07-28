@@ -1,0 +1,12 @@
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Pools;
+
+namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Hunter;
+
+// "Taunt. Deathrattle: Summon two random 3-Cost Beasts. They attack random enemies."
+public class Ankylodon : Cost3BeastMinionPool
+{
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Hunter.Ankylodon;
+	public override int Picks() => 1;
+	public override int EventCount() => 2;
+	public override bool IsWithReplacement() => true;
+}

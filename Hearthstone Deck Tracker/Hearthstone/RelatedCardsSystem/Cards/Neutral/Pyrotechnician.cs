@@ -1,21 +1,11 @@
-﻿using System.Linq;
-using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Pools;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
 
-public class Pyrotechnician : ICardGenerator
+// "After you cast a spell, add a random Fire spell to your hand."
+public class Pyrotechnician : FireSpellPool
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Neutral.Pyrotechnician;
-
-	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
-	{
-		return card.TypeEnum == CardType.SPELL &&
-		       card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.FIRE &&
-		       card.IsCardLegal(gameMode, format);
-	}
-
-	public bool IsInGeneratorPool(MultiIdCard card, GameType gameMode, FormatType format)
-	{
-		return card.Ids.Any(c => IsInGeneratorPool(new Card(c), gameMode, format));
-	}
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.Pyrotechnician;
+	public override int Picks() => 1;
+	public override bool IsWithReplacement() => true;
 }

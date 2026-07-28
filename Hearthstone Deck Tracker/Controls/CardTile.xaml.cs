@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
@@ -41,6 +42,19 @@ public partial class CardTile
 	private void OnCardChanged()
 	{
 		(DataContext as CardTileViewModel)?.OnCardChanged();
+	}
+
+	private void CardTile_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+	{
+		if(DataContext is not CardTileViewModel vm)
+			return;
+		var info = vm.Card.GetRelatedCardsInfo();
+		if(info.Cards == null || info.Cards.Count == 0 || !info.ShowSummary)
+			return;
+		if(!Config.Instance.OutfinderEnabled)
+			return;
+		e.Handled = true;
+		Core.Overlay.ShowRelatedCardsPanel(vm.Card, info.Cards);
 	}
 }
 

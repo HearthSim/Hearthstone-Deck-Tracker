@@ -6,5 +6,4 @@ public interface ICardWithRelatedCards : ICard
 {
 	bool ShouldShowForOpponent(Player opponent);
 	List<Card?> GetRelatedCards(Player player);
-
 }

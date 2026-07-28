@@ -39,6 +39,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -651,6 +652,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsTraditionalHearthstoneMatch)
 			{
 				CardLegalityChecker.LoadCardsByFormat(_game.CurrentGameType, _game.CurrentFormatType);
+				LoadOutfinderKeywordsIfEntitled();
 			}
 
 			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
@@ -687,6 +689,16 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private async void LoadOutfinderKeywordsIfEntitled()
+		{
+			RelatedCardsManager.RelatedCardsSummaryKeywords = null;
+
+			if(!await OutfinderTrial.ActivateOrContinue(_game))
+				return;
+
+			await RelatedCardsManager.LoadRelatedCardsSummaryKeywords();
+		}
+
 		private DateTime _lastReconnectStartTimestamp = DateTime.MinValue;
 		public async void HandleGameReconnect(DateTime timestamp)
 		{
@@ -705,6 +717,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsTraditionalHearthstoneMatch)
 			{
 				CardLegalityChecker.LoadCardsByFormat(_game.CurrentGameType, _game.CurrentFormatType);
+				LoadOutfinderKeywordsIfEntitled();
 			}
 
 			if(_game.IsBattlegroundsMatch)
@@ -1043,6 +1056,8 @@ namespace Hearthstone_Deck_Tracker
 						_game.Metrics
 					);
 					MulliganGuideTrial.Clear();
+					OutfinderTrial.Clear();
+					RelatedCardsManager.RelatedCardsSummaryKeywords = null;
 				}
 
 				if(_game.IsBattlegroundsMatch)

@@ -464,6 +464,48 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Log.Info("Enabled mouse hook");
 		}
 
+		// The global right-click hook is only alive while a large-pool card is
+		// hovered in the game (hand or discover). Everywhere else (e.g. deck list
+		// card tiles) right-clicks are handled by regular WPF mouse events.
+		private void SetHoveredLargePool(Card? card, List<Card>? cards)
+		{
+			_hoveredLargePoolCard = card;
+			_hoveredLargePoolCards = cards;
+			if(card != null && cards != null)
+				HookRightClick();
+			else
+				UnHookRightClick();
+		}
+
+		public void HookRightClick()
+		{
+			if(_rmbMouseInput != null)
+				return;
+			_rmbMouseInput = new User32.MouseInput();
+			_rmbMouseInput.RmbDown += MouseInputOnRmbDown;
+			Log.Info("Enabled right-click hook");
+		}
+
+		public void UnHookRightClick()
+		{
+			if(_rmbMouseInput == null)
+				return;
+			_rmbMouseInput.Dispose();
+			_rmbMouseInput = null;
+			Log.Info("Disabled right-click hook");
+		}
+
+		private void MouseInputOnRmbDown(object sender, EventArgs e)
+		{
+			if(!User32.IsHearthstoneInForeground() || Visibility != Visibility.Visible)
+				return;
+			if(_hoveredLargePoolCards == null || _hoveredLargePoolCard == null)
+				return;
+			if(!Config.Instance.OutfinderEnabled)
+				return;
+			ShowRelatedCardsPanel(_hoveredLargePoolCard, _hoveredLargePoolCards);
+		}
+
 		public void UnHookMouse()
 		{
 			if (_uiMovable || _mouseInput == null)

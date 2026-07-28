@@ -34,7 +34,9 @@ public class InfestTheSculleryCounter : NumericCounter
 		return RelatedCards;
 	}
 
-	public override string ValueToShow() => Math.Min(BaseCost + Counter, 10).ToString();
+	public int SummonCost => Math.Min(BaseCost + Counter, 10);
+
+	public override string ValueToShow() => SummonCost.ToString();
 
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
 	{

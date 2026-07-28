@@ -26,6 +26,7 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
@@ -46,6 +47,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.PlayerResourcesWidget;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.RelatedCardsPanel;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -82,6 +84,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private bool? _isFriendsListOpen;
 		private bool _lmbDown;
 		private User32.MouseInput? _mouseInput;
+		private User32.MouseInput? _rmbMouseInput;
+		private List<Card>? _hoveredLargePoolCards;
+		private Card? _hoveredLargePoolCard;
 		private Point _mousePos;
 		private bool _opponentCardsHidden;
 		private bool _playerCardsHidden;
@@ -108,6 +113,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _arenaOverlayBehavior;
 		private OverlayElementBehavior _arenaPreLobbyBehavior;
 		private OverlayElementBehavior _constructedPreLobbyWidgetBehavior;
+		private OverlayElementBehavior _mulliganGuideTrialsExhaustedBehavior;
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
@@ -120,6 +126,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public BattlegroundsQuestPickingViewModel BattlegroundsQuestPickingViewModel { get; } = new();
 		public BattlegroundsTrinketPickingViewModel BattlegroundsTrinketPickingViewModel { get; } = new();
 		public BattlegroundsInspirationViewModel BattlegroundsInspirationViewModel { get; } = new();
+		public RelatedCardsPanelViewModel RelatedCardsPanelViewModel { get; } = new();
 
 		public BattlegroundsGuidesTabsViewModel BattlegroundsGuidesTabsViewModel { get; } = new();
 		public BattlegroundsHeroGuideListViewModel BattlegroundsHeroGuideListViewModel { get; } = new();
@@ -136,6 +143,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public ArenaPickHelperViewModel ArenaPickHelperViewModel { get; } = new();
 		public ArenaPreDraftViewModel ArenaPreDraftViewModel { get; } = new();
 		public ConstructedMulliganPreLobbyWidgetViewModel ConstructedMulliganPreLobbyWidgetViewModel { get; } = new();
+		public MulliganGuideTrialsExhaustedViewModel MulliganGuideTrialsExhaustedViewModel { get; } = new();
 
 		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
 		public Tier7PreLobbyViewModel Tier7PreLobbyViewModel { get; } = new Tier7PreLobbyViewModel();
@@ -389,6 +397,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				},
 			};
 
+			_mulliganGuideTrialsExhaustedBehavior = new OverlayElementBehavior(MulliganGuideTrialsExhausted)
+			{
+				GetLeft = () => Width / 2 - MulliganGuideTrialsExhausted.ActualWidth * (Height / 1080) / 2,
+				GetTop = () => Height / 2 - MulliganGuideTrialsExhausted.ActualHeight * (Height / 1080) / 2,
+				GetScaling = () => Height / 1080,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+				Fade = true,
+				Distance = 40,
+			};
+
 			_constructedPreLobbyWidgetBehavior = new OverlayElementBehavior(ConstructedPreLobbyWidget)
 			{
 				GetLeft = () => Helper.GetScaledXPos(0.034, (int)Width, ScreenRatio),
@@ -424,6 +444,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			GridMain.Visibility = Visible;
 
 			BattlegroundsInspirationViewModel.OnClose += HideBgsInspiration;
+			RelatedCardsPanelViewModel.OnClose += HideRelatedCardsPanel;
+			MulliganGuideTrialsExhaustedViewModel.OnClose += DismissMulliganGuideTrialsExhausted;
 			Tier7Trial.OnTrialActivated += () =>
 			{
 				BattlegroundsMinionsVM.IsInspirationEnabled = _game.IsBattlegroundsMatch;
@@ -647,6 +669,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UnhookGameWindow();
 			if(_mouseInput != null)
 				UnHookMouse();
+			UnHookRightClick();
 			DisableBatteryMonitor();
 		}
 
@@ -1236,6 +1259,49 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OpacityMaskOverlay.Enable();
 		}
 
+		// Tracked separately from the element's Visibility, which stays Visible until the
+		// exit animation finishes, long after the pre-lobby should be back.
+		private bool _mulliganGuideTrialsExhaustedVisible;
+
+		internal void ShowMulliganGuideTrialsExhausted(string? trialTimeRemaining)
+		{
+			MulliganGuideTrialsExhaustedViewModel.TrialTimeRemaining = trialTimeRemaining;
+			_mulliganGuideTrialsExhaustedVisible = true;
+			_mulliganGuideTrialsExhaustedBehavior.Show();
+		}
+
+		internal void HideMulliganGuideTrialsExhausted()
+		{
+			_mulliganGuideTrialsExhaustedVisible = false;
+			_mulliganGuideTrialsExhaustedBehavior.Hide();
+		}
+
+		private void DismissMulliganGuideTrialsExhausted()
+		{
+			HideMulliganGuideTrialsExhausted();
+			// Bring the pre-lobby back now that the alert is out of the way.
+			UpdateMulliganGuidePreLobbyVisibility();
+		}
+
+		private void MulliganGuideTrialsExhaustedCover_OnMouseDown(object sender, MouseButtonEventArgs e)
+			=> DismissMulliganGuideTrialsExhausted();
+
+		public void ShowRelatedCardsPanel(Card sourceCard, List<Card> relatedCards)
+		{
+			RelatedCardsPanelViewModel.CardName = sourceCard.LocalizedName;
+			RelatedCardsPanelViewModel.Cards = relatedCards;
+			RelatedCardsPanelControl.Visibility = Visibility.Visible;
+		}
+
+		private void HideRelatedCardsPanel()
+		{
+			RelatedCardsPanelControl.Visibility = Visibility.Collapsed;
+			RelatedCardsPanelViewModel.Cards = null;
+			RelatedCardsPanelViewModel.CardName = null;
+		}
+
+		private void RelatedCardsCover_OnMouseDown(object sender, MouseButtonEventArgs e) => HideRelatedCardsPanel();
+
 		public static bool AnimatingXPBar = false;
 
 		internal async Task ExperienceChangedAsync(int experience, int experienceNeeded, int level, int levelChange, bool animate)
@@ -1449,6 +1515,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ConstructedMulliganGuidePreLobbyViewModel.VisualsFormatType = vft;
 			ConstructedMulliganGuidePreLobbyViewModel.IsModalOpen = isModalOpen;
 			ConstructedMulliganPreLobbyWidgetViewModel.VisualsFormatType = vft;
+			// Discover pools hovered in the menu have no game to read the format from.
+			PoolContext.MenuVisualsFormatType = vft;
 		}
 
 		internal void SetBaconState(SelectedBattlegroundsGameMode mode)

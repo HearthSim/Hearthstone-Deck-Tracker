@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using HearthDb;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
@@ -152,6 +153,30 @@ public class CardTooltipViewModel : ViewModel
 		{
 			SetProp(value ?? LocUtil.Get("Related_Cards", useCardLanguage: true));
 		}
+	}
+
+	public Dictionary<string, string>? RelatedCardsSummary
+	{
+		get => GetProp<Dictionary<string, string>?>(null);
+		set => SetProp(value);
+	}
+
+	public int RelatedCardsSummaryTotalNum
+	{
+		get => GetProp(0);
+		set => SetProp(value);
+	}
+
+	public PoolStatistics? PoolStatistics
+	{
+		get => GetProp<PoolStatistics?>(null);
+		set => SetProp(value);
+	}
+
+	public bool HasLargePool
+	{
+		get => GetProp(false);
+		set => SetProp(value);
 	}
 
 	public string? Text

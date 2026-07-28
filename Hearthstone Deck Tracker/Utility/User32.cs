@@ -287,6 +287,7 @@ namespace Hearthstone_Deck_Tracker
 			private const int WH_MOUSE_LL = 14;
 			private const int WM_LBUTTONDOWN = 0x201;
 			private const int WM_LBUTTONUP = 0x0202;
+			private const int WM_RBUTTONDOWN = 0x0204;
 			private readonly WindowsHookHelper.HookDelegate _mouseDelegate;
 			private readonly IntPtr _mouseHandle;
 			private bool _disposed;
@@ -302,6 +303,7 @@ namespace Hearthstone_Deck_Tracker
 			public event EventHandler<EventArgs>? LmbDown;
 			public event EventHandler<EventArgs>? LmbUp;
 			public event EventHandler<EventArgs>? MouseMoved;
+			public event EventHandler<EventArgs>? RmbDown;
 
 			private IntPtr MouseHookDelegate(int code, IntPtr wParam, IntPtr lParam)
 			{
@@ -312,13 +314,16 @@ namespace Hearthstone_Deck_Tracker
 				switch(wParam.ToInt32())
 				{
 					case WM_LBUTTONDOWN:
-						LmbDown?.Invoke(this, new EventArgs());
+						LmbDown?.Invoke(this, EventArgs.Empty);
 						break;
 					case WM_LBUTTONUP:
-						LmbUp?.Invoke(this, new EventArgs());
+						LmbUp?.Invoke(this, EventArgs.Empty);
+						break;
+					case WM_RBUTTONDOWN:
+						RmbDown?.Invoke(this, EventArgs.Empty);
 						break;
 					default:
-						MouseMoved?.Invoke(this, new EventArgs());
+						MouseMoved?.Invoke(this, EventArgs.Empty);
 						break;
 				}
 

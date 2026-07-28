@@ -1,21 +1,14 @@
-﻿using System.Linq;
-using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Pools;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Mage;
 
-public class Supernova : ICardGenerator
+// "Fill your hand with random Fire spells. They cost (1)."
+// Hand-fill count is unpredictable, so it is modeled as a single representative draw.
+// Fire spell pool + generator inherited from Pyrotechnician.
+public class Supernova : FireSpellPool
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Mage.Supernova;
-
-	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
-	{
-		return card.TypeEnum == CardType.SPELL &&
-		       card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.FIRE &&
-		       card.IsCardLegal(gameMode, format);
-	}
-
-	public bool IsInGeneratorPool(MultiIdCard card, GameType gameMode, FormatType format)
-	{
-		return card.Ids.Any(c => IsInGeneratorPool(new Card(c), gameMode, format));
-	}
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Mage.Supernova;
+	public override int Picks() => 1;
+	public override bool IsWithReplacement() => true;
 }

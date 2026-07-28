@@ -432,6 +432,21 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HidePlayerRelatedCards = false;
 
+		[DefaultValue(true)]
+		public bool OutfinderEnabled = true;
+
+		[DefaultValue(true)]
+		public bool OutfinderInDeck = true;
+
+		[DefaultValue(true)]
+		public bool OutfinderInHand = true;
+
+		[DefaultValue(true)]
+		public bool OutfinderUsePercentages = true;
+
+		[DefaultValue(false)]
+		public bool OutfinderUseCardTiles = false;
+
 		[DefaultValue(false)]
 		public bool HidePlayerHighlightSynergies = false;
 

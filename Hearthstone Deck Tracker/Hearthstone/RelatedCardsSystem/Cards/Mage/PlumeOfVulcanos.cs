@@ -1,23 +1,15 @@
-using System.Linq;
-using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Pools;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Mage;
 
-public class PlumeOfVulcanos : ICardGenerator
+// "Whenever this takes damage, get a random Fire spell. It costs (3) less."
+// Non-collectible token created by Vulcanos. Fire spell pool + generator inherited from Pyrotechnician.
+public class PlumeOfVulcanos : FireSpellPool
 {
-	public virtual string GetCardId() => HearthDb.CardIds.NonCollectible.Mage.Vulcanos_PlumeOfVulcanosToken1;
-
-	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
-	{
-		return card.TypeEnum == CardType.SPELL &&
-		       card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.FIRE &&
-		       card.IsCardLegal(gameMode, format);
-	}
-
-	public bool IsInGeneratorPool(MultiIdCard card, GameType gameMode, FormatType format)
-	{
-		return card.Ids.Any(c => IsInGeneratorPool(new Card(c), gameMode, format));
-	}
+	public override string GetCardId() => HearthDb.CardIds.NonCollectible.Mage.Vulcanos_PlumeOfVulcanosToken1;
+	public override int Picks() => 1;
+	public override bool IsWithReplacement() => true;
 }
 
 public class PlumeOfVulcanos2 : PlumeOfVulcanos

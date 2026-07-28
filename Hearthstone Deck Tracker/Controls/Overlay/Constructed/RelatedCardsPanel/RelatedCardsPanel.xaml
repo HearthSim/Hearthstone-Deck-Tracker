@@ -1,0 +1,362 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.RelatedCardsPanel.RelatedCardsPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.RelatedCardsPanel"
+             xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance local:RelatedCardsPanelViewModel}"
+             d:DesignHeight="600" d:DesignWidth="350">
+    <UserControl.Resources>
+        <Style x:Key="FilterChipStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1E2426"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#3A4A52"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <TextBlock Text="{TemplateBinding Content}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       FontSize="11"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <!-- Hover: lighter bg + brighter border (declared first = lower precedence) -->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#263035"/>
+                    <Setter Property="BorderBrush" Value="#4A6070"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+                <!-- Active: amber accent wins over hover -->
+                <DataTrigger Binding="{Binding IsActive}" Value="True">
+                    <Setter Property="Background" Value="#201A00"/>
+                    <Setter Property="BorderBrush" Value="#FFB00D"/>
+                    <Setter Property="Foreground" Value="#FFB00D"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Border Width="350"
+            Background="#CC2E3235"
+            BorderBrush="#4A5256"
+            BorderThickness="1,0,0,0">
+        <DockPanel>
+            <Border DockPanel.Dock="Top"
+                    Background="#1C2022"
+                    BorderBrush="#4A5256"
+                    BorderThickness="0,0,0,1">
+                <Grid Margin="10,8">
+                    <hdt:HearthstoneTextBlock Text="{Binding HeaderText}"
+                                              FontSize="14"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"
+                                              Margin="0,0,32,0"/>
+                    <Button Style="{DynamicResource AccentedSquareButtonStyle}"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"
+                            Command="{Binding CloseCommand}">
+                        <Rectangle Width="16" Height="16" Margin="2">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_close_white}"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Border DockPanel.Dock="Top"
+                    Background="#1A1C1E"
+                    BorderBrush="#2E3E4A"
+                    BorderThickness="0,0,0,1"
+                    Padding="12,6">
+                <Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="{DynamicResource HsReplayIconWhite}"
+                               Height="13" Margin="0,0,6,0"
+                               RenderOptions.BitmapScalingMode="Fant"/>
+                        <TextBlock Text="{lex:Loc TheOutfinder_Label_Title}"
+                                   FontSize="11" FontWeight="Bold"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CanUseFilters}" Value="True">
+                                            <Setter Property="Foreground" Value="{StaticResource HSReplayNetPremiumGold}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+                    <TextBlock Text="{lex:Loc TheOutfinder_Label_FreeVersion}"
+                               FontStyle="Italic"
+                               FontSize="10"
+                               Foreground="#8A9BA8"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right"
+                               Visibility="{Binding CanUseFilters, Converter={StaticResource InverseBoolToVisibility}}"/>
+                </Grid>
+            </Border>
+
+            <Border DockPanel.Dock="Top"
+                    BorderBrush="#2C3540"
+                    BorderThickness="0,0,0,1"
+                    Height="32"
+                    Cursor="Hand"
+                    Visibility="{Binding ShowFilterBar, Converter={StaticResource BoolToVisibility}}">
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding ToggleFilterCommand}"/>
+                </Border.InputBindings>
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="#1A1C1E"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1E2226"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding IsFilterOpen}" Value="True">
+                                <Setter Property="Background" Value="#1E2428"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid Margin="12,0">
+                    <!-- Left: filter icon + label + active dot -->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <Rectangle Fill="White" Height="8" Width="12"
+                                   VerticalAlignment="Center"
+                                   Opacity="0.55"
+                                   Margin="0,0,7,0">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Visual="{DynamicResource bar_filter}"/>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="{lex:LocTextUpper TheOutfinder_Label_Filters}"
+                                   FontSize="10" FontWeight="SemiBold"
+                                   Foreground="{StaticResource HSReplayNetPremiumGold}"
+                                   VerticalAlignment="Center"/>
+                        <Ellipse Width="5" Height="5"
+                                 Fill="#FFB00D"
+                                 Margin="7,0,0,0"
+                                 VerticalAlignment="Center"
+                                 Visibility="{Binding HasActiveFilter, Converter={StaticResource BoolToVisibility}}"/>
+                    </StackPanel>
+                    <!-- Right: matching/total counter + chevron (rotates when open) -->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding FilterMatchText}"
+                                   FontSize="10"
+                                   Margin="0,0,8,0"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="#8A9BA8"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasActiveFilter}" Value="True">
+                                            <Setter Property="Foreground" Value="#FFB00D"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <Path VerticalAlignment="Center"
+                              Stroke="White" StrokeThickness="1.5" StrokeLineJoin="Round"
+                              Data="M 0,0 L 5,4 L 10,0"
+                              RenderTransformOrigin="0.5,0.5">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Setter Property="RenderTransform">
+                                        <Setter.Value><RotateTransform Angle="0"/></Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsFilterOpen}" Value="True">
+                                            <Setter Property="RenderTransform">
+                                                <Setter.Value><RotateTransform Angle="180"/></Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border DockPanel.Dock="Top"
+                    Background="#17191B"
+                    BorderBrush="#2C3540"
+                    BorderThickness="0,0,0,1"
+                    Padding="10,10,10,12"
+                    Visibility="{Binding ShowFilterDrawer, Converter={StaticResource BoolToVisibility}}">
+                <StackPanel>
+                    <!-- Keyword filter chips -->
+                    <ItemsControl ItemsSource="{Binding KeywordFilters}"
+                                  HorizontalAlignment="Center"
+                                  Visibility="{Binding KeywordFilters, Converter={StaticResource NullableToVisibility}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Label}"
+                                        Command="{Binding DataContext.SelectKeywordCommand,
+                                                  RelativeSource={RelativeSource AncestorType=local:RelatedCardsPanel}}"
+                                        CommandParameter="{Binding KeywordName}"
+                                        Margin="3,2" Padding="10,4"
+                                        Style="{StaticResource FilterChipStyle}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Cost section — shown only when pool has more than 2 distinct costs -->
+                    <StackPanel Margin="0,10,0,0"
+                                Visibility="{Binding ShowCostFilters, Converter={StaticResource BoolToVisibility}}">
+                        <StackPanel Orientation="Horizontal" Margin="4,0,0,5">
+                            <Rectangle Width="2" Height="9" RadiusX="1" RadiusY="1"
+                                       Fill="#4A6FA5" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock Text="{lex:LocTextUpper TheOutfinder_Label_Cost}" FontSize="9" FontWeight="SemiBold"
+                                       Foreground="White" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ItemsControl ItemsSource="{Binding CostFilters}" HorizontalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Content="{Binding Label}"
+                                            Command="{Binding DataContext.SelectCostCommand,
+                                                      RelativeSource={RelativeSource AncestorType=local:RelatedCardsPanel}}"
+                                            CommandParameter="{Binding Cost}"
+                                            Margin="2,2" Padding="8,4" MinWidth="26"
+                                            Style="{StaticResource FilterChipStyle}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Only one of these is ever visible. A collapsed ListView is never measured, so its
+                 VirtualizingStackPanel realizes no containers and the hidden mode requests no images. -->
+            <Grid>
+                <ListView ItemsSource="{Binding FilteredCardRows}"
+                          Visibility="{Binding ShowCardGrid, Converter={StaticResource BoolToVisibility}}"
+                          VirtualizingPanel.IsVirtualizing="True"
+                          VirtualizingPanel.VirtualizationMode="Recycling"
+                          ScrollViewer.CanContentScroll="True"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          Focusable="False">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border ext:OverlayExtensions.ToolTip="{x:Type tooltips:CardTooltip}"
+                                                ToolTipService.Placement="Left"
+                                                ToolTipService.InitialShowDelay="100"
+                                                Background="Transparent">
+                                            <Image Source="{Binding AssetViewModel.Asset}"
+                                                   Width="108"
+                                                   Height="152"
+                                                   Margin="2,3"
+                                                   RenderOptions.BitmapScalingMode="Fant"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <ListView ItemsSource="{Binding FilteredCards}"
+                          Visibility="{Binding UseCardTiles, Converter={StaticResource BoolToVisibility}}"
+                          VirtualizingPanel.IsVirtualizing="True"
+                          VirtualizingPanel.VirtualizationMode="Recycling"
+                          ScrollViewer.CanContentScroll="True"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          Padding="4,3"
+                          Focusable="False">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Margin" Value="0,0,0,1"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.LayoutTransform>
+                                    <ScaleTransform ScaleX="0.92" ScaleY="0.92"/>
+                                </Grid.LayoutTransform>
+                                <controls:CardTile Width="217" Height="34"
+                                                   DataContext="{Binding TileViewModel}"
+                                                   Loaded="CardTile_OnLoaded"
+                                                   Unloaded="CardTile_OnUnloaded"
+                                                   PreviewMouseRightButtonDown="CardTile_OnPreviewMouseRightButtonDown"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+        </DockPanel>
+    </Border>
+</UserControl>

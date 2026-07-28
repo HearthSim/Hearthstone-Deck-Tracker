@@ -8,7 +8,7 @@
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              Background="Transparent"
              Unloaded="AnimatedCardList_OnUnloaded"
-             extensions:OverlayExtensions.IsOverlayHitTestVisible="{Binding ViewModel.IsScrollable, RelativeSource={RelativeSource Self}}"
+             extensions:OverlayExtensions.IsOverlayHitTestVisible="True"
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <Style x:Key="CardFilterButtonStyle" TargetType="ToggleButton">

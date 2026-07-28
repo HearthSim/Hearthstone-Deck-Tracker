@@ -1,11 +1,16 @@
-﻿using System.Linq;
+using System.Linq;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Pools;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
 
-public class GalacticCrusader : ICardGenerator
+// "Taunt Deathrattle: Get two random Holy spells. They cost (3) less."
+public class GalacticCrusader : HolySpellPool, ICardGenerator
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Neutral.GalacticCrusader;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.GalacticCrusader;
+	public override int Picks() => 1;
+	public override bool IsWithReplacement() => true;
+	public override int EventCount() => 2;
 
 	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
 	{

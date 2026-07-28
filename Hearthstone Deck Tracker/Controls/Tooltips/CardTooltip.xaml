@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              mc:Ignorable="d"
              DataContextChanged="CardTooltip_OnDataContextChanged"
@@ -32,6 +33,20 @@
         <Storyboard x:Key="StoryboardFadeOutInstant">
             <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0" />
         </Storyboard>
+        <!-- Fade-in/out for the pool summary panel, passed to PoolSummaryView.RootBorderStyle -->
+        <Style x:Key="PoolSummaryFadeInStyle" TargetType="Border">
+            <Setter Property="Opacity" Value="0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard Storyboard="{StaticResource StoryboardFadeInDelayed}"/>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard Storyboard="{StaticResource StoryboardFadeOutInstant}"/>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <DockPanel DataContext="{Binding ViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}">
 
@@ -107,5 +122,15 @@
                 </Style>
             </controls:GridCardImages.Style>
         </controls:GridCardImages>
+        <tooltips:PoolSummaryView
+            DockPanel.Dock="{Binding ImageDock}"
+            VerticalAlignment="Top"
+            Margin="0 0 15 0"
+            MaxWidth="330"
+            PoolStatistics="{Binding PoolStatistics}"
+            RelatedCardsSummaryTotalNum="{Binding RelatedCardsSummaryTotalNum}"
+            RelatedCardsSummary="{Binding RelatedCardsSummary}"
+            HasLargePool="{Binding HasLargePool}"
+            RootBorderStyle="{StaticResource PoolSummaryFadeInStyle}"/>
     </DockPanel>
 </UserControl>

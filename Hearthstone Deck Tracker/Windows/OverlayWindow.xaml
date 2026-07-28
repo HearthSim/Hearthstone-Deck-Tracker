@@ -28,6 +28,8 @@
         xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Arena"
         xmlns:chinaModule="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.ChinaModule"
         xmlns:minionPinning="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning"
+        xmlns:relatedCardsPanel="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.RelatedCardsPanel"
+        xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -52,34 +54,45 @@
                         <windows:CardGridTooltipViewModel/>
                     </Grid.DataContext>
                     <ext:OverlayExtensions.ToolTip>
-                        <controls:GridCardImages Title="{lex:Loc Related_Cards}" MaxCardGridHeight="470" Cards="{Binding Cards}" Visibility="{Binding Cards, Converter={StaticResource NullableToVisibility}}">
-                            <controls:GridCardImages.LayoutTransform>
-                                <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
-                            </controls:GridCardImages.LayoutTransform>
-                            <controls:GridCardImages.Style>
-                                <Style TargetType="controls:GridCardImages">
-                                    <Setter Property="Opacity" Value="0"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True">
-                                            <DataTrigger.EnterActions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </DataTrigger.EnterActions>
-                                            <DataTrigger.ExitActions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </DataTrigger.ExitActions>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </controls:GridCardImages.Style>
-                        </controls:GridCardImages>
+                        <StackPanel Orientation="Horizontal">
+                            <tooltips:PoolSummaryView
+                                VerticalAlignment="Top"
+                                Margin="0 0 15 0"
+                                Width="{Binding SummaryWidth}"
+                                PoolStatistics="{Binding PoolStatistics}"
+                                RelatedCardsSummaryTotalNum="{Binding RelatedCardsSummaryTotalNum}"
+                                RelatedCardsSummary="{Binding RelatedCardsSummary}"
+                                HasLargePool="{Binding HasLargePool}"
+                                KeywordsMaxHeight="{Binding SummaryMaxHeight}"/>
+                            <controls:GridCardImages Title="{lex:Loc Related_Cards}" MaxCardGridHeight="470" Cards="{Binding Cards}" Visibility="{Binding Cards, Converter={StaticResource NullableToVisibility}}">
+                                <controls:GridCardImages.LayoutTransform>
+                                    <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+                                </controls:GridCardImages.LayoutTransform>
+                                <controls:GridCardImages.Style>
+                                    <Style TargetType="controls:GridCardImages">
+                                        <Setter Property="Opacity" Value="0"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True">
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.EnterActions>
+                                                <DataTrigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </DataTrigger.ExitActions>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </controls:GridCardImages.Style>
+                            </controls:GridCardImages>
+                        </StackPanel>
                     </ext:OverlayExtensions.ToolTip>
                 </Grid>
 
@@ -537,6 +550,38 @@
                     ext:OverlayExtensions.IsOverlayHitTestVisible="True"
                     DataContext="{Binding BattlegroundsInspirationViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                     />
+
+                <!-- Dismisses RelatedCardsPanel when clicking outside it, mirroring BattlegroundsInspiration -->
+                <Grid Background="Black" Opacity="0.01" Canvas.Top="0" Canvas.Left="0"
+                      Width="{Binding Width, ElementName=CanvasInfo}"
+                      Height="{Binding Height, ElementName=CanvasInfo}"
+                      Visibility="{Binding Visibility, ElementName=RelatedCardsPanelControl}"
+                      ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                      MouseDown="RelatedCardsCover_OnMouseDown" />
+
+                <relatedCardsPanel:RelatedCardsPanel
+                    x:Name="RelatedCardsPanelControl"
+                    Visibility="Collapsed"
+                    Canvas.Right="0"
+                    Canvas.Top="0"
+                    Height="{Binding ActualHeight, ElementName=CanvasInfo}"
+                    ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                    DataContext="{Binding RelatedCardsPanelViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
+
+                <!-- Dismisses the Mulligan Guide trials alert when clicking outside it -->
+                <Grid Background="Black" Opacity="0.01" Canvas.Top="0" Canvas.Left="0"
+                      Width="{Binding Width, ElementName=CanvasInfo}"
+                      Height="{Binding Height, ElementName=CanvasInfo}"
+                      Visibility="{Binding Visibility, ElementName=MulliganGuideTrialsExhausted}"
+                      ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                      MouseDown="MulliganGuideTrialsExhaustedCover_OnMouseDown" />
+
+                <mulligan:MulliganGuideTrialsExhausted
+                    x:Name="MulliganGuideTrialsExhausted" Visibility="Collapsed" Canvas.Top="0" Canvas.Left="0"
+                    ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                    DataContext="{Binding MulliganGuideTrialsExhaustedViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
 
                 <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
                 <Grid Name="OverlayTooltip" IsHitTestVisible="False"/>

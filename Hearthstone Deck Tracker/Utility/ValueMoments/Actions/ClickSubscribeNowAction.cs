@@ -17,6 +17,8 @@ public class ClickSubscribeNowAction : VMAction
 		ConstructedPreLobby,
 		[JsonProperty("constructed_pre_lobby_wild")]
 		ConstructedPreLobbyWild,
+		[JsonProperty("constructed_trials_exhausted")]
+		ConstructedTrialsExhausted,
 	}
 
 	public ClickSubscribeNowAction(

@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
@@ -394,6 +395,44 @@ public partial class OverlayWindow
 		vm.TooltipPlacement = PlacementMode.Bottom;
 	}
 
+	private void ApplyRelatedCardsSummary(CardGridTooltipViewModel vm, ICardWithRelatedCards cardWithRelatedCards,
+		string cardId, bool summaryEnabled, Entity? hoveredEntity, List<Card>? dynamicPool = null)
+	{
+		if(cardWithRelatedCards is ICardWithDynamicRelatedCardsSummary cardWithDynamicPool && summaryEnabled)
+		{
+			// Summary depends on live game state (evolve/devolve targets); recomputed per hover.
+			// dynamicPool is the same pool used to build the card grid, reused here to avoid a
+			// second filter-and-dedup pass.
+			vm.RelatedCardsSummaryTotalNum =
+				cardWithDynamicPool.ComputeSummary(Core.Game.Player, out var summary,
+					out var statistics, Config.Instance.OutfinderUsePercentages, hoveredEntity, dynamicPool);
+			vm.RelatedCardsSummary = summary;
+			vm.PoolStatistics = statistics;
+		}
+		else if(cardWithRelatedCards is ICardWithRelatedCardsSummary cardWithGeneratedPool && summaryEnabled)
+		{
+			var pickConfig = new PickConfig(cardWithGeneratedPool.Picks(), cardWithGeneratedPool.EventCount(), cardWithGeneratedPool.IsWithReplacement());
+			vm.RelatedCardsSummaryTotalNum =
+				RelatedCardsManager.TryGetRelatedCardsSummary(vm.Cards!, pickConfig, out var summary,
+					out var statistics, Config.Instance.OutfinderUsePercentages);
+			vm.RelatedCardsSummary = summary;
+			vm.PoolStatistics = statistics;
+		}
+		else
+		{
+			vm.RelatedCardsSummary = null;
+			vm.PoolStatistics = null;
+			return;
+		}
+
+		SetHoveredLargePool(Database.GetCardFromId(cardId), vm.Cards);
+		if(vm.Cards!.Count > RelatedCardsManager.LargePoolThreshold)
+		{
+			vm.HasLargePool = true;
+			vm.Cards = null;
+		}
+	}
+
 	public void SetRelatedCardsTrigger(BigCardState state)
 	{
 		// Note: To debug behavior here and/or implement new triggers set a translucent
@@ -401,6 +440,7 @@ public partial class OverlayWindow
 
 		var vm = (CardGridTooltipViewModel)RelatedCardsTrigger.DataContext;
 		vm.Reset();
+		SetHoveredLargePool(null, null);
 		if(state.CardId == "")
 			return;
 
@@ -412,16 +452,41 @@ public partial class OverlayWindow
 
 		if(state is { IsHand: true } && Core.Game.IsTraditionalHearthstoneMatch && !Config.Instance.HidePlayerRelatedCards)
 		{
-			var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId)?.GetRelatedCards(Core.Game.Player);
-			if(relatedCards == null || relatedCards.Count == 0)
+			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId);
+			if (cardWithRelatedCards == null)
+				return;
+
+			if(cardWithRelatedCards is ICardWithRelatedCardsSummary or ICardWithDynamicRelatedCardsSummary && (!Config.Instance.OutfinderEnabled || !Config.Instance.OutfinderInHand))
+				return;
+
+			var hoveredEntity = Core.Game.Player.Hand.FirstOrDefault(e => e.ZonePosition == state.ZonePosition);
+			// Dynamic pools take the hovered entity so per-copy state (upgrade tags, costs)
+			// picks the right pool when multiple copies are in hand. The pool is built once and
+			// shared with the summary computation below.
+			List<Card>? dynamicPool = null;
+			List<Card?>? relatedCards;
+			if(cardWithRelatedCards is ICardWithDynamicRelatedCardsSummary dynamicRelatedCards)
 			{
-				var entity = Core.Game.Player.Hand.FirstOrDefault(e => e.ZonePosition == state.ZonePosition);
-				relatedCards = entity?.Info.StoredCardIds.Select(Database.GetCardFromId).ToList();
+				dynamicPool = dynamicRelatedCards.GetPool(Core.Game.Player, hoveredEntity);
+				relatedCards = dynamicRelatedCards.GetRelatedCards(Core.Game.Player, hoveredEntity, dynamicPool);
+			}
+			else
+				relatedCards = cardWithRelatedCards.GetRelatedCards(Core.Game.Player);
+
+			if(relatedCards.Count == 0)
+			{
+				relatedCards = hoveredEntity?.Info.StoredCardIds.Select(Database.GetCardFromId).ToList();
 			}
 
 			vm.Cards = relatedCards?.WhereNotNull().ToList();
 			if(vm.Cards == null || vm.Cards.Count == 0)
 				return;
+
+			vm.IsHandHover = true;
+			vm.SummaryMaxHeight = Height * 0.4;
+
+			ApplyRelatedCardsSummary(vm, cardWithRelatedCards, state.CardId,
+				Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInHand, hoveredEntity, dynamicPool);
 
 			vm.Top = Height * 0.47;
 			vm.Height = Height * 0.53;
@@ -431,7 +496,8 @@ public partial class OverlayWindow
 			var centerPosition = (state.ZoneSize + 1) / 2.0;
 			var relativePosition = state.ZonePosition - centerPosition;
 			var offsetXScale = state.ZoneSize > 3 ? cardTotal / state.ZoneSize * 0.037 : 0.098;
-			var offsetX = 0.34 + relativePosition * offsetXScale;
+			var offsetXConst = vm.RelatedCardsSummary == null || vm.Cards == null ? 0.34 : 0.22;
+			var offsetX = offsetXConst + relativePosition * offsetXScale;
 
 			vm.Left = Helper.GetScaledXPos(offsetX, (int)Width, ScreenRatio);
 		}
@@ -489,6 +555,7 @@ public partial class OverlayWindow
 
 		var vm = (CardGridTooltipViewModel)RelatedCardsTrigger.DataContext;
 		vm.Reset();
+		SetHoveredLargePool(null, null);
 		if(state.CardId == "")
 			return;
 
@@ -500,11 +567,31 @@ public partial class OverlayWindow
 
 		if(!Config.Instance.HidePlayerRelatedCards)
 		{
-			var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId)?.GetRelatedCards(Core.Game.Player);
+			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId);
+
+			if(cardWithRelatedCards is ICardWithRelatedCardsSummary or ICardWithDynamicRelatedCardsSummary && (!Config.Instance.OutfinderEnabled || !Config.Instance.OutfinderInDeck))
+				return;
+
+			// Deck hovers have no hovered hand entity; dynamic pools fall back to the in-hand copy
+			// so the grid reflects its live state. The pool is built once and shared with the
+			// summary (which, as before, resolves its own targets from null entity).
+			List<Card>? dynamicPool = null;
+			List<Card?>? relatedCards;
+			if(cardWithRelatedCards is ICardWithDynamicRelatedCardsSummary dynamicRelatedCards)
+			{
+				var handEntity = Core.Game.Player.Hand.FirstOrDefault(e => e.CardId == state.CardId);
+				dynamicPool = dynamicRelatedCards.GetPool(Core.Game.Player, handEntity);
+				relatedCards = dynamicRelatedCards.GetRelatedCards(Core.Game.Player, handEntity, dynamicPool);
+			}
+			else
+				relatedCards = cardWithRelatedCards?.GetRelatedCards(Core.Game.Player);
 
 			vm.Cards = relatedCards?.WhereNotNull().ToList();
 			if(vm.Cards == null || vm.Cards.Count == 0)
 				return;
+
+			ApplyRelatedCardsSummary(vm, cardWithRelatedCards!, state.CardId,
+				Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInDeck, null, dynamicPool);
 
 			vm.Top = Height * 0.2;
 			vm.Height = Height * 0.53;
@@ -680,6 +767,80 @@ public class CardGridTooltipViewModel : ViewModel
 		set => SetProp(value);
 	}
 
+	public Dictionary<string, string>? RelatedCardsSummary
+	{
+		get => GetProp<Dictionary<string, string>?>(null);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(SummaryWidth));
+		}
+	}
+
+	public int RelatedCardsSummaryTotalNum
+	{
+		get => GetProp(0);
+		set => SetProp(value);
+	}
+
+	public PoolStatistics? PoolStatistics
+	{
+		get => GetProp<PoolStatistics?>(null);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(SummaryWidth));
+		}
+	}
+
+	public bool HasLargePool
+	{
+		get => GetProp(false);
+		set => SetProp(value);
+	}
+
+	public bool IsHandHover
+	{
+		get => GetProp(false);
+		set => SetProp(value);
+	}
+
+	public double SummaryMaxHeight
+	{
+		get => GetProp(double.NaN);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(SummaryWidth));
+		}
+	}
+
+	// Each keyword box is ~108px wide (100px + 4px margin each side) and ~73px tall.
+	// The stats row (PoolStatistics) is a fixed 3-column grid that fits in 330px.
+	// Default: 330px. For Hand hover with MaxHeight set, extra columns are added when
+	// 3 keyword columns would overflow MaxHeight.
+	public double SummaryWidth
+	{
+		get
+		{
+			const double itemWidth = 108.0;
+			const double itemHeight = 73.0;
+			const double defaultWidth = 330.0;
+
+			var total = RelatedCardsSummary?.Count ?? 0;
+			if(total == 0 || double.IsNaN(SummaryMaxHeight) || SummaryMaxHeight <= 0)
+				return defaultWidth;
+
+			var defaultItemsPerRow = (int)(defaultWidth / itemWidth); // 3
+			var itemsPerColumn = Math.Max(1, (int)(SummaryMaxHeight / itemHeight));
+			if(total <= defaultItemsPerRow * itemsPerColumn)
+				return defaultWidth;
+
+			var columnsNeeded = (int)Math.Ceiling((double)total / itemsPerColumn);
+			return Math.Max(defaultWidth, columnsNeeded * itemWidth);
+		}
+	}
+
 	public void Reset()
 	{
 		Width = 0;
@@ -689,6 +850,12 @@ public class CardGridTooltipViewModel : ViewModel
 		TooltipHorizontalOffset = 0;
 		TooltipVerticalOffset = 0;
 		Cards = null;
+		RelatedCardsSummary = null;
+		RelatedCardsSummaryTotalNum = 0;
+		PoolStatistics = null;
+		HasLargePool = false;
+		IsHandHover = false;
+		SummaryMaxHeight = double.NaN;
 		TooltipAlignment = AlignmentMode.Center;
 		TooltipPlacement = PlacementMode.Top;
 	}

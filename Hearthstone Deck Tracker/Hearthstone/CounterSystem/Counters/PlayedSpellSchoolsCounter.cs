@@ -56,6 +56,8 @@ public class PlayedSpellSchoolsCounter : NumericCounter
 
 	private HashSet<SpellSchool> PlayedSpellSchools { get; set; } = new HashSet<SpellSchool>();
 
+	public IReadOnlyCollection<SpellSchool> GetPlayedSpellSchools() => PlayedSpellSchools;
+
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
 	{
 		if(!Game.IsTraditionalHearthstoneMatch)

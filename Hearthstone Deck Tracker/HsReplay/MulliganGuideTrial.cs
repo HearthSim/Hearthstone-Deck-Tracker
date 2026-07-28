@@ -28,9 +28,20 @@ public static class MulliganGuideTrial
 	{
 		public string? Token { get; set; }
 		public uint? GameID { get; set; }
+		public bool LastTrialAlertPending { get; set; }
 	}
 
 	public static bool IsTrialForCurrentGameActive(uint? gameId) => Serializer.Load().GameID == gameId;
+
+	public static bool ConsumePendingLastTrialAlert()
+	{
+		var data = Serializer.Load();
+		if(!data.LastTrialAlertPending)
+			return false;
+		data.LastTrialAlertPending = false;
+		Serializer.Save(data);
+		return true;
+	}
 
 	private static readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1, 1);
 
@@ -46,6 +57,7 @@ public static class MulliganGuideTrial
 
 			if(currentData.GameID == gameId)
 			{
+				Token = currentData.Token;
 				return currentData.Token;
 			}
 
@@ -55,12 +67,17 @@ public static class MulliganGuideTrial
 
 			if(_status == null || _status.TrialsRemaining == 0)
 				return null;
+
+			// Note this before activating: TrialsRemaining is not decremented locally, so
+			// after activation it still reports the pre-activation count.
+			var isLastTrial = _status.TrialsRemaining == 1;
+
 			Token = await ApiWrapper.ActivatePlayerTrial("mulligan-guide-overlay", accountHi, accountLo);
 			if(Token != null)
 			{
 				Core.Game.Metrics.MulliganGuideTrialActivated = true;
 
-				var data = new TrialData { Token = Token, GameID = gameId };
+				var data = new TrialData { Token = Token, GameID = gameId, LastTrialAlertPending = isLastTrial };
 				Serializer.Save(data);
 				 Core.Game.Metrics.MulliganGuideTrialsRemaining = Math.Max(0, (RemainingTrials ?? 0) - 1);
 

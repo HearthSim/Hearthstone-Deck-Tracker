@@ -1,0 +1,42 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayTheOutfinder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignHeight="200" d:DesignWidth="300">
+    <StackPanel>
+        <CheckBox x:Name="CheckboxOutfinderEnabled"
+                  Content="{lex:Loc OptionsTheOutfinder_CheckBox_Enable}"
+                  Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                  Checked="CheckboxOutfinderEnabled_Checked"
+                  Unchecked="CheckboxOutfinderEnabled_Unchecked"/>
+        <StackPanel IsEnabled="{Binding IsChecked, ElementName=CheckboxOutfinderEnabled}"
+                    Margin="0,2,0,0">
+            <CheckBox x:Name="CheckboxOutfinderInDeck"
+                      Content="{lex:Loc OptionsTheOutfinder_CheckBox_ShowInDeck}"
+                      Margin="10,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                      Checked="CheckboxOutfinderInDeck_Checked"
+                      Unchecked="CheckboxOutfinderInDeck_Unchecked"/>
+            <CheckBox x:Name="CheckboxOutfinderInHand"
+                      Content="{lex:Loc OptionsTheOutfinder_CheckBox_ShowInHand}"
+                      Margin="10,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                      Checked="CheckboxOutfinderInHand_Checked"
+                      Unchecked="CheckboxOutfinderInHand_Unchecked"/>
+            <CheckBox x:Name="CheckboxOutfinderUsePercentages"
+                      Content="{lex:Loc OptionsTheOutfinder_CheckBox_UsePercentages}"
+                      Margin="10,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                      Checked="CheckboxOutfinderUsePercentages_Checked"
+                      Unchecked="CheckboxOutfinderUsePercentages_Unchecked"/>
+            <CheckBox x:Name="CheckboxOutfinderUseCardTiles"
+                      Content="{lex:Loc OptionsTheOutfinder_CheckBox_UseCardTiles}"
+                      Margin="10,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                      Checked="CheckboxOutfinderUseCardTiles_Checked"
+                      Unchecked="CheckboxOutfinderUseCardTiles_Unchecked"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

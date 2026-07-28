@@ -649,6 +649,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_constructedMulliganGuidePreLobbyBehaviour.UpdatePosition();
 			_constructedMulliganGuidePreLobbyBehaviour.UpdateScaling();
 
+			_mulliganGuideTrialsExhaustedBehavior.UpdatePosition();
+			_mulliganGuideTrialsExhaustedBehavior.UpdateScaling();
+
 			_bgsChinaModuleBehavior.UpdatePosition();
 			_bgsChinaModuleBehavior.UpdateScaling();
 
@@ -776,12 +779,26 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await MulliganGuideTrial.Update(acc.Hi, acc.Lo);
 			}
 
-			var show = (
+			var inConstructedLobby = (
 				_game.IsRunning &&
 				_game.IsInMenu &&
-				SceneHandler.Scene == Mode.TOURNAMENT &&
-				Config.Instance.ShowMulliganGuidePreLobby
+				SceneHandler.Scene == Mode.TOURNAMENT
 			);
+
+			// Decide on the alert first: while it is up the pre-lobby stays hidden, so it
+			// does not sit behind the dismiss-on-click cover.
+			if(inConstructedLobby)
+			{
+				UpdateMulliganGuideTrialsExhausted();
+			}
+			else
+			{
+				HideMulliganGuideTrialsExhausted();
+			}
+
+			var show = inConstructedLobby
+				&& Config.Instance.ShowMulliganGuidePreLobby
+				&& !_mulliganGuideTrialsExhaustedVisible;
 
 			if(show)
 			{
@@ -795,6 +812,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 				_constructedMulliganGuidePreLobbyBehaviour.Hide();
 				_constructedPreLobbyWidgetBehavior.Hide();
 			}
+		}
+
+		private void UpdateMulliganGuideTrialsExhausted()
+		{
+			if(!MulliganGuideTrial.ConsumePendingLastTrialAlert())
+				return;
+
+			if(HSReplayNetOAuth.AccountData?.IsPremium ?? false)
+				return;
+
+			// Trials may have reset while the player was away from the constructed lobby.
+			if((MulliganGuideTrial.RemainingTrials ?? 0) > 0)
+				return;
+
+			ShowMulliganGuideTrialsExhausted(MulliganGuideTrial.TimeRemaining);
 		}
 
 		public void UpdateArenaPreLobbyVisibility()

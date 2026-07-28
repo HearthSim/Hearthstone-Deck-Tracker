@@ -16,7 +16,7 @@
              d:DataContext="{d:DesignInstance controls:CardTileViewModel}"
              extensions:OverlayExtensions.ToolTip="{x:Type tooltips:CardTooltip}"
              d:DesignHeight="34" d:DesignWidth="217">
-    <Grid>
+    <Grid MouseRightButtonDown="CardTile_OnMouseRightButtonDown">
         <Grid.Resources>
             <controls:MultiplyConverter x:Key="MultiplyConverter"/>
             <controls:MulliganMarginConverter x:Key="MulliganMarginConverter"/>

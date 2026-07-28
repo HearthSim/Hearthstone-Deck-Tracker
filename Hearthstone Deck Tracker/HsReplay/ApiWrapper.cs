@@ -308,6 +308,53 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
+		public static async Task<Dictionary<string, string[]>?> GetDiscoverPoolKeywords(string token)
+		{
+			try
+			{
+				return await Client.GetDiscoverPoolKeywords(token);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		public static async Task<Dictionary<string, string[]>?> GetDiscoverPoolKeywords()
+		{
+			try
+			{
+				var userOwnsPremium = HSReplayNetOAuth.AccountData?.IsPremium ?? false;
+				if(userOwnsPremium)
+					return await HSReplayNetOAuth.MakeRequest(c => c.GetDiscoverPoolKeywords());
+
+				// Free arena trial (whether or not logged in): fetch through the
+				// unauthenticated arena endpoint, gated on the drafted deck being registered
+				// for an arenasmith trial.
+				var deckId = Reflection.Client.GetArenaDeck()?.Deck.Id;
+				var accountId = Reflection.Client.GetAccountId();
+				if(accountId == null || !deckId.HasValue)
+					return null;
+
+				await ArenaTrial.EnsureLoaded(accountId.Hi, accountId.Lo);
+				if(!ArenaTrial.IsDeckResumable(deckId.Value))
+				{
+					Log.Info("Current deck is not registered for trials, aborting");
+					return null;
+				}
+
+				return await Client.GetDiscoverPoolKeywords(new ArenaPackagesParams {
+					DeckId = deckId.Value, AccountLo = accountId.Lo, PlayerRegion = (int)Helper.GetRegion(accountId.Hi)
+				});
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
 		public static async Task PostMulliganGuideFeedback(MulliganGuideFeedbackParams parameters)
 		{
 			try

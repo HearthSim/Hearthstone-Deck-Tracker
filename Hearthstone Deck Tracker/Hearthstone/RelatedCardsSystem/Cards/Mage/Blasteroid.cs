@@ -1,21 +1,14 @@
-﻿using System.Linq;
-using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Pools;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Mage;
 
-public class Blasteroid : ICardGenerator
+// "Battlecry: Shuffle 5 random Fire spells into your deck. They cost (2) less."
+// Fire spell pool + generator inherited from Pyrotechnician.
+public class Blasteroid : FireSpellPool
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Mage.Blasteroid;
-
-	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
-	{
-		return card.TypeEnum == CardType.SPELL &&
-		       card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.FIRE &&
-		       card.IsCardLegal(gameMode, format);
-	}
-
-	public bool IsInGeneratorPool(MultiIdCard card, GameType gameMode, FormatType format)
-	{
-		return card.Ids.Any(c => IsInGeneratorPool(new Card(c), gameMode, format));
-	}
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Mage.Blasteroid;
+	public override int Picks() => 1;
+	public override bool IsWithReplacement() => true;
+	public override int EventCount() => 5;
 }

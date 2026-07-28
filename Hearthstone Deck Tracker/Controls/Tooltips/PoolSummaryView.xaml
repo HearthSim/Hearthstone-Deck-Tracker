@@ -1,0 +1,200 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Tooltips.PoolSummaryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignWidth="330"
+             Visibility="{Binding PoolStatistics, RelativeSource={RelativeSource Self}, Converter={StaticResource NullableToVisibility}}">
+    <Border x:Name="RootBorder"
+            DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Style="{Binding RootBorderStyle}"
+            CornerRadius="12"
+            Background="#DD1E2428"
+            BorderBrush="#2C3A42"
+            BorderThickness="1"
+            Padding="0,0,0,10">
+        <StackPanel>
+            <TextBlock
+                Text="{Binding PoolOfCardsText}"
+                FontSize="13" Foreground="#9AABB5"
+                HorizontalAlignment="Center" Margin="0,10,0,2"/>
+            <!-- Distribution Bar Charts -->
+            <UniformGrid Rows="1" Margin="8,4,8,0">
+                <!-- Cost -->
+                <StackPanel HorizontalAlignment="Center" Margin="4,0">
+                    <TextBlock Text="{lex:Loc TheOutfinder_Label_Cost}" FontSize="11" FontWeight="SemiBold"
+                               Foreground="#4A6FA5" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                    <Grid>
+                        <ItemsControl ItemsSource="{Binding PoolStatistics.CostBars}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="1,0">
+                                        <Grid Height="40">
+                                            <Rectangle VerticalAlignment="Bottom" Height="{Binding BarHeight}" RadiusX="2" RadiusY="2">
+                                                <Rectangle.Style>
+                                                    <Style TargetType="Rectangle">
+                                                        <Setter Property="Fill" Value="#4A6FA5"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMedian}" Value="True">
+                                                                <Setter Property="Fill" Value="White"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                        </Grid>
+                                        <TextBlock Text="{Binding Label}" FontSize="9"
+                                                   HorizontalAlignment="Center" Foreground="#7A8E97"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                    <hdt:HearthstoneTextBlock Text="{Binding PoolStatistics.MedianCostText}"
+                                               FontSize="17" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                    <TextBlock Text="{lex:Loc TheOutfinder_Label_Median}" FontSize="9" Foreground="#556066" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <!-- Attack -->
+                <StackPanel HorizontalAlignment="Center" Margin="4,0"
+                            Visibility="{Binding PoolStatistics.AttackBars, Converter={StaticResource NullableToVisibility}}">
+                    <TextBlock Text="{lex:Loc TheOutfinder_Label_Attack}" FontSize="11" FontWeight="SemiBold"
+                               Foreground="#BFA010" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                    <Grid>
+                        <ItemsControl ItemsSource="{Binding PoolStatistics.AttackBars}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="1,0">
+                                        <Grid Height="40">
+                                            <Rectangle VerticalAlignment="Bottom" Height="{Binding BarHeight}" RadiusX="2" RadiusY="2">
+                                                <Rectangle.Style>
+                                                    <Style TargetType="Rectangle">
+                                                        <Setter Property="Fill" Value="#FCD116"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMedian}" Value="True">
+                                                                <Setter Property="Fill" Value="White"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                        </Grid>
+                                        <TextBlock Text="{Binding Label}" FontSize="9"
+                                                   HorizontalAlignment="Center" Foreground="#7A8E97"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                    <hdt:HearthstoneTextBlock Text="{Binding PoolStatistics.MedianAttackText}"
+                                               FontSize="17" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                    <TextBlock Text="{lex:Loc TheOutfinder_Label_Median}" FontSize="9" Foreground="#556066" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <!-- Health -->
+                <StackPanel HorizontalAlignment="Center" Margin="4,0"
+                            Visibility="{Binding PoolStatistics.HealthBars, Converter={StaticResource NullableToVisibility}}">
+                    <TextBlock Text="{lex:Loc TheOutfinder_Label_Health}" FontSize="11" FontWeight="SemiBold"
+                               Foreground="#8A4A4A" HorizontalAlignment="Center" Margin="0,0,0,3"/>
+                    <Grid>
+                        <ItemsControl ItemsSource="{Binding PoolStatistics.HealthBars}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="1,0">
+                                        <Grid Height="40">
+                                            <Rectangle VerticalAlignment="Bottom" Height="{Binding BarHeight}" RadiusX="2" RadiusY="2">
+                                                <Rectangle.Style>
+                                                    <Style TargetType="Rectangle">
+                                                        <Setter Property="Fill" Value="#8A4A4A"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMedian}" Value="True">
+                                                                <Setter Property="Fill" Value="White"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                        </Grid>
+                                        <TextBlock Text="{Binding Label}" FontSize="9"
+                                                   HorizontalAlignment="Center" Foreground="#7A8E97"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                    <hdt:HearthstoneTextBlock Text="{Binding PoolStatistics.MedianHealthText}"
+                                               FontSize="17" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                    <TextBlock Text="{lex:Loc TheOutfinder_Label_Median}" FontSize="9" Foreground="#556066" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </UniformGrid>
+
+            <!-- Premium branding divisor -->
+            <Border Background="#17191B"
+                    BorderBrush="#2E3E4A"
+                    BorderThickness="0,1,0,1"
+                    Margin="0,12,0,2" Padding="0,6"
+                    Visibility="{Binding RelatedCardsSummary, Converter={StaticResource NullableToVisibility}}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image Source="{DynamicResource HsReplayIconWhite}"
+                           Height="11" Margin="0,0,5,0"
+                           RenderOptions.BitmapScalingMode="Fant"/>
+                    <TextBlock Text="{lex:Loc TheOutfinder_Label_Title}"
+                               FontSize="10" FontWeight="Bold"
+                               Foreground="{StaticResource HSReplayNetPremiumGold}"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Keywords -->
+            <ItemsControl ItemsSource="{Binding RelatedCardsSummary}"
+                          HorizontalAlignment="Center"
+                          Margin="0,2,0,0"
+                          Visibility="{Binding RelatedCardsSummary, Converter={StaticResource NullableToVisibility}}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="{Binding KeywordsMaxHeight}"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#1A2228" CornerRadius="10" Margin="3,3" Padding="8,5"
+                                BorderBrush="#2E3E4A" BorderThickness="1">
+                            <StackPanel HorizontalAlignment="Center">
+                                <hdt:HearthstoneTextBlock Text="{Binding Value}"
+                                                           FontSize="13" FontWeight="Bold"
+                                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Key}"
+                                           FontSize="11" Foreground="#8A9BA8"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock
+                Text="{lex:Loc TheOutfinder_Label_RightClickHint}"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                FontStyle="Italic"
+                FontSize="13"
+                Foreground="#8A9BA8"
+                Margin="12,8,12,0"
+                Visibility="{Binding HasLargePool, Converter={StaticResource BoolToVisibility}}"
+            />
+        </StackPanel>
+    </Border>
+</UserControl>

@@ -1,11 +1,24 @@
-﻿using System.Linq;
+using System.Collections.Generic;
+using System.Linq;
 using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Mage;
 
-public class TimelooperToki : ICardGenerator
+// "Battlecry: Get 3 random spells from the past. When you play ALL 3, get another Timelooper Toki."
+public class TimelooperToki : FromThePastPoolCard, ICardGenerator
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Mage.TimelooperToki;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Mage.TimelooperToki;
+	public override int Picks() => 1;
+	public override int EventCount() => 3;
+	public override bool IsWithReplacement() => true;
+
+	protected override IEnumerable<Card> GetCardPool(string playerClass, GameType gt, FormatType format)
+	{
+		return HearthDb.Cards.Collectible.Values
+			.Where(c => c is { Type: CardType.SPELL }
+				&& (c.IsClass(playerClass) || c.IsClass("Neutral")))
+			.Select(c => new Card(c));
+	}
 
 	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
 	{

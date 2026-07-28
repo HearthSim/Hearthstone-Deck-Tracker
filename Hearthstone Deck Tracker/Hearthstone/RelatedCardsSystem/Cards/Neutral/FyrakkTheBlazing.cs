@@ -1,21 +1,13 @@
-﻿using System.Linq;
-using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Pools;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
 
-public class FyrakkTheBlazing : ICardGenerator
+// "Immune to Fire spells. Battlecry: Cast 15 Mana worth of Fire spells at random enemies."
+// The number of casts is unpredictable (depends on rolled spell costs), so it is modeled
+// as a single representative draw. Fire spell pool + generator inherited from Pyrotechnician.
+public class FyrakkTheBlazing : FireSpellPool
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Neutral.FyrakkTheBlazing;
-
-	public bool IsInGeneratorPool(Card card, GameType gameMode, FormatType format)
-	{
-		return card.TypeEnum == CardType.SPELL &&
-		       card.GetTag(GameTag.SPELL_SCHOOL) == (int)SpellSchool.FIRE &&
-		       card.IsCardLegal(gameMode, format);
-	}
-
-	public bool IsInGeneratorPool(MultiIdCard card, GameType gameMode, FormatType format)
-	{
-		return card.Ids.Any(c => IsInGeneratorPool(new Card(c), gameMode, format));
-	}
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.FyrakkTheBlazing;
+	public override int Picks() => 1;
+	public override bool IsWithReplacement() => true;
 }

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
-
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Druid;
 
 public class SummerFlowerchild : ICardWithHighlight

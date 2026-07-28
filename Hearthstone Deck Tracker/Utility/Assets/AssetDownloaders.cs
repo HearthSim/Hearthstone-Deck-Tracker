@@ -63,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 					        $"/{card.Id}{(card.BaconTriple ? "_triple" : "")}.png",
 					card => $"{card.Id}{(card.BaconTriple ? "_triple" : "")}.png",
 					Helper.BitmapImageFromBytes,
-					maxCacheSize: 200,
+					maxCacheSize: 1000,
 					placeholderAsset: "pack://application:,,,/Resources/faceless_manipulator.png"
 				);
 				ConfigWrapper.Bindable.CardResolutionChanged += () => cardImageDownloader.ClearStorage();

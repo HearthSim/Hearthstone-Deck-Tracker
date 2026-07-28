@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -107,59 +108,96 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public Player? ControllerPlayer { get; set; }
 
-		public List<Card>? RelatedCards
+		public List<Card>? RelatedCards => GetRelatedCardsInfo().Cards;
+
+		public RelatedCardsInfo GetRelatedCardsInfo()
 		{
-			get
+			if(ControllerPlayer == null)
+				return default;
+			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(Id);
+			if (cardWithRelatedCards == null)
+				return default;
+
+			// Decklist hovers also happen in the menu, where there is no hero to take the class
+			// from. Pools built below read it off the player, so resolve it first.
+			PoolContext.ApplyMenuDefaults(ControllerPlayer);
+
+			var showSummary = false;
+			var pickConfig = default(PickConfig);
+			ICardWithDynamicRelatedCardsSummary? dynamicSummaryCard = null;
+
+			if(cardWithRelatedCards is ICardWithRelatedCardsSummary cardWithGeneratedPool)
 			{
-				if(ControllerPlayer == null)
-					return null;
-				var relatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(Id)?.GetRelatedCards(ControllerPlayer).WhereNotNull().ToList() ?? new();
-				// Get related cards from Entity
-				if (relatedCards.IsEmpty())
+				showSummary = true;
+				pickConfig = new PickConfig(
+					cardWithGeneratedPool.Picks(),
+					cardWithGeneratedPool.EventCount(),
+					cardWithGeneratedPool.IsWithReplacement());
+			}
+			else if(cardWithRelatedCards is ICardWithDynamicRelatedCardsSummary dynamicCard)
+			{
+				showSummary = true;
+				dynamicSummaryCard = dynamicCard;
+			}
+
+			// For dynamic pools, build the filtered pool once here and hand it back on the result
+			// so UpdateTooltip's summary can reuse it rather than rebuild it. The in-hand copy is
+			// used as the hovered entity to match the plain overload's display semantics.
+			List<Card>? dynamicPool = null;
+			List<Card> relatedCards;
+			if(dynamicSummaryCard != null)
+			{
+				var handEntity = ControllerPlayer.Hand.FirstOrDefault(e => e.CardId == Id);
+				dynamicPool = dynamicSummaryCard.GetPool(ControllerPlayer, handEntity);
+				relatedCards = dynamicSummaryCard.GetRelatedCards(ControllerPlayer, handEntity, dynamicPool).WhereNotNull().ToList();
+			}
+			else
+				relatedCards = cardWithRelatedCards.GetRelatedCards(ControllerPlayer).WhereNotNull().ToList();
+
+			// Get related cards from Entity
+			if (relatedCards.IsEmpty())
+			{
+				IEnumerable<Entity> entities;
+				var wasPlayed = ControllerPlayer == Core.Game.Player ? Count == 0 || Jousted : !( Count == 0 || Jousted);
+
+				if(!wasPlayed)
 				{
-					IEnumerable<Entity> entities;
-					var wasPlayed = ControllerPlayer == Core.Game.Player ? Count == 0 || Jousted : !( Count == 0 || Jousted);
-
-					if(!wasPlayed)
-					{
-						var entitiesInDeck = ControllerPlayer.Deck.Where(x => x.CardId == Id);
-						var entitiesInHand = ControllerPlayer.Hand.Where(x => x.CardId == Id && x.Info.Hidden);
-						entities = entitiesInDeck.Concat(entitiesInHand).OrderBy(x => x.Id);
-					}
-					else
-					{
-						var entitiesInGraveyard = ControllerPlayer.Graveyard.Where(x => x.CardId == Id);
-						var entitiesInSeatside = ControllerPlayer.SetAside.Where(x => x.CardId == Id);
-						var entitesInBoard = ControllerPlayer.Board.Where(x => x.CardId == Id);
-						entities = entitiesInGraveyard.Concat(entitiesInSeatside).Concat(entitesInBoard).OrderBy(x => x.Id);
-					}
-
-					var multiple = false;
-					foreach(var entity in entities)
-					{
-						var storedCards = entity.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull();
-						if(storedCards.IsEmpty())
-						{
-							continue;
-						}
-						// Since we group them, we add an image of the card to separate the related cards
-						if(multiple)
-						{
-							relatedCards.Add(this);
-						}
-						relatedCards.AddRange(entity.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull());
-						multiple = true;
-					}
+					var entitiesInDeck = ControllerPlayer.Deck.Where(x => x.CardId == Id);
+					var entitiesInHand = ControllerPlayer.Hand.Where(x => x.CardId == Id && x.Info.Hidden);
+					entities = entitiesInDeck.Concat(entitiesInHand).OrderBy(x => x.Id);
+				}
+				else
+				{
+					var entitiesInGraveyard = ControllerPlayer.Graveyard.Where(x => x.CardId == Id);
+					var entitiesInSeatside = ControllerPlayer.SetAside.Where(x => x.CardId == Id);
+					var entitesInBoard = ControllerPlayer.Board.Where(x => x.CardId == Id);
+					entities = entitiesInGraveyard.Concat(entitiesInSeatside).Concat(entitesInBoard).OrderBy(x => x.Id);
 				}
 
-				if(relatedCards.IsEmpty())
-					return null;
-				return relatedCards;
+				var multiple = false;
+				foreach(var entity in entities)
+				{
+					var storedCards = entity.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull();
+					if(storedCards.IsEmpty())
+					{
+						continue;
+					}
+					// Since we group them, we add an image of the card to separate the related cards
+					if(multiple)
+					{
+						relatedCards.Add(this);
+					}
+					relatedCards.AddRange(entity.Info.StoredCardIds.Select(Database.GetCardFromId).WhereNotNull());
+					multiple = true;
+				}
 			}
+
+			// A pool that resolves to no cards still keeps its summary metadata: dynamic pools
+			// (e.g. evolve with an empty board) render the summary frame with no card grid.
+			return new RelatedCardsInfo(relatedCards.IsEmpty() ? null : relatedCards, showSummary, pickConfig, dynamicSummaryCard, dynamicPool);
 		}
 
 		public void UpdateRelatedCards() => OnPropertyChanged(nameof(RelatedCards));
-
 
 		private static Locale? _selectedLanguage;
 		private static Locale SelectedLanguage => _selectedLanguage ??= Enum.TryParse(Helper.GetCardLanguage(), out Locale lang) ? lang : Locale.enUS;
@@ -644,7 +682,87 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			viewModel.Card = this;
 			viewModel.ShowTriple = BaconCard;
-			viewModel.RelatedCards = RelatedCards;
+
+			var info = GetRelatedCardsInfo();
+			var relatedCards = info.Cards;
+			viewModel.HasLargePool = false;
+
+			if(info.ShowSummary && (!Config.Instance.OutfinderEnabled || !Config.Instance.OutfinderInDeck))
+			{
+				viewModel.RelatedCards = null;
+				viewModel.RelatedCardsSummary = null;
+				viewModel.PoolStatistics = null;
+				return;
+			}
+
+			var showSummary = info.ShowSummary && Config.Instance.OutfinderEnabled;
+
+			if(info.DynamicSummaryCard != null && showSummary && ControllerPlayer != null)
+			{
+				// Summary depends on live game state; deck hovers have no hand entity, so the
+				// card computes from its printed cost.
+				viewModel.RelatedCardsSummaryTotalNum =
+					info.DynamicSummaryCard.ComputeSummary(ControllerPlayer, out var summary, out var statistics,
+						Config.Instance.OutfinderUsePercentages, pool: info.DynamicPool);
+				viewModel.RelatedCardsSummary = summary;
+				viewModel.PoolStatistics = statistics;
+				if(relatedCards != null && relatedCards.Count > RelatedCardsManager.LargePoolThreshold)
+				{
+					viewModel.RelatedCards = null;
+					viewModel.HasLargePool = true;
+				}
+				else
+					viewModel.RelatedCards = relatedCards;
+				return;
+			}
+
+			if(relatedCards != null && showSummary && relatedCards.Count > RelatedCardsManager.LargePoolThreshold)
+			{
+				viewModel.RelatedCards = null;
+				viewModel.HasLargePool = true;
+				viewModel.RelatedCardsSummaryTotalNum =
+					RelatedCardsManager.TryGetRelatedCardsSummary(relatedCards!, info.PickConfig, out var summary,
+						out var statistics, Config.Instance.OutfinderUsePercentages);
+				viewModel.RelatedCardsSummary = summary;
+				viewModel.PoolStatistics = statistics;
+			}
+			else
+			{
+				viewModel.RelatedCards = relatedCards;
+				if(relatedCards != null && showSummary)
+				{
+					viewModel.RelatedCardsSummaryTotalNum =
+						RelatedCardsManager.TryGetRelatedCardsSummary(relatedCards!, info.PickConfig, out var summary,
+							out var statistics, Config.Instance.OutfinderUsePercentages);
+					viewModel.RelatedCardsSummary = summary;
+					viewModel.PoolStatistics = statistics;
+				}
+			}
+		}
+	}
+
+	public readonly struct RelatedCardsInfo
+	{
+		public List<Card>? Cards { get; }
+
+		public bool ShowSummary { get; }
+
+		public PickConfig PickConfig { get; }
+
+		public ICardWithDynamicRelatedCardsSummary? DynamicSummaryCard { get; }
+
+		// The full filtered pool for a dynamic card, built once when the card list was resolved
+		// so the summary can reuse it instead of rebuilding it. Null for non-dynamic cards.
+		public List<Card>? DynamicPool { get; }
+
+		public RelatedCardsInfo(List<Card>? cards, bool showSummary, PickConfig pickConfig,
+			ICardWithDynamicRelatedCardsSummary? dynamicSummaryCard, List<Card>? dynamicPool = null)
+		{
+			Cards = cards;
+			ShowSummary = showSummary;
+			PickConfig = pickConfig;
+			DynamicSummaryCard = dynamicSummaryCard;
+			DynamicPool = dynamicPool;
 		}
 	}
 
