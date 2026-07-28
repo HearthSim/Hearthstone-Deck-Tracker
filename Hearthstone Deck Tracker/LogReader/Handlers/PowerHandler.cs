@@ -1872,6 +1872,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
 								.UpdateFlobbidinousFloopConfirmedNoTransformDuos(gameState.CurrentBlock.SourceEntityId);
 					}
+					// Summoning Sphere's Start of Combat trigger block always runs, but it summons nothing when
+					// its owner's board is already full. The summon is the minion created with the Sphere as
+					// CREATOR; a summon does not outlive the combat, so no such minion in PLAY when the block
+					// ends means this trigger produced nothing.
+					if(gameState.CurrentBlock is
+						{
+							CardId: NonCollectible.Neutral.SummoningSphere or NonCollectible.Neutral.LesserTrinket,
+							TriggerKeyword: "TRIGGER_VISUAL"
+						}
+						&& game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var sphereEntity))
+					{
+						var noSummon = !game.Entities.Values.Any(e =>
+							e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION
+							&& e.GetTag(GameTag.CREATOR) == sphereEntity.Id
+							&& e.GetTag(GameTag.ZONE) == (int)Zone.PLAY);
+
+						if(noSummon)
+							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+								?.UpdateSummoningSphereConfirmedNoSummonDuos(sphereEntity.Id);
+					}
 				}
 				if(game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null
 					&& gameState.CurrentBlock?.Type == "POWER" && gameState.CurrentBlock.CardId == NonCollectible.Neutral.BackToBackBATTLEGROUNDS)

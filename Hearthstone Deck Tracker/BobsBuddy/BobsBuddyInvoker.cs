@@ -1097,6 +1097,27 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
+		internal async void UpdateSummoningSphereConfirmedNoSummonDuos(int trinketEntityId)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+
+			var summoningSphereTrinket = _input.Player.Trinkets.FirstOrDefault(t => t.game_id == trinketEntityId && t.CardID == NonCollectible.Neutral.SummoningSphere);
+			if(summoningSphereTrinket == null && _input.PlayerTeammate != null)
+				summoningSphereTrinket = _input.PlayerTeammate.Trinkets.FirstOrDefault(t => t.game_id == trinketEntityId && t.CardID == NonCollectible.Neutral.SummoningSphere);
+			if(summoningSphereTrinket == null)
+				summoningSphereTrinket = _input.Opponent.Trinkets.FirstOrDefault(t => t.game_id == trinketEntityId && t.CardID == NonCollectible.Neutral.SummoningSphere);
+			if(summoningSphereTrinket == null && _input.OpponentTeammate != null)
+				summoningSphereTrinket = _input.OpponentTeammate.Trinkets.FirstOrDefault(t => t.game_id == trinketEntityId && t.CardID == NonCollectible.Neutral.SummoningSphere);
+			if(summoningSphereTrinket == null || ((SummoningSphere)summoningSphereTrinket).AttachedMinion != null
+				|| summoningSphereTrinket.TrinketUpdatedDuringCombat)
+				return;
+
+			summoningSphereTrinket.TrinketUpdatedDuringCombat = true;
+
+			await TryRerun();
+		}
+
 		internal async void UpdateMagnanimooseSummonPoolDuos(List<Entity> summonedEntities, int magnanimooseEntityId, bool isPlayerMinion)
 		{
 			if(_input == null || !UpdateRevealedEntityValidStates)
