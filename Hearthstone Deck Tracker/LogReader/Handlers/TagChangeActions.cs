@@ -657,6 +657,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					.FlushAndUpdateObservedAutoAssemblerDeathrattlesAsync().Forget();
 			}
 
+			// Signal to flush granted Surf n' Surf Crab deathrattles observed during a sequence of Deathrattle Blocks
+			if(BobsBuddyInvoker.CurrentCombatHasPendingCrabObservations && game.CurrentGameStats != null)
+			{
+				BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
+					.FlushAndUpdateObservedCrabDeathrattlesAsync().Forget();
+			}
+
 			if(entity.IsHero)
 			{
 				Log.Debug($"Saw hero attack from {entity.CardId}");

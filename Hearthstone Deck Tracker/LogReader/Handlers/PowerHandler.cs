@@ -284,6 +284,31 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						}
 					}
 
+					// Used to detect and update hidden granted Surf n' Surf Crab deathrattles
+					if(  // short-circuit on CardId to minimize frequency of this check
+						(cardId == NonCollectible.Neutral.SurfnSurf_CrabToken || cardId == NonCollectible.Neutral.SurfnSurf_Crab)
+						&& game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null
+						&& block is { Type: "TRIGGER", TriggerKeyword: "DEATHRATTLE" }
+						&& game.Entities.TryGetValue(block.SourceEntityId, out var crabDeathrattleSource)
+						&& crabDeathrattleSource.IsMinion
+					)
+					{
+						var isGolden = cardId == NonCollectible.Neutral.SurfnSurf_Crab;
+						var sourceZone = crabDeathrattleSource.GetTag(GameTag.ZONE);
+						if(sourceZone == (int)Zone.GRAVEYARD)  // Deathrattles triggered the normal way
+						{
+							// Extra-deathrattles (e.g., Titus Rivendare) are tracked on the controlling player entity.
+							var controller = crabDeathrattleSource.GetTag(GameTag.CONTROLLER);
+							var controllerEntity = controller == game.Player.Id ? game.PlayerEntity
+								: controller == game.Opponent.Id ? game.OpponentEntity
+								: game.Entities.Values.FirstOrDefault(e => e.GetTag(GameTag.PLAYER_ID) == controller);
+							var extraDeathrattles = controllerEntity?.GetTag(GameTag.EXTRA_DEATHRATTLES_ADDITIONAL) ?? 0;
+
+							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+								.ObserveGrantedCrabDeathrattles(block.SourceEntityId, extraDeathrattles, isGolden);
+						}
+					}
+
 					if(gameState.CurrentBlock != null && (entity.CardId?.ToUpper().Contains("HERO") ?? false))
 						gameState.CurrentBlock.HasFullEntityHeroPackets = true;
 				}

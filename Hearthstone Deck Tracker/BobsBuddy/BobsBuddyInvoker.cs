@@ -63,6 +63,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		// True while at least one magnetized AutoAssembler deathrattle observation awaits flushing
 		internal static bool CurrentCombatHasPendingAutoAssemblerObservations;
 
+		// True while at least one granted Surf n' Surf Crab deathrattle observation awaits flushing
+		internal static bool CurrentCombatHasPendingCrabObservations;
+
 		// Incremented on every detected game reconnect. Each combat snapshot records the current value;
 		// a mismatch at validation time means the reconnect happened after this combat started, so the
 		// absence of the combat's outcome should not be deemed as CombatResult.Tie.
@@ -349,6 +352,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				// The last death of the combat has no following attack to trigger a potential flush.
 				if(CurrentCombatHasPendingAutoAssemblerObservations)
 					await FlushAndUpdateObservedAutoAssemblerDeathrattlesAsync();
+				if(CurrentCombatHasPendingCrabObservations)
+					await FlushAndUpdateObservedCrabDeathrattlesAsync();
 
 				if(isGameOver)
 				{
@@ -817,6 +822,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			// A stale observation from a combat that never reached StartShoppingAsync (e.g., disconnect) must not trigger flushes in the next combat.
 			CurrentCombatHasPendingAutoAssemblerObservations = false;
+			CurrentCombatHasPendingCrabObservations = false;
 
 			DebugLog("Successfully snapshotted board state");
 		}
@@ -1386,6 +1392,84 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.MinionUpdatedDuringCombat = true;
 
 			DebugLog($"Set {automatons.Count} Auto Assembler deathrattles ({automatons.Count(g => g)} golden) on {minion.CardID} (entity {sourceEntityId}, {summonedByIsPremium.Count} Automatons observed, {triggerMultiplier} triggers per deathrattle)");
+
+			return true;
+		}
+
+		// Minions whose death firings summoned Crabs (granted Surf n' Surf "Crab Riding"), awaiting reconciliation:
+		// source entity id -> (trigger multiplier, summoned Crabs in creation order)
+		private readonly Dictionary<int, (int TriggerMultiplier, List<bool> SummonedIsPremium)> _pendingCrabDeathrattleSources =
+			new Dictionary<int, (int, List<bool>)>();
+
+		internal void ObserveGrantedCrabDeathrattles(int sourceEntityId, int extraDeathrattles, bool isGolden)
+		{
+			if(!_pendingCrabDeathrattleSources.TryGetValue(sourceEntityId, out var observation))
+			{
+				observation = (1 + extraDeathrattles, new List<bool>());
+				_pendingCrabDeathrattleSources[sourceEntityId] = observation;
+			}
+			observation.SummonedIsPremium.Add(isGolden);
+			CurrentCombatHasPendingCrabObservations = true;
+		}
+
+		internal async Task FlushAndUpdateObservedCrabDeathrattlesAsync()
+		{
+			CurrentCombatHasPendingCrabObservations = false;
+			if(_pendingCrabDeathrattleSources.Count == 0)
+				return;
+			var sourceThatSummoned = _pendingCrabDeathrattleSources.ToList();
+			_pendingCrabDeathrattleSources.Clear();
+
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+
+			var changed = false;
+			foreach(var kv_pair in sourceThatSummoned)
+				changed |= ReconcileCrabDeathrattles(kv_pair.Key, kv_pair.Value.TriggerMultiplier, kv_pair.Value.SummonedIsPremium);
+
+			if(changed)
+				await TryRerun();
+		}
+
+		private bool ReconcileCrabDeathrattles(int sourceEntityId, int triggerMultiplier, List<bool> summonedByIsPremium)
+		{
+			var sides = new[] { _input!.Player, _input.PlayerTeammate, _input.Opponent, _input.OpponentTeammate };
+			var minion = sides.Where(p => p != null).SelectMany(p => p!.Side).FirstOrDefault(m => m.game_id == sourceEntityId);
+			if(minion == null || minion.MinionUpdatedDuringCombat)
+				return false;
+
+			// Extra deathrattles (e.g., Titus Rivendare) resolve as full repeats of the whole deathrattle list —
+			// so the first (observed / triggerMultiplier) summons are the distinct deathrattles in their real order.
+			// Unlike Auto Assembler there is no innate summoner of Crabs to skip: every observed firing maps to
+			// one granted "Crab Riding" entry on AdditionalDeathrattles.
+			var crabs = summonedByIsPremium.Take(summonedByIsPremium.Count / triggerMultiplier).ToList();
+
+			// Get any Crab deathrattles already captured on AdditionalDeathrattles (visible grant enchantments)
+			var currentIndices = new List<int>();
+			for(var i = 0; i < minion.AdditionalDeathrattles.Count; i++)
+			{
+				var deathrattleAction = minion.AdditionalDeathrattles[i].Method;
+				if(deathrattleAction == GenericDeathrattleActions.Crab.Method)
+					currentIndices.Add(i);
+				else if(deathrattleAction == GenericDeathrattleActions.CrabGolden.Method)
+					currentIndices.Add(i);
+			}
+
+			// If observed summons not more than entries already captured — nothing to add.
+			if(crabs.Count <= currentIndices.Count)
+				return false;
+
+			// Replace the Crab entries with the observed sequence, in place: the simulator fires
+			// AdditionalDeathrattles in list order, so the order decides summon order — board
+			// positions, and which summons no longer fit once the board fills.
+			var insertAt = currentIndices.Count > 0 ? currentIndices[0] : minion.AdditionalDeathrattles.Count;
+			for(var i = currentIndices.Count - 1; i >= 0; i--)
+				minion.AdditionalDeathrattles.RemoveAt(currentIndices[i]);
+			minion.AdditionalDeathrattles.InsertRange(insertAt,
+				crabs.Select(golden => golden ? GenericDeathrattleActions.CrabGolden : GenericDeathrattleActions.Crab));
+			minion.MinionUpdatedDuringCombat = true;
+
+			DebugLog($"Set {crabs.Count} Crab deathrattles ({crabs.Count(g => g)} golden) on {minion.CardID} (entity {sourceEntityId}, {summonedByIsPremium.Count} Crabs observed, {triggerMultiplier} triggers per deathrattle)");
 
 			return true;
 		}
