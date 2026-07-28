@@ -23,6 +23,7 @@ using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using static HearthDb.CardIds;
+using BoardState = Hearthstone_Deck_Tracker.Utility.BoardDamage.BoardState;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {

@@ -52,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SpecialShopChoicesStateWatcher.Change += (sender, args) => Core.Overlay.HandleSpecialShop(args);
 			DiscoverStateWatcher.Change += OnDiscoverStateChange;
 			BigCardWatcher.Change += OnBigCardChange;
-			OpponentBoardStateWatcher.Change += OnOpponentBoardStateChange;
+			PlayZoneWatcher.Change += OnPlayZoneChange;
 			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
 			BattlegroundsLeaderboardWatcher.Change += (sender, args) => Core.Overlay.SetHoveredBattlegroundsLeaderboardEntityId(args.HoveredEntityId);
 			BattlegroundsLobbyInfoWatcher.Change += OnBattlegroundsLobbyInfoChange;
@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SpecialShopChoicesStateWatcher.Stop();
 			BigCardWatcher.Stop();
 			DiscoverStateWatcher.Stop();
-			OpponentBoardStateWatcher.Stop();
+			PlayZoneWatcher.Stop();
 			BattlegroundsTeammateBoardStateWatcher.Stop();
 			BattlegroundsLeaderboardWatcher.Stop();
 			BattlegroundsLobbyInfoWatcher.Stop();
@@ -343,10 +343,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Core.Overlay.SetDeckPickerState(args.SelectedFormatType, args.DecksOnPage, args.IsModalOpen);
 		}
 
-		internal static void OnOpponentBoardStateChange (object sender, HearthWatcher.EventArgs.OpponentBoardArgs args)
+		internal static void OnPlayZoneChange (object sender, HearthWatcher.EventArgs.BoardStateArgs args)
 		{
-			var boardCards = args.BoardCards;
-			var mousedOverSlot = args.MousedOverSlot;
+			// In Battlegrounds the opposing play zone is Bob's shop.
+			var boardCards = args.Opposing?.BoardCards ?? new List<BoardCard>();
+			var mousedOverSlot = args.Opposing?.MousedOverSlot ?? -1;
 
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.BattlegroundsMinionPinningViewModel.OnShopChange(boardCards, mousedOverSlot);
@@ -403,8 +404,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static ChoicesWatcher ChoicesWatcher { get; } = new(new HearthMirrorChoicesProvider());
 		public static SpecialShopChoicesStateWatcher SpecialShopChoicesStateWatcher { get; } = new(new HearthMirrorSpecialShopChoicesProvider());
 		public static BigCardStateWatcher BigCardWatcher { get; } = new(new HearthMirrorBigCardProvider());
-		public static OpponentBoardStateWatcher OpponentBoardStateWatcher { get; } =
-			new(new HearthMirrorOpponentBoardStateProvider());
+		public static PlayZoneWatcher PlayZoneWatcher { get; } =
+			new(new HearthMirrorBoardStateProvider());
 		public static DiscoverStateWatcher DiscoverStateWatcher { get; } = new(new HearthMirrorDiscoverStateProvider());
 		public static BattlegroundsTeammateBoardStateWatcher BattlegroundsTeammateBoardStateWatcher { get; } = new(new HearthMirrorBattlegroundsTeammateBoardStateProvider());
 		public static BattlegroundsLeaderboardWatcher BattlegroundsLeaderboardWatcher { get; } = new(new HearthMirrorBattlegroundsLeaderboardProvider());
@@ -534,9 +535,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public MulliganTooltipState? State => Reflection.Client.GetMulliganTooltipState();
 	}
 
-	public class HearthMirrorOpponentBoardStateProvider : IOpponentBoardProvider
+	public class HearthMirrorBoardStateProvider : IBoardStateProvider
 	{
-		public OpponentBoardState? OpponentBoardState => Reflection.Client.GetOpponentBoardState();
+		public BoardState? BoardState => Reflection.Client.GetBoardState();
 	}
 
 	public class HearthMirrorBattlegroundsLobbyInfoProvider : IBattlegroundsLobbyInfoProvider

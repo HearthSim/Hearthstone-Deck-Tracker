@@ -112,7 +112,7 @@ public class SceneHandler
 			Watchers.BaconWatcher.Run();
 			Watchers.MulliganTooltipWatcher.Run();
 			Watchers.MulliganStateWatcher.Run();
-			Watchers.OpponentBoardStateWatcher.Run();
+			Watchers.PlayZoneWatcher.Run();
 		}
 		else if(to == Mode.DRAFT)
 		{
