@@ -186,7 +186,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 				if(_data == null || !_data.Enabled)
 					return string.Empty;
 
-				return string.Format(LocUtil.Get("PreLobbySale_Blackfriday_Description"), _data.Discount);
+				return string.Format(LocUtil.Get("BattlegroundsPreLobby_SaleTooltip_Description"), _data.Discount);
 			}
 		}
 

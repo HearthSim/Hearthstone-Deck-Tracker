@@ -437,7 +437,7 @@ public class ArenaPreDraftViewModel : ViewModel
 			if(_data == null || !_data.Enabled)
 				return string.Empty;
 
-			return string.Format(LocUtil.Get("PreLobbySale_Blackfriday_Description"), _data.Discount);
+			return string.Format(LocUtil.Get("TraditionalPreLobby_SaleTooltip_Description"), _data.Discount);
 		}
 	}
 
