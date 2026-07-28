@@ -841,7 +841,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 			var hideEntitiy = gameState.CurrentBlock is { HideShowEntities: true } && entity.IsControlledBy(game.Opponent.Id);
 
-			var isStartOfTheGameEffect = gameState.CurrentBlock?.TriggerKeyword == "START_OF_GAME_KEYWORD";
+			// Some start of game effects (e.g. Prince Renathal) reveal themselves from a block that is
+			// not tagged with START_OF_GAME_KEYWORD. Nothing else reveals opponent cards during the
+			// mulligan, so treat any reveal happening then as a start of game effect.
+			var isStartOfTheGameEffect = gameState.CurrentBlock?.TriggerKeyword == "START_OF_GAME_KEYWORD"
+				|| game.GameEntity?.GetTag(STEP) <= (int)Step.BEGIN_MULLIGAN;
 
 			// cultivating sprite's bulb is set to not revealed, but it is a known card
 			var isCultivatingSpriteBulb = gameState.CurrentBlock?.CardId == Collectible.Neutral.CultivatingSprite
