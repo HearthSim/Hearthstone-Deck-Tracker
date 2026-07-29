@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 				TrialsRemaining = new[] { $"{MulliganGuideOverlay}:{gameMetrics.MulliganGuideTrialsRemaining}" };
 
 			ShowedOpponentArenaPackage = gameMetrics.ArenaShowedOpponentPackage;
+			ShowedTheOutfinder = gameMetrics.ShowedTheOutfinder;
 			HearthstoneSettings = new HearthstoneSettings();
 		}
 
@@ -68,6 +69,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("showed_opponent_arena_package")]
 		public bool ShowedOpponentArenaPackage { get; }
+
+		[JsonProperty("showed_the_outfinder")]
+		public bool ShowedTheOutfinder { get; }
 
 		[JsonProperty("hdt_hsconstructed_settings_enabled")]
 		[JsonConverter(typeof(VMEnabledSettingsJsonConverter))]

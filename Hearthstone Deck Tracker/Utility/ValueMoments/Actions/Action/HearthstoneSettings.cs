@@ -22,5 +22,20 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("mulligan_guide_toast")]
 		public bool MulliganGuideToast { get => Config.Instance.ShowMulliganToast; }
+
+		[JsonProperty("outfinder")]
+		public bool Outfinder { get => Config.Instance.OutfinderEnabled; }
+
+		[JsonProperty("outfinder_in_deck")]
+		public bool OutfinderInDeck { get => Config.Instance.OutfinderInDeck; }
+
+		[JsonProperty("outfinder_in_hand")]
+		public bool OutfinderInHand { get => Config.Instance.OutfinderInHand; }
+
+		[JsonProperty("outfinder_use_percentages")]
+		public bool OutfinderUsePercentages { get => Config.Instance.OutfinderUsePercentages; }
+
+		[JsonProperty("outfinder_use_card_tiles")]
+		public bool OutfinderUseCardTiles { get => Config.Instance.OutfinderUseCardTiles; }
 	}
 }

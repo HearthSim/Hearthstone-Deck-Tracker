@@ -81,6 +81,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 
 			if(hearthstoneAction.ShowedOpponentArenaPackage)
 				yield return new ValueMoment(VMName.ArenaOpponentPackage, ValueMoment.VMKind.Paid);
+
+			if(hearthstoneAction.ShowedTheOutfinder)
+				yield return new ValueMoment(VMName.HSTheOutfinder, !isMulliganTrialActivated);
 		}
 
 		private static IEnumerable<ValueMoment> GetEndMatchBattlegroundsValueMoments(VMAction action)

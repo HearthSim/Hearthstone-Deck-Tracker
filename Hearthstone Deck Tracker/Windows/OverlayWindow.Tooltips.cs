@@ -425,6 +425,9 @@ public partial class OverlayWindow
 			return;
 		}
 
+		if(vm.RelatedCardsSummary != null)
+			Core.Game.Metrics.ShowedTheOutfinder = true;
+
 		SetHoveredLargePool(Database.GetCardFromId(cardId), vm.Cards);
 		if(vm.Cards!.Count > RelatedCardsManager.LargePoolThreshold)
 		{

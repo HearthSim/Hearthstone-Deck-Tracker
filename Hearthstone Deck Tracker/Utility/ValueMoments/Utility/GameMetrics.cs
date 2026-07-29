@@ -7,6 +7,7 @@
 		public bool MulliganGuideTrialActivated { get; set; }
 		public int? MulliganGuideTrialsRemaining { get; set; }
 		public bool ArenaShowedOpponentPackage { get; set; }
+		public bool ShowedTheOutfinder { get; set; }
 		public int BattlegroundsMinionTiersClicks { get; private set; }
 		public int BattlegroundsMinionsByMinionTypeFilterClicks { get; private set; }
 		public int BattlegroundsMinionsInspirationClicks { get; set; }
