@@ -21,8 +21,16 @@ public class CounterManager
 
 	private void Initialize()
 	{
-		var counterTypes = Assembly.GetAssembly(typeof(BaseCounter)).GetTypes()
-			.Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(BaseCounter)));
+		System.Type[] allTypes;
+		try
+		{
+			allTypes = Assembly.GetAssembly(typeof(BaseCounter)).GetTypes();
+		}
+		catch(ReflectionTypeLoadException ex)
+		{
+			allTypes = ex.Types.Where(t => t != null).ToArray();
+		}
+		var counterTypes = allTypes.Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(BaseCounter)));
 
 		foreach(var type in counterTypes)
 		{

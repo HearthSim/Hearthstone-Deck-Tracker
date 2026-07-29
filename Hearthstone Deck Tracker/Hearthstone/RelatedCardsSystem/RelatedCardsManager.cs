@@ -71,8 +71,16 @@ public class RelatedCardsManager
 		Dictionary<string, ICardGenerator> )
 		InitializeCards()
 	{
-		var cards = Assembly.GetAssembly(typeof(ICard)).GetTypes()
-			.Where(t => t.IsClass && !t.IsAbstract && typeof(ICard).IsAssignableFrom(t));
+		System.Type[] allTypes;
+		try
+		{
+			allTypes = Assembly.GetAssembly(typeof(ICard)).GetTypes();
+		}
+		catch(ReflectionTypeLoadException ex)
+		{
+			allTypes = ex.Types.Where(t => t != null).ToArray();
+		}
+		var cards = allTypes.Where(t => t.IsClass && !t.IsAbstract && typeof(ICard).IsAssignableFrom(t));
 
 		var relatedCardsDict = new Dictionary<string, ICardWithRelatedCards>();
 		var highlightCardsDict = new Dictionary<string, ICardWithHighlight>();
