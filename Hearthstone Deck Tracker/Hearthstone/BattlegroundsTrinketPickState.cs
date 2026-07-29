@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+﻿using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using HSReplay.Requests;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone;

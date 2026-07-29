@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Linq;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 {

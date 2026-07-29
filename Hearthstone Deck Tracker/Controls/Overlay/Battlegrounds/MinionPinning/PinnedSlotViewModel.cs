@@ -1,7 +1,6 @@
 ﻿﻿using System;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Commands;
-using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.Assets;

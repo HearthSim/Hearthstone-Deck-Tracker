@@ -19,7 +19,6 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
-using CardIds = HearthDb.CardIds;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 using Sideboard = Hearthstone_Deck_Tracker.Hearthstone.Sideboard;
 

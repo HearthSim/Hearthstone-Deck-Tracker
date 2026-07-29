@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Windows;
-using BobsBuddy.Simulation;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Newtonsoft.Json;

@@ -1,13 +1,10 @@
 #region
 
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Brush = System.Windows.Media.Brush;
-using Color = System.Windows.Media.Color;
 using SystemColors = System.Windows.SystemColors;
 
 #endregion

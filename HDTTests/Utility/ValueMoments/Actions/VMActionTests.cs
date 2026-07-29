@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
@@ -11,7 +9,6 @@ using Newtonsoft.Json;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action;
 using Newtonsoft.Json.Linq;
-using NuGet;
 
 namespace HDTTests.Utility.ValueMoments.Actions
 {

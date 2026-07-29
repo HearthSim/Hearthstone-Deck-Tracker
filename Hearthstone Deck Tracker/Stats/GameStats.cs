@@ -55,7 +55,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private int _starLevel;
 		private int _battlegroundsRating;
 		private int _mercenariesRating;
-		private int _arenaRating;
 		private int _stars;
 		private int _legendRank;
 		private Region _region;

@@ -7,6 +7,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
@@ -14,15 +15,12 @@ using static HearthDb.Enums.GameTag;
 using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
-using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Animations;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System.Collections.Generic;
 using System.Windows.Input;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls;
-using Hearthstone_Deck_Tracker.Hearthstone;
-using static HearthDb.CardIds;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {

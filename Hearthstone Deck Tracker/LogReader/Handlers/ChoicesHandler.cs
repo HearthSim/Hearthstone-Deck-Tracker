@@ -2,9 +2,7 @@
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone.EffectSystem.Effects.Neutral;
 using static Hearthstone_Deck_Tracker.LogReader.LogConstants.Choices;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers;

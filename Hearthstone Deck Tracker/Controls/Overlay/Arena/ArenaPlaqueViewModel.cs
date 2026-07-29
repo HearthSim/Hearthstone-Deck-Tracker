@@ -10,34 +10,7 @@ public class ArenaPlaqueViewModel : ViewModel
 {
 	private readonly int _seed;
 
-	public ArenaPlaqueViewModel(string score, int level, int randomSeed, bool isUnderground)
-	{
-		_seed = randomSeed;
-		Score = score;
-		Level = level;
-		IsUnderground = isUnderground;
-
-		var random = new Random(_seed);
-		double RandomScale(double value)
-		{
-			return value * (1 + (random.NextDouble() * 0.1 - 0.05));
-		}
-
-		InnerFlames = new[]
-		{
-			new FlameData(RandomScale(25), RandomScale(-1), RandomScale(.8)),
-			new FlameData(RandomScale(25), RandomScale(-1), RandomScale(.7)),
-			new FlameData(RandomScale(4), RandomScale(-1.2), RandomScale(1)),
-		};
-
-		OuterFlames = new[]
-		{
-			new FlameData(RandomScale(-30), RandomScale(1), RandomScale(1)),
-			new FlameData(RandomScale(29), RandomScale(1), RandomScale(.75)),
-		};
-	}
-
-	public ArenaPlaqueViewModel(string score, int level, int randomSeed, bool isUnderground, Thickness margin)
+	public ArenaPlaqueViewModel(string score, int level, int randomSeed, bool isUnderground, Thickness margin = default)
 	{
 		_seed = randomSeed;
 		Score = score;

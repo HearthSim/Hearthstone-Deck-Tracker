@@ -2,7 +2,6 @@
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
-using HSReplay.Responses;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 {

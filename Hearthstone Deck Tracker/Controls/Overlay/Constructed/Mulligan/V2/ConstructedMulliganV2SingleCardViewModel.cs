@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using HearthMirror.Objects;
+﻿using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using HSReplay.Responses;
 

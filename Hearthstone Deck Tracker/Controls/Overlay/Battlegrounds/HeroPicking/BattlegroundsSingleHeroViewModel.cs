@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition;
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using HSReplay.Responses;
 using static System.Windows.Visibility;

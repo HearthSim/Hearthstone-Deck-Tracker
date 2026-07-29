@@ -10,7 +10,6 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Updating;
-using Hearthstone_Deck_Tracker.Utility.ValueMoments;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
@@ -58,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			try
 			{
 #if !DEBUG
-				if(!ValueMomentManager.ShouldSendEventToMixPanel(action, action.ValueMoments))
+				if(!Hearthstone_Deck_Tracker.Utility.ValueMoments.ValueMomentManager.ShouldSendEventToMixPanel(action, action.ValueMoments))
 					return;
 				if(TryGetToken(out var token))
 				{

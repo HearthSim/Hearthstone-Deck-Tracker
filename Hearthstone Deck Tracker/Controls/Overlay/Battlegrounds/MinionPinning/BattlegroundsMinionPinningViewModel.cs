@@ -10,7 +10,6 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 using System.Collections.ObjectModel;
 using Hearthstone_Deck_Tracker.Utility;
-using HSReplay.Responses;
 
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning

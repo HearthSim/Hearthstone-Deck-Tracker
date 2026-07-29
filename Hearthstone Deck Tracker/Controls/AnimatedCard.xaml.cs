@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Controls;
 
@@ -169,7 +170,7 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 		}
 		catch(Exception e)
 		{
-			// ignored
+			Log.Debug($"Could not run storyboard {key}: {e.Message}");
 		}
 	}
 

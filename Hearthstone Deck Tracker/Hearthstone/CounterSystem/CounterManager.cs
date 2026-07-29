@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;

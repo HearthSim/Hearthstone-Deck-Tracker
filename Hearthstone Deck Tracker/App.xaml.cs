@@ -4,21 +4,15 @@
 
 // ReSharper disable RedundantUsingDirective
 using System;
-using System.IO;
 using System.Linq;
-using System.Management;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Threading;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
-using Squirrel;
 
 #endregion
 
@@ -77,14 +71,14 @@ namespace Hearthstone_Deck_Tracker
 				var date = DateTime.Now;
 				var fileName = "Crash Reports\\" + $"Crash report {date.Day}{date.Month}{date.Year}-{date.Hour}{date.Minute}";
 
-				if(!Directory.Exists("Crash Reports"))
-					Directory.CreateDirectory("Crash Reports");
+				if(!System.IO.Directory.Exists("Crash Reports"))
+					System.IO.Directory.CreateDirectory("Crash Reports");
 
-				using(var sr = new StreamWriter(fileName + ".txt", true))
+				using(var sr = new System.IO.StreamWriter(fileName + ".txt", true))
 				{
 					sr.WriteLine("########## " + DateTime.Now + " ##########");
 					sr.WriteLine(e.Exception);
-					sr.WriteLine("Logfile: " + Log.CurrentLogFile);
+					sr.WriteLine("Logfile: " + Utility.Logging.Log.CurrentLogFile);
 				}
 #endif
 				e.Handled = true;

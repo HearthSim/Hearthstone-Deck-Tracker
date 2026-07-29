@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

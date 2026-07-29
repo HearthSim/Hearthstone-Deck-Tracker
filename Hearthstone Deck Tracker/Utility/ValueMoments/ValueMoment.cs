@@ -1,5 +1,4 @@
 ﻿
-using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 {
