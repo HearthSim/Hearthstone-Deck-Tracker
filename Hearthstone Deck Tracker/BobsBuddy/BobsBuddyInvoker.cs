@@ -1355,6 +1355,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(minion == null || minion.MinionUpdatedDuringCombat)
 				return false;
 
+			// Ignore minions that copy/gain deathrattles during combat (e.g., Fish of N'Zoth, Timewraped Whirl-O-Tron)
+			if(minion is ICopiesDeathrattles)
+				return false;
+
 			// Extra deathrattles (e.g., Titus Rivendare) resolve as full repeats of the whole deathrattle list —
 			// so the first (observed / triggerMultiplier) summons are the distinct deathrattles in their real order.
 			var automatons = summonedByIsPremium.Take(summonedByIsPremium.Count / triggerMultiplier).ToList();
@@ -1436,6 +1440,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var sides = new[] { _input!.Player, _input.PlayerTeammate, _input.Opponent, _input.OpponentTeammate };
 			var minion = sides.Where(p => p != null).SelectMany(p => p!.Side).FirstOrDefault(m => m.game_id == sourceEntityId);
 			if(minion == null || minion.MinionUpdatedDuringCombat)
+				return false;
+
+			// Ignore minions that copy/gain deathrattles during combat (e.g., Fish of N'Zoth, Timewraped Whirl-O-Tron)
+			if(minion is ICopiesDeathrattles)
 				return false;
 
 			// Extra deathrattles (e.g., Titus Rivendare) resolve as full repeats of the whole deathrattle list —
