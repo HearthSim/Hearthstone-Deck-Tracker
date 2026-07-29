@@ -91,6 +91,14 @@
                   Unchecked="CheckBoxFlavorText_Unchecked">
                         <TextBlock Text="{lex:Loc Options_Overlay_General_CheckBox_FlavorText}" TextWrapping="Wrap" />
                     </CheckBox>
+        <CheckBox Name="CheckBoxBoardEntryOrder"
+                  HorizontalAlignment="Left"
+                  ToolTip="{lex:Loc Options_Overlay_General_CheckBox_BoardEntryOrder_Tooltip}"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxBoardEntryOrder_Checked"
+                  Unchecked="CheckBoxBoardEntryOrder_Unchecked">
+            <TextBlock Text="{lex:Loc Options_Overlay_General_CheckBox_BoardEntryOrder}" TextWrapping="Wrap" />
+        </CheckBox>
         <CheckBox Name="CheckBoxBatteryStatus" Content="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus}" HorizontalAlignment="Left"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

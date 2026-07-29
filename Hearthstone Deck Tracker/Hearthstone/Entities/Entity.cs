@@ -282,6 +282,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				LatestCardId = LatestCardId,
 				StoredCardIds = StoredCardIds,
 				DeckIndex = DeckIndex,
+				BoardOrder = BoardOrder,
 				CopyOfCardId = CopyOfCardId,
 				ExtraInfo = ExtraInfo,
 				ShatterCombined = ShatterCombined,
@@ -383,6 +384,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public List<string> StoredCardIds { get; set; } = new List<string>();
 		public string? CopyOfCardId { get; set; }
 		public int DeckIndex { get; set; }
+
+		public int? BoardOrder { get; set; }
+
 		public bool InGraveardAtStartOfGame { get; set; }
 		public ICardExtraInfo? ExtraInfo { get; set; }
 

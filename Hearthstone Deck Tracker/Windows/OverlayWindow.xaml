@@ -7,6 +7,7 @@
         xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
         xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
         xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
+        xmlns:boardOrder="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.BoardOrder"
         xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone"
         xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
         xmlns:battlegroundsSession="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session"
@@ -324,6 +325,23 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </Grid>
+
+                <!-- Board entry-order badges. Deliberately separate from Grid*Board: those feed
+                     mouse-over detection by index, which the drop-gap spacer would shift. -->
+                <Grid Name="GridOpponentBoardOrder"
+                      Width="{Binding BoardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                      Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
+                    <boardOrder:BoardOrderView DataContext="{Binding OpponentBoardOrderVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+                </Grid>
+                <Grid Name="GridPlayerBoardOrder"
+                      Width="{Binding BoardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                      Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
+                    <boardOrder:BoardOrderView DataContext="{Binding PlayerBoardOrderVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+                </Grid>
+                <boardOrder:BoardOrderSlotView x:Name="OpponentWeaponOrder"
+                                               DataContext="{Binding OpponentBoardOrderVM.Weapon, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+                <boardOrder:BoardOrderSlotView x:Name="PlayerWeaponOrder"
+                                               DataContext="{Binding PlayerBoardOrderVM.Weapon, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
 
                 <Grid Name="GridFlavorText" Visibility="{Binding FlavorTextVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Panel.ZIndex="5" Width="298" Height="123" Canvas.Left="-338">
                     <Image Source="../Resources/flavor_text.png"/>

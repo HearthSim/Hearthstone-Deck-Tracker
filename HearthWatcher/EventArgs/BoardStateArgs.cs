@@ -3,9 +3,6 @@ using HearthMirror.Objects;
 
 namespace HearthWatcher.EventArgs;
 
-/// <summary>
-/// One side's play zone. In Battlegrounds the opposing zone is Bob's shop.
-/// </summary>
 public class PlayZoneArgs
 {
 	public List<BoardCard> BoardCards { get; }

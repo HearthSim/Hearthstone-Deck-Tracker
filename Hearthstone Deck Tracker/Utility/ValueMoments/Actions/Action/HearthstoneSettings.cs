@@ -37,5 +37,8 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("outfinder_use_card_tiles")]
 		public bool OutfinderUseCardTiles { get => Config.Instance.OutfinderUseCardTiles; }
+
+		[JsonProperty("board_entry_order")]
+		public bool BoardEntryOrder { get => Config.Instance.ShowBoardEntryOrder; }
 	}
 }

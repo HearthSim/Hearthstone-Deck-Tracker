@@ -394,6 +394,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool HideOpponentCounters = false;
 
 		[DefaultValue(false)]
+		public bool ShowBoardEntryOrder = false;
+
+		[DefaultValue(false)]
 		public bool HideOpponentRelatedCards = false;
 
 		[DefaultValue(false)]

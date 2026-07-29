@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool DeterminedPlayers => _game.Player.Id > 0 && _game.Opponent.Id > 0;
 		public Tuple<int, string>? ChameleosReveal { get; set; }
 		public int DredgeCounter { get; set; }
+		public int BoardOrderCounter { get; set; }
 		public Dictionary<string, int> PlayerIdsByPlayerName { get; set; } = new();
 
 		public int GetTurnNumber()
@@ -65,6 +66,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			CurrentBlock = null;
 			_maxBlockId = 0;
 			DredgeCounter = 0;
+			BoardOrderCounter = 0;
 			TriangulatePlayed = false;
 			StarshipLauchBlockIds.Clear();
 			MinionsInPlay.Clear();

@@ -1,0 +1,23 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.BoardOrder.BoardOrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:boardOrder="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.BoardOrder"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance boardOrder:BoardOrderViewModel}">
+    <Grid Visibility="{Binding Visibility}">
+        <ItemsControl ItemsSource="{Binding Slots}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <boardOrder:BoardOrderSlotView/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</UserControl>

@@ -45,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxBatteryStatus.IsChecked = Config.Instance.ShowBatteryLife;
 			CheckBoxBatteryStatusText.IsChecked = Config.Instance.ShowBatteryLifePercent;
 			CheckBoxFlavorText.IsChecked = Config.Instance.ShowFlavorText;
+			CheckBoxBoardEntryOrder.IsChecked = Config.Instance.ShowBoardEntryOrder;
 			CheckBoxOverlayUseAnimations.IsChecked = Config.Instance.OverlayCardAnimations;
 			CheckBoxRemoveSecrets.IsChecked = Config.Instance.RemoveSecretsFromList;
 
@@ -393,6 +394,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowFlavorText = false;
 			Config.Save();
 			Core.Overlay.FlavorTextVisibility = Visibility.Collapsed;
+		}
+
+		private void CheckBoxBoardEntryOrder_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBoardEntryOrder = true;
+			SaveConfig(true);
+		}
+
+		private void CheckBoxBoardEntryOrder_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBoardEntryOrder = false;
+			SaveConfig(true);
 		}
 
 		private void CheckboxOverlayUseAnimations_Checked(object sender, RoutedEventArgs e)

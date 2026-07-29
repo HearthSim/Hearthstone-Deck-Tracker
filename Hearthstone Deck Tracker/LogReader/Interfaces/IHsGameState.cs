@@ -41,6 +41,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		Block? CurrentBlock { get; }
 		Tuple<int, string>? ChameleosReveal { get; set; }
 		int DredgeCounter { get; set; }
+		int BoardOrderCounter { get; set; }
 		Dictionary<string, int> PlayerIdsByPlayerName { get; }
 		Dictionary<int, IHsChoice> ChoicesById { get; }
 		Dictionary<int, List<IHsChoice>> ChoicesByTaskList { get; }

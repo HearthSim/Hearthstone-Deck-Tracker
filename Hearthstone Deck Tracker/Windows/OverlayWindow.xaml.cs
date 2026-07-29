@@ -24,6 +24,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
+using Hearthstone_Deck_Tracker.Controls.Overlay.BoardOrder;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
@@ -152,6 +153,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public List<BoardMinionOverlayViewModel> OppBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
 		public List<BoardMinionOverlayViewModel> PlayerBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
+
+		public BoardOrderViewModel PlayerBoardOrderVM { get; } = new();
+		public BoardOrderViewModel OpponentBoardOrderVM { get; } = new();
+		private HearthWatcher.EventArgs.BoardStateArgs? _lastBoardState;
+		private Entity? _playerWeapon;
+		private Entity? _opponentWeapon;
+		private readonly BoardOrderRanker _boardOrderRanker = new();
+		private bool _boardOrderShown;
 
 		private Dictionary<ItemsControl, List<Ellipse>> _boardHoverTargets = new Dictionary<ItemsControl, List<Ellipse>>();
 

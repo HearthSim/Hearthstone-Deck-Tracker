@@ -1039,6 +1039,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 		}
 
+		private static void UpdateBoardOrder(IHsGameState gameState, Entity entity, int value, int prevValue)
+		{
+			if((Zone)value == PLAY && (Zone)prevValue != PLAY)
+				entity.Info.BoardOrder = ++gameState.BoardOrderCounter;
+		}
+
 		private void ZoneChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
 		{
 			if(id <= 3)
@@ -1052,6 +1058,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				else if(value != (int)Zone.INVALID && value != (int)SETASIDE)
 					entity.Info.OriginalZone = (Zone)value;
 			}
+			UpdateBoardOrder(gameState, entity, value, prevValue);
 			var controller = entity.GetTag(CONTROLLER);
 			switch((Zone)prevValue)
 			{

@@ -345,12 +345,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal static void OnPlayZoneChange (object sender, HearthWatcher.EventArgs.BoardStateArgs args)
 		{
-			// In Battlegrounds the opposing play zone is Bob's shop.
-			var boardCards = args.Opposing?.BoardCards ?? new List<BoardCard>();
-			var mousedOverSlot = args.Opposing?.MousedOverSlot ?? -1;
-
+			// In Battlegrounds the opposing play zone is Bob's shop. Outside of it nothing here
+			// consumes the shop view, so don't build the fallback list on every tick.
 			if(Core.Game.IsBattlegroundsMatch)
+			{
+				var boardCards = args.Opposing?.BoardCards ?? new List<BoardCard>();
+				var mousedOverSlot = args.Opposing?.MousedOverSlot ?? -1;
 				Core.Overlay.BattlegroundsMinionPinningViewModel.OnShopChange(boardCards, mousedOverSlot);
+			}
+
+			Core.Overlay.OnPlayZoneStateChanged(args);
 		}
 
 		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.FriendlyChallengeEventArgs args)
@@ -537,7 +541,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 	public class HearthMirrorBoardStateProvider : IBoardStateProvider
 	{
-		public BoardState? BoardState => Reflection.Client.GetBoardState();
+		private static bool NeedsFriendlyZone
+			=> Config.Instance.ShowBoardEntryOrder && Core.Game.IsTraditionalHearthstoneMatch;
+
+		public BoardState? BoardState => Reflection.Client.GetBoardState(NeedsFriendlyZone);
 	}
 
 	public class HearthMirrorBattlegroundsLobbyInfoProvider : IBattlegroundsLobbyInfoProvider

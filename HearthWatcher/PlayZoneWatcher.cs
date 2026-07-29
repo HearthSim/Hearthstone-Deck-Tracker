@@ -6,11 +6,6 @@ using HearthWatcher.Providers;
 
 namespace HearthWatcher;
 
-/// <summary>
-/// Watches both play zones. Replaces the old OpponentBoardStateWatcher: the opposing zone is
-/// still what Battlegrounds cares about (it is Bob's shop), but the friendly zone is needed for
-/// anything drawn over the player's own board.
-/// </summary>
 public class PlayZoneWatcher
 {
 	public delegate void PlayZoneEventHandler(object sender, BoardStateArgs args);

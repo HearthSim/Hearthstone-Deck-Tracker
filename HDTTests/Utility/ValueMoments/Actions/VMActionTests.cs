@@ -82,7 +82,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "showed_opponent_arena_package", false },
 				{ "showed_the_outfinder", false },
 				{ "hdt_hsconstructed_settings_enabled", new []{ "hide_timers", "mulligan_guide_overlay", "mulligan_gv2_overlay", "mulligan_guide_overlay_auto_expand", "mulligan_guide_toast", "outfinder", "outfinder_in_deck", "outfinder_in_hand", "outfinder_use_percentages" }},
-				{ "hdt_hsconstructed_settings_disabled", new []{ "hide_decks", "outfinder_use_card_tiles" }},
+				{ "hdt_hsconstructed_settings_disabled", new []{ "hide_decks", "outfinder_use_card_tiles", "board_entry_order" }},
 				{ "action_source", "app" },
 				{ "action_name", "end_match" },
 				{ "domain", "hsreplay.net" },

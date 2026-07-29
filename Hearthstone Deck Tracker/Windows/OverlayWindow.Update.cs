@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.Controls.Overlay.BoardOrder;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using static HearthDb.CardIds;
 using BoardState = Hearthstone_Deck_Tracker.Utility.BoardDamage.BoardState;
@@ -154,9 +155,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_cardMarks[i].Visibility = Collapsed;
 			}
 
-			var oppBoard = Core.Game.Opponent.Board.Where(x => x.TakesBoardSlot).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
-			var playerBoard = Core.Game.Player.Board.Where(x => x.TakesBoardSlot).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
+			// Player.Board walks the whole entity dictionary, so materialise it once per side
+			// and derive both the board slots and the weapon from it.
+			var oppInPlay = Core.Game.Opponent.Board.ToList();
+			var playerInPlay = Core.Game.Player.Board.ToList();
+			var oppBoard = oppInPlay.Where(x => x.TakesBoardSlot).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
+			var playerBoard = playerInPlay.Where(x => x.TakesBoardSlot).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
+
+			// Weapons only ever change through the log, and this method runs after every log
+			// batch, so caching them here keeps the watcher path free of entity scans.
+			_playerWeapon = playerInPlay.FirstOrDefault(x => x.IsWeapon);
+			_opponentWeapon = oppInPlay.FirstOrDefault(x => x.IsWeapon);
+			// The watcher only fires when the zone contents change, so refresh here too: a
+			// BoardOrder assigned by the log slightly after the last tick would otherwise
+			// leave a minion unlabelled until the board next changes.
+			UpdateBoardOrderOverlay();
 			if(!_game.IsInMenu && (_game.IsMulliganDone || _game.IsBattlegroundsMatch || _game.IsMercenariesMatch) && User32.IsHearthstoneInForeground() && IsContentVisible)
 				DetectMouseOver(playerBoard, oppBoard);
 			else
@@ -357,6 +371,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					PlayerBoard[i].Height = BoardHeight;
 					PlayerBoard[i].Margin = MinionMargin;
 				}
+
 			}
 
 			ApplyAutoScaling();
@@ -471,6 +486,78 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var playerBoardOffset = _game.IsMercenariesMatch ? isMainAction && !mercsToNominate ? Height * -0.09 : Height * 0.003 : Height * 0.03 ;
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - playerBoardOffset);
+
+			if(!Config.Instance.ShowBoardEntryOrder)
+				return;
+
+			PlayerBoardOrderVM.UpdateSizes(MinionWidth, BoardHeight, MinionMargin);
+			OpponentBoardOrderVM.UpdateSizes(MinionWidth, BoardHeight, MinionMargin);
+			Canvas.SetTop(GridOpponentBoardOrder, Canvas.GetTop(GridOpponentBoard));
+			Canvas.SetTop(GridPlayerBoardOrder, Canvas.GetTop(GridPlayerBoard));
+			PositionWeaponOrderBadges();
+		}
+
+
+		private const double PlayerWeaponBadgeOffsetX = 0.364;
+		private const double PlayerWeaponBadgeCenterY = 0.7;
+		private const double OpponentWeaponBadgeOffsetX = 0.380;
+		private const double OpponentWeaponBadgeCenterY = 0.144;
+
+		private void PositionWeaponOrderBadges()
+		{
+			var centerToTop = BoardHeight * BoardOrderSlotViewModel.BadgeSizeFactor
+				* (0.5 - BoardOrderSlotViewModel.BadgeOverhangFactor);
+
+			var playerLeft = Helper.GetScaledXPos(PlayerWeaponBadgeOffsetX, (int)Width, ScreenRatio) - MinionWidth / 2;
+			var opponentLeft = Helper.GetScaledXPos(OpponentWeaponBadgeOffsetX, (int)Width, ScreenRatio) - MinionWidth / 2;
+
+			Canvas.SetLeft(PlayerWeaponOrder, playerLeft);
+			Canvas.SetTop(PlayerWeaponOrder, PlayerWeaponBadgeCenterY * Height - centerToTop);
+			Canvas.SetLeft(OpponentWeaponOrder, opponentLeft);
+			Canvas.SetTop(OpponentWeaponOrder, OpponentWeaponBadgeCenterY * Height - centerToTop);
+		}
+
+		internal void OnPlayZoneStateChanged(HearthWatcher.EventArgs.BoardStateArgs args)
+		{
+			_lastBoardState = args;
+			UpdateBoardOrderOverlay();
+		}
+
+		private void UpdateBoardOrderOverlay()
+		{
+			var show = Config.Instance.ShowBoardEntryOrder
+				&& _game.IsTraditionalHearthstoneMatch
+				&& _game.IsMulliganDone
+				&& !_game.IsInMenu
+				&& !IsGameOver
+				&& IsContentVisible;
+
+			if(!show)
+			{
+				// Only clear on the transition. This runs after every log batch, and both view
+				// models start out in the cleared state, so re-clearing is pure notification
+				// churn for everyone who never turns the setting on.
+				if(!_boardOrderShown)
+					return;
+				_boardOrderShown = false;
+				PlayerBoardOrderVM.Visibility = Collapsed;
+				OpponentBoardOrderVM.Visibility = Collapsed;
+				PlayerBoardOrderVM.Clear();
+				OpponentBoardOrderVM.Clear();
+				return;
+			}
+
+			_boardOrderShown = true;
+			PlayerBoardOrderVM.Visibility = Visible;
+			OpponentBoardOrderVM.Visibility = Visible;
+
+			var ranks = _boardOrderRanker.Compute(
+				_game,
+				_lastBoardState?.Friendly, _playerWeapon,
+				_lastBoardState?.Opposing, _opponentWeapon);
+
+			PlayerBoardOrderVM.Update(_lastBoardState?.Friendly, _playerWeapon, ranks);
+			OpponentBoardOrderVM.Update(_lastBoardState?.Opposing, _opponentWeapon, ranks);
 		}
 
 		private void UpdateElementPositions()
