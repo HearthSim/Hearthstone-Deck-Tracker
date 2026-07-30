@@ -1,5 +1,7 @@
-## **Unreleased**
+## **Release v1.54.1 - 2026-07-30**
 **Hearthstone**:
+- Added an option to show the order cards entered the board, numbering each minion and weapon.\
+  *You'll find this setting under Options > Overlay > General.*
 - Added cards to the bottom of the deck by Sphere of Sapience.
 - Fixed decklist not updating with the card shuffled by Shattered Reflection.
 
