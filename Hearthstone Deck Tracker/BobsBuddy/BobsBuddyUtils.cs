@@ -258,6 +258,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var trinket = factory.Create(cardId, player);
 			SetScriptDataProperties(trinket, entity);
 
+			// Set slot that holds the trinket (i.e., Fantastic Treasure, Growing Collection,
+			// Lesser Trinket, Greater Trinket); necessary to order friendly start of combat triggers
+			if(entity.CardId != null && entity.CardId != cardId)
+				trinket.ContainerCardId = entity.CardId;
+
 			// Special handling for replica cathedral
 			if(cardId == NonCollectible.Neutral.ReplicaCathedral)
 				trinket.ScriptDataNum1 = entity.GetTag((GameTag)4696);
