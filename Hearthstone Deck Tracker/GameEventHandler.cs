@@ -731,7 +731,6 @@ namespace Hearthstone_Deck_Tracker
 
 					Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 					Core.Overlay.BattlegroundsSessionViewModelVM.Update();
-					Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 					Core.Overlay.BattlegroundsAnomalyGuideListViewModel.Update();
 					Core.Overlay.BattlegroundsTrinketGuideListViewModel.Update();
 					Core.Overlay.BattlegroundsQuestGuideListViewModel.Update();
@@ -739,6 +738,16 @@ namespace Hearthstone_Deck_Tracker
 					Watchers.BattlegroundsLobbyInfoWatcher.Run();
 					if(_game.IsBattlegroundsDuosMatch)
 						Watchers.BattlegroundsTeammateBoardStateWatcher.Run();
+
+					// the mulligan is already over, so HandlePlayerMulliganDone will never snapshot the hero
+					if(_game.BattlegroundsHeroPickState.PickedHeroDbfId is null)
+					{
+						// board entities arrive after GameEntity, wait for the hero to show up
+						for(var i = 0; i < 20 && _game.Player.Hero is null; i++)
+							await Task.Delay(500);
+						_game.SnapshotBattlegroundsHeroPick();
+					}
+					Core.Overlay.BattlegroundsHeroGuideListViewModel.Update();
 				}
 			}
 
