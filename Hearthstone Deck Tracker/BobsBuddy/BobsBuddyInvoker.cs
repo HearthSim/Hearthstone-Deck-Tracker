@@ -742,6 +742,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			DebugLog("Snapshotting board state...");
 			LastAttackingHero = null;
+			_attackingHero = null;
+			_defendingHero = null;
 			_reconnectCounterAtSnapshot = _reconnectCounter;
 			var simulator = new Simulator();
 			var input = new Input();
