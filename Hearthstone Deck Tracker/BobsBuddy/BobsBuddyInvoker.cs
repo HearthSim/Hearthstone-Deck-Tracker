@@ -1765,8 +1765,17 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private LethalResult GetLastLethalResult()
 		{
 			if(_defendingHero == null || _attackingHero == null)
-				return LethalResult.NoOneDied;
+				return LethalResult.NoOneDied;  // No damage dealt, defender still alive (was a tie)
 			var totalDefenderHealth = _defendingHero.Health + _defendingHero.GetTag(GameTag.ARMOR);
+			if(_defendingHero.CardId == NonCollectible.Neutral.LadyDeathwhisperTavernBrawl1 && _input != null)
+			{
+				// The defender is Lady Deathwhisper, the DUOS 0-health hero;
+				// In this case, the attacking hero strike damage is directed to the living teammate
+				if(_attackingHero.IsControlledBy(_game.Player.Id))
+					totalDefenderHealth = Simulator.GetDuosStartingHealth(_input.Opponent.Health, _input.OpponentTeammate?.Health);
+				else
+					totalDefenderHealth = Simulator.GetDuosStartingHealth(_input.Player.Health, _input.PlayerTeammate?.Health);
+			}
 			if(_attackingHero.Attack >= totalDefenderHealth)
 			{
 				if(_attackingHero.IsControlledBy(_game.Player.Id))
@@ -1774,7 +1783,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				else
 					return LethalResult.FriendlyDied;
 			}
-			return LethalResult.NoOneDied;
+			return LethalResult.NoOneDied;  // damage was dealt, but defender still alive
 		}
 
 		private async Task ValidateSimulationResultAsync()
