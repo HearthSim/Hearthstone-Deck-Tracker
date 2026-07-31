@@ -89,6 +89,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			{
 				Log.Error($"Could not create asset downloader to download card images: {e.Message}");
 			}
+
+			// no downloads can be in flight yet, safe to sweep
+			cardPortraitDownloader?.CleanUpOrphanedFiles();
+			cardTileDownloader?.CleanUpOrphanedFiles();
+			cardImageDownloader?.CleanUpOrphanedFiles();
+			heroImageDownloader?.CleanUpOrphanedFiles();
 		}
 
 

@@ -1,6 +1,7 @@
 ﻿using Hearthstone_Deck_Tracker.Utility.Assets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -113,6 +114,31 @@ namespace HDTTests.ImageDownloading
 			var data = await assetDownloader.GetAssetData("FOO");
 
 			Assert.AreEqual("hello", data);
+
+			Directory.Delete(path, true);
+		}
+
+		[TestMethod]
+		public void CleanUpOrphanedFiles_DeletesFilesWithoutIndexEntry_KeepsEverythingElse()
+		{
+			var path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+			Directory.CreateDirectory(path);
+			File.WriteAllText(Path.Combine(path, "INDEXED.txt"), "indexed");
+			File.WriteAllText(Path.Combine(path, "PINNED.txt"), "pinned");
+			File.WriteAllText(Path.Combine(path, "ORPHAN.txt"), "orphan");
+			File.WriteAllText(Path.Combine(path, "Cache.xml"), "<LRUCache />");
+
+			var assetDownloader = new AssetDownloader<string, string>(
+				path, key => $"http://127.0.0.1:1/{key}", key => $"{key}.txt", bytes => Encoding.UTF8.GetString(bytes),
+				alwaysKeepCached: new HashSet<string> { "PINNED" });
+			assetDownloader.CreateEmptyAssetEntry("INDEXED");
+
+			assetDownloader.CleanUpOrphanedFiles();
+
+			Assert.IsFalse(File.Exists(Path.Combine(path, "ORPHAN.txt")));
+			Assert.IsTrue(File.Exists(Path.Combine(path, "INDEXED.txt")));
+			Assert.IsTrue(File.Exists(Path.Combine(path, "PINNED.txt")));
+			Assert.IsTrue(File.Exists(Path.Combine(path, "Cache.xml")));
 
 			Directory.Delete(path, true);
 		}

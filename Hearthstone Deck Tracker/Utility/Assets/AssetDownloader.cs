@@ -113,6 +113,35 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			SerializeLRUCache();
 		}
 
+		/// <summary>
+		/// Delete files in the storage directory that have no index entry. Failed deletes and index
+		/// trimming can leave files behind that would otherwise accumulate unbounded. Callers must
+		/// ensure no downloads are in flight (e.g. run this before the downloader is handed out).
+		/// </summary>
+		public void CleanUpOrphanedFiles()
+		{
+			try
+			{
+				foreach(var file in new DirectoryInfo(_storageDestination).GetFiles())
+				{
+					if(file.Name == Path.GetFileName(CacheFilePath) || _lruLookup.ContainsKey(file.Name) || _alwaysKeepCached.Contains(file.Name))
+						continue;
+					try
+					{
+						file.Delete();
+					}
+					catch(Exception e)
+					{
+						Log.Error($"Could not delete orphaned file {file.Name}: {e.Message}");
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+			}
+		}
+
 		public void InvalidateCachedAssets()
 		{
 			foreach(var entry in _lruCache)
