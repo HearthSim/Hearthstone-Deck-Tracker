@@ -1,4 +1,4 @@
-## Unreleased
+## **Release v1.54.2 - 2026-07-31**
 **General**:
 - Fixed an issue where rewind replays would not be uploaded correctly.
 - Fixed an issue that could cause card images to not load.
