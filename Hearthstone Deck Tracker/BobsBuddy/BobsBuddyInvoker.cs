@@ -1769,10 +1769,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_defendingHero == null || _attackingHero == null)
 				return LethalResult.NoOneDied;  // No damage dealt, defender still alive (was a tie)
 			var totalDefenderHealth = _defendingHero.Health + _defendingHero.GetTag(GameTag.ARMOR);
-			if(_defendingHero.CardId == NonCollectible.Neutral.LadyDeathwhisperTavernBrawl1 && _input != null)
+			if(_game.IsBattlegroundsDuosMatch && _input != null)
 			{
-				// The defender is Lady Deathwhisper, the DUOS 0-health hero;
-				// In this case, the attacking hero strike damage is directed to the living teammate
+				// A duos pair shares one health pool. _defendingHero holds the last hero-vs-hero strike of the
+				// combat; when the other partner has been eliminated that strike lands on Lady Deathwhisper,
+				// which has HEALTH=30 DAMAGE=30 before it is hit. Its Health+ARMOR is therefore 0, so every strike
+				// compares as lethal. Use GetDuosStartingHealth instead - which is the value the simulation used.
 				if(_attackingHero.IsControlledBy(_game.Player.Id))
 					totalDefenderHealth = Simulator.GetDuosStartingHealth(_input.Opponent.Health, _input.OpponentTeammate?.Health);
 				else
