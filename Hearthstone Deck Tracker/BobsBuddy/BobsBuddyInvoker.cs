@@ -1165,6 +1165,20 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				{
 					var minion = GetMinionFromEntity(simulator, isPlayerMinion, e, GetAttachedEntities(e.Id));
 					var copiedFrom = e.GetTag(GameTag.COPIED_FROM_ENTITY_ID);
+
+					// The game writes a minion's aggregate ATK/HEALTH when it enters PLAY. A copy that did not
+					// fit stays in SETASIDE holding the card's printed stats, so read the real values off the
+					// entity it was copied from.
+					if(!e.IsInPlay && copiedFrom > 0
+						&& _game.Entities.TryGetValue(copiedFrom, out var copySource)
+						&& (copySource.IsInPlay || copySource.IsInSetAside))
+					{
+						minion.baseAttack = copySource.GetTag(GameTag.ATK);
+						minion.maxAttack = copySource.GetTag(GameTag.ATK);
+						minion.baseHealth = copySource.GetTag(GameTag.HEALTH) - copySource.GetTag(GameTag.DAMAGE);
+						minion.maxHealth = copySource.GetTag(GameTag.HEALTH);
+					}
+
 					if(copiedFrom > 0)
 						minion.game_id = copiedFrom;
 					return minion;

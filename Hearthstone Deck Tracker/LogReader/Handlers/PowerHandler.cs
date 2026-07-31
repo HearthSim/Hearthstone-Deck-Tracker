@@ -1809,11 +1809,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						var magnanimooseEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
 						if(magnanimooseEntity != null)
 						{
+							// A summon that does not fit on the owner's board appears in SETASIDE
 							var summonedEntities = game.Entities.Values
 								.Where(e =>
 									e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
 									e.GetTag(GameTag.CREATOR) == magnanimooseEntity.Id &&
-									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY
+									(e.GetTag(GameTag.ZONE) == (int)Zone.PLAY || e.GetTag(GameTag.ZONE) == (int)Zone.SETASIDE)
 								).ToList();
 
 							if(summonedEntities.Any())
@@ -1826,11 +1827,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						var nelliesEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
 						if(nelliesEntity != null)
 						{
+							// A summon that does not fit on the owner's board appears in SETASIDE
 							var summonedDbfIds = game.Entities.Values
 								.Where(e =>
 									e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
 						            e.GetTag(GameTag.CREATOR) == nelliesEntity.Id &&
-									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY
+									(e.GetTag(GameTag.ZONE) == (int)Zone.PLAY || e.GetTag(GameTag.ZONE) == (int)Zone.SETASIDE)
 								).Select(x => x.Card.DbfId).ToArray();
 
 							if(summonedDbfIds.Any())
@@ -1843,11 +1845,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						var magnanimooseEntity = game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var entity) ? entity : null;
 						if(magnanimooseEntity != null)
 						{
+							// A copy that does not fit on the owner's board appears in SETASIDE
 							var summonedEntities = game.Entities.Values
 								.Where(e =>
 									e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
 									e.GetTag(GameTag.CREATOR) == magnanimooseEntity.Id &&
-									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY
+									(e.GetTag(GameTag.ZONE) == (int)Zone.PLAY || e.GetTag(GameTag.ZONE) == (int)Zone.SETASIDE)
 								).ToList();
 
 							if(summonedEntities.Any())
