@@ -789,16 +789,13 @@ namespace Hearthstone_Deck_Tracker
 					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?.StartShoppingAsync(true);
 					OpponentDeadForTracker.Reset();
 				}
-				if(_game.IsConstructedMatch)
+				if(_game.IsTraditionalHearthstoneMatch)
 				{
 					Core.Overlay.HideMulliganToast(false);
 					Core.Game.Player.MulliganCardStats = null;
 					Core.Overlay.HideMulliganGuideStats();
-					if(_game.Opponent.IsPlayingWhizbang)
-					{
-						_game.Opponent.IsPlayingWhizbang = false;
-						Player.KnownOpponentDeck = null;
-					}
+					_game.Opponent.IsPlayingWhizbang = false;
+					Player.KnownOpponentDeck = null;
 				}
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
