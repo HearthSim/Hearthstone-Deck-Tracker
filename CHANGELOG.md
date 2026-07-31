@@ -1,5 +1,6 @@
 ## Unreleased
 **General**:
+- Fixed an issue where rewind replays would not be uploaded correctly.
 - Fixed an issue that could cause card images to not load.
 
 **Battlegrounds**:

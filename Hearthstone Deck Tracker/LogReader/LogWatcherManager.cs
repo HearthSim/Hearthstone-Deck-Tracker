@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private HsGameState? _gameState;
 		private GameV2? _game;
 		private readonly LogWatcher _logWatcher;
+		private readonly RewoundEntityCreationFilter _rewoundEntityCreations = new RewoundEntityCreationFilter();
 		private bool _stop;
 
 		public List<DateTimeRange> IgnoredTimeRanges = new List<DateTimeRange>();
@@ -118,6 +119,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_game = game;
 			_gameState = new HsGameState(game) { GameHandler = new GameEventHandler(game) };
 			_gameState.Reset();
+			_rewoundEntityCreations.Reset();
 		}
 
 		private void OnNewLines(List<LogLine> lines)
@@ -129,12 +131,16 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				if(_stop)
 					break;
 
-				// skip rewinded lines
+				// skip rewinded lines, but keep the entities they created in the uploaded log:
+				// a rewind does not un-create them and later lines still reference them.
 				if(IgnoredTimeRanges.Any(tr => tr.Contains(line.Time)))
 				{
+					if(_rewoundEntityCreations.KeepInPowerLog(line))
+						_game.PowerLog.Add(line.Line);
 					continue;
 				}
 
+				_rewoundEntityCreations.Reset();
 				_game.GameTime.Time = line.Time;
 				switch(line.Namespace)
 				{
