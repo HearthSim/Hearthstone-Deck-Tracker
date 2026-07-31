@@ -19,6 +19,8 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 		public static readonly Regex VerboseRegex = new Regex(@"Verbose=(?<value>(\w+))");
 		public static readonly string HearthstoneAppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Blizzard\Hearthstone");
 		public static readonly string LogConfigPath = Path.Combine(HearthstoneAppData, LogConfigFile);
+		private const string DefaultProductUid = "hs_beta";
+		private static readonly Regex ProductUidRegex = new Regex(@"(?:^|\s)-uid\s+(?<value>[\w.\-]+)");
 		private static readonly bool Console = Config.Instance.LogConfigConsolePrinting;
 		public static readonly LogConfigItem[] RequiredConfigItems =
 		{
@@ -26,10 +28,22 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 			new LogConfigItem("Arena", Console),
 			// FullScreenFX is no longer used as of Hearthstone 25.0.0,
 			// but leaving here to not require a log.config update.
-			new LogConfigItem("FullScreenFX", Console), 
+			new LogConfigItem("FullScreenFX", Console),
 			new LogConfigItem("LoadingScreen", Console),
 			new LogConfigItem("Power", Console, true),
 		};
 		public static string[] Verbose => new [] { "Power" };
+
+		// non-default clients are launched with "-uid <product>" and store their config in a matching subdirectory
+		public static string GetLogConfigPath(string? commandLine)
+		{
+			if(commandLine == null)
+				return LogConfigPath;
+			var match = ProductUidRegex.Match(commandLine);
+			if(!match.Success)
+				return LogConfigPath;
+			var uid = match.Groups["value"].Value;
+			return uid == DefaultProductUid ? LogConfigPath : Path.Combine(HearthstoneAppData, uid, LogConfigFile);
+		}
 	}
 }

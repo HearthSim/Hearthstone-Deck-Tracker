@@ -368,6 +368,23 @@ namespace Hearthstone_Deck_Tracker
 #endif
 		}
 
+		// the running client may be a build using its own log.config, which the startup check does not cover
+		private static async Task<bool> UpdateLogConfigForRunningClient()
+		{
+			var path = LogConfigConstants.GetLogConfigPath(Helper.GetHearthstoneCommandLine());
+			if(path == LogConfigConstants.LogConfigPath)
+				return false;
+			try
+			{
+				return await LogConfigUpdater.Run(path);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return false;
+			}
+		}
+
 		private static async Task ShowRestartRequiredMessageAsync()
 		{
 			MainWindow.ActivateWindow();
@@ -402,7 +419,8 @@ namespace Hearthstone_Deck_Tracker
 						AssetDownloaders.heroImageDownloader?.InvalidateCachedAssets();
 
 						var ok = Helper.EnsureClientLogConfig();
-						if(!ok)
+						var logConfigUpdated = await UpdateLogConfigForRunningClient();
+						if(!ok || logConfigUpdated)
 						{
 							ShowRestartRequiredMessageAsync().Forget();
 							Overlay.ShowRestartRequiredWarning();

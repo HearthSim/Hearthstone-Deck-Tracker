@@ -22,17 +22,27 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 		{
 			if(_running)
 				return;
-			_running = true;
-			LogConfigWatcher.Pause();
 			try
 			{
-				if(File.Exists(LogConfigPath))
-					await Helper.WaitForFileAccess(LogConfigPath, 500);
-				LogConfigUpdated = CheckLogConfig();
+				LogConfigUpdated = await Run(LogConfigPath);
 			}
 			catch
 			{
 				LogConfigUpdateFailed = true;
+			}
+		}
+
+		public static async Task<bool> Run(string path)
+		{
+			if(_running)
+				return false;
+			_running = true;
+			LogConfigWatcher.Pause();
+			try
+			{
+				if(File.Exists(path))
+					await Helper.WaitForFileAccess(path, 500);
+				return CheckLogConfig(path);
 			}
 			finally
 			{
@@ -41,16 +51,16 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 			}
 		}
 
-		private static bool CheckLogConfig()
+		internal static bool CheckLogConfig(string path)
 		{
 			try
 			{
-				var logConfig = ReadLogConfig();
+				var logConfig = ReadLogConfig(path);
 				foreach(var item in RequiredConfigItems.Where(required => logConfig.Items.All(x => x.Name != required.Name)))
 					logConfig.Add(item);
 				logConfig.Verify();
 				if(logConfig.Updated)
-					WriteLogConfig(logConfig);
+					WriteLogConfig(logConfig, path);
 				return logConfig.Updated;
 			}
 			catch(Exception e)
@@ -60,37 +70,41 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 			}
 		}
 
-		private static void WriteLogConfig(LogConfig logConfig)
+		private static void WriteLogConfig(LogConfig logConfig, string path)
 		{
-			if(File.Exists(LogConfigPath))
+			if(File.Exists(path))
 			{
 				try
 				{
 					// ReSharper disable once ObjectCreationAsStatement
-					new FileInfo(LogConfigPath) { IsReadOnly = false };
+					new FileInfo(path) { IsReadOnly = false };
 				}
 				catch(Exception e)
 				{
 					Log.Error("Could not remove read-only from log.config:\n" + e);
 				}
 			}
-			else if (!Directory.Exists(HearthstoneAppData))
+			else
 			{
-				Directory.CreateDirectory(HearthstoneAppData);
-				Log.Info(@"Created directory %LocalAppData%\Blizzard\Hearthstone");
+				var dir = Path.GetDirectoryName(path);
+				if(dir != null && !Directory.Exists(dir))
+				{
+					Directory.CreateDirectory(dir);
+					Log.Info($"Created directory {dir}");
+				}
 			}
 
-			Log.Info("Updating log.config");
-			using(var sw = new StreamWriter(LogConfigPath))
+			Log.Info($"Updating {path}");
+			using(var sw = new StreamWriter(path))
 				sw.Write(string.Concat(logConfig.Items));
 		}
 
-		private static LogConfig ReadLogConfig()
+		private static LogConfig ReadLogConfig(string path)
 		{
 			var logConfig = new LogConfig();
-			if(!File.Exists(LogConfigPath))
+			if(!File.Exists(path))
 				return logConfig;
-			using(var sr = new StreamReader(LogConfigPath))
+			using(var sr = new StreamReader(path))
 			{
 				LogConfigItem? current = null;
 				string line;

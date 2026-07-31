@@ -764,6 +764,26 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		internal static string? GetHearthstoneCommandLine()
+		{
+			var proc = User32.GetHearthstoneProc();
+			if(proc == null)
+			{
+				Log.Warn("Could not find Hearthstone process");
+				return null;
+			}
+			try
+			{
+				var searcher = new ManagementObjectSearcher($"SELECT CommandLine FROM Win32_Process WHERE ProcessId={proc.Id}");
+				return searcher.Get().Cast<ManagementObject>().FirstOrDefault()?["CommandLine"]?.ToString();
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
 		internal static bool EnsureClientLogConfig()
 		{
 			const string targetContent = "[Log]\nFileSizeLimit.Int=-1";
