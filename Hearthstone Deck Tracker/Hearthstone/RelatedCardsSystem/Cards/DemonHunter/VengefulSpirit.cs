@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.DemonHunter;
 
@@ -7,5 +8,5 @@ public class VengefulSpirit : ICardWithHighlight
 	public string GetCardId() => HearthDb.CardIds.Collectible.Demonhunter.VengefulSpirit;
 
 	public HighlightColor ShouldHighlight(Card card, IEnumerable<Card> deck) =>
-		HighlightColorHelper.GetHighlightColor(card.HasDeathrattle());
+		HighlightColorHelper.GetHighlightColor(card.HasDeathrattle() && card.TypeEnum is CardType.MINION);
 }
