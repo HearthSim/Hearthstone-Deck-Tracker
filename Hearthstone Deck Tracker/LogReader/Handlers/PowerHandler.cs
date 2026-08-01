@@ -364,6 +364,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						game.Entities.Add(entityId, new Entity(entityId));
 					var entity = game.Entities[entityId];
 					var oldCardId = entity.CardId;
+					// A Battlegrounds trinket slot (Lesser/Greater Trinket) or trinket-granting hero
+					// power (Fantastic Treasure, Growing Collection) is revealed by CHANGE_ENTITY.
+					if(string.IsNullOrEmpty(entity.Info.CardIdBeforeReveal)
+						&& !string.IsNullOrEmpty(oldCardId)
+						&& oldCardId != cardId)
+					{
+						entity.Info.CardIdBeforeReveal = oldCardId;
+					}
 					if(
 						string.IsNullOrEmpty(entity.CardId) ||
 						// placeholders and Fantastic Treasure (Marin's hero power)

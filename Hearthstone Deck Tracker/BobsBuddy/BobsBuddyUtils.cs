@@ -260,8 +260,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			// Set slot that holds the trinket (i.e., Fantastic Treasure, Growing Collection,
 			// Lesser Trinket, Greater Trinket); necessary to order friendly start of combat triggers
-			if(entity.CardId != null && entity.CardId != cardId)
-				trinket.ContainerCardId = entity.CardId;
+			var containerCardId = entity.Info.CardIdBeforeReveal ?? entity.CardId;
+			if(containerCardId != null && containerCardId != cardId)
+				trinket.ContainerCardId = containerCardId;
 
 			// Special handling for replica cathedral
 			if(cardId == NonCollectible.Neutral.ReplicaCathedral)

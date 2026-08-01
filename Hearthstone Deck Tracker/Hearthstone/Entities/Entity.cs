@@ -277,6 +277,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				Forged = Forged,
 				OriginalZone = OriginalZone,
 				OriginalCardId = OriginalCardId,
+				CardIdBeforeReveal = CardIdBeforeReveal,
 				OriginalEntityWasCreated = OriginalEntityWasCreated,
 				GuessedCardState = GuessedCardState,
 				LatestCardId = LatestCardId,
@@ -377,6 +378,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public Zone? OriginalZone { get; set; }
 		public string? OriginalCardId { get; private set; }
 		public bool WasTransformed => !string.IsNullOrEmpty(OriginalCardId);
+		public string? CardIdBeforeReveal { get; set; }
 		public bool CreatedInDeck => OriginalZone == Zone.DECK;
 		public bool CreatedInHand => OriginalZone == Zone.HAND;
 		public bool? OriginalEntityWasCreated { get; internal set; }
