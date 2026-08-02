@@ -68,8 +68,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		}
 
 #if(SQUIRREL)
-		private const int MaxBobsBuddyEventsPerGame = 5;
-		private const int MaxBobsBuddyExceptionsPerGame = 2;
+		private const int MaxBobsBuddyEventsPerGame = 20;
+		private const int MaxBobsBuddyExceptionsPerGame = 5;
 		private const int MaxHDTToolsEvents = 10;
 		private static int BobsBuddyEventsSent;
 		private static int BobsBuddyExceptionsSent;
