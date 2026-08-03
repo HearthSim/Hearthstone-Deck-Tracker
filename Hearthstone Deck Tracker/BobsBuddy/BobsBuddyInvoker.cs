@@ -29,6 +29,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private const int Iterations = 10_000;
 		private const int StateChangeDelay = 500;
 		private const int MaxTime = 1_500;
+		private const int MinimumSpinTime = 500;
 		private const int MaxTimeForComplexBoards = 3_000;
 		private const int MaxTimeForLeapfrogger = 5_000;
 		private const int MinimumSimulationsToReportSentry = 2500;
@@ -290,12 +291,18 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			DebugLog("Running simulation...");
 			BobsBuddyDisplay.HidePercentagesShowSpinners();
+			var start = DateTime.Now;
 			var result = await RunSimulation();
 			if(result == null || _input == null)
 			{
 				DebugLog("Simulation returned no result. Exiting.");
 				return;
 			}
+
+			// extremely fast simulations otherwise make the spinner disappear quickly, making the result feel unreliable
+			var remainingSpinTime = MinimumSpinTime - (int)(DateTime.Now - start).TotalMilliseconds;
+			if(remainingSpinTime > 0)
+				await Task.Delay(remainingSpinTime);
 
 			if(result.simulationCount <= 500 && result.myExitCondition == Simulator.ExitConditions.Time)
 			{

@@ -3,6 +3,7 @@
 - Fixed Vengeful Spirit highlighting weapons in the decklist.
 
 **Battlegrounds**:
+- Significantly improved how fast Bob's Buddy calculates the combat odds.
 - Fixed Accord-O-Tron not appearing in the Gold Next Turn counter.
 - Fixed some Bob's Buddy predictions in Duos.
 
