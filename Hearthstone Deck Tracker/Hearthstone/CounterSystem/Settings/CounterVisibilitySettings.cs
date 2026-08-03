@@ -78,6 +78,22 @@ public sealed class CounterVisibilitySettings
 
 	public bool HasAnyOverride => Overrides.Any(x => !x.IsEmpty);
 
+	/// <summary>
+	/// Counters explicitly set to <paramref name="visibility"/> for one side. Auto returns nothing:
+	/// it is the absence of an entry, not a value. Entries for counters this build does not know
+	/// about are skipped, so a stale config cannot leak unknown ids into metrics.
+	/// </summary>
+	public IEnumerable<string> GetCounterIds(bool isPlayer, CounterVisibility visibility)
+	{
+		if(visibility == CounterVisibility.Auto)
+			return Enumerable.Empty<string>();
+
+		var known = CounterTypeProvider.GetKnownCounterIds();
+		return Overrides
+			.Where(x => known.Contains(x.CounterId) && x.Get(isPlayer) == visibility)
+			.Select(x => x.CounterId);
+	}
+
 	public void ResetAll()
 	{
 		var known = CounterTypeProvider.GetKnownCounterIds();

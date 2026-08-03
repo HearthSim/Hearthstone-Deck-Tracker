@@ -34,6 +34,13 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility
 				if(propJsonPropertyAttribute != null && !(bool)propValue)
 					writer.WriteValue(((JsonPropertyAttribute)propJsonPropertyAttribute).PropertyName);
 			}
+
+			if(value is IVMDynamicSettings dynamicSettings)
+			{
+				foreach(var name in dynamicSettings.DynamicDisabledSettings)
+					writer.WriteValue(name);
+			}
+
 			writer.WriteEndArray();
 		}
 	}

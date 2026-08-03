@@ -1,9 +1,14 @@
-﻿using Hearthstone_Deck_Tracker.Utility.RemoteData;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 {
-	public class GeneralSettings
+	public class GeneralSettings : IVMDynamicSettings
 	{
 		[JsonProperty("upload_my_collection_automatically")]
 		public bool UploadMyCollectionAutomatically { get => Config.Instance.SyncCollection; }
@@ -76,5 +81,28 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("mulligan_gv2_overlay")]
 		public bool MulliganGV2Overlay { get => Config.Instance.EnableMulliganGV2; }
+
+		// Counters the user forced on or off. Counters left on Auto appear in neither list, so a
+		// user who has not touched the setting adds nothing to the payload.
+		[JsonIgnore]
+		public IEnumerable<string> DynamicEnabledSettings => CounterSettings(CounterVisibility.Enabled);
+
+		[JsonIgnore]
+		public IEnumerable<string> DynamicDisabledSettings => CounterSettings(CounterVisibility.Disabled);
+
+		private static IEnumerable<string> CounterSettings(CounterVisibility visibility)
+		{
+			var settings = CounterVisibilitySettings.Instance;
+			return settings.GetCounterIds(true, visibility).Select(id => $"player_counter_{MetricName(id)}")
+				.Concat(settings.GetCounterIds(false, visibility).Select(id => $"opponent_counter_{MetricName(id)}"))
+				.OrderBy(x => x, System.StringComparer.Ordinal);
+		}
+
+		private static string MetricName(string counterId)
+		{
+			if(counterId.EndsWith("Counter") && counterId.Length > "Counter".Length)
+				counterId = counterId.Substring(0, counterId.Length - "Counter".Length);
+			return Regex.Replace(counterId, "(?<=[a-z0-9])([A-Z])", "_$1").ToLowerInvariant();
+		}
 	}
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using Newtonsoft.Json;
@@ -22,12 +23,21 @@ namespace HDTTests.Utility.ValueMoments.Actions
 		public void TestInitialize()
 		{
 			Config.Instance.ResetAll();
+			// ResetAll only restores fields carrying a DefaultValue attribute, which a collection
+			// cannot, so the counter overrides have to be cleared explicitly. Without this the
+			// payload assertions below fail on any machine whose real config forces a counter.
+			Config.Instance.CounterVisibilityOverrides.Clear();
+			CounterVisibilitySettings.Instance.Invalidate();
+			CounterVisibilitySettings.Instance.SaveConfig = () => { };
 			VMAction.Environment = new FakeVMActionEnvironment();
 		}
 
 		[TestCleanup]
 		public void TestCleanup()
 		{
+			Config.Instance.CounterVisibilityOverrides.Clear();
+			CounterVisibilitySettings.Instance.Invalidate();
+			CounterVisibilitySettings.Instance.SaveConfig = Config.Save;
 			VMAction.Environment = new VMActionEnvironment();
 		}
 
@@ -243,6 +253,78 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			Assert.AreEqual("Copy Code", mixpanelPayload["action_name"]);
 			Assert.IsTrue(mixpanelPayload.ContainsKey("hdt_personal_stats_settings_enabled"));
 			Assert.IsTrue(mixpanelPayload.ContainsKey("hdt_personal_stats_settings_disabled"));
+		}
+
+		private static (List<string> Enabled, List<string> Disabled) GeneralSettingsArrays()
+		{
+			var action = new EndMatchHearthstoneAction(
+				123, "foo", GameResult.Win, GameMode.Practice, GameType.GT_VS_AI, 1, new GameMetrics());
+			var payload = JObject.Parse(JsonConvert.SerializeObject(action));
+			return (
+				payload["hdt_general_settings_enabled"].Values<string>().ToList(),
+				payload["hdt_general_settings_disabled"].Values<string>().ToList()
+			);
+		}
+
+		[TestMethod]
+		public void GeneralSettings_CounterForcedOn_IsReportedAsEnabled()
+		{
+			CounterVisibilitySettings.Instance.Set("PogoHopperCounter", true, CounterVisibility.Enabled);
+
+			var (enabled, disabled) = GeneralSettingsArrays();
+
+			CollectionAssert.Contains(enabled, "player_counter_pogo_hopper");
+			CollectionAssert.DoesNotContain(disabled, "player_counter_pogo_hopper");
+		}
+
+		[TestMethod]
+		public void GeneralSettings_CounterForcedOff_IsReportedAsDisabled()
+		{
+			CounterVisibilitySettings.Instance.Set("PogoHopperCounter", true, CounterVisibility.Disabled);
+
+			var (enabled, disabled) = GeneralSettingsArrays();
+
+			CollectionAssert.Contains(disabled, "player_counter_pogo_hopper");
+			CollectionAssert.DoesNotContain(enabled, "player_counter_pogo_hopper");
+		}
+
+		[TestMethod]
+		public void GeneralSettings_CounterOnAuto_IsReportedInNeitherList()
+		{
+			CounterVisibilitySettings.Instance.Set("PogoHopperCounter", true, CounterVisibility.Enabled);
+			CounterVisibilitySettings.Instance.Set("PogoHopperCounter", true, CounterVisibility.Auto);
+
+			var (enabled, disabled) = GeneralSettingsArrays();
+
+			Assert.IsFalse(enabled.Any(x => x.Contains("pogo_hopper")));
+			Assert.IsFalse(disabled.Any(x => x.Contains("pogo_hopper")));
+		}
+
+		[TestMethod]
+		public void GeneralSettings_PlayerAndOpponentAreReportedSeparately()
+		{
+			CounterVisibilitySettings.Instance.Set("PogoHopperCounter", true, CounterVisibility.Enabled);
+			CounterVisibilitySettings.Instance.Set("PogoHopperCounter", false, CounterVisibility.Disabled);
+
+			var (enabled, disabled) = GeneralSettingsArrays();
+
+			CollectionAssert.Contains(enabled, "player_counter_pogo_hopper");
+			CollectionAssert.Contains(disabled, "opponent_counter_pogo_hopper");
+		}
+
+		[TestMethod]
+		public void GeneralSettings_UnknownCounterIsNotReported()
+		{
+			Config.Instance.CounterVisibilityOverrides.Add(new CounterVisibilityOverride
+			{
+				CounterId = "SomeCounterFromANewerVersion",
+				Player = CounterVisibility.Enabled,
+			});
+			CounterVisibilitySettings.Instance.Invalidate();
+
+			var (enabled, _) = GeneralSettingsArrays();
+
+			Assert.IsFalse(enabled.Any(x => x.Contains("some_counter_from_a_newer_version")));
 		}
 	}
 }
