@@ -187,7 +187,14 @@ namespace Hearthstone_Deck_Tracker.Live
 			return trinketEntity?.Card.DbfId;
 		}
 
-		private int? BgsAnomaly(Entity? game) => BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(game);
+		private int? BgsAnomaly(Entity? game)
+		{
+			// the "Discover a Dark Gift" button takes the same slot as anomalies
+			if(game?.GetTag(GameTag.BACON_DARK_GIFTS_ACTIVE) == 1)
+				return Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Neutral.DarkGifts1)?.DbfId;
+
+			return BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(game);
+		}
 
 		// Return the dbf id for an entity, but blacklisted against common hero cards we don't want want to show in the overlay.
 		private int HeroDbfId(Entity? entity)
