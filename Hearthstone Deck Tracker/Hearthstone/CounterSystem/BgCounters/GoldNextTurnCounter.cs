@@ -18,6 +18,7 @@ public class GoldNextTurnCounter : StatsCounter
 	    HearthDb.CardIds.NonCollectible.Neutral.SouthseaBusker_ExtraGoldNextTurnDntEnchantment,
 	    HearthDb.CardIds.NonCollectible.Neutral.Overconfidence_OverconfidentDntEnchantment,
 	    HearthDb.CardIds.NonCollectible.Neutral.GraceFarsail_ExtraGoldIn2TurnsDntEnchantment,
+	    HearthDb.CardIds.NonCollectible.Neutral.AccordOTron,
 	    HearthDb.CardIds.NonCollectible.Neutral.CarefulInvestment
     };
 
@@ -26,6 +27,12 @@ public class GoldNextTurnCounter : StatsCounter
     {
 	    get => _overconfidence;
 	    set => _overconfidence = Math.Max(0, value);
+    }
+    private int _accordotron;
+    private int Accordotron
+    {
+	    get => _accordotron;
+	    set => _accordotron = Math.Max(0, value);
     }
     private int _goldSureAmount;
     private int GoldSureAmount
@@ -39,7 +46,7 @@ public class GoldNextTurnCounter : StatsCounter
     {
     }
 
-    public override bool ShouldShow() => Game.IsBattlegroundsMatch && (GoldSureAmount > 0 || Overconfidence > 0);
+    public override bool ShouldShow() => Game.IsBattlegroundsMatch && (GoldSureAmount > 0 || Overconfidence > 0 || Accordotron > 0);
 
     public override string[] GetCardsToDisplay()
     {
@@ -56,9 +63,10 @@ public class GoldNextTurnCounter : StatsCounter
 
     public override string ValueToShow()
     {
+        var sureAmount = GoldSureAmount + Accordotron;
         if (ExtraGoldFromOverconfidence > 0)
-            return $"{GoldSureAmount} ({GoldSureAmount + ExtraGoldFromOverconfidence})";
-        return $"{GoldSureAmount}";
+            return $"{sureAmount} ({sureAmount + ExtraGoldFromOverconfidence})";
+        return $"{sureAmount}";
     }
 
     public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
@@ -87,6 +95,34 @@ public class GoldNextTurnCounter : StatsCounter
                 Overconfidence--;
                 OnCounterChanged();
             }
+        }
+
+        var isAccordotronMinion = entity.CardId is HearthDb.CardIds.NonCollectible.Neutral.AccordOTron
+	        or HearthDb.CardIds.NonCollectible.Neutral.AccordoTron_AccordOTron;
+        var isAccordotronEnchantment = entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.AccordoTron_AccordOTronEnchantment;
+        if((isAccordotronMinion && tag == GameTag.ZONE)
+           || (isAccordotronEnchantment && tag is GameTag.ZONE or GameTag.TAG_SCRIPT_DATA_NUM_1))
+        {
+	        UpdateAccordotron();
+        }
+    }
+
+    private void UpdateAccordotron()
+    {
+        var controllerId = IsPlayerCounter ? Game.Player.Id : Game.Opponent.Id;
+        var total = Game.Entities.Values
+	        .Where(e => e.IsInPlay && e.IsControlledBy(controllerId))
+	        .Sum(e => e.CardId switch
+	        {
+		        HearthDb.CardIds.NonCollectible.Neutral.AccordOTron => 1,
+		        HearthDb.CardIds.NonCollectible.Neutral.AccordoTron_AccordOTron => 2,
+		        HearthDb.CardIds.NonCollectible.Neutral.AccordoTron_AccordOTronEnchantment => e.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1),
+		        _ => 0,
+	        });
+        if(total != Accordotron)
+        {
+	        Accordotron = total;
+	        OnCounterChanged();
         }
     }
 }

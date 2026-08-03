@@ -3,6 +3,7 @@
 - Fixed Vengeful Spirit highlighting weapons in the decklist.
 
 **Battlegrounds**:
+- Fixed Accord-O-Tron not appearing in the Gold Next Turn counter.
 - Fixed some Bob's Buddy predictions in Duos.
 
 ## **Release v1.54.2 - 2026-07-31**
