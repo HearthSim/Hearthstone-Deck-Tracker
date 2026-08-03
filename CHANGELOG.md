@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.54.3 - 2026-08-03**
 **Hearthstone**:
 - Fixed performance issues related to The OutFinder that caused small mouse freezes.
 - Added support to Hemet, Jungle Hunter.
