@@ -1,0 +1,108 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayCounters"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="500">
+    <UserControl.Resources>
+        <!-- One template for every counter: nothing here mentions a specific counter, which is what
+             keeps this page zero-touch when a new counter is added. -->
+        <DataTemplate x:Key="CounterRowTemplate" DataType="{x:Type overlay:CounterSettingRow}">
+            <Grid Margin="0,3,0,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Ellipse Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{Binding CardAsset.Asset}">
+                            <ImageBrush.Transform>
+                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="16" CenterY="11"/>
+                            </ImageBrush.Transform>
+                        </ImageBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+
+                <TextBlock Grid.Column="1" Text="{Binding DisplayName}" ToolTip="{Binding CounterId}"
+                           VerticalAlignment="Center" Margin="8,0,10,0" TextTrimming="CharacterEllipsis"/>
+
+                <ComboBox Grid.Column="2" Width="110" Margin="0,0,6,0" VerticalAlignment="Center"
+                          ItemsSource="{Binding Source={x:Static overlay:CounterSettingRow.VisibilityOptions}}"
+                          DisplayMemberPath="Label"
+                          SelectedValuePath="Value"
+                          SelectedValue="{Binding PlayerVisibility, Mode=TwoWay}"/>
+
+                <ComboBox Grid.Column="3" Width="110" VerticalAlignment="Center"
+                          ItemsSource="{Binding Source={x:Static overlay:CounterSettingRow.VisibilityOptions}}"
+                          DisplayMemberPath="Label"
+                          SelectedValuePath="Value"
+                          SelectedValue="{Binding OpponentVisibility, Mode=TwoWay}"
+                          IsEnabled="{Binding IsOpponentSupported}"
+                          ToolTip="{Binding OpponentUnsupportedTooltip}"
+                          ToolTipService.ShowOnDisabled="True"/>
+            </Grid>
+        </DataTemplate>
+
+        <Style x:Key="ColumnHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+
+        <Style x:Key="GroupHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,12,0,4"/>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Margin="10">
+        <TextBlock Text="{lex:Loc OptionsCounters_Description}" TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+        <DockPanel Margin="0,0,0,4">
+            <Button DockPanel.Dock="Right" Content="{lex:Loc OptionsCounters_ResetAll}"
+                    Padding="10,2" Margin="8,0,0,0"
+                    Command="{Binding ResetAllCommand}"
+                    IsEnabled="{Binding HasAnyOverride}"/>
+            <TextBox x:Name="TextBoxFilter"
+                     Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged, Delay=150}"
+                     controls:TextBoxHelper.Watermark="{lex:Loc OptionsCounters_Filter_Placeholder}"/>
+        </DockPanel>
+
+        <!-- Column headers, aligned with the two dropdowns in the row template. -->
+        <Grid Margin="0,6,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" Width="110" Margin="0,0,6,0"
+                       Text="{lex:Loc OptionsCounters_Column_Player}" Style="{StaticResource ColumnHeaderStyle}"/>
+            <TextBlock Grid.Column="2" Width="110"
+                       Text="{lex:Loc OptionsCounters_Column_Opponent}" Style="{StaticResource ColumnHeaderStyle}"/>
+        </Grid>
+
+        <TextBlock Text="{lex:Loc OptionsCounters_NoResults}" Margin="0,12,0,0"
+                   Visibility="{Binding NoResultsVisibility}"/>
+
+        <StackPanel Visibility="{Binding ConstructedVisibility}">
+            <TextBlock Text="{lex:Loc OptionsCounters_Group_Traditional}" Style="{StaticResource GroupHeaderStyle}"/>
+            <ItemsControl ItemsSource="{Binding ConstructedRows}" ItemTemplate="{StaticResource CounterRowTemplate}"/>
+        </StackPanel>
+
+        <StackPanel Visibility="{Binding BattlegroundsVisibility}">
+            <TextBlock Text="{lex:Loc OptionsCounters_Group_Battlegrounds}" Style="{StaticResource GroupHeaderStyle}"/>
+            <ItemsControl ItemsSource="{Binding BattlegroundsRows}" ItemTemplate="{StaticResource CounterRowTemplate}"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

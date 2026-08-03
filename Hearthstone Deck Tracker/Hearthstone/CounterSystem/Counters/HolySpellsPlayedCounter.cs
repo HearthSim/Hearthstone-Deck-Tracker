@@ -5,7 +5,7 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 
-public class HolySpellsPLayedCounter : NumericCounter
+public class HolySpellsPlayedCounter : NumericCounter
 {
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Paladin.FlickeringLightbot;
 
@@ -14,7 +14,7 @@ public class HolySpellsPLayedCounter : NumericCounter
 		HearthDb.CardIds.Collectible.Paladin.FlickeringLightbot
 	};
 
-	public HolySpellsPLayedCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
+	public HolySpellsPlayedCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
 

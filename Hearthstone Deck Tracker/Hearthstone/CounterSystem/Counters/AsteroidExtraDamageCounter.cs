@@ -15,7 +15,7 @@ public class AsteroidExtraDamageCounter : NumericCounter
 	{
 	}
 
-	public override bool ShouldShow() => !Game.IsBattlegroundsMatch && Counter > 0;
+	public override bool ShouldShow() => Game.IsTraditionalHearthstoneMatch && Counter > 0;
 
 	public override string[] GetCardsToDisplay()
 	{

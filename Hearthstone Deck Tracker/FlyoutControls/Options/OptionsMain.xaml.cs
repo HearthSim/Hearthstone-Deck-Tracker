@@ -40,6 +40,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly StreamingCapturableOverlay OptionsStreamingCapturableOverlay = new StreamingCapturableOverlay();
 		public readonly OverlayMulligan OptionsOverlayMulligan = new OverlayMulligan();
 		public readonly OverlayTheOutfinder OptionsOverlayTheOutfinder = new OverlayTheOutfinder();
+		public readonly OverlayCounters OptionsOverlayCounters = new OverlayCounters();
 		public readonly OverlayBattlegrounds OptionsOverlayBattlegrounds = new OverlayBattlegrounds();
 		public readonly OverlayArena OptionsOverlayArena = new OverlayArena();
 		public readonly OverlayMercenaries OptionsOverlayMercenaries = new OverlayMercenaries();
@@ -239,6 +240,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ContentHeader = "The Outfinder";
 			OptionsContent = OptionsOverlayTheOutfinder;
 			OptionsOverlayTheOutfinder.Load();
+		}
+
+		// Note: intentionally not part of Load(GameV2) below. Loading this page builds the counter
+		// catalog, which instantiates every counter; that must not happen on the startup path.
+		private void TreeViewItemOverlayCounters_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Overlay_Counters_Header");
+			OptionsContent = OptionsOverlayCounters;
+			OptionsOverlayCounters.Load();
 		}
 
 		private void TreeViewItemHSReplayReplays_OnSelected(object sender, RoutedEventArgs e)

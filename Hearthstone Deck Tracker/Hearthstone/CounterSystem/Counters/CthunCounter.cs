@@ -4,7 +4,7 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 
-public class CtunCounter : StatsCounter
+public class CthunCounter : StatsCounter
 {
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Neutral.CthunOG;
 
@@ -13,7 +13,7 @@ public class CtunCounter : StatsCounter
 		HearthDb.CardIds.Collectible.Neutral.CthunOG
 	};
 
-	public CtunCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
+	public CthunCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
 

@@ -7,7 +7,7 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.BgCounters;
 
-public class ShopBuffStatsCounter : StatsCounter
+public class ElementalTavernBuffStatsCounter : StatsCounter
 {
 	public override bool IsBattlegroundsCounter => true;
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.NomiKitchenNightmare;
@@ -16,7 +16,7 @@ public class ShopBuffStatsCounter : StatsCounter
 		HearthDb.CardIds.NonCollectible.Neutral.ElementalShopBuffPlayerEnchantmentDnt,
 	};
 
-	public ShopBuffStatsCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
+	public ElementalTavernBuffStatsCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
 

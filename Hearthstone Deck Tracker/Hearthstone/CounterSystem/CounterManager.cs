@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
@@ -21,18 +20,7 @@ public class CounterManager
 
 	private void Initialize()
 	{
-		System.Type[] allTypes;
-		try
-		{
-			allTypes = Assembly.GetAssembly(typeof(BaseCounter)).GetTypes();
-		}
-		catch(ReflectionTypeLoadException ex)
-		{
-			allTypes = ex.Types.Where(t => t != null).ToArray();
-		}
-		var counterTypes = allTypes.Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(BaseCounter)));
-
-		foreach(var type in counterTypes)
+		foreach(var type in CounterTypeProvider.GetCounterTypes())
 		{
 			var playerCounter = (BaseCounter)Activator.CreateInstance(type,  true, Game);
 			var opponentCounter = (BaseCounter)Activator.CreateInstance(type, false, Game);
@@ -54,7 +42,7 @@ public class CounterManager
 	public List<BaseCounter> GetVisibleCounters(bool controlledByPlayer)
 	{
 		var counters = controlledByPlayer ? PlayerCounters : OpponentCounters;
-		return counters.Where(c => c.ShouldShow()).ToList();
+		return counters.Where(c => c.IsVisible()).ToList();
 	}
 
 	public List<BaseCounter> GetExampleCounters(bool controlledByPlayer)

@@ -5,7 +5,7 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 
-public class SpellsPLayedInCharactersCounter : NumericCounter
+public class SpellsPlayedInCharactersCounter : NumericCounter
 {
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Paladin.SeaShanty;
 
@@ -14,7 +14,7 @@ public class SpellsPLayedInCharactersCounter : NumericCounter
 		HearthDb.CardIds.Collectible.Paladin.SeaShanty
 	};
 
-	public SpellsPLayedInCharactersCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
+	public SpellsPlayedInCharactersCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
 

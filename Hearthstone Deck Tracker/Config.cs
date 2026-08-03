@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -431,6 +432,10 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool HidePlayerCounters = false;
+
+		// Per-counter, per-side visibility overrides. Sparse: only counters the user has actually
+		// customised get an entry, so a newly added counter needs no config migration.
+		public List<CounterVisibilityOverride> CounterVisibilityOverrides = new();
 
 		[DefaultValue(false)]
 		public bool HidePlayerRelatedCards = false;

@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay;
 
@@ -23,6 +24,11 @@ public partial class CountersOverlay
 	{
 		_counters = Core.Game.CounterManager;
 		_counters.CountersChanged += CountersChanged;
+
+		// Subscribed here rather than from the options page so the overlay refreshes no matter who
+		// changed a setting. Both instances live as long as the OverlayWindow, so no unsubscribe.
+		CounterVisibilitySettings.Instance.Changed += CountersChanged;
+
 		InitializeComponent();
 		UpdateVisibleCounters();
 	}

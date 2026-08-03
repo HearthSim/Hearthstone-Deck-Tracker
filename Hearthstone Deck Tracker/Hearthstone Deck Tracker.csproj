@@ -292,6 +292,11 @@
 	  <XamlRuntime>Wpf</XamlRuntime>
 	  <SubType>Designer</SubType>
 	</Page>
+	<Page Update="FlyoutControls\Options\Overlay\OverlayCounters.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	  <XamlRuntime>Wpf</XamlRuntime>
+	  <SubType>Designer</SubType>
+	</Page>
 	<Page Update="FlyoutControls\Options\Overlay\OverlayArena.xaml">
 	  <Generator>MSBuild:Compile</Generator>
 	  <XamlRuntime>Wpf</XamlRuntime>

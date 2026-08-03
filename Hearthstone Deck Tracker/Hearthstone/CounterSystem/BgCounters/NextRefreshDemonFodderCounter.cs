@@ -6,7 +6,7 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.BgCounters;
 
-public class DemonFodderCounter : NumericCounter
+public class NextRefreshDemonFodderCounter : NumericCounter
 {
 	public override bool IsBattlegroundsCounter => true;
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.LaboratoryAssistant_DemonFodderToken1;
@@ -19,7 +19,7 @@ public class DemonFodderCounter : NumericCounter
 
 	};
 
-	public DemonFodderCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
+	public NextRefreshDemonFodderCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
 

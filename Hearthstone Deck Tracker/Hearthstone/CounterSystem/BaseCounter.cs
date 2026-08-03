@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
@@ -17,12 +18,54 @@ public abstract class BaseCounter : INotifyPropertyChanged
 {
 	protected GameV2 Game { get; }
 	public bool IsPlayerCounter { get; }
-	public virtual string LocalizedName => Database.GetCardFromId(CardIdToShowInUI)!.LocalizedName!;
+
+	public virtual string LocalizedName => CardDisplayName ?? FallbackDisplayName;
+
+	public virtual bool UsesFallbackDisplayName => CardDisplayName == null;
+
+	private string? CardDisplayName => Database.GetCardFromId(CardIdToShowInUI)?.LocalizedName;
+
+	private string FallbackDisplayName
+	{
+		get
+		{
+			var name = GetType().Name;
+			return name.EndsWith("Counter") && name.Length > "Counter".Length
+				? name.Substring(0, name.Length - "Counter".Length)
+				: name;
+		}
+	}
+
 	protected virtual string? CardIdToShowInUI { get; }
 
 	public abstract string[] RelatedCards { get; }
 
 	public virtual bool IsBattlegroundsCounter => false;
+
+	public string CounterId => GetType().Name;
+
+	public virtual bool IsAvailableInCurrentGameMode =>
+		IsBattlegroundsCounter ? Game.IsBattlegroundsMatch : Game.IsTraditionalHearthstoneMatch;
+
+	public CounterVisibility VisibilityOverride =>
+		CounterVisibilitySettings.Instance.Get(CounterId, IsPlayerCounter);
+
+	/// <summary>
+	/// Final visibility for this counter: the game-mode gate, then the user's override, then the
+	/// counter's own heuristic.
+	/// </summary>
+	public bool IsVisible()
+	{
+		if(!IsAvailableInCurrentGameMode)
+			return false;
+
+		return VisibilityOverride switch
+		{
+			CounterVisibility.Disabled => false,
+			CounterVisibility.Enabled => true,
+			_ => ShouldShow(),
+		};
+	}
 
 	protected BaseCounter(bool controlledByPlayer, GameV2 game)
 	{

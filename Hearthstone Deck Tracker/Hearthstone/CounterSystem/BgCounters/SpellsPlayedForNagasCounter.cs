@@ -11,7 +11,7 @@ public class SpellsPlayedForNagasCounter : NumericCounter
 {
 	public override bool IsBattlegroundsCounter => true;
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.Thaumaturgist;
-	public override string LocalizedName => LocUtil.Get("Counter_PlayedSpells", useCardLanguage: true);
+	public override string LocalizedName => LocUtil.Get("Counter_PlayedSpellsForNagas", useCardLanguage: true);
 	public override string[] RelatedCards => new []
 	{
 		HearthDb.CardIds.NonCollectible.Neutral.Thaumaturgist,

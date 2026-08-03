@@ -6,7 +6,7 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.BgCounters;
 
-public class ElementalsExtraStatsCounter : StatsCounter
+public class ElementalExtraStatsCounter : StatsCounter
 {
 	public override bool IsBattlegroundsCounter => true;
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.NonCollectible.Neutral.SandSwirler;
@@ -16,7 +16,7 @@ public class ElementalsExtraStatsCounter : StatsCounter
 		HearthDb.CardIds.NonCollectible.Neutral.GlowingCinder,
 	};
 
-	public ElementalsExtraStatsCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
+	public ElementalExtraStatsCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}
 
