@@ -1,3 +1,8 @@
+## **Unreleased**
+**Overlay**:
+- Added a "Counters" section to Options > Overlay, to choose which counters are shown for you and for your opponent.\
+  *Every counter can be left on "Auto" to keep showing it only when it's relevant, or forced to always show or never show. Both Hearthstone and Battlegrounds counters are covered. Tick "Advanced options" at the bottom of the Options menu to find it.*
+
 ## **Release v1.54.3 - 2026-08-03**
 **Hearthstone**:
 - Fixed performance issues related to The OutFinder that caused small mouse freezes.
