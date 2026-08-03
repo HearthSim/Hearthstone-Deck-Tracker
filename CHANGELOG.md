@@ -1,5 +1,6 @@
 ## **Unreleased**
 **Hearthstone**:
+- Added support to Hemet, Jungle Hunter.
 - Fixed Vengeful Spirit highlighting weapons in the decklist.
 
 **Battlegrounds**:

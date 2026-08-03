@@ -604,7 +604,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			else if(logLine.Contains("META_DATA - Meta=OVERRIDE_HISTORY"))
 			{
-				if(gameState.CurrentBlock != null)
+				var isPlayerHemet = gameState.CurrentBlock != null && gameState.CurrentBlock.CardId == Collectible.Neutral.HemetJungleHunter &&
+				                    game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var e) &&
+				                    e.IsControlledBy(game.Player.Id);
+				if(gameState.CurrentBlock != null && !isPlayerHemet)
 					gameState.CurrentBlock.HideShowEntities = true;
 			}
 			else if(logLine.Contains("META_DATA - Meta=HISTORY_TARGET"))
@@ -1617,6 +1620,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								if(actionStartingEntity != null)
 									if(actionStartingEntity.IsControlledBy(game.Player.Id))
 										gameState.GameHandler?.ResetOpponentHandCostReduction();
+								break;
+							case Collectible.Neutral.HemetJungleHunter:
+								if(correspondPlayer == game.Player.Id)
+									game.Player.RemovePredictedCardsInDeckCosting(3);
+								else if(correspondPlayer == game.Opponent.Id)
+									game.Opponent.RemovePredictedCardsInDeckCosting(3);
 								break;
 							case NonCollectible.Warrior.EntertheLostCity_LatorviusGazeOfTheCityToken:
 								if(actionStartingEntity?.IsControlledBy(game.Opponent.Id) == true)

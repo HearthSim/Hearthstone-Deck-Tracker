@@ -864,6 +864,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				InDeckPredictions.Add(new PredictedCard(cardId, 0, isCreated));
 		}
 
+		public void RemovePredictedCardsInDeckCosting(int maxCost)
+		{
+			InDeckPredictions.RemoveAll(x =>
+			{
+				var card = Database.GetCardFromId(x.CardId);
+				return card != null && card.IsKnownCard && card.Cost <= maxCost;
+			});
+		}
+
 		public void JoustReveal(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
