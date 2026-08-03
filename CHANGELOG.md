@@ -2,6 +2,9 @@
 **Hearthstone**:
 - Fixed Vengeful Spirit highlighting weapons in the decklist.
 
+**Battlegrounds**:
+- Fixed some Bob's Buddy predictions in Duos.
+
 ## **Release v1.54.2 - 2026-07-31**
 **General**:
 - Fixed an issue where rewind replays would not be uploaded correctly.
