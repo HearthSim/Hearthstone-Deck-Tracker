@@ -464,39 +464,50 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Log.Info("Enabled mouse hook");
 		}
 
-		// The global right-click hook is only alive while a large-pool card is
-		// hovered in the game (hand or discover). Everywhere else (e.g. deck list
-		// card tiles) right-clicks are handled by regular WPF mouse events.
 		private void SetHoveredLargePool(Card? card, List<Card>? cards)
 		{
 			_hoveredLargePoolCard = card;
 			_hoveredLargePoolCards = cards;
-			if(card != null && cards != null)
-				HookRightClick();
-			else
-				UnHookRightClick();
 		}
 
-		public void HookRightClick()
+		// Matches the other watchers in the app. A physical click is held far longer than this, so
+		// edge detection at this rate does not miss one.
+		private const int RightClickPollInterval = 16;
+
+		private bool _runRightClickPolling;
+		private bool _rightButtonWasDown;
+
+		/// <summary>
+		/// Watches for a right-click while a pool is hovered in-game, so the Outfinder panel can be
+		/// opened from a click that lands on Hearthstone rather than on our (click-through) overlay.
+		///
+		/// This used to be a global WH_MOUSE_LL hook. That is a filtering hook, so Windows holds
+		/// back every mouse event in the system until each hook in the chain returns, and any stall
+		/// on our UI thread became a stall in the game's mouse input.
+		/// </summary>
+		private async void StartRightClickPolling()
 		{
-			if(_rmbMouseInput != null)
+			if(_runRightClickPolling)
 				return;
-			_rmbMouseInput = new User32.MouseInput();
-			_rmbMouseInput.RmbDown += MouseInputOnRmbDown;
-			Log.Info("Enabled right-click hook");
+			_runRightClickPolling = true;
+			while(_runRightClickPolling)
+			{
+				PollRightClick();
+				await Task.Delay(RightClickPollInterval);
+			}
 		}
 
-		public void UnHookRightClick()
+		private void StopRightClickPolling() => _runRightClickPolling = false;
+
+		private void PollRightClick()
 		{
-			if(_rmbMouseInput == null)
+			var isDown = User32.IsRightMouseButtonDown();
+			var pressed = isDown && !_rightButtonWasDown;
+
+			_rightButtonWasDown = isDown;
+
+			if(!pressed)
 				return;
-			_rmbMouseInput.Dispose();
-			_rmbMouseInput = null;
-			Log.Info("Disabled right-click hook");
-		}
-
-		private void MouseInputOnRmbDown(object sender, EventArgs e)
-		{
 			if(!User32.IsHearthstoneInForeground() || Visibility != Visibility.Visible)
 				return;
 			if(_hoveredLargePoolCards == null || _hoveredLargePoolCard == null)

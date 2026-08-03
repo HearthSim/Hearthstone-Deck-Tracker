@@ -85,7 +85,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private bool? _isFriendsListOpen;
 		private bool _lmbDown;
 		private User32.MouseInput? _mouseInput;
-		private User32.MouseInput? _rmbMouseInput;
 		private List<Card>? _hoveredLargePoolCards;
 		private Card? _hoveredLargePoolCard;
 		private Point _mousePos;
@@ -206,6 +205,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 
 			StartInteractivityUpdates();
+			StartRightClickPolling();
 
 			OverlayExtensions.OnToolTipChanged += SetTooltip;
 
@@ -675,10 +675,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
 			StopInteractivityUpdates();
+			StopRightClickPolling();
 			UnhookGameWindow();
 			if(_mouseInput != null)
 				UnHookMouse();
-			UnHookRightClick();
 			DisableBatteryMonitor();
 		}
 

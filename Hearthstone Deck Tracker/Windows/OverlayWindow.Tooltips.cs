@@ -395,8 +395,18 @@ public partial class OverlayWindow
 		vm.TooltipPlacement = PlacementMode.Bottom;
 	}
 
+	/// <summary>
+	/// Computes the summary for <paramref name="pool"/> and decides how much of it the grid shows.
+	///
+	/// The pool is passed in rather than read back off the view model on purpose. Assigning
+	/// vm.Cards makes GridCardImages build a CardAssetViewModel per card, and each of those reads
+	/// and decodes that card's full-size render synchronously on the UI thread. Discover pools run
+	/// to several hundred cards, so assigning the full pool and clamping afterwards decoded the
+	/// whole pool in order to then display none of it.
+	/// vm.Cards is therefore only ever assigned what will actually be rendered.
+	/// </summary>
 	private void ApplyRelatedCardsSummary(CardGridTooltipViewModel vm, ICardWithRelatedCards cardWithRelatedCards,
-		string cardId, bool summaryEnabled, Entity? hoveredEntity, List<Card>? dynamicPool = null)
+		string cardId, bool summaryEnabled, Entity? hoveredEntity, List<Card> pool, List<Card>? dynamicPool = null)
 	{
 		if(cardWithRelatedCards is ICardWithDynamicRelatedCardsSummary cardWithDynamicPool && summaryEnabled)
 		{
@@ -413,27 +423,32 @@ public partial class OverlayWindow
 		{
 			var pickConfig = new PickConfig(cardWithGeneratedPool.Picks(), cardWithGeneratedPool.EventCount(), cardWithGeneratedPool.IsWithReplacement());
 			vm.RelatedCardsSummaryTotalNum =
-				RelatedCardsManager.TryGetRelatedCardsSummary(vm.Cards!, pickConfig, out var summary,
+				RelatedCardsManager.TryGetRelatedCardsSummary(pool!, pickConfig, out var summary,
 					out var statistics, Config.Instance.OutfinderUsePercentages);
 			vm.RelatedCardsSummary = summary;
 			vm.PoolStatistics = statistics;
 		}
 		else
 		{
+			// No summary for this card, so the grid is the whole point: show the pool as-is.
 			vm.RelatedCardsSummary = null;
 			vm.PoolStatistics = null;
+			vm.Cards = pool;
 			return;
 		}
 
 		if(vm.RelatedCardsSummary != null)
 			Core.Game.Metrics.ShowedTheOutfinder = true;
 
-		SetHoveredLargePool(Database.GetCardFromId(cardId), vm.Cards);
-		if(vm.Cards!.Count > RelatedCardsManager.LargePoolThreshold)
+		SetHoveredLargePool(Database.GetCardFromId(cardId), pool);
+		if(pool.Count > RelatedCardsManager.LargePoolThreshold)
 		{
+			// Summarised only. Right-click opens the full pool in the (virtualized) panel.
 			vm.HasLargePool = true;
 			vm.Cards = null;
 		}
+		else
+			vm.Cards = pool;
 	}
 
 	public void SetRelatedCardsTrigger(BigCardState state)
@@ -481,15 +496,16 @@ public partial class OverlayWindow
 				relatedCards = hoveredEntity?.Info.StoredCardIds.Select(Database.GetCardFromId).ToList();
 			}
 
-			vm.Cards = relatedCards?.WhereNotNull().ToList();
-			if(vm.Cards == null || vm.Cards.Count == 0)
+			// Deliberately not assigned to vm.Cards yet - see ApplyRelatedCardsSummary.
+			var pool = relatedCards?.WhereNotNull().ToList();
+			if(pool == null || pool.Count == 0)
 				return;
 
 			vm.IsHandHover = true;
 			vm.SummaryMaxHeight = Height * 0.4;
 
 			ApplyRelatedCardsSummary(vm, cardWithRelatedCards, state.CardId,
-				Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInHand, hoveredEntity, dynamicPool);
+				Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInHand, hoveredEntity, pool, dynamicPool);
 
 			vm.Top = Height * 0.47;
 			vm.Height = Height * 0.53;
@@ -589,12 +605,13 @@ public partial class OverlayWindow
 			else
 				relatedCards = cardWithRelatedCards?.GetRelatedCards(Core.Game.Player);
 
-			vm.Cards = relatedCards?.WhereNotNull().ToList();
-			if(vm.Cards == null || vm.Cards.Count == 0)
+			// Deliberately not assigned to vm.Cards yet - see ApplyRelatedCardsSummary.
+			var pool = relatedCards?.WhereNotNull().ToList();
+			if(pool == null || pool.Count == 0)
 				return;
 
 			ApplyRelatedCardsSummary(vm, cardWithRelatedCards!, state.CardId,
-				Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInDeck, null, dynamicPool);
+				Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInDeck, null, pool, dynamicPool);
 
 			vm.Top = Height * 0.2;
 			vm.Height = Height * 0.53;

@@ -1,5 +1,6 @@
 ## **Unreleased**
 **Hearthstone**:
+- Fixed performance issues related to The OutFinder that caused small mouse freezes.
 - Added support to Hemet, Jungle Hunter.
 - Fixed Vengeful Spirit highlighting weapons in the decklist.
 

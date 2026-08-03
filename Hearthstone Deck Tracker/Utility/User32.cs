@@ -115,6 +115,23 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Point GetMousePos() => GetCursorPos(out var p) ? new Point(p.X, p.Y) : Point.Empty;
 
+		[DllImport("user32.dll")]
+		private static extern short GetAsyncKeyState(int vKey);
+
+		[DllImport("user32.dll")]
+		private static extern int GetSystemMetrics(int nIndex);
+
+		private const int VkLButton = 0x01;
+		private const int VkRButton = 0x02;
+		private const int SmSwapButton = 23;
+		private const int KeyDownMask = 0x8000;
+
+		public static bool IsRightMouseButtonDown()
+		{
+			var vKey = GetSystemMetrics(SmSwapButton) != 0 ? VkLButton : VkRButton;
+			return (GetAsyncKeyState(vKey) & KeyDownMask) != 0;
+		}
+
 		public static WindowState GetHearthstoneWindowState()
 		{
 			var hsWindow = GetHearthstoneWindow();
@@ -303,7 +320,6 @@ namespace Hearthstone_Deck_Tracker
 			public event EventHandler<EventArgs>? LmbDown;
 			public event EventHandler<EventArgs>? LmbUp;
 			public event EventHandler<EventArgs>? MouseMoved;
-			public event EventHandler<EventArgs>? RmbDown;
 
 			private IntPtr MouseHookDelegate(int code, IntPtr wParam, IntPtr lParam)
 			{
@@ -320,7 +336,8 @@ namespace Hearthstone_Deck_Tracker
 						LmbUp?.Invoke(this, EventArgs.Empty);
 						break;
 					case WM_RBUTTONDOWN:
-						RmbDown?.Invoke(this, EventArgs.Empty);
+						// Nothing listens for this any more (the Outfinder polls the button state
+						// instead), but it must not fall through to the MouseMoved default.
 						break;
 					default:
 						MouseMoved?.Invoke(this, EventArgs.Empty);
