@@ -5,6 +5,7 @@
 **Battlegrounds**:
 - Significantly improved how fast Bob's Buddy calculates the combat odds.
 - Fixed Accord-O-Tron not appearing in the Gold Next Turn counter.
+- Fixed an issue that could cause the Trinket overlay to be partially obscured when another choice was queued up (e.g. Kerrigan's Zerg pick).
 - Fixed some Bob's Buddy predictions in Duos.
 
 ## **Release v1.54.2 - 2026-07-31**
