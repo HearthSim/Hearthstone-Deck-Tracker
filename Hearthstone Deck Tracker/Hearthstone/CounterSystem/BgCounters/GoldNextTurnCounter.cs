@@ -97,15 +97,23 @@ public class GoldNextTurnCounter : StatsCounter
             }
         }
 
+        // during combat the board is replicated, keep the last shopping phase value
+        if(Game.IsBattlegroundsCombatPhase)
+	        return;
+
         var isAccordotronMinion = entity.CardId is HearthDb.CardIds.NonCollectible.Neutral.AccordOTron
 	        or HearthDb.CardIds.NonCollectible.Neutral.AccordoTron_AccordOTron;
         var isAccordotronEnchantment = entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.AccordoTron_AccordOTronEnchantment;
-        if((isAccordotronMinion && tag == GameTag.ZONE)
+        // PREMIUM catches transforms into the golden minion (CHANGE_ENTITY does not change the zone)
+        if((isAccordotronMinion && tag is GameTag.ZONE or GameTag.PREMIUM)
            || (isAccordotronEnchantment && tag is GameTag.ZONE or GameTag.TAG_SCRIPT_DATA_NUM_1))
         {
 	        UpdateAccordotron();
         }
     }
+
+    private bool IsAttachedToEntityInPlay(Entity enchantment) =>
+	    Game.Entities.TryGetValue(enchantment.GetTag(GameTag.ATTACHED), out var host) && host.IsInPlay;
 
     private void UpdateAccordotron()
     {
@@ -116,7 +124,9 @@ public class GoldNextTurnCounter : StatsCounter
 	        {
 		        HearthDb.CardIds.NonCollectible.Neutral.AccordOTron => 1,
 		        HearthDb.CardIds.NonCollectible.Neutral.AccordoTron_AccordOTron => 2,
-		        HearthDb.CardIds.NonCollectible.Neutral.AccordoTron_AccordOTronEnchantment => e.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1),
+		        // board replication can leave stale enchantments in the play zone, require the host minion as well
+		        HearthDb.CardIds.NonCollectible.Neutral.AccordoTron_AccordOTronEnchantment when IsAttachedToEntityInPlay(e) =>
+			        e.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1),
 		        _ => 0,
 	        });
         if(total != Accordotron)
