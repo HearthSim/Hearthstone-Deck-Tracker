@@ -114,13 +114,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(ControllerPlayer == null)
 				return default;
+			// May be null: some cards (Tidepool Pupil, Commander Sivara) have no registered
+			// related-cards class and carry their cards on the entity instead - see the
+			// StoredCardIds fallback below.
 			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(Id);
-			if (cardWithRelatedCards == null)
-				return default;
 
 			// Decklist hovers also happen in the menu, where there is no hero to take the class
-			// from. Pools built below read it off the player, so resolve it first.
-			PoolContext.ApplyMenuDefaults(ControllerPlayer);
+			// from. Pools built below read it off the player, so resolve it first. Only needed
+			// when there is a pool to build.
+			if(cardWithRelatedCards != null)
+				PoolContext.ApplyMenuDefaults(ControllerPlayer);
 
 			var showSummary = false;
 			var pickConfig = default(PickConfig);
@@ -152,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				relatedCards = dynamicSummaryCard.GetRelatedCards(ControllerPlayer, handEntity, dynamicPool).WhereNotNull().ToList();
 			}
 			else
-				relatedCards = cardWithRelatedCards.GetRelatedCards(ControllerPlayer).WhereNotNull().ToList();
+				relatedCards = cardWithRelatedCards?.GetRelatedCards(ControllerPlayer).WhereNotNull().ToList() ?? new();
 
 			// Get related cards from Entity
 			if (relatedCards.IsEmpty())

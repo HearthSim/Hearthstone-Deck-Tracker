@@ -1,4 +1,7 @@
 ## **Unreleased**
+**Hearthstone**:
+- Fixed Tidepool Pupil, Commander Sivara and similar cards not showing their stored cards when hovered.
+
 **Overlay**:
 - Added a "Counters" section to Options > Overlay, to choose which counters are shown for you and for your opponent.\
   *Every counter can be left on "Auto" to keep showing it only when it's relevant, or forced to always show or never show. Both Hearthstone and Battlegrounds counters are covered. Tick "Advanced options" at the bottom of the Options menu to find it.*

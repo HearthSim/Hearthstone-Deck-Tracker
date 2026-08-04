@@ -405,7 +405,7 @@ public partial class OverlayWindow
 	/// whole pool in order to then display none of it.
 	/// vm.Cards is therefore only ever assigned what will actually be rendered.
 	/// </summary>
-	private void ApplyRelatedCardsSummary(CardGridTooltipViewModel vm, ICardWithRelatedCards cardWithRelatedCards,
+	private void ApplyRelatedCardsSummary(CardGridTooltipViewModel vm, ICardWithRelatedCards? cardWithRelatedCards,
 		string cardId, bool summaryEnabled, Entity? hoveredEntity, List<Card> pool, List<Card>? dynamicPool = null)
 	{
 		if(cardWithRelatedCards is ICardWithDynamicRelatedCardsSummary cardWithDynamicPool && summaryEnabled)
@@ -431,6 +431,8 @@ public partial class OverlayWindow
 		else
 		{
 			// No summary for this card, so the grid is the whole point: show the pool as-is.
+			// Also the path for a null cardWithRelatedCards, where the pool came off the entity's
+			// StoredCardIds instead of a registered class.
 			vm.RelatedCardsSummary = null;
 			vm.PoolStatistics = null;
 			vm.Cards = pool;
@@ -470,9 +472,10 @@ public partial class OverlayWindow
 
 		if(state is { IsHand: true } && Core.Game.IsTraditionalHearthstoneMatch && !Config.Instance.HidePlayerRelatedCards)
 		{
+			// May be null: some cards (Tidepool Pupil, Commander Sivara) have no registered
+			// related-cards class and carry their cards on the entity instead - see the
+			// StoredCardIds fallback below.
 			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId);
-			if (cardWithRelatedCards == null)
-				return;
 
 			if(cardWithRelatedCards is ICardWithRelatedCardsSummary or ICardWithDynamicRelatedCardsSummary && (!Config.Instance.OutfinderEnabled || !Config.Instance.OutfinderInHand))
 				return;
@@ -489,9 +492,9 @@ public partial class OverlayWindow
 				relatedCards = dynamicRelatedCards.GetRelatedCards(Core.Game.Player, hoveredEntity, dynamicPool);
 			}
 			else
-				relatedCards = cardWithRelatedCards.GetRelatedCards(Core.Game.Player);
+				relatedCards = cardWithRelatedCards?.GetRelatedCards(Core.Game.Player);
 
-			if(relatedCards.Count == 0)
+			if(relatedCards == null || relatedCards.Count == 0)
 			{
 				relatedCards = hoveredEntity?.Info.StoredCardIds.Select(Database.GetCardFromId).ToList();
 			}
@@ -610,7 +613,7 @@ public partial class OverlayWindow
 			if(pool == null || pool.Count == 0)
 				return;
 
-			ApplyRelatedCardsSummary(vm, cardWithRelatedCards!, state.CardId,
+			ApplyRelatedCardsSummary(vm, cardWithRelatedCards, state.CardId,
 				Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInDeck, null, pool, dynamicPool);
 
 			vm.Top = Height * 0.2;
