@@ -1,6 +1,10 @@
-## **Unreleased**
+## **Release v1.55.0 - 2026-08-04**
+**Updated for Hearthstone 36.2**
+
 **Hearthstone**:
 - Fixed Tidepool Pupil, Commander Sivara and similar cards not showing their stored cards when hovered.
+
+*Because you have been asking us: We will intentionally not be adding support for showing Watfin's suspicious card. We believe our deck tracker should enhance playing the game, not tell you what to do.*
 
 **Overlay**:
 - Added a "Counters" section to Options > Overlay, to choose which counters are shown for you and for your opponent.\
