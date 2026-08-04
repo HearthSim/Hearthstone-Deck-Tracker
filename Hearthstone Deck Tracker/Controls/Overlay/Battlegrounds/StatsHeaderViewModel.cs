@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			PickRate = pickRate;
 		}
 
-		public string TierChar => TierV2 != null ? TierV2.ToUpper() : Tier.ToString();
+		public string TierChar => !string.IsNullOrEmpty(TierV2) ? TierV2!.ToUpper() : Tier?.ToString() ?? "?";
 
 		public Brush TierGradient => TierV2 != null ? TierV2 switch
 		{
