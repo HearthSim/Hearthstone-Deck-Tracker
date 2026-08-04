@@ -22,6 +22,9 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 
 		[JsonProperty("game_type")]
 		public BnetGameType GameType { get; set; }
+
+		[JsonProperty("hearthstone_build", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public int? HearthstoneBuild { get; set; }
 	}
 
 	public class BoardState
@@ -34,6 +37,9 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 
 		[JsonProperty("game_type")]
 		public BnetGameType GameType { get; set; }
+
+		[JsonProperty("hearthstone_build", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public int? HearthstoneBuild { get; set; }
 
 		[JsonProperty("traditional_anomaly", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int? TraditionalAnomaly { get; set; }

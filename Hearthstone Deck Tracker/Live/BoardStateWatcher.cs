@@ -76,7 +76,8 @@ namespace Hearthstone_Deck_Tracker.Live
 				Deck = boardState?.Player?.Deck,
 				GameType = gameType,
 				Rank = rank ?? 0,
-				LegendRank = legendRank ?? 0
+				LegendRank = legendRank ?? 0,
+				HearthstoneBuild = Core.Game.MetaData.HearthstoneBuild
 			};
 		}
 
@@ -323,6 +324,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},
 				GameType = gameType,
+				HearthstoneBuild = Core.Game.MetaData.HearthstoneBuild,
 				TraditionalAnomaly = anomaly,
 			};
 		}
@@ -485,6 +487,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				Player = playerBoardState,
 				Opponent = opponentBoardState,
 				GameType = gameType,
+				HearthstoneBuild = Core.Game.MetaData.HearthstoneBuild,
 				BattlegroundsAnomaly = BgsAnomaly(Core.Game.GameEntity),
 				BobsBuddyOutput = GetBobsBuddyState()
 			};
