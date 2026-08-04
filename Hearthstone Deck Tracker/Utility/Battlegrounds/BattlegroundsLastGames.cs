@@ -21,6 +21,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 		[XmlElement("Game")]
 		public List<GameItem> Games { get; set; } = new List<GameItem>();
 
+		// Battlegrounds seasons reset the rating to a low value, so a large drop to a low rating means the season rolled over
+		public static bool IsRatingReset(int before, int after) => after < 500 && after - before < -500;
+
 		private static string DataPath => Path.Combine(Config.AppDataPath, "BgsLastGames.xml");
 
 		private static BattlegroundsLastGames Load()
@@ -146,6 +149,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 
 			[XmlAttribute("Duos")]
 			public bool Duos { get; set; }
+
+			// the season reset happened during this game, so it counts as starting from 0 MMR
+			[XmlIgnore]
+			public bool SeasonReset => IsRatingReset(Rating, RatingAfter);
 		}
 
 		public class FinalBoardItem

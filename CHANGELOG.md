@@ -2,6 +2,9 @@
 **Hearthstone**:
 - Added counter for Dragoncaller Alanna.
 
+**Battlegrounds**:
+- Improve handling of MMR reset in session widget.
+
 **Streaming:**
 - Fixed the opponent's hero power not being hoverable in the Twitch Extension.
 

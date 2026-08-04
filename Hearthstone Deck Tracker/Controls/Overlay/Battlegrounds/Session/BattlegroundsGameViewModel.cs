@@ -19,6 +19,9 @@ public class BattlegroundsGameViewModel : ViewModel
 	public List<Entity> FinalBoardMinions { get; set; } = new List<Entity>();
 	private readonly GameItem _gameItem;
 
+	// a single game never swings the rating this far, so we hide implausible deltas instead of showing something wrong
+	private const int MaxPlausibleMMRDelta = 500;
+
 	// These are the languages where we'd prefer we show the localized hero name rather than our English-only short version
 	private bool PreferTranslatedCardName => Helper.GetCardLanguage() switch
 	{
@@ -58,9 +61,9 @@ public class BattlegroundsGameViewModel : ViewModel
 
 		PlacementText = LocUtil.GetPlacement(gameItem.Placement);
 
-		MMRDelta = gameItem.RatingAfter - gameItem.Rating;
+		MMRDelta = gameItem.SeasonReset ? gameItem.RatingAfter : gameItem.RatingAfter - gameItem.Rating;
 		var signal = MMRDelta > 0 ? "+" : "";
-		MMRDeltaText = Math.Abs(MMRDelta) > 500 || gameItem.FriendlyGame ? "-" : $"{signal}{MMRDelta}";
+		MMRDeltaText = Math.Abs(MMRDelta) > MaxPlausibleMMRDelta || gameItem.FriendlyGame ? "-" : $"{signal}{MMRDelta}";
 
 		CrownVisibility = gameItem.Placement == 1 ? Visibility.Visible : Visibility.Hidden;
 
@@ -110,7 +113,7 @@ public class BattlegroundsGameViewModel : ViewModel
 	{
 		get
 		{
-			if(MMRDelta == 0 || Math.Abs(MMRDelta) > 500 || _gameItem.FriendlyGame)
+			if(MMRDelta == 0 || Math.Abs(MMRDelta) > MaxPlausibleMMRDelta || _gameItem.FriendlyGame)
 				return new SolidColorBrush(Colors.White);
 			return new SolidColorBrush(MMRDelta > 0 ? Color.FromRgb(139, 210, 134) : Color.FromRgb(236, 105, 105));
 		}

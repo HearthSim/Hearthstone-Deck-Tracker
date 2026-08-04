@@ -64,7 +64,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 		var firstGame = await UpdateLatestGames();
 
 		var rating = (IsDuos  ? Core.Game.BattlegroundsRatingInfo?.DuosRating : Core.Game.BattlegroundsRatingInfo?.Rating) ?? 0;
-		var ratingStart = firstGame?.Rating ?? rating;
+		var ratingStart = firstGame == null ? rating : firstGame.SeasonReset ? 0 : firstGame.Rating;
 		if(rating == 0)
 			rating = ratingStart;
 		BgRatingStart = $"{ratingStart:N0}";
@@ -375,9 +375,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 				var gStartTime = DateTime.Parse(g.StartTime);
 				var ts = gStartTime - (DateTime)previousGameEndTime;
 
-				var diffMMR = g.Rating - previousGameRatingAfter;
-				// Check for MMR reset
-				var ratingReset = g.Rating < 500 && diffMMR < -500;
+				var ratingReset = IsRatingReset(previousGameRatingAfter, g.Rating);
 
 				if(ts.TotalHours >= 2 || ratingReset)
 					sessionStartTime = gStartTime;
@@ -396,12 +394,8 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 			// Check for MMR reset on last game
 			var ratingResetAfterLastGame = false;
-			if(Core.Game.BattlegroundsRatingInfo?.Rating != null)
-			{
-				var currentMMR = Core.Game.BattlegroundsRatingInfo?.Rating;
-				var sessionLastMMR = lastGame.RatingAfter;
-				ratingResetAfterLastGame = currentMMR < 500 && currentMMR - sessionLastMMR < -500;
-			}
+			if(Core.Game.BattlegroundsRatingInfo?.Rating is int currentMMR)
+				ratingResetAfterLastGame = IsRatingReset(lastGame.RatingAfter, currentMMR);
 
 			var ts = DateTime.Now - DateTime.Parse(lastGame.EndTime);
 
