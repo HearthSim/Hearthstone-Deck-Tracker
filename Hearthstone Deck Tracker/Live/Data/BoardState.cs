@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		public int Hero { get; set; }
 
 		[JsonProperty("hero_power", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int HeroPower { get; set; }
+		public int? HeroPower { get; set; }
 
 		[JsonProperty("hero_power_top", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int? HeroPowerTop { get; set; }

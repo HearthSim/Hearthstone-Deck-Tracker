@@ -99,6 +99,18 @@ namespace Hearthstone_Deck_Tracker.Live
 			return card?.DbfId ?? 0;
 		}
 
+		private int? DbfIdOrNull(Entity? e)
+		{
+			var dbfId = DbfId(e);
+			return dbfId != 0 ? dbfId : (int?)null;
+		}
+
+		private int? DbfIdOrNull(BattlegroundsTeammateBoardStateEntity? e)
+		{
+			var dbfId = DbfId(e);
+			return dbfId != 0 ? dbfId : (int?)null;
+		}
+
 		private int ZonePosition(Entity e) => e.GetTag(GameTag.ZONE_POSITION);
 		private int ZonePosition(BattlegroundsTeammateBoardStateEntity e) =>
 			e.Tags.TryGetValue((int)GameTag.ZONE_POSITION, out var position) ? position : 0;
@@ -131,8 +143,10 @@ namespace Hearthstone_Deck_Tracker.Live
 				x.HasTag(GameTag.BACON_IS_HEROPOWER_QUESTREWARD) && x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) == index);
 			if(questReward != null)
 				return questReward.Card.DbfId;
+			// the game treats any index >= 1 as the secondary trinket slot (ZoneBattlegroundTrinket)
 			var trinket = player.Trinkets.FirstOrDefault(x =>
-				x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_6) == TrinketHeroPowerSlot && x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) == index);
+				x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_6) == TrinketHeroPowerSlot &&
+				(index == 0 ? x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) == 0 : x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) >= 1));
 			if(trinket != null)
 				return trinket.Card.DbfId;
 			var heroPower = player.PlayerEntities.FirstOrDefault(x =>
@@ -317,7 +331,7 @@ namespace Hearthstone_Deck_Tracker.Live
 						Cards = SortedDbfIds(player.Hand),
 						Size = player.HandCount
 					},
-					HeroPower = BgsQuestReward(player, true) ?? DbfId(FindHeroPower(player)),
+					HeroPower = BgsQuestReward(player, true) ?? DbfIdOrNull(FindHeroPower(player)),
 					Weapon = playerWeapon != 0 ? playerWeapon : (BgsQuestReward(player, false) ?? BuddyDbfId(player) ?? 0),
 					Fatigue = Core.Game.PlayerEntity.GetTag(GameTag.FATIGUE)
 				},
@@ -334,7 +348,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					},
 					Secrets = SortedDbfIds(opponent.PlayerEntities.Where(x => x.IsInSecret)),
 					Hero = HeroDbfId(Find(opponent, HeroId(Core.Game.OpponentEntity))),
-					HeroPower = BgsQuestReward(opponent, true) ?? DbfId(FindHeroPower(opponent)),
+					HeroPower = BgsQuestReward(opponent, true) ?? DbfIdOrNull(FindHeroPower(opponent)),
 					Weapon = opponentWeapon != 0 ? opponentWeapon : (BgsQuestReward(opponent, false) ?? BuddyDbfId(opponent) ?? 0),
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},
@@ -364,19 +378,20 @@ namespace Hearthstone_Deck_Tracker.Live
 				? SortedDbfIds(specialShopState!.BoardCards)
 				: SortedDbfIds(opponent.Board.Where(x => x.TakesBoardSlot));
 
-			var playerHeroPowerBottom = BgsHeroPowerSlot(player, 0);
-			var playerHeroPowerTop = BgsHeroPowerSlot(player, 1);
-			var opponentHeroPowerTop = BgsHeroPowerSlot(opponent, 0); // intentionally flipped
-			var opponentHeroPowerBottom = BgsHeroPowerSlot(opponent, 1);
+			// the primary hero power sits at the bottom for the player and at the top for the opponent
+			var playerHeroPowerPrimary = BgsHeroPowerSlot(player, 0);
+			var playerHeroPowerSecondary = BgsHeroPowerSlot(player, 1);
+			var opponentHeroPowerPrimary = BgsHeroPowerSlot(opponent, 0);
+			var opponentHeroPowerSecondary = BgsHeroPowerSlot(opponent, 1);
 
 			return new Tuple<BoardStatePlayer, BoardStatePlayer>(
 				new BoardStatePlayer
 				{
 					Board = SortedDbfIds(player.Board.Where(x => x.TakesBoardSlot)),
 					Hero = HeroDbfId(playerEntity != null ? Find(player, HeroId(playerEntity)) : null),
-					HeroPower = playerHeroPowerBottom ?? 0,
-					HeroPowerTop = playerHeroPowerTop,
-					HeroPowerBottom = playerHeroPowerTop != null ? playerHeroPowerBottom : null,
+					HeroPower = playerHeroPowerSecondary == null ? playerHeroPowerPrimary : null,
+					HeroPowerTop = playerHeroPowerSecondary,
+					HeroPowerBottom = playerHeroPowerSecondary != null ? playerHeroPowerPrimary : null,
 					Weapon = playerWeapon != 0 ? playerWeapon :
 						BgsQuestReward(player, false) ??
 						BuddyDbfId(player) ?? 0,
@@ -393,9 +408,9 @@ namespace Hearthstone_Deck_Tracker.Live
 				{
 					Board = opponentBoard,
 					Hero = HeroDbfId(opponentEntity != null ? Find(opponent, HeroId(opponentEntity)) : null),
-					HeroPower = opponentHeroPowerBottom ?? 0,
-					HeroPowerTop = opponentHeroPowerTop,
-					HeroPowerBottom = opponentHeroPowerTop != null ? opponentHeroPowerBottom : null,
+					HeroPower = opponentHeroPowerSecondary == null ? opponentHeroPowerPrimary : null,
+					HeroPowerTop = opponentHeroPowerSecondary != null ? opponentHeroPowerPrimary : null,
+					HeroPowerBottom = opponentHeroPowerSecondary,
 					Weapon = opponentWeapon != 0 ? opponentWeapon :
 						BgsQuestReward(opponent, false) ??
 						BuddyDbfId(opponent) ?? 0,
@@ -444,13 +459,15 @@ namespace Hearthstone_Deck_Tracker.Live
 				?? inPlay.FirstOrDefault(entity =>
 					GetTag(entity, GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_TRINKET
 					&& GetTag(entity, GameTag.TAG_SCRIPT_DATA_NUM_6) == TrinketHeroPowerSlot
-					&& GetTag(entity, GameTag.ADDITIONAL_HERO_POWER_INDEX) == index)
+					&& (index == 0
+						? GetTag(entity, GameTag.ADDITIONAL_HERO_POWER_INDEX) == 0
+						: GetTag(entity, GameTag.ADDITIONAL_HERO_POWER_INDEX) >= 1))
 				?? inPlay.FirstOrDefault(entity =>
 					GetTag(entity, GameTag.CARDTYPE) == (int)CardType.HERO_POWER
 					&& GetTag(entity, GameTag.ADDITIONAL_HERO_POWER_INDEX) == index);
 
-			var heroPowerBottom = HeroPowerSlot(0);
-			var heroPowerTop = HeroPowerSlot(1);
+			var heroPowerPrimary = HeroPowerSlot(0);
+			var heroPowerSecondary = HeroPowerSlot(1);
 
 			var weapon = inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.WEAPON)
 				?? inPlay.FirstOrDefault(entity =>
@@ -481,9 +498,9 @@ namespace Hearthstone_Deck_Tracker.Live
 			{
 				Board = SortedDbfIds(board),
 				Hero = DbfId(hero),
-				HeroPower = DbfId(heroPowerBottom),
-				HeroPowerTop = heroPowerTop != null ? DbfId(heroPowerTop) : (int?)null,
-				HeroPowerBottom = heroPowerTop != null ? DbfId(heroPowerBottom) : (int?)null,
+				HeroPower = heroPowerSecondary == null ? DbfIdOrNull(heroPowerPrimary) : null,
+				HeroPowerTop = DbfIdOrNull(heroPowerSecondary),
+				HeroPowerBottom = heroPowerSecondary != null ? DbfIdOrNull(heroPowerPrimary) : null,
 				Weapon = weapon != null ? DbfId(weapon) : buddyDbfId,
 				FirstTrinket = DbfId(lesserTrinket),
 				SecondTrinket = DbfId(greaterTrinket),
