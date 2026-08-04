@@ -81,6 +81,12 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("hero_power", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int HeroPower { get; set; }
 
+		[JsonProperty("hero_power_top", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public int? HeroPowerTop { get; set; }
+
+		[JsonProperty("hero_power_bottom", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public int? HeroPowerBottom { get; set; }
+
 		[JsonProperty("weapon", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int Weapon { get; set; }
 
@@ -104,6 +110,10 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 			if(Hero != other?.Hero)
 				return false;
 			if(HeroPower != other.HeroPower)
+				return false;
+			if(HeroPowerTop != other.HeroPowerTop)
+				return false;
+			if(HeroPowerBottom != other.HeroPowerBottom)
 				return false;
 			if(Weapon != other.Weapon)
 				return false;
