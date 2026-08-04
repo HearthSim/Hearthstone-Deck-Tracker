@@ -1,4 +1,7 @@
 ## **Unreleased**
+**Hearthstone**:
+- Added counter for Dragoncaller Alanna.
+
 **Streaming:**
 - Fixed the opponent's hero power not being hoverable in the Twitch Extension.
 
