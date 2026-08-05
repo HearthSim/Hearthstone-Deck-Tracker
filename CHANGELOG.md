@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.55.1 - 2026-08-05**
 **Hearthstone**:
 - Added counter for Dragoncaller Alanna.
 - Added counter for Crystal Stag.
