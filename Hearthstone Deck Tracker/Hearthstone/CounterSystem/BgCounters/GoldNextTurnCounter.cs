@@ -58,6 +58,7 @@ public class GoldNextTurnCounter : StatsCounter
             HearthDb.CardIds.NonCollectible.Neutral.AccordOTron,
             HearthDb.CardIds.NonCollectible.Neutral.RecordSmuggler,
             HearthDb.CardIds.NonCollectible.Neutral.CarefulInvestment,
+            HearthDb.CardIds.NonCollectible.Neutral.PrivateInvestigator,
         };
     }
 
