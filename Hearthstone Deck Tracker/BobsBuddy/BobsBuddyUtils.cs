@@ -57,7 +57,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.ScriptDataNum3 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);
 			minion.ScriptDataNum4 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_4);
 
-			var dbfId = entity.Card.DbfId;
+			// LatestCard, not Card: MODULAR_ENTITY_PART tags hold the dbf id of what the entity
+			// currently is, which differs from Card for in-place transforms via CHANGE_ENTITY
+			var dbfId = entity.LatestCard.DbfId;
 			var m1 = entity.GetTag(GameTag.MODULAR_ENTITY_PART_1);
 			var m2 = entity.GetTag(GameTag.MODULAR_ENTITY_PART_2);
 			if(m1 > 0 && m2 > 0 && (m1 == dbfId || m2 == dbfId))
@@ -144,9 +146,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						minion.SetBloodGemStats(atk, health);
 						break;
 					default:
-						if(attached.Card.TypeEnum == CardType.ENCHANTMENT && attached.CardId != null)
+						if(attached.LatestCard.TypeEnum == CardType.ENCHANTMENT && attached.Info.LatestCardId != null)
 						{
-							var enchantment = sim.EnchantmentFactory.Create(attached.CardId, minion.ControlledByPlayer);
+							var enchantment = sim.EnchantmentFactory.Create(attached.Info.LatestCardId, minion.ControlledByPlayer);
 							if(enchantment != null)
 							{
 								enchantment.ScriptDataNum1 = attached.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
@@ -209,7 +211,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var magnetizedModules = allEntities.Values
 				.Where(x => x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) == host.Id
 					&& x.HasTag(GameTag.MAGNETIC)
-					&& x.Card.TypeEnum == CardType.MINION)
+					&& x.LatestCard.TypeEnum == CardType.MINION)
 				.OrderBy(x => x.Id);
 
 			foreach(var module in magnetizedModules)
@@ -291,8 +293,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			// GetTag(HEALTH) is the max health, unaffected by damage. Taking the min of the two increases accuracy
 			// in case there is a buff that never appears as an enchantment attached to the minion.
 			var aura = Math.Min(
-				malorne.GetTag(GameTag.ATK) - malorne.Card.Attack - attackBuffs,
-				malorne.GetTag(GameTag.HEALTH) - malorne.Card.Health - healthBuffs);
+				malorne.GetTag(GameTag.ATK) - malorne.LatestCard.Attack - attackBuffs,
+				malorne.GetTag(GameTag.HEALTH) - malorne.LatestCard.Health - healthBuffs);
 			if(malorne.CardId == NonCollectible.Neutral.ForestLordCenarius_Malorne2)
 				aura /= 2;
 			return aura > 0 ? aura * 3 : 0;

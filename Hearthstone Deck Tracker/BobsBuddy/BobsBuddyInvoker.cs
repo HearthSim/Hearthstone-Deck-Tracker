@@ -456,18 +456,21 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(string.IsNullOrWhiteSpace(entity.CardId))
 					continue;
 
-				if(!entity.Card.IsKnownCard)
+				// LatestCard, not Card: the entity may have transformed in place via CHANGE_ENTITY
+				// (e.g. a Lockbox turning into a minion), where Card keeps the pre-transform card.
+				var card = entity.LatestCard;
+				if(!card.IsKnownCard)
 				{
 					ErrorState = BobsBuddyErrorState.UnknownCards;
 					throw new ArgumentException("Board has unknown cards. Exiting.");
 				}
 
 				// SupportedCards.VerifyCardIsSupported currently only works with TECH_LEVEL > 0.
-				if(entity.Card.Data != null && entity.IsMinion)
+				if(card.Data != null && entity.IsMinion)
 				{
 					// Results other than "Supported" mean HDT has data about the card via dynamic CardDefs updates
 					// (otherwise we would have exited above), but BobsBuddy has not yet been updated.
-					var result = SupportedCards.VerifyCardIsSupported(entity.Card.Data);
+					var result = SupportedCards.VerifyCardIsSupported(card.Data);
 
 					// Unknown cards have two issues: 1) If they have effects they have not been implemented yet,
 					// and 2) even if they don't have effects, we would be unable to summon instances of the card
@@ -481,7 +484,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					// For the most part we only care about text changes to cards if we previously had an implementation
 					// for a card. While there can in theory be edge cases where a card is changed in a way where the
 					// old text did not need an implementation, but the new text does, this seems very unlikely.
-					if(result == SupportedCards.Result.TextChanged && simulator.MinionFactory.HasImplementationFor(entity.CardId!))
+					if(result == SupportedCards.Result.TextChanged && simulator.MinionFactory.HasImplementationFor(entity.Info.LatestCardId!))
 					{
 						ErrorState = BobsBuddyErrorState.UnknownCards;
 						throw new ArgumentException("Board has cards with changed text. Exiting.");
@@ -597,7 +600,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			if(friendly)
 			{
-				inputPlayer.SetSecrets(gamePlayer.Secrets.Select(x => (int?)x.Card.DbfId).ToList());
+				inputPlayer.SetSecrets(gamePlayer.Secrets.Select(x => (int?)x.LatestCard.DbfId).ToList());
 
 				var friendlyHandEntities = GetOrderedHandEntities(gamePlayer.Hand);
 				foreach(var e in friendlyHandEntities)
@@ -629,7 +632,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				_opponentSecrets = secrets;
 				inputPlayer.SetSecrets(
 					secrets
-						.Select(x => !string.IsNullOrEmpty(x.CardId) ? (int?)x.Card.DbfId : null)
+						.Select(x => !string.IsNullOrEmpty(x.CardId) ? (int?)x.LatestCard.DbfId : null)
 						.Distinct(new SecretDbfIdComparer())
 						.ToList()
 				);
@@ -894,7 +897,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			_input.Opponent.SetSecrets(
 				_opponentSecrets
-					.Select(x => !string.IsNullOrEmpty(x.CardId) ? (int?)x.Card.DbfId : null)
+					.Select(x => !string.IsNullOrEmpty(x.CardId) ? (int?)x.LatestCard.DbfId : null)
 					.Distinct(new SecretDbfIdComparer())
 					.ToList()
 			);
@@ -979,7 +982,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				tavishLockAndLoad.AttachedMinionCapturedDuringCombat = true;
 			}
 			else if(tavishLockAndLoad.Data3 == 0)
-				tavishLockAndLoad.Data3 = firedMinionEntity.Card.DbfId;
+				tavishLockAndLoad.Data3 = firedMinionEntity.LatestCard.DbfId;
 			else
 				return;
 
@@ -1228,9 +1231,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 
 			// Attach enchant to the minion
-			if(enchantmentEntity.Card.TypeEnum == CardType.ENCHANTMENT && enchantmentEntity.CardId != null)
+			if(enchantmentEntity.LatestCard.TypeEnum == CardType.ENCHANTMENT && enchantmentEntity.Info.LatestCardId != null)
 			{
-				var enchantment = new Simulator().EnchantmentFactory.Create(enchantmentEntity.CardId, minion.ControlledByPlayer);
+				var enchantment = new Simulator().EnchantmentFactory.Create(enchantmentEntity.Info.LatestCardId, minion.ControlledByPlayer);
 				if(enchantment != null)
 				{
 					enchantment.ScriptDataNum1 = enchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);

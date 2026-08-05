@@ -1,3 +1,7 @@
+## Unreleased
+**Battlegrounds**:
+- Fixed bogus "Unsupported Card" warnings when a lockbox transformed.
+
 ## **Release v1.55.1 - 2026-08-05**
 **Hearthstone**:
 - Added counter for Dragoncaller Alanna.
