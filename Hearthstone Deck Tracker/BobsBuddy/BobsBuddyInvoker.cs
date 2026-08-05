@@ -657,7 +657,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.EternalKnight_EternalKnightPlayerEnchantDnt);
 			if(pEternalLegion != null)
+			{
 				inputPlayer.EternalKnightCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+				inputPlayer.EternalLegionCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);   // attached
+			}
 			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
 			if(pUndeadBonus != null)
 			{
@@ -693,7 +696,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);   // direct
 
-			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, friendly={friendly}");
+			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pEternalLegion={inputPlayer.EternalLegionCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, friendly={friendly}");
 
 			inputPlayer.PiratesSummonCounter = playerEntity.GetTag((GameTag)2358);   // direct
 
