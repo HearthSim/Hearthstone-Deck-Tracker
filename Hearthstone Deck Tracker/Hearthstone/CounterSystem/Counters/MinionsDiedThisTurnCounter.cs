@@ -11,6 +11,7 @@ public class MinionsDiedThisTurnCounter: NumericCounter
 	public override string[] RelatedCards => new string[]
 	{
 		HearthDb.CardIds.Collectible.Invalid.RemnantOfRage,
+		HearthDb.CardIds.Collectible.Druid.VolcanicLumberer,
 	};
 
 	public MinionsDiedThisTurnCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)

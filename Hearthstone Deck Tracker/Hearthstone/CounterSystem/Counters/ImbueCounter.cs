@@ -24,6 +24,7 @@ public class ImbueCounter : NumericCounter
 		HearthDb.CardIds.NonCollectible.Deathknight.Finality_BlessingOfTheInfinite,
 		HearthDb.CardIds.NonCollectible.Rogue.Eventuality_BlessingOfTheBronze,
 		HearthDb.CardIds.Collectible.Neutral.MalorneTheWaywatcher,
+		HearthDb.CardIds.Collectible.Druid.HamuulRunetotem,
 	};
 
 	public ImbueCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
