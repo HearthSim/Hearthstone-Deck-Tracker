@@ -1,9 +1,12 @@
 ## **Unreleased**
 **Hearthstone**:
 - Added counter for Dragoncaller Alanna.
+- Added counter for Crystal Stag.
+- Added counter for Knight of the Wild and Frostsaber Matriarch.
 
 **Battlegrounds**:
 - Improve handling of MMR reset in session widget.
+- Fixed a number of Bob's Buddy predictions caused by the new Battlegrounds Season.
 
 **Streaming:**
 - Fixed the opponent's hero power not being hoverable in the Twitch Extension.
