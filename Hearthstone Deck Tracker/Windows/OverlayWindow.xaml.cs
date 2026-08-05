@@ -1145,9 +1145,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LinkOpponentDeckDisplay.Hide(true);
 		}
 
-		internal void UpdatePlayerResourcesWidget(int maxHealth, int maxMana, int maxHandSize)
+		internal void UpdatePlayerResourcesWidget(int maxHealth, int maxMana, int maxHandSize, int? maxGold)
 		{
-			PlayerResourcesViewModel.UpdatePlayerResourcesWidget(maxHealth, maxMana, maxHandSize);
+			PlayerResourcesViewModel.UpdatePlayerResourcesWidget(maxHealth, maxMana, maxHandSize, maxGold: maxGold);
 		}
 
 		internal void UpdateOpponentResourcesWidget(int maxHealth, int maxMana, int maxHandSize, int? corpsesLeft)

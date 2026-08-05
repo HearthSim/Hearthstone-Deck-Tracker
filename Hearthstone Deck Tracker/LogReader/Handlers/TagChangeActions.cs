@@ -26,6 +26,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		//We have to remove cards moved from deck -> graveyard when this is the parent block due to a data leak introduced by blizzard to the classic format.
 		const string ClassicTrackingCardId = HearthDb.CardIds.Collectible.Hunter.TrackingVanilla;
 
+		// Battlegrounds gold cap, not in HearthDb yet. MAXRESOURCES is a flat 99 in Battlegrounds and never moves.
+		const GameTag BaconMaxGold = (GameTag)3148;
+
 		public Action? FindAction(GameTag tag, IGame game, IHsGameState gameState, int id, int value, int prevValue)
 		{
 			return () =>
@@ -130,6 +133,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case MAXRESOURCES:
 						MaxResourcesChange(gameState, id, game, value, prevValue);
 						break;
+					case BaconMaxGold:
+						MaxGoldChange(gameState, id, game, value);
+						break;
 					case MAXHANDSIZE:
 						MaxHandSizeChange(gameState, id, game, value, prevValue);
 						break;
@@ -176,6 +182,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						OnNextOpponentPlayerId(id, value, game);
 						break;
 				}
+
 				game.CounterManager.HandleTagChange(tag, gameState, id, value, prevValue);
 			};
 		}
@@ -207,6 +214,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					game.SnapshotBattlegroundsBoardState();
 				}
+
 				if(game.IsBattlegroundsDuosMatch && game.CurrentGameStats != null)
 				{
 					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?
@@ -228,7 +236,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					game.DuosSetHeroModified(false);
 				}
 			}
-			else if (game.IsTraditionalHearthstoneMatch)
+			else if(game.IsTraditionalHearthstoneMatch)
 			{
 				if(!game.Entities.TryGetValue(heroEntityId, out var entity))
 					return;
@@ -277,7 +285,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
 			if(entity.CardId != NonCollectible.Neutral.DrBoomsMonster
-				&& entity.CardId != NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1)
+			   && entity.CardId != NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1)
 				return;
 			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
 				?.UpdateDrBoomsMonsterReborn(entity.GetTag(CREATOR), value, entity.IsControlledBy(game.Player.Id));
@@ -290,7 +298,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
 			if(entity.CardId != NonCollectible.Neutral.ForestLordCenarius_Malorne1
-				&& entity.CardId != NonCollectible.Neutral.ForestLordCenarius_Malorne2)
+			   && entity.CardId != NonCollectible.Neutral.ForestLordCenarius_Malorne2)
 				return;
 			if(entity.IsControlledBy(game.Player.Id))
 				return;
@@ -306,14 +314,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(game.CurrentGameStats == null)
 				return;
 			var block = gameState.CurrentBlock;
-			if(block == null || block.Type != "TRIGGER" || block.CardId != NonCollectible.Neutral.Baconshop8playerenchantTavernBrawl || value != 1)
+			if(block == null || block.Type != "TRIGGER"
+			                 || block.CardId != NonCollectible.Neutral.Baconshop8playerenchantTavernBrawl || value != 1)
 				return;
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
 			if(!entity.IsHeroPower || entity.IsControlledBy(game.Player.Id))
 				return;
 
-			if(entity.CardId != entity.Info.LatestCardId) Log.Warn($"CardId Mismatch {entity.CardId} vs {entity.Info.LatestCardId}");
+			if(entity.CardId != entity.Info.LatestCardId)
+				Log.Warn($"CardId Mismatch {entity.CardId} vs {entity.Info.LatestCardId}");
 		}
 
 		private void OnCardCopy(int id, int value, IGame game, IHsGameState gameState)
@@ -330,7 +340,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			)
 			{
 				if(game.CurrentGameStats != null)
-					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateLockAndLoadHeroPower(entity, entity.IsControlledBy(game.Opponent.Id));
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+						?.UpdateLockAndLoadHeroPower(entity, entity.IsControlledBy(game.Opponent.Id));
 			}
 
 			// Sandy transforms into a copy of the teammate's highest-Health minion. Capture from Sandy's own
@@ -339,7 +350,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			// (no CARDTYPE/CREATOR) and only revealed after the transform, with its zone already REMOVEDFROMGAME.
 			if(
 				game.CurrentGameMode == GameMode.Battlegrounds &&
-				(gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Sandy || gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Sandy_Sandy) &&
+				(gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Sandy
+				 || gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Sandy_Sandy) &&
 				entity.IsMinion &&
 				gameState.CurrentBlock?.SourceEntityId == entity.Id &&
 				entity.IsInZone(PLAY) &&
@@ -347,7 +359,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			)
 			{
 				if(game.CurrentGameStats != null)
-					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateSandyTransformDuos(entity);
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+						?.UpdateSandyTransformDuos(entity);
 			}
 
 			// Glorious Gloop transforms the chosen minion into the teammate's highest-Tier minion. Capture the
@@ -361,19 +374,22 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			)
 			{
 				if(game.CurrentGameStats != null)
-					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateFlobbidinousFloopTransformDuos(entity, gameState.CurrentBlock.SourceEntityId);
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+						?.UpdateFlobbidinousFloopTransformDuos(entity, gameState.CurrentBlock.SourceEntityId);
 			}
 
 			if(
 				game.CurrentGameMode == GameMode.Battlegrounds &&
-				(gameState.CurrentBlock?.CardId == NonCollectible.Neutral.SummoningSphere || gameState.CurrentBlock?.CardId == NonCollectible.Neutral.LesserTrinket) &&
+				(gameState.CurrentBlock?.CardId == NonCollectible.Neutral.SummoningSphere
+				 || gameState.CurrentBlock?.CardId == NonCollectible.Neutral.LesserTrinket) &&
 				entity.IsMinion &&
 				gameState.CurrentBlock?.SourceEntityId == entity.GetTag(CREATOR) &&
 				(entity.IsInZone(SETASIDE) || entity.IsInZone(PLAY))
 			)
 			{
 				if(game.CurrentGameStats != null)
-					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.UpdateSummoningSphereDuos(entity, entity.GetTag(CREATOR));
+					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+						?.UpdateSummoningSphereDuos(entity, entity.GetTag(CREATOR));
 			}
 
 			if(!game.Entities.TryGetValue(value, out var targetEntity))
@@ -405,6 +421,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					game.Opponent.PredictUniqueCardInDeck(entity.Info.LatestCardId, false);
 					Core.UpdateOpponentCards();
 				}
+
 				return;
 			}
 
@@ -480,7 +497,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			Collectible.Mage.PuzzleBoxOfYoggSaron,
 		};
 
-		private void OnDredge(Hearthstone.Entities.Entity entity, Hearthstone.Entities.Entity target, IGame game, IHsGameState gameState)
+		private void OnDredge(Hearthstone.Entities.Entity entity, Hearthstone.Entities.Entity target, IGame game,
+			IHsGameState gameState)
 		{
 			if(entity.GetTag(LINKED_ENTITY) != target.Id)
 				return;
@@ -504,7 +522,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			}
 
-			if (gameState.CurrentBlock.DredgeCounter == 0)
+			if(gameState.CurrentBlock.DredgeCounter == 0)
 			{
 				gameState.DredgeCounter += 3;
 			}
@@ -556,10 +574,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					// on themselves instead of the created entity.
 					return;
 				}
+
 				if(game.Entities.TryGetValue(displayedCreatorId, out var displayedCreator))
 				{
 					// For some reason Far Sight sets DISPLAYED_CREATOR on the entity
-					if(displayedCreator.CardId == Collectible.Shaman.FarSight || displayedCreator.CardId == Collectible.Shaman.FarSightCore || displayedCreator.CardId == Collectible.Shaman.FarSightVanilla)
+					if(displayedCreator.CardId == Collectible.Shaman.FarSight
+					   || displayedCreator.CardId == Collectible.Shaman.FarSightCore
+					   || displayedCreator.CardId == Collectible.Shaman.FarSightVanilla)
 						return;
 				}
 
@@ -569,6 +590,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					// Same precaution as for Direhorn Hatching above.
 					return;
 				}
+
 				if(creatorId == game.GameEntity?.Id)
 					return;
 				// All cards created by Whizbang have a creator tag set
@@ -578,10 +600,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						return;
 					var controller = creator.GetTag(CONTROLLER);
 					var usingWhizbang = controller == game.Player?.Id && game.Player.IsPlayingWhizbang
-										|| controller == game.Opponent?.Id && game.Opponent.IsPlayingWhizbang;
+					                    || controller == game.Opponent?.Id && game.Opponent.IsPlayingWhizbang;
 					if(usingWhizbang && creator.IsInSetAside)
 						return;
 				}
+
 				entity.Info.Created = true;
 			}
 		}
@@ -617,10 +640,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if((Step)value == Step.BEGIN_MULLIGAN)
 				gameState.GameHandler?.HandleBeginMulligan();
 			gameState.GameHandler?.HandleMercenariesStateChange();
-			if (game.PlayerEntity != null && game.PlayerEntity.HasTag(CURRENT_PLAYER) && (Step)value == Step.MAIN_CLEANUP) {
-				var remainingMana = game.PlayerEntity.GetTag(RESOURCES) + game.PlayerEntity.GetTag(TEMP_RESOURCES) - game.PlayerEntity.GetTag(RESOURCES_USED);
+			if(game.PlayerEntity != null && game.PlayerEntity.HasTag(CURRENT_PLAYER)
+			                             && (Step)value == Step.MAIN_CLEANUP)
+			{
+				var remainingMana = game.PlayerEntity.GetTag(RESOURCES) + game.PlayerEntity.GetTag(TEMP_RESOURCES)
+				                    - game.PlayerEntity.GetTag(RESOURCES_USED);
 				game.SecretsManager.HandlePlayerTurnEnd(remainingMana);
 			}
+
 			if(game.SetupDone || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
 				return;
 			Log.Info("Game was already in progress.");
@@ -643,7 +670,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void ProposedDefenderChange(IGame game, int value) => game.ProposedDefender = value;
 
-		private void ProposedAttackerChange(IHsGameState gameState, int id, IGame game, int value) {
+		private void ProposedAttackerChange(IHsGameState gameState, int id, IGame game, int value)
+		{
 			game.ProposedAttacker = value;
 			if(value <= 0)
 				return;
@@ -674,6 +702,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						.MaybeRunDuosPartialCombat();
 				}
 			}
+
 			gameState.GameHandler?.HandleProposedAttackerChange(entity);
 		}
 
@@ -739,6 +768,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			else if(entity.IsControlledBy(game.Opponent.Id))
 			{
 				gameState.GameHandler?.HandleOpponentMaxManaChange(value);
+			}
+		}
+
+		private void MaxGoldChange(IHsGameState gameState, int id, IGame game, int value)
+		{
+			if(value <= 0)
+				return;
+			if(!game.IsBattlegroundsMatch)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+
+			if(entity.IsControlledBy(game.Player.Id))
+			{
+				gameState.GameHandler?.HandlePlayerMaxGoldChange(value);
 			}
 		}
 

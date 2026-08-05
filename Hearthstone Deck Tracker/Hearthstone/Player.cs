@@ -24,6 +24,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private const int InitialMaxHealth = 30;
 		private const int InitialMaxMana = 10;
 		private const int InitialMaxHandSize = 10;
+		// Battlegrounds gold caps here unless an anomaly or hero effect raises it
+		internal const int InitialMaxGold = 10;
 
 		public Player(IGame game, bool isLocalPlayer)
 		{
@@ -39,6 +41,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int MaxHealth { get; set; }
 		public int MaxMana { get; set; }
 		public int MaxHandSize { get; set; }
+		public int MaxGold { get; set; }
 		public int? CorpsesLeft { get; set; }
 		public bool IsLocalPlayer { get; }
 		public int SpellsPlayedCount => SpellsPlayedCards.Count;
@@ -505,6 +508,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			MaxMana = InitialMaxMana;
 			MaxHealth = InitialMaxHealth;
 			MaxHandSize = InitialMaxHandSize;
+			MaxGold = InitialMaxGold;
 			CorpsesLeft = null;
 			HasDeathKnightTourist = false;
 			InDeckPredictions.Clear();

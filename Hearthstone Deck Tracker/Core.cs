@@ -637,7 +637,8 @@ namespace Hearthstone_Deck_Tracker
 
 		internal static void UpdatePlayerResourcesWidget()
 		{
-			Overlay.UpdatePlayerResourcesWidget(Game.Player.MaxHealth, Game.Player.MaxMana, Game.Player.MaxHandSize);
+			var shouldShowMaxGold = Game.IsBattlegroundsMatch && Game.Player.MaxGold > Player.InitialMaxGold;
+			Overlay.UpdatePlayerResourcesWidget(Game.Player.MaxHealth, Game.Player.MaxMana, Game.Player.MaxHandSize, shouldShowMaxGold ? Game.Player.MaxGold : null);
 		}
 
 		internal static void UpdateOpponentResourcesWidget()

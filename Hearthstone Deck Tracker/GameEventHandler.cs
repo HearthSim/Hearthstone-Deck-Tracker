@@ -1357,6 +1357,12 @@ namespace Hearthstone_Deck_Tracker
 			Core.UpdateOpponentResourcesWidget();
 		}
 
+		public void HandlePlayerMaxGoldChange(int value)
+		{
+			_game.Player.MaxGold = value;
+			Core.UpdatePlayerResourcesWidget();
+		}
+
 		public void HandleOpponentCorpsesLeftChange(int value)
 		{
 			_game.Opponent.CorpsesLeft = value;
@@ -2975,6 +2981,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentMaxManaChange(int value) => HandleOpponentMaxManaChange(value);
 		void IGameHandler.HandlePlayerMaxHandSizeChange(int value) => HandlePlayerMaxHandSizeChange(value);
 		void IGameHandler.HandleOpponentMaxHandSizeChange(int value) => HandleOpponentMaxHandSizeChange(value);
+		void IGameHandler.HandlePlayerMaxGoldChange(int value) => HandlePlayerMaxGoldChange(value);
 		void IGameHandler.HandleOpponentCorpsesLeftChange(int value) => HandleOpponentCorpsesLeftChange(value);
 		void IGameHandler.HandlePlayerLibramReduction(int value) => HandlePlayerLibramReduction(value);
 		void IGameHandler.HandleOpponentLibramReduction(int value) => HandleOpponentLibramReduction(value);

@@ -40,6 +40,10 @@
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTurnCounter_Checked"
                   Unchecked="CheckboxShowBattlegroundsTurnCounter_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowBattlegroundsMaxResourcesWidget" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_MaxResourcesWidget}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsMaxResourcesWidget_Checked"
+                  Unchecked="CheckboxShowBattlegroundsMaxResourcesWidget_Unchecked" Margin="10,5,0,0" />
         <CheckBox x:Name="CheckboxShowChinaModuleOverlay" Content="显示重连器"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxCheckboxShowChinaModuleOverlay_Checked"

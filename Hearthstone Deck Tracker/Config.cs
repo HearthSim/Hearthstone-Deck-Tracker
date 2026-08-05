@@ -462,6 +462,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool HidePlayerMaxResourcesWidget = false;
 
 		[DefaultValue(false)]
+		public bool HidePlayerMaxResourcesWidgetBattlegrounds = false;
+
+		[DefaultValue(false)]
 		public bool HidePlayerCardCount = false;
 
 		[DefaultValue(false)]

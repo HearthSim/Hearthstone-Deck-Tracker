@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentMaxManaChange(int value);
 		void HandlePlayerMaxHandSizeChange(int value);
 		void HandleOpponentMaxHandSizeChange(int value);
+		void HandlePlayerMaxGoldChange(int value);
 
 		void HandleOpponentJoust(Entity entity, string? cardId, int turn);
 		void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn);

@@ -291,15 +291,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdatePlayerResourcesWidgetVisibility()
 		{
-			if(_game.IsInMenu || !_game.IsMulliganDone || _game.IsBattlegroundsMatch)
+			if(_game.IsInMenu || !_game.IsMulliganDone)
 			{
 				PlayerResourcesWidget.Visibility = Collapsed;
 				OpponentResourcesWidget.Visibility = Collapsed;
 			}
 			else
 			{
-				PlayerResourcesWidget.Visibility = Config.Instance.HidePlayerMaxResourcesWidget ? Collapsed : Visible;
-				OpponentResourcesWidget.Visibility = Config.Instance.HideOpponentMaxResourcesWidget ? Collapsed : Visible;
+				var hidePlayerWidget = _game.IsBattlegroundsMatch
+					? Config.Instance.HidePlayerMaxResourcesWidgetBattlegrounds
+					: Config.Instance.HidePlayerMaxResourcesWidget;
+				PlayerResourcesWidget.Visibility = hidePlayerWidget ? Collapsed : Visible;
+				OpponentResourcesWidget.Visibility = Config.Instance.HideOpponentMaxResourcesWidget || _game.IsBattlegroundsMatch ? Collapsed : Visible;
 			}
 		}
 

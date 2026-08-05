@@ -17,6 +17,7 @@ public class PlayerResourcesViewModel : INotifyPropertyChanged
 	private bool _manaChanged;
 	private bool _handSizeChanged;
 	private bool _corpsesChanged;
+	private bool _goldChanged;
 
 	private List<Resource> _changedResources = new();
 	public List<Resource> ChangedResources
@@ -42,14 +43,18 @@ public class PlayerResourcesViewModel : INotifyPropertyChanged
 		_manaChanged = false;
 		_handSizeChanged = false;
 		_corpsesChanged = false;
+		_goldChanged = false;
+
+		ChangedResources = new List<Resource>();
 	}
 
-	public void UpdatePlayerResourcesWidget(int maxHealth, int maxMana, int maxHandSize, int? corpsesLeft = null)
+	public void UpdatePlayerResourcesWidget(int maxHealth, int maxMana, int maxHandSize, int? corpsesLeft = null, int? maxGold = null)
 	{
 		_healthChanged |= maxHealth != _initialMaxHealth;
 		_manaChanged |= maxMana != _initialMaxMana;
 		_handSizeChanged |= maxHandSize != _initialMaxHandSize;
 		_corpsesChanged = corpsesLeft != null;
+		_goldChanged = maxGold != null;
 
 		var updated = new List<Resource>();
 
@@ -64,6 +69,9 @@ public class PlayerResourcesViewModel : INotifyPropertyChanged
 
 		if (_corpsesChanged && corpsesLeft is not null)
 			updated.Add(new Resource("/Images/corpses.png", corpsesLeft.Value));
+
+		if (_goldChanged && maxGold is not null)
+			updated.Add(new Resource("/Images/coin-cost.png", maxGold.Value));
 
 		ChangedResources = updated;
 	}

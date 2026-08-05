@@ -77,6 +77,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowBattlegroundsBrowser.IsChecked = Config.Instance.ShowBattlegroundsBrowser;
 			CheckboxAlwaysShowBattlegroundsTavernTier7.IsChecked = Config.Instance.AlwaysShowBattlegroundsTavernTier7;
 			CheckboxShowBattlegroundsTurnCounter.IsChecked = Config.Instance.ShowBattlegroundsTurnCounter;
+			CheckboxShowBattlegroundsMaxResourcesWidget.IsChecked = !Config.Instance.HidePlayerMaxResourcesWidgetBattlegrounds;
 			CheckboxShowBattlegroundsTavernMarkers.IsChecked = Config.Instance.ShowBattlegroundsTavernMarkers;
 			CheckboxAutoEnableTavernMarkersRecommended.IsChecked = Config.Instance.AutoEnableTavernMarkersRecommended;
 			CheckboxShowTavernMarkersQuickGuides.IsChecked = !Config.Instance.DismissedTavernMarkerQuickQuickGuide && !Config.Instance.DismissedCompGuidesMarkerQuickGuide;
@@ -368,6 +369,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.TurnCounter.Visibility = Visibility.Collapsed;
+		}
+
+		private void CheckboxShowBattlegroundsMaxResourcesWidget_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerMaxResourcesWidgetBattlegrounds = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.PlayerResourcesWidget.Visibility = Visibility.Visible;
+		}
+
+		private void CheckboxShowBattlegroundsMaxResourcesWidget_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerMaxResourcesWidgetBattlegrounds = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.PlayerResourcesWidget.Visibility = Visibility.Collapsed;
 		}
 
 		private void CheckboxShowBattlegroundsTavernMarkers_Checked(object sender, RoutedEventArgs e)

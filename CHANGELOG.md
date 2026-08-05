@@ -1,5 +1,7 @@
 ## Unreleased
 **Battlegrounds**:
+- Added max gold to the Max Resources widget (when it is above 10).\
+  *You can toggle this using the setting at Options > Battlegrounds > Show Maximum Gold.*
 - Fixed bogus "Unsupported Card" warnings when a lockbox transformed.
 
 ## **Release v1.55.1 - 2026-08-05**
