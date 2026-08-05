@@ -900,7 +900,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OpacityMaskOverlay.AddMaskedRegion("MulliganAnomaly", rect);
 		}
 
-		public void SetDiscoverCardOpacityMask(int zoneSize)
+		public void SetDiscoverCardOpacityMask(int zoneSize, bool hasDarkGifts)
 		{
 			OpacityMaskOverlay.RemoveMaskedRegion("DiscoverCard");
 
@@ -908,7 +908,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 
 			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
-			var rects = regionDrawer.DrawDiscoverCardRegions(zoneSize);
+			var rects = regionDrawer.DrawDiscoverCardRegions(zoneSize, hasDarkGifts);
 
 			using var _ = OpacityMaskOverlay.StartBatchUpdate();
 			foreach(var rect in rects)
@@ -1587,7 +1587,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(cards.All(x => x.TypeEnum == CardType.BATTLEGROUND_TRINKET))
 				SetTrinketPickingOpacityMask(cards.Count);
 			else if(cards.All(x => x.TypeEnum == CardType.MINION || x.TypeEnum == CardType.BATTLEGROUND_SPELL || x.TypeEnum == CardType.SPELL))
-				SetDiscoverCardOpacityMask(cards.Count);
+			{
+				var hasDarkGifts = _game.Player.OfferedEntities.Any(x => x.GetTag(GameTag.DARK_GIFT_ENTITY) > 0);
+				SetDiscoverCardOpacityMask(cards.Count, hasDarkGifts);
+			}
 		}
 
 		internal void HandleSpecialShop(SpecialShopChoicesArgs args)

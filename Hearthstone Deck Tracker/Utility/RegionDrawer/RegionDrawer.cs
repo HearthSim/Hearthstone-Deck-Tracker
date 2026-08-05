@@ -50,6 +50,13 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 		// the big card frame extends about 0.065 above the card region, so this keeps its visual top at the screen edge
 		private const double BigCardTopLimit = 0.06;
 
+		// dark gift choice cards render larger and spaced wider than regular discovers, with a banner of
+		// varying height below each card (the region height is generous to cover the tallest banners)
+		private const double DarkGiftCardHeight = 0.605;
+		private const double DarkGiftCardAspectRatio = 33.2 / (DarkGiftCardHeight * 100);
+		private const double DarkGiftCardSpacing = 0.287;
+		private const double DarkGiftCardY = 0.185;
+
 		private double Height { get; }
 		private double Width { get; }
 		private double ScreenRatio { get; }
@@ -377,24 +384,26 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 				yield return DrawCardRegion(offsetX + 0.293, offsetY, AnomalyHeight, AnomalyAspectRatio);
 		}
 
-		public List<Rect> DrawDiscoverCardRegions(int zoneSize)
+		public List<Rect> DrawDiscoverCardRegions(int zoneSize, bool hasDarkGifts)
 		{
 			var regions = new List<Rect>();
 
 			if(zoneSize == 0)
 				return regions;
 
-			const double discoverCardSpacing = 0.27;
+			var cardSpacing = hasDarkGifts ? DarkGiftCardSpacing : 0.27;
+			var layoutCenter = hasDarkGifts ? 0.519 : 0.53;
+			var cardY = hasDarkGifts ? DarkGiftCardY : 0.29;
 
-			var totalWidth = zoneSize * discoverCardSpacing;
-			var leftEdge = 0.53 - totalWidth / 2;
-
-			var cardY = 0.29;
+			var totalWidth = zoneSize * cardSpacing;
+			var leftEdge = layoutCenter - totalWidth / 2;
 
 			for (var i = 0; i < zoneSize; i++)
 			{
-				var cardX = leftEdge + i * discoverCardSpacing;
-				var rect = DrawCardRegion(cardX, cardY);
+				var cardX = leftEdge + i * cardSpacing;
+				var rect = hasDarkGifts
+					? DrawCardRegion(cardX, cardY, DarkGiftCardHeight, DarkGiftCardAspectRatio)
+					: DrawCardRegion(cardX, cardY);
 				regions.Add(rect);
 			}
 
