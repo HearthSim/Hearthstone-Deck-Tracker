@@ -3,6 +3,7 @@
 	public enum BobsBuddyWarningState
 	{
 		None,
-		DataQuality
+		DataQuality,
+		UpdateAvailable
 	}
 }

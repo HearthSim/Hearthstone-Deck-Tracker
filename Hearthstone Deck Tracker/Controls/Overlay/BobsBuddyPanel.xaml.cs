@@ -20,8 +20,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			InitializeComponent();
 			ResetDisplays();
 
-			WarningState = Remote.Config.Data?.BobsBuddy?.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
-			Remote.Config.Loaded += cfg => WarningState = cfg?.BobsBuddy?.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
+			WarningState = GetWarningState(Remote.Config.Data);
+			Remote.Config.Loaded += cfg => WarningState = GetWarningState(cfg);
+		}
+
+		private static BobsBuddyWarningState GetWarningState(RemoteData.Config? config)
+		{
+			var bobsBuddy = config?.BobsBuddy;
+			if(bobsBuddy == null)
+				return BobsBuddyWarningState.None;
+			if(bobsBuddy.MinRecommendedVersion is string minVersion &&
+			   Version.TryParse(minVersion, out var recommendedVersion)
+			   && recommendedVersion > Helper.GetCurrentVersion())
+				return BobsBuddyWarningState.UpdateAvailable;
+			return bobsBuddy.DataQualityWarning ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
 		}
 
 		private string? _winRateDisplay;
@@ -127,6 +139,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(StatusMessage));
 				OnPropertyChanged(nameof(WarningIconVisibility));
+				OnPropertyChanged(nameof(WarningIconTextTooltip));
+				OnPropertyChanged(nameof(WarningIconTooltipEnabled));
 			}
 		}
 
@@ -168,7 +182,24 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public Visibility WarningIconVisibility => ErrorState == BobsBuddyErrorState.None && WarningState == BobsBuddyWarningState.None ? Visibility.Collapsed : Visibility.Visible;
 
-		public string? WarningIconTextTooltip => WarningState == BobsBuddyWarningState.DataQuality ? LocUtil.Get("BobsBuddyWarningTooltip_DataQuality") : null;
+		public string? WarningIconTextTooltip
+		{
+			get
+			{
+				if(ErrorState == BobsBuddyErrorState.UpdateRequired)
+					return null;
+				switch(WarningState)
+				{
+					case BobsBuddyWarningState.DataQuality:
+						return LocUtil.Get("BobsBuddyWarningTooltip_DataQuality");
+					case BobsBuddyWarningState.UpdateAvailable:
+						var version = Remote.Config.Data?.BobsBuddy?.MinRecommendedVersion ?? "";
+						return string.Format(LocUtil.Get("BobsBuddyWarningTooltip_UpdateAvailable"), version);
+					default:
+						return null;
+				}
+			}
+		}
 		public bool WarningIconTooltipEnabled => WarningIconTextTooltip != null;
 
 

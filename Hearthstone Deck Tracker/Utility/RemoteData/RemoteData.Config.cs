@@ -118,6 +118,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("min_required_version")]
 			public string? MinRequiredVersion { get; set; }
 
+			[JsonProperty("min_recommended_version")]
+			public string? MinRecommendedVersion { get; set; }
+
 			[JsonProperty("sentry_min_required_version")]
 			public string? SentryMinRequiredVersion { get; set; }
 
