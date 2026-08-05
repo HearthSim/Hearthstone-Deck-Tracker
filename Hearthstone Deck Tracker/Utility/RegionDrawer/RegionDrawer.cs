@@ -47,6 +47,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 		private const double AnomalyHeight = 0.45;
 		private const double AnomalyAspectRatio = 32 / (AnomalyHeight * 100);
 
+		// the big card frame extends about 0.065 above the card region, so this keeps its visual top at the screen edge
+		private const double BigCardTopLimit = 0.06;
+
 		private double Height { get; }
 		private double Width { get; }
 		private double ScreenRatio { get; }
@@ -154,6 +157,18 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 			var tooltipOffsetX = offsetX + CardToToolTipOffsetX;
 			var rectTooltip = DrawCardTooltipRegion(relativePosition <= 0.5 ? tooltipOffsetX : tooltipOffsetX - CardHeight, offsetY, tooltipHeight);
 			var rectEnchants = DrawCardEnchantRegion(offsetX, offsetY, enchantHeight);
+
+			// the game anchors an overflowing enchantment list to the screen bottom and pushes the card and tooltips up,
+			// but keeps the card top on screen (BigCard.FitInsideScreenBottom, then FitInsideScreenTop)
+			var overflow = rectEnchants.Bottom - 1;
+			if(overflow > 0)
+			{
+				var shift = Math.Min(overflow, Math.Max(rectCard.Y - BigCardTopLimit, 0));
+				rectCard.Y -= shift;
+				rectTooltip.Y -= shift;
+				rectEnchants.Y -= shift;
+			}
+
 			regions.Add(rectCard);
 			regions.Add(rectTooltip);
 			regions.Add(rectEnchants);
