@@ -4,6 +4,8 @@
   *You can toggle this using the setting at Options > Battlegrounds > Show Maximum Gold.*
 - Fixed overlay elements sometimes covering the Dark Gift banners.
 - Fixed bogus "Unsupported Card" warnings when a Lockbox transformed.
+- Fixed the all-time MMR permanently showing the current MMR on certain accounts.
+- Fixed a number of incorrect combat odds.
 
 ## **Release v1.55.1 - 2026-08-05**
 **Hearthstone**:
