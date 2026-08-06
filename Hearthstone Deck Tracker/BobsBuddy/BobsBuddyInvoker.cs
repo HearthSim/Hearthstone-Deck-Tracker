@@ -713,6 +713,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			inputPlayer.BeastsSummonCounter = playerEntity.GetTag((GameTag)3962);   // direct
 
+			inputPlayer.TastyLobsterCounter = playerEntity.GetTag((GameTag)4803);   // direct
+
 			inputPlayer.FriendlyMinionsDeadLastCombatCounter = playerEntity.GetTag((GameTag)2717);   // direct
 
 			inputPlayer.BattlecryCounter = playerEntity.GetTag((GameTag)3236);   // direct
