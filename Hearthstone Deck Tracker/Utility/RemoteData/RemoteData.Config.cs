@@ -29,6 +29,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("mulligan_guide")]
 			public MulliganGuideData? MulliganGuide { get; set; }
 
+			[JsonProperty("mulligan_gv2")]
+			public MulliganGV2Data? MulliganGV2 { get; set; }
+
 			[JsonProperty("arenasmith")]
 			public ArenasmithData? Arenasmith { get; set; }
 
@@ -144,6 +147,12 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 		{
 			[JsonProperty("disabled")]
 			public bool Disabled { get; set; }
+		}
+
+		internal class MulliganGV2Data
+		{
+			[JsonProperty("enable_tavern_brawl")]
+			public bool EnableTavernBrawl { get; set; }
 		}
 
 		internal class ArenasmithData

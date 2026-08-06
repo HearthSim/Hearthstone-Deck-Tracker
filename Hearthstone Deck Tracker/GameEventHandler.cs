@@ -1023,7 +1023,7 @@ namespace Hearthstone_Deck_Tracker
 					ToastManager.ShowGameResultToast(deckName ?? "Unknown deck", _game.CurrentGameStats);
 				}
 
-				if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
+				if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch || _game.IsMulliganGV2BrawlOverride)
 				{
 					CaptureMulliganGuideFeedback(_game.CurrentFormatType);
 				}
@@ -1379,7 +1379,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				HandleBattlegroundsStart();
 			}
-			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
+			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch || _game.IsMulliganGV2BrawlOverride)
 				HandleHearthstoneMulliganPhase();
 		}
 
@@ -1395,13 +1395,12 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.BattlegroundsHeroGuideListViewModel.OnMulliganEnded();
 				Core.Overlay.ResetAnomalyGuidesMulliganTrigger();
 			}
-			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch)
+			else if(_game.IsConstructedMatch || _game.IsFriendlyMatch || _game.IsArenaMatch || _game.IsMulliganGV2BrawlOverride)
 			{
 				Core.Overlay.HideMulliganToast(false);
 
 				var openingHand = _game.SnapshotOpeningHand();
-				var isV2 = _game.CurrentFormatType is FormatType.FT_STANDARD &&
-				            _game.CurrentGameType is GameType.GT_RANKED or GameType.GT_VS_FRIEND;
+				var isV2 = _game.IsMulliganGV2Match;
 
 				if((isV2 || _game.MulliganCardStats != null) && (Config.Instance.EnableMulliganGuide || Config.Instance.EnableMulliganGV2))
 				{
@@ -1688,8 +1687,7 @@ namespace Hearthstone_Deck_Tracker
 				if(step > (int)Step.BEGIN_MULLIGAN)
 					break;
 
-				var isV2 = _game.CurrentFormatType is FormatType.FT_STANDARD &&
-				                    _game.CurrentGameType is GameType.GT_RANKED or GameType.GT_VS_FRIEND;
+				var isV2 = _game.IsMulliganGV2Match;
 
 				_game.SnapshotMulligan();
 				_game.CacheMulliganGuideParams(isV2);
@@ -1819,10 +1817,11 @@ namespace Hearthstone_Deck_Tracker
 			if(!Config.Instance.GoogleAnalytics || _game.Spectator)
 				return;
 
-			var isV2 = format is FormatType.FT_STANDARD;
+			var isBrawlOverride = _game.IsMulliganGV2BrawlOverride;
+			var isV2 = isBrawlOverride || format is FormatType.FT_STANDARD;
 			if(isV2)
 			{
-				if(_game.CurrentGameMode != Ranked)
+				if(!isBrawlOverride && _game.CurrentGameMode != Ranked)
 					return;
 
 				var v2Parameters = _game.GetMulliganV2FeedbackParams();
@@ -1933,7 +1932,10 @@ namespace Hearthstone_Deck_Tracker
 			string? token = null;
 			if(!userOwnsPremium)
 			{
-				if(!IsDeckAvailableForMulliganGuide((BnetGameType)parameters.GameType, parameters.Deckstring))
+				// The pre-lobby only runs in the constructed lobby, so there is no deck status
+				// cached for a brawl deck. Let the request through and let the response decide.
+				if(!_game.IsMulliganGV2BrawlOverride
+					&& !IsDeckAvailableForMulliganGuide((BnetGameType)parameters.GameType, parameters.Deckstring))
 					return null;
 
 				var acc = Reflection.Client.GetAccountId();

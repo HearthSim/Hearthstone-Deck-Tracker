@@ -24,6 +24,7 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using HSReplay;
 using HSReplay.OAuth.Data;
@@ -182,6 +183,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool IsArenaMatch => CurrentGameType is GameType.GT_ARENA or GameType.GT_UNDERGROUND_ARENA;
 		public bool IsFriendlyMatch => CurrentGameType == GameType.GT_VS_FRIEND;
+
+		public bool IsMulliganGV2BrawlOverride => CurrentGameType == GameType.GT_TAVERNBRAWL
+												&& (Remote.Config.Data?.MulliganGV2?.EnableTavernBrawl ?? false);
+
+		public bool IsMulliganGV2Match => IsMulliganGV2BrawlOverride
+										|| (CurrentFormatType is FormatType.FT_STANDARD
+											&& CurrentGameType is GameType.GT_RANKED or GameType.GT_VS_FRIEND);
 
 		public bool IsTraditionalHearthstoneMatch => !IsBattlegroundsMatch && !IsMercenariesMatch;
 
@@ -648,11 +656,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var starLevel = PlayerMedalInfo?.StarLevel ?? 0;
 				var starsPerWin = PlayerMedalInfo?.StarsPerWin ?? 0;
 
+				var asRankedStandard = IsMulliganGV2BrawlOverride;
+
 				Log.Info($"--- Caching Mulligan Params ---");
 
 				_mulliganV2Params = new MulliganV2Params
 				{
-					Deckstring = DeckSerializer.Serialize(HearthDbConverter.ToHearthDbDeck(activeDeck), false),
+					Deckstring = DeckSerializer.Serialize(
+						HearthDbConverter.ToHearthDbDeck(activeDeck, asRankedStandard ? FormatType.FT_STANDARD : null), false
+					),
 					PlayerClass = _playerClass.ToString(),
 					DeckCards = playerDeck,
 					OpponentClass = opponentClass.ToString(),
@@ -660,8 +672,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					PlayerRegion = ((BnetRegion)CurrentRegion).ToString(),
 					PlayerStarLevel = starLevel > 0 ? starLevel : null,
 					PlayerStarMultiplier = starsPerWin > 0 ? starsPerWin : null,
-					GameType = (int)HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat),
-					FormatType = (int)CurrentFormatType,
+					GameType = (int)(asRankedStandard
+						? BnetGameType.BGT_RANKED_STANDARD
+						: HearthDbConverter.GetBnetGameType(CurrentGameType, CurrentFormat)),
+					FormatType = (int)(asRankedStandard ? FormatType.FT_STANDARD : CurrentFormatType),
 					OfferedCards = dbfIds ?? MulliganState.OfferedCards?.Select(x => x.Card.DbfId).ToArray()
 				};
 
