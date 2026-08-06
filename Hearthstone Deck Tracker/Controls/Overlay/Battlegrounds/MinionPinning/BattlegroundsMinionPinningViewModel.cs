@@ -7,6 +7,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 using System.Collections.ObjectModel;
 using Hearthstone_Deck_Tracker.Utility;
@@ -36,6 +37,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 		private const int SlotGroupSize = 5;
 
 		public BattlegroundsMinionPinning? View { get; set; }
+
+		public BattlegroundsCompsGuidesViewModel? CompsGuidesVM { get; set; }
 
 		public BattlegroundsMinionPinningViewModel()
 		{
@@ -191,7 +194,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 			_recommendedCardIds.Clear();
 			_recommendedCardGuides.Clear();
 
-			var guidesVm = Core.Overlay.BattlegroundsCompsGuidesVM;
+			var guidesVm = CompsGuidesVM;
 			if(guidesVm == null)
 				return;
 
@@ -507,7 +510,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 			{
 				SetProp(value);
 				ConfigWrapper.TavernMarkersPanelExpanded = value;
-				Core.Overlay.UpdateElementSizes();
 			}
 		}
 

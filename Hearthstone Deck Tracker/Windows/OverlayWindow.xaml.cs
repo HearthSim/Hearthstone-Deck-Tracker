@@ -453,12 +453,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 				HookGameWindow();
 				UpdatePosition();
 			}
+			// wire before the initial Update, resets during it may recompute recommendations
+			BattlegroundsMinionPinningViewModel.CompsGuidesVM = BattlegroundsCompsGuidesVM;
+
 			Update(true);
 			UpdateScaling();
 			UpdatePlayerLayout();
 			UpdateOpponentLayout();
 			GridMain.Visibility = Visible;
 
+			BattlegroundsMinionPinningViewModel.PropertyChanged += (_, e) =>
+			{
+				if(e.PropertyName == nameof(BattlegroundsMinionPinningViewModel.IsExpanded))
+					UpdateElementSizes();
+			};
 			BattlegroundsInspirationViewModel.OnClose += HideBgsInspiration;
 			RelatedCardsPanelViewModel.OnClose += HideRelatedCardsPanel;
 			MulliganGuideTrialsExhaustedViewModel.OnClose += DismissMulliganGuideTrialsExhausted;
@@ -1074,6 +1082,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			BattlegroundsMinionsVM.Reset();
 			BattlegroundsCompsGuidesVM.OnMatchEnd();
+			BattlegroundsGuidesTabsViewModel.Reset();
+			BattlegroundsHeroGuideListViewModel.Reset();
+			BattlegroundsQuestGuideListViewModel.Reset();
+			BattlegroundsTrinketGuideListViewModel.Reset();
+			BattlegroundsAnomalyGuideListViewModel.Reset();
+			ResetAnomalyGuidesMulliganTrigger();
+			BattlegroundsHeroPickingViewModel.Reset();
+			BattlegroundsQuestPickingViewModel.Reset();
+			BattlegroundsTrinketPickingViewModel.Reset();
+			HideBattlegroundsHeroPanel();
+			HideBattlegroundsTimewarpPanel();
 			_bgsTopBarBehavior.Hide();
 			_bgsTopBarTriggerMaskBehavior.Hide();
 			TurnCounter.UpdateTurn(1);
@@ -1083,7 +1102,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HideBgsInspiration();
 			BtnTier7Inspiration.IsEnabled = false;
 
+			BattlegroundsMinionPinningViewModel.Reset();
 			BgsMinionPinningVisibility = Collapsed;
+
+			ChinaModuleVM.Reset();
 			HideBgsChinaModulePanel();
 		}
 
