@@ -58,13 +58,34 @@
             </Style>
         </Grid.Resources>
 
-        <!-- Pre-rendered fallback for non-default card themes -->
-        <Viewbox Visibility="{Binding IsPreRendered, Converter={StaticResource BoolToVisibility}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" StretchDirection="DownOnly" Stretch="Fill">
-            <Grid Width="217" Height="34">
-                <Rectangle Fill="{Binding PreRenderedCard}" />
-                <Rectangle Fill="{Binding PreRenderedHighlight}" Style="{StaticResource HighlightAnimation}" />
-            </Grid>
-        </Viewbox>
+        <!-- Pre-rendered fallback for non-default card themes.
+        Optional tile features use template-gated Controls: a Control has no default template, so a
+        disabled feature costs a single empty element instead of its collapsed (or merely transparent)
+        subtree. This matters at the volume the Battlegrounds minion browser creates tiles. -->
+        <Control Focusable="False">
+            <Control.Style>
+                <Style TargetType="Control">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsPreRendered}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Control">
+                                        <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" StretchDirection="DownOnly" Stretch="Fill">
+                                            <Grid Width="217" Height="34">
+                                                <Rectangle Fill="{Binding PreRenderedCard}" />
+                                                <Rectangle Fill="{Binding PreRenderedHighlight}" Style="{StaticResource HighlightAnimation}" />
+                                            </Grid>
+                                        </Viewbox>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Control.Style>
+        </Control>
 
         <Grid Visibility="{Binding IsPreRendered, Converter={StaticResource InverseBoolToVisibility}}">
             <Border BorderBrush="#000000" BorderThickness="1" Background="#313131">
@@ -73,32 +94,66 @@
                 </Border.CacheMode>
                 <DockPanel Name="Content">
                     <!-- Cost -->
-                    <Border DockPanel.Dock="Left" BorderThickness="0,0,1,0" BorderBrush="#000000"
-                            Visibility="{Binding IsCostVisible, Converter={StaticResource BoolToVisibility}}"
-                            Width="{Binding ActualHeight, ElementName=Content}">
-                        <Grid>
-                            <Rectangle Fill="{Binding GemColorBrush}" Opacity=".5"/>
-                            <hearthstoneDeckTracker:HearthstoneTextBlock
-                                Text="{Binding Cost}" Margin="2" FontSize="20" HorizontalAlignment="Center"
-                                FontStretch="Condensed" FontWeight="Normal" VerticalAlignment="Center"/>
-                        </Grid>
-                    </Border>
+                    <Control DockPanel.Dock="Left" Focusable="False"
+                             Width="{Binding ActualHeight, ElementName=Content}">
+                        <Control.Style>
+                            <Style TargetType="Control">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCostVisible}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Control">
+                                                    <Border BorderThickness="0,0,1,0" BorderBrush="#000000">
+                                                        <Grid>
+                                                            <Rectangle Fill="{Binding GemColorBrush}" Opacity=".5"/>
+                                                            <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                                Text="{Binding Cost}" Margin="2" FontSize="20" HorizontalAlignment="Center"
+                                                                FontStretch="Condensed" FontWeight="Normal" VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Control.Style>
+                    </Control>
 
                     <!-- Count -->
-                    <Border Name="CountContainer" DockPanel.Dock="Right" BorderThickness="1,0,0,0" BorderBrush="#000000"
-                            Visibility="{Binding IsCountVisible, Converter={StaticResource BoolToVisibility}}"
-                            Width="{Binding ActualHeight, ElementName=Content, Converter={StaticResource MultiplyConverter}, ConverterParameter=0.7}">
-                        <Grid Margin="0,0,0,0">
-                            <hearthstoneDeckTracker:HearthstoneTextBlock
-                                Text="{Binding Count}" FontSize="17" TextAlignment="Center" Fill="#f0c348" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                FontStretch="Condensed" FontWeight="Normal" Visibility="{Binding IsCountTextVisible, Converter={StaticResource BoolToVisibility}}"/>
-                            <Image Source="{StaticResource LegendaryStar}" RenderOptions.BitmapScalingMode="Fant"
-                                   Visibility="{Binding IsLegendaryIconVisible, Converter={StaticResource BoolToVisibility}}"
-                                   VerticalAlignment="Center" HorizontalAlignment="Center"
-                                   Height="{Binding ActualHeight, ElementName=Content, Converter={StaticResource MultiplyConverter}, ConverterParameter=0.85}"
-                                   Width="{Binding ActualHeight, ElementName=Content, Converter={StaticResource MultiplyConverter}, ConverterParameter=0.85}" />
-                        </Grid>
-                    </Border>
+                    <Control DockPanel.Dock="Right" Focusable="False"
+                             Width="{Binding ActualHeight, ElementName=Content, Converter={StaticResource MultiplyConverter}, ConverterParameter=0.7}">
+                        <Control.Style>
+                            <Style TargetType="Control">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCountVisible}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Control">
+                                                    <Border BorderThickness="1,0,0,0" BorderBrush="#000000">
+                                                        <Grid Margin="0,0,0,0">
+                                                            <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                                Text="{Binding Count}" FontSize="17" TextAlignment="Center" Fill="#f0c348" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                FontStretch="Condensed" FontWeight="Normal" Visibility="{Binding IsCountTextVisible, Converter={StaticResource BoolToVisibility}}"/>
+                                                            <Image Source="{StaticResource LegendaryStar}" RenderOptions.BitmapScalingMode="Fant"
+                                                                   Visibility="{Binding IsLegendaryIconVisible, Converter={StaticResource BoolToVisibility}}"
+                                                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                   Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=DockPanel}, Converter={StaticResource MultiplyConverter}, ConverterParameter=0.85}"
+                                                                   Width="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=DockPanel}, Converter={StaticResource MultiplyConverter}, ConverterParameter=0.85}" />
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Control.Style>
+                    </Control>
 
                     <!-- Art & Everything on top of it-->
                     <Grid ClipToBounds="True">
@@ -135,35 +190,84 @@
                         <DockPanel Grid.Column="0" Grid.ColumnSpan="2">
 
                             <!-- Mulligan Winrate -->
-                            <Grid DockPanel.Dock="Right" VerticalAlignment="Center" Visibility="{Binding MulliganText, Converter={StaticResource NullableToVisibility}}">
-                                <Grid.Style>
-                                    <Style TargetType="Grid">
+                            <Control DockPanel.Dock="Right" VerticalAlignment="Center" Focusable="False">
+                                <Control.Style>
+                                    <Style TargetType="Control">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
                                         <Setter Property="Margin" Value="0,0,4,0"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsVisible, ElementName=CountContainer}" Value="False">
+                                            <DataTrigger Binding="{Binding IsMulliganVisible}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Control">
+                                                            <Grid>
+                                                                <Border CornerRadius="7" Background="{Binding MulliganBackground}" VerticalAlignment="Stretch"
+                                                                        BorderBrush="{Binding MulliganBorderColor}" BorderThickness="{Binding MulliganBorderThickness}" />
+                                                                <hearthstoneDeckTracker:HearthstoneTextBlock
+                                                                    Text="{Binding MulliganText}" Margin="6,4" Fill="{Binding MulliganTextColor}" VerticalAlignment="Center"
+                                                                    FontFamily="{Binding NameFontFamily}" FontSize="15" FontStretch="Condensed" FontWeight="{Binding NameFontWeight}" />
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsCountVisible}" Value="False">
                                                 <Setter Property="Margin" Value="{Binding ActualHeight, ElementName=Content, Converter={StaticResource MulliganMarginConverter}, ConverterParameter=0.7}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </Grid.Style>
-                                <Border CornerRadius="7" Background="{Binding MulliganBackground}" VerticalAlignment="Stretch"
-                                        BorderBrush="{Binding MulliganBorderColor}" BorderThickness="{Binding MulliganBorderThickness}" />
-                                <hearthstoneDeckTracker:HearthstoneTextBlock
-                                    Text="{Binding MulliganText}" Margin="6,4" Fill="{Binding MulliganTextColor}" VerticalAlignment="Center"
-                                    FontFamily="{Binding NameFontFamily}" FontSize="15" FontStretch="Condensed" FontWeight="{Binding NameFontWeight}" />
-                            </Grid>
+                                </Control.Style>
+                            </Control>
 
-                            <!-- This icon is probably small enough that we don't need to scale it -->
-                            <Image DockPanel.Dock="Right" Source="{StaticResource IconCreated}" Visibility="{Binding IsCreatedIconVisible, Converter={StaticResource BoolToVisibility}}" Height="15" Margin="4,0"/>
+                            <!-- Created icon -->
+                            <Control DockPanel.Dock="Right" Focusable="False">
+                                <Control.Style>
+                                    <Style TargetType="Control">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsCreatedIconVisible}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Control">
+                                                            <!-- This icon is probably small enough that we don't need to scale it -->
+                                                            <Image Source="{StaticResource IconCreated}" Height="15" Margin="4,0"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Control.Style>
+                            </Control>
 
                             <!-- Battlegrounds Spell Cost -->
-                            <Grid DockPanel.Dock="Right" Visibility="{Binding IsBaconSpell, Converter={StaticResource BoolToVisibility}}">
-                                <Image Source="{StaticResource CoinCost}"
-                                    Width="{Binding ActualHeight, ElementName=Content, Converter={StaticResource MultiplyConverter}, ConverterParameter=.75}"
-                                    Height="{Binding ActualHeight, ElementName=Content, Converter={StaticResource MultiplyConverter}, ConverterParameter=.75}" />
+                            <Control DockPanel.Dock="Right" Focusable="False">
+                                <Control.Style>
+                                    <Style TargetType="Control">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsBaconSpell}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Control">
+                                                            <Grid>
+                                                                <Image Source="{StaticResource CoinCost}"
+                                                                    Width="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=DockPanel}, Converter={StaticResource MultiplyConverter}, ConverterParameter=.75}"
+                                                                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=DockPanel}, Converter={StaticResource MultiplyConverter}, ConverterParameter=.75}" />
 
-                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Cost}" FontSize="17" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            </Grid>
+                                                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Cost}" FontSize="17" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Control.Style>
+                            </Control>
 
                             <!-- Card Name -->
                             <hearthstoneDeckTracker:HearthstoneTextBlock
@@ -180,18 +284,36 @@
             <Grid Background="#000000" Opacity="0.6" Visibility="{Binding IsDarkened, Converter={StaticResource BoolToVisibility}}"/>
 
             <!-- Related Cards Highlight -->
-            <Grid ClipToBounds="True"  Style="{StaticResource HighlightAnimation}">
-                <Border BorderBrush="{Binding HighlightBrush}" BorderThickness="1" Opacity="0.6" />
-                <Grid Margin="1" ClipToBounds="True">
-                    <Rectangle Fill="{Binding HighlightBrush}" Opacity="0.08" />
-                    <Border BorderBrush="{Binding HighlightBrush}" BorderThickness="6" Margin="-2" CornerRadius="5" Opacity="0.5">
-                        <Border.Effect>
-                            <BlurEffect Radius="7"/>
-                        </Border.Effect>
-                    </Border>
-                    <Border BorderBrush="{Binding HighlightBrush}" BorderThickness="3" Margin="-2" CornerRadius="4"/>
-                </Grid>
-            </Grid>
+            <Control Focusable="False">
+                <Control.Style>
+                    <Style TargetType="Control">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowDeckListFeatures}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Control">
+                                            <Grid ClipToBounds="True" Style="{StaticResource HighlightAnimation}">
+                                                <Border BorderBrush="{Binding HighlightBrush}" BorderThickness="1" Opacity="0.6" />
+                                                <Grid Margin="1" ClipToBounds="True">
+                                                    <Rectangle Fill="{Binding HighlightBrush}" Opacity="0.08" />
+                                                    <Border BorderBrush="{Binding HighlightBrush}" BorderThickness="6" Margin="-2" CornerRadius="5" Opacity="0.5">
+                                                        <Border.Effect>
+                                                            <BlurEffect Radius="7"/>
+                                                        </Border.Effect>
+                                                    </Border>
+                                                    <Border BorderBrush="{Binding HighlightBrush}" BorderThickness="3" Margin="-2" CornerRadius="4"/>
+                                                </Grid>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Control.Style>
+            </Control>
         </Grid>
     </Grid>
 </UserControl>

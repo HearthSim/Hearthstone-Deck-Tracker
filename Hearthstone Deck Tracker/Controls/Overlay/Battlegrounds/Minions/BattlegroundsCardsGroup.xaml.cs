@@ -15,9 +15,23 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChanged
 {
 
+	// Unloading (e.g. by being virtualized away in the minions browser) strips the card list, and
+	// re-realizing a recycled container may re-bind an unchanged Cards value, which would leave the
+	// group empty. Track the unload so the next load repopulates.
+	private bool _repopulateOnLoad;
+
 	public BattlegroundsCardsGroup()
 	{
 		InitializeComponent();
+		Unloaded += (_, _) => _repopulateOnLoad = true;
+		Loaded += (_, _) =>
+		{
+			if(!_repopulateOnLoad)
+				return;
+			_repopulateOnLoad = false;
+			if(Cards is not null)
+				UpdateCards(Cards.ToList());
+		};
 	}
 
 	public event PropertyChangedEventHandler? PropertyChanged;
@@ -217,6 +231,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 
 	public void UpdateCards(List<Hearthstone.Card> cards)
 	{
+		_repopulateOnLoad = false;
 		CardsList.ShowTier7InspirationButton = IsInspirationEnabled;
 		CardsList.ShowPinButton = true;
 		CardsList.Update(cards, true);

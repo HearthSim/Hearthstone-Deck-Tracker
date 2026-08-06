@@ -35,10 +35,10 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 		RunStoryBoardNonBlocking(storyboardKey);
 	}
 
-	public void Update(Hearthstone.Card card, bool showTier7InspirationBtn = false)
+	public void Update(Hearthstone.Card card, bool showTier7InspirationBtn = false, bool showDeckListFeatures = true)
 	{
 		DataContext = card;
-		CardTileViewModel = new CardTileViewModel(card);
+		CardTileViewModel = new CardTileViewModel(card, showDeckListFeatures);
 		BtnTier7Inspiration.Visibility = showTier7InspirationBtn ? Visibility.Visible : Visibility.Collapsed;
 		UpdatePinButtonState();
 	}

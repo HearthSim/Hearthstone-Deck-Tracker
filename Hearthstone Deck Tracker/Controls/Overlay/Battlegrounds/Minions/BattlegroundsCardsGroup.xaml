@@ -65,7 +65,7 @@
                         />
                     </DockPanel>
                 </Border>
-                <controls:AnimatedCardList x:Name="CardsList"/>
+                <controls:AnimatedCardList x:Name="CardsList" ShowDeckListFeatures="False"/>
             </StackPanel>
         </Grid>
     </Border>

@@ -257,31 +257,47 @@
                     </Grid>
                 </Border>
             </Grid>
-            <ScrollViewer x:Name="MinionScrollViewer" HorizontalAlignment="Right"
-                          VerticalScrollBarVisibility="Auto"
-                          ext:OverlayExtensions.IsOverlayHitTestVisible="True">
-                <StackPanel>
-                    <ItemsControl
-                        x:Name="GroupsControl"
-                        ItemsSource="{Binding Groups}"
-                    >
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:BattlegroundsCardsGroup
-                                    Tier="{Binding Tier}"
-                                    MinionType="{Binding MinionType}"
-                                    GroupedByMinionType="{Binding GroupedByMinionType}"
-                                    Keyword="{Binding Keyword}"
-                                    GroupedByKeyword="{Binding GroupedByKeyword}"
-                                    Cards="{Binding Cards}"
-                                    IsInspirationEnabled="{Binding IsInspirationEnabled}"
-                                    ClickMinionTypeCommand="{Binding SetActiveMinionTypeCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
-                                />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </ScrollViewer>
+            <ItemsControl
+                x:Name="GroupsControl"
+                ItemsSource="{Binding Groups}"
+                HorizontalAlignment="Right"
+                VirtualizingPanel.IsVirtualizing="True"
+                VirtualizingPanel.ScrollUnit="Pixel"
+                VirtualizingPanel.CacheLengthUnit="Pixel"
+                VirtualizingPanel.CacheLength="0,0"
+                VirtualizingPanel.VirtualizationMode="Recycling"
+            >
+                <ItemsControl.Template>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <ScrollViewer x:Name="MinionScrollViewer"
+                                      VerticalScrollBarVisibility="Auto"
+                                      CanContentScroll="True"
+                                      Focusable="False"
+                                      ext:OverlayExtensions.IsOverlayHitTestVisible="True">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:BattlegroundsCardsGroup
+                            Tier="{Binding Tier}"
+                            MinionType="{Binding MinionType}"
+                            GroupedByMinionType="{Binding GroupedByMinionType}"
+                            Keyword="{Binding Keyword}"
+                            GroupedByKeyword="{Binding GroupedByKeyword}"
+                            Cards="{Binding Cards}"
+                            IsInspirationEnabled="{Binding IsInspirationEnabled}"
+                            ClickMinionTypeCommand="{Binding SetActiveMinionTypeCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
+                        />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </DockPanel>
 
         <!-- Hacky: Hide the right end of the top border of the overlayed panel -->

@@ -1,3 +1,7 @@
+## Unreleased
+**Battlegrounds**:
+- Improved performance when opening and filtering the minion browser.
+
 ## **Release v1.55.2 - 2026-08-06**
 **Battlegrounds**:
 - Added max gold to the Max Resources widget (when it is above 10).\

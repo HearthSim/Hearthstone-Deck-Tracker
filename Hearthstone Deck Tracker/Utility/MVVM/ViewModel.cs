@@ -50,15 +50,20 @@ public class ViewModel : INotifyPropertyChanged
 		return false;
 	}
 
-	private readonly List<string> _localizedPropNames;
+	// a view model is constructed per card tile on every browser filter change, and reflecting over every
+	// property on each instance came out at roughly 0.2ms per view model in a profile
+	private static readonly ConcurrentDictionary<Type, IReadOnlyList<string>> _localizedPropNamesByType = new();
+
+	private readonly IReadOnlyList<string> _localizedPropNames;
 	protected ViewModel()
 	{
 		// This allows us to annotate (getter only) properties with [LozalizedProp] to automatically
 		// update them when the language changes.
-		_localizedPropNames = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
-			.Where(p => p.GetCustomAttributes(typeof(LocalizedPropAttribute), true).Any())
-			.Select(x => x.Name)
-			.ToList();
+		_localizedPropNames = _localizedPropNamesByType.GetOrAdd(GetType(), type =>
+			type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
+				.Where(p => p.GetCustomAttributes(typeof(LocalizedPropAttribute), true).Any())
+				.Select(x => x.Name)
+				.ToList());
 		if(_localizedPropNames.Count > 0)
 			LocalizeDictionary.Instance.PropertyChanged += LocalizeDictionary_OnPropertyChanged;
 	}

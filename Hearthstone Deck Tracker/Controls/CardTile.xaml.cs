@@ -69,10 +69,14 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 
 	public new Hearthstone.Card Card => base.Card!;
 
-	public CardTileViewModel(Hearthstone.Card card) : base(card, CardAssetType.Tile)
+	public CardTileViewModel(Hearthstone.Card card, bool showDeckListFeatures = true) : base(card, CardAssetType.Tile)
 	{
+		ShowDeckListFeatures = showDeckListFeatures;
 		WeakEventManager<Hearthstone.Card, PropertyChangedEventArgs>.AddHandler(Card, nameof(Card.PropertyChanged), CardOnPropertyChanged);
 	}
+
+	// gates deck-list-only tile features (highlight overlay), so static browsers skip their element cost
+	public bool ShowDeckListFeatures { get; }
 
 	// @cleanup: We still heavily rely on Hearthstone.Card in many places at the "de-facto card data container".
 	// Most of the UI related data could probably be moved here, but that would require a larger refactor.
@@ -112,6 +116,7 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 		}
 		else if(e.PropertyName is nameof(Card.IsMulliganOption) or nameof(Card.CardWinrates))
 		{
+			OnPropertyChanged(nameof(IsMulliganVisible));
 			OnPropertyChanged(nameof(MulliganText));
 			OnPropertyChanged(nameof(MulliganTextColor));
 			OnPropertyChanged(nameof(MulliganBackground));
@@ -263,6 +268,7 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 	public bool IsCreatedIconVisible => Card.IsCreated;
 	public bool IsBaconSpell => Card.TypeEnum == CardType.BATTLEGROUND_SPELL;
 
+	public bool IsMulliganVisible => Card.CardWinrates != null;
 	public string? MulliganText => Card.CardWinrates != null ? $"{Card.CardWinrates.Value.MulliganWinrate:0.0}%" : null;
 
 	private static SolidColorBrush DefaultMulliganColor { get; } = new(Color.FromRgb(255, 255, 255));

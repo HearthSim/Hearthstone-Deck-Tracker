@@ -26,7 +26,7 @@ public partial class BattlegroundsMinions : UserControl
 	void BattlegroundsMinionsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
 	{
 		if(e.PropertyName == nameof(BattlegroundsMinionsViewModel.ActiveTier))
-			MinionScrollViewer.ScrollToTop();
+			(GroupsControl.Template?.FindName("MinionScrollViewer", GroupsControl) as ScrollViewer)?.ScrollToTop();
 	}
 
 	public ICommand SetActiveTierCommand => new Command<int>(value =>
