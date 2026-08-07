@@ -1,4 +1,7 @@
 ## Unreleased
+**Hearthstone**:
+- Fixed the Mulligan Guide skipping cards added by Commander Beatrix.
+
 **Battlegrounds**:
 - Improved performance when opening and filtering the minion browser.
 

@@ -1689,7 +1689,7 @@ namespace Hearthstone_Deck_Tracker
 
 				var isV2 = _game.IsMulliganGV2Match;
 
-				_game.SnapshotMulligan();
+				var offeredCards = _game.SnapshotMulligan();
 				_game.CacheMulliganGuideParams(isV2);
 
 				var showToast = Config.Instance.ShowMulliganToast && !_game.IsArenaMatch;
@@ -1701,9 +1701,6 @@ namespace Hearthstone_Deck_Tracker
 						var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
 						if(!string.IsNullOrEmpty(shortId))
 						{
-							var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created);
-							var dbfIds = cards.OrderBy(x => x.ZonePosition).Select(x => x.Card.DeckbuildingCard.DbfId).ToArray();
-
 							MulliganV2Data? mulliganGuideData = null;
 							if(Config.Instance.EnableMulliganGV2)
 							{
@@ -1724,8 +1721,7 @@ namespace Hearthstone_Deck_Tracker
 						var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
 						if(!string.IsNullOrEmpty(shortId))
 						{
-							var cards = _game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created);
-							var dbfIds = cards.OrderBy(x => x.ZonePosition).Select(x => x.Card.DeckbuildingCard.DbfId).ToArray();
+							var dbfIds = offeredCards.Select(x => x.Card.DeckbuildingCard.DbfId).ToArray();
 
 							MulliganGuideData? mulliganGuideData = null;
 							if(Config.Instance.EnableMulliganGuide)
