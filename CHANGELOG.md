@@ -1,4 +1,4 @@
-## Unreleased
+## **Release v1.55.3 - 2026-08-07**
 **Hearthstone**:
 - Fixed the spell cast by Ursol not being revealed in the opponent's decklist.
 - Fixed the Mulligan Guide skipping cards added by Commander Beatrix.
