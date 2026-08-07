@@ -456,6 +456,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private HashSet<FrameworkElement> _mouseOverElements = new();
 
+		private static readonly List<FrameworkElement> NoMouseOver = new();
+
 		private class ElementCache<T>
 		{
 			private readonly TimeSpan _maxAge;
@@ -491,10 +493,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(_transformCache.IsInvalid)
 				_transformCache.Clear();
 
-			var clickableMouseOver = _clickableElements.Where(e => ElementContains(e, (Point)cursorPos, _scaleCache.Dict, _transformCache.Dict)).ToList();
+			// behind Hearthstone the overlay is invisible to the player, so treat everything as un-hovered.
+			// going through the regular path (rather than returning early) lets the leave events fire for
+			// whatever was still hovered when the overlay went behind.
+			var behind = _overlayZState == OverlayZState.Behind;
+
+			var clickableMouseOver = behind ? NoMouseOver
+				: _clickableElements.Where(e => ElementContains(e, (Point)cursorPos, _scaleCache.Dict, _transformCache.Dict)).ToList();
 			SetClickthrough(clickableMouseOver.Count == 0);
 
-			var hoverableMouseOver = _hoverableElements.Where(x => ElementContains(x, (Point)cursorPos, _scaleCache.Dict, _transformCache.Dict)).ToList();
+			var hoverableMouseOver = behind ? NoMouseOver
+				: _hoverableElements.Where(x => ElementContains(x, (Point)cursorPos, _scaleCache.Dict, _transformCache.Dict)).ToList();
 
 #if HOVER_DEBUG
 			ClearHoverDebug();
