@@ -1,5 +1,6 @@
 ## Unreleased
 **Hearthstone**:
+- Fixed the spell cast by Ursol not being revealed in the opponent's decklist.
 - Fixed the Mulligan Guide skipping cards added by Commander Beatrix.
 
 **Battlegrounds**:

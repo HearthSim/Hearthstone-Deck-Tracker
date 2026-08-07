@@ -397,6 +397,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 			OnDredge(entity, targetEntity, game, gameState);
 
+			// Ursol casts the highest Cost spell from its controller's hand as an aura. The spell leaves
+			// the hand without ever being revealed, only the copy Ursol casts carries the card id. That
+			// copy is shown to both players, so back-fill the original to keep it in the tracked decklist.
+			if(
+				entity.HasCardId &&
+				(targetEntity.IsInHand || targetEntity.IsInSetAside) &&
+				!targetEntity.HasCardId &&
+				game.Entities.TryGetValue(entity.GetTag(CREATOR), out var ursol) &&
+				ursol.CardId == Collectible.Paladin.Ursol
+			)
+			{
+				targetEntity.CardId = entity.Info.LatestCardId;
+				targetEntity.Info.Hidden = false;
+				gameState.GameHandler?.HandleCardCopy();
+				return;
+			}
+
 			if(entity.IsControlledBy(game.Opponent.Id))
 				return;
 
