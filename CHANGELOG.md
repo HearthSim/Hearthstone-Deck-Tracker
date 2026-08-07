@@ -3,11 +3,8 @@
 - Fixed the spell cast by Ursol not being revealed in the opponent's decklist.
 - Fixed the Mulligan Guide skipping cards added by Commander Beatrix.
 
-**Battlegrounds**:
-- Improved performance when opening and filtering the minion browser.
-
 **Streaming:**
-- The capturable overlay now shows its contents even when Hearthstone is not in focus.\
+- The capturable overlay now shows it's contents even when Hearthstone is not in focus.\
   *This means your stream will continue seeing the overlay if e.g. you switch to a window on another screen. You may need to reorder the overlay to be exactly one layer above the game.*
 
 ## **Release v1.55.2 - 2026-08-06**
