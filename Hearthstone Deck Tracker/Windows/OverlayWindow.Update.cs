@@ -40,6 +40,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			for(var i = 0; i < 20; i++)
 			{
+				if(_overlayZState == OverlayZState.Behind)
+					return;
+
 				var isTopmost = User32.IsTopmost(new WindowInteropHelper(this).Handle);
 				if(isTopmost)
 				{
@@ -325,22 +328,49 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void UpdateVisibility()
 		{
-			var isHearthstoneInForeground = User32.IsHearthstoneInForeground();
+			var isForeground = User32.IsHearthstoneInForeground();
+			// minimized uses the opacity-0 path rather than moving the window: DWM stops
+			// producing frames for offscreen windows, which would freeze OBS capture. In
+			// place with opacity 0 the capture stays connected (transparent frames) and
+			// the window keeps its size and position.
+			var hardHidden = Config.Instance.HideOverlay
+			                  || (Config.Instance.HideOverlayInSpectator && _game.CurrentGameMode == GameMode.Spectator)
+			                  || Helper.GameWindowState == WindowState.Minimized;
+			var behind = !isForeground &&
+			             (_game.IsInMenu ? Config.Instance.HideMenuOverlayInBackground : Config.Instance.HideInBackground);
 
-			//hide the overlay depending on options
-			var visible = !((Config.Instance.HideInBackground && !isHearthstoneInForeground && !_game.IsInMenu)
-			                || (Config.Instance.HideMenuOverlayInBackground && !isHearthstoneInForeground && _game.IsInMenu)
-			                || (Config.Instance.HideOverlayInSpectator && _game.CurrentGameMode == GameMode.Spectator)
-			                || Config.Instance.HideOverlay
-			                || Helper.GameWindowState == WindowState.Minimized);
-			var updatePosition = visible && !IsContentVisible;
-			ShowOverlay(visible);
+			var newState = hardHidden ? OverlayZState.Hidden
+				: behind ? OverlayZState.Behind : OverlayZState.Visible;
+
+			var contentVisible = newState != OverlayZState.Hidden;
+			var updatePosition = contentVisible && !IsContentVisible;
+			ShowOverlay(contentVisible);
 			if(updatePosition)
 				UpdatePosition();
+
+			if(newState != _overlayZState)
+			{
+				_overlayZState = newState;
+				if(newState == OverlayZState.Behind)
+					SendToBack();
+				else if(newState == OverlayZState.Visible)
+					SetTopmost();
+			}
+			else if(newState == OverlayZState.Behind && User32.IsTopmost(new WindowInteropHelper(this).Handle))
+				SendToBack();
+		}
+
+		private void SendToBack()
+		{
+			SetClickthrough(true);
+			User32.SendWindowToBack(new WindowInteropHelper(this).Handle);
 		}
 
 		public void UpdatePosition()
 		{
+			if(Helper.GameWindowState == WindowState.Minimized)
+				return;
+
 			var hsRect = User32.GetHearthstoneRect(true);
 
 			//hs window has height 0 if it just launched, screwing things up if the tracker is started before hs is.

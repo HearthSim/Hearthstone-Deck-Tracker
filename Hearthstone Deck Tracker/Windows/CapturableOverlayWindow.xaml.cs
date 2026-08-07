@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility.Overlay;
@@ -10,7 +11,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class CapturableOverlayWindow : INotifyPropertyChanged
 	{
-		private bool _activated;
 		private bool _initialized;
 
 		public CapturableOverlayWindow()
@@ -38,11 +38,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var state = Helper.GameWindowState;
 			if(state == WindowState.Maximized)
 				state = WindowState.Normal;
-			if(_activated && state != WindowState.Minimized)
-			{
-				_activated = false;
-				User32.BringHsToForeground();
-			}
 			if(ForcedWindowState == state)
 				return;
 			ForcedWindowState = state;
@@ -80,12 +75,29 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void UpdateContentVisibility() => OnPropertyChanged(nameof(ContentVisibility));
 
+		private void CapturableOverlayWindow_OnSourceInitialized(object sender, EventArgs e)
+		{
+			var hwnd = new WindowInteropHelper(this).Handle;
+			User32.SetWindowExStyle(hwnd, User32.WsExNoActivate | User32.WsExTransparent);
+			User32.SendWindowToBack(hwnd);
+		}
+
 		private void CapturableOverlayWindow_OnStateChanged(object sender, EventArgs e)
 		{
 			if(ForcedWindowState.HasValue)
 				WindowState = ForcedWindowState.Value;
+
+			// restoring from minimized raises the window, so re-pin it behind Hearthstone
+			if(WindowState != WindowState.Minimized)
+				User32.SendWindowToBack(new WindowInteropHelper(this).Handle);
 		}
 
-		private void CapturableOverlayWindow_OnActivated(object sender, EventArgs e) => _activated = true;
+		// WsExNoActivate only blocks click activation, alt-tab can still bring this to the front
+		private void CapturableOverlayWindow_OnActivated(object sender, EventArgs e)
+		{
+			User32.SendWindowToBack(new WindowInteropHelper(this).Handle);
+			if(Helper.GameWindowState != WindowState.Minimized)
+				User32.BringHsToForeground();
+		}
 	}
 }

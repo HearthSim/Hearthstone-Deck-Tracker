@@ -35,6 +35,10 @@ namespace Hearthstone_Deck_Tracker
 		private const int WsMaximize = 0x1000000;
 		public const int SwRestore = 9;
 		public const int SwShow = 5;
+		public static readonly IntPtr HwndBottom = new IntPtr(1);
+		public const uint SwpNoSize = 0x0001;
+		public const uint SwpNoMove = 0x0002;
+		public const uint SwpNoActivate = 0x0010;
 		private const int Alt = 0xA4;
 		private const int ExtendedKey = 0x1;
 		private const int KeyUp = 0x2;
@@ -65,6 +69,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DllImport("user32.dll")]
 		public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+		[DllImport("user32.dll")]
+		public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
 
 		[DllImport("user32.dll")]
 		public static extern void mouse_event(uint dwFlags, uint dx, uint dy, int dwData, UIntPtr dwExtraInfo);
@@ -144,6 +151,13 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public static bool IsTopmost(IntPtr hwnd) => (GetWindowLong(hwnd, GwlExstyle) & WsExTopmost) != 0;
+
+		public static void SendWindowToBack(IntPtr hwnd)
+		{
+			if(hwnd == IntPtr.Zero)
+				return;
+			SetWindowPos(hwnd, HwndBottom, 0, 0, 0, 0, SwpNoMove | SwpNoSize | SwpNoActivate);
+		}
 
 		public static IntPtr GetHearthstoneWindow()
 		{

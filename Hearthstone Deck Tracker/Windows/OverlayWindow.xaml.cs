@@ -590,9 +590,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		/// </summary>
 		public bool IsContentVisible { get; private set; }
 
+		public enum OverlayZState { Hidden, Behind, Visible }
+		private OverlayZState _overlayZState = OverlayZState.Hidden;
+
 		public void HideOverlayWindow()
 		{
 			IsContentVisible = false;
+			_overlayZState = OverlayZState.Hidden;
 			SetClickthrough(true);
 			Hide();
 		}
