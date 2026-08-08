@@ -1,3 +1,8 @@
+## **Unreleased**
+**Hearthstone**:
+- The opponent's counters now account for Azalina Soulsever.\
+  *Half of their deck is copied from yours, so counters for payoffs in your own deck now also show up for the opponent once they start counting.*
+
 ## **Release v1.55.3 - 2026-08-07**
 **Hearthstone**:
 - Fixed the spell cast by Ursol not being revealed in the opponent's decklist.

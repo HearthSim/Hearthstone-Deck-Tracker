@@ -26,6 +26,7 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 		public Player Player { get; set; }
 		public Player Opponent { get; set; }
+		public HashSet<int> ControllersWithDeckCopiedFromEnemy { get; } = new HashSet<int>();
 		public Entity GameEntity { get; set; }
 		public Entity PlayerEntity { get; set; }
 		public Entity OpponentEntity { get; set; }

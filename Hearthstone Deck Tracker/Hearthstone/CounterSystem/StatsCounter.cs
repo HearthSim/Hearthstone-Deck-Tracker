@@ -34,6 +34,8 @@ public abstract class StatsCounter : BaseCounter
 
 	public override int SortValue => AttackCounter + HealthCounter;
 
+	protected override bool HasValue => AttackCounter > 0 || HealthCounter > 0;
+
 	public StatsCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 		AttackCounter = 0;

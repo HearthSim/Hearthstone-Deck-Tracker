@@ -63,9 +63,31 @@ public abstract class BaseCounter : INotifyPropertyChanged
 		{
 			CounterVisibility.Disabled => false,
 			CounterVisibility.Enabled => true,
-			_ => ShouldShow(),
+			_ => ShouldShow() || MirrorsPlayerDeckKnowledge,
 		};
 	}
+
+	/// <summary>
+	/// Opponent counters normally have to guess from the opponent's class and the format, because we
+	/// cannot see their deck. Azalina Soulsever copies half of our deck into theirs, so a payoff
+	/// sitting in our deck becomes a payoff they may hold too — judge those counters with the player's
+	/// deck knowledge on top of their own heuristic.
+	/// </summary>
+	protected bool MirrorsPlayerDeckKnowledge =>
+		!IsPlayerCounter
+		&& MirrorsPlayerDeck
+		&& Game.IsTraditionalHearthstoneMatch
+		&& Game.Opponent.DeckCopiedFromEnemy
+		&& HasValue
+		&& InPlayerDeckOrKnown(RelatedCards);
+
+	/// <summary>
+	/// Whether this counter takes part in the mirroring above. Opt out for counters that are
+	/// deliberately player-only.
+	/// </summary>
+	protected virtual bool MirrorsPlayerDeck => true;
+
+	protected abstract bool HasValue { get; }
 
 	protected BaseCounter(bool controlledByPlayer, GameV2 game)
 	{
@@ -166,7 +188,14 @@ public abstract class BaseCounter : INotifyPropertyChanged
 		get
 		{
 			var availableCardIds = GetAvailableCardIds();
-			foreach(var cardId in GetCardsToDisplay())
+
+			// The opponent branch of GetCardsToDisplay filters by their class, which would drop the
+			// cards Azalina copied out of our deck and leave the tooltip empty under the pill.
+			var cardIds = MirrorsPlayerDeckKnowledge
+				? GetCardsToDisplay().Concat(GetCardsInDeckOrKnown(RelatedCards)).Distinct()
+				: GetCardsToDisplay();
+
+			foreach(var cardId in cardIds)
 			{
 				var card = Database.GetCardFromId(cardId);
 				if(card == null)

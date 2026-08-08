@@ -130,6 +130,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int PrimaryPlayerId { get; set; }
 		public Player Player { get; set; }
 		public Player Opponent { get; set; }
+		public HashSet<int> ControllersWithDeckCopiedFromEnemy { get; } = new();
 		public bool IsInMenu { get; set; }
 		public bool IsUsingPremade { get; set; }
 		public bool IsRunning { get; set; }
@@ -471,6 +472,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				UpdatePlayers(MatchInfo);
 			ProposedAttacker = 0;
 			ProposedDefender = 0;
+			ControllersWithDeckCopiedFromEnemy.Clear();
 			Entities.Clear();
 			IsBattlegroundsCombatPhase = false;
 			SecretsManager.Reset();

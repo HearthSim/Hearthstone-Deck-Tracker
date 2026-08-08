@@ -84,7 +84,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						TransformedFromCardChange(id, value, game);
 						break;
 					case CREATOR:
+						CreatorChanged(id, value, game);
+						break;
 					case DISPLAYED_CREATOR:
+						AzalinaCopyCreated(id, value, game);
 						CreatorChanged(id, value, game);
 						break;
 					case WHIZBANG_DECK_ID:
@@ -576,6 +579,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(Config.Instance.AutoDeckDetection)
 				DeckManager.AutoSelectTemplateDeckByDeckId(game, value);
+		}
+
+		private void AzalinaCopyCreated(int id, int value, IGame game)
+		{
+			if(!game.Entities.TryGetValue(value, out var creator)
+				|| creator.CardId != Collectible.Priest.AzalinaSoulsever)
+				return;
+			if(!game.Entities.TryGetValue(id, out var copy))
+				return;
+
+			// Record the raw controller, not the side. This runs during CREATE_GAME, where Player.Id and
+			// Opponent.Id are still unset because CacheMatchInfo resolves them asynchronously.
+			var controller = copy.GetTag(CONTROLLER);
+			if(controller > 0)
+				game.ControllersWithDeckCopiedFromEnemy.Add(controller);
 		}
 
 		private void CreatorChanged(int id, int value, IGame game)

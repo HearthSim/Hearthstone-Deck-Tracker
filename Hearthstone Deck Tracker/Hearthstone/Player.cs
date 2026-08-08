@@ -56,6 +56,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Entity> EntitiesDiscardedFromHand { get; } = new();
 		public bool IsPlayingWhizbang { get; set; }
 		public bool HasDeathKnightTourist { get; set; }
+
+		/// <summary>
+		/// True when this player's deck was built half out of their enemy's cards (Azalina Soulsever).
+		/// </summary>
+		/// <remarks>
+		/// Resolved from <see cref="Id"/> on read rather than stored: the copies are created during
+		/// CREATE_GAME, and Player.Id/Opponent.Id only arrive once the async MatchInfo poll completes,
+		/// so at write time we do not yet know which side is which.
+		/// </remarks>
+		public bool DeckCopiedFromEnemy => Id > 0 && _game.ControllersWithDeckCopiedFromEnemy.Contains(Id);
 		public int PogoHopperPlayedCount { get; private set; }
 		public Entity? LastDiedMinionCard => DeadMinionsCards.LastOrDefault();
 		public List<Entity> DeadMinionsCards { get; } = new();

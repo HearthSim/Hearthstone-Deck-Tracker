@@ -27,6 +27,8 @@ public abstract class NumericCounter : BaseCounter
 
 	public int Value => Counter;
 
+	protected override bool HasValue => Counter > 0;
+
 	public override string ValueToShow() => Counter.ToString();
 
 	public override int SortValue => Counter;

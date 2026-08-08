@@ -21,6 +21,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		Player Player { get; set; }
 		Player Opponent { get; set; }
+		HashSet<int> ControllersWithDeckCopiedFromEnemy { get; }
 		Entity? GameEntity { get; }
 		Entity? PlayerEntity { get; }
 		Entity? OpponentEntity { get; }

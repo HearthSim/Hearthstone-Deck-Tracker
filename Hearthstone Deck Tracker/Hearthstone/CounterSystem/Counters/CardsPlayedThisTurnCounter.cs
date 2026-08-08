@@ -34,6 +34,9 @@ public class CardsPlayedThisTurnCounter: NumericCounter
 	{
 	}
 
+	// Player-only by design, so Azalina copying our deck does not make it meaningful for the opponent.
+	protected override bool MirrorsPlayerDeck => false;
+
 	public override bool ShouldShow()
 	{
 		if(!Game.IsTraditionalHearthstoneMatch) return false;
