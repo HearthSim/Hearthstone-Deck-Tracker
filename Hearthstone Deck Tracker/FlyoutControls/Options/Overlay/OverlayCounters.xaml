@@ -23,15 +23,21 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Ellipse Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center">
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="{Binding CardAsset.Asset}">
-                            <ImageBrush.Transform>
-                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="16" CenterY="11"/>
-                            </ImageBrush.Transform>
-                        </ImageBrush>
-                    </Ellipse.Fill>
-                </Ellipse>
+                <!-- Card portrait for real counters; rows without a card fall back to a plain icon.
+                     Exactly one of the two ever has a source, so they can simply overlap. -->
+                <Grid Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center">
+                    <Ellipse>
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding CardAsset.Asset}">
+                                <ImageBrush.Transform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="16" CenterY="11"/>
+                                </ImageBrush.Transform>
+                            </ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Image Source="{Binding IconSource}" Width="22" Height="22"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
 
                 <TextBlock Grid.Column="1" Text="{Binding DisplayName}" ToolTip="{Binding CounterId}"
                            VerticalAlignment="Center" Margin="8,0,10,0" TextTrimming="CharacterEllipsis"/>
@@ -40,7 +46,10 @@
                           ItemsSource="{Binding Source={x:Static overlay:CounterSettingRow.VisibilityOptions}}"
                           DisplayMemberPath="Label"
                           SelectedValuePath="Value"
-                          SelectedValue="{Binding PlayerVisibility, Mode=TwoWay}"/>
+                          SelectedValue="{Binding PlayerVisibility, Mode=TwoWay}"
+                          IsEnabled="{Binding IsPlayerSupported}"
+                          ToolTip="{Binding PlayerUnsupportedTooltip}"
+                          ToolTipService.ShowOnDisabled="True"/>
 
                 <ComboBox Grid.Column="3" Width="110" VerticalAlignment="Center"
                           ItemsSource="{Binding Source={x:Static overlay:CounterSettingRow.VisibilityOptions}}"

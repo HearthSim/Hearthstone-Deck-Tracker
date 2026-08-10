@@ -12,6 +12,7 @@ using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -638,12 +639,15 @@ namespace Hearthstone_Deck_Tracker
 		internal static void UpdatePlayerResourcesWidget()
 		{
 			var shouldShowMaxGold = Game.IsBattlegroundsMatch && Game.Player.MaxGold > Player.InitialMaxGold;
-			Overlay.UpdatePlayerResourcesWidget(Game.Player.MaxHealth, Game.Player.MaxMana, Game.Player.MaxHandSize, shouldShowMaxGold ? Game.Player.MaxGold : null);
+			var shouldShowCorpsesLeft = CorpsesCounterDescriptor.IsVisible(true, false);
+
+			Overlay.UpdatePlayerResourcesWidget(Game.Player.MaxHealth, Game.Player.MaxMana, Game.Player.MaxHandSize,
+				shouldShowCorpsesLeft ? Game.Player.CorpsesLeft : null, shouldShowMaxGold ? Game.Player.MaxGold : null);
 		}
 
 		internal static void UpdateOpponentResourcesWidget()
 		{
-			var shouldShowCorpsesLeft = Game.Opponent.HasDeathKnightTourist;
+			var shouldShowCorpsesLeft = CorpsesCounterDescriptor.IsVisible(false, Game.Opponent.HasDeathKnightTourist);
 			Overlay.UpdateOpponentResourcesWidget(Game.Opponent.MaxHealth, Game.Opponent.MaxMana, Game.Opponent.MaxHandSize, shouldShowCorpsesLeft ? Game.Opponent.CorpsesLeft : null);
 		}
 

@@ -860,9 +860,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.IsTraditionalHearthstoneMatch)
 				return;
 
-			if(entity.IsControlledBy(game.Opponent.Id))
+			var corpsesSpent = entity.GetTag(CORPSES_SPENT_THIS_GAME);
+			if(entity.IsControlledBy(game.Player.Id))
 			{
-				var corpsesSpent = entity.GetTag(CORPSES_SPENT_THIS_GAME);
+				gameState.GameHandler?.HandlePlayerCorpsesLeftChange(value - corpsesSpent);
+			}
+			else if(entity.IsControlledBy(game.Opponent.Id))
+			{
 				gameState.GameHandler?.HandleOpponentCorpsesLeftChange(value - corpsesSpent);
 			}
 		}
@@ -877,9 +881,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.IsTraditionalHearthstoneMatch)
 				return;
 
-			if(entity.IsControlledBy(game.Opponent.Id))
+			var corpses = entity.GetTag(CORPSES);
+			if(entity.IsControlledBy(game.Player.Id))
 			{
-				var corpses = entity.GetTag(CORPSES);
+				gameState.GameHandler?.HandlePlayerCorpsesLeftChange(corpses - value);
+			}
+			else if(entity.IsControlledBy(game.Opponent.Id))
+			{
 				gameState.GameHandler?.HandleOpponentCorpsesLeftChange(corpses - value);
 			}
 		}

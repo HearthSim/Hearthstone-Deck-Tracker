@@ -61,6 +61,8 @@ public static class CounterCatalog
 			}
 		}
 
+		descriptors.AddRange(WidgetCounters.Descriptors);
+
 		// Ordering is deliberately not applied here: DisplayName is live, so a card-language change
 		// would leave a cached order stale. The view model sorts at bind time instead.
 		_failedTypes = failures;

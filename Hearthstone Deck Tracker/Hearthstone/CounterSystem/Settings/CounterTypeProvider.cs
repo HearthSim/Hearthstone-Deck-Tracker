@@ -20,9 +20,12 @@ public static class CounterTypeProvider
 
 	public static IReadOnlyList<Type> GetCounterTypes() => _counterTypes ??= FindCounterTypes();
 
-	/// <summary>Persistence keys (<c>Type.Name</c>) of every counter this build knows about.</summary>
+	/// <summary>
+	/// Persistence keys of everything the options page can configure: every counter (<c>Type.Name</c>)
+	/// plus the widget readouts that behave like counters without being one.
+	/// </summary>
 	public static HashSet<string> GetKnownCounterIds() =>
-		_knownCounterIds ??= new HashSet<string>(GetCounterTypes().Select(t => t.Name));
+		_knownCounterIds ??= new HashSet<string>(GetCounterTypes().Select(t => t.Name).Concat(WidgetCounters.Ids));
 
 	private static IReadOnlyList<Type> FindCounterTypes()
 	{

@@ -110,7 +110,8 @@ public class CounterSettingRow : INotifyPropertyChanged
 
 	public string DisplayName => Descriptor.DisplayName;
 	public string CounterId => Descriptor.CounterId;
-	public CardAssetViewModel CardAsset => Descriptor.CardAsset;
+	public CardAssetViewModel? CardAsset => Descriptor.CardAsset;
+	public string? IconSource => Descriptor.IconSource;
 
 	private static IReadOnlyList<CounterVisibilityOption>? _visibilityOptions;
 
@@ -121,10 +122,11 @@ public class CounterSettingRow : INotifyPropertyChanged
 		new CounterVisibilityOption(CounterVisibility.Disabled, LocUtil.Get("OptionsCounters_Mode_Disabled")),
 	};
 
-	public bool IsOpponentSupported => !Descriptor.IsBattlegroundsCounter;
+	public bool IsPlayerSupported => Descriptor.SupportsPlayer;
+	public bool IsOpponentSupported => Descriptor.SupportsOpponent;
 
-	public string? OpponentUnsupportedTooltip =>
-		IsOpponentSupported ? null : LocUtil.Get("OptionsCounters_OpponentUnsupportedTooltip");
+	public string? PlayerUnsupportedTooltip => Descriptor.PlayerUnsupportedTooltip;
+	public string? OpponentUnsupportedTooltip => Descriptor.OpponentUnsupportedTooltip;
 
 	public CounterVisibility PlayerVisibility
 	{

@@ -2,6 +2,8 @@
 **Hearthstone**:
 - The opponent's counters now account for Azalina Soulsever.\
   *Half of their deck is copied from yours, so counters for payoffs in your own deck now also show up for the opponent once they start counting.*
+- Corpses can now be set to always or never show, for you and for your opponent, at Options > Overlay > Counters.\
+	*Corpses appear in the Max Resources widget rather than as a counter, but they are configured alongside the counters.*
 
 ## **Release v1.55.3 - 2026-08-07**
 **Hearthstone**:
