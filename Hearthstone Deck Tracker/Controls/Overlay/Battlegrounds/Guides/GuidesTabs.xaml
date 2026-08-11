@@ -10,12 +10,22 @@
              xmlns:heroes="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes"
              xmlns:quests="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Quests"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              Width="249"
              d:DesignHeight="249" d:DesignWidth="249"
              d:DataContext="{d:DesignInstance local:BattlegroundsGuidesTabsViewModel}"
              >
     <UserControl.Resources>
+        <!-- the tabs sit flush with the top of the screen, so the tooltip has to hang below them -->
+        <Style x:Key="TabTooltipStyle" TargetType="ToolTip" BasedOn="{StaticResource ArenaTooltipStyle}">
+            <Setter Property="Placement" Value="Bottom" />
+            <!-- the base style centers on the target, which would push the tooltip off the right edge -->
+            <Setter Property="HorizontalOffset" Value="0" />
+        </Style>
+
         <Style TargetType="Button">
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Background" Value="#141617" />
@@ -31,12 +41,19 @@
                                 BorderBrush="#3f4346"
                         >
                             <ContentPresenter
+                                x:Name="Content"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#2C3135" />
+                            </Trigger>
+                            <!-- after the hover trigger, so it wins while the button is disabled -->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#141617" />
+                                <Setter TargetName="Content" Property="Opacity" Value="0.4" />
+                                <Setter Property="Cursor" Value="Arrow" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -46,7 +63,8 @@
     </UserControl.Resources>
 
     <StackPanel extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Background="#2C3135">
+        <!-- the bar hangs off the right edge, so a hidden tab has to give up its space there -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#2C3135">
             <Button Command="{Binding ShowMinionsCommand}">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -89,47 +107,56 @@
                 </Grid>
             </Button>
 
-            <Button Command="{Binding ShowHeroesCommand}">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type heroes:BattlegroundsHeroGuideListViewModel}">
-                                <Setter Property="Background" Value="#23272A" />
-                                <Setter Property="BorderThickness" Value="1,0,0,0" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Grid Width="83"
-                      Height="49">
-                    <Rectangle Fill="White">
-                        <Rectangle.Style>
-                            <Style TargetType="Rectangle">
-                                <Setter Property="Height" Value="27" />
-                                <Setter Property="Width" Value="24" />
-                                <Setter Property="Margin" Value="2.5,3.7,0,0" />
-                                <Setter Property="OpacityMask">
-                                    <Setter.Value>
-                                        <VisualBrush Visual="{DynamicResource icon_hero_and_quest}" />
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding HasQuests}" Value="False">
-                                        <Setter Property="Height" Value="23" />
-                                        <Setter Property="Width" Value="21" />
-                                        <Setter Property="Margin" Value="0" />
-                                        <Setter Property="OpacityMask">
-                                            <Setter.Value>
-                                                <VisualBrush Visual="{DynamicResource icon_hero}" />
-                                            </Setter.Value>
-                                        </Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Rectangle.Style>
-                    </Rectangle>
-                </Grid>
-            </Button>
+            <Border Background="Transparent" ToolTipService.InitialShowDelay="500"
+                    Visibility="{Binding HeroesTabVisible, Converter={StaticResource BoolToVisibility}}">
+                <Border.ToolTip>
+                    <ToolTip
+                        Visibility="{Binding HeroesTabEnabled, Converter={StaticResource InverseBoolToVisibility}}"
+                        Style="{StaticResource TabTooltipStyle}"
+                        Content="{lex:Loc Battlegrounds_GuidesTabs_Heroes_Disabled_Tooltip}" />
+                </Border.ToolTip>
+                <Button Command="{Binding ShowHeroesCommand}" IsEnabled="{Binding HeroesTabEnabled}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActiveViewModel, Converter={StaticResource ObjectTypeConverter}}" Value="{x:Type heroes:BattlegroundsHeroGuideListViewModel}">
+                                    <Setter Property="Background" Value="#23272A" />
+                                    <Setter Property="BorderThickness" Value="1,0,0,0" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Grid Width="83"
+                          Height="49">
+                        <Rectangle Fill="White">
+                            <Rectangle.Style>
+                                <Style TargetType="Rectangle">
+                                    <Setter Property="Height" Value="27" />
+                                    <Setter Property="Width" Value="24" />
+                                    <Setter Property="Margin" Value="2.5,3.7,0,0" />
+                                    <Setter Property="OpacityMask">
+                                        <Setter.Value>
+                                            <VisualBrush Visual="{DynamicResource icon_hero_and_quest}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasQuests}" Value="False">
+                                            <Setter Property="Height" Value="23" />
+                                            <Setter Property="Width" Value="21" />
+                                            <Setter Property="Margin" Value="0" />
+                                            <Setter Property="OpacityMask">
+                                                <Setter.Value>
+                                                    <VisualBrush Visual="{DynamicResource icon_hero}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                    </Grid>
+                </Button>
+            </Border>
         </StackPanel>
         <Border Visibility="{Binding ActiveViewModel, Converter={StaticResource NullableToVisibility}}"
                 x:Name="TabsContent"

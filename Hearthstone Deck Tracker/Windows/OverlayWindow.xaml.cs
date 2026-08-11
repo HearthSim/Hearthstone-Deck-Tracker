@@ -269,6 +269,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				AnchorSide = Side.Top,
 				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
+				HideCallback = TearDownBgsTopBarState,
 			};
 
 			_bgsTopBarTriggerMaskBehavior = new OverlayElementBehavior(BgsTopBarMask)
@@ -1036,9 +1037,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
+		private bool BgsGuidesPreLobbyVisible { get; set; }
+
 		private void UpdateBgsTopBarContentVisibility()
 		{
-			TurnCounter.Visibility = Config.Instance.ShowBattlegroundsTurnCounter ? Visible : Collapsed;
+			// there are no turns to count before a match has started
+			TurnCounter.Visibility = !BgsGuidesPreLobbyVisible && Config.Instance.ShowBattlegroundsTurnCounter ? Visible : Collapsed;
 
 			// ShowBattlegroundsBrowser ("Show Minions and Guides Browser") hides the whole top bar apart from
 			// the turn counter, ShowBattlegroundsGuides ("Show Hero and Comp Guides") only picks which panel shows
@@ -1067,8 +1071,28 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}), DispatcherPriority.Background);
 		}
 
+		// the top bar stays up from the lobby into the match, so leaving the lobby state happens here
+		// rather than by hiding and showing it again
+		private void LeaveBgsGuidesPreLobby()
+		{
+			if(!BgsGuidesPreLobbyVisible)
+				return;
+
+			// the lobby allows filters the match may not have (tier 7, missing minion types)
+			BgsGuidesPreLobbyVisible = false;
+			BattlegroundsMinionsVM.Reset();
+			BattlegroundsGuidesTabsViewModel.IsPreLobby = false;
+			BtnTier7Inspiration.Visibility = Visible;
+		}
+
 		internal void ShowBgsTopBar()
 		{
+			// a hide that never finished still owes its teardown, and the setup below expects a clean slate
+			if(_bgsTopBarTeardownPending)
+				TearDownBgsTopBarState();
+
+			LeaveBgsGuidesPreLobby();
+
 			if(_game.GameEntity?.GetTag(GameTag.TURN) is int turn and > 0)
 				Core.Overlay.TurnCounter.UpdateTurn((int)turn / 2);
 
@@ -1103,6 +1127,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BgsMinionPinningVisibility = ShouldShowBgsMinionPinning() ? Visible : Collapsed;
 			_bgsTopBarBehavior.Show();
 			_bgsTopBarTriggerMaskBehavior.Show();
+
+			// coming from the lobby the bar is already up, so it has to be re-measured for the wider content
+			_bgsTopBarBehavior.Refresh();
+			_bgsTopBarTriggerMaskBehavior.Refresh();
 		}
 
 		internal void ShowBgsTopBarAndBobsBuddyPanel()
@@ -1115,7 +1143,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateBattlegroundsSessionVisibility();
 		}
 
-		internal void HideBgsTopBar()
+		// the top bar can stay up into the pre-lobby, so everything a match leaves behind is reset
+		// here rather than in HideBgsTopBar
+		private void ResetBgsMatchState()
 		{
 			BattlegroundsMinionsVM.Reset();
 			BattlegroundsCompsGuidesVM.OnMatchEnd();
@@ -1130,8 +1160,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsTrinketPickingViewModel.Reset();
 			HideBattlegroundsHeroPanel();
 			HideBattlegroundsTimewarpPanel();
-			_bgsTopBarBehavior.Hide();
-			_bgsTopBarTriggerMaskBehavior.Hide();
 			TurnCounter.UpdateTurn(1);
 			HideBobsBuddyPanel();
 
@@ -1144,6 +1172,33 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			ChinaModuleVM.Reset();
 			HideBgsChinaModulePanel();
+		}
+
+		private bool _bgsTopBarTeardownPending;
+
+		// the teardown changes how the bar looks (the heroes tab regains its enabled state, panels
+		// disappear), so while it is still on screen it has to wait for the exit animation
+		private void TearDownBgsTopBarState()
+		{
+			_bgsTopBarTeardownPending = false;
+			LeaveBgsGuidesPreLobby();
+			ResetBgsMatchState();
+		}
+
+		internal void HideBgsTopBar()
+		{
+			if(BgsTopBar.Visibility != Visible)
+			{
+				// only tear down once after a hide, this is called on every overlay update tick
+				// while in the menu or a non-Battlegrounds match
+				if(_bgsTopBarTeardownPending)
+					TearDownBgsTopBarState();
+				return;
+			}
+
+			_bgsTopBarTeardownPending = true;
+			_bgsTopBarBehavior.Hide();
+			_bgsTopBarTriggerMaskBehavior.Hide();
 		}
 
 		internal void ShowBattlegroundsHeroPickingStats(

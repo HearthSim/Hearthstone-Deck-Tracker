@@ -818,6 +818,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowBattlegroundsGuides = true;
 
+		[DefaultValue(true)]
+		public bool ShowMinionBrowserBetweenGames = true;
+
 		[DefaultValue(false)]
 		public bool AlwaysShowBattlegroundsTavernTier7 = false;
 

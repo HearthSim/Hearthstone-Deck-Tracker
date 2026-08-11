@@ -58,6 +58,7 @@ public class SceneHandler
 		else if(from == Mode.BACON)
 		{
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
+			Core.Overlay.UpdateBattlegroundsGuidesPreLobbyVisibility();
 			Core.Overlay.UpdateTier7PreLobbyVisibility();
 			Watchers.BaconWatcher.Stop();
 		}
@@ -98,6 +99,7 @@ public class SceneHandler
 			Core.Game.CacheBattlegroundsRatingInfo();
 			Core.Game.BattlegroundsSessionViewModel.Update();
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
+			Core.Overlay.UpdateBattlegroundsGuidesPreLobbyVisibility();
 			Core.Overlay.UpdateTier7PreLobbyVisibility();
 			Watchers.BaconWatcher.Run();
 			Remote.Config.Load();

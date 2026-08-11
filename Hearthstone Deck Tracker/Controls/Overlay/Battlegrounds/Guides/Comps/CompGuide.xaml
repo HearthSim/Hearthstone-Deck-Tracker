@@ -328,7 +328,7 @@
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                                <Border ToolTipService.InitialShowDelay="500">
+                                <Border ToolTipService.InitialShowDelay="500" Visibility="{Binding ExampleBoardsButtonVisibility}">
                                     <Border.ToolTip>
                                         <ToolTip
                                             Visibility="{Binding ExampleBoardsButtonEnabled, Converter={StaticResource InverseBoolToVisibility}}"

@@ -159,7 +159,17 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
-	private bool ShowTavernTier7 => Config.Instance.AlwaysShowBattlegroundsTavernTier7 || HasTier7HeroPower || HasTier7Trinket || HasTier7QuestReward;
+	public bool IsPreLobby
+	{
+		get => GetProp(false);
+		set
+		{
+			SetProp(value);
+			UpdateTavernTier7Visibility();
+		}
+	}
+
+	private bool ShowTavernTier7 => IsPreLobby || Config.Instance.AlwaysShowBattlegroundsTavernTier7 || HasTier7HeroPower || HasTier7Trinket || HasTier7QuestReward;
 
 	public void UpdateTavernTier7Visibility()
 	{
@@ -180,7 +190,10 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		public int Size { get; set; }
 	}
 
-	public List<int> AvailableTiers => BattlegroundsUtils.GetAvailableTiers(Anomaly).ToList();
+	// outside of a match no tier is gated behind an anomaly, hero power or trinket
+	public List<int> AvailableTiers => IsPreLobby
+		? new List<int> { 1, 2, 3, 4, 5, 6, 7 }
+		: BattlegroundsUtils.GetAvailableTiers(Anomaly).ToList();
 
 	public List<TierButton> TierButtons
 	{
@@ -362,7 +375,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 			else if(ActiveMinionType is Race minionType)
 			{
 				var tiers = AvailableTiers;
-				if(ShowTavernTier7)
+				if(ShowTavernTier7 && !tiers.Contains(7))
 					tiers.Add(7);
 				foreach(var tierGroup in tiers)
 				{
@@ -417,7 +430,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 			else if(ActiveMinionKeyword is { } activeMinionKeyword)
 			{
 				var tiers = AvailableTiers;
-				if(ShowTavernTier7)
+				if(ShowTavernTier7 && !tiers.Contains(7))
 					tiers.Add(7);
 				foreach(var tierGroup in tiers)
 				{
@@ -500,6 +513,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 
 	public void Reset()
 	{
+		IsPreLobby = false;
 		AvailableRaces = null;
 		ActiveTier = null;
 		ActiveMinionType = null;

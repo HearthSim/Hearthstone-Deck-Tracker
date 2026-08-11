@@ -33,6 +33,14 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 	public BattlegroundsCompsGuidesViewModel()
 	{
 		RetryCommand = new Command(async () => await RetryLoadCompGuides());
+		HSReplayNetOAuth.AccountDataUpdated += OnAccountChanged;
+		HSReplayNetOAuth.LoggedOut += OnAccountChanged;
+	}
+
+	private void OnAccountChanged()
+	{
+		if(IsPreLobby)
+			OnPreLobby();
 	}
 
 	public ICommand RetryCommand { get; }
@@ -122,7 +130,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			var compsData = await ApiWrapper.GetCompsGuides(Helper.GetCardLanguage());
 			var viewModelData = compsData?
 				.OrderBy(comp => comp.Name)
-				.Select(comp => new BattlegroundsCompGuideViewModel(comp))
+				.Select(comp => new BattlegroundsCompGuideViewModel(comp, IsPreLobby))
 				.ToList();
 			return viewModelData;
 		}
@@ -137,11 +145,21 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 	{
 		try
 		{
-			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
-			if(availableRaces == null)
-				return null;
+			int[] currentRaces;
+			if(IsPreLobby)
+			{
+				// there is no minion pool before a match, so ask for the unfiltered list
+				currentRaces = Array.Empty<int>();
+			}
+			else
+			{
+				var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+				if(availableRaces == null)
+					return null;
 
-			var currentRaces = availableRaces.Cast<int>().ToArray();
+				currentRaces = availableRaces.Cast<int>().ToArray();
+			}
+
 			var compsData = token != null
 				? await ApiWrapper.GetPremiumCompsGuides(token, Helper.GetCardLanguage(), currentRaces)
 				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7CompsGuides(Helper.GetCardLanguage(), currentRaces));
@@ -156,7 +174,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 				var tier = tierEntry.Key;
 				var comps = tierEntry.Value.OrderBy(comp => comp.TierRank).ToList();
 
-				var viewModels = comps.Select(comp => new BattlegroundsCompGuideViewModel(comp)).ToList();
+				var viewModels = comps.Select(comp => new BattlegroundsCompGuideViewModel(comp, IsPreLobby)).ToList();
 
 				result[tier] = new TieredComps
 				{
@@ -166,9 +184,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 				};
 			}
 
-			CompsByTier = result;
-
-			return CompsByTier;
+			return result;
 		}
 		catch (Exception ex)
 		{
@@ -216,8 +232,21 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		}
 	}
 
+	public bool IsPreLobby
+	{
+		get => GetProp(false);
+		private set => SetProp(value);
+	}
+
 	public async void OnMatchStart()
 	{
+		if(IsPreLobby)
+		{
+			IsPreLobby = false;
+			// the guides are rebuilt below, so a comp selected in the lobby would point at a stale view model
+			SelectedComp = null;
+		}
+
 		if(Core.Game.Spectator)
 			await Task.Delay(1500);
 
@@ -225,6 +254,26 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		{
 			await _updateCompGuidesSemaphore.WaitAsync();
 			await UpdateCompGuides();
+		}
+		finally
+		{
+			_updateCompGuidesSemaphore.Release();
+		}
+	}
+
+	public async void OnPreLobby()
+	{
+		IsPreLobby = true;
+		try
+		{
+			await _updateCompGuidesSemaphore.WaitAsync();
+			SelectedComp = null;
+
+			// no trial is activated here, spending one before the player has even queued is not worth it
+			if(HSReplayNetOAuth.AccountData?.IsTier7 ?? false)
+				await SetPremiumCompGuides(null);
+			else
+				await SetFreeCompGuides();
 		}
 		finally
 		{
@@ -244,63 +293,69 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
 
 		if(token != null || userOwnsTier7)
-		{
-			var premiumGuidesTask = GetPremiumCompGuides(token);
-
-			Dictionary<int,TieredComps>? filteredBattlegroundsCompGuides = null;
-
-#if(DEBUG)
-	    Log.Debug($"Fetching Premium Battlegrounds Comp Guides...");
-#endif
-			try
-			{
-				filteredBattlegroundsCompGuides = await premiumGuidesTask;
-			}
-			catch(Exception e)
-			{
-				HandleCompGuidesError(e.GetType().Name, e.Message);
-			}
-
-			if(filteredBattlegroundsCompGuides is not null)
-			{
-				CompsByTier = filteredBattlegroundsCompGuides;
-				HasError = false;
-			}
-			else if(!HasError)
-				HandleCompGuidesError("NoData", "Premium comp guides request returned no data");
-		}
+			await SetPremiumCompGuides(token);
 		else
-		{
-			var guidesTask = GetCompGuides();
+			await SetFreeCompGuides();
+	}
 
-			List<BattlegroundsCompGuideViewModel>? battlegroundsCompGuides = null;
-
+	private async Task SetPremiumCompGuides(string? token)
+	{
 #if(DEBUG)
-	    Log.Debug($"Fetching Battlegrounds Comp Guides...");
+		Log.Debug("Fetching Premium Battlegrounds Comp Guides...");
 #endif
 
-			try
-			{
-				battlegroundsCompGuides = await guidesTask;
-			}
-			catch(Exception e)
-			{
-				HandleCompGuidesError(e.GetType().Name, e.Message);
-			}
-
-			if(battlegroundsCompGuides is not null)
-			{
-				Comps = battlegroundsCompGuides;
-				HasError = false;
-			}
-			else if(!HasError)
-				HandleCompGuidesError("NoData", "Comp guides request returned no data");
+		Dictionary<int, TieredComps>? guides = null;
+		try
+		{
+			guides = await GetPremiumCompGuides(token);
 		}
+		catch(Exception e)
+		{
+			HandleCompGuidesError(e.GetType().Name, e.Message);
+		}
+
+		if(guides is not null)
+		{
+			// UpdateState prefers CompsByTier, so the free list has to go before it is set
+			Comps = null;
+			CompsByTier = guides;
+			HasError = false;
+		}
+		else if(!HasError)
+			HandleCompGuidesError("NoData", "Premium comp guides request returned no data");
+	}
+
+	private async Task SetFreeCompGuides()
+	{
+#if(DEBUG)
+		Log.Debug("Fetching Battlegrounds Comp Guides...");
+#endif
+
+		List<BattlegroundsCompGuideViewModel>? guides = null;
+		try
+		{
+			guides = await GetCompGuides();
+		}
+		catch(Exception e)
+		{
+			HandleCompGuidesError(e.GetType().Name, e.Message);
+		}
+
+		if(guides is not null)
+		{
+			CompsByTier = null;
+			Comps = guides;
+			HasError = false;
+		}
+		else if(!HasError)
+			HandleCompGuidesError("NoData", "Comp guides request returned no data");
 	}
 
 	public void OnMatchEnd()
 	{
+		IsPreLobby = false;
 		CompsByTier = null;
+		SelectedComp = null;
 		HasError = false;
 		HasRetriedAndFailed = false;
 	}
@@ -391,6 +446,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 
 	public void Reset()
 	{
+		IsPreLobby = false;
 		Comps = null;
 		CompsByTier = null;
 		SelectedComp = null;

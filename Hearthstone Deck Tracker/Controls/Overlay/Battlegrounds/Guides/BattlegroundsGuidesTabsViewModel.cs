@@ -33,6 +33,36 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 		}
 	}
 
+	public bool IsPreLobby
+	{
+		get => GetProp(false);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(HeroesTabEnabled));
+		}
+	}
+
+	// there are no heroes to guide before a match has started
+	public bool HeroesTabEnabled => !IsPreLobby;
+
+	// anything squarer than 16:10 has no room for the heroes tab
+	private const double MinAspectRatio = 1680.0 / 1050.0;
+
+	public double AspectRatio
+	{
+		get => GetProp(16.0 / 9.0);
+		set
+		{
+			if(AspectRatio == value)
+				return;
+			SetProp(value);
+			OnPropertyChanged(nameof(HeroesTabVisible));
+		}
+	}
+
+	public bool HeroesTabVisible => AspectRatio >= MinAspectRatio;
+
 	public bool HasQuests
 	{
 		get => GetProp(false);

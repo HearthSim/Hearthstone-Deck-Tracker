@@ -11,6 +11,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("bg_guides")]
 		public bool Guides { get => Config.Instance.ShowBattlegroundsGuides; }
 
+		[JsonProperty("bg_browser_between_games")]
+		public bool MinionBrowserBetweenGames { get => Config.Instance.ShowMinionBrowserBetweenGames; }
+
 		[JsonProperty("bg_turn_counter")]
 		public bool TurnCounter { get => Config.Instance.ShowBattlegroundsTurnCounter; }
 

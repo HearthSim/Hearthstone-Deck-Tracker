@@ -234,7 +234,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(_game.IsInMenu || !inBattlegrounds)
 			{
-				HideBgsTopBar();
+				if(ShouldShowBattlegroundsGuidesPreLobby())
+					UpdateBattlegroundsGuidesPreLobbyVisibility();
+				else
+					HideBgsTopBar();
 			}
 
 			UpdateActiveEffects();
@@ -391,6 +394,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OnPropertyChanged(nameof(CardHeight));
 				OnPropertyChanged(nameof(MercAbilityHeight));
 				OnPropertyChanged(nameof(MinionMargin));
+
+				BattlegroundsGuidesTabsViewModel.AspectRatio = Width / Height;
 
 				for(int i = 0; i < OppBoard.Count; i++)
 				{
@@ -822,38 +827,34 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void UpdateVisibilities()
 		{
 			UpdateBattlegroundsSessionVisibility();
+			UpdateBattlegroundsGuidesPreLobbyVisibility();
 			UpdateTier7PreLobbyVisibility();
 			UpdateMulliganGuidePreLobbyVisibility();
 			UpdateArenaPickHelperVisibility();
 			UpdateArenaPreLobbyVisibility();
 		}
 
+		// In the battlegrounds lobby, in a battlegrounds match, or transitioning between the two
+		private bool InBattlegroundsScene => SceneHandler.Scene switch
+		{
+			Mode.BACON => true,
+			Mode.GAMEPLAY => Core.Game.IsBattlegroundsMatch,
+			// Scene is transitioning - do not check for IsBattlegroundsMatch because that might not be set yet/still
+			null => (
+				// Start of Match
+				(SceneHandler.LastScene == Mode.BACON && SceneHandler.NextScene == Mode.GAMEPLAY)
+				// End of Match
+				|| (SceneHandler.LastScene == Mode.GAMEPLAY && SceneHandler.NextScene == Mode.BACON)
+			),
+			_ => false
+		};
+
 		public void UpdateBattlegroundsSessionVisibility()
 		{
 			var show = _game.IsRunning
 			    && (Config.Instance.ShowSessionRecap || _uiMovable)
-				&& (
-					(
-						// Scene is not transitioning
-						SceneHandler.Scene != null &&
-						SceneHandler.Scene switch
-						{
-							Mode.BACON => Config.Instance.ShowSessionRecapBetweenGames,
-							Mode.GAMEPLAY => Core.Game.IsBattlegroundsMatch,
-							_ => false
-						}
-					)
-					|| (
-						// Scene is transitioning - do not check for IsBattlegroundsMatch because that might not be set yet/still
-						SceneHandler.Scene == null && Config.Instance.ShowSessionRecapBetweenGames &&
-						(
-							// Start of Match
-							(SceneHandler.LastScene == Mode.BACON && SceneHandler.NextScene == Mode.GAMEPLAY)
-							// End of Match
-							|| (SceneHandler.LastScene == Mode.GAMEPLAY && SceneHandler.NextScene == Mode.BACON)
-						)
-					)
-				);
+				&& InBattlegroundsScene
+				&& (SceneHandler.Scene == Mode.GAMEPLAY || Config.Instance.ShowSessionRecapBetweenGames);
 
 			if(show || (_game.IsChinaModuleActive && Config.Instance.ShowSessionRecap))
 			{
@@ -865,6 +866,57 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				FadeAnimation.SetVisibility(BattlegroundsSessionStackPanel, Collapsed);
 			}
+		}
+
+		private bool ShouldShowBattlegroundsGuidesPreLobby()
+		{
+			if(!_game.IsRunning || !InBattlegroundsScene)
+				return false;
+
+			if(!Config.Instance.ShowBattlegroundsBrowser)
+				return false;
+
+			if(!Config.Instance.ShowMinionBrowserBetweenGames)
+				return false;
+
+			// once up, the bar stays up while the match loads in, until ShowBgsTopBar hands it over
+			return BgsGuidesPreLobbyVisible || SceneHandler.Scene == Mode.BACON;
+		}
+
+		public void UpdateBattlegroundsGuidesPreLobbyVisibility()
+		{
+			if(!ShouldShowBattlegroundsGuidesPreLobby())
+			{
+				if(BgsGuidesPreLobbyVisible)
+					HideBgsTopBar();
+				return;
+			}
+
+			// this runs on every overlay update, so only touch the view models when something actually changed
+			var isDuos = Tier7PreLobbyViewModel.BattlegroundsGameMode == SelectedBattlegroundsGameMode.DUOS;
+			if(BgsGuidesPreLobbyVisible)
+			{
+				if(BattlegroundsMinionsVM.IsDuos != isDuos)
+					BattlegroundsMinionsVM.IsDuos = isDuos;
+				return;
+			}
+
+			// coming back from a match the bar stays up, so nothing else has torn the match state down
+			TearDownBgsTopBarState();
+
+			BgsGuidesPreLobbyVisible = true;
+			BattlegroundsGuidesTabsViewModel.IsPreLobby = true;
+			BattlegroundsGuidesTabsViewModel.ActiveViewModel = null;
+			BattlegroundsCompsGuidesVM.OnPreLobby();
+			BattlegroundsMinionsVM.IsPreLobby = true;
+			BattlegroundsMinionsVM.IsDuos = isDuos;
+			BattlegroundsMinionsVM.PreloadCardTiles();
+
+			BtnTier7Inspiration.Visibility = Collapsed;
+			UpdateBgsTopBarContentVisibility();
+
+			_bgsTopBarBehavior.Show();
+			_bgsTopBarTriggerMaskBehavior.Show();
 		}
 
 		public void UpdateTier7PreLobbyVisibility()

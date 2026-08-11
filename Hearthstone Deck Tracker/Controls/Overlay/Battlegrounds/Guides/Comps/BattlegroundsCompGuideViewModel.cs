@@ -35,9 +35,12 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		return brush;
 	}
 
-	public BattlegroundsCompGuideViewModel(BattlegroundsCompGuide compGuide)
+	private readonly bool _isPreLobby;
+
+	public BattlegroundsCompGuideViewModel(BattlegroundsCompGuide compGuide, bool isPreLobby)
 	{
 		CompGuide = compGuide;
+		_isPreLobby = isPreLobby;
 
 		CoreCardId = CompGuide.CoreCards.FirstOrDefault();
 		CardToShowInUi = Database.GetCardFromId(CompGuide.RepresentativeCard);
@@ -192,8 +195,13 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 	public CardAssetViewModel CardAsset { get; }
 
 	private HashSet<int>? _availableCardIds;
-	private HashSet<int> GetAvailableCardIds()
+
+	// null means every card is available, which is the case before a match, where there is no minion pool yet
+	private HashSet<int>? GetAvailableCardIds()
 	{
+		if(_isPreLobby)
+			return null;
+
 		if (_availableCardIds == null)
 		{
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
@@ -224,7 +232,7 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 				Health = card.Health,
 				Tier = card.TechLevel,
 				Card = card,
-				IsAvailable = !checkAvailability || availableCardIds!.Contains(card.DbfId)
+				IsAvailable = availableCardIds?.Contains(card.DbfId) ?? true
 			});
 	}
 
@@ -238,7 +246,7 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		var cards = CompGuide.CoreCards.Select(cardId =>
 		{
 			var card = Database.GetCardFromDbfId(cardId, false);
-			if(card == null || !availableCardIds.Contains(card.DbfId))
+			if(card == null || availableCardIds?.Contains(card.DbfId) == false)
 				return null;
 
 			card.BaconCard = true;
@@ -339,6 +347,9 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		                                       ?.GameHandle);
 
 	public bool ExampleBoardsButtonEnabled => IsTier7Enabled;
+
+	// the example boards are filtered by the current minion pool, which only exists during a match
+	public Visibility ExampleBoardsButtonVisibility => _isPreLobby ? Visibility.Collapsed : Visibility.Visible;
 
 	public IEnumerable<Inline>? HowToPlay { get; }
 }
