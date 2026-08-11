@@ -258,7 +258,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			}
 			catch(Exception e)
 			{
-				HandleCompGuidesError(e);
+				HandleCompGuidesError(e.GetType().Name, e.Message);
 			}
 
 			if(filteredBattlegroundsCompGuides is not null)
@@ -266,6 +266,8 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 				CompsByTier = filteredBattlegroundsCompGuides;
 				HasError = false;
 			}
+			else if(!HasError)
+				HandleCompGuidesError("NoData", "Premium comp guides request returned no data");
 		}
 		else
 		{
@@ -283,7 +285,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			}
 			catch(Exception e)
 			{
-				HandleCompGuidesError(e);
+				HandleCompGuidesError(e.GetType().Name, e.Message);
 			}
 
 			if(battlegroundsCompGuides is not null)
@@ -291,6 +293,8 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 				Comps = battlegroundsCompGuides;
 				HasError = false;
 			}
+			else if(!HasError)
+				HandleCompGuidesError("NoData", "Comp guides request returned no data");
 		}
 	}
 
@@ -372,10 +376,10 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		return token;
 	}
 
-	private void HandleCompGuidesError(Exception error)
+	private void HandleCompGuidesError(string type, string message)
 	{
 		HasError = true;
-		Influx.OnGetBattlegroundsCompositionGuidesError(error.GetType().Name, error.Message);
+		Influx.OnGetBattlegroundsCompositionGuidesError(type, message);
 	}
 
 	// Exclusive state visibility properties

@@ -9,6 +9,7 @@
              xmlns:guides="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides"
              xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
              xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              mc:Ignorable="d"
              DataContext="{Binding BattlegroundsCompsGuidesVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
@@ -171,6 +172,28 @@
                                         Margin="0,16,0,0"
                                         FontWeight="SemiBold"
                                         Visibility="{Binding HasRetriedAndFailed, Converter={StaticResource BoolToVisibility}}"
+                                    />
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Loading State -->
+                            <Border Visibility="{Binding LoadingVisibility}" Padding="16">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <mah:ProgressRing
+                                        IsActive="True"
+                                        Foreground="White"
+                                        Width="32"
+                                        Height="32"
+                                        Margin="0,0,0,12"
+                                    />
+                                    <TextBlock
+                                        Text="{lex:Loc Battlegrounds_CompGuides_Loading_Message}"
+                                        FontSize="12"
+                                        Foreground="White"
+                                        Opacity="0.7"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap"
+                                        MaxWidth="250"
                                     />
                                 </StackPanel>
                             </Border>
