@@ -675,6 +675,27 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				inputPlayer.BeastHealthBonus = pBeastBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);   // attached
 				Log.Info($"pBeastAttack={inputPlayer.BeastAttackBonus}, pBeastHealth={inputPlayer.BeastHealthBonus}, friendly={friendly}");
 			}
+
+			// Cards like Floating Candle Set can trigger Goldrinn one or more times during shopping phase.
+			// Add any bonuses to BeastAttackBonus/BeastHealthBonus
+			var goldrinnAttackBonus = 0;
+			var goldrinnHealthBonus = 0;
+			foreach(var pGoldrinnBonus in playerAttached)
+			{
+				if(pGoldrinnBonus.CardId != NonCollectible.Neutral.GoldrinntheGreatWolf_GoldrinnPlayerEnchantDnt)
+					continue;
+				if(!pGoldrinnBonus.IsInPlay)
+					continue;
+				goldrinnAttackBonus += pGoldrinnBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+				goldrinnHealthBonus += pGoldrinnBonus.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);   // attached
+			}
+			if(goldrinnAttackBonus > 0 || goldrinnHealthBonus > 0)
+			{
+				inputPlayer.BeastAttackBonus += goldrinnAttackBonus;
+				inputPlayer.BeastHealthBonus += goldrinnHealthBonus;
+				Log.Info($"pGoldrinnBeastAttack={goldrinnAttackBonus}, pGoldrinnBeastHealth={goldrinnHealthBonus}, friendly={friendly}");
+			}
+
 			var pAncestralAutomaton = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomatonPlayerEnchantDnt);
 			if(pAncestralAutomaton != null)
 				inputPlayer.AncestralAutomatonCounter = pAncestralAutomaton.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
