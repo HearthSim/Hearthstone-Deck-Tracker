@@ -75,6 +75,8 @@ jobs:
 
       - name: Build (Release)
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x64"
+        env:
+          SENTRY_DSN: ${{ vars.SENTRY_DSN }}
 
       - name: Setup VSTest
         uses: Malcolmnixon/Setup-VSTest@v4

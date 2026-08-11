@@ -265,7 +265,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), ReportContext);
+					SentryReporter.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), ReportContext);
 				return;
 			}
 		}
@@ -304,7 +304,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, isDuos: true, ReportContext);
+					SentryReporter.CaptureBobsBuddyException(e, _input, _turn, isDuos: true, ReportContext);
 				return;
 			}
 		}
@@ -410,7 +410,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), ReportContext);
+					SentryReporter.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), ReportContext);
 				return;
 			}
 		}
@@ -434,7 +434,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			var isDuos = _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false);
 			if(ReportErrors)
-				Sentry.CaptureBobsBuddyException(pendingException, _input, _turn, isDuos, ReportContext);
+				SentryReporter.CaptureBobsBuddyException(pendingException, _input, _turn, isDuos, ReportContext);
 			Influx.OnBobsBuddyUnsupportedInteraction(
 				pendingException.Entity?.CardID, pendingMessage, _turn, isDuos, pendingException.Entity?.ControlledByPlayer);
 		}
@@ -1962,7 +1962,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), ReportContext);
+					SentryReporter.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), ReportContext);
 				Output = null;
 				return null;
 			}
@@ -2135,7 +2135,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			DebugLog($"Queueing alert... (valid input: {_input != null})");
 			if(_input != null && Output != null)
-				Sentry.QueueBobsBuddyTerminalCase(
+				SentryReporter.QueueBobsBuddyTerminalCase(
 					_input, Output, result, _turn, _game.CurrentRegion,
 					isDuos: _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), isOpposingAkazamzarak: IsOpposingAkazamzarak(),
 					reportContext: ReportContext

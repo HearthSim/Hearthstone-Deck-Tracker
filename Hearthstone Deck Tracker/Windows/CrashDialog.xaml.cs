@@ -4,6 +4,7 @@ using System.Windows.Forms.VisualStyles;
 using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using MahApps.Metro;
+using Sentry;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -11,11 +12,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		private readonly Exception _exception;
 		private bool _hasClickedSend;
+		private SentryId? _eventId;
 
 		public CrashDialog(Exception exception)
 		{
 			_exception = exception;
 			InitializeComponent();
+
+			// send while the dialog is up, unless clicking send is the only consent we have
+			if(Config.Instance.GoogleAnalytics)
+				_eventId = SentryReporter.CaptureException(_exception);
 		}
 
 		public string ExceptionMessage => _exception.Message;
@@ -24,8 +30,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void ButtonSend_Click(object sender, RoutedEventArgs e)
 		{
-			if(!string.IsNullOrEmpty(TextBoxDescription.Text))
-				_exception.Data.Add("description", TextBoxDescription.Text);
 			_hasClickedSend = true;
 			Close();
 		}
@@ -52,8 +56,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void CrashDialog_Closed(object sender, EventArgs e)
 		{
-			if(Config.Instance.GoogleAnalytics || _hasClickedSend)
-				Sentry.CaptureException(_exception);
+			if(_eventId == null)
+			{
+				if(!_hasClickedSend)
+					return;
+				_eventId = SentryReporter.CaptureException(_exception);
+			}
+
+			if(!string.IsNullOrEmpty(TextBoxDescription.Text))
+				SentryReporter.CaptureUserFeedback(_eventId.Value, TextBoxDescription.Text);
+
+			SentryReporter.FlushBeforeShutdown();
 		}
 	}
 }

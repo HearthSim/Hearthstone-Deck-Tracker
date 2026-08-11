@@ -39,6 +39,9 @@ jobs:
 
       - name: Build (Dev)
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x64" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x64\Squirrel\"
+        env:
+          SENTRY_DSN: ${{ vars.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: Dev
 
       - name: Setup SM_CLIENT_CERT_FILE from base64 secret data
         shell: bash

@@ -11,9 +11,14 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Hearthstone Deck Tracker</Description>
     <Copyright>Copyright © HearthSim 2026</Copyright>
-    <Version>1.57.2</Version>
-    <AssemblyVersion>$(Version)</AssemblyVersion>
-    <FileVersion>$(Version)</FileVersion>
+    <!-- Version is left unset so it composes to VersionPrefix(-VersionSuffix), which is what
+         InformationalVersion and therefore the Sentry release name derive from. Both are rewritten
+         by build-scripts/update_version.ps1. -->
+    <VersionPrefix>1.57.2</VersionPrefix>
+    <VersionSuffix></VersionSuffix>
+    <BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
+    <AssemblyVersion>$(VersionPrefix).$(BuildNumber)</AssemblyVersion>
+    <FileVersion>$(AssemblyVersion)</FileVersion>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <UseWPF>true</UseWPF>
     <PlatformTarget>x64</PlatformTarget>
@@ -47,6 +52,17 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <SentryDsn>$(SENTRY_DSN)</SentryDsn>
+    <SentryDsn Condition="'$(SentryDsn)' == ''">https://63f3118ab76da59e220c259639c60330@o35918.ingest.us.sentry.io/80405</SentryDsn>
+    <!-- when unset SentryReporter falls back to Squirrel/Portable, based on the build configuration -->
+    <SentryEnvironment>$(SENTRY_ENVIRONMENT)</SentryEnvironment>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyMetadata Include="SentryDsn" Value="$(SentryDsn)" />
+    <AssemblyMetadata Include="SentryEnvironment" Value="$(SentryEnvironment)" Condition="'$(SentryEnvironment)' != ''" />
+  </ItemGroup>
+
   <Target Name="GenerateDesignerFiles">
     <GenerateResource SdkToolsPath="$(TargetFrameworkSDKToolsDirectory)" Sources="Properties/Strings.resx" StronglyTypedLanguage="C#" StronglyTypedClassName="Strings" StronglyTypedNamespace="Hearthstone_Deck_Tracker.Properties" StronglyTypedFileName="Properties/Strings.Designer.cs" OutputResources="Hearthstone_Deck_Tracker.Properties.Strings.resources" PublicClass="true" />
     <Delete Files="Hearthstone_Deck_Tracker.Properties.Strings.resources" />
@@ -65,8 +81,8 @@
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="Mono.Cecil" Version="0.9.6.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Sentry" Version="6.9.0" />
     <PackageReference Include="SharpCompress" Version="0.17.1" />
-    <PackageReference Include="SharpRaven" Version="2.4.0" />
     <PackageReference Include="Splat" Version="1.6.2" />
     <PackageReference Include="squirrel.windows" Version="1.9.1" />
     <PackageReference Include="TaskScheduler" Version="2.12.1" />

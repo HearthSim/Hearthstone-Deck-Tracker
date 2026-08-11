@@ -1,4 +1,4 @@
-#region
+﻿#region
 
 using System;
 using System.Collections.Generic;
@@ -803,7 +803,7 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)
 				{
 					Log.Info("Game was spectator mode without a game result. Probably exited spectator mode early.");
-					Sentry.DropBattlegroundsEvents("spectator_no_result");
+					SentryReporter.DropBattlegroundsEvents("spectator_no_result");
 					return;
 				}
 				var player = _game.Entities.FirstOrDefault(e => e.Value?.IsPlayer ?? false).Value;
@@ -1076,7 +1076,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 
-					Sentry.FlushBattlegroundsEvents(_game.CurrentGameStats.HsReplay.UploadId, LogContainsStateComplete, _game.IsBattlegroundsDuosMatch);
+					SentryReporter.FlushBattlegroundsEvents(_game.CurrentGameStats.HsReplay.UploadId, LogContainsStateComplete, _game.IsBattlegroundsDuosMatch);
 					Tier7Trial.Clear();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
 					var finalPlacement = hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0;

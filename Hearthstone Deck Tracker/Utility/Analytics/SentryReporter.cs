@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using BobsBuddy;
 using BobsBuddy.Simulation;
@@ -12,13 +15,10 @@ using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Plugins;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SharpRaven;
-using SharpRaven.Data;
+using Sentry;
 
 #if(SQUIRREL)
 using Hearthstone_Deck_Tracker.BobsBuddy;
@@ -29,19 +29,26 @@ using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 
 namespace Hearthstone_Deck_Tracker.Utility.Analytics
 {
-	internal class Sentry
+	internal class SentryReporter
 	{
-		static Sentry()
+		static SentryReporter()
 		{
-			Client.Release = Helper.GetCurrentVersion().ToVersionString(true);
-			Client.Compression = true;
-			Client.Timeout = TimeSpan.FromSeconds(15);
 			Log.OnLogLine += AddHDTLogLine;
 		}
 
 		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
 		private static List<string> _recentHDTLog = new List<string>();
 		static int LogLinesKept = Remote.Config.Data?.BobsBuddy?.LogLinesKept ?? 100;
+
+		private const string ExtraKey = "hdt";
+
+		// BobsBuddy entities contain reference cycles (Enchantment.AttachedTo), which make serialization throw
+		private static readonly Newtonsoft.Json.JsonSerializerSettings SerializerSettings = new()
+		{
+			ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
+			Error = (_, args) => args.ErrorContext.Handled = true,
+		};
+		private static readonly TimeSpan CrashFlushTimeout = TimeSpan.FromSeconds(5);
 
 		static void AddHDTLogLine(string toLog)
 		{
@@ -52,24 +59,64 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			_recentHDTLog.Add(toLog);
 		}
 
-		private static readonly RavenClient Client = new RavenClient("https://0a6c07cee8d141f0bee6916104a02af4:883b339db7b040158cdfc42287e6a791@app.getsentry.com/80405");
+		// baked in at build time, see AssemblyMetadata in the csproj
+		private static string? GetBuildMetadata(string key) => typeof(SentryReporter).Assembly
+			.GetCustomAttributes<AssemblyMetadataAttribute>()
+			.FirstOrDefault(x => x.Key == key)?.Value;
 
-		public static string CaptureException(Exception ex)
+		public static void Initialize()
+		{
+			SentrySdk.Init(options =>
+			{
+				options.Dsn = GetBuildMetadata("SentryDsn") ?? "";
+				// Release is left unset so the SDK resolves it from InformationalVersion, which is also
+				// where sentry-cli reads it from when it creates the release at build time
+				options.Distribution = Helper.GetCurrentVersion().Revision.ToString();
+				options.Environment = GetBuildMetadata("SentryEnvironment");
+				if(string.IsNullOrWhiteSpace(options.Environment))
+				{
+#if(SQUIRREL)
+					options.Environment = "Squirrel";
+#else
+					options.Environment = "Portable";
+#endif
+				}
+				options.IsGlobalModeEnabled = true;
+
+				// System.Text.Json ignores public fields, which the BobsBuddy payloads consist of
+				options.AddJsonConverter(new NewtonsoftConverter<BobsBuddyData>());
+				options.AddJsonConverter(new NewtonsoftConverter<HDTToolsData>());
+				options.AddJsonConverter(new NewtonsoftConverter<JObject>());
+			});
+		}
+
+		public static SentryId CaptureException(Exception ex)
 		{
 			var plugins = PluginManager.Instance.Plugins.Where(x => x.IsEnabled).ToList();
 			ex.Data.Add("active-plugins", plugins.Any() ? string.Join(", ", plugins.Select(x => x.NameAndVersion)) : "none");
 
 			var exception = new SentryEvent(ex);
 #if(SQUIRREL)
-			exception.Tags.Add("squirrel", "true");
+			exception.SetTag("squirrel", "true");
 #else
-			exception.Tags.Add("squirrel", "false");
+			exception.SetTag("squirrel", "false");
 #endif
-			exception.Tags.Add("hearthstone", Helper.GetHearthstoneBuild()?.ToString());
-			exception.Tags.Add("os_arch", RuntimeInformation.OSArchitecture.ToString().ToLower());
+			exception.SetTag("hearthstone", Helper.GetHearthstoneBuild()?.ToString() ?? "");
+			exception.SetTag("os_arch", RuntimeInformation.OSArchitecture.ToString().ToLower());
 
-			return Client.Capture(exception);
+			return SentrySdk.CaptureEvent(exception);
 		}
+
+		public static void CaptureUserFeedback(SentryId eventId, string message)
+		{
+			SentrySdk.CaptureFeedback(
+				message,
+				associatedEventId: eventId != SentryId.Empty ? eventId : null
+			);
+		}
+
+		// the crash dialog closes right into a shutdown, so give anything still queued a chance to go out
+		public static void FlushBeforeShutdown() => SentrySdk.Flush(CrashFlushTimeout);
 
 #if(SQUIRREL)
 		private const int MaxBobsBuddyEventsPerGame = 5;
@@ -83,13 +130,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static Queue<SentryEvent> HDTToolsEvents = new Queue<SentryEvent>();
 
 #if(SQUIRREL)
-		private static void AddReportContextTags(Dictionary<string, string> tags, BobsBuddySentryReportContext context)
+		private static void AddReportContextTags(SentryEvent e, BobsBuddySentryReportContext context)
 		{
-			tags["cm_active"] = context.CMActive.ToString();
-			tags["reconnected_after_snapshot"] = context.ReconnectedAfterSnapshot.ToString();
-			tags["entities_cleared"] = context.EntitiesCleared.ToString();
-			tags["snapshot_input_was_set"] = context.SnapshotInputWasSet.ToString();
-			tags["duos_partial_combat"] = context.IsDuosPartialCombat.ToString();
+			e.SetTag("cm_active", context.CMActive.ToString());
+			e.SetTag("reconnected_after_snapshot", context.ReconnectedAfterSnapshot.ToString());
+			e.SetTag("entities_cleared", context.EntitiesCleared.ToString());
+			e.SetTag("snapshot_input_was_set", context.SnapshotInputWasSet.ToString());
+			e.SetTag("duos_partial_combat", context.IsDuosPartialCombat.ToString());
 		}
 #endif
 
@@ -104,11 +151,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			// Clean up data
 			output.ClearListsForReporting(); //ignoring for some temporary debugging
-
-			var msg = new SentryMessage(isDuos ?
-				$"BobsBuddy {BobsBuddyUtils.VersionString} (Duos): Incorrect Terminal Case: {result}" :
-				$"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: {result}"
-			);
 
 			var data = new BobsBuddyData()
 			{
@@ -126,30 +168,27 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			};
 
-			var tags = new Dictionary<string, string>() {
-				{"bobs_buddy_version", BobsBuddyUtils.VersionString},
-				{"turn", turn.ToString()},
-				{"region", data.Region.ToString()},
-				{"is_duos", isDuos.ToString()},
-				{"opposing_akazamzarak", isOpposingAkazamzarak.ToString()}
+			var bbEvent = new SentryEvent
+			{
+				Message = isDuos ?
+					$"BobsBuddy {BobsBuddyUtils.VersionString} (Duos): Incorrect Terminal Case: {result}" :
+					$"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: {result}",
+				Level = SentryLevel.Warning,
 			};
-			AddReportContextTags(tags, reportContext);
+
+			bbEvent.SetTag("bobs_buddy_version", BobsBuddyUtils.VersionString);
+			bbEvent.SetTag("turn", turn.ToString());
+			bbEvent.SetTag("region", data.Region.ToString());
+			bbEvent.SetTag("is_duos", isDuos.ToString());
+			bbEvent.SetTag("opposing_akazamzarak", isOpposingAkazamzarak.ToString());
 
 			if(testInput.Anomaly != null)
-			{
-				tags["anomaly_card_id"] = testInput.Anomaly.CardID;
-			}
+				bbEvent.SetTag("anomaly_card_id", testInput.Anomaly.CardID);
 
-			var bbEvent = new SentryEvent(msg)
-			{
-				Level = ErrorLevel.Warning,
-				Tags = tags,
-				Extra = data,
-			};
+			AddReportContextTags(bbEvent, reportContext);
 
-			bbEvent.Fingerprint.Add(result);
-			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
-			bbEvent.Fingerprint.Add(isDuos.ToString());
+			bbEvent.SetExtra(ExtraKey, data);
+			bbEvent.SetFingerprint(result, BobsBuddyUtils.VersionString, isDuos.ToString());
 
 			BobsBuddyEvents.Enqueue(bbEvent);
 			Influx.OnBobsBuddySentryEventQueued("terminal_case", isDuos);
@@ -191,7 +230,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 					break;
 				}
 				var e = HDTToolsEvents.Dequeue();
-				Client.Capture(e);
+				SentrySdk.CaptureEvent(e);
 				HDTToolsEventsSent++;
 			}
 #endif
@@ -213,7 +252,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 					break;
 				}
 				var e = BobsBuddyEvents.Dequeue();
-				((BobsBuddyData)e.Extra).ShortId = shortId;
+				var bbData = GetBobsBuddyData(e);
+				if(bbData != null)
+					bbData.ShortId = shortId;
 
 				var toCapture = WithSerializableExtra(recode(e));
 				var extraSize = GetExtraSize(toCapture);
@@ -221,8 +262,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				totalExtraBytes += extraSize;
 				StripIfTooLarge(toCapture, extraSize);
 
-				var eventId = Client.Capture(toCapture);
-				if(eventId != null)
+				var eventId = SentrySdk.CaptureEvent(toCapture);
+				if(eventId != SentryId.Empty)
 					sent++;
 				else
 					captureFailed++;
@@ -233,7 +274,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		private static SentryEvent RecodeIfBothSidesEmpty(SentryEvent e)
 		{
-			var bbData = (BobsBuddyData)e.Extra;
+			var bbData = GetBobsBuddyData(e);
 			if(
 				bbData != null && bbData.Input != null &&
 				bbData.Turn > 5 &&
@@ -282,43 +323,33 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			}
 		}
 
+		private static JObject? GetSerializedExtra(SentryEvent e) =>
+			e.Extra.TryGetValue(ExtraKey, out var extra) ? extra as JObject : null;
+
 		private static int GetExtraSize(SentryEvent e)
-			=> (e.Extra as JObject)?.ToString(Formatting.None).Length ?? 0;
+			=> GetSerializedExtra(e)?.ToString(Newtonsoft.Json.Formatting.None).Length ?? 0;
 
 		private static void StripIfTooLarge(SentryEvent e, int extraSize)
 		{
-			if(!(e.Extra is JObject extra))
-				return;
 			if(extraSize <= MaxExtraSizeBytes)
+				return;
+			var extra = GetSerializedExtra(e);
+			if(extra == null)
 				return;
 			extra["Input"] = "[stripped: payload exceeded size limit]";
 			extra["Output"] = "[stripped: payload exceeded size limit]";
-			e.Tags["stripped_for_size"] = "true";
+			e.SetTag("stripped_for_size", "true");
 		}
 
 		private static SentryEvent WithSerializableExtra(SentryEvent e)
 		{
-			if(e.Extra == null)
+			if(!e.Extra.TryGetValue(ExtraKey, out var data) || data == null)
 				return e;
-			// BobsBuddy entities contain reference cycles (Enchantment.AttachedTo), which make SharpRaven's serialization throw
-			var serializer = JsonSerializer.Create(new JsonSerializerSettings
-			{
-				ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-				Error = (_, args) => args.ErrorContext.Handled = true,
-			});
-			var extra = JObject.FromObject(e.Extra, serializer);
+			var extra = JObject.FromObject(data, Newtonsoft.Json.JsonSerializer.Create(SerializerSettings));
 			PruneDeepTokens(extra, 0);
-			e.Extra = extra;
+			e.SetExtra(ExtraKey, extra);
 			return e;
 		}
-
-		private static SentryEvent Recode(SentryEvent e, string message) =>
-			new SentryEvent(new SentryMessage(message))
-			{
-				Level = e.Level,
-				Tags = e.Tags,
-				Extra = e.Extra,
-			};
 #endif
 
 		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, bool isDuos, BobsBuddySentryReportContext reportContext)
@@ -341,24 +372,21 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				Log = ReverseAndClone(_recentHDTLog)
 			};
 
-			var tags = new Dictionary<string, string>() {
-				{"bobs_buddy_version", BobsBuddyUtils.VersionString},
-				{"turn", turn.ToString()},
-			};
-			AddReportContextTags(tags, reportContext);
-
 			var bbEvent = new SentryEvent(ex)
 			{
-				Level = ErrorLevel.Warning,
-				Tags = tags,
-				Extra = data,
+				Message = isDuos ?
+					$"BobsBuddy {BobsBuddyUtils.VersionString} (Duos): {ex.Message}" :
+					$"BobsBuddy {BobsBuddyUtils.VersionString}: {ex.Message}",
+				Level = SentryLevel.Warning,
 			};
 
-			bbEvent.Message = isDuos ?
-				$"BobsBuddy {BobsBuddyUtils.VersionString} (Duos): {bbEvent.Message}":
-				$"BobsBuddy {BobsBuddyUtils.VersionString}: {bbEvent.Message}";
-			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
-			bbEvent.Fingerprint.Add(isDuos.ToString());
+			bbEvent.SetTag("bobs_buddy_version", BobsBuddyUtils.VersionString);
+			bbEvent.SetTag("turn", turn.ToString());
+
+			AddReportContextTags(bbEvent, reportContext);
+
+			bbEvent.SetExtra(ExtraKey, data);
+			bbEvent.SetFingerprint(BobsBuddyUtils.VersionString, isDuos.ToString());
 
 			BobsBuddyEvents.Enqueue(bbEvent);
 
@@ -374,32 +402,45 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			toReturn.Reverse();
 			return toReturn;
 		}
+
+		private static BobsBuddyData? GetBobsBuddyData(SentryEvent e) =>
+			e.Extra.TryGetValue(ExtraKey, out var extra) ? extra as BobsBuddyData : null;
+
+		private static SentryEvent Recode(SentryEvent original, string message)
+		{
+			var recoded = new SentryEvent
+			{
+				Message = message,
+				Level = original.Level,
+			};
+			foreach(var tag in original.Tags)
+				recoded.SetTag(tag.Key, tag.Value);
+			foreach(var extra in original.Extra)
+				recoded.SetExtra(extra.Key, extra.Value);
+			return recoded;
+		}
 #endif
 
 		public static void CaptureHDTToolsExecutionProblem(string problem)
 		{
 #if(SQUIRREL)
-			var msg = new SentryMessage($"HDTTools {HDTToolsManager.VersionString} Problem: {problem}");
-
-			var tags = new Dictionary<string, string>() {
-				{"hdttools_version", HDTToolsManager.VersionString},
-				{"problem", problem}
-			};
-
 			var data = new HDTToolsData()
 			{
 				Problem = problem,
 				Log = ReverseAndClone(_recentHDTLog)
 			};
 
-			var hdttoolsEvent = new SentryEvent(msg)
+			var hdttoolsEvent = new SentryEvent
 			{
-				Level = ErrorLevel.Warning,
-				Tags = tags,
-				Extra = data
+				Message = $"HDTTools {HDTToolsManager.VersionString} Problem: {problem}",
+				Level = SentryLevel.Warning,
 			};
-			hdttoolsEvent.Fingerprint.Add(HDTToolsManager.VersionString);
-			hdttoolsEvent.Fingerprint.Add(problem);
+
+			hdttoolsEvent.SetTag("hdttools_version", HDTToolsManager.VersionString);
+			hdttoolsEvent.SetTag("problem", problem);
+
+			hdttoolsEvent.SetExtra(ExtraKey, data);
+			hdttoolsEvent.SetFingerprint(HDTToolsManager.VersionString, problem);
 
 			HDTToolsEvents.Enqueue(hdttoolsEvent);
 #endif
@@ -408,13 +449,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		public static void CaptureHDTToolsExitProblem(string exitProblem, List<string> hdtToolsLog)
 		{
 #if(SQUIRREL)
-			var msg = new SentryMessage($"HDTTools {HDTToolsManager.VersionString} Exit Problem: {exitProblem}");
-
-			var tags = new Dictionary<string, string>() {
-				{"hdttools_version", HDTToolsManager.VersionString},
-				{"exit_problem", exitProblem}
-			};
-
 			var data = new HDTToolsData()
 			{
 				ExitProblem = exitProblem,
@@ -422,14 +456,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				HDTToolsLog = ReverseAndClone(hdtToolsLog)
 			};
 
-			var hdttoolsEvent = new SentryEvent(msg)
+			var hdttoolsEvent = new SentryEvent
 			{
-				Level = ErrorLevel.Warning,
-				Tags = tags,
-				Extra = data
+				Message = $"HDTTools {HDTToolsManager.VersionString} Exit Problem: {exitProblem}",
+				Level = SentryLevel.Warning,
 			};
-			hdttoolsEvent.Fingerprint.Add(HDTToolsManager.VersionString);
-			hdttoolsEvent.Fingerprint.Add(exitProblem);
+
+			hdttoolsEvent.SetTag("hdttools_version", HDTToolsManager.VersionString);
+			hdttoolsEvent.SetTag("exit_problem", exitProblem);
+
+			hdttoolsEvent.SetExtra(ExtraKey, data);
+			hdttoolsEvent.SetFingerprint(HDTToolsManager.VersionString, exitProblem);
 
 			HDTToolsEvents.Enqueue(hdttoolsEvent);
 #endif
@@ -447,6 +484,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			BobsBuddyEventsSent = 0;
 			BobsBuddyExceptionsSent = 0;
 #endif
+		}
+
+		private class NewtonsoftConverter<T> : JsonConverter<T>
+		{
+			public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+				=> throw new NotSupportedException();
+
+			public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+				=> writer.WriteRawValue(Newtonsoft.Json.JsonConvert.SerializeObject(value, SerializerSettings));
 		}
 
 		private class HDTToolsData

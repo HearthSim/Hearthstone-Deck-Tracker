@@ -44,6 +44,8 @@ jobs:
 
       - name: Build (Squirrel)
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x64"
+        env:
+          SENTRY_DSN: ${{ vars.SENTRY_DSN }}
 
       - name: Setup SM_CLIENT_CERT_FILE from base64 secret data
         if: startsWith(github.ref, 'refs/tags/v') && vars.RELEASE_PIPELINE_ENABLED == '1'

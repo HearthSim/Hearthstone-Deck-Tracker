@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
@@ -101,6 +102,8 @@ namespace Hearthstone_Deck_Tracker
 #if(SQUIRREL)
 			Utility.Updating.Updater.SquirrelInit();
 #endif
+
+			SentryReporter.Initialize();
 
 			Core.Initialize();
 		}

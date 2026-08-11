@@ -251,7 +251,7 @@ public class BattlegroundsChinaModule
 		Influx.OnBattlegroundsHDTToolsExecutionProblem(problem);
 		Influx.OnBattlegroundsHDTToolsNotFound(problem == HDTToolsExecutionProblem.NotFound, true);
 		if(problem is not HDTToolsExecutionProblem.ElevatedPrivilegesRefused)
-			Sentry.CaptureHDTToolsExecutionProblem(problem.ToString());
+			SentryReporter.CaptureHDTToolsExecutionProblem(problem.ToString());
 	}
 
 	private static void OnBattlegroundsHDTToolsExit(HDTToolsExitCode exitCode)
@@ -259,7 +259,7 @@ public class BattlegroundsChinaModule
 		Influx.OnBattlegroundsHDTToolsExit(exitCode);
 		Influx.OnBattlegroundsHDTToolsNotFound(false);
 		if(exitCode is not HDTToolsExitCode.Success)
-			Sentry.CaptureHDTToolsExitProblem(exitCode.ToString(), HDTToolsManager.GetRecentLogs());
+			SentryReporter.CaptureHDTToolsExitProblem(exitCode.ToString(), HDTToolsManager.GetRecentLogs());
 	}
 
  	public static bool IsChineseEnvironment()
