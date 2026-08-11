@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.55.5 - 2026-08-11**
 **Hearthstone**:
 - Fixed Start of Game cards, such as Azalina Soulsever, appearing in the opponent's decklist before the mulligan was over.
 - Fixed a rare crash when showing the pool summary.
