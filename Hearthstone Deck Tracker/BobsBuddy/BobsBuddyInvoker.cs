@@ -696,7 +696,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			inputPlayer.ElementalPlayCounter = playerEntity.GetTag((GameTag)2878);   // direct
 
-			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pEternalLegion={inputPlayer.EternalLegionCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, friendly={friendly}");
+			inputPlayer.ElementalsGiveExtraAttack = playerEntity.GetTag(GameTag.BACON_ELEMENTAL_BUFFATKVALUE);   // direct
+			inputPlayer.ElementalsGiveExtraHealth = playerEntity.GetTag(GameTag.BACON_ELEMENTAL_BUFFHEALTHVALUE);   // direct
+
+			Log.Info($"pEternal={inputPlayer.EternalKnightCounter}, pEternalLegion={inputPlayer.EternalLegionCounter}, pUndead={inputPlayer.UndeadAttackBonus}, pElemental={inputPlayer.ElementalPlayCounter}, pElementalExtraAtk={inputPlayer.ElementalsGiveExtraAttack}, pElementalExtraHealth={inputPlayer.ElementalsGiveExtraHealth}, friendly={friendly}");
 
 			inputPlayer.PiratesSummonCounter = playerEntity.GetTag((GameTag)2358);   // direct
 
