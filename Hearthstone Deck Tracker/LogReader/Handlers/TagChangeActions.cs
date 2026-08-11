@@ -563,6 +563,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(entity.IsPlayer && (Mulligan)value == Mulligan.DONE)
 				gameState.GameHandler?.HandlePlayerMulliganDone();
+			if((Mulligan)value == Mulligan.DONE && game.IsMulliganDone)
+				RevealPendingStartOfGameEntities(game);
+		}
+
+		private void RevealPendingStartOfGameEntities(IGame game)
+		{
+			var pending = game.Entities.Values.Where(x => x.Info.PendingStartOfGameReveal).ToList();
+			if(!pending.Any())
+				return;
+			foreach(var entity in pending)
+				RevealStartOfGameEntity(entity);
+			Core.UpdateOpponentCards();
 		}
 
 		private void WhizbangDeckIdChange(int id, int value, IGame game)
@@ -944,13 +956,25 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 			if(isStartOfTheGameEffect && entity.IsControlledBy(game.Opponent.Id))
 			{
-				entity.Info.GuessedCardState = GuessedCardState.Revealed;
+				if(!game.IsMulliganDone)
+				{
+					entity.Info.PendingStartOfGameReveal = true;
+					return;
+				}
 
-				PredictFabled(entity);
+				RevealStartOfGameEntity(entity);
 
 				Core.UpdateOpponentCards();
 			}
 
+		}
+
+		private void RevealStartOfGameEntity(Entity entity)
+		{
+			entity.Info.PendingStartOfGameReveal = false;
+			entity.Info.GuessedCardState = GuessedCardState.Revealed;
+
+			PredictFabled(entity);
 		}
 
 		private void PredictFabled(Entity entity)

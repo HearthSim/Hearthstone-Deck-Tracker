@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed Start of Game cards, such as Azalina Soulsever, appearing in the opponent's decklist before the mulligan was over.
+
 ## **Release v1.55.4 - 2026-08-10**
 **Hearthstone**:
 - The opponent's counters now account for Azalina Soulsever.\

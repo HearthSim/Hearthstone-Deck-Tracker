@@ -280,6 +280,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				CardIdBeforeReveal = CardIdBeforeReveal,
 				OriginalEntityWasCreated = OriginalEntityWasCreated,
 				GuessedCardState = GuessedCardState,
+				PendingStartOfGameReveal = PendingStartOfGameReveal,
 				LatestCardId = LatestCardId,
 				StoredCardIds = StoredCardIds,
 				DeckIndex = DeckIndex,
@@ -390,6 +391,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public int? BoardOrder { get; set; }
 
 		public bool InGraveardAtStartOfGame { get; set; }
+
+		public bool PendingStartOfGameReveal { get; set; }
+
 		public ICardExtraInfo? ExtraInfo { get; set; }
 
 		public string? LatestCardId
