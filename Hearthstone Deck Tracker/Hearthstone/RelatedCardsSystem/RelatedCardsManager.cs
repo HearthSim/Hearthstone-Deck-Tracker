@@ -352,9 +352,12 @@ public class RelatedCardsManager
 		// Standard window (0-based, "7+"): single-cost pools and pools with min=0.
 		// Shifted window (minVal-based, "10+"): multi-cost high-cost pools so each
 		// individual value gets its own bar instead of collapsing into a single spike.
-		var bucketStart = (minVal == maxVal || minVal < 1) ? 0 : minVal;
+		// The start is clamped to the cap: a pool whose cheapest/smallest card is already
+		// past it (e.g. costs 12 and 20) has nothing left to spread out and collapses into
+		// the single "10+" bucket, instead of producing an empty or negative window.
+		var bucketStart = (minVal == maxVal || minVal < 1) ? 0 : Math.Min(minVal, HighCostCap);
 		var cap = bucketStart == 0 ? StandardCap : HighCostCap;
-		var bucketCount = cap - bucketStart + 1; // start=0→8, start=5→6, start=8→3
+		var bucketCount = cap - bucketStart + 1; // start=0→8, start=5→6, start=10→1
 
 		var freq = new int[bucketCount];
 		for(var i = 0; i < count; i++)
