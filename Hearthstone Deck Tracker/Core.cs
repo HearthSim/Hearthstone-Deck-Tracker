@@ -207,9 +207,6 @@ namespace Hearthstone_Deck_Tracker
 
 			if(ConfigManager.UpdatedVersion != null)
 			{
-#if(!SQUIRREL)
-				Updater.Cleanup();
-#endif
 #if(!PORTABLE_DISCONTINUED)
 				if(ConfigManager.ShouldShowUpdateNotes())
 				{
@@ -402,15 +399,13 @@ namespace Hearthstone_Deck_Tracker
 
 		private static async void UpdateOverlayAsync()
 		{
-#if(!SQUIRREL)
-			if(Config.Instance.CheckForUpdates)
-				Updater.CheckForUpdates(true);
-#endif
 			var hsForegroundChanged = false;
 			while(_updateOverlay)
 			{
+#if(SQUIRREL)
 				if(Config.Instance.CheckForUpdates)
 					Updater.CheckForUpdates();
+#endif
 				if(User32.GetHearthstoneWindow() != IntPtr.Zero)
 				{
 					if(Game.CurrentRegion == Region.UNKNOWN)

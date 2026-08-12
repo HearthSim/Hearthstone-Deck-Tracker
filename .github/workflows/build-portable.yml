@@ -110,7 +110,6 @@ jobs:
         shell: pwsh
         run: |
           $hdtReleaseDir = "Hearthstone Deck Tracker\bin\x64\Hearthstone Deck Tracker"
-          smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUpdate.exe"
           smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUninstaller.exe"
           smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\Hearthstone Deck Tracker.exe"
         env:

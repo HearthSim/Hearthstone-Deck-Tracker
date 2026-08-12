@@ -203,27 +203,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 			Config.Instance.CheckConfigWarnings();
 
-#if(!SQUIRREL)
-			Updater.Status.Changed += async value =>
-			{
-				if(value != UpdaterState.Available)
-					return;
-				ActivateWindow();
-				var result = await this.ShowMessageAsync(
-					title: Utility.LocUtil.Get("MainWindow_StatusBarUpdate_NewUpdateAvailable"),
-					message: Utility.LocUtil.Get("MainWindow_ShowMessage_UpdateDialog"),
-					style: MessageDialogStyle.AffirmativeAndNegative,
-					settings: new MessageDialogs.Settings
-					{
-						AffirmativeButtonText = Utility.LocUtil.Get("Button_Download"),
-						NegativeButtonText = Utility.LocUtil.Get("Button_Notnow")
-					}
-				);
-				if(result == MessageDialogResult.Affirmative)
-					Updater.StartUpdate();
-			};
-#endif
-
 			HsReplayDataManager.Decks.OnLoaded += () =>
 			{
 				DeckPickerList.RefreshDisplayedDecks();
@@ -529,7 +508,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 #endregion
 
-		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e) => Updater.StartUpdate();
+		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e)
+		{
+#if(SQUIRREL)
+			Updater.StartUpdate();
+#endif
+		}
 
 		private void HyperlinkDevDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/discord/");
 

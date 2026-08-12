@@ -37,9 +37,6 @@ if (!(Test-Path $output)) {
 
 # Sign and zip up portable build
 if (!$dev) {
-    smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUpdate.exe"
-    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE  }
-
     smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUninstaller.exe"
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE  }
 

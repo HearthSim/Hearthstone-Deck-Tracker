@@ -31,6 +31,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxConfigSaveAppData.Visibility = Visibility.Collapsed;
 			CheckboxDataSaveAppData.Visibility = Visibility.Collapsed;
 			SelectSaveDataPath.Visibility = Visibility.Collapsed;
+#else
+			CheckboxCheckForUpdates.Visibility = Visibility.Collapsed;
 #endif
 		}
 
