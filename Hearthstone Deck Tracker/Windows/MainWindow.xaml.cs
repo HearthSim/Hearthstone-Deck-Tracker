@@ -193,6 +193,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 #elif(DEBUG)
 			Title += " [DEBUG]";
 #endif
+#if(PORTABLE_DISCONTINUED)
+			StatusBarPortableDiscontinued.Visibility = Visible;
+#endif
 			Config.Instance.OnConfigWarning += warning =>
 			{
 				WarningFlyout.SetConfigWarning(warning);

@@ -1,0 +1,27 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.PortableDiscontinued"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="600">
+    <StackPanel VerticalAlignment="Center" Margin="0,0,0,60">
+        <Label Content="{lex:Loc PortableDiscontinued_Header}" FontWeight="SemiBold" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+        <TextBlock TextWrapping="Wrap" FontSize="15" HorizontalAlignment="Center" Width="420">
+            <Run Text="{lex:Loc PortableDiscontinued_Message}"/>
+            <LineBreak/><LineBreak/>
+            <Run Text="{lex:Loc PortableDiscontinued_Message_Action}"/>
+        </TextBlock>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+            <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="200"
+                    Command="commands:GlobalCommands.OpenUrl" CommandParameter="https://hsreplay.net/hdt/download/">
+                <TextBlock Text="{lex:Loc PortableDiscontinued_Button_Download}"/>
+            </Button>
+            <Button Style="{DynamicResource SquareButtonStyle}" Margin="10,0,0,0" Width="200" Click="ButtonContinue_OnClick">
+                <TextBlock Text="{lex:Loc PortableDiscontinued_Button_Continue}"/>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
