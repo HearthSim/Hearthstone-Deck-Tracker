@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          # full history so "sentry-cli releases set-commits --auto" can resolve the commit range
+          fetch-depth: 0
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
@@ -42,9 +45,15 @@ jobs:
           $exit2 = $LASTEXITCODE
           if ($exit1 -ne 0 -or $exit2 -ne 0) { exit 1 }
 
+      # SENTRY_AUTH_TOKEN is only passed for tagged builds, which is what enables the Sentry CLI
+      # steps in "Hearthstone Deck Tracker.csproj". The release name is not passed in: both sentry-cli
+      # and the SDK derive it from InformationalVersion, so they cannot drift apart.
       - name: Build (Squirrel)
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x64"
         env:
+          SENTRY_AUTH_TOKEN: ${{ startsWith(github.ref, 'refs/tags/v') && secrets.SENTRY_AUTH_TOKEN || '' }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
           SENTRY_DSN: ${{ vars.SENTRY_DSN }}
 
       - name: Setup SM_CLIENT_CERT_FILE from base64 secret data

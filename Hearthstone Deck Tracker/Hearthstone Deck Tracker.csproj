@@ -52,6 +52,24 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
 
+  <!-- sentry-cli picks up SENTRY_ORG/SENTRY_PROJECT/SENTRY_AUTH_TOKEN from .github/workflows/main.yml.
+       The release name is composed from the same version the SDK resolves it from at runtime, so both
+       sides always agree. -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Squirrel|x64' and '$(SENTRY_AUTH_TOKEN)' != ''">
+    <!-- the Sentry targets would only enable the CLI in a target running after "AfterBuild", which is
+         already too late for the release targets hooked into it, so opt in here -->
+    <UseSentryCLI>true</UseSentryCLI>
+    <!-- 32-bit MSBuild cannot reflect over the x64 exe to read InformationalVersion, so spell out the
+         release name the SDK composes at runtime (otherwise sentry-cli falls back to the commit sha) -->
+    <SENTRY_RELEASE>$(AssemblyName)@$(VersionPrefix)</SENTRY_RELEASE>
+    <SENTRY_RELEASE Condition="'$(VersionSuffix)' != ''">$(AssemblyName)@$(VersionPrefix)-$(VersionSuffix)</SENTRY_RELEASE>
+    <SentryCreateRelease>true</SentryCreateRelease>
+    <SentrySetCommits>true</SentrySetCommits>
+    <SentrySetCommitOptions>--auto --ignore-missing</SentrySetCommitOptions>
+    <SentryUploadSymbols>true</SentryUploadSymbols>
+    <SentryUploadSources>true</SentryUploadSources>
+  </PropertyGroup>
+
   <PropertyGroup>
     <SentryDsn>$(SENTRY_DSN)</SentryDsn>
     <SentryDsn Condition="'$(SentryDsn)' == ''">https://63f3118ab76da59e220c259639c60330@o35918.ingest.us.sentry.io/80405</SentryDsn>

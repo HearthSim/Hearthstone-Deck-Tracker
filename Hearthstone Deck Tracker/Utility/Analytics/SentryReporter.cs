@@ -69,8 +69,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			SentrySdk.Init(options =>
 			{
 				options.Dsn = GetBuildMetadata("SentryDsn") ?? "";
-				// Release is left unset so the SDK resolves it from InformationalVersion, which is also
-				// where sentry-cli reads it from when it creates the release at build time
+				// Release is left unset so the SDK resolves it from InformationalVersion, which the csproj
+				// composes the sentry-cli release name from at build time
 				options.Distribution = Helper.GetCurrentVersion().Revision.ToString();
 				options.Environment = GetBuildMetadata("SentryEnvironment");
 				if(string.IsNullOrWhiteSpace(options.Environment))
