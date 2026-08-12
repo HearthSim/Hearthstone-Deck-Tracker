@@ -1,7 +1,7 @@
 Param(
     [Parameter(Mandatory=$True)]
     [string]$packageVersion,
-    [ValidateSet("squirrel", "portable", "dev")]
+    [ValidateSet("squirrel", "dev")]
     $type
 )
 
@@ -20,7 +20,6 @@ Write-Host "Creating $type release $packageVersion..."
 
 $repo = @{
     dev = "HDT-dev-builds"
-    portable = "Hearthstone-Deck-Tracker"
     squirrel = "HDT-Releases"
 }[$type]
 
@@ -29,10 +28,6 @@ $releaseBody = @{
 # Development build (unstable)
 ### Using this build is not recommended!
 ### Download the latest stable build here: https://hsreplay.net/downloads/
-"@
-    portable = @"
-## Download here: https://hsreplay.net/downloads/
-<Insert Release Notes Here>
 "@
     squirrel = ""
 }[$type]
@@ -65,7 +60,6 @@ $baseDir = if ($type -eq "dev") {"dev-builds"} else {"builds"}
 
 $assetFilter = @{
     dev = "HDT-Installer.exe", "Hearthstone.Deck.Tracker-*.zip", "*.nupkg", "RELEASES"
-    portable = "Hearthstone.Deck.Tracker-*.zip"
     squirrel = "HDT-Installer.exe", "*.nupkg", "RELEASES"
 }[$type]
 

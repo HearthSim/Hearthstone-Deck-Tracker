@@ -12,18 +12,12 @@ $DEV_LATEST = "https://api.github.com/repos/HearthSim/HDT-dev-builds/releases/la
 $PROD_LATEST = "https://api.github.com/repos/HearthSim/HDT-Releases/releases/latest"
 
 $buildDir = "$baseDir\Hearthstone Deck Tracker\bin\x64"
-$hdtReleaseDir = "$buildDir\Hearthstone Deck Tracker"
 $squirrelTools = "$baseDir\packages\squirrel.windows\1.9.1\tools"
 $squirrel = "$squirrelTools\Squirrel.exe"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 # Run post build scripts
-if (!$dev) {
-    Set-Location "$buildDir\Release"
-    .$PSScriptRoot/release_post_build.bat
-    Set-Location $PSScriptRoot
-}
 Set-Location "$buildDir/Squirrel"
 .$PSScriptRoot/squirrel_post_build.bat
 Set-Location $PSScriptRoot
@@ -33,18 +27,6 @@ $buildsDir = if ($dev) { "dev-builds" } else { "builds" };
 $output = "$baseDir\$buildsDir\$packageVersion"
 if (!(Test-Path $output)) {
     mkdir $output
-}
-
-# Sign and zip up portable build
-if (!$dev) {
-    smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUninstaller.exe"
-    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE  }
-
-    smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\Hearthstone Deck Tracker.exe"
-    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE  }
-
-    Set-Location $buildDir
-    7z a -r -mx9 "$output\Hearthstone.Deck.Tracker-v$packageVersion.zip" "Hearthstone Deck Tracker"
 }
 
 # Create squirrel build
