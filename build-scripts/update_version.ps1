@@ -8,12 +8,12 @@ Param(
 $baseDir = $(Resolve-Path "$PSScriptRoot\..").Path
 $projectFile = "$baseDir\Hearthstone Deck Tracker\Hearthstone Deck Tracker.csproj"
 
-# Read version number from AssemblyInfo
+# Read version number from the csproj
 $assemblyInfo = [IO.File]::ReadAllText($projectFile)
-$assemblyVersionRegex = New-Object System.Text.RegularExpressions.Regex('<AssemblyVersion>(\d+)\.(\d+)\.(\d+)</AssemblyVersion>')
-$match = $assemblyVersionRegex.Match($assemblyInfo)
+$versionRegex = New-Object System.Text.RegularExpressions.Regex('<Version>(\d+)\.(\d+)\.(\d+)</Version>')
+$match = $versionRegex.Match($assemblyInfo)
 if(!$match.Success) {
-    throw "AssemblyVersion not found in csproj"
+    throw "Version not found in csproj"
 }
 
 $major = $match.Groups[1].Value
@@ -29,12 +29,9 @@ if ($dev) {
     $packageVersion = "$packageVersion-dev$buildNumber"
 }
 
-# Update AssemblyInfo.cs with the new version
+# Update the csproj with the new version. AssemblyVersion and FileVersion derive from it.
 $assemblyVersion = "$major.$minor.$patch.$buildNumber"
-$assemblyInfo = $assemblyVersionRegex.Replace($assemblyInfo, '<AssemblyVersion>' + $assemblyVersion + '</AssemblyVersion>')
-
-$fileVersionRegex = New-Object System.Text.RegularExpressions.Regex('<FileVersion>.*</FileVersion>')
-$assemblyInfo = $fileVersionRegex.Replace($assemblyInfo, '<FileVersion>' + $assemblyVersion + '</FileVersion>')
+$assemblyInfo = $versionRegex.Replace($assemblyInfo, '<Version>' + $assemblyVersion + '</Version>')
 
 [IO.File]::WriteAllText($projectFile, $assemblyInfo)
 
