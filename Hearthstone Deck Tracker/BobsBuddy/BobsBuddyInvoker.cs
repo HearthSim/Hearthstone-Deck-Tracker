@@ -440,8 +440,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			Hearthstone.Player gamePlayer,
 			BobsBuddyPlayer inputPlayer,
 			Entity? playerEntity,
-			bool friendly,
-			bool isDuosTeammate = false
+			bool friendly
 			)
 		{
 			var playerGameHero = gamePlayer.Hero;
@@ -647,12 +646,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			// displayed warband swaps to the teammate's, the game creates FRESH copies of the teammate's per-player
 			// enchants attached to the same Player entity in zone PLAY, and moves the local player's own copies
 			// to SETASIDE; therefore filter to to IsInPlay.
-			var playerAttached = isDuosTeammate
+			// Both the LOCAL player and teammate need the same filter in duos: the copies that are not in play
+			// belong to the teammate, so an unfiltered lookup returns the teammate's enchant whenever the
+			// local player has no copy of its own.
+			var playerAttached = _game.IsBattlegroundsDuosMatch
 				? GetAttachedEntities(playerEntity.Id).Where(x => x.IsInPlay).ToList()
 				: GetAttachedEntities(playerEntity.Id).ToList();
 
 			// captured inputPlayer values below are marked as either 'attached' or 'direct'
-			// attached: obtained from GetAttachedEntities (requires isDuosTeammate to work properly in duos games)
+			// attached: obtained from GetAttachedEntities (required to read correct player/teammate in duos games)
 			// direct: comes directly from the playerEntity using GetTag (no special handling needed for duos)
 
 			var pEternalLegion = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.EternalKnight_EternalKnightPlayerEnchantDnt);
@@ -821,12 +823,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				{
 					if(_game.DuosWasPlayerHeroModified && DuosInputPlayerTeammate == null && input.PlayerTeammate != null)
 					{
-						SetupInputPlayer(simulator, _game.Player, input.PlayerTeammate, _game.PlayerEntity, true, isDuosTeammate: true);
+						SetupInputPlayer(simulator, _game.Player, input.PlayerTeammate, _game.PlayerEntity, true);
 						DuosInputPlayerTeammate = input.PlayerTeammate;
 					}
 					if(_game.DuosWasOpponentHeroModified && DuosInputOpponentTeammate == null && input.OpponentTeammate != null)
 					{
-						SetupInputPlayer(simulator, _game.Opponent, input.OpponentTeammate, _game.OpponentEntity, false, isDuosTeammate: true);
+						SetupInputPlayer(simulator, _game.Opponent, input.OpponentTeammate, _game.OpponentEntity, false);
 						DuosInputOpponentTeammate = input.OpponentTeammate;
 					}
 				}
