@@ -310,6 +310,45 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		}
 
+#if(SQUIRREL)
+		// funnel points are written immediately rather than queued, since SendQueuedMetrics only runs after the drops they measure
+		private static InfluxPointBuilder BobsBuddySentryFunnelPoint(string stage, int count) =>
+			new InfluxPointBuilder("hdt_bb_sentry_funnel")
+				.Tag("stage", stage)
+				.Tag("bb_version", BobsBuddyUtils.VersionString)
+				.Field("count", count);
+#endif
+
+		public static void OnBobsBuddySentryEventQueued(string type, bool isDuos)
+		{
+#if(SQUIRREL)
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(BobsBuddySentryFunnelPoint("queued", 1).Tag("type", type).Tag("is_duos", isDuos.ToString()).Build());
+#endif
+		}
+
+		public static void OnBobsBuddySentryEventsSent(string path, int sent, int captureFailed)
+		{
+#if(SQUIRREL)
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			if(sent > 0)
+				WritePoint(BobsBuddySentryFunnelPoint("sent", sent).Tag("path", path).Build());
+			if(captureFailed > 0)
+				WritePoint(BobsBuddySentryFunnelPoint("capture_failed", captureFailed).Tag("path", path).Build());
+#endif
+		}
+
+		public static void OnBobsBuddySentryEventsDropped(string reason, int count)
+		{
+#if(SQUIRREL)
+			if(!Config.Instance.GoogleAnalytics || count == 0)
+				return;
+			WritePoint(BobsBuddySentryFunnelPoint("dropped", count).Tag("reason", reason).Build());
+#endif
+		}
+
 		public static void OnBobsBuddyEnabledChanged(bool newState)
 		{
 			if(!Config.Instance.GoogleAnalytics)

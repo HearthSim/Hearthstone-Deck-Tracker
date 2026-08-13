@@ -135,18 +135,35 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bbEvent.Fingerprint.Add(isDuos.ToString());
 
 			BobsBuddyEvents.Enqueue(bbEvent);
+			Influx.OnBobsBuddySentryEventQueued("terminal_case", isDuos);
 #endif
 		}
 
-		public static void SendQueuedBattlegroundsEvents(string? shortId = null)
+		public static void FlushBattlegroundsEvents(string? shortId, bool logContainsStateComplete, bool isDuos)
 		{
 #if(SQUIRREL)
-			SendQueuedBobsBuddyEvents(shortId);
-			SendQueuedHDTToolsEvents();
+			if(logContainsStateComplete)
+			{
+				SendQueuedBobsBuddyEvents(shortId, "normal", RecodeIfBothSidesEmpty);
+				SendQueuedHDTToolsEvents();
+			}
+			else if(!isDuos)
+				SendQueuedBobsBuddyEvents(shortId, "state_complete_false", RecodeAsStateCompleteFalse);
+			else
+				Influx.OnBobsBuddySentryEventsDropped("duos_no_state_complete", BobsBuddyEvents.Count);
 #endif
+			ClearBattlegroundsEvents();
 		}
 
-		public static void SendQueuedHDTToolsEvents()
+		public static void DropBattlegroundsEvents(string reason)
+		{
+#if(SQUIRREL)
+			Influx.OnBobsBuddySentryEventsDropped(reason, BobsBuddyEvents.Count);
+#endif
+			ClearBattlegroundsEvents();
+		}
+
+		private static void SendQueuedHDTToolsEvents()
 		{
 #if(SQUIRREL)
 			while(HDTToolsEvents.Count > 0)
@@ -163,69 +180,56 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		}
 
-		public static void SendQueuedBobsBuddyEvents(string? shortId)
-		{
 #if(SQUIRREL)
+		private static void SendQueuedBobsBuddyEvents(string? shortId, string path, Func<SentryEvent, SentryEvent> recode)
+		{
+			var sent = 0;
+			var captureFailed = 0;
 			while(BobsBuddyEvents.Count > 0)
 			{
 				if(BobsBuddyEventsSent >= MaxBobsBuddyEventsPerGame)
 				{
+					Influx.OnBobsBuddySentryEventsDropped("cap", BobsBuddyEvents.Count);
 					ClearBobsBuddyEvents();
 					break;
 				}
 				var e = BobsBuddyEvents.Dequeue();
 				((BobsBuddyData)e.Extra).ShortId = shortId;
 
-				var bbData = (BobsBuddyData)e.Extra;
-				if(
-					bbData != null && bbData.Input != null &&
-					bbData.Turn > 5 &&
-					bbData.Input.Player.Side.Count == 0 &&
-					bbData.Input.Opponent.Side.Count == 0
-				)
-				{
-					var msg = new SentryMessage($"BobsBuddy {BobsBuddyUtils.VersionString}: Both Sides Empty");
-					var recodedBbEvent = new SentryEvent(msg)
-					{
-						Level = e.Level,
-						Tags = e.Tags,
-						Extra = e.Extra,
-					};
-					Client.Capture(recodedBbEvent);
-				}
+				var eventId = Client.Capture(recode(e));
+				if(eventId != null)
+					sent++;
 				else
-					Client.Capture(e);
-
+					captureFailed++;
 				BobsBuddyEventsSent++;
 			}
-#endif
+			Influx.OnBobsBuddySentryEventsSent(path, sent, captureFailed);
 		}
 
-		public static void SendQueuedBobsBuddyEventsStateCompleteFalse(string? shortId)
+		private static SentryEvent RecodeIfBothSidesEmpty(SentryEvent e)
 		{
-#if(SQUIRREL)
-			while(BobsBuddyEvents.Count > 0)
-			{
-				if(BobsBuddyEventsSent >= MaxBobsBuddyEventsPerGame)
-				{
-					ClearBobsBuddyEvents();
-					break;
-				}
-				var e = BobsBuddyEvents.Dequeue();
-				((BobsBuddyData)e.Extra).ShortId = shortId;
-
-				var msg = new SentryMessage($"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: StateCompleteFalse");
-				var recodedBbEvent = new SentryEvent(msg)
-				{
-					Level = e.Level,
-					Tags = e.Tags,
-					Extra = e.Extra,
-				};
-				Client.Capture(recodedBbEvent);
-				BobsBuddyEventsSent++;
-			}
-#endif
+			var bbData = (BobsBuddyData)e.Extra;
+			if(
+				bbData != null && bbData.Input != null &&
+				bbData.Turn > 5 &&
+				bbData.Input.Player.Side.Count == 0 &&
+				bbData.Input.Opponent.Side.Count == 0
+			)
+				return Recode(e, $"BobsBuddy {BobsBuddyUtils.VersionString}: Both Sides Empty");
+			return e;
 		}
+
+		private static SentryEvent RecodeAsStateCompleteFalse(SentryEvent e) =>
+			Recode(e, $"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: StateCompleteFalse");
+
+		private static SentryEvent Recode(SentryEvent e, string message) =>
+			new SentryEvent(new SentryMessage(message))
+			{
+				Level = e.Level,
+				Tags = e.Tags,
+				Extra = e.Extra,
+			};
+#endif
 
 		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, bool isDuos)
 		{
@@ -265,6 +269,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bbEvent.Fingerprint.Add(isDuos.ToString());
 
 			BobsBuddyEvents.Enqueue(bbEvent);
+
+			// exceptions share the queue and the per-game cap, so they count toward the funnel too
+			Influx.OnBobsBuddySentryEventQueued("exception", isDuos);
 #endif
 		}
 
@@ -339,7 +346,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		public static void ClearBobsBuddyEvents() => BobsBuddyEvents.Clear();
 		public static void ClearHDTToolsEvents() => HDTToolsEvents.Clear();
 
-		public static void ClearBattlegroundsEvents()
+		private static void ClearBattlegroundsEvents()
 		{
 			ClearBobsBuddyEvents();
 			ClearHDTToolsEvents();
