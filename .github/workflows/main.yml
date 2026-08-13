@@ -29,7 +29,7 @@ jobs:
           echo "::set-output name=packageVersion::$packageVersion"
 
       - name: Build (Release)
-        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x64" /p:PortableDiscontinued=true
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x64"
 
       - name: Setup VSTest
         uses: Malcolmnixon/Setup-VSTest@v4

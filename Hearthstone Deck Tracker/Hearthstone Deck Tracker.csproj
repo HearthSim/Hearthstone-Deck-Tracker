@@ -45,10 +45,6 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(PortableDiscontinued)'=='true'">
-    <DefineConstants>$(DefineConstants);PORTABLE_DISCONTINUED</DefineConstants>
-  </PropertyGroup>
-
   <Target Name="GenerateDesignerFiles">
     <GenerateResource SdkToolsPath="$(TargetFrameworkSDKToolsDirectory)" Sources="Properties/Strings.resx" StronglyTypedLanguage="C#" StronglyTypedClassName="Strings" StronglyTypedNamespace="Hearthstone_Deck_Tracker.Properties" StronglyTypedFileName="Properties/Strings.Designer.cs" OutputResources="Hearthstone_Deck_Tracker.Properties.Strings.resources" PublicClass="true" />
     <Delete Files="Hearthstone_Deck_Tracker.Properties.Strings.resources" />

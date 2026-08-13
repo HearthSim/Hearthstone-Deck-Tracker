@@ -136,9 +136,6 @@
             <controls:Flyout x:Name="FlyoutUpdateNotes" Header="{lex:Loc MainWindow_Flyout_UpdateNotes_Header}" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <flyoutControls:UpdateNotes x:Name="UpdateNotesControl"/>
             </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutPortableDiscontinued" Header="Hearthstone Deck Tracker" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
-                <flyoutControls:PortableDiscontinued x:Name="PortableDiscontinuedControl"/>
-            </controls:Flyout>
             <controls:Flyout x:Name="FlyoutHsReplayNote" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="0" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <controls:Flyout.HeaderTemplate>
                     <DataTemplate/>
@@ -204,15 +201,6 @@
                 <StatusBarItem HorizontalAlignment="Right">
                     <CheckBox Foreground="White" Content="check for dev updates" FlowDirection="RightToLeft"
                         IsChecked="{Binding CheckForDevUpdates, Source={StaticResource ConfigWrapper}}" />
-                </StatusBarItem>
-            </StatusBar>
-            <StatusBar Name="StatusBarPortableDiscontinued" DockPanel.Dock="Top" Margin="1,1,1,0" Visibility="Collapsed" Background="{DynamicResource AccentBaseColorBrush}">
-                <StatusBarItem Margin="0,5,0,5" HorizontalAlignment="Center">
-                    <TextBlock VerticalAlignment="Center" FontSize="14">
-                        <Hyperlink Foreground="White" FontWeight="Bold" Command="commands:GlobalCommands.OpenUrl" CommandParameter="https://hsreplay.net/hdt/download/">
-                            <Run Text="{lex:Loc MainWindow_StatusBarPortableDiscontinued_Message}"/>
-                        </Hyperlink>
-                    </TextBlock>
                 </StatusBarItem>
             </StatusBar>
             <StatusBar DataContext="{x:Static utility:Updater.Status}" DockPanel.Dock="Top" Margin="1,1,1,0" Visibility="{Binding StatusBarVisibility}" Background="{DynamicResource AccentBaseColorBrush}">

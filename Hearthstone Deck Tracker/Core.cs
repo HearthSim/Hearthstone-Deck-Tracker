@@ -198,23 +198,17 @@ namespace Hearthstone_Deck_Tracker
 			MainWindow.Show();
 			splashScreenWindow.Close();
 
-#if(PORTABLE_DISCONTINUED)
-			MainWindow.FlyoutPortableDiscontinued.IsOpen = true;
-#endif
-
 			if(Config.Instance.DisplayHsReplayNoteLive && ConfigManager.PreviousVersion != null && ConfigManager.PreviousVersion < new Version(1, 1, 0))
 				MainWindow.FlyoutHsReplayNote.IsOpen = true;
 
 			if(ConfigManager.UpdatedVersion != null)
 			{
-#if(!PORTABLE_DISCONTINUED)
 				if(ConfigManager.ShouldShowUpdateNotes())
 				{
 					MainWindow.UpdateNotesControl.LoadReleaseNotes();
 					MainWindow.FlyoutUpdateNotes.IsOpen = true;
 					MainWindow.UpdateNotesControl.SetHighlight(ConfigManager.PreviousVersion);
 				}
-#endif
 
 #if(SQUIRREL)
 				// Once per update, update the remote. We do this in case e.g. GitHub was down and switched
