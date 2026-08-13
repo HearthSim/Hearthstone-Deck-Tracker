@@ -1075,10 +1075,9 @@ namespace Hearthstone_Deck_Tracker
 
 					if(LogContainsStateComplete)
 						Sentry.SendQueuedBattlegroundsEvents(_game.CurrentGameStats.HsReplay.UploadId);
-					else
-						if(!_game.IsBattlegroundsDuosMatch)
-							Sentry.SendQueuedBobsBuddyEventsStateCompleteFalse(_game.CurrentGameStats.HsReplay.UploadId);
-						Sentry.ClearBattlegroundsEvents();
+					else if(!_game.IsBattlegroundsDuosMatch)
+						Sentry.SendQueuedBobsBuddyEventsStateCompleteFalse(_game.CurrentGameStats.HsReplay.UploadId);
+					Sentry.ClearBattlegroundsEvents();
 					Tier7Trial.Clear();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
 					var finalPlacement = hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0;
