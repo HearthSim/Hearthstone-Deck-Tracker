@@ -1,3 +1,7 @@
+## **Release v1.55.7 - 2026-08-13**
+**Battlegrounds**:
+- Fixed a number of incorrect combat odds.
+
 ## **Release v1.55.6 - 2026-08-13**
 **General**:
 - We're improving our automatic update system and as such, users on old installations of Hearthstone Deck Tracker might see a prompt to reinstall the deck tracker. Nothing is changing for existing users on modern installs.\
