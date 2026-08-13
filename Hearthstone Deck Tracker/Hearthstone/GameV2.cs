@@ -135,6 +135,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool IsUsingPremade { get; set; }
 		public bool IsRunning { get; set; }
 		public bool IsBattlegroundsCombatPhase { get; set; }
+
+		// The GameEntity TURN tag the most recent shopping phase started on.
+		public int GameEntityTurnAtShoppingStart { get; set; } = -1;
+
 		public Region CurrentRegion { get; set; }
 		public GameStats? CurrentGameStats { get; set; }
 		public HearthMirror.Objects.Deck? CurrentSelectedDeck { get; set; }
@@ -475,6 +479,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ControllersWithDeckCopiedFromEnemy.Clear();
 			Entities.Clear();
 			IsBattlegroundsCombatPhase = false;
+			GameEntityTurnAtShoppingStart = -1;
 			SecretsManager.Reset();
 			SetupDone = false;
 			_spectator = null;

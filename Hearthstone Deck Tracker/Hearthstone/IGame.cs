@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		bool IsBattlegroundsDuosMatch { get; }
 		bool IsTraditionalHearthstoneMatch { get; }
 		bool IsBattlegroundsCombatPhase { get; set; }
+		int GameEntityTurnAtShoppingStart { get; set; }
 		bool IsRunning { get; set; }
 		Region CurrentRegion { get; set; }
 		GameMode CurrentGameMode { get; }

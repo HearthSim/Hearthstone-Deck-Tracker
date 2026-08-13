@@ -40,6 +40,7 @@ namespace HDTTests.Hearthstone.Secrets
 		public bool IsBattlegroundsDuosMatch { get; set; }
 		public bool IsTraditionalHearthstoneMatch { get; set; }
 		public bool IsBattlegroundsCombatPhase { get; set; }
+		public int GameEntityTurnAtShoppingStart { get; set; } = -1;
 		public bool IsRunning { get; set; }
 		public Region CurrentRegion { get; set; }
 		public GameMode CurrentGameMode { get; set; }

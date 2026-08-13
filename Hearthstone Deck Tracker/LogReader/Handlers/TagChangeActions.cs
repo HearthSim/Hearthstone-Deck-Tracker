@@ -198,6 +198,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				Core.Overlay.BgsMinionPinningShop.Visibility = Visibility.Collapsed;
 				if(game.IsBattlegroundsSoloMatch && game.CurrentGameStats != null)
 				{
+					// A "real" combat should always start on the GameEntity TURN after a shopping phase (GameEntity
+					// TURN should appear as ODD for shopping phases and EVEN for combat).
+					var gameEntityTurn = game.GameEntity?.GetTag(GameTag.TURN) ?? 0;
+					// In order to prevent false positive BobsBuddy terminals from being reported, skip rare cases
+					// where we've observed an extra combat appearing at the end of a shopping phase, while still
+					// in the same shopping phase turn.
+					if(gameEntityTurn <= game.GameEntityTurnAtShoppingStart)
+					{
+						Log.Warn($"Not starting Bob's Buddy: combat opened on GameEntity TURN {gameEntityTurn}, which is a shopping phase TURN {game.GameEntityTurnAtShoppingStart}.");
+						return;
+					}
+
 					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
 						.StartCombat();
 				}

@@ -514,6 +514,7 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.IsBattlegroundsMatch)
 				{
 					_game.IsBattlegroundsCombatPhase = false;
+					_game.GameEntityTurnAtShoppingStart = _game.GameEntity?.GetTag(GameTag.TURN) ?? -1;
 					Core.Overlay.OnBattlegroundsShoppingStart();
 					_game.PrimaryPlayerId = _game.Player.Id;
 					OpponentDeadForTracker.ShoppingStarted(_game);
