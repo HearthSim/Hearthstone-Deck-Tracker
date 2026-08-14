@@ -313,7 +313,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #if(SQUIRREL)
 		// funnel points are written immediately rather than queued, since SendQueuedMetrics only runs after the drops they measure
 		private static InfluxPointBuilder BobsBuddySentryFunnelPoint(string stage, int count) =>
-			new InfluxPointBuilder("hdt_bb_sentry_funnel")
+			new InfluxPointBuilder("hdt_bb_sentry_funnel", false)
 				.Tag("stage", stage)
 				.Tag("bb_version", BobsBuddyUtils.VersionString)
 				.Field("count", count);
