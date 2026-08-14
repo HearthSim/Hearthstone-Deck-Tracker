@@ -1021,9 +1021,28 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		internal void ShowBgsTopBar()
+		private void UpdateBgsTopBarContentVisibility()
 		{
 			TurnCounter.Visibility = Config.Instance.ShowBattlegroundsTurnCounter ? Visible : Collapsed;
+
+			// ShowBattlegroundsBrowser ("Show Minions and Guides Browser") hides the whole top bar apart from
+			// the turn counter, ShowBattlegroundsGuides ("Show Hero and Comp Guides") only picks which panel shows
+			var showBrowser = Config.Instance.ShowBattlegroundsBrowser;
+			var showGuides = showBrowser && Config.Instance.ShowBattlegroundsGuides;
+			GuidesTabs.Visibility = showGuides ? Visible : Collapsed;
+			BattlegroundsMinions.Visibility = showBrowser && !showGuides ? Visible : Collapsed;
+		}
+
+		// showing or hiding any of the content changes the width of the bar
+		internal void UpdateBgsTopBarContent()
+		{
+			UpdateBgsTopBarContentVisibility();
+			_bgsTopBarBehavior.Refresh();
+			_bgsTopBarTriggerMaskBehavior.Refresh();
+		}
+
+		internal void ShowBgsTopBar()
+		{
 			if(_game.GameEntity?.GetTag(GameTag.TURN) is int turn and > 0)
 				Core.Overlay.TurnCounter.UpdateTurn((int)turn / 2);
 
@@ -1049,18 +1068,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			BattlegroundsMinionsVM.OnHeroPowers(heroPowers);
 
-			if(Config.Instance.ShowBattlegroundsGuides)
-			{
-				GuidesTabs.Visibility = Visible;
-				BattlegroundsMinions.Visibility = Collapsed;
-			} else if (Config.Instance.ShowBattlegroundsBrowser)
-			{
-				GuidesTabs.Visibility = Collapsed;
-				BattlegroundsMinions.Visibility = Visible;
-			} else {
-				GuidesTabs.Visibility = Collapsed;
-				BattlegroundsMinions.Visibility = Collapsed;
-			}
+			UpdateBgsTopBarContentVisibility();
 
 			BtnTier7Inspiration.IsEnabled = BattlegroundsInspirationViewModel.HasBeenActivated;
 

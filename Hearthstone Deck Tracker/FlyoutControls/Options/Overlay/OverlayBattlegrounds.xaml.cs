@@ -279,10 +279,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsGuides = true;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
-			{
-				Core.Overlay.GuidesTabs.Visibility = Visibility.Visible;
-				Core.Overlay.BattlegroundsMinions.Visibility = Visibility.Collapsed;
-			}
+				Core.Overlay.UpdateBgsTopBarContent();
 		}
 
 		private void CheckboxShowBattlegroundsGuides_Unchecked(object sender, RoutedEventArgs e)
@@ -292,10 +289,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsGuides = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
-			{
-				Core.Overlay.GuidesTabs.Visibility = Visibility.Collapsed;
-				Core.Overlay.BattlegroundsMinions.Visibility = Visibility.Visible;
-			}
+				Core.Overlay.UpdateBgsTopBarContent();
 		}
 
 		private void CheckboxShowBattlegroundsBrowser_Checked(object sender, RoutedEventArgs e)
@@ -305,17 +299,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsBrowser = true;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
-			{
-				if(Config.Instance.ShowBattlegroundsGuides)
-				{
-					Core.Overlay.BattlegroundsMinions.Visibility = Visibility.Collapsed;
-					Core.Overlay.GuidesTabs.Visibility = Visibility.Visible;
-				} else
-				{
-					Core.Overlay.BattlegroundsMinions.Visibility = Visibility.Visible;
-					Core.Overlay.GuidesTabs.Visibility = Visibility.Collapsed;
-				}
-			}
+				Core.Overlay.UpdateBgsTopBarContent();
 		}
 
 		private void CheckboxShowBattlegroundsBrowser_Unchecked(object sender, RoutedEventArgs e)
@@ -325,10 +309,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsBrowser = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
-			{
-				Core.Overlay.BattlegroundsMinions.Visibility = Visibility.Collapsed;
-				Core.Overlay.GuidesTabs.Visibility = Visibility.Collapsed;
-			}
+				Core.Overlay.UpdateBgsTopBarContent();
 		}
 
 		private void CheckboxAlwaysShowBattlegroundsTavernTier7_Checked(object sender, RoutedEventArgs e)
@@ -357,8 +338,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTurnCounter = true;
 			SaveConfig(true);
-			if(Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.TurnCounter.Visibility = Visibility.Visible;
+			Core.Overlay.UpdateBgsTopBarContent();
 		}
 
 		private void CheckboxShowBattlegroundsTurnCounter_Unchecked(object sender, RoutedEventArgs e)
@@ -367,8 +347,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTurnCounter = false;
 			SaveConfig(true);
-			if(Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.TurnCounter.Visibility = Visibility.Collapsed;
+			Core.Overlay.UpdateBgsTopBarContent();
 		}
 
 		private void CheckboxShowBattlegroundsMaxResourcesWidget_Checked(object sender, RoutedEventArgs e)
