@@ -504,6 +504,19 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(point.Build());
 		}
 
+		public static void OnBobsBuddyCombatInShoppingTurn(int turn, int gameEntityTurn, int gameEntityTurnAtShoppingStart)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_bb_combat_in_shopping_turn")
+				.Tag("turn", Math.Min(turn, 20))
+				.Tag("bb_version", BobsBuddyUtils.VersionString)
+				.Field("game_entity_turn", gameEntityTurn)
+				.Field("game_entity_turn_at_shopping_start", gameEntityTurnAtShoppingStart)
+				.Build()
+			);
+		}
+
 		private static readonly List<InfluxPoint> _queue = new();
 		public static void SendQueuedMetrics()
 		{
