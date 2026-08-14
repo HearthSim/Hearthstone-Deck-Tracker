@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fixed the secret tracker showing the wrong secrets when The Origin Stone cast a secret from a Discover.
+
 ## **Release v1.55.10 - 2026-08-14**
 **Battlegrounds**:
 - Fixed an issue with the instrumentation we use to fix incorrect combat odds.

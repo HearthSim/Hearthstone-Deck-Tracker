@@ -398,11 +398,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		private ICardGenerator? TryGetOriginStoneSourceGenerator(Secret secret)
 		{
-			// The Origin Stone casts copies of unchosen discover options: it reveals a copy of the
-			// option immediately before the cast entity is created. Trace that copy back to the
-			// discover source to reuse its generator pool.
+			// The Origin Stone casts copies of unchosen discover options, revealing a copy of each
+			// non-secret option immediately before the cast entity is created. Trace such a copy
+			// back to the discover source to reuse its generator pool.
 			var revealedCast = Game.Opponent.RevealedEntities
-				.Where(e => e.Id < secret.Entity.Id && e.IsSecret
+				.Where(e => e.Id < secret.Entity.Id
 							&& e.GetTag(GameTag.COPIED_FROM_ENTITY_ID) > 0
 							&& e.IsInZone(Zone.SETASIDE))
 				.OrderByDescending(e => e.Id)

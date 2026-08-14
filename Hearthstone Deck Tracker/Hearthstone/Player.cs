@@ -806,8 +806,37 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						.FirstOrDefault();
 					if(revealedCast?.CardId is not null)
 						entity.Info.StoredCardIds.Add(revealedCast.CardId);
+					else
+					{
+						// Copies of secrets are not revealed, but the unchosen discover options they
+						// were copied from are, which still narrows the secret down to those options.
+						foreach(var cardId in GetUnchosenDiscoveredSecretIds(entity, creator))
+							entity.Info.StoredCardIds.Add(cardId);
+					}
 				}
 			}
+		}
+
+		private IEnumerable<string> GetUnchosenDiscoveredSecretIds(Entity secret, Entity creator)
+		{
+			var unchosenOptions = _game.Entities.Values
+				.Where(e => e.Id > creator.Id && e.Id < secret.Id && e.HasCardId
+							&& e.IsControlledBy(secret.GetTag(GameTag.CONTROLLER))
+							&& e.GetTag(GameTag.WAS_DISCOVER_OPTION) == 1
+							&& e.GetTag(GameTag.CREATOR) > 0
+							// The chosen option moves to hand, the unchosen ones are discarded.
+							&& (e.IsInZone(Zone.GRAVEYARD) || e.IsInZone(Zone.SETASIDE)))
+				.OrderByDescending(e => e.Id)
+				.ToList();
+
+			var discoverSourceId = unchosenOptions.FirstOrDefault()?.GetTag(GameTag.CREATOR) ?? 0;
+			if(discoverSourceId == 0)
+				return Enumerable.Empty<string>();
+
+			return unchosenOptions
+				.Where(e => e.IsSecret && e.GetTag(GameTag.CREATOR) == discoverSourceId)
+				.Select(e => e.CardId!)
+				.Distinct();
 		}
 
 		public void RemoveFromDeck(Entity entity, int turn)

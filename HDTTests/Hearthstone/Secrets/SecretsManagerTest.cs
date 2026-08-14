@@ -974,6 +974,83 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
+		public void CreatedByTheOriginStone_UnchosenDiscoverOption()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_WILD
+			};
+			game.Player = new Player(game, true) { Id = 1 };
+			game.Opponent = new Player(game, false) { Id = 2 };
+
+			var creator = new Entity(159);
+			creator.CardId = HearthDb.CardIds.NonCollectible.Mage.TheForbiddenSequence_TheOriginStoneToken;
+			creator.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			game.Entities.Add(159, creator);
+
+			var alterTime = new Entity(17);
+			alterTime.CardId = HearthDb.CardIds.Collectible.Mage.AlterTime;
+			alterTime.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			game.Entities.Add(17, alterTime);
+
+			// Unchosen options, revealed when The Origin Stone cast them
+			var unchosenSpell = new Entity(257);
+			unchosenSpell.CardId = HearthDb.CardIds.Collectible.Mage.AncientMysteries;
+			unchosenSpell.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			unchosenSpell.SetTag(GameTag.CREATOR, 17);
+			unchosenSpell.SetTag(GameTag.WAS_DISCOVER_OPTION, 1);
+			unchosenSpell.SetTag(GameTag.ZONE, (int)Zone.GRAVEYARD);
+			game.Entities.Add(257, unchosenSpell);
+
+			var unchosenSecret = new Entity(258);
+			unchosenSecret.CardId = HearthDb.CardIds.Collectible.Mage.PotionOfPolymorph;
+			unchosenSecret.SetTag(GameTag.SECRET, 1);
+			unchosenSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			unchosenSecret.SetTag(GameTag.CREATOR, 17);
+			unchosenSecret.SetTag(GameTag.WAS_DISCOVER_OPTION, 1);
+			unchosenSecret.SetTag(GameTag.ZONE, (int)Zone.GRAVEYARD);
+			game.Entities.Add(258, unchosenSecret);
+
+			// The chosen option went to hand instead of being cast
+			var chosenSecret = new Entity(259);
+			chosenSecret.CardId = HearthDb.CardIds.Collectible.Mage.Counterspell;
+			chosenSecret.SetTag(GameTag.SECRET, 1);
+			chosenSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			chosenSecret.SetTag(GameTag.CREATOR, 17);
+			chosenSecret.SetTag(GameTag.WAS_DISCOVER_OPTION, 1);
+			chosenSecret.SetTag(GameTag.ZONE, (int)Zone.HAND);
+			game.Entities.Add(259, chosenSecret);
+
+			// The Origin Stone reveals the copy it casts, but only for non-secrets
+			var revealedCast = new Entity(261);
+			revealedCast.CardId = HearthDb.CardIds.Collectible.Mage.AncientMysteries;
+			revealedCast.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			revealedCast.SetTag(GameTag.COPIED_FROM_ENTITY_ID, 257);
+			revealedCast.SetTag(GameTag.ZONE, (int)Zone.SETASIDE);
+			game.Entities.Add(261, revealedCast);
+
+			var createdSecret = new Entity(264);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.ZONE, (int)Zone.SECRET);
+			game.Entities.Add(264, createdSecret);
+
+			game.Opponent.CreateInSecret(createdSecret, 10, creator.Id);
+
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// The only unchosen secret option was Potion of Polymorph, so the secret is known
+			Assert.AreEqual(1, cards.Count);
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.PotionOfPolymorph == c.Id && c.Count == 1));
+		}
+
+		[TestMethod]
 		public void CreatedByTheOriginStone_NoInfo()
 		{
 			var game = new MockGame
