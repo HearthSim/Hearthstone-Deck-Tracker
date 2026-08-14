@@ -1,4 +1,4 @@
-## Unreleased
+## **Release v1.55.9 - 2026-08-14**
 **Battlegrounds**:
 - Updated the list of Trinkets that cause Tavern Tier 7 to appear.
 - Removed the distracting Bob's Buddy animation when hovering the leaderboard.
