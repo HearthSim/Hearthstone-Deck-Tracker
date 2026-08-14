@@ -42,10 +42,18 @@ public class BattlegroundsSessionViewModel : ViewModel
 		if(Core.Game.Spectator)
 			return;
 
-		var currentRating = Core.Game.CurrentGameStats?.BattlegroundsRatingAfter;
-		BgRatingCurrent = $"{currentRating:N0}";
+		UpdateCurrentRating(Core.Game.CurrentGameStats?.BattlegroundsRatingAfter ?? 0, Core.Game.CurrentBattlegroundsRating);
 
 		UpdateLatestGames();
+	}
+
+	// the post-game rating is 0 when we could not read it from the client, so we fall back to the rating we already
+	// have rather than claiming the player dropped to 0
+	internal void UpdateCurrentRating(int ratingAfter, int? clientRating)
+	{
+		var currentRating = ratingAfter > 0 ? ratingAfter : clientRating;
+		if(currentRating > 0)
+			BgRatingCurrent = $"{currentRating:N0}";
 	}
 
 	private readonly SemaphoreSlim _updateCompStatsSemaphore = new SemaphoreSlim(1, 1);
