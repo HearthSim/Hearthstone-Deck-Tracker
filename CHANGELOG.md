@@ -1,3 +1,7 @@
+## Unreleased
+**Battlegrounds**:
+- Updated the list of Trinkets that cause Tavern Tier 7 to appear.
+
 ## **Release v1.55.8 - 2026-08-14**
 **Battlegrounds**:
 - Fixed a number of incorrect combat odds.

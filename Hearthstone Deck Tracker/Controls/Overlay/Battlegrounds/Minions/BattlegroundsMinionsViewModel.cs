@@ -465,6 +465,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		HasTier7Trinket = trinkets.Any(
 			x => x is HearthDb.CardIds.NonCollectible.Neutral.PaglesFishingRod
 				or HearthDb.CardIds.NonCollectible.Neutral.Kaleidoscope
+				or HearthDb.CardIds.NonCollectible.Neutral.Kaleidoscope_KaleidoscopeToken
+				or HearthDb.CardIds.NonCollectible.Neutral.WaxLance
 		);
 	}
 
