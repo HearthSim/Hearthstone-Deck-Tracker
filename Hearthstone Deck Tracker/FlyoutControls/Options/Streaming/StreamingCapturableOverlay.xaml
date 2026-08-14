@@ -12,28 +12,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
+        <TextBlock Margin="5,5,5,10" TextWrapping="Wrap" Text="{lex:LocText Options_Overlay_Streaming_Label_Note}"/>
         <CheckBox Margin="5,5,0,0" Name="CheckBoxShowCapOverlay" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_Show}" 
               Checked="CheckBoxShowCapOverlay_OnChecked" Unchecked="CheckBoxShowCapOverlay_OnUnchecked"/>
-        <CheckBox Margin="5,5,0,0" Name="CheckBoxDisableOpacityTransition" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_DisableTransitions}" 
-                          Checked="CheckBoxDisableOpacityTransition_Checked" Unchecked="CheckBoxDisableOpacityTransition_Unchecked" />
-        <CheckBox Margin="5,5,0,0" Name="CheckBoxMaskCapturableOverlay" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_MaskOverlay}"
-                  Checked="CheckBoxMaskCapturableOverlay_OnChecked" Unchecked="CheckBoxMaskCapturableOverlay_OnUnchecked" />
-        <DockPanel Margin="0,5,0,0">
+        <DockPanel Margin="0,5,0,0" IsEnabled="{Binding IsChecked, ElementName=CheckBoxShowCapOverlay}">
             <Label Content="{lex:LocText Options_Overlay_Streaming_Label_Background}" DockPanel.Dock="Left" />
-            <Border Width="26" Height="26" Background="{Binding SelectedColor, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+            <Border Width="26" Height="26" Background="{Binding SelectedColor, RelativeSource={RelativeSource AncestorType=UserControl}}"
                     BorderThickness="1" BorderBrush="{DynamicResource ControlBorderBrush}" DockPanel.Dock="Right" Margin="2,0,0,0"/>
             <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Right"
                              Height="23" HorizontalContentAlignment="Center" Margin="10,0,0,0"
                              TextWrapping="Wrap" Text="#FF00FF" VerticalAlignment="Top"
                              Width="127" TextChanged="TextboxBackground_TextChanged" />
         </DockPanel>
-        <TextBlock Margin="5,15,5,5" TextWrapping="Wrap">
-            <Run Text="{lex:LocText Options_Overlay_Streaming_Text1}"/>
-            <LineBreak/>
-            <LineBreak/>
-            <Run Text="{lex:LocText Options_Overlay_Streaming_Text2}"/>
-        </TextBlock>
-        <TextBlock Margin="5,5,0,0" FontWeight="SemiBold">
+        <CheckBox Margin="5,5,0,0" Name="CheckBoxMaskCapturableOverlay" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_MaskOverlay}"
+                  IsEnabled="{Binding IsChecked, ElementName=CheckBoxShowCapOverlay}"
+                  Checked="CheckBoxMaskCapturableOverlay_OnChecked" Unchecked="CheckBoxMaskCapturableOverlay_OnUnchecked" />
+        <CheckBox Margin="5,5,0,0" Name="CheckBoxDisableOpacityTransition" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_DisableTransitions}"
+                          Checked="CheckBoxDisableOpacityTransition_Checked" Unchecked="CheckBoxDisableOpacityTransition_Unchecked" />
+        <TextBlock Margin="5,15,0,0" FontWeight="SemiBold">
             <Hyperlink Click="Hyperlink_OnClick">
                 <Run Text="{lex:LocText Options_Overlay_Streaming_Hyperlink_Wiki}"/>
             </Hyperlink>

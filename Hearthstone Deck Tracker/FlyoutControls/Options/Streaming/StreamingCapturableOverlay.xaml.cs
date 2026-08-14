@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			InitializeComponent();
 			CheckBoxShowCapOverlay.IsChecked = Config.Instance.ShowCapturableOverlay;
 			CheckBoxDisableOpacityTransition.IsChecked = !Config.Instance.OverlayCardAnimationsOpacity;
-			CheckBoxMaskCapturableOverlay.IsChecked = Config.Instance.OverlayCardAnimationsOpacity;
+			CheckBoxMaskCapturableOverlay.IsChecked = Config.Instance.MaskCapturableOverlay;
 			_initialized = true;
 		}
 
