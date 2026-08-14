@@ -7,6 +7,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
@@ -450,7 +451,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					BgsOpponentInfo.Visibility = Visibility.Visible;
 					BgsOpponentInfo.UpdateLayout();
-					_bgsBobsBuddyBehavior.Hide();
+					_bgsBobsBuddyBehavior.Hide(AnimationType.Instant);
 					_bgsPastOpponentBoardBehavior.Show();
 				}
 				else
