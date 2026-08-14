@@ -15,6 +15,8 @@ using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SharpRaven;
 using SharpRaven.Data;
 
@@ -198,7 +200,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				var e = BobsBuddyEvents.Dequeue();
 				((BobsBuddyData)e.Extra).ShortId = shortId;
 
-				var eventId = Client.Capture(recode(e));
+				var eventId = Client.Capture(WithSerializableExtra(recode(e)));
 				if(eventId != null)
 					sent++;
 				else
@@ -223,6 +225,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		private static SentryEvent RecodeAsStateCompleteFalse(SentryEvent e) =>
 			Recode(e, $"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: StateCompleteFalse");
+
+		private static SentryEvent WithSerializableExtra(SentryEvent e)
+		{
+			if(e.Extra == null)
+				return e;
+			// BobsBuddy entities contain reference cycles (Enchantment.AttachedTo), which make SharpRaven's serialization throw
+			var serializer = JsonSerializer.Create(new JsonSerializerSettings
+			{
+				ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+				Error = (_, args) => args.ErrorContext.Handled = true,
+			});
+			e.Extra = JObject.FromObject(e.Extra, serializer);
+			return e;
+		}
 
 		private static SentryEvent Recode(SentryEvent e, string message) =>
 			new SentryEvent(new SentryMessage(message))
