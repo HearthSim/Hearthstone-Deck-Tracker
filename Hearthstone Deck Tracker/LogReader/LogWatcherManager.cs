@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public static LogWatcherInfo PowerLogWatcherInfo => new LogWatcherInfo
 		{
 			Name = "Power",
-			StartsWithFilters = new[] {"PowerTaskList.DebugPrintPower", "GameState.", "PowerProcessor.EndCurrentTaskList"},
+			StartsWithFilters = new[] {"PowerTaskList.DebugPrintPower", "GameState.", "PowerProcessor.EndCurrentTaskList", "ChoiceCardMgr."},
 			ContainsFilters = new[] {"Begin Spectating", "Start Spectator", "End Spectator"}
 		};
 
@@ -170,6 +170,13 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						else if(line.LineContent.StartsWith("PowerProcessor.EndCurrentTaskList"))
 						{
 							_choicesHandler.Handle(line.Line, _gameState, _game);
+						}
+						// the client logs this right after the offered entities. A choice without a task list has
+						// no other line to flush it until the player picks, which would leave the offered entities
+						// unknown for as long as the choices are on screen.
+						else if(line.LineContent.StartsWith("ChoiceCardMgr."))
+						{
+							_choicesHandler.Flush(_gameState, _game);
 						}
 						else
 						{

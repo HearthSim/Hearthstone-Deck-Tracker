@@ -243,9 +243,7 @@ namespace HearthWatcher.LogReader
 									if(!sr.EndOfStream && !(next == 'D' || next == 'W' || next == 'E'))
 										break;
 									var logLine = new LogLine(Info.Name, line);
-									if((!Info.HasFilters || (Info.StartsWithFilters?.Any(x => logLine.LineContent.StartsWith(x)) ?? false)
-										|| (Info.ContainsFilters?.Any(x => logLine.LineContent.Contains(x)) ?? false))
-										&& logLine.Time >= _startingPoint)
+									if(Info.Matches(logLine.LineContent) && logLine.Time >= _startingPoint)
 										_lines.Enqueue(logLine);
 								}
 								else
