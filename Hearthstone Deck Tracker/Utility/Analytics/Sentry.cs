@@ -32,6 +32,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		static Sentry()
 		{
 			Client.Release = Helper.GetCurrentVersion().ToVersionString(true);
+			Client.Compression = true;
+			Client.Timeout = TimeSpan.FromSeconds(15);
 			Log.OnLogLine += AddHDTLogLine;
 		}
 
@@ -68,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		}
 
 #if(SQUIRREL)
-		private const int MaxBobsBuddyEventsPerGame = 20;
+		private const int MaxBobsBuddyEventsPerGame = 5;
 		private const int MaxBobsBuddyExceptionsPerGame = 5;
 		private const int MaxHDTToolsEvents = 10;
 		private static int BobsBuddyEventsSent;
