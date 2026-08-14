@@ -36,6 +36,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.TrinketPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
+using HearthMirror;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Arena;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
@@ -1581,9 +1582,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ConstructedMulliganGuidePreLobbyViewModel.IsInQueue = inQueue;
 		}
 
-		internal void SetBaconQueue(bool isAnyOpen)
+		internal void SetBaconQueue(bool inQueue)
 		{
-			UpdateTier7PreLobbyVisibility();
+			// hiding the panel resets the game mode, re-read it on cancel (the watcher only emits on change)
+			if(!inQueue)
+				SetBaconState(Reflection.Client.GetSelectedBattlegroundsGameMode());
+			else
+				UpdateTier7PreLobbyVisibility();
 		}
 
 		private IReadOnlyList<string>? _pendingBgsCombatChoices;
