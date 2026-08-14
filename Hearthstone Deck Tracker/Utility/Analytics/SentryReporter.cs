@@ -110,6 +110,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			return SentrySdk.CaptureEvent(exception);
 		}
 
+		public static void CaptureSingleInstanceProblem(string problem)
+		{
+			var singleInstanceEvent = new SentryEvent
+			{
+				Message = $"Single instance problem: {problem}",
+				Level = SentryLevel.Warning,
+			};
+
+			singleInstanceEvent.SetTag("problem", problem);
+			singleInstanceEvent.SetFingerprint("single-instance", problem);
+
+			SentrySdk.CaptureEvent(singleInstanceEvent);
+		}
+
 		public static void CaptureUserFeedback(SentryId eventId, string message)
 		{
 			SentrySdk.CaptureFeedback(

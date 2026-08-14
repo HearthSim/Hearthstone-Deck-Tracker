@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 					{
 						using(var fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.None))
 						{
-							//can access log file => no other instance of same installation running
+							//can access log file => nothing else is holding on to it
 						}
 						File.Move(logFile, logFile.Replace(".txt", "_" + DateTime.Now.ToUnixTimeSeconds() + ".txt"));
 						//keep logs from the last 2 days plus 25 before that
@@ -67,8 +67,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 				}
 				catch(Exception)
 				{
-					MessageBox.Show("Another instance of Hearthstone Deck Tracker is already running.",
-						"Error starting Hearthstone Deck Tracker", MessageBoxButton.OK, MessageBoxImage.Error);
+					MessageBox.Show("Hearthstone Deck Tracker could not access its log file. Make sure no other "
+						+ "application is using it.", "Error starting Hearthstone Deck Tracker", MessageBoxButton.OK,
+						MessageBoxImage.Error);
 					Application.Current.Shutdown();
 					return;
 				}

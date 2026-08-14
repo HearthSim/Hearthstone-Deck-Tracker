@@ -93,6 +93,12 @@ namespace Hearthstone_Deck_Tracker
 				Config.Load();
 			}
 
+			if(!SingleInstance.TryClaim(OnSecondInstance))
+			{
+				Application.Current.Shutdown();
+				return;
+			}
+
 			var forceSoftwareRendering = !Config.Instance.UseHardwareAcceleration;
 			if(forceSoftwareRendering == null)
 			{
@@ -276,6 +282,9 @@ namespace Hearthstone_Deck_Tracker
 
 			Initialized = true;
 
+			if(_activationPending)
+				ActivateMainWindow();
+
 			Influx.OnAppStart(
 				Helper.GetCurrentVersion(),
 				newUser,
@@ -290,6 +299,26 @@ namespace Hearthstone_Deck_Tracker
 
 			Config.Instance.CleanShutdown = false;
 			Config.Save();
+		}
+
+		private static bool _activationPending;
+
+		private static void OnSecondInstance()
+		{
+			Log.Info("Another instance was started, activating the main window");
+			ActivateMainWindow();
+		}
+
+		private static void ActivateMainWindow()
+		{
+			// the main window may not exist yet, in which case it will show up on its own
+			if(!Initialized)
+			{
+				_activationPending = true;
+				return;
+			}
+			_activationPending = false;
+			MainWindow.ActivateWindow();
 		}
 
 		private static bool _notifyAccessDenied = true;

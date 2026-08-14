@@ -36,6 +36,8 @@ namespace Hearthstone_Deck_Tracker
 		public const int SwRestore = 9;
 		public const int SwShow = 5;
 		public static readonly IntPtr HwndBottom = new IntPtr(1);
+		public static readonly IntPtr HwndMessage = new IntPtr(-3);
+		public const uint SmtoAbortIfHung = 0x0002;
 		public const uint SwpNoSize = 0x0001;
 		public const uint SwpNoMove = 0x0002;
 		public const uint SwpNoActivate = 0x0010;
@@ -90,6 +92,17 @@ namespace Hearthstone_Deck_Tracker
 
 		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
 		private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		public static extern IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string? lpszClass,
+			string? lpszWindow);
+
+		[DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+		public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam,
+			uint fuFlags, uint uTimeout, out IntPtr lpdwResult);
+
+		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		public static extern uint RegisterWindowMessage(string lpString);
 
 		[DllImport("user32.dll")]
 		private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
