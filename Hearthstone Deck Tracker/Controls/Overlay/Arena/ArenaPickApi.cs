@@ -138,7 +138,7 @@ public record ArenaCardPickApiResponse
 				return new T();
 
 			var json = JsonConvert.SerializeObject(ContentRaw);
-			return JsonConvert.DeserializeObject<T>(json);
+			return JsonConvert.DeserializeObject<T>(json) ?? new T();
 		}
 
 	}

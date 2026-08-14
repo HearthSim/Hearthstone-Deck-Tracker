@@ -39,7 +39,7 @@ public static class CardLegalityChecker
 		req.Headers.UserAgent.ParseAdd(Helper.GetUserAgent());
 		var resp = await Core.HttpClient.SendAsync(req);
 		if(resp is { StatusCode: HttpStatusCode.OK })
-			return JsonConvert.DeserializeObject<string[]>(await resp.Content.ReadAsStringAsync());
+			return JsonConvert.DeserializeObject<string[]>(await resp.Content.ReadAsStringAsync()) ?? Array.Empty<string>();
 
 		return Array.Empty<string>();
 	}

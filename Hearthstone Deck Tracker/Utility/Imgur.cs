@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker
 				var reader = new StreamReader(new MemoryStream(responseArray), Encoding.Default);
 				var json = reader.ReadToEnd();
 				var resp = JsonConvert.DeserializeObject<ImgurResponse>(json);
-				if(resp.data?.link == null)
+				if(resp?.data?.link == null)
 					throw new Exception("no link found");
 
 				Log.Info("Response (" + resp.status + ") " + resp.data.link);

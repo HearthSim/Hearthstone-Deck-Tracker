@@ -413,7 +413,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					using(var reader = new StreamReader(stream))
 					{
 						var response = JsonConvert.DeserializeObject<dynamic>(reader.ReadToEnd());
-						if(response.error == "account_already_claimed")
+						if(response?.error == "account_already_claimed")
 							return ClaimBlizzardAccountResponse.TokenAlreadyClaimed;
 					}
 				}

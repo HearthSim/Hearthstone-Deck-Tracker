@@ -894,7 +894,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var base64 = cardId.Substring("CREATED_BY_".Length);
 			var json = Encoding.UTF8.GetString(Convert.FromBase64String(base64));
 
-			var dto = JsonConvert.DeserializeObject<FakeCardDto>(json);
+			var dto = JsonConvert.DeserializeObject<FakeCardDto>(json) ?? throw new ArgumentException("Not a FakeCard cardId");
 
 			return new FakeCard(dto.originalCardId)
 			{

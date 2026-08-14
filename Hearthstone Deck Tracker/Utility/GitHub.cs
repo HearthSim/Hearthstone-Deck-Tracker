@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			{
 				Log.Info($"{user}/{repo}: Checking for updates (current={version}, pre-release={preRelease})");
 				var latest = await GetLatestRelease(user, repo, preRelease);
-				if(latest.Assets != null && latest.Assets.Count > 0)
+				if(latest?.Assets != null && latest.Assets.Count > 0)
 				{
 					if(latest.GetVersion()?.CompareTo(version) > 0)
 					{
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return null;
 		}
 
-		private static async Task<Release> GetLatestRelease(string user, string repo, bool preRelease)
+		private static async Task<Release?> GetLatestRelease(string user, string repo, bool preRelease)
 		{
 			try
 			{
@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 						url += "/latest";
 					json = await wc.DownloadStringTaskAsync(url);
 				}
-				return preRelease ? JsonConvert.DeserializeObject<Release[]>(json).FirstOrDefault()
+				return preRelease ? JsonConvert.DeserializeObject<Release[]>(json)?.FirstOrDefault()
 								  : JsonConvert.DeserializeObject<Release>(json);
 			}
 			catch(Exception ex)

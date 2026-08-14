@@ -62,7 +62,7 @@
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="Mono.Cecil" Version="0.9.6.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SharpCompress" Version="0.17.1" />
     <PackageReference Include="SharpRaven" Version="2.4.0" />
     <PackageReference Include="Splat" Version="1.6.2" />
