@@ -328,13 +328,19 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		}
 
-		public static void OnBobsBuddySentryEventsSent(string path, int sent, int captureFailed)
+		public static void OnBobsBuddySentryEventsSent(string path, int sent, int captureFailed, int maxExtraBytes, int totalExtraBytes)
 		{
 #if(SQUIRREL)
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			if(sent > 0)
-				WritePoint(BobsBuddySentryFunnelPoint("sent", sent).Tag("path", path).Build());
+				WritePoint(
+					BobsBuddySentryFunnelPoint("sent", sent)
+						.Tag("path", path)
+						.Field("max_extra_bytes", maxExtraBytes)
+						.Field("total_extra_bytes", totalExtraBytes)
+						.Build()
+				);
 			if(captureFailed > 0)
 				WritePoint(BobsBuddySentryFunnelPoint("capture_failed", captureFailed).Tag("path", path).Build());
 #endif
