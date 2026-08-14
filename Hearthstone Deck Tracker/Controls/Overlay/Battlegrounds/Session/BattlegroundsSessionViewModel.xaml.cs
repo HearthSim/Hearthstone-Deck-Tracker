@@ -381,7 +381,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 					sessionStartTime = gStartTime;
 			}
 			previousGameEndTime = DateTime.Parse(g.EndTime);
-			previousGameRatingAfter = g.RatingAfter;
+			previousGameRatingAfter = g.RatingAfterOrCarriedForward;
 		};
 
 		var sessionGames = sessionStartTime == null
@@ -395,7 +395,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 			// Check for MMR reset on last game
 			var ratingResetAfterLastGame = false;
 			if(Core.Game.BattlegroundsRatingInfo?.Rating is int currentMMR)
-				ratingResetAfterLastGame = IsRatingReset(lastGame.RatingAfter, currentMMR);
+				ratingResetAfterLastGame = IsRatingReset(lastGame.RatingAfterOrCarriedForward, currentMMR);
 
 			var ts = DateTime.Now - DateTime.Parse(lastGame.EndTime);
 

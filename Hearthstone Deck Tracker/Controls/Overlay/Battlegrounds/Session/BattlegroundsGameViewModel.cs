@@ -61,9 +61,12 @@ public class BattlegroundsGameViewModel : ViewModel
 
 		PlacementText = LocUtil.GetPlacement(gameItem.Placement);
 
-		MMRDelta = gameItem.SeasonReset ? gameItem.RatingAfter : gameItem.RatingAfter - gameItem.Rating;
+		MMRDelta = gameItem.RatingAfter is int ratingAfter
+			? gameItem.SeasonReset ? ratingAfter : ratingAfter - gameItem.Rating
+			: 0;
 		var signal = MMRDelta > 0 ? "+" : "";
-		MMRDeltaText = Math.Abs(MMRDelta) > MaxPlausibleMMRDelta || gameItem.FriendlyGame ? "-" : $"{signal}{MMRDelta}";
+		var unknownDelta = gameItem.RatingAfter == null || Math.Abs(MMRDelta) > MaxPlausibleMMRDelta || gameItem.FriendlyGame;
+		MMRDeltaText = unknownDelta ? "-" : $"{signal}{MMRDelta}";
 
 		CrownVisibility = gameItem.Placement == 1 ? Visibility.Visible : Visibility.Hidden;
 

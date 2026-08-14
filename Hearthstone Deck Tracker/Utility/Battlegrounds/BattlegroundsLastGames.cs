@@ -67,8 +67,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 				return;
 			}
 
+			AddGame(playerId, startTime, endTime, hero, rating, ratingAfter, placemenent, finalBoard, friendlyGame, duos, save);
+		}
+
+		internal void AddGame(
+			string playerId, string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, bool duos, bool save
+		)
+		{
 			RemoveGame(startTime, false);
-			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter, placemenent, finalBoard, friendlyGame, playerId, duos));
+			// GameStats leaves the rating at 0 when we could not read it from the client after the game
+			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter > 0 ? ratingAfter : (int?)null, placemenent, finalBoard, friendlyGame, playerId, duos));
 			if(save)
 				Save();
 		}
@@ -102,7 +110,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 
 		public class GameItem
 		{
-			public GameItem(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, string player, bool duos)
+			public GameItem(string startTime, string endTime, string hero, int rating, int? ratingAfter, int placemenent, Entity[] finalBoard, bool friendlyGame, string player, bool duos)
 			{
 				StartTime = startTime;
 				EndTime = endTime;
@@ -135,8 +143,19 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			[XmlAttribute("Rating")]
 			public int Rating { get; set; }
 
+			// null when we could not read the rating from the client after the game
+			[XmlIgnore]
+			public int? RatingAfter { get; set; }
+
+			// entries written before we could tell the two apart stored the missing rating as 0
 			[XmlAttribute("RatingAfter")]
-			public int RatingAfter { get; set; }
+			public int SerializedRatingAfter
+			{
+				get => RatingAfter ?? 0;
+				set => RatingAfter = value > 0 ? value : (int?)null;
+			}
+
+			public bool ShouldSerializeSerializedRatingAfter() => RatingAfter.HasValue;
 
 			[XmlAttribute("Placemenent")]
 			public int Placement { get; set; }
@@ -150,9 +169,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			[XmlAttribute("Duos")]
 			public bool Duos { get; set; }
 
+			// a missing post-game rating would otherwise look like a drop to 0, so we carry the pre-game rating forward
+			[XmlIgnore]
+			public int RatingAfterOrCarriedForward => RatingAfter ?? Rating;
+
 			// the season reset happened during this game, so it counts as starting from 0 MMR
 			[XmlIgnore]
-			public bool SeasonReset => IsRatingReset(Rating, RatingAfter);
+			public bool SeasonReset => IsRatingReset(Rating, RatingAfterOrCarriedForward);
 		}
 
 		public class FinalBoardItem
