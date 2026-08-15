@@ -163,7 +163,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(attachedEntities.Any(e => e.HasTag(GameTag.MAGNETIC)))
 			{
 				if(minion.IsMech())
-					CheckForMagnetizedDeathrattles(minion, attachedEntities, allEntities);
+					CheckForMagnetizedDeathrattles(minion, entity, attachedEntities, allEntities);
 				// Not just mech here, because Technical Element can magnetize to Elementals
 				CheckForSurfnSurfFromMagnetizedModules(minion, entity, allEntities);
 			}
@@ -175,7 +175,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		// Magnetized deathrattles (e.g., Auto Assembler) can be *hiding* if initially attached
 		// to a magnetic minion that was then tripled and magnetized to another mech.
-		private static void CheckForMagnetizedDeathrattles(Minion minion, IEnumerable<Entity> attachedEntities, IReadOnlyDictionary<int, Entity>? allEntities)
+		private static void CheckForMagnetizedDeathrattles(Minion minion, Entity host, IEnumerable<Entity> attachedEntities, IReadOnlyDictionary<int, Entity>? allEntities)
 		{
 			// Required to resolve the chain of magnetized
 			if(allEntities == null)
@@ -183,7 +183,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			// Specific handling for: Auto Assembler
 			// Each attached enchantment's CREATOR is the magnetic card that produced it; take each distinct id once.
-			foreach(var magneticId in attachedEntities.Select(e => e.GetTag(GameTag.CREATOR)).Where(id => id > 0).Distinct())
+			// Exclude the HOST: an enchantment the host created on itself is already turned into an
+			// AutoAssemblerEnchantment by the attachedEntities above (only magnetized modules are hidden).
+			foreach(var magneticId in attachedEntities.Select(e => e.GetTag(GameTag.CREATOR)).Where(id => id > 0 && id != host.Id).Distinct())
 			{
 				if(!allEntities.TryGetValue(magneticId, out var magnetic))
 					continue;
