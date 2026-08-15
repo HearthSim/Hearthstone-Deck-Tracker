@@ -7,5 +7,6 @@
 		bool? IsPopupShowing { get; }
 		bool? IsFriendsListVisible { get; }
 		bool? IsBlurActive { get; }
+		bool? IsGameMenuShown { get; }
 	}
 }

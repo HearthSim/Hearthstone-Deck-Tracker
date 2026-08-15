@@ -267,6 +267,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Core.Overlay.ArenaPreDraftViewModel.IsGameCriticalUiOpen = isCriticalUiOpen;
 			Core.Overlay.ConstructedMulliganPreLobbyWidgetViewModel.IsGameCriticalUiOpen = isCriticalUiOpen;
 			Core.Overlay.SetFriendListOpacityMask(args.IsFriendsListVisible);
+			Core.Overlay.SetGameMenuOpacityMask(args.IsGameMenuShown);
 		}
 
 		internal static void OnBigCardChange(object sender, HearthWatcher.EventArgs.BigCardArgs args)
@@ -488,6 +489,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool? IsPopupShowing => Reflection.Client.IsPopupShowing();
 		public bool? IsFriendsListVisible => Reflection.Client.IsFriendsListVisible();
 		public bool? IsBlurActive => Reflection.Client.GetIsBlurActive();
+		public bool? IsGameMenuShown => Reflection.Client.IsGameMenuShown();
 	}
 
 	public class HearthMirrorDeckPickerProvider : IDeckPickerProvider

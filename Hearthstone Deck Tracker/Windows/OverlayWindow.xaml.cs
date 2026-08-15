@@ -735,6 +735,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OpacityMaskOverlay.RemoveMaskedRegion("FriendsList");
 		}
 
+		public void SetGameMenuOpacityMask(bool visible)
+		{
+			if(visible)
+			{
+				var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
+				var rect = regionDrawer.DrawGameMenuRegion();
+
+				OpacityMaskOverlay.AddMaskedRegion("GameMenu", rect);
+			}
+			else
+				OpacityMaskOverlay.RemoveMaskedRegion("GameMenu");
+		}
+
 		public async void SetArenaCardOpacityMask(ArenaState.BigCard? bigCard)
 		{
 			var calledAgain = Debounce.WasCalledAgain(30);

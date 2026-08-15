@@ -57,6 +57,12 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 		private const double DarkGiftCardSpacing = 0.287;
 		private const double DarkGiftCardY = 0.185;
 
+		// the escape menu is horizontally centered and its height varies with the number of buttons
+		// (concede and restart only exist during a match), so this covers the tallest variant
+		private const double GameMenuHeight = 0.36;
+		private const double GameMenuWidth = 0.37;
+		private const double GameMenuTop = 0.25;
+
 		private double Height { get; }
 		private double Width { get; }
 		private double ScreenRatio { get; }
@@ -96,6 +102,19 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 			var normalizedWidth = widthInPixels / Width;
 
 			return new Rect(0, 0.27, normalizedWidth, normalizedHeight);
+		}
+
+		public Rect DrawGameMenuRegion()
+		{
+			var heightScaling = Height / BaseHeight;
+
+			var heightInPixels = GameMenuHeight * heightScaling * BaseHeight;
+			var widthInPixels = GameMenuWidth * heightScaling * BaseHeight;
+
+			var normalizedHeight = heightInPixels / Height;
+			var normalizedWidth = widthInPixels / Width;
+
+			return new Rect(0.5 - normalizedWidth / 2, GameMenuTop, normalizedWidth, normalizedHeight);
 		}
 
 		public Rect DrawHeroPowerRegion(double offsetX, double offsetY, double heroPowerHeight = HeroPowerHeight, double heroAspectRatio = HeroPowerAspectRatio)

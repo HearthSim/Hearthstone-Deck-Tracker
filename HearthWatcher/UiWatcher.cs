@@ -45,7 +45,8 @@ namespace HearthWatcher
 					_provider.IsJournalOpen ?? false,
 					_provider.IsPopupShowing ?? false,
 					_provider.IsFriendsListVisible ?? false,
-					_provider.IsBlurActive ?? false
+					_provider.IsBlurActive ?? false,
+					_provider.IsGameMenuShown ?? false
 				);
 				if(curr.Equals(_prev))
 					continue;
