@@ -72,7 +72,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 
 	public static readonly DependencyProperty KeywordProperty = DependencyProperty.Register(
 		nameof(Keyword),
-		typeof(GameTag?),
+		typeof(BattlegroundsKeyword),
 		typeof(BattlegroundsCardsGroup),
 		new PropertyMetadata()
 	);
@@ -148,9 +148,9 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 		}
 	}
 
-	public GameTag Keyword
+	public BattlegroundsKeyword? Keyword
 	{
-		get { return (GameTag)GetValue(KeywordProperty); }
+		get { return (BattlegroundsKeyword?)GetValue(KeywordProperty); }
 		set
 		{
 			SetValue(KeywordProperty, value);
@@ -190,7 +190,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 		get
 		{
 			if(GroupedByKeyword)
-				return HearthDbConverter.GetLocalizedKeyword(Keyword);
+				return Keyword?.Name ?? string.Empty;
 
 			if(GroupedByMinionType)
 				return HearthDbConverter.GetLocalizedRace(MinionType) ?? string.Empty;

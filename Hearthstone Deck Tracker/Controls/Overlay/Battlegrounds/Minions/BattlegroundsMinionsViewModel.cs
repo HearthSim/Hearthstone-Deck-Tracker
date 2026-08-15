@@ -74,9 +74,9 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
-	public GameTag? ActiveMinionKeyword
+	public BattlegroundsKeyword? ActiveMinionKeyword
 	{
-		get => GetProp<GameTag?>(null);
+		get => GetProp<BattlegroundsKeyword?>(null);
 		set
 		{
 			SetProp(value);
@@ -198,12 +198,12 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
-	public List<GameTag> AvailableKeywords => BattlegroundsUtils.GetAvailableKeywords();
+	public List<BattlegroundsKeyword> AvailableKeywords => BattlegroundsUtils.GetAvailableKeywords();
 
 	public class KeywordButton
 	{
-		public GameTag Keyword { get; set; }
-		public string KeywordName => HearthDbConverter.GetLocalizedKeyword(Keyword);
+		public BattlegroundsKeyword Keyword { get; set; } = null!;
+		public string KeywordName => Keyword.Name;
 
 		public bool Active { get; set; }
 		public bool Faded { get; set; }
@@ -283,7 +283,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 
 		public bool GroupedByMinionType { get; set; } = false;
 
-		public GameTag Keyword { get; set; }
+		public BattlegroundsKeyword? Keyword { get; set; }
 
 		public bool GroupedByKeyword { get; set; } = false;
 
@@ -411,7 +411,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 					});
 				}
 			}
-			else if(ActiveMinionKeyword is GameTag activeMinionKeyword)
+			else if(ActiveMinionKeyword is { } activeMinionKeyword)
 			{
 				var tiers = AvailableTiers;
 				if(ShowTavernTier7)

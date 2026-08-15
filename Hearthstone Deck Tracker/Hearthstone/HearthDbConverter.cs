@@ -173,26 +173,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_ => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(spellSchool.ToString().ToLowerInvariant())
 		};
 
-		public static string GetLocalizedKeyword(GameTag gameTag) => gameTag switch
-		{
-			GameTag.TAUNT => LocUtil.Get("GameTag_Taunt"),
-			GameTag.DIVINE_SHIELD => LocUtil.Get("GameTag_DivineShield"),
-			GameTag.POISONOUS => LocUtil.Get("GameTag_Poisonous"),
-			GameTag.VENOMOUS => LocUtil.Get("GameTag_Venomous"),
-			GameTag.WINDFURY => LocUtil.Get("GameTag_Windfury"),
-			GameTag.BATTLECRY => LocUtil.Get("GameTag_Battlecry"),
-			GameTag.DEATHRATTLE => LocUtil.Get("GameTag_Deathrattle"),
-			GameTag.CHOOSE_ONE => LocUtil.Get("GameTag_ChooseOne"),
-			GameTag.END_OF_TURN_TRIGGER => LocUtil.Get("GameTag_EndOfTurn"),
-			GameTag.START_OF_COMBAT => LocUtil.Get("GameTag_StartOfCombat"),
-			GameTag.REBORN => LocUtil.Get("GameTag_Reborn"),
-			GameTag.MODULAR => LocUtil.Get("GameTag_Modular"),
-			GameTag.IS_BACON_POOL_SPELL => LocUtil.Get("GameTag_BGSpell"),
-			GameTag.BACON_RALLY => LocUtil.Get("GameTag_BGRally"),
-			GameTag.AVENGE => LocUtil.Get("GameTag_BGAvenge"),
-			_ => CultureInfo.InvariantCulture.TextInfo.ToTitleCase(gameTag.ToString().ToLowerInvariant())
-		};
-
 		public static string SetConverter(CardSet set) => SetDict.TryGetValue((int)set, out var str) ? str ?? string.Empty : string.Empty;
 
 		public static GameMode GetGameMode(GameType gameType)

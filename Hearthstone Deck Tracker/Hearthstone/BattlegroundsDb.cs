@@ -163,7 +163,7 @@ public class BattlegroundsDb
 		return cards.Concat(exclusiveCards).ToList();
 	}
 
-	public List<Card> GetCards(int tier, GameTag keyword, IEnumerable<Race>? races, bool isDuos)
+	public List<Card> GetCards(int tier, BattlegroundsKeyword keyword, IEnumerable<Race>? races, bool isDuos)
 	{
 		var availableCards = GetCardsByRaces(races?.ToList() ?? new List<Race>(), isDuos);
 		var cardsByTier = availableCards
@@ -176,15 +176,13 @@ public class BattlegroundsDb
 	}
 
 	private List<Card> GetFilteredCardsByTierAndKeyword(Dictionary<int,List<Card>> cardsByTier, int tier,
-		GameTag keyword)
+		BattlegroundsKeyword keyword)
 	{
 		if (!cardsByTier.TryGetValue(tier, out var cards))
 			return new List<Card>();
 
 		return cards
-			.Where(card =>
-				card.GetTag(keyword) > 0 ||
-				(keyword != GameTag.IS_BACON_POOL_SPELL && (card.EnglishText?.Contains(HearthDbConverter.GetLocalizedKeyword(keyword)) ?? false)))
+			.Where(card => keyword.Matches(card.GetTag, card.EnglishText))
 			.Distinct()
 			.ToList();
 	}
@@ -250,7 +248,7 @@ public class BattlegroundsDb
 		return spells.Concat(exclusiveSpells).ToList();
 	}
 
-	public List<Card> GetSpells(GameTag keyword, bool isDuos)
+	public List<Card> GetSpells(BattlegroundsKeyword keyword, bool isDuos)
 	{
 		var availableSpells = new List<Card>();
 		foreach(var card in _spells)
@@ -262,8 +260,7 @@ public class BattlegroundsDb
 			if(duosExclusive < 0 && !isDuos)
 				continue;
 
-			if (card.Entity.GetTag(keyword) > 0 ||
-			    (keyword != GameTag.IS_BACON_POOL_SPELL && (card.GetLocText(Locale.enUS)?.Contains(HearthDbConverter.GetLocalizedKeyword(keyword)) ?? false)))
+			if(keyword.Matches(card.Entity.GetTag, card.GetLocText(Locale.enUS)))
 			{
 				availableSpells.Add(new Card(card, true));
 			}

@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Commands;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 
@@ -24,7 +25,7 @@ public partial class BattlegroundsMinionsExtraFilters : UserControl
 		set { SetValue(StandAloneProperty, value); }
 	}
 
-	public ICommand SetActiveKeywordCommand => new Command<GameTag>(value =>
+	public ICommand SetActiveKeywordCommand => new Command<BattlegroundsKeyword>(value =>
 	{
 		((BattlegroundsMinionsViewModel)DataContext).ActiveMinionKeyword = ((BattlegroundsMinionsViewModel)DataContext).ActiveMinionKeyword == value ? null : value;
 		Core.Game.Metrics.BattlegroundsBrowserMechanicFilterClicks++;

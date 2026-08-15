@@ -2,6 +2,10 @@
 **Hearthstone**:
 - Fixed the secret tracker showing the wrong secrets when The Origin Stone cast a secret from a Discover.
 
+**Battlegrounds**:
+- Added Activate and Lockbox to the filterable mechanics in the Minion Browser.
+- Fixed the Minion Browser mechanic filters finding fewer minions when the tracker is not set to English.
+
 **Plugins**:
 - Fixed a plugin compatibility issue.
 

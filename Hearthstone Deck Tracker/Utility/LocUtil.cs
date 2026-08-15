@@ -111,9 +111,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 			LocalizeDictionary.Instance.Culture = GetCultureInfoFromLocale(Config.Instance.Localization.ToString());
 		}
 
-		public static string Get(string key, bool upper = false, bool useCardLanguage = false)
+		public static string Get(string key, bool upper = false, bool useCardLanguage = false) =>
+			Get(key, useCardLanguage ? GetCultureInfoFromLocale(Helper.GetCardLanguage()) : LocalizeDictionary.Instance.Culture, upper);
+
+		/// <summary>
+		/// Resolves the neutral (English) resource, regardless of the language the app is running in.
+		/// </summary>
+		public static string GetEnglish(string key) => Get(key, CultureInfo.InvariantCulture);
+
+		private static string Get(string key, CultureInfo culture, bool upper = false)
 		{
-			var culture = useCardLanguage ? GetCultureInfoFromLocale(Helper.GetCardLanguage()) : LocalizeDictionary.Instance.Culture;
 			var cacheKey = culture + key;
 			if(!Cache.TryGetValue(cacheKey, out var str))
 			{

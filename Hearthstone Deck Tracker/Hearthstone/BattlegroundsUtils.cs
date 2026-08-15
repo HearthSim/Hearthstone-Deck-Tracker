@@ -100,23 +100,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return anomalyDbfId;
 			return null;
 		}
-		public static List<GameTag> GetAvailableKeywords()
+		private static readonly List<BattlegroundsKeyword> _availableKeywords = new()
 		{
-			return new List<GameTag>()
-			{
-				GameTag.BATTLECRY,
-				GameTag.DEATHRATTLE,
-				GameTag.AVENGE,
-				GameTag.BACON_RALLY,
-				GameTag.DIVINE_SHIELD,
-				GameTag.TAUNT,
-				GameTag.END_OF_TURN_TRIGGER,
-				GameTag.START_OF_COMBAT,
-				GameTag.REBORN,
-				GameTag.CHOOSE_ONE,
-				GameTag.MODULAR,
-				GameTag.VENOMOUS
-			};
-		}
+			new TagKeyword(GameTag.BATTLECRY, "GameTag_Battlecry"),
+			new TagKeyword(GameTag.DEATHRATTLE, "GameTag_Deathrattle"),
+			new TagKeyword(GameTag.AVENGE, "GameTag_BGAvenge"),
+			new TagKeyword(GameTag.BACON_RALLY, "GameTag_BGRally"),
+			new TagKeyword(GameTag.DIVINE_SHIELD, "GameTag_DivineShield"),
+			new TagKeyword(GameTag.TAUNT, "GameTag_Taunt"),
+			new TagKeyword(GameTag.END_OF_TURN_TRIGGER, "GameTag_EndOfTurn"),
+			new TagKeyword(GameTag.START_OF_COMBAT, "GameTag_StartOfCombat"),
+			new TagKeyword(GameTag.REBORN, "GameTag_Reborn"),
+			new TagKeyword(GameTag.CHOOSE_ONE, "GameTag_ChooseOne"),
+			new TagKeyword(GameTag.MODULAR, "GameTag_Modular"),
+			new TagKeyword(GameTag.VENOMOUS, "GameTag_Venomous"),
+			new TagKeyword(GameTag.BACON_ACTIVATE_TOOLTIP, "GameTag_BGActivate"),
+			new MentionedKeyword("Battlegrounds_Browser_Filter_Lockbox"),
+		};
+
+		public static List<BattlegroundsKeyword> GetAvailableKeywords() => _availableKeywords;
 	}
 }
