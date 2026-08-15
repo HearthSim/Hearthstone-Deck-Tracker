@@ -203,7 +203,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			sb.Begin();
 		}
 
-		public void Hide(AnimationType? animation = null)
+		// keep the parameterless overload, plugins are compiled against it
+		public void Hide() => Hide(null);
+
+		public void Hide(AnimationType? animation)
 		{
 			if(Element.Visibility == Collapsed)
 				return;
