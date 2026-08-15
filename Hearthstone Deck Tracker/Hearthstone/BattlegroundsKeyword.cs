@@ -17,7 +17,7 @@ public abstract record BattlegroundsKeyword
 /// </summary>
 public record MentionedKeyword(string LocKey) : BattlegroundsKeyword
 {
-	public override string Name => LocUtil.Get(LocKey);
+	public override string Name => LocUtil.Get(LocKey, useCardLanguage: true);
 
 	public override bool Matches(Func<GameTag, int> getTag, string? englishText)
 	{
