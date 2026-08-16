@@ -166,6 +166,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					CheckForMagnetizedDeathrattles(minion, entity, attachedEntities, allEntities);
 				// Not just mech here, because Technical Element can magnetize to Elementals
 				CheckForSurfnSurfFromMagnetizedModules(minion, entity, allEntities);
+				CheckForRepeatedMagnetizedAutoAssemblers(minion, attachedEntities);
 			}
 
 			minion.game_id = entity.Id;
@@ -200,6 +201,36 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			// Future magnetic deathrattles can be added/handled here.
+		}
+
+		// Every magnetization of the same module onto a host accumulates into ONE enchantment on that
+		// host, whose TAG_SCRIPT_DATA_NUM_1 holds the module's Attack once per module. An extra
+		// magnetization granted by another card (Drone Duplicator, Polarizing Beatboxer) writes that
+		// card's own enchantment instead of the module's, so the module is read from CREATOR_DBID.
+		private static void CheckForRepeatedMagnetizedAutoAssemblers(Minion minion, IEnumerable<Entity> attachedEntities)
+		{
+			foreach(var attached in attachedEntities)
+			{
+				if(!attached.HasTag(GameTag.MAGNETIC))
+					continue;
+
+				var module = Database.GetCardFromDbfId(attached.GetTag(GameTag.CREATOR_DBID), false);
+				if(module == null || module.Attack <= 0)
+					continue;
+
+				var golden = module.Id == NonCollectible.Neutral.AutoAssembler_AutoAssembler1;
+				if(!golden && module.Id != AutoAssembler.CardId)
+					continue;
+
+				var modules = attached.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) / module.Attack;
+
+				// The module's own enchantment already carries one of them.
+				var carriesOne = attached.CardId == AutoAssemblerEnchantment.CardId
+					|| attached.CardId == AutoAssemblerEnchantmentGolden.CardId;
+
+				for(var i = carriesOne ? 1 : 0; i < modules; i++)
+					minion.AdditionalDeathrattles.Add(golden ? AutoAssembler.GoldenDeathrattle() : AutoAssembler.Deathrattle());
+			}
 		}
 
 		// A magnetized module keeps its own attached enchantments, including Surf n' Surf Spellcraft spells
