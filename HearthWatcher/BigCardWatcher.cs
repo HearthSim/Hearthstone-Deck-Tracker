@@ -6,58 +6,39 @@ using System.Threading.Tasks;
 
 namespace HearthWatcher;
 
-public class BigCardStateWatcher
+public class BigCardStateWatcher : PollingWatcher
 {
 	public delegate void BigCardEventHandler(object sender, BigCardArgs args);
 
 	private readonly IBigCardProvider _provider;
-	private readonly int _delay;
-	private bool _running;
-	private bool _watch;
-	private BigCardArgs _prev = null;
+	private BigCardArgs? _prev;
 
-	public BigCardStateWatcher(IBigCardProvider bigCardProvider, int delay = 16)
+	public BigCardStateWatcher(IBigCardProvider bigCardProvider, int delay = 16) : base(delay)
 	{
 		_provider = bigCardProvider ?? throw new ArgumentNullException(nameof(bigCardProvider));
-		_delay = delay;
 	}
 
-	public event BigCardEventHandler Change;
+	public event BigCardEventHandler? Change;
 
-	public void Run()
+	protected override Task<bool> TickAsync()
 	{
-		_watch = true;
-		if(!_running)
-			Update();
-	}
-
-	public void Stop() => _watch = false;
-
-	private async void Update()
-	{
-		_running = true;
-		while(_watch)
+		var state = _provider.State;
+		var curr = new BigCardArgs(
+			state?.TooltipHeights ?? new List<float>(),
+			state?.EnchantmentHeights ?? new List<float>(),
+			state?.CardId ?? "",
+			state?.ZonePosition ?? 0,
+			state?.ZoneSize ?? 0,
+			state?.Side ?? 0,
+			state?.IsHand ?? false
+		);
+		if(_prev == null || !curr.Equals(_prev))
 		{
-			await Task.Delay(_delay);
-			if(!_watch)
-				break;
-
-			var state = _provider.State;
-			var curr = new BigCardArgs(
-				state?.TooltipHeights ?? new List<float>(),
-				state?.EnchantmentHeights ?? new List<float>(),
-				state?.CardId ?? "",
-				state?.ZonePosition ?? 0,
-				state?.ZoneSize ?? 0,
-				state?.Side ?? 0,
-				state?.IsHand ?? false
-			);
-			if(curr.Equals(_prev))
-				continue;
-			Change?.Invoke(this, curr);
 			_prev = curr;
+			Dispatch(() => Change?.Invoke(this, curr));
 		}
-		_prev = null;
-		_running = false;
+		return Task.FromResult(false);
 	}
+
+	protected override void OnLoopEnd() => _prev = null;
 }

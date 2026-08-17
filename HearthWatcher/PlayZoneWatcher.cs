@@ -6,53 +6,34 @@ using HearthWatcher.Providers;
 
 namespace HearthWatcher;
 
-public class PlayZoneWatcher
+public class PlayZoneWatcher : PollingWatcher
 {
 	public delegate void PlayZoneEventHandler(object sender, BoardStateArgs args);
 
 	private readonly IBoardStateProvider _provider;
-	private readonly int _delay;
-	private bool _running;
-	private bool _watch;
-	private BoardStateArgs? _prev = null;
+	private BoardStateArgs? _prev;
 
-	public PlayZoneWatcher(IBoardStateProvider boardStateProvider, int delay = 16)
+	public PlayZoneWatcher(IBoardStateProvider boardStateProvider, int delay = 16) : base(delay)
 	{
 		_provider = boardStateProvider ?? throw new ArgumentNullException(nameof(boardStateProvider));
-		_delay = delay;
 	}
 
 	public event PlayZoneEventHandler? Change;
 
-	public void Run()
-	{
-		_watch = true;
-		if(!_running)
-			Update();
-	}
-
-	public void Stop() => _watch = false;
-
 	private static PlayZoneArgs? ToArgs(PlayZoneState? state)
 		=> state == null ? null : new PlayZoneArgs(state.BoardCards, state.MousedOverSlot);
 
-	private async void Update()
+	protected override Task<bool> TickAsync()
 	{
-		_running = true;
-		while(_watch)
+		var state = _provider.BoardState;
+		var curr = new BoardStateArgs(ToArgs(state?.Friendly), ToArgs(state?.Opposing));
+		if(_prev == null || !curr.Equals(_prev))
 		{
-			await Task.Delay(_delay);
-			if(!_watch)
-				break;
-
-			var state = _provider.BoardState;
-			var curr = new BoardStateArgs(ToArgs(state?.Friendly), ToArgs(state?.Opposing));
-			if(curr.Equals(_prev))
-				continue;
-			Change?.Invoke(this, curr);
 			_prev = curr;
+			Dispatch(() => Change?.Invoke(this, curr));
 		}
-		_prev = null;
-		_running = false;
+		return Task.FromResult(false);
 	}
+
+	protected override void OnLoopEnd() => _prev = null;
 }

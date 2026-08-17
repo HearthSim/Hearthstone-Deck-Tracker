@@ -1,59 +1,40 @@
-﻿﻿using System;
+﻿using System;
 using System.Threading.Tasks;
 using HearthWatcher.EventArgs;
 using HearthWatcher.Providers;
 
 namespace HearthWatcher;
 
-public class SpecialShopChoicesStateWatcher
+public class SpecialShopChoicesStateWatcher : PollingWatcher
 {
 	public delegate void SpecialShopChoicesStateEventHandler(object sender, SpecialShopChoicesArgs args);
 
 	private readonly ISpecialShopChoicesProvider _provider;
-	private readonly int _delay;
-	private bool _running;
-	private bool _watch;
-	private SpecialShopChoicesArgs _prev = null;
+	private SpecialShopChoicesArgs? _prev;
 	public SpecialShopChoicesArgs? CurrentState => _prev;
 
-	public SpecialShopChoicesStateWatcher(ISpecialShopChoicesProvider opponentBoardProvider, int delay = 16)
+	public SpecialShopChoicesStateWatcher(ISpecialShopChoicesProvider opponentBoardProvider, int delay = 16) : base(delay)
 	{
 		_provider = opponentBoardProvider ?? throw new ArgumentNullException(nameof(opponentBoardProvider));
-		_delay = delay;
 	}
 
-	public event SpecialShopChoicesStateEventHandler Change;
+	public event SpecialShopChoicesStateEventHandler? Change;
 
-	public void Run()
+	protected override Task<bool> TickAsync()
 	{
-		_watch = true;
-		if(!_running)
-			Update();
-	}
-
-	public void Stop() => _watch = false;
-
-	private async void Update()
-	{
-		_running = true;
-		while(_watch)
+		var state = _provider.SpecialShopChoicesState;
+		var curr = new SpecialShopChoicesArgs(
+			state?.IsActive ?? false,
+			state?.BoardCards ?? new System.Collections.Generic.List<HearthMirror.Objects.BoardCard>(),
+			state?.MousedOverSlot ?? -1
+		);
+		if(_prev == null || !curr.Equals(_prev))
 		{
-			await Task.Delay(_delay);
-			if(!_watch)
-				break;
-
-			var state = _provider.SpecialShopChoicesState;
-			var curr = new SpecialShopChoicesArgs(
-				state?.IsActive ?? false,
-				state?.BoardCards ?? new System.Collections.Generic.List<HearthMirror.Objects.BoardCard>(),
-				state?.MousedOverSlot ?? -1
-			);
-			if(curr.Equals(_prev))
-				continue;
-			Change?.Invoke(this, curr);
 			_prev = curr;
+			Dispatch(() => Change?.Invoke(this, curr));
 		}
-		_prev = null;
-		_running = false;
+		return Task.FromResult(false);
 	}
+
+	protected override void OnLoopEnd() => _prev = null;
 }

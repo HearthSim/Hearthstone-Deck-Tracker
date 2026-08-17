@@ -10,50 +10,29 @@ using HearthMirror.Objects;
 namespace HearthWatcher
 {
 
-	public class DungeonRunWatcher
+	public class DungeonRunWatcher : PollingWatcher
 	{
 		private readonly IGameDataProvider _dataProvider;
-		private readonly int _delay;
-		public bool Running { get; private set; }
-		private bool _watch;
-		private List<int>[] _prevCards;
-		private int[] _prevLootChoice;
-		private int[] _prevTreasureChoice;
+		private List<int>?[] _prevCards = new List<int>?[7];
+		private int[] _prevLootChoice = new int[7];
+		private int[] _prevTreasureChoice = new int[7];
 
-		public event Action<DungeonInfo> DungeonInfoChanged;
-		public event Action<bool, CardSet> DungeonRunMatchStarted;
+		public event Action<DungeonInfo>? DungeonInfoChanged;
+		public event Action<bool, CardSet>? DungeonRunMatchStarted;
 
-		public DungeonRunWatcher(IGameDataProvider dataProvider, int delay = 500)
+		public DungeonRunWatcher(IGameDataProvider dataProvider, int delay = 500) : base(delay)
 		{
 			_dataProvider = dataProvider;
-			_delay = delay;
 		}
 
-		public void Run()
+		protected override void OnLoopStart()
 		{
-			_watch = true;
-			if(!Running)
-				Watch();
-		}
-
-		public void Stop() => _watch = false;
-
-		private async void Watch()
-		{
-			Running = true;
-			_prevCards = new List<int>[] { null, null, null, null, null, null, null };
+			_prevCards = new List<int>?[] { null, null, null, null, null, null, null };
 			_prevLootChoice = new[] { 0, 0, 0, 0, 0, 0, 0 };
 			_prevTreasureChoice = new[] { 0, 0, 0, 0, 0, 0, 0 };
-			while(_watch)
-			{
-				await Task.Delay(_delay);
-				if(!_watch)
-					break;
-				if(await Update())
-					break;
-			}
-			Running = false;
 		}
+
+		protected override Task<bool> TickAsync() => Update();
 
 		private readonly string[] _initialOpponents =
 		{
@@ -83,11 +62,11 @@ namespace HearthWatcher
 						if(card.Set == CardSet.DALARAN)
 						{
 							UpdateDungeonInfo();
-							await Task.Delay(500);
+							await Task.Delay(500).ConfigureAwait(false);
 						}
 						var newRun = _initialOpponents.Contains(_dataProvider.OpponentHeroId)
 									|| _dataProvider.OpponentHeroHealth == 10;
-						DungeonRunMatchStarted?.Invoke(newRun, card.Set);
+						Dispatch(() => DungeonRunMatchStarted?.Invoke(newRun, card.Set));
 						return true;
 					}
 				}
@@ -95,6 +74,8 @@ namespace HearthWatcher
 			return false;
 		}
 
+		// deliberately unlocked, DeckManager calls this from the (posted) DungeonRunMatchStarted
+		// handler and relies on DungeonInfoChanged firing inline before it recurses
 		public bool UpdateDungeonInfo()
 		{
 			var dungeonInfo = Reflection.Client.GetDungeonInfo();
@@ -104,14 +85,15 @@ namespace HearthWatcher
 				{
 					if(dungeonInfo[i] != null && (dungeonInfo[i].RunActive || dungeonInfo[i].SelectedDeckId != 0))
 					{
-						if(_prevCards[i] == null || _prevCards[i].Count != (dungeonInfo[i].DbfIds?.Count ?? 0)
+						if(_prevCards[i] == null || _prevCards[i]!.Count != (dungeonInfo[i].DbfIds?.Count ?? 0)
 							|| _prevLootChoice[i] != dungeonInfo[i].PlayerChosenLoot
 							|| _prevTreasureChoice[i] != dungeonInfo[i].PlayerChosenTreasure)
 						{
 							_prevCards[i] = dungeonInfo[i].DbfIds?.ToList() ?? new List<int>();
 							_prevLootChoice[i] = dungeonInfo[i].PlayerChosenLoot;
 							_prevTreasureChoice[i] = dungeonInfo[i].PlayerChosenTreasure;
-							DungeonInfoChanged?.Invoke(dungeonInfo[i]);
+							var info = dungeonInfo[i];
+							Dispatch(() => DungeonInfoChanged?.Invoke(info));
 						}
 					}
 					else
@@ -123,7 +105,7 @@ namespace HearthWatcher
 			}
 			else
 			{
-				_prevCards = new List<int>[] { null, null, null, null, null, null, null };
+				_prevCards = new List<int>?[] { null, null, null, null, null, null, null };
 			}
 			return false;
 		}

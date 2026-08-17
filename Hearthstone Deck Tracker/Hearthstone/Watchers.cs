@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PVPDungeonRunWatcher.PVPDungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set, true);
 			PVPDungeonRunWatcher.PVPDungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo, true);
 			FriendlyChallengeWatcher.OnFriendlyChallenge += OnFriendlyChallenge;
-			ExperienceWatcher.NewExperienceHandler += (sender, args) => Core.Overlay.ExperienceChangedAsync(args.Experience, args.ExperienceNeeded, args.Level, args.LevelChange, args.Animate).Forget();
+			ExperienceWatcher.RewardTrackDataChanged += OnRewardTrackDataChanged;
 			QueueWatcher.InQueueChanged += (sender, args) => Core.Game.QueueEvents.Handle(args);
 			BaconWatcher.Change += OnBaconChange;
 			UiWatcher.Change += OnUiChange;
@@ -392,6 +392,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		internal static void OnBattlegroundsLobbyInfoChange(object sender, HearthWatcher.EventArgs.BattlegroundsLobbyInfoArgs args)
 		{
 			Core.Game.MetaData.BattlegroundsLobbyInfo = args.LobbyInfo;
+		}
+
+		private static readonly ExperienceTracker ExperienceTracker = new();
+
+		private static void OnRewardTrackDataChanged(RewardTrackData data)
+		{
+			if(ExperienceTracker.Update(data) is { } update)
+				Core.Overlay.ExperienceChangedAsync(update.Experience, update.ExperienceNeeded, update.Level, update.LevelChange, update.Animate).Forget();
 		}
 
 		public static ArenaWatcher ArenaWatcher { get; } = new(new HearthMirrorArenaProvider());

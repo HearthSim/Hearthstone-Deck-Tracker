@@ -5,52 +5,33 @@ using HearthWatcher.Providers;
 
 namespace HearthWatcher;
 
-public class MulliganStateWatcher
+public class MulliganStateWatcher : PollingWatcher
 {
 	public delegate void MulliganStateEventHandler(object sender, MulliganState args);
 
 	private readonly IMulliganStateProvider _provider;
-	private readonly int _delay;
-	private bool _running;
-	private bool _watch;
-	private MulliganState? _prev = null;
+	private MulliganState? _prev;
 
-	public MulliganStateWatcher(IMulliganStateProvider mulliganTooltipProvider, int delay = 16)
+	public MulliganStateWatcher(IMulliganStateProvider mulliganTooltipProvider, int delay = 16) : base(delay)
 	{
 		_provider = mulliganTooltipProvider ?? throw new ArgumentNullException(nameof(mulliganTooltipProvider));
-		_delay = delay;
 	}
 
-	public event MulliganStateEventHandler Change;
+	public event MulliganStateEventHandler? Change;
 
-	public void Run()
+	protected override Task<bool> TickAsync()
 	{
-		_watch = true;
-		if(!_running)
-			Update();
-	}
+		var curr = _provider.State;
+		if(curr == null)
+			return Task.FromResult(false);
 
-	public void Stop() => _watch = false;
-
-	private async void Update()
-	{
-		_running = true;
-		while(_watch)
+		if(_prev == null || !curr.Equals(_prev))
 		{
-			await Task.Delay(_delay);
-			if(!_watch)
-				break;
-
-			var curr = _provider.State;
-			if(curr == null)
-				continue;
-
-			if(_prev != null && curr.Equals(_prev))
-				continue;
-			Change?.Invoke(this, curr);
 			_prev = curr;
+			Dispatch(() => Change?.Invoke(this, curr));
 		}
-		_prev = null;
-		_running = false;
+		return Task.FromResult(false);
 	}
+
+	protected override void OnLoopEnd() => _prev = null;
 }

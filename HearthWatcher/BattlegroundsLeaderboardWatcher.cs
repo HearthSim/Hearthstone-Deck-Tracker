@@ -1,57 +1,37 @@
 ﻿using HearthWatcher.EventArgs;
 using HearthWatcher.Providers;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using HearthMirror.Objects;
 
 namespace HearthWatcher
 {
-	public class BattlegroundsLeaderboardWatcher
+	public class BattlegroundsLeaderboardWatcher : PollingWatcher
 	{
 		public delegate void BattlegroundsLeaderboardEventHandler(object sender, BattlegroundsLeaderboardArgs args);
 
 		private readonly IBattlegroundsLeaderboardProvider _provider;
-		private readonly int _delay;
-		private bool _running;
-		private bool _watch;
 		private BattlegroundsLeaderboardArgs? _prev;
 
-		public BattlegroundsLeaderboardWatcher(IBattlegroundsLeaderboardProvider provider, int delay = 16)
+		public BattlegroundsLeaderboardWatcher(IBattlegroundsLeaderboardProvider provider, int delay = 16) : base(delay)
 		{
 			_provider = provider ?? throw new ArgumentNullException(nameof(provider));
-			_delay = delay;
 		}
 
-		public event BattlegroundsLeaderboardEventHandler Change;
+		public event BattlegroundsLeaderboardEventHandler? Change;
 
-		public void Run()
+		protected override Task<bool> TickAsync()
 		{
-			_watch = true;
-			if(!_running)
-				Update();
-		}
-
-		public void Stop() => _watch = false;
-
-		private async void Update()
-		{
-			_running = true;
-			while(_watch)
+			var curr = new BattlegroundsLeaderboardArgs(
+				_provider.BattlegroundsLeaderboardHoveredEntityId
+			);
+			if(_prev == null || !curr.Equals(_prev))
 			{
-				await Task.Delay(_delay);
-				if(!_watch)
-					break;
-				var curr = new BattlegroundsLeaderboardArgs(
-					_provider.BattlegroundsLeaderboardHoveredEntityId
-				);
-				if(curr.Equals(_prev))
-					continue;
-				Change?.Invoke(this, curr);
 				_prev = curr;
+				Dispatch(() => Change?.Invoke(this, curr));
 			}
-			_prev = null;
-			_running = false;
+			return Task.FromResult(false);
 		}
+
+		protected override void OnLoopEnd() => _prev = null;
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using HearthMirror.Enums;
@@ -9,11 +8,10 @@ using HearthWatcher.Providers;
 
 namespace HearthWatcher;
 
-public class ArenaStateWatcher
+public class ArenaStateWatcher : PollingWatcher
 {
-	private readonly int _delay;
-	private bool _running;
-	private bool _watch;
+	// serialize the pool-thread tick against direct Update() calls
+	private readonly object _updateLock = new();
 	private readonly IArenaStateProvider _provider;
 	private ArenaState.DraftChoice? _choice;
 	private double _scroll;
@@ -37,10 +35,9 @@ public class ArenaStateWatcher
 
 	private ArenaState.ScryCache? _cache;
 
-	public ArenaStateWatcher(IArenaStateProvider provider, int delay = 15)
+	public ArenaStateWatcher(IArenaStateProvider provider, int delay = 15) : base(delay)
 	{
 		_provider = provider ?? throw new ArgumentNullException(nameof(provider));
-		_delay = delay;
 	}
 
 	public event Action<ArenaState.ActorInfo?>? OnHeroZoomed;
@@ -60,51 +57,49 @@ public class ArenaStateWatcher
 	public event Action<int>? OnArenaSeasonIdChanged;
 	public event Action<long>? OnDeckIdChanged;
 
-	public void Run()
+	protected override void OnLoopStart()
 	{
-		_watch = true;
-		if(!_running)
-			Watch();
-	}
-
-	public void Stop()
-	{
-		_watch = false;
-		_cache = null;
-	}
-
-	private async void Watch()
-	{
-		_running = true;
-		_choice = null;
-		_scroll = 0;
-		_deckList = null;
-		_choices = null;
-		_choicesVersion = null;
-		_deckListVersion = null;
-		_redraftDeckList = null;
-		_redraftDeckListVersion = null;
-		_hero = "";
-		_heroPower = "";
-		_zoomedHero = null;
-		_isAnimating = false;
-		_isPackageSelectOpen = false;
-		_trayBigCard = null;
-		_tooltip = null;
-		_clientState = (ArenaClientStateType.None, ArenaSessionState.INVALID);
-		_cache = null;
-
-		while(_watch)
+		lock(_updateLock)
 		{
-			await Task.Delay(_delay);
-			if(!_watch)
-				break;
-			Update();
+			_choice = null;
+			_scroll = 0;
+			_deckList = null;
+			_choices = null;
+			_choicesVersion = null;
+			_deckListVersion = null;
+			_redraftDeckList = null;
+			_redraftDeckListVersion = null;
+			_hero = "";
+			_heroPower = "";
+			_zoomedHero = null;
+			_isAnimating = false;
+			_isPackageSelectOpen = false;
+			_trayBigCard = null;
+			_tooltip = null;
+			_clientState = (ArenaClientStateType.None, ArenaSessionState.INVALID);
+			_cache = null;
 		}
-		_running = false;
+	}
+
+	protected override void OnLoopEnd()
+	{
+		lock(_updateLock)
+			_cache = null;
+	}
+
+	protected override Task<bool> TickAsync()
+	{
+		Update();
+		return Task.FromResult(false);
 	}
 
 	public void Update()
+	{
+		lock(_updateLock)
+			UpdateCore();
+	}
+
+	private void UpdateCore()
 	{
 		var state = _provider.GetState(_deckListVersion, _redraftDeckListVersion, _cache);
 		if(state == null)
@@ -118,68 +113,79 @@ public class ArenaStateWatcher
 		{
 			_cache = null;
 			_clientState = (state.ClientState, state.SessionState);
-			OnClientStateChanged?.Invoke(_clientState);
+			var clientState = _clientState;
+			Dispatch(() => OnClientStateChanged?.Invoke(clientState));
 		}
 
 		if(_isAnimating != state.IsAnimating)
 		{
 			_isAnimating = state.IsAnimating;
-			OnIsAnimatingChanged?.Invoke(_isAnimating);
+			var isAnimating = _isAnimating;
+			Dispatch(() => OnIsAnimatingChanged?.Invoke(isAnimating));
 		}
 
 		if(_isUnderground != state.IsUnderground)
 		{
 			_cache = null;
 			_isUnderground = state.IsUnderground;
-			OnIsUndergroundChanged?.Invoke(_isUnderground);
+			var isUnderground = _isUnderground;
+			Dispatch(() => OnIsUndergroundChanged?.Invoke(isUnderground));
 		}
 
 		if(_arenaSeasonId != state.ArenaSeasonId)
 		{
 			_arenaSeasonId = state.ArenaSeasonId;
-			OnArenaSeasonIdChanged?.Invoke(_arenaSeasonId);
+			var arenaSeasonId = _arenaSeasonId;
+			Dispatch(() => OnArenaSeasonIdChanged?.Invoke(arenaSeasonId));
 		}
 
 		if(_isPackageSelectOpen != state.IsPackageSelectOpen)
 		{
 			_isPackageSelectOpen = state.IsPackageSelectOpen;
-			OnIsPackageSelectOpen?.Invoke(_isPackageSelectOpen);
+			var isPackageSelectOpen = _isPackageSelectOpen;
+			Dispatch(() => OnIsPackageSelectOpen?.Invoke(isPackageSelectOpen));
 		}
 
 		if(_zoomedHero?.CardId != state.ZoomedHero?.CardId)
 		{
 			_zoomedHero = state.ZoomedHero;
-			OnHeroZoomed?.Invoke(_zoomedHero);
+			var zoomedHero = _zoomedHero;
+			Dispatch(() => OnHeroZoomed?.Invoke(zoomedHero));
 		}
 
 		if(_heroPower != state.ChosenHeroPower)
 		{
 			_heroPower = state.ChosenHeroPower;
-			OnHeroPowerPicked?.Invoke(_heroPower);
+			var heroPower = _heroPower;
+			Dispatch(() => OnHeroPowerPicked?.Invoke(heroPower));
 		}
 
 		if(_hero != state.ChosenHero)
 		{
 			_hero = state.ChosenHero;
-			OnHeroPicked?.Invoke(_hero);
+			var hero = _hero;
+			Dispatch(() => OnHeroPicked?.Invoke(hero));
 		}
 
 		if(_deckId != state.DeckId)
 		{
 			_deckId = state.DeckId;
-			OnDeckIdChanged?.Invoke(_deckId);
+			var deckId = _deckId;
+			Dispatch(() => OnDeckIdChanged?.Invoke(deckId));
 		}
 
 		if(!Equals(state.DeckListBigCard?.PositionY, _trayBigCard?.PositionY))
 		{
 			_trayBigCard = state.DeckListBigCard;
-			OnTrayBigCardChanged?.Invoke(_trayBigCard);
+			var trayBigCard = _trayBigCard;
+			Dispatch(() => OnTrayBigCardChanged?.Invoke(trayBigCard));
 		}
 
 		if(Math.Abs(state.DeckListScroll - _scroll) > 0.001)
 		{
 			_scroll = state.DeckListScroll;
-			OnScrollChange?.Invoke(_scroll);
+			var scroll = _scroll;
+			Dispatch(() => OnScrollChange?.Invoke(scroll));
 		}
 
 		// DeckListData will be null if the list version matches _deckListVersion.
@@ -187,14 +193,16 @@ public class ArenaStateWatcher
 		{
 			_deckListVersion = state.DeckListData.Version;
 			_deckList = state.DeckListData.CardIds;
-			OnDeckListChange?.Invoke(_deckList);
+			var deckList = _deckList;
+			Dispatch(() => OnDeckListChange?.Invoke(deckList));
 		}
 
 		if(state.RedraftDeckListData != null)
 		{
 			_redraftDeckListVersion = state.RedraftDeckListData.Version;
 			_redraftDeckList = state.RedraftDeckListData.CardIds;
-			OnRedraftDeckListChange?.Invoke(_redraftDeckList);
+			var redraftDeckList = _redraftDeckList;
+			Dispatch(() => OnRedraftDeckListChange?.Invoke(redraftDeckList));
 		}
 
 		if(_choices?.Count != state.Choices.Count || _choicesVersion != state.ChoicesVersion)
@@ -210,20 +218,23 @@ public class ArenaStateWatcher
 			{
 				_choices = state.Choices;
 				_choicesVersion = state.ChoicesVersion;
-				OnChoicesChanged?.Invoke(_choices);
+				var choices = _choices;
+				Dispatch(() => OnChoicesChanged?.Invoke(choices));
 			}
 		}
 
 		if(_choice?.Actor.CardId != state.HoveredChoice?.Actor.CardId || _choice?.Actor.Index != state.HoveredChoice?.Actor.Index)
 		{
 			_choice = state.HoveredChoice;
-			OnCardHover?.Invoke(_choice);
+			var choice = _choice;
+			Dispatch(() => OnCardHover?.Invoke(choice));
 		}
 
 		if(_tooltip?.Item2 != _choice?.Actor.Index || !Equals(_tooltip?.Item1.Sum(), state.TooltipHeights?.Sum()))
 		{
 			_tooltip = _choice?.Actor.Index == null || state.TooltipHeights == null ? null : (state.TooltipHeights, _choice.Actor.Index);
-			OnTooltipChanged?.Invoke(_tooltip);
+			var tooltip = _tooltip;
+			Dispatch(() => OnTooltipChanged?.Invoke(tooltip));
 		}
 	}
 }

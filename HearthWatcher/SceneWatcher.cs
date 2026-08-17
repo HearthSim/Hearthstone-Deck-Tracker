@@ -5,55 +5,36 @@ using System.Threading.Tasks;
 
 namespace HearthWatcher;
 
-public class SceneWatcher
+public class SceneWatcher : PollingWatcher
 {
 	public delegate void SceneEventHandler(object sender, SceneEventArgs args);
 
 	private readonly ISceneProvider _provider;
-	private readonly int _delay;
-	private bool _running;
-	private bool _watch;
-	private SceneEventArgs _prev = null;
+	private SceneEventArgs? _prev;
 
-	public SceneWatcher(ISceneProvider sceneProvider, int delay = 16)
+	public SceneWatcher(ISceneProvider sceneProvider, int delay = 16) : base(delay)
 	{
 		_provider = sceneProvider ?? throw new ArgumentNullException(nameof(sceneProvider));
-		_delay = delay;
 	}
 
-	public event SceneEventHandler Change;
+	public event SceneEventHandler? Change;
 
-	public void Run()
+	protected override Task<bool> TickAsync()
 	{
-		_watch = true;
-		if(!_running)
-			Update();
-	}
-
-	public void Stop() => _watch = false;
-
-	private async void Update()
-	{
-		_running = true;
-		while(_watch)
+		var state = _provider.State;
+		var curr = new SceneEventArgs(
+			state?.PrevMode ?? 0,
+			state?.Mode ?? 0,
+			state?.SceneLoaded ?? false,
+			state?.Transitioning ?? false
+		);
+		if(_prev == null || !curr.Equals(_prev))
 		{
-			await Task.Delay(_delay);
-			if(!_watch)
-				break;
-
-			var state = _provider.State;
-			var curr = new SceneEventArgs(
-				state?.PrevMode ?? 0,
-				state?.Mode ?? 0,
-				state?.SceneLoaded ?? false,
-				state?.Transitioning ?? false
-			);
-			if(curr.Equals(_prev))
-				continue;
-			Change?.Invoke(this, curr);
 			_prev = curr;
+			Dispatch(() => Change?.Invoke(this, curr));
 		}
-		_prev = null;
-		_running = false;
+		return Task.FromResult(false);
 	}
+
+	protected override void OnLoopEnd() => _prev = null;
 }

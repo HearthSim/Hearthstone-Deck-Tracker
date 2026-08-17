@@ -9,7 +9,7 @@ using HearthWatcher.Providers;
 
 namespace HearthWatcher
 {
-	public class ArenaWatcher
+	public class ArenaWatcher : PollingWatcher
 	{
 		public delegate void ChoicesChangedEventHandler(object sender, ChoicesChangedEventArgs args);
 		public delegate void RedraftChoicesChangedEventHandler(object sender, RedraftChoicesChangedEventArgs args);
@@ -18,9 +18,8 @@ namespace HearthWatcher
 		public delegate void CompleteDeckEventHandler(object sender, CompleteDeckEventArgs args);
 		public delegate void RewardsEventHandler(object sender, RewardsEventArgs args);
 
-		private readonly int _delay;
-		private bool _running;
-		private bool _watch;
+		// serialize the pool-thread tick against direct Update() calls from the log path
+		private readonly object _updateLock = new();
 		private int _prevSlot = -1;
 		private int _prevRedraftSlot = -1;
 		private Card[]? _prevChoices;
@@ -34,52 +33,43 @@ namespace HearthWatcher
 		private const int MaxRedraftDeckSize = 5;
 		private readonly IArenaProvider _arenaProvider;
 
-		public ArenaWatcher(IArenaProvider arenaProvider, int delay = 500)
+		public ArenaWatcher(IArenaProvider arenaProvider, int delay = 500) : base(delay)
 		{
 			_arenaProvider = arenaProvider ?? throw new ArgumentNullException(nameof(arenaProvider));
-			_delay = delay;
 		}
 
-		public event ChoicesChangedEventHandler OnChoicesChanged;
-		public event RedraftChoicesChangedEventHandler OnRedraftChoicesChanged;
-		public event CardPickedEventHandler OnCardPicked;
-		public event RedraftCardPickedEventHandler OnRedraftCardPicked;
-		public event CompleteDeckEventHandler OnCompleteDeck;
-		public event RewardsEventHandler OnRewards;
+		public event ChoicesChangedEventHandler? OnChoicesChanged;
+		public event RedraftChoicesChangedEventHandler? OnRedraftChoicesChanged;
+		public event CardPickedEventHandler? OnCardPicked;
+		public event RedraftCardPickedEventHandler? OnRedraftCardPicked;
+		public event CompleteDeckEventHandler? OnCompleteDeck;
+		public event RewardsEventHandler? OnRewards;
 
-		public void Run()
+		protected override void OnLoopStart()
 		{
-			_watch = true;
-			if(!_running)
-				Watch();
-		}
-
-		public void Stop() => _watch = false;
-
-		private async void Watch()
-		{
-			_running = true;
-			_prevSlot = -1;
-			_prevRedraftSlot = -1;
-			_prevInfo = null;
-			_prevChoices = null;
-			_prevChoicesVersion = -1;
-			_prevPackages = null;
-			_prevIsUnderground = null;
-			_isDualClass = false;
-			_prevArenaSessionState = ArenaSessionState.INVALID;
-			while(_watch)
+			lock(_updateLock)
 			{
-				await Task.Delay(_delay);
-				if(!_watch)
-					break;
-				if(Update())
-					break;
+				_prevSlot = -1;
+				_prevRedraftSlot = -1;
+				_prevInfo = null;
+				_prevChoices = null;
+				_prevChoicesVersion = -1;
+				_prevPackages = null;
+				_prevIsUnderground = null;
+				_isDualClass = false;
+				_prevArenaSessionState = ArenaSessionState.INVALID;
 			}
-			_running = false;
 		}
+
+		protected override Task<bool> TickAsync() => Task.FromResult(Update());
 
 		public bool Update()
+		{
+			lock(_updateLock)
+				return UpdateCore();
+		}
+
+		private bool UpdateCore()
 		{
 			var arenaInfo = _arenaProvider.GetArenaInfo();
 			if(arenaInfo == null)
@@ -97,10 +87,10 @@ namespace HearthWatcher
 							CardPicked(arenaInfo);
 					}
 				}
-				OnCompleteDeck?.Invoke(this, new CompleteDeckEventArgs(arenaInfo));
+				Dispatch(() => OnCompleteDeck?.Invoke(this, new CompleteDeckEventArgs(arenaInfo)));
 				if(arenaInfo.Rewards?.Any() ?? false)
-					OnRewards?.Invoke(this, new RewardsEventArgs(arenaInfo));
-				_watch = false;
+					Dispatch(() => OnRewards?.Invoke(this, new RewardsEventArgs(arenaInfo)));
+				Stop();
 				return true;
 			}
 
@@ -138,8 +128,8 @@ namespace HearthWatcher
 			if(_prevChoicesVersion == choices.Version)
 				return false;
 
-			OnChoicesChanged?.Invoke(this,
-				new ChoicesChangedEventArgs(choices.Choices.ToArray(), arenaInfo.Deck, arenaInfo.CurrentSlot, arenaInfo.IsUnderground, choices.Packages));
+			var choicesChangedArgs = new ChoicesChangedEventArgs(choices.Choices.ToArray(), arenaInfo.Deck, arenaInfo.CurrentSlot, arenaInfo.IsUnderground, choices.Packages);
+			Dispatch(() => OnChoicesChanged?.Invoke(this, choicesChangedArgs));
 
 			_isDualClass = _isDualClass ||
 			               (!string.IsNullOrEmpty(arenaInfo.Deck.HeroPower) && string.IsNullOrEmpty(arenaInfo.Deck.Hero));
@@ -176,8 +166,8 @@ namespace HearthWatcher
 			                      && _prevChoicesVersion == choices.Version)
 				return false;
 
-			OnRedraftChoicesChanged?.Invoke(this,
-				new RedraftChoicesChangedEventArgs(choices.Choices.ToArray(), arenaInfo.Deck, redraftDeck, redraftSlot, arenaInfo.Losses, arenaInfo.IsUnderground));
+			var redraftChoicesChangedArgs = new RedraftChoicesChangedEventArgs(choices.Choices.ToArray(), arenaInfo.Deck, redraftDeck, redraftSlot, arenaInfo.Losses, arenaInfo.IsUnderground);
+			Dispatch(() => OnRedraftChoicesChanged?.Invoke(this, redraftChoicesChangedArgs));
 
 			if(_prevRedraftSlot >= 0 && _prevIsUnderground == arenaInfo.IsUnderground)
 				RedraftCardPicked(arenaInfo);
@@ -198,7 +188,8 @@ namespace HearthWatcher
 			var hero = _prevChoices?.FirstOrDefault(x => x.Id == arenaInfo.Deck.Hero);
 			if(hero != null)
 			{
-				OnCardPicked?.Invoke(this, new CardPickedEventArgs(hero, _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground, null));
+				var args = new CardPickedEventArgs(hero, _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground, null);
+				Dispatch(() => OnCardPicked?.Invoke(this, args));
 				return;
 			}
 			// dual-class
@@ -206,7 +197,8 @@ namespace HearthWatcher
 			var heroPower = _prevChoices?.FirstOrDefault(x => x.Id == arenaInfo.Deck.HeroPower);
 			if(heroPower != null)
 			{
-				OnCardPicked?.Invoke(this, new CardPickedEventArgs(heroPower, _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground, null));
+				var args = new CardPickedEventArgs(heroPower, _prevChoices!, arenaInfo.Deck, arenaInfo.CurrentSlot - 1, arenaInfo.IsUnderground, null);
+				Dispatch(() => OnCardPicked?.Invoke(this, args));
 			}
 
 		}
@@ -260,13 +252,14 @@ namespace HearthWatcher
 			{
 				var pickedCard = new Card(picked.Id, 1, picked.PremiumType);
 
-				OnCardPicked?.Invoke(this, new CardPickedEventArgs(
+				var args = new CardPickedEventArgs(
 					pickedCard,
 					_prevChoices!,
 					arenaInfo.Deck,
 					arenaInfo.CurrentSlot - 1,
 					arenaInfo.IsUnderground,
-					usedPackage));
+					usedPackage);
+				Dispatch(() => OnCardPicked?.Invoke(this, args));
 			}
 
 		}
@@ -276,18 +269,16 @@ namespace HearthWatcher
 			var pick = arenaInfo.RedraftDeck.Cards.FirstOrDefault(x => !_prevInfo?.RedraftDeck.Cards.Any(c => x.Id == c.Id && x.Count == c.Count) ?? false);
 			if(pick != null)
 			{
-				OnRedraftCardPicked?.Invoke(
-					this,
-					new RedraftCardPickedEventArgs(
-						new Card(pick.Id, 1, pick.PremiumType),
-						_prevChoices!,
-						arenaInfo.Deck,
-						arenaInfo.RedraftDeck,
-						arenaInfo.RedraftCurrentSlot - 1,
-						arenaInfo.Losses,
-						arenaInfo.IsUnderground
-					)
+				var args = new RedraftCardPickedEventArgs(
+					new Card(pick.Id, 1, pick.PremiumType),
+					_prevChoices!,
+					arenaInfo.Deck,
+					arenaInfo.RedraftDeck,
+					arenaInfo.RedraftCurrentSlot - 1,
+					arenaInfo.Losses,
+					arenaInfo.IsUnderground
 				);
+				Dispatch(() => OnRedraftCardPicked?.Invoke(this, args));
 			}
 		}
 
@@ -299,18 +290,16 @@ namespace HearthWatcher
 			var deck = _prevInfo?.Deck ?? arenaInfo.Deck;
 			if(pick != null)
 			{
-				OnRedraftCardPicked?.Invoke(
-					this,
-					new RedraftCardPickedEventArgs(
-						new Card(pick.Id, 1, pick.PremiumType),
-						_prevChoices!,
-						deck,
-						arenaInfo.RedraftDeck,
-						arenaInfo.RedraftCurrentSlot - 1,
-						arenaInfo.Losses,
-						arenaInfo.IsUnderground
-					)
+				var args = new RedraftCardPickedEventArgs(
+					new Card(pick.Id, 1, pick.PremiumType),
+					_prevChoices!,
+					deck,
+					arenaInfo.RedraftDeck,
+					arenaInfo.RedraftCurrentSlot - 1,
+					arenaInfo.Losses,
+					arenaInfo.IsUnderground
 				);
+				Dispatch(() => OnRedraftCardPicked?.Invoke(this, args));
 			}
 		}
 

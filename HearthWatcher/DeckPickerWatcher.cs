@@ -1,59 +1,40 @@
 ﻿using HearthWatcher.EventArgs;
 using HearthWatcher.Providers;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using HearthMirror.Objects;
 
 namespace HearthWatcher;
 
-public class DeckPickerWatcher
+public class DeckPickerWatcher : PollingWatcher
 {
 	public delegate void DeckPickerEventHandler(object sender, DeckPickerEventArgs args);
 
 	private readonly IDeckPickerProvider _provider;
-	private readonly int _delay;
-	private bool _running;
-	private bool _watch;
-	private DeckPickerEventArgs _prev;
+	private DeckPickerEventArgs? _prev;
 
-	public DeckPickerWatcher(IDeckPickerProvider deckPickerProvider, int delay = 16)
+	public DeckPickerWatcher(IDeckPickerProvider deckPickerProvider, int delay = 16) : base(delay)
 	{
 		_provider = deckPickerProvider ?? throw new ArgumentNullException(nameof(deckPickerProvider));
-		_delay = delay;
 	}
 
-	public event DeckPickerEventHandler Change;
+	public event DeckPickerEventHandler? Change;
 
-	public void Run()
+	protected override Task<bool> TickAsync()
 	{
-		_watch = true;
-		if(!_running)
-			Update();
-	}
-
-	public void Stop() => _watch = false;
-
-	private async void Update()
-	{
-		_running = true;
-		while(_watch)
+		var curr = new DeckPickerEventArgs(
+			_provider.DeckPickerState?.VisualsFormatType ?? VisualsFormatType.VFT_UNKNOWN,
+			_provider.DecksOnPage ?? new(),
+			_provider.DeckPickerState?.SelectedDeck,
+			(_provider.DeckPickerState?.IsModeSwitching ?? false) || _provider.IsBlurActive || (_provider.DeckPickerState?.SetRotationOpen ?? false)
+		);
+		if(_prev == null || !curr.Equals(_prev))
 		{
-			await Task.Delay(_delay);
-			if(!_watch)
-				break;
-			var curr = new DeckPickerEventArgs(
-				_provider.DeckPickerState?.VisualsFormatType ?? VisualsFormatType.VFT_UNKNOWN,
-				_provider.DecksOnPage ?? new(),
-				_provider.DeckPickerState?.SelectedDeck,
-				(_provider.DeckPickerState?.IsModeSwitching ?? false) || _provider.IsBlurActive || (_provider.DeckPickerState?.SetRotationOpen ?? false)
-			);
-			if(curr.Equals(_prev))
-				continue;
-			Change?.Invoke(this, curr);
 			_prev = curr;
+			Dispatch(() => Change?.Invoke(this, curr));
 		}
-		_prev = null;
-		_running = false;
+		return Task.FromResult(false);
 	}
+
+	protected override void OnLoopEnd() => _prev = null;
 }

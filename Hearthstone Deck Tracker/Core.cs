@@ -6,9 +6,11 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using HearthMirror;
+using HearthWatcher;
 using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -133,6 +135,10 @@ namespace Hearthstone_Deck_Tracker
 			}
 #endif
 			Log.Initialize();
+			if(SynchronizationContext.Current is { } syncContext)
+				PollingWatcher.SetEventContext(syncContext);
+			else
+				Log.Warn("No SynchronizationContext, watcher events will fire on pool threads");
 			Reflection.LogDebugMessage += msg => Log.Debug("HearthMirror RPC[client]: " + msg);
 			Reflection.LogMessage += msg => Log.Info("HearthMirror RPC [client]: " + msg);
 

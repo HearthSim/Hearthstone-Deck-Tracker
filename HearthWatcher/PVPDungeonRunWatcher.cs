@@ -2,57 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HearthDb;
 using HearthDb.Enums;
 using HearthMirror;
 using HearthMirror.Objects;
 
 namespace HearthWatcher
 {
-	public class PVPDungeonRunWatcher
+	public class PVPDungeonRunWatcher : PollingWatcher
 	{
 		private readonly IGameDataProvider _dataProvider;
-		private readonly int _delay;
-		public bool Running { get; private set; }
-		private bool _watch;
-		private List<int> _prevCards;
+		private List<int>? _prevCards;
 		private int? _prevLootChoice;
 		private int? _prevTreasureChoice;
 
-		public event Action<DungeonInfo> PVPDungeonInfoChanged;
-		public event Action<bool, CardSet> PVPDungeonRunMatchStarted;
+		public event Action<DungeonInfo>? PVPDungeonInfoChanged;
+		public event Action<bool, CardSet>? PVPDungeonRunMatchStarted;
 
-		public PVPDungeonRunWatcher(IGameDataProvider dataProvider, int delay = 500)
+		public PVPDungeonRunWatcher(IGameDataProvider dataProvider, int delay = 500) : base(delay)
 		{
 			_dataProvider = dataProvider;
-			_delay = delay;
 		}
 
-		public void Run()
+		protected override void OnLoopStart()
 		{
-			_watch = true;
-			if(!Running)
-				Watch();
-		}
-
-		public void Stop() => _watch = false;
-
-		private async void Watch()
-		{
-			Running = true;
 			_prevCards = null;
 			_prevLootChoice = null;
 			_prevTreasureChoice = null;
-			while(_watch)
-			{
-				await Task.Delay(_delay);
-				if(!_watch)
-					break;
-				if(Update())
-					break;
-			}
-			Running = false;
 		}
+
+		protected override Task<bool> TickAsync() => Task.FromResult(Update());
 
 		public bool Update()
 		{
@@ -64,7 +42,7 @@ namespace HearthWatcher
 			}
 			else if(_dataProvider.InPVPDungeonRunMatch && !string.IsNullOrEmpty(_dataProvider.OpponentHeroId))
 			{
-				PVPDungeonRunMatchStarted.Invoke(false, CardSet.DARKMOON_FAIRE);
+				Dispatch(() => PVPDungeonRunMatchStarted?.Invoke(false, CardSet.DARKMOON_FAIRE));
 				return true;
 			}
 			return false;
@@ -72,7 +50,7 @@ namespace HearthWatcher
 
 		public bool UpdatePVPDungeonInfo()
 		{
-			DungeonInfo pvpDungeonInfo = null;
+			DungeonInfo? pvpDungeonInfo = null;
 			using(_ = Reflection.ClientReadTimeout(10000))
 			{
 				pvpDungeonInfo = Reflection.Client.GetPVPDungeonInfo();
@@ -87,7 +65,7 @@ namespace HearthWatcher
 						_prevCards = pvpDungeonInfo.DbfIds?.ToList() ?? new List<int>();
 						_prevLootChoice = pvpDungeonInfo.PlayerChosenLoot;
 						_prevTreasureChoice = pvpDungeonInfo.PlayerChosenTreasure;
-						PVPDungeonInfoChanged?.Invoke(pvpDungeonInfo);
+						Dispatch(() => PVPDungeonInfoChanged?.Invoke(pvpDungeonInfo));
 					}
 				}
 				else if(pvpDungeonInfo.SelectedLoadoutTreasureDbId > 0)
@@ -101,7 +79,7 @@ namespace HearthWatcher
 					if(dbfids.Count == 15)
 					{
 						pvpDungeonInfo.UpdateDbfids(dbfids);
-						PVPDungeonInfoChanged?.Invoke(pvpDungeonInfo);
+						Dispatch(() => PVPDungeonInfoChanged?.Invoke(pvpDungeonInfo));
 						// This is the only scenario in which we can stop the watcher.
 						// If a new deck is created the only options are to a) play a game or b) exit the PVPDR scene
 						return true;
