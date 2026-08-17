@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              mc:Ignorable="d">
     <Border CornerRadius="0, 0 , 0 ,3" Background="#141617" >
-        <local:HearthstoneTextBlock x:Name="TurnText" Text="Turn 1" Margin="10,3" />
+        <local:HearthstoneTextBlock Text="{Binding TurnText, FallbackValue=Turn 1, RelativeSource={RelativeSource AncestorType=overlay:TurnCounter}}" Margin="10,3" />
     </Border>
 </UserControl>

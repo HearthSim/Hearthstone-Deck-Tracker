@@ -4,16 +4,19 @@ using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
 	public partial class BattlegroundsTierTriples : INotifyPropertyChanged
 	{
 		private readonly BrushConverter _brushConverter = new();
+		private readonly LocalizedPropNotifier _localizedPropNotifier;
 
 		public BattlegroundsTierTriples()
 		{
 			InitializeComponent();
+			_localizedPropNotifier = new LocalizedPropNotifier(GetType(), OnPropertyChanged);
 			Tier = 1;
 			Qty = 0;
 			Turn = 1;
@@ -52,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public double TripleOpacity => Qty > 0 ? 0 : 0.2;
 		public Visibility TripleVisibility => Turn > 0 ? Visibility.Visible : Visibility.Collapsed;
 		public string QtyText => Turn > 0 ? $"{Qty}" : "";
+		[LocalizedProp]
 		public string TurnText => Turn > 0 ? string.Format(LocUtil.Get("Overlay_Battlegrounds_Turn_Counter"), Turn) : "";
 
 		public int Tier

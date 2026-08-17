@@ -1,12 +1,7 @@
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using Hearthstone_Deck_Tracker.Annotations;
-using WPFLocalizeExtension.Engine;
 
 namespace Hearthstone_Deck_Tracker.Utility.MVVM;
 
@@ -50,45 +45,12 @@ public class ViewModel : INotifyPropertyChanged
 		return false;
 	}
 
-	// a view model is constructed per card tile on every browser filter change, and reflecting over every
-	// property on each instance came out at roughly 0.2ms per view model in a profile
-	private static readonly ConcurrentDictionary<Type, IReadOnlyList<string>> _localizedPropNamesByType = new();
+	private readonly LocalizedPropNotifier _localizedPropNotifier;
 
-	private readonly IReadOnlyList<string> _localizedPropNames;
 	protected ViewModel()
 	{
-		// This allows us to annotate (getter only) properties with [LozalizedProp] to automatically
+		// This allows us to annotate (getter only) properties with [LocalizedProp] to automatically
 		// update them when the language changes.
-		_localizedPropNames = _localizedPropNamesByType.GetOrAdd(GetType(), type =>
-			type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
-				.Where(p => p.GetCustomAttributes(typeof(LocalizedPropAttribute), true).Any())
-				.Select(x => x.Name)
-				.ToList());
-		if(_localizedPropNames.Count > 0)
-			LocalizeDictionary.Instance.PropertyChanged += LocalizeDictionary_OnPropertyChanged;
-	}
-
-	~ViewModel()
-	{
-		if(_localizedPropNames.Count > 0)
-			LocalizeDictionary.Instance.PropertyChanged -= LocalizeDictionary_OnPropertyChanged;
-	}
-
-	private void LocalizeDictionary_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-	{
-		if(e.PropertyName != nameof(LocalizeDictionary.Instance.Culture))
-			return;
-		foreach(var name in _localizedPropNames)
-			OnPropertyChanged(name);
-	}
-
-	/// <summary>
-	/// Mark property as localized. Usually used when calling LocUtil for a localized string.
-	/// Setting this attribute will cause OnPropertyChanged to be automatically called on the
-	/// property when the selected language for the application changes.
-	/// </summary>
-	[AttributeUsage(AttributeTargets.Property)]
-	protected class LocalizedPropAttribute : Attribute
-	{
+		_localizedPropNotifier = new LocalizedPropNotifier(GetType(), OnPropertyChanged);
 	}
 }

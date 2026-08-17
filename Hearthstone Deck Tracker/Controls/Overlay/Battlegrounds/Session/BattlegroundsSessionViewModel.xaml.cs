@@ -433,6 +433,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 		}
 	}
 
+	[LocalizedProp]
 	public string AvailableMinionTypesHeaderLabel =>
 		(_availableMinionTypesSectionVisibility == Visibility.Visible, _bannedMinionTypesSectionVisibility == Visibility.Visible) switch
 		{

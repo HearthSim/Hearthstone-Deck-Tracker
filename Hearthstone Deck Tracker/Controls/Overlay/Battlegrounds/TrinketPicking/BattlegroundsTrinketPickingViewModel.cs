@@ -40,6 +40,7 @@ public class BattlegroundsTrinketPickingViewModel : ViewModel
 	public Visual? VisibilityToggleIcon =>
 		Application.Current.TryFindResource(StatsVisibility == Visible ? "eye_slash" : "eye") as Visual;
 
+	[LocalizedProp]
 	public string VisibilityToggleText => StatsVisibility == Visible
 		? LocUtil.Get("BattlegroundsTrinketPicking_VisibilityToggle_Hide")
 		: LocUtil.Get("BattlegroundsTrinketPicking_VisibilityToggle_Show");

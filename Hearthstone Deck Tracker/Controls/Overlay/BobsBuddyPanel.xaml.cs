@@ -1,6 +1,7 @@
 ﻿using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public partial class BobsBuddyPanel : UserControl, INotifyPropertyChanged
 	{
+		private readonly LocalizedPropNotifier _localizedPropNotifier;
+
 		public BobsBuddyPanel()
 		{
 			InitializeComponent();
 			ResetDisplays();
 
+			_localizedPropNotifier = new LocalizedPropNotifier(GetType(), OnPropertyChanged);
 			WarningState = GetWarningState(Remote.Config.Data);
 			Remote.Config.Loaded += cfg => WarningState = GetWarningState(cfg);
 		}
@@ -178,10 +182,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		const float SoftLabelOpacity = 0.3f;
 
+		[LocalizedProp]
 		public string StatusMessage => StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults, ErrorMessage);
 
 		public Visibility WarningIconVisibility => ErrorState == BobsBuddyErrorState.None && WarningState == BobsBuddyWarningState.None ? Visibility.Collapsed : Visibility.Visible;
 
+		[LocalizedProp]
 		public string? WarningIconTextTooltip
 		{
 			get

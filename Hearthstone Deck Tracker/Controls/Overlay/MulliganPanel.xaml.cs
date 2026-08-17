@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
@@ -20,9 +21,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private int[]? _dbfIds;
 		private Dictionary<string, string>? _parameters;
 
+		private readonly LocalizedPropNotifier _localizedPropNotifier;
+
 		public MulliganPanel()
 		{
 			InitializeComponent();
+			_localizedPropNotifier = new LocalizedPropNotifier(GetType(), OnPropertyChanged);
 		}
 
 		public event PropertyChangedEventHandler? PropertyChanged;
@@ -100,6 +104,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		[LocalizedProp]
 		public string NoDataLabel
 		{
 			get => LocUtil.Get(ShowingMulliganStats ? "Toast_Mulligan_NotOnWebsite" : "Toast_Mulligan_Unavailable");

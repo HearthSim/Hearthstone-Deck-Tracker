@@ -1,4 +1,7 @@
 ## **Unreleased**
+**General**:
+- Fixed not all UI elements updating immediately when you changed the deck tracker's language.
+
 **Battlegrounds**:
 - Fixed the session widget not appearing immediately when starting the deck tracker while mid-match.
 - Fixed a 1 pixel gap above overlay elements at the top of the screen.

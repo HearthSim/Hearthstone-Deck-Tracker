@@ -9,6 +9,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 
@@ -20,9 +21,12 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 	// group empty. Track the unload so the next load repopulates.
 	private bool _repopulateOnLoad;
 
+	private readonly LocalizedPropNotifier _localizedPropNotifier;
+
 	public BattlegroundsCardsGroup()
 	{
 		InitializeComponent();
+		_localizedPropNotifier = new LocalizedPropNotifier(GetType(), OnPropertyChanged);
 		Unloaded += (_, _) => _repopulateOnLoad = true;
 		Loaded += (_, _) =>
 		{
@@ -167,6 +171,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 		set => SetValue(IsInspirationEnabledProperty, value);
 	}
 
+	[LocalizedProp]
 	public string Title
 	{
 		get

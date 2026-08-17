@@ -59,8 +59,6 @@ public class BattlegroundsGameViewModel : ViewModel
 
 		}
 
-		PlacementText = LocUtil.GetPlacement(gameItem.Placement);
-
 		MMRDelta = gameItem.RatingAfter is int ratingAfter
 			? gameItem.SeasonReset ? ratingAfter : ratingAfter - gameItem.Rating
 			: 0;
@@ -125,7 +123,8 @@ public class BattlegroundsGameViewModel : ViewModel
 	public string? StartTime { get; }
 	public string HeroName { get; }
 	public int Placement { get; }
-	public string PlacementText { get; }
+	[LocalizedProp]
+	public string PlacementText => LocUtil.GetPlacement(Placement);
 	public int MMRDelta { get; }
 	public string MMRDeltaText { get; }
 	public CardAssetViewModel CardImage { get; }

@@ -48,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking
 
 		public Visual? VisibilityToggleIcon =>
 			Application.Current.TryFindResource(StatsVisibility == Visible ? "eye_slash" : "eye") as Visual;
+		[LocalizedProp]
 		public string VisibilityToggleText => StatsVisibility == Visible
 			? LocUtil.Get("BattlegroundsHeroPicking_VisibilityToggle_Hide")
 			: LocUtil.Get("BattlegroundsHeroPicking_VisibilityToggle_Show");

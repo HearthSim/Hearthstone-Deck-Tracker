@@ -36,6 +36,7 @@ public class ConstructedMulliganGuideViewModel : ViewModel
 
 	public Visual? VisibilityToggleIcon =>
 		Application.Current.TryFindResource(StatsVisibility == Visible ? "eye_slash" : "eye") as Visual;
+	[LocalizedProp]
 	public string VisibilityToggleText => StatsVisibility == Visible
 		? LocUtil.Get("ConstructedMulliganGuide_VisibilityToggle_Hide")
 		: LocUtil.Get("ConstructedMulliganGuide_VisibilityToggle_Show");
