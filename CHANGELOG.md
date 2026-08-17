@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.55.13 - 2026-08-17**
 **General**:
 - Fixed not all UI elements updating immediately when you changed the deck tracker's language.
 
