@@ -1,6 +1,8 @@
 ## **Unreleased**
 **Battlegrounds**:
+- Fixed a number of incorrect combat odds.
 - Fixed a crash when Sandy was on the board in Duos.
+- Fixed some missing translations in the Minion Browser filter popup.
 
 ## **Release v1.55.11 - 2026-08-15**
 **Hearthstone**:
