@@ -71,7 +71,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 		var firstGame = await UpdateLatestGames();
 
-		var rating = (IsDuos  ? Core.Game.BattlegroundsRatingInfo?.DuosRating : Core.Game.BattlegroundsRatingInfo?.Rating) ?? 0;
+		var rating = ClientRating(Core.Game.BattlegroundsRatingInfo, IsDuos) ?? 0;
 		var ratingStart = firstGame == null ? rating : firstGame.SeasonReset ? 0 : firstGame.Rating;
 		if(rating == 0)
 			rating = ratingStart;
@@ -95,6 +95,10 @@ public class BattlegroundsSessionViewModel : ViewModel
 	private bool IsDuos => Core.Game.IsInMenu
 		? BattlegroundsGameMode == SelectedBattlegroundsGameMode.DUOS
 		: Core.Game.IsBattlegroundsDuosMatch;
+
+	// Duos and Solos are separate ladders, so mixing them up makes a Duos rating look like a season reset
+	internal static int? ClientRating(BattlegroundRatingInfo? ratingInfo, bool duos)
+		=> duos ? ratingInfo?.DuosRating : ratingInfo?.Rating;
 
 	public void UpdateSectionsVisibilities()
 	{
@@ -342,12 +346,13 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	private async Task<GameItem?> UpdateLatestGames()
 	{
-		var sortedGames = (await Instance.PlayerGames(IsDuos))
+		var duos = IsDuos;
+		var sortedGames = (await Instance.PlayerGames(duos))
 			.OrderBy(g => g.StartTime)
 			.ToList();
 		DeleteOldGames(sortedGames);
 
-		var sessionGames = GetSessionGames(sortedGames);
+		var sessionGames = GetSessionGames(sortedGames, Core.Game.BattlegroundsRatingInfo, duos);
 		var firstGame = sessionGames.FirstOrDefault();
 
 		SessionGames.Clear();
@@ -370,7 +375,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 		return firstGame;
 	}
 
-	private List<GameItem> GetSessionGames(List<GameItem> sortedGames)
+	internal static List<GameItem> GetSessionGames(List<GameItem> sortedGames, BattlegroundRatingInfo? ratingInfo, bool duos)
 	{
 		DateTime? sessionStartTime = null;
 		DateTime? previousGameEndTime = null;
@@ -402,7 +407,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 			// Check for MMR reset on last game
 			var ratingResetAfterLastGame = false;
-			if(Core.Game.BattlegroundsRatingInfo?.Rating is int currentMMR)
+			if(ClientRating(ratingInfo, duos) is int currentMMR)
 				ratingResetAfterLastGame = IsRatingReset(lastGame.RatingAfterOrCarriedForward, currentMMR);
 
 			var ts = DateTime.Now - DateTime.Parse(lastGame.EndTime);
@@ -667,6 +672,12 @@ public class BattlegroundsSessionViewModel : ViewModel
 		}
 		set
 		{
+			// the client reports UNKNOWN whenever the lobby is not showing (during a game, in another
+			// scene) and the watcher coerces failed mirror reads to it too, so it never tells us which
+			// mode the player is in. Keeping the last mode we actually saw avoids falling back to Solos.
+			if(value == SelectedBattlegroundsGameMode.UNKNOWN)
+				return;
+
 			var modified = GetProp(SelectedBattlegroundsGameMode.UNKNOWN) != value;
 			SetProp(value);
 			if(modified)

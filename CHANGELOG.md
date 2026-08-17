@@ -4,6 +4,7 @@
 
 **Battlegrounds**:
 - Added counters for Eternal Knight and Ancestral Automaton.
+- Fixed issues that could cause Latest Games to not work in Duos.
 - Fixed the session widget not appearing immediately when starting the deck tracker while mid-match.
 - Fixed a 1 pixel gap above overlay elements at the top of the screen.
 - Fixed a recent issue with incorrect combat odds around Polarizing Beatboxer.
