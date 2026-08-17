@@ -1098,6 +1098,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ShowBgsTopBar();
 			ShowBobsBuddyPanel();
 			UpdateBgsChinaModulePanel();
+
+			// starting HDT mid-match, IsBattlegroundsMatch was still unknown when the scene event fired
+			UpdateBattlegroundsSessionVisibility();
 		}
 
 		internal void HideBgsTopBar()

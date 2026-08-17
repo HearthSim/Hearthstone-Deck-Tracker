@@ -1,3 +1,7 @@
+## **Unreleased**
+**Battlegrounds**:
+- Fixed the session widget not appearing immediately when starting the deck tracker while mid-match.
+
 ## **Release v1.55.12 - 2026-08-17**
 **Battlegrounds**:
 - Fixed a number of incorrect combat odds.
