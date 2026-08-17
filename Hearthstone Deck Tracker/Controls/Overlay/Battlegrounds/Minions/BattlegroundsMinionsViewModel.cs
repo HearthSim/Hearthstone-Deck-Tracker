@@ -23,8 +23,11 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		set
 		{
 			SetProp(value);
+			if(ActiveMinionKeyword is { } keyword && !AvailableKeywords.Contains(keyword))
+				ActiveMinionKeyword = null;
 			OnPropertyChanged(nameof(Groups));
 			OnPropertyChanged(nameof(MinionTypeButtons));
+			OnPropertyChanged(nameof(KeywordButtons));
 			OnPropertyChanged(nameof(UnavailableRaces));
 			OnPropertyChanged(nameof(UnavailableMinionTypesVisibility));
 		}
@@ -198,7 +201,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
-	public List<BattlegroundsKeyword> AvailableKeywords => BattlegroundsUtils.GetAvailableKeywords();
+	public List<BattlegroundsKeyword> AvailableKeywords => BattlegroundsUtils.GetAvailableKeywords(AvailableRaces);
 
 	public class KeywordButton
 	{

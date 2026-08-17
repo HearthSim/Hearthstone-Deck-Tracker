@@ -8,6 +8,9 @@ public abstract record BattlegroundsKeyword
 {
 	public abstract string Name { get; }
 
+	// minion type the keyword only ever appears on, hiding the filter when it is not in the lobby
+	public Race? RequiredRace { get; init; }
+
 	public abstract bool Matches(Func<GameTag, int> getTag, string? englishText);
 }
 

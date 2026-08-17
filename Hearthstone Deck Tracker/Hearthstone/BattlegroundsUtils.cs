@@ -115,9 +115,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			new TagKeyword(GameTag.MODULAR, "GameTag_Modular"),
 			new TagKeyword(GameTag.VENOMOUS, "GameTag_Venomous"),
 			new TagKeyword(GameTag.BACON_ACTIVATE_TOOLTIP, "GameTag_BGActivate"),
-			new MentionedKeyword("Battlegrounds_Browser_Filter_Lockbox"),
+			new MentionedKeyword("Battlegrounds_Browser_Filter_Lockbox") { RequiredRace = Race.PIRATE },
 		};
 
-		public static List<BattlegroundsKeyword> GetAvailableKeywords() => _availableKeywords;
+		public static List<BattlegroundsKeyword> GetAvailableKeywords(IEnumerable<Race>? availableRaces)
+		{
+			if(availableRaces is null)
+				return _availableKeywords;
+			var races = availableRaces as IReadOnlyCollection<Race> ?? availableRaces.ToList();
+			return _availableKeywords
+				.Where(x => x.RequiredRace is not { } required || races.Contains(required))
+				.ToList();
+		}
 	}
 }
