@@ -47,7 +47,10 @@
         <Style TargetType="controls:CardTile" BasedOn="{StaticResource CardStyle}" />
     </Window.Resources>
     <Grid Name="GridMain" ClipToBounds="True">
-        <Border BorderThickness="1" BorderBrush="Transparent">
+            <!-- Transparent geometry filling the window, so the CapturableOverlayWindow VisualBrush
+                 has stable bounds to align to even when no overlay element is visible. Must not wrap
+                 CanvasInfo, that would offset the whole overlay by the border thickness. -->
+            <Border BorderThickness="1" BorderBrush="Transparent" IsHitTestVisible="False"/>
             <Canvas Name="CanvasInfo" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="832">
                 <Grid Name="RelatedCardsTrigger" Width="{Binding Width}" Height="{Binding Height}" Canvas.Top="{Binding Top}" Canvas.Left="{Binding Left}"
                       ext:OverlayExtensions.IsOverlayHoverVisible="True" ToolTipService.InitialShowDelay="400" ToolTipService.Placement="{Binding TooltipPlacement}">
@@ -604,6 +607,5 @@
                 <!-- The tooltip needs to stay the bottom item to ensure they are always rendered on top -->
                 <Grid Name="OverlayTooltip" IsHitTestVisible="False"/>
             </Canvas>
-        </Border>
     </Grid>
 </Window>
