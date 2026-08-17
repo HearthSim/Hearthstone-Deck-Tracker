@@ -921,7 +921,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				try
 				{
-					var value = func.Invoke();
+					// run off-thread, callers pass blocking memory reads
+					var value = await Task.Run(func);
 					if(value != null)
 						return value;
 				}
