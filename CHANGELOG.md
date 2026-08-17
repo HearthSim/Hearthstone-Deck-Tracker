@@ -5,6 +5,7 @@
 **Battlegrounds**:
 - Fixed the session widget not appearing immediately when starting the deck tracker while mid-match.
 - Fixed a 1 pixel gap above overlay elements at the top of the screen.
+- Fixed a recent issue with incorrect combat odds around Polarizing Beatboxer.
 
 ## **Release v1.55.12 - 2026-08-17**
 **Battlegrounds**:
