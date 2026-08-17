@@ -173,8 +173,10 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 		{
 			if((GroupedByKeyword && (int)MinionType != -1) || GroupedByMinionType)
 			{
+				// intentionally making this string use HDT language for now, because it's more of a UI term than a game
+				// term
 				return string.Format(
-					LocUtil.Get("BattlegroundsMinions_TavernTier", useCardLanguage: true),
+					LocUtil.Get("BattlegroundsMinions_TavernTier", useCardLanguage: false),
 					Tier
 				);
 			}
