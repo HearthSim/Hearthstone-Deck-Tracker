@@ -166,7 +166,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					CheckForMagnetizedDeathrattles(minion, entity, attachedEntities, allEntities);
 				// Not just mech here, because Technical Element can magnetize to Elementals
 				CheckForSurfnSurfFromMagnetizedModules(minion, entity, allEntities);
-				CheckForRepeatedMagnetizedAutoAssemblers(minion, attachedEntities);
+				CheckForRepeatedMagnetizedAutoAssemblers(minion, entity, attachedEntities, allEntities);
 			}
 
 			minion.game_id = entity.Id;
@@ -208,34 +208,66 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			// Future magnetic deathrattles can be added/handled here.
 		}
 
-		// Every magnetization of the same module onto a host accumulates into ONE enchantment on that
-		// host, whose TAG_SCRIPT_DATA_NUM_1 holds the module's Attack once per module. An extra
-		// magnetization granted by another card (Drone Duplicator, Polarizing Beatboxer) writes that
-		// card's own enchantment instead of the module's, so the module is read from CREATOR_DBID.
-		private static void CheckForRepeatedMagnetizedAutoAssemblers(Minion minion, IEnumerable<Entity> attachedEntities)
+		// Count the Auto Assembler modules fused into this host. TAG_SCRIPT_DATA_NUM_1 on the
+		// enchantment cannot give the count: repeated magnetizations accumulate into ONE enchantment
+		// and that tag holds the stats each module carried when it fused.
+		// Each module stays in the entity tree as its own REMOVEDFROMGAME minion instead,
+		// and three cases find them:
+		//   - a magnetic enchantment on the host names its module in CREATOR
+		//   - a module records its host in TAG_SCRIPT_DATA_NUM_1 when it magnetizes
+		//   - a module the host's own effect duplicated carries CREATOR = the host.
+		private static void CheckForRepeatedMagnetizedAutoAssemblers(Minion minion, Entity host, IEnumerable<Entity> attachedEntities, IReadOnlyDictionary<int, Entity>? allEntities)
 		{
+			if(allEntities == null)
+				return;
+
+			var modules = new Dictionary<int, bool>();  // module entity id -> is golden
+
 			foreach(var attached in attachedEntities)
 			{
 				if(!attached.HasTag(GameTag.MAGNETIC))
 					continue;
 
 				var module = Database.GetCardFromDbfId(attached.GetTag(GameTag.CREATOR_DBID), false);
-				if(module == null || module.Attack <= 0)
+				if(module == null)
 					continue;
 
-				var golden = module.Id == NonCollectible.Neutral.AutoAssembler_AutoAssembler1;
-				if(!golden && module.Id != AutoAssembler.CardId)
+				if(module.Id != AutoAssembler.CardId && module.Id != NonCollectible.Neutral.AutoAssembler_AutoAssembler1)
 					continue;
 
-				var modules = attached.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) / module.Attack;
+				var isGolden = module.Id == NonCollectible.Neutral.AutoAssembler_AutoAssembler1;
 
-				// The module's own enchantment already carries one of them.
-				var carriesOne = attached.CardId == AutoAssemblerEnchantment.CardId
-					|| attached.CardId == AutoAssemblerEnchantmentGolden.CardId;
-
-				for(var i = carriesOne ? 1 : 0; i < modules; i++)
-					minion.AdditionalDeathrattles.Add(golden ? AutoAssembler.GoldenDeathrattle() : AutoAssembler.Deathrattle());
+				var moduleId = attached.GetTag(GameTag.CREATOR);
+				if(moduleId > 0)
+					modules[moduleId] = isGolden;  // one entry per magnetic enchantment's CREATOR
 			}
+
+			foreach(var entity in allEntities.Values)
+			{
+				if(entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) != host.Id && entity.GetTag(GameTag.CREATOR) != host.Id)
+					continue;
+
+				if(entity.GetTag(GameTag.ZONE) != (int)Zone.REMOVEDFROMGAME)
+					continue;
+
+				if(entity.CardId != AutoAssembler.CardId && entity.CardId != NonCollectible.Neutral.AutoAssembler_AutoAssembler1)
+					continue;
+
+				var isGolden = entity.CardId == NonCollectible.Neutral.AutoAssembler_AutoAssembler1;
+
+				modules[entity.Id] = isGolden;
+			}
+
+			if(modules.Count == 0)
+				return;
+
+			// Exclude one counted module when the host carries a BG32_172e, because EnchantmentFactory
+			// resolves that card id to an AutoAssemblerEnchantment which already summons one Automaton.
+			var carried = attachedEntities.Any(e => e.CardId == AutoAssemblerEnchantment.CardId
+				|| e.CardId == AutoAssemblerEnchantmentGolden.CardId) ? 1 : 0;
+
+			foreach(var module in modules.OrderBy(x => x.Key).Skip(carried))
+				minion.AdditionalDeathrattles.Add(module.Value ? AutoAssembler.GoldenDeathrattle() : AutoAssembler.Deathrattle());
 		}
 
 		// A magnetized module keeps its own attached enchantments, including Surf n' Surf Spellcraft spells
