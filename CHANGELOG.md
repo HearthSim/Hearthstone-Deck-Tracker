@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.55.12 - 2026-08-17**
 **Battlegrounds**:
 - Fixed a number of incorrect combat odds.
 - Fixed a crash when Sandy was on the board in Duos.
