@@ -1055,22 +1055,24 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			var friendly = true;
 			// True to a "transform", transformedSandyEntity has the same Id as the original Sandy
-			var sandyMinion = _input.Player.Side.FirstOrDefault(m => m.game_id == transformedSandyEntity.Id);
+			// A duos teammate board can be snapshot after its Sandy already transformed, so the entity id
+			// resolves to the transformed copy instead (match on the type, not just the id).
+			var sandyMinion = _input.Player.Side.OfType<Sandy>().FirstOrDefault(m => m.game_id == transformedSandyEntity.Id);
 			if(sandyMinion == null && _input.PlayerTeammate != null)
-				sandyMinion = _input.PlayerTeammate.Side.FirstOrDefault(m => m.game_id == transformedSandyEntity.Id);
+				sandyMinion = _input.PlayerTeammate.Side.OfType<Sandy>().FirstOrDefault(m => m.game_id == transformedSandyEntity.Id);
 			if(sandyMinion == null)
 			{
 				friendly = false;
-				sandyMinion = _input.Opponent.Side.FirstOrDefault(m => m.game_id == transformedSandyEntity.Id);
+				sandyMinion = _input.Opponent.Side.OfType<Sandy>().FirstOrDefault(m => m.game_id == transformedSandyEntity.Id);
 			}
 			if(sandyMinion == null && _input.OpponentTeammate != null)
-				sandyMinion = _input.OpponentTeammate.Side.FirstOrDefault(m => m.game_id == transformedSandyEntity.Id);
+				sandyMinion = _input.OpponentTeammate.Side.OfType<Sandy>().FirstOrDefault(m => m.game_id == transformedSandyEntity.Id);
 			if(sandyMinion == null)
 				return;
-			if(((Sandy)sandyMinion).AttachedMinion != null)
+			if(sandyMinion.AttachedMinion != null)
 				return;
 
-			((Sandy)sandyMinion).AttachedMinion = GetMinionFromEntity(new Simulator(), friendly, transformedSandyEntity, GetAttachedEntities(transformedSandyEntity.Id));
+			sandyMinion.AttachedMinion = GetMinionFromEntity(new Simulator(), friendly, transformedSandyEntity, GetAttachedEntities(transformedSandyEntity.Id));
 			sandyMinion.MinionUpdatedDuringCombat = true;
 
 			await TryRerun();

@@ -1,3 +1,7 @@
+## **Unreleased**
+**Battlegrounds**:
+- Fixed a crash when Sandy was on the board in Duos.
+
 ## **Release v1.55.11 - 2026-08-15**
 **Hearthstone**:
 - Fixed the secret tracker showing the wrong secrets when The Origin Stone cast a secret from a Discover.
