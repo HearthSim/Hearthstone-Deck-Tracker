@@ -16,6 +16,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public class OverlayElementBehavior
 	{
 		private bool _animating;
+		private bool _hiding;
+		private AnimationType? _hidingAnimation;
+		private int _transition;
+		private double _restingOpacity = 1;
 		private double _currentScaling = 1;
 		private double _currentCenterX = 1;
 		private double _currentCenterY = 1;
@@ -165,7 +169,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void Show()
 		{
-			if(Element.Visibility == Visible)
+			// Hide only collapses the element once its animation completes, so a Show during that
+			// window has to interrupt it rather than treat the element as already shown
+			if(Element.Visibility == Visible && !_hiding)
 				return;
 
 			var finalPosition = GetAnchorSideOffset();
@@ -173,10 +179,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(sb == null)
 				return;
 
-			var opacity = Element.Opacity;
+			var opacity = CaptureRestingOpacity();
+			var transition = ++_transition;
+			_hiding = false;
+			_hidingAnimation = null;
 
 			sb.Completed += (obj, args) =>
 			{
+				if(transition != _transition)
+					return;
 				_animating = false;
 				ShowCallback?.Invoke();
 				if(Fade)
@@ -203,6 +214,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			sb.Begin();
 		}
 
+		// while an animation runs Element.Opacity reads the animated value, not the one to restore
+		private double CaptureRestingOpacity()
+		{
+			if(!_animating)
+				_restingOpacity = Element.Opacity;
+			return _restingOpacity;
+		}
+
 		// keep the parameterless overload, plugins are compiled against it
 		public void Hide() => Hide(null);
 
@@ -211,12 +230,28 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(Element.Visibility == Collapsed)
 				return;
 
-			var sb = CreateStoryboard(animation ?? ExitAnimation, GetHiddenOffset(), Fade ? 0 : null);
+			// the overlay update calls this on every tick, and restarting the animation each time
+			// would keep pushing back the point where the element actually collapses
+			var exitAnimation = animation ?? ExitAnimation;
+			if(_hiding && _hidingAnimation == exitAnimation)
+				return;
+
+			var sb = CreateStoryboard(exitAnimation, GetHiddenOffset(), Fade ? 0 : null);
 			if(sb == null)
 				return;
+
+			CaptureRestingOpacity();
+			var transition = ++_transition;
+			_hiding = true;
+			_hidingAnimation = exitAnimation;
+
 			sb.Completed += (obj, args) =>
 			{
+				if(transition != _transition)
+					return;
 				_animating = false;
+				_hiding = false;
+				_hidingAnimation = null;
 				Element.Visibility = Collapsed;
 				HideCallback?.Invoke();
 				UpdatePosition();
