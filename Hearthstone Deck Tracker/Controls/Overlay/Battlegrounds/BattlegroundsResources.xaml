@@ -15,6 +15,7 @@
     <SolidColorBrush x:Key="Tier7YellowButtonForeground" Color="#26200F"/>
 
     <Style x:Key="Tier7ButtonStyle" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{StaticResource Tier7YellowButtonBackground}" />
         <Setter Property="Foreground" Value="{StaticResource Tier7YellowButtonForeground}" />
         <Setter Property="FontWeight" Value="Bold" />
