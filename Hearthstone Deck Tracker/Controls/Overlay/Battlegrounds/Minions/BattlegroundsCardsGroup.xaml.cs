@@ -241,6 +241,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 		_repopulateOnLoad = false;
 		CardsList.ShowTier7InspirationButton = IsInspirationEnabled;
 		CardsList.ShowPinButton = true;
+		CardsList.UseBattlegroundsTile = true;
 		CardsList.Update(cards, true);
 	}
 }

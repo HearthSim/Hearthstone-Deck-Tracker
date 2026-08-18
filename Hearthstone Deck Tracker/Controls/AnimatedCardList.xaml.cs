@@ -40,6 +40,8 @@ public partial class AnimatedCardList
 
 	public bool ShowDeckListFeatures { get; set; } = true;
 
+	public bool UseBattlegroundsTile { get; set; }
+
 	private Func<Hearthstone.Card, IEnumerable<Hearthstone.Card>, HighlightColor>? _shouldHighlightCard;
 	public Func<Hearthstone.Card, IEnumerable<Hearthstone.Card>, HighlightColor>? ShouldHighlightCard
 	{
@@ -187,7 +189,7 @@ public partial class AnimatedCardList
 	private AnimatedCard GetAnimatedCard(Hearthstone.Card card)
 	{
 		var animatedCard = _animatedCardPool.GetOrCreate(card.Id);
-		animatedCard.Update(card, ShowTier7InspirationButton && card.IsBaconMinion, ShowDeckListFeatures);
+		animatedCard.Update(card, ShowTier7InspirationButton && card.IsBaconMinion, ShowDeckListFeatures, UseBattlegroundsTile);
 		animatedCard.ShowPinButton = ShowPinButton;
 		animatedCard.MaxHeight = ViewModel.MaxHeightCard;
 		animatedCard.SetBinding(MaxHeightProperty, new Binding("MaxHeightCard") { Source = ViewModel });

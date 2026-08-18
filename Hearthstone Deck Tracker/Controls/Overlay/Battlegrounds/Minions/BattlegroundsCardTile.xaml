@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions.BattlegroundsCardTile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
+             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             ToolTipService.Placement="Right"
+             ToolTipService.InitialShowDelay="100"
+             mc:Ignorable="d"
+             MaxHeight="34"
+             d:DataContext="{d:DesignInstance controls:CardTileViewModel}"
+             extensions:OverlayExtensions.ToolTip="{x:Type tooltips:CardTooltip}"
+             d:DesignHeight="34" d:DesignWidth="217">
+    <!-- CardTile reduced to what the Battlegrounds minion browser shows, kept in sync with its
+    look. Deliberately no per-instance resources, styles or storyboards and no layout-feedback
+    (ActualHeight) bindings: tab switches instantiate and re-attach this control at high volume,
+    and both BAML inflation and the visual count are what make that freeze. -->
+    <Grid>
+        <Border BorderBrush="#000000" BorderThickness="1" Background="#313131">
+            <Grid ClipToBounds="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="8*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <Grid.OpacityMask>
+                        <LinearGradientBrush StartPoint="0,1" EndPoint="0.5,0">
+                            <GradientStop Color="#00000000" Offset="0.45"/>
+                            <GradientStop Color="#000000" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Grid.OpacityMask>
+                    <Grid ClipToBounds="True">
+                        <!-- Battlegrounds card art has extra white on both edges, negative margins hide it -->
+                        <Image Source="{Binding Asset}" RenderOptions.BitmapScalingMode="Fant"
+                               Stretch="UniformToFill" HorizontalAlignment="Right" VerticalAlignment="Center"
+                               Margin="-38,0,-10,0"/>
+                    </Grid>
+                </Grid>
+                <DockPanel Grid.Column="0" Grid.ColumnSpan="2">
+                    <!-- Battlegrounds Spell Cost -->
+                    <Grid DockPanel.Dock="Right" VerticalAlignment="Center"
+                          Visibility="{Binding IsBaconSpell, Converter={StaticResource BoolToVisibility}}">
+                        <Image Source="{StaticResource CoinCost}" Width="24" Height="24"/>
+                        <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Cost}" FontSize="17"
+                                                                     VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Grid>
+                    <hearthstoneDeckTracker:HearthstoneTextBlock
+                        Text="{Binding Name}" Margin="4,0,8,0" Fill="{Binding NameColor}" VerticalAlignment="Center"
+                        FontFamily="{Binding NameFontFamily}" FontSize="13" FontStretch="Condensed" FontWeight="{Binding NameFontWeight}"/>
+                </DockPanel>
+            </Grid>
+        </Border>
+        <Border BorderBrush="{Binding BorderColorBrush}" BorderThickness="1" Opacity="{Binding BorderOpacity}" Margin="1"/>
+        <Grid Background="#000000" Opacity="0.6" Visibility="{Binding IsDarkened, Converter={StaticResource BoolToVisibility}}"/>
+    </Grid>
+</UserControl>

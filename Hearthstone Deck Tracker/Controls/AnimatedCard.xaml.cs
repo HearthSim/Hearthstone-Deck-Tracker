@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Assets;
+using Hearthstone_Deck_Tracker.Utility.Themes;
 
 namespace Hearthstone_Deck_Tracker.Controls;
 
@@ -16,8 +19,33 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 	public AnimatedCard()
 	{
 		InitializeComponent();
-		CardTileControl.Subscribe();
+		Subscribe();
+	}
+
+	// card defs, theme and language subscriptions live here rather than on the tile, so both
+	// tile flavors get refreshed the same way
+	private void Subscribe()
+	{
+		Unsubscribe();
+		CardDefsManager.CardsChanged += OnCardChanged;
+		CardDefsManager.InitialDefsLoaded += OnCardChanged;
+		ThemeManager.ThemeChanged += OnCardChanged;
+		Helper.CardLanguageChanged += OnCardChanged;
 		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged += OnPinsChanged;
+	}
+
+	private void Unsubscribe()
+	{
+		CardDefsManager.CardsChanged -= OnCardChanged;
+		CardDefsManager.InitialDefsLoaded -= OnCardChanged;
+		ThemeManager.ThemeChanged -= OnCardChanged;
+		Helper.CardLanguageChanged -= OnCardChanged;
+		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged -= OnPinsChanged;
+	}
+
+	private void OnCardChanged()
+	{
+		CardTileViewModel?.OnCardChanged();
 	}
 
 	private void OnPinsChanged(object? sender, EventArgs e)
@@ -35,8 +63,18 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 		RunStoryBoardNonBlocking(storyboardKey);
 	}
 
-	public void Update(Hearthstone.Card card, bool showTier7InspirationBtn = false, bool showDeckListFeatures = true)
+	private bool? _tileIsBattlegrounds;
+	private void EnsureTile(bool useBattlegroundsTile)
 	{
+		if(_tileIsBattlegrounds == useBattlegroundsTile)
+			return;
+		_tileIsBattlegrounds = useBattlegroundsTile;
+		TileHost.Content = useBattlegroundsTile ? new BattlegroundsCardTile() : (object)new CardTile();
+	}
+
+	public void Update(Hearthstone.Card card, bool showTier7InspirationBtn = false, bool showDeckListFeatures = true, bool useBattlegroundsTile = false)
+	{
+		EnsureTile(useBattlegroundsTile);
 		// a pooled instance that last displayed the same card state can keep its bound
 		// viewmodel, skipping the binding churn and the re-render of its cached visuals
 		if(Card is not { } prev || CardTileViewModel is not { } vm || vm.ShowDeckListFeatures != showDeckListFeatures || !DisplayStateEquals(prev, card))
@@ -69,8 +107,7 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 	public void OnReuseFromPool()
 	{
 		_inPool = false;
-		CardTileControl.Subscribe();
-		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged += OnPinsChanged;
+		Subscribe();
 	}
 
 	public void OnReturnToPool()
@@ -79,8 +116,7 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 		foreach(var sb in _runningStoryBoards.Values.ToList())
 			sb.TrySetResult(false);
 		_runningStoryBoards.Clear();
-		CardTileControl.Unsubscribe();
-		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged -= OnPinsChanged;
+		Unsubscribe();
 	}
 
 	public void Dispose()
