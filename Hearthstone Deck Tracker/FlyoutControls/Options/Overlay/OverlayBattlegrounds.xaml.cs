@@ -677,7 +677,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			var result = await window.ShowMessageAsync(
 				LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetPos_Title"),
-				LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetPos_Title"),
+				LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetPos_Desc"),
 				MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
 				return;
