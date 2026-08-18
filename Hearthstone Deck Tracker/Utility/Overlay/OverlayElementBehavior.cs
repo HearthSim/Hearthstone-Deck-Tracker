@@ -173,6 +173,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(Element.Visibility == Visible && !_hiding)
 				return;
 
+			// a zero-duration storyboard never raises Completed, so apply the final state directly
+			if(EntranceAnimation == AnimationType.Instant)
+			{
+				var restingOpacity = CaptureRestingOpacity();
+				++_transition;
+				_animating = false;
+				_hiding = false;
+				_hidingAnimation = null;
+				Element.Visibility = Visible;
+				Element.UpdateLayout();
+				UpdateScaling();
+				UpdatePosition();
+				Element.Opacity = restingOpacity;
+				ShowCallback?.Invoke();
+				return;
+			}
+
 			var finalPosition = GetAnchorSideOffset();
 			var sb = CreateStoryboard(EntranceAnimation, finalPosition, Fade ? 1 : null);
 			if(sb == null)
@@ -234,6 +251,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var exitAnimation = animation ?? ExitAnimation;
 			if(_hiding && _hidingAnimation == exitAnimation)
 				return;
+
+			// a zero-duration storyboard never raises Completed, so apply the final state directly
+			if(exitAnimation == AnimationType.Instant)
+			{
+				CaptureRestingOpacity();
+				++_transition;
+				_animating = false;
+				_hiding = false;
+				_hidingAnimation = null;
+				Element.Visibility = Collapsed;
+				HideCallback?.Invoke();
+				return;
+			}
 
 			var sb = CreateStoryboard(exitAnimation, GetHiddenOffset(), Fade ? 0 : null);
 			if(sb == null)

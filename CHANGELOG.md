@@ -1,3 +1,7 @@
+## Unreleased
+**Battlegrounds**:
+- Fixed the last known board tooltip being cut off.
+
 ## **Release v1.56.0 - 2026-08-18**
 **Updated for Hearthstone 36.2.2**
 
