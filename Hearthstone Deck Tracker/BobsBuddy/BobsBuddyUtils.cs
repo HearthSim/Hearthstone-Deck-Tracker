@@ -167,6 +167,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				// Not just mech here, because Technical Element can magnetize to Elementals
 				CheckForSurfnSurfFromMagnetizedModules(minion, entity, allEntities);
 				CheckForRepeatedMagnetizedAutoAssemblers(minion, entity, attachedEntities, allEntities);
+				CheckForDarkGiftsOnMagnetizedModules(sim, minion, entity, attachedEntities, allEntities);
 			}
 
 			minion.game_id = entity.Id;
@@ -298,6 +299,37 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							break;
 						case NonCollectible.Neutral.SurfnSurf_CrabRiding:
 							minion.AdditionalDeathrattles.Add(GenericDeathrattles.CrabGolden);
+							break;
+					}
+				}
+			}
+		}
+
+		// A specific Dark Gift (Jaws of Death) offered on a magnetic minion can be obtained from Ominous Stone.
+		// However, the enchantment is not directly visible on the attached minion at combat setup.
+		private static void CheckForDarkGiftsOnMagnetizedModules(Simulator sim, Minion minion, Entity host, IEnumerable<Entity> attachedEntities, IReadOnlyDictionary<int, Entity>? allEntities)
+		{
+			if(allEntities == null)
+				return;
+
+			foreach(var magneticId in attachedEntities
+				.Where(e => e.HasTag(GameTag.MAGNETIC))
+				.Select(e => e.GetTag(GameTag.CREATOR))
+				.Where(id => id > 0 && id != host.Id)
+				.Distinct())
+			{
+				var gifts = allEntities.Values
+					.Where(x => x.IsAttachedTo(magneticId))
+					.OrderBy(x => x.Id);
+
+				foreach(var gift in gifts)
+				{
+					switch(gift.CardId)
+					{
+						case JawsOfDeath.CardId:
+							var enchantment = sim.EnchantmentFactory.Create(JawsOfDeath.CardId, minion.ControlledByPlayer);
+							if(enchantment != null)
+								minion.AttachEnchantment(enchantment);
 							break;
 					}
 				}
