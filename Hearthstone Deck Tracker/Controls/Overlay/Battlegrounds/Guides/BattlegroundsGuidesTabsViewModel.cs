@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Commands;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
@@ -30,8 +31,33 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 		{
 			SetProp(value);
 			Core.Overlay.BattlegroundsMinionsVM.IsFiltersOpen = false;
+			OnPropertyChanged(nameof(MetaSnapshotHasRoom));
+			OnPropertyChanged(nameof(MetaSnapshotVisible));
 		}
 	}
+
+	public ICommand MetaSnapshotCommand => new Command(() =>
+	{
+		var url = Helper.BuildHsReplayNetUrl("battlegrounds", "bgs_lobby_meta_snapshot", null, new[] { "meta-snapshot" });
+		Helper.TryOpenUrl(url);
+	});
+
+	public bool IsInQueue
+	{
+		get => GetProp(false);
+		set
+		{
+			if(IsInQueue == value)
+				return;
+			SetProp(value);
+			OnPropertyChanged(nameof(MetaSnapshotVisible));
+		}
+	}
+
+	public bool MetaSnapshotVisible => IsPreLobby && !IsInQueue && ActiveViewModel == null;
+
+	// the meta snapshot sits where the tab content goes, so both of these hide it without animating
+	public bool MetaSnapshotHasRoom => ActiveViewModel == null && HeroesTabVisible;
 
 	public bool IsPreLobby
 	{
@@ -40,13 +66,14 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 		{
 			SetProp(value);
 			OnPropertyChanged(nameof(HeroesTabEnabled));
+			OnPropertyChanged(nameof(MetaSnapshotVisible));
 		}
 	}
 
 	// there are no heroes to guide before a match has started
 	public bool HeroesTabEnabled => !IsPreLobby;
 
-	// anything squarer than 16:10 has no room for the heroes tab
+	// anything squarer than 16:10 has no room for the heroes tab or the meta snapshot notice
 	private const double MinAspectRatio = 1680.0 / 1050.0;
 
 	public double AspectRatio
@@ -58,6 +85,7 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 				return;
 			SetProp(value);
 			OnPropertyChanged(nameof(HeroesTabVisible));
+			OnPropertyChanged(nameof(MetaSnapshotHasRoom));
 		}
 	}
 

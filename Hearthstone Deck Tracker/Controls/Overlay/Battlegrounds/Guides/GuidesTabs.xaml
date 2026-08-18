@@ -10,6 +10,7 @@
              xmlns:heroes="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Heroes"
              xmlns:quests="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Quests"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -24,6 +25,46 @@
             <Setter Property="Placement" Value="Bottom" />
             <!-- the base style centers on the target, which would push the tooltip off the right edge -->
             <Setter Property="HorizontalOffset" Value="0" />
+        </Style>
+
+        <Style x:Key="MetaSnapshotButtonStyle" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Padding" Value="8,7,8,7" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                BorderBrush="{StaticResource Tier7Purple}"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                Padding="{TemplateBinding Padding}"
+                        >
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#7636A8" />
+                                    <GradientStop Offset="1" Color="#661E9F" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="#9143D5" />
+                                            <GradientStop Offset="1" Color="#7E22CE" />
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style TargetType="Button">
@@ -158,6 +199,39 @@
                 </Button>
             </Border>
         </StackPanel>
+        <!-- the fade would keep reserving space, so opening a tab collapses the panel through this wrapper instead -->
+        <Grid Visibility="{Binding MetaSnapshotHasRoom, Converter={StaticResource BoolToVisibility}}">
+            <Border Background="#23272A"
+                    BorderBrush="#3f4346"
+                    BorderThickness="1"
+                    CornerRadius="3"
+                    Margin="0,5,0,0"
+                    Padding="10"
+                    Visibility="Collapsed"
+                    anim:FadeAnimation.Visibility="{Binding MetaSnapshotVisible, Converter={StaticResource BoolToVisibility}}"
+                    anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2"
+                >
+                <StackPanel>
+                    <TextBlock Text="{lex:Loc Battlegrounds_GuidesTabs_MetaSnapshot_Description}"
+                               Foreground="#9CA3A8"
+                               FontSize="12"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,8"
+                        />
+                    <Button Command="{Binding MetaSnapshotCommand}"
+                            Style="{StaticResource MetaSnapshotButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Fill="White" Width="13.5" Height="17" Margin="0,0,5,0" VerticalAlignment="Center">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Visual="{DynamicResource appbar_hsreplay}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Text="{lex:Loc Battlegrounds_GuidesTabs_MetaSnapshot_Button}" VerticalAlignment="Center" Margin="0,-1,0,1" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </Grid>
         <Border Visibility="{Binding ActiveViewModel, Converter={StaticResource NullableToVisibility}}"
                 x:Name="TabsContent"
             >
