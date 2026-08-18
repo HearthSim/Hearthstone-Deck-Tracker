@@ -167,7 +167,38 @@ namespace Hearthstone_Deck_Tracker
 			set { SetValue(TextWrappingProperty, value); }
 		}
 
-		private Dictionary<int, Geometry> _cachedGeometry = new();
+		private readonly record struct GeometryCacheKey(
+			string Text, string FontFamily, int FontSize, FontWeight FontWeight, FontStretch FontStretch,
+			TextAlignment Alignment, FlowDirection FlowDirection, int MaxWidthTenths, int OriginYTenths);
+
+		// Building glyph geometry is expensive and the same strings (card names, costs, counts)
+		// are rendered over and over across tile instances, so cache globally and frozen.
+		private static readonly Dictionary<GeometryCacheKey, Geometry> _geometryCache = new();
+		private const int GeometryCacheMaxEntries = 2048;
+
+		private static readonly Dictionary<double, Pen> _strokePens = new();
+		private static readonly Pen _fillPen = CreateFillPen();
+
+		private static Pen CreateFillPen()
+		{
+			var pen = new Pen(Brushes.White, 0);
+			pen.Freeze();
+			return pen;
+		}
+
+		private static Pen GetStrokePen(double width)
+		{
+			lock(_strokePens)
+			{
+				if(!_strokePens.TryGetValue(width, out var pen))
+				{
+					_strokePens[width] = pen = new Pen(Brushes.Black, width) { LineJoin = PenLineJoin.Round };
+					pen.Freeze();
+				}
+				return pen;
+			}
+		}
+
 		protected override void OnRender(DrawingContext drawingContext)
 		{
 			EnsureFormattedText();
@@ -175,21 +206,40 @@ namespace Hearthstone_Deck_Tracker
 			if(_formattedText == null)
 				return;
 
-			Geometry geometry;
+			double originY;
+			int maxWidthTenths;
 			if(!double.IsNaN(Width) || !double.IsNaN(Height) || TextAlignment != TextAlignment.Left)
 			{
 				var center = (ActualHeight - _formattedText.Height) / 2;
-				geometry = _formattedText.BuildGeometry(new Point(0, center + _formattedText.Height * 0.05));
+				originY = center + _formattedText.Height * 0.05;
+				maxWidthTenths = (int)Math.Round(_formattedText.MaxTextWidth * 10);
 			}
-			else if(!_cachedGeometry.TryGetValue(_fontSize, out geometry))
+			else
 			{
-				// If we don't have a set width or height we can very aggressively cache, just
-				// based on font size.
-				_cachedGeometry[_fontSize] = geometry = _formattedText.BuildGeometry(new Point(0, _formattedText.Height * 0.05));
+				// layout of unconstrained left-aligned text does not depend on the max width
+				originY = _formattedText.Height * 0.05;
+				maxWidthTenths = 0;
 			}
 
-			drawingContext.DrawGeometry(Stroke, new Pen(Brushes.Black, StrokeWidth) { LineJoin = PenLineJoin.Round }, geometry);
-			drawingContext.DrawGeometry(Fill, new Pen(Brushes.White, 0), geometry);
+			var key = new GeometryCacheKey(_formattedText.Text, FontFamily.Source, _fontSize, FontWeight, FontStretch,
+			                               TextAlignment, FlowDirection, maxWidthTenths, (int)Math.Round(originY * 10));
+			Geometry geometry;
+			lock(_geometryCache)
+			{
+				if(!_geometryCache.TryGetValue(key, out var cached))
+				{
+					if(_geometryCache.Count >= GeometryCacheMaxEntries)
+						_geometryCache.Clear();
+					cached = _formattedText.BuildGeometry(new Point(0, originY));
+					if(cached.CanFreeze)
+						cached.Freeze();
+					_geometryCache[key] = cached;
+				}
+				geometry = cached;
+			}
+
+			drawingContext.DrawGeometry(Stroke, GetStrokePen(StrokeWidth), geometry);
+			drawingContext.DrawGeometry(Fill, _fillPen, geometry);
 		}
 
 		private const int MaxAllowedTextSize = 3579139;
@@ -254,7 +304,6 @@ namespace Hearthstone_Deck_Tracker
 
 			outlinedTextBlock.InvalidateMeasure();
 			outlinedTextBlock.InvalidateVisual();
-			outlinedTextBlock._cachedGeometry.Clear();
 			outlinedTextBlock._measureCache.Clear();
 			outlinedTextBlock._fontSize = (int)outlinedTextBlock.FontSize;
 		}
@@ -266,7 +315,6 @@ namespace Hearthstone_Deck_Tracker
 
 			outlinedTextBlock.InvalidateMeasure();
 			outlinedTextBlock.InvalidateVisual();
-			outlinedTextBlock._cachedGeometry.Clear();
 			outlinedTextBlock._measureCache.Clear();
 			outlinedTextBlock._fontSize = (int)outlinedTextBlock.FontSize;
 		}

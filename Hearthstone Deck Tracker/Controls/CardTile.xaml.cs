@@ -173,8 +173,9 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 		}
 	}
 
-	private static FontFamily ChunkfiveFont => new(new Uri("pack://application:,,,/"), "./Resources/#Chunkfive");
-	private static FontFamily DefaultFont => new();
+	// keep single instances, a new FontFamily per get forces a full text re-layout on every bind
+	private static FontFamily ChunkfiveFont { get; } = new(new Uri("pack://application:,,,/"), "./Resources/#Chunkfive");
+	private static FontFamily DefaultFont { get; } = new();
 
 	public FontWeight NameFontWeight => Helper.LatinLanguages.Contains(Helper.GetCardLanguage()) ? FontWeights.Normal : FontWeights.Bold;
 	public FontFamily NameFontFamily => Helper.LatinLanguages.Contains(Helper.GetCardLanguage()) ? ChunkfiveFont : DefaultFont;

@@ -37,31 +37,57 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 
 	public void Update(Hearthstone.Card card, bool showTier7InspirationBtn = false, bool showDeckListFeatures = true)
 	{
-		DataContext = card;
-		CardTileViewModel = new CardTileViewModel(card, showDeckListFeatures);
+		// a pooled instance that last displayed the same card state can keep its bound
+		// viewmodel, skipping the binding churn and the re-render of its cached visuals
+		if(Card is not { } prev || CardTileViewModel is not { } vm || vm.ShowDeckListFeatures != showDeckListFeatures || !DisplayStateEquals(prev, card))
+		{
+			DataContext = card;
+			CardTileViewModel = new CardTileViewModel(card, showDeckListFeatures);
+		}
+		else
+		{
+			// theme, card defs or language may have changed while pooled (events are
+			// unsubscribed there), refresh the kept viewmodel (unchanged values won't
+			// invalidate anything)
+			vm.OnCardChanged();
+		}
 		BtnTier7Inspiration.Visibility = showTier7InspirationBtn ? Visibility.Visible : Visibility.Collapsed;
 		UpdatePinButtonState();
 	}
 
+	private static bool DisplayStateEquals(Hearthstone.Card a, Hearthstone.Card b)
+		=> a.Id == b.Id && a.Count == b.Count && a.Cost == b.Cost && a.IsCreated == b.IsCreated
+		   && a.HighlightInHand == b.HighlightInHand && a.Jousted == b.Jousted && a.WasDiscarded == b.WasDiscarded
+		   && a.IsMulliganOption == b.IsMulliganOption && Equals(a.CardWinrates, b.CardWinrates)
+		   && Equals(a.ExtraInfo, b.ExtraInfo);
+
+	// While pooled we keep DataContext and CardTileViewModel around, so that reuse for the
+	// same card does not have to rebind (and unbinding here would itself trigger a binding
+	// storm across the whole tile). Only event subscriptions and animations are torn down.
+	private bool _inPool;
+
 	public void OnReuseFromPool()
 	{
+		_inPool = false;
 		CardTileControl.Subscribe();
 		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged += OnPinsChanged;
 	}
 
-	public void OnReturnToPool() => Cleanup();
-
-	public void Dispose() => Cleanup();
-
-	private void Cleanup()
+	public void OnReturnToPool()
 	{
-		DataContext = null;
-		CardTileViewModel = null;
+		_inPool = true;
 		foreach(var sb in _runningStoryBoards.Values.ToList())
 			sb.TrySetResult(false);
 		_runningStoryBoards.Clear();
 		CardTileControl.Unsubscribe();
 		Core.Overlay.BattlegroundsMinionPinningViewModel.PinsChanged -= OnPinsChanged;
+	}
+
+	public void Dispose()
+	{
+		OnReturnToPool();
+		DataContext = null;
+		CardTileViewModel = null;
 	}
 
 	public Hearthstone.Card? Card => DataContext as Hearthstone.Card;
@@ -142,7 +168,7 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 	{
 		if(_runningStoryBoards.ContainsKey(key))
 			return false;
-		if(CardTileViewModel == null)
+		if(_inPool || CardTileViewModel == null)
 		{
 			// The card was returned to the pool and we should not play any new animations
 			return false;

@@ -21,9 +21,9 @@ public partial class AnimatedCardList
 	// Instantiating AnimatedCards at the volume we need to is pretty expensive. E.g. switching between views in
 	// BattlegroundsMinions may throw away and instantiate 30+ cards.
 	// So instead of constantly creating new instances we put previously used ones in a pool to be re-used later.
-	// This allows the component to remain fully set up and all that needs to happen is for it to be loaded again
-	// and be populated with a new viewmodel.
-	private static readonly Pool<AnimatedCard> _animatedCardPool = new(200);
+	// The pool is keyed by card id: getting back the instance that last displayed the same card lets it skip
+	// rebinding entirely and keep its rendered visuals, which makes revisiting a recently shown view cheap.
+	private static readonly KeyedPool<AnimatedCard> _animatedCardPool = new(200);
 
 	public ObservableCollection<AnimatedCard> AnimatedCards { get; } = new();
 
@@ -87,7 +87,7 @@ public partial class AnimatedCardList
 			if(reset)
 			{
 				foreach(var card in AnimatedCards)
-					_animatedCardPool.Return(card);
+					_animatedCardPool.Return(card.Card?.Id ?? string.Empty, card);
 				AnimatedCards.Clear();
 			}
 
@@ -186,7 +186,7 @@ public partial class AnimatedCardList
 
 	private AnimatedCard GetAnimatedCard(Hearthstone.Card card)
 	{
-		var animatedCard = _animatedCardPool.GetOrCreate();
+		var animatedCard = _animatedCardPool.GetOrCreate(card.Id);
 		animatedCard.Update(card, ShowTier7InspirationButton && card.IsBaconMinion, ShowDeckListFeatures);
 		animatedCard.ShowPinButton = ShowPinButton;
 		animatedCard.MaxHeight = ViewModel.MaxHeightCard;
@@ -200,7 +200,7 @@ public partial class AnimatedCardList
 		if(fadeOut && card.Card != null)
 			await card.FadeOut(card.Card.Count > 0);
 		_removingCards.Remove(card);
-		_animatedCardPool.Return(card);
+		_animatedCardPool.Return(card.Card?.Id ?? string.Empty, card);
 		AnimatedCards.Remove(card);
 	}
 
@@ -263,7 +263,7 @@ public partial class AnimatedCardList
 		foreach(var card in AnimatedCards)
 		{
 			if(!_removingCards.Contains(card))
-				_animatedCardPool.Return(card);
+				_animatedCardPool.Return(card.Card?.Id ?? string.Empty, card);
 		}
 		AnimatedCards.Clear();
 	}
