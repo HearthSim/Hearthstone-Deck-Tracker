@@ -1,5 +1,8 @@
-## Unreleased
+## **Release v1.56.0 - 2026-08-18**
+**Updated for Hearthstone 36.2.2**
+
 **Battlegrounds**:
+- Continued improving the performance of the minion browser.
 - Fixed empty Lockbox filter appearing in non-Pirate lobbies.
 
 ## **Release v1.55.13 - 2026-08-17**
