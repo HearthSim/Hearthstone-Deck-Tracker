@@ -20,9 +20,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private AnimationType? _hidingAnimation;
 		private int _transition;
 		private double _restingOpacity = 1;
-		private double _currentScaling = 1;
-		private double _currentCenterX = 1;
-		private double _currentCenterY = 1;
+		private double _currentScaling = double.NaN;
 		private Style? _baseTooltipStyle = null;
 
 		public FrameworkElement Element { get; }
@@ -134,30 +132,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void UpdateScaling()
 		{
-			if(_animating || !Element.IsVisible)
+			if(!Element.IsVisible)
 				return;
-			var centerX = GetLeft == null ? Element.ActualWidth : 0;
-			var centerY = GetTop == null ? Element.ActualHeight : 0;
-			var scaling = GetScaling?.Invoke() ?? 1;
-			if (_currentScaling != scaling || centerX != _currentCenterX || centerY != _currentCenterY)
-			{
-				_currentScaling = scaling;
-				_currentCenterX = centerX;
-				_currentCenterY = centerY;
-				var transform = new ScaleTransform(scaling, scaling, centerX, centerY);
-				Element.RenderTransform = transform;
 
-				// To automatically scale tooltips, any tooltip styles need to
-				// be defined in the Elements ResourceDictionary. This will not
-				// work if any styled are defined in nested elements.
-				var tooltipStyle = new Style(typeof(ToolTip), _baseTooltipStyle);
-				tooltipStyle.Setters.Add(new Setter(FrameworkElement.LayoutTransformProperty, transform));
-				Element.Resources[typeof(ToolTip)] = tooltipStyle;
-			}
+			// scale around the anchored corner. A relative origin follows the element through every
+			// layout pass, an absolute CenterX/CenterY would keep using the size it was last given here
+			Element.RenderTransformOrigin = new Point(GetLeft == null ? 1 : 0, GetTop == null ? 1 : 0);
+
+			var scaling = GetScaling?.Invoke() ?? 1;
+			if(_currentScaling == scaling)
+				return;
+			_currentScaling = scaling;
+
+			var transform = new ScaleTransform(scaling, scaling);
+			Element.RenderTransform = transform;
+
+			// To automatically scale tooltips, any tooltip styles need to
+			// be defined in the Elements ResourceDictionary. This will not
+			// work if any styled are defined in nested elements.
+			var tooltipStyle = new Style(typeof(ToolTip), _baseTooltipStyle);
+			tooltipStyle.Setters.Add(new Setter(FrameworkElement.LayoutTransformProperty, transform));
+			Element.Resources[typeof(ToolTip)] = tooltipStyle;
 		}
 
-		// Show() sizes the scaling origin to the content it had at the time. Call this after swapping
-		// the content of an element that stays visible, otherwise it keeps scaling around the old width.
+		// Call this after swapping the content of an element that stays visible, so its position is
+		// measured against the size the new content takes up.
 		public void Refresh()
 		{
 			if(_animating || !Element.IsVisible)
