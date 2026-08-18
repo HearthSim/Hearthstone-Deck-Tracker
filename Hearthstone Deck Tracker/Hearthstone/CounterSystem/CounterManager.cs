@@ -56,14 +56,21 @@ public class CounterManager
 		if(!Game.Entities.TryGetValue(id, out var entity))
 			return;
 
+		var battlegrounds = Game.IsBattlegroundsMatch;
+		var traditional = Game.IsTraditionalHearthstoneMatch;
+		if(!battlegrounds && !traditional)
+			return;
+
 		foreach(var playerCounter in PlayerCounters)
 		{
-			playerCounter.HandleTagChange(tag, gameState, entity, value, prevValue);
+			if(playerCounter.IsBattlegroundsCounter == battlegrounds)
+				playerCounter.HandleTagChange(tag, gameState, entity, value, prevValue);
 		}
 
 		foreach(var opponentCounter in OpponentCounters)
 		{
-			opponentCounter.HandleTagChange(tag, gameState, entity, value, prevValue);
+			if(opponentCounter.IsBattlegroundsCounter == battlegrounds)
+				opponentCounter.HandleTagChange(tag, gameState, entity, value, prevValue);
 		}
 	}
 

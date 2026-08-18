@@ -196,7 +196,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 										|| (CurrentFormatType is FormatType.FT_STANDARD
 											&& CurrentGameType is GameType.GT_RANKED or GameType.GT_VS_FRIEND);
 
-		public bool IsTraditionalHearthstoneMatch => !IsBattlegroundsMatch && !IsMercenariesMatch;
+		// an unknown game type must not fall through to "traditional", or every non-bg counter and
+		// tag change action activates in the window before the game type resolves
+		public bool IsTraditionalHearthstoneMatch => CurrentGameType != GameType.GT_UNKNOWN
+													&& !IsBattlegroundsMatch && !IsMercenariesMatch;
 
 		public Mode CurrentMode
 		{
@@ -209,15 +212,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		private FormatType _currentFormatType = FormatType.FT_UNKNOWN;
-		public FormatType CurrentFormatType
-		{
-			get
-			{
-				if(_currentFormatType == FormatType.FT_UNKNOWN)
-					_currentFormatType = (FormatType)HearthMirror.Reflection.Client.GetFormat();
-				return _currentFormatType;
-			}
-		}
+		public FormatType CurrentFormatType => _currentFormatType;
 
 		public Format? CurrentFormat => HearthDbConverter.GetFormat(CurrentFormatType);
 
@@ -277,26 +272,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool _gameTypeDuosCorrectionCheckCompleted;
 		public GameType CurrentGameType
 		{
+			// never read the mirror here: this is on the tag change hot path, where a failing read
+			// costs two full service table scans and still reports GT_UNKNOWN, so it would retry
+			// forever. CacheGameType owns resolving it.
 			get
 			{
-				if(_currentGameType != GameType.GT_UNKNOWN)
-				{
-					if(_gameTypeDuosCorrectionCheckCompleted)
-						return _currentGameType;
-					if(IsSoloBattlegroundsGameType(_currentGameType))
-						TryCorrectMisreadSoloGameType();
+				if(_currentGameType == GameType.GT_UNKNOWN)
+					return GameType.GT_UNKNOWN;
+				if(_gameTypeDuosCorrectionCheckCompleted)
 					return _currentGameType;
-				}
-				if(_currentMode == Mode.GAMEPLAY)
-				{
-					_currentGameType = (GameType)HearthMirror.Reflection.Client.GetGameType();
-					if(_gameTypeDuosCorrectionCheckCompleted)
-						return _currentGameType;
-					if(IsSoloBattlegroundsGameType(_currentGameType))
-						TryCorrectMisreadSoloGameType();
-					return _currentGameType;
-				}
-				return GameType.GT_UNKNOWN;
+				if(IsSoloBattlegroundsGameType(_currentGameType))
+					TryCorrectMisreadSoloGameType();
+				return _currentGameType;
 			}
 		}
 
@@ -439,6 +426,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			if(!_gameTypeDuosCorrectionCheckCompleted)  // Do not let a late mirror overwrite a bg game type already corrected by TryCorrectMisreadSoloGameType.
 				_currentGameType = gameType;
+
+			// both live on GameMgr, so the format is readable in the same window the game type was
+			_currentFormatType = (FormatType)HearthMirror.Reflection.Client.GetFormat();
 		}
 
 		internal void CacheSpectator() => _spectator = HearthMirror.Reflection.Client.IsSpectating();
