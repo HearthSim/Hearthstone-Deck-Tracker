@@ -18,6 +18,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			CheckBoxShowCapOverlay.IsChecked = Config.Instance.ShowCapturableOverlay;
 			CheckBoxDisableOpacityTransition.IsChecked = !Config.Instance.OverlayCardAnimationsOpacity;
 			CheckBoxMaskCapturableOverlay.IsChecked = Config.Instance.MaskCapturableOverlay;
+			CheckBoxShowBattlegroundsMechanicWindow.IsChecked = Config.Instance.ShowBattlegroundsMechanicWindow;
 			_initialized = true;
 		}
 
@@ -36,6 +37,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			Config.Save();
 			OnPropertyChanged(nameof(SelectedColor));
 			Core.Windows.CapturableOverlay?.UpdateBackground();
+			Core.Windows.BattlegroundsMechanicWindowIfCreated?.UpdateBackground();
 		}
 
 		[NotifyPropertyChangedInvocator]
@@ -81,7 +83,30 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 		}
 
 
-		private void Hyperlink_OnClick(object sender, RoutedEventArgs e) 
+		private void CheckBoxShowBattlegroundsMechanicWindow_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsMechanicWindow = true;
+			Config.Save();
+			Core.Windows.BattlegroundsMechanicWindow.Show();
+			Core.Windows.BattlegroundsMechanicWindow.Activate();
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.OptionsOverlayDeckWindows.CheckboxBattlegroundsMechanicWindow.IsChecked = true;
+		}
+
+		private void CheckBoxShowBattlegroundsMechanicWindow_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsMechanicWindow = false;
+			Config.Save();
+			Core.Windows.BattlegroundsMechanicWindowIfCreated?.Hide();
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.OptionsOverlayDeckWindows.CheckboxBattlegroundsMechanicWindow.IsChecked = false;
+		}
+
+		private void Hyperlink_OnClick(object sender, RoutedEventArgs e)
 			=> Helper.TryOpenUrl("https://help.hearthsim.net/en/articles/4109898-how-can-i-capture-the-hearthstone-deck-tracker-for-streaming");
 
 		private void CheckBoxDisableOpacityTransition_Checked(object sender, RoutedEventArgs e)

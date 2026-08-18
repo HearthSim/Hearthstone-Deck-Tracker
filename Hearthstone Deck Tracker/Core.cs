@@ -245,6 +245,8 @@ namespace Hearthstone_Deck_Tracker
 				Windows.OpponentWindow.Show();
 			if(Config.Instance.TimerWindowOnStartup)
 				Windows.TimerWindow.Show();
+			if(Config.Instance.ShowBattlegroundsMechanicWindow)
+				Windows.BattlegroundsMechanicWindow.Show();
 
 			PluginManager.Instance.LoadPluginsFromDefaultPath();
 			MainWindow.Options.OptionsTrackerPlugins.Load();
@@ -699,11 +701,14 @@ namespace Hearthstone_Deck_Tracker
 			private static OpponentWindow? _opponentWindow;
 			private static BattlegroundsSessionWindow? _bgsSessionWindow;
 			private static TimerWindow? _timerWindow;
+			private static BattlegroundsMechanicWindow? _bgsMechanicWindow;
 
 			public static PlayerWindow PlayerWindow => _playerWindow ??= new PlayerWindow(Game);
 			public static OpponentWindow OpponentWindow => _opponentWindow ??= new OpponentWindow(Game);
 			public static BattlegroundsSessionWindow BattlegroundsSessionWindow => _bgsSessionWindow ??= new BattlegroundsSessionWindow();
 			public static TimerWindow TimerWindow => _timerWindow ??= new TimerWindow(Config.Instance);
+			public static BattlegroundsMechanicWindow BattlegroundsMechanicWindow => _bgsMechanicWindow ??= new BattlegroundsMechanicWindow();
+			internal static BattlegroundsMechanicWindow? BattlegroundsMechanicWindowIfCreated => _bgsMechanicWindow;
 			public static CapturableOverlayWindow? CapturableOverlay;
 
 			internal static void CloseAll()
@@ -712,6 +717,7 @@ namespace Hearthstone_Deck_Tracker
 				_playerWindow?.Close();
 				_opponentWindow?.Close();
 				_bgsSessionWindow?.Close();
+				_bgsMechanicWindow?.Close();
 				CapturableOverlay?.Close();
 			}
 		}

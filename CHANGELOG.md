@@ -7,6 +7,9 @@
 - Added custom graphics for Divine Shields that take 4 hits in the Last Known Board tooltip.
 - Fixed a number of incorrect combat odds.
 
+**Streaming**:
+- Added a capturable window that shows the current Battlegrounds mechanic (Deity or Anomaly).
+
 ## **Release v1.58.6 - 2026-10-01**
 **Updated for Hearthstone 36.6.3**
 

@@ -1,5 +1,6 @@
 ﻿using HearthDb.Enums;
 using HearthMirror;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System;
@@ -218,6 +219,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return deityDbfId;
 			return null;
 		}
+
+		// an anomaly takes precedence over the deity
+		public static (BattlegroundsMechanic Mechanic, int DbfId)? GetBattlegroundsMechanic(Entity? game, ICollection<Race>? availableRaces)
+		{
+			if(GetBattlegroundsAnomalyDbfId(game) is int anomalyDbfId)
+				return (BattlegroundsMechanic.Anomaly, anomalyDbfId);
+			// the deity tag is set in every lobby but only has an effect with aberrations
+			if(GetBattlegroundsDeityDbfId(game) is int deityDbfId && availableRaces?.Contains(Race.ABERRATION) == true)
+				return (BattlegroundsMechanic.Deity, deityDbfId);
+			return null;
+		}
+
 		private static readonly List<BattlegroundsKeyword> _availableKeywords = new()
 		{
 			new TagKeyword(GameTag.BATTLECRY, "GameTag_Battlecry"),

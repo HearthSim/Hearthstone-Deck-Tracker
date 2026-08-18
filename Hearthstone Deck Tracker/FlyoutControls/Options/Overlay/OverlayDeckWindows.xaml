@@ -50,6 +50,12 @@
                   Checked="CheckboxTimerTopmostHsForeground_Checked"
                   Unchecked="CheckboxTimerTopmostHsForeground_Unchecked" />
         <Separator Margin="0,5,0,0" />
+        <CheckBox x:Name="CheckboxBattlegroundsMechanicWindow"
+                  Content="{lex:Loc Options_DeckWindows_CheckBox_BattlegroundsMechanic}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxBattlegroundsMechanicWindow_Checked"
+                  Unchecked="CheckboxBattlegroundsMechanicWindow_Unchecked" />
+        <Separator Margin="0,5,0,0" />
         <DockPanel Margin="5,5,5,0">
             <Label Content="{lex:Loc Options_DeckWindows_Label_Background}" HorizontalAlignment="Left"
                    VerticalAlignment="Top" />

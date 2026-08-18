@@ -147,6 +147,18 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AutoShowMulliganGuide = true;
 
+		[DefaultValue(430)]
+		public int BattlegroundsMechanicWindowHeight = 430;
+
+		[DefaultValue(null)]
+		public int? BattlegroundsMechanicWindowLeft = null;
+
+		[DefaultValue(null)]
+		public int? BattlegroundsMechanicWindowTop = null;
+
+		[DefaultValue(300)]
+		public int BattlegroundsMechanicWindowWidth = 300;
+
 		[DefaultValue(true)]
 		public bool DeckPickerCaps = true;
 
@@ -922,6 +934,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;
+
+		[DefaultValue(false)]
+		public bool ShowBattlegroundsMechanicWindow = false;
 
 		[DefaultValue(true)]
 		public bool MaskCapturableOverlay = true;

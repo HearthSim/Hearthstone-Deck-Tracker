@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxOpponentWindowOpenAutomatically.IsChecked = Config.Instance.OpponentWindowOnStart;
 			CheckboxTimerTopmost.IsChecked = Config.Instance.TimerWindowTopmost;
 			CheckboxTimerWindow.IsChecked = Config.Instance.TimerWindowOnStartup;
+			CheckboxBattlegroundsMechanicWindow.IsChecked = Config.Instance.ShowBattlegroundsMechanicWindow;
 			CheckboxTimerTopmostHsForeground.IsChecked = Config.Instance.TimerWindowTopmostIfHsForeground;
 			CheckboxTimerTopmostHsForeground.IsEnabled = Config.Instance.TimerWindowTopmost;
 			CheckboxWinTopmostHsForeground.IsChecked = Config.Instance.WindowsTopmostIfHsForeground;
@@ -139,6 +140,29 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Core.Windows.TimerWindow.Hide();
 			Config.Instance.TimerWindowOnStartup = false;
 			SaveConfig(true);
+		}
+
+		private void CheckboxBattlegroundsMechanicWindow_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Core.Windows.BattlegroundsMechanicWindow.Show();
+			Core.Windows.BattlegroundsMechanicWindow.Activate();
+			Config.Instance.ShowBattlegroundsMechanicWindow = true;
+			SaveConfig(false);
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.OptionsStreamingCapturableOverlay.CheckBoxShowBattlegroundsMechanicWindow.IsChecked = true;
+		}
+
+		private void CheckboxBattlegroundsMechanicWindow_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Core.Windows.BattlegroundsMechanicWindowIfCreated?.Hide();
+			Config.Instance.ShowBattlegroundsMechanicWindow = false;
+			SaveConfig(false);
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.OptionsStreamingCapturableOverlay.CheckBoxShowBattlegroundsMechanicWindow.IsChecked = false;
 		}
 
 		private void CheckboxTimerTopmostHsForeground_Checked(object sender, RoutedEventArgs e)
