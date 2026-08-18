@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Hunter;
 
@@ -13,7 +14,7 @@ public class ConfrontTheTolvir: ICardWithRelatedCards
 	{
 		return player.CardsPlayedThisMatch
 			.Select(entity => CardUtils.GetProcessedCardFromEntity(entity, player))
-			.Where(card => card is { Cost: 1 })
+			.Where(card => card is { Cost: 1, TypeEnum: CardType.MINION })
 			.ToList();
 	}
 }
