@@ -22,7 +22,7 @@ jobs:
 
       - name: Update version
         id: version
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') && vars.RELEASE_PIPELINE_ENABLED == '1'
         run: |
           $buildNumber = 5000 + $Env:GITHUB_RUN_NUMBER
           $packageVersion = ./build-scripts/update_version.ps1 -dev $false -buildNumber $buildNumber
@@ -46,14 +46,14 @@ jobs:
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x64"
 
       - name: Setup SM_CLIENT_CERT_FILE from base64 secret data
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') && vars.RELEASE_PIPELINE_ENABLED == '1'
         shell: bash
         run: |
           echo "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}" | base64 --decode > ${RUNNER_TEMP}/sm_client_cert.p12
           echo "SM_CLIENT_CERT_FILE=${RUNNER_TEMP}/sm_client_cert.p12" >> $GITHUB_ENV
 
       - name: Setup Software Trust Manager
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') && vars.RELEASE_PIPELINE_ENABLED == '1'
         uses: digicert/code-signing-software-trust-action@v1.0.1
         with:
           simple-signing-mode: true
@@ -64,7 +64,7 @@ jobs:
           SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
 
       - name: Package
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') && vars.RELEASE_PIPELINE_ENABLED == '1'
         run: ./build-scripts/package.ps1 -dev $false -packageVersion ${{ steps.version.outputs.packageVersion }}
         env:
           SM_HOST: ${{ vars.SM_HOST }}
@@ -73,7 +73,7 @@ jobs:
           SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
 
       - name: Create Release (Squirrel)
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') && vars.RELEASE_PIPELINE_ENABLED == '1'
         run: ./build-scripts/github_release.ps1 -type squirrel -packageVersion ${{ steps.version.outputs.packageVersion }}
         env:
           HDT_GITHUB_TOKEN: ${{ secrets.HDT_GITHUB_TOKEN }}
