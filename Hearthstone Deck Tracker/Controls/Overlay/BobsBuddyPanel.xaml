@@ -111,7 +111,7 @@
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Style="{StaticResource ContainerStyle}" Opacity="{Binding PlayerLethalOpacity}">
                                 <Border Style="{StaticResource LabelContainerStyle}" >
-                                    <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" />
+                                    <TextBlock Text="{lex:Loc BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" />
                                 </Border>
                                 <local:HearthstoneTextBlock Text="{Binding PlayerLethalDisplay}" FontSize="17" Opacity="0.85"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
@@ -119,7 +119,7 @@
                             <StackPanel Background="#23272A" Orientation="Horizontal">
                                 <StackPanel Style="{StaticResource ContainerStyle}">
                                     <Border Style="{StaticResource LabelContainerStyle}" >
-                                        <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Win}" Style="{StaticResource LabelTextStyle}" Foreground="#8AC66E" />
+                                        <TextBlock Text="{lex:Loc BobsBuddyPanel_Label_Win}" Style="{StaticResource LabelTextStyle}" Foreground="#8AC66E" />
                                     </Border>
                                     <local:HearthstoneTextBlock Text="{Binding WinRateDisplay}" FontSize="21"
                                     VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
@@ -127,7 +127,7 @@
                                 <Rectangle Style="{StaticResource SeparatorStyle}" />
                                 <StackPanel Style="{StaticResource ContainerStyle}">
                                     <Border Style="{StaticResource LabelContainerStyle}" >
-                                        <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Tie}" Style="{StaticResource LabelTextStyle}" Foreground="White" Opacity=".7" />
+                                        <TextBlock Text="{lex:Loc BobsBuddyPanel_Label_Tie}" Style="{StaticResource LabelTextStyle}" Foreground="White" Opacity=".7" />
                                     </Border>
                                     <Grid>
                                         <local:HearthstoneTextBlock Text="{Binding TieRateDisplay}" FontSize="21"
@@ -138,7 +138,7 @@
                                 <Rectangle Style="{StaticResource SeparatorStyle}" />
                                 <StackPanel Style="{StaticResource ContainerStyle}">
                                     <Border Style="{StaticResource LabelContainerStyle}" >
-                                        <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Loss}" Style="{StaticResource LabelTextStyle}" Foreground="#C66E6E" />
+                                        <TextBlock Text="{lex:Loc BobsBuddyPanel_Label_Loss}" Style="{StaticResource LabelTextStyle}" Foreground="#C66E6E" />
                                     </Border>
                                     <local:HearthstoneTextBlock Text="{Binding LossRateDisplay}" FontSize="21"
                                     VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
@@ -146,7 +146,7 @@
                             </StackPanel>
                             <StackPanel Style="{StaticResource ContainerStyle}" Opacity="{Binding OpponentLethalOpacity}">
                                 <Border Style="{StaticResource LabelContainerStyle}" >
-                                    <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" />
+                                    <TextBlock Text="{lex:Loc BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" />
                                 </Border>
                                 <local:HearthstoneTextBlock Text="{Binding OpponentLethalDisplay}" FontSize="17" Opacity="0.85"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
