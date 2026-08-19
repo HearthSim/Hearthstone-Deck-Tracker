@@ -166,15 +166,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdatePosition();
 		}
 
-		public void Show()
+		// keep the parameterless overload, plugins are compiled against it
+		public void Show() => Show(null);
+
+		public void Show(AnimationType? animation)
 		{
 			// Hide only collapses the element once its animation completes, so a Show during that
 			// window has to interrupt it rather than treat the element as already shown
 			if(Element.Visibility == Visible && !_hiding)
 				return;
 
+			var entranceAnimation = animation ?? EntranceAnimation;
+
 			// a zero-duration storyboard never raises Completed, so apply the final state directly
-			if(EntranceAnimation == AnimationType.Instant)
+			if(entranceAnimation == AnimationType.Instant)
 			{
 				var restingOpacity = CaptureRestingOpacity();
 				++_transition;
@@ -191,7 +196,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			var finalPosition = GetAnchorSideOffset();
-			var sb = CreateStoryboard(EntranceAnimation, finalPosition, Fade ? 1 : null);
+			var sb = CreateStoryboard(entranceAnimation, finalPosition, Fade ? 1 : null);
 			if(sb == null)
 				return;
 

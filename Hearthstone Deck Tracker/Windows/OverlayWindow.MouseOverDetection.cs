@@ -383,15 +383,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_leaderboardHoveredEntityId = entityId;
 		}
 
-		private async void ShowBobsBuddyPanelDelayed()
+		private void ShowBobsBuddyPanelIfInMatch()
 		{
-			await Task.Delay(300);
-			if(_leaderboardHoveredEntityId == null &&
-				_game.IsBattlegroundsMatch &&
+			if(_game.IsBattlegroundsMatch &&
 				_game.GetTurnNumber() != 0 &&
 				!_game.IsInMenu)
 			{
-				ShowBobsBuddyPanel();
+				ShowBobsBuddyPanel(AnimationType.Instant);
 			}
 		}
 

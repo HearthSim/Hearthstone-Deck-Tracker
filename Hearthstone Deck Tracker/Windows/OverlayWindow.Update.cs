@@ -459,7 +459,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					BgsOpponentInfo.Visibility = Visibility.Collapsed;
 					_bgsPastOpponentBoardBehavior.Hide();
 					BgsOpponentInfo.ClearLastKnownBoard();
-					ShowBobsBuddyPanelDelayed();
+					ShowBobsBuddyPanelIfInMatch();
 				}
 
 				// Only fade the minions, if we're out of mulligan

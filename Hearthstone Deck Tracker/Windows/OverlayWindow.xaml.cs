@@ -1219,13 +1219,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OpponentResourcesViewModel.Initialize(maxHealth, maxMana, maxHandSize);
 		}
 
-		internal void ShowBobsBuddyPanel()
+		internal void ShowBobsBuddyPanel(AnimationType? animation = null)
 		{
 			if(!Config.Instance.RunBobsBuddy)
 				return;
 			if(Remote.Config.Data?.BobsBuddy?.Disabled ?? false)
 				return;
-			_bgsBobsBuddyBehavior.Show();
+			_bgsBobsBuddyBehavior.Show(animation);
 		}
 
 		internal void HideBobsBuddyPanel()
