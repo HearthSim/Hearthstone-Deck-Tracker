@@ -1,3 +1,7 @@
+## **Release v1.56.2 - 2026-08-19**
+**Battlegrounds**:
+- Fixed a number of incorrect combat odds.
+
 ## **Release v1.56.1 - 2026-08-18**
 **Battlegrounds**:
 - Fixed the last known board tooltip being cut off.
