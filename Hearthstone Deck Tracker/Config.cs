@@ -21,6 +21,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private static Config? _config;
 
+		// a Config that was never loaded holds defaults (see Instance), so saving it would
+		// replace the real config.xml (this happens in tests, which never call Load)
+		private static bool _loaded;
+
 		public static readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 		                                            + @"\HearthstoneDeckTracker";
 
@@ -1313,7 +1317,15 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static void Save() => XmlManager<Config>.Save(Instance.ConfigPath, Instance);
+		public static void Save()
+		{
+			if(!IsLoaded)
+			{
+				Log.Warn("Not saving config: it was never loaded");
+				return;
+			}
+			XmlManager<Config>.Save(Instance.ConfigPath, Instance);
+		}
 
 		public static void SaveBackup(bool deleteOriginal = false)
 		{
@@ -1360,10 +1372,11 @@ namespace Hearthstone_Deck_Tracker
 			Save();
 		}
 
-		public static bool IsLoaded => _config != null;
+		public static bool IsLoaded => _loaded && _config != null;
 
 		public static void Load()
 		{
+			_loaded = true;
 			var foundConfig = false;
 			Environment.CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 			try
