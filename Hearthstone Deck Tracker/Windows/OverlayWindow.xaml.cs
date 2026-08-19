@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
+using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Annotations;
@@ -1053,6 +1054,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateBgsTopBarContentVisibility();
 			_bgsTopBarBehavior.Refresh();
 			_bgsTopBarTriggerMaskBehavior.Refresh();
+		}
+
+		// these panels are centered on their own width, which changes with the length of the localized labels
+		internal void RefreshCenteredBgsPanels()
+		{
+			// give the localized bindings a chance to update before the panels are measured again
+			Dispatcher.BeginInvoke(new Action(() =>
+			{
+				_bgsBobsBuddyBehavior.Refresh();
+				_bgsPastOpponentBoardBehavior.Refresh();
+			}), DispatcherPriority.Background);
 		}
 
 		internal void ShowBgsTopBar()

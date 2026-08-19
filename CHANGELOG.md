@@ -1,3 +1,7 @@
+## Unreleased
+**Battlegrounds**:
+- Fixed the Bob's Buddy widget being visually offset in certain languages.
+
 ## **Release v1.56.2 - 2026-08-19**
 **Battlegrounds**:
 - Fixed a number of incorrect combat odds.

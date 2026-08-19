@@ -209,6 +209,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			LocUtil.UpdateCultureInfo();
 			UpdateUIAfterChangeLanguage();
 			Core.Overlay.UpdateBgsChinaModulePanel();
+			Core.Overlay.RefreshCenteredBgsPanels();
 			if(Config.Instance.LastSeenHearthstoneLang == null)
 				Helper.UpdateCardLanguage();
 		}
