@@ -1,6 +1,8 @@
 ## Unreleased
 **Battlegrounds**:
+- The Minion and Comp Guides Browser is now available inbetween matches!
 - Fixed the Bob's Buddy widget being visually offset in certain languages.
+- Fixed a number of incorrect combat odds, especially in Duos.
 
 ## **Release v1.56.2 - 2026-08-19**
 **Battlegrounds**:
