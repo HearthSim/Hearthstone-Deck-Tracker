@@ -106,7 +106,6 @@ namespace Hearthstone_Deck_Tracker.Live
 				new BoardStatePlayer
 				{
 					Board = ToSortedBoard(player.Board.Where(x => x.TakesBoardSlot)),
-					Hero = HeroDbfId(playerEntity != null ? Find(player, HeroId(playerEntity)) : null),
 					HeroPower = playerHeroPowerSecondary == null ? playerHeroPowerPrimary : null,
 					HeroPowerTop = playerHeroPowerSecondary,
 					HeroPowerBottom = playerHeroPowerSecondary != null ? playerHeroPowerPrimary : null,
@@ -125,7 +124,6 @@ namespace Hearthstone_Deck_Tracker.Live
 				}, new BoardStatePlayer
 				{
 					Board = opponentBoard,
-					Hero = HeroDbfId(opponentEntity != null ? Find(opponent, HeroId(opponentEntity)) : null),
 					HeroPower = opponentHeroPowerSecondary == null ? opponentHeroPowerPrimary : null,
 					HeroPowerTop = opponentHeroPowerSecondary != null ? opponentHeroPowerPrimary : null,
 					HeroPowerBottom = opponentHeroPowerSecondary,
@@ -166,8 +164,6 @@ namespace Hearthstone_Deck_Tracker.Live
 
 			var lesserTrinket = inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_TRINKET && GetTag(entity, GameTag.TAG_SCRIPT_DATA_NUM_6) == TrinketFirstSlot);
 			var greaterTrinket = inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.BATTLEGROUND_TRINKET && GetTag(entity, GameTag.TAG_SCRIPT_DATA_NUM_6) == TrinketSecondSlot);
-
-			var hero = inPlay.FirstOrDefault(entity => GetTag(entity, GameTag.CARDTYPE) == (int)CardType.HERO);
 
 			BattlegroundsTeammateBoardStateEntity? HeroPowerSlot(int index) =>
 				inPlay.FirstOrDefault(entity =>
@@ -215,7 +211,6 @@ namespace Hearthstone_Deck_Tracker.Live
 			return new BoardStatePlayer
 			{
 				Board = ToSortedBoard(board),
-				Hero = DbfId(hero),
 				HeroPower = heroPowerSecondary == null ? DbfIdOrNull(heroPowerPrimary) : null,
 				HeroPowerTop = DbfIdOrNull(heroPowerSecondary),
 				HeroPowerBottom = heroPowerSecondary != null ? DbfIdOrNull(heroPowerPrimary) : null,

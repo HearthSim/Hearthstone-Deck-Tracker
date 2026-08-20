@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		public BoardStateDeck? Deck { get; set; }
 
 		[JsonProperty("hero", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int Hero { get; set; }
+		public int? Hero { get; set; }
 
 		[JsonProperty("hero_power", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int? HeroPower { get; set; }
@@ -107,7 +107,9 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 
 		public bool Equals(BoardStatePlayer? other)
 		{
-			if(Hero != other?.Hero)
+			if(other == null)
+				return false;
+			if(Hero != other.Hero)
 				return false;
 			if(HeroPower != other.HeroPower)
 				return false;
