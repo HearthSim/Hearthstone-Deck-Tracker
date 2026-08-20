@@ -17,6 +17,7 @@ using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
 using BobsBuddy.Enchantments;
 using BobsBuddy.Minions.Duos;
+using BobsBuddy.Minions.Buddy;
 using BobsBuddy.Minions.Mech;
 using BobsBuddy.Trinkets;
 using BobsBuddy.Utils;
@@ -1418,6 +1419,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			// Ignore minions that copy/gain deathrattles during combat (e.g., Fish of N'Zoth, Timewraped Whirl-O-Tron)
 			if(minion is ICopiesDeathrattles)
+				return false;
+
+			// Sneed's New Shredder's innate Deathrattle summons a copy of a hand minion; when that hand
+			// minion is an Ancestral Automaton the observation is indistinguishable from a hidden
+			// magnetized Auto Assembler — do not attribute its summons to a module.
+			if(minion is SneedsNewShredder)
 				return false;
 
 			// Extra deathrattles (e.g., Titus Rivendare) resolve as full repeats of the whole deathrattle list —
