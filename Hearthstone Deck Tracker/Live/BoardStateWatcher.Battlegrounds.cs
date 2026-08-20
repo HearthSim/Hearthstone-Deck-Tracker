@@ -8,6 +8,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Live.Data;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using BoardState = Hearthstone_Deck_Tracker.Live.Data.BoardState;
 
 namespace Hearthstone_Deck_Tracker.Live
@@ -33,6 +34,48 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		private CardWithEnchantments[] ToSortedBoard(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
 			entities.OrderBy(ZonePosition).Select(e => new CardWithEnchantments(ToCardRef(ResolveCard(e)))).ToArray();
+
+		private CardWithEnchantments[] ToSortedBoardWithDarkGifts(IEnumerable<Entity> entities) =>
+			entities.OrderBy(ZonePosition).Select(ToCardWithDarkGifts).ToArray();
+		private CardWithEnchantments[] ToSortedBoardWithDarkGifts(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
+			entities.OrderBy(ZonePosition).Select(ToCardWithDarkGifts).ToArray();
+
+		private CardWithEnchantments ToCardWithDarkGifts(Entity entity)
+		{
+			var darkGifts = Core.Game.Entities.Values
+				.Where(x => x.IsAttachedTo(entity.Id) && x.HasTag(GameTag.IS_NIGHTMARE_BONUS))
+				.OrderBy(x => x.Id)
+				.Select(DarkGiftCard)
+				.WhereNotNull()
+				.Select(ToCardRef);
+			return new CardWithEnchantments(ToCardRef(ResolveCard(entity)), darkGifts);
+		}
+
+		private CardWithEnchantments ToCardWithDarkGifts(BattlegroundsTeammateBoardStateEntity entity)
+		{
+			// the teammate board state has no entity ids we could resolve, but the client itself picks the
+			// enchantment portrait by CREATOR_DBID
+			var darkGifts = entity.Attachments
+				.Where(x => GetTag(x, GameTag.IS_NIGHTMARE_BONUS) > 0)
+				.OrderBy(x => GetTag(x, GameTag.ENTITY_ID))
+				.Select(x => Database.GetCardFromDbfId(GetTag(x, GameTag.CREATOR_DBID), false))
+				.Where(IsBattlegroundsDarkGift)
+				.Select(ToCardRef);
+			return new CardWithEnchantments(ToCardRef(ResolveCard(entity)), darkGifts);
+		}
+
+		// the enchantment has no art of its own, so report the dark gift that created it
+		private Hearthstone.Card? DarkGiftCard(Entity enchantment)
+		{
+			var creatorId = enchantment.GetTag(GameTag.CREATOR);
+			if(Core.Game.Entities.TryGetValue(creatorId, out var creator) && IsBattlegroundsDarkGift(creator.Card))
+				return creator.Card;
+			var dbCreator = Database.GetCardFromDbfId(enchantment.GetTag(GameTag.CREATOR_DBID), false);
+			return IsBattlegroundsDarkGift(dbCreator) ? dbCreator : null;
+		}
+
+		private static bool IsBattlegroundsDarkGift(Hearthstone.Card? card) =>
+			card?.TypeEnum == CardType.SPELL && card.CardSet == CardSet.BATTLEGROUNDS && card.GetTag(GameTag.IS_NIGHTMARE_BONUS) > 0;
 
 		// a hero power position can be occupied by a hero power, a hero power quest reward or a hero
 		// power trinket, all keyed by ADDITIONAL_HERO_POWER_INDEX (0 = bottom/only, 1 = top)
@@ -94,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			var specialShopActive = specialShopState?.IsActive == true && specialShopState.BoardCards.Count > 0;
 			var opponentBoard = specialShopActive
 				? ToSortedBoard(specialShopState!.BoardCards)
-				: ToSortedBoard(opponent.Board.Where(x => x.TakesBoardSlot));
+				: ToSortedBoardWithDarkGifts(opponent.Board.Where(x => x.TakesBoardSlot));
 
 			// the primary hero power sits at the bottom for the player and at the top for the opponent
 			var playerHeroPowerPrimary = BgsHeroPowerSlot(player, 0);
@@ -105,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			return new Tuple<BoardStatePlayer, BoardStatePlayer>(
 				new BoardStatePlayer
 				{
-					Board = ToSortedBoard(player.Board.Where(x => x.TakesBoardSlot)),
+					Board = ToSortedBoardWithDarkGifts(player.Board.Where(x => x.TakesBoardSlot)),
 					HeroPower = playerHeroPowerSecondary == null ? playerHeroPowerPrimary : null,
 					HeroPowerTop = playerHeroPowerSecondary,
 					HeroPowerBottom = playerHeroPowerSecondary != null ? playerHeroPowerPrimary : null,
@@ -210,7 +253,7 @@ namespace Hearthstone_Deck_Tracker.Live
 
 			return new BoardStatePlayer
 			{
-				Board = ToSortedBoard(board),
+				Board = ToSortedBoardWithDarkGifts(board),
 				HeroPower = heroPowerSecondary == null ? DbfIdOrNull(heroPowerPrimary) : null,
 				HeroPowerTop = DbfIdOrNull(heroPowerSecondary),
 				HeroPowerBottom = heroPowerSecondary != null ? DbfIdOrNull(heroPowerPrimary) : null,

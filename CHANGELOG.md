@@ -1,3 +1,7 @@
+## Unreleased
+**Streaming**:
+- Viewers can see the Dark Gifts on your minions by hovering them in the Twitch Extension!
+
 ## **Release v1.56.4 - 2026-08-20**
 **Battlegrounds**:
 - Fixed a number of incorrect combat odds.
