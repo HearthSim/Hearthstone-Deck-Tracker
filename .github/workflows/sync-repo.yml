@@ -1,0 +1,26 @@
+name: Sync Repo
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    if: github.repository_id == '231005536'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Sync to main repo
+        run: |
+          git remote add public https://x-access-token:${HDT_GITHUB_TOKEN}@github.com/HearthSim/Hearthstone-Deck-Tracker.git
+          git push --no-follow-tags public refs/heads/master:refs/heads/master
+        env:
+          HDT_GITHUB_TOKEN: ${{ secrets.HDT_GITHUB_TOKEN }}
