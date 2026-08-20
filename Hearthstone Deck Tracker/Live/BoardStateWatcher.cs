@@ -9,12 +9,16 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Live.Data;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using BoardState = Hearthstone_Deck_Tracker.Live.Data.BoardState;
 
 namespace Hearthstone_Deck_Tracker.Live
 {
 	internal partial class BoardStateWatcher
 	{
+		// what identifies cards in the twitch payload, hard-coded to dbf ids until the extension handles card ids
+		private const bool SendCardIds = false;
+
 		private const int UpdateDelay = 1000;
 		private const int RepeatDelay = 10000;
 		private bool _update;
@@ -81,14 +85,22 @@ namespace Hearthstone_Deck_Tracker.Live
 			};
 		}
 
-		private int DbfId(Entity? e)
+		private Hearthstone.Card? ResolveCard(Entity? e)
 		{
 			if(e == null)
-				return 0;
-			var card = e.Info.LatestCardId == e.CardId
+				return null;
+			return e.Info.LatestCardId == e.CardId
 				? e.Card
 				: Database.GetCardFromId(e.Info.LatestCardId);
-			return card?.DbfId ?? 0;
+		}
+
+		private int DbfId(Entity? e) => ResolveCard(e)?.DbfId ?? 0;
+
+		private CardRef ToCardRef(Hearthstone.Card? card)
+		{
+			if(card == null)
+				return 0;
+			return SendCardIds ? (CardRef)card.Id : (CardRef)card.DbfId;
 		}
 
 		private int? DbfIdOrNull(Entity? e)
@@ -101,11 +113,15 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		private int[] SortedDbfIds(IEnumerable<Entity> entities) => entities.OrderBy(ZonePosition).Select(DbfId).ToArray();
 
-		private int[] SortedDbfIds(IEnumerable<BoardCard> boardCards) =>
+		private CardWithEnchantments[] ToSortedBoard(IEnumerable<Entity> entities) =>
+			entities.OrderBy(ZonePosition).Select(e => new CardWithEnchantments(ToCardRef(ResolveCard(e)))).ToArray();
+
+		private CardWithEnchantments[] ToSortedBoard(IEnumerable<BoardCard> boardCards) =>
 			boardCards
 				.Where(c => c?.CardId != null)
-				.Select(c => Database.GetCardFromId(c.CardId)?.DbfId ?? 0)
-				.Where(dbfId => dbfId != 0)
+				.Select(c => Database.GetCardFromId(c.CardId))
+				.WhereNotNull()
+				.Select(card => new CardWithEnchantments(ToCardRef(card)))
 				.ToArray();
 
 		private int HeroId(Entity playerEntity) => playerEntity.GetTag(GameTag.HERO_ENTITY);
@@ -245,14 +261,14 @@ namespace Hearthstone_Deck_Tracker.Live
 			var specialShopState = Watchers.SpecialShopChoicesStateWatcher.CurrentState;
 			var specialShopActive = specialShopState?.IsActive == true && specialShopState.BoardCards.Count > 0;
 			var opponentBoard = specialShopActive
-				? SortedDbfIds(specialShopState!.BoardCards)
-				: SortedDbfIds(opponent.Board.Where(x => x.TakesBoardSlot));
+				? ToSortedBoard(specialShopState!.BoardCards)
+				: ToSortedBoard(opponent.Board.Where(x => x.TakesBoardSlot));
 
 			return new BoardState
 			{
 				Player = new BoardStatePlayer
 				{
-					Board = SortedDbfIds(player.Board.Where(x => x.TakesBoardSlot)),
+					Board = ToSortedBoard(player.Board.Where(x => x.TakesBoardSlot)),
 					Deck = new BoardStateDeck
 					{
 						Cards = playerCardsList,

@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 	public class BoardStatePlayer
 	{
 		[JsonProperty("board", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int[]? Board { get; set; }
+		public CardWithEnchantments[]? Board { get; set; }
 
 		[JsonProperty("hand", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public BoardStateHand? Hand { get; set; }

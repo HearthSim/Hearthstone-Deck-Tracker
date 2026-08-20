@@ -14,13 +14,10 @@ namespace Hearthstone_Deck_Tracker.Live
 {
 	internal partial class BoardStateWatcher
 	{
-		private int DbfId(BattlegroundsTeammateBoardStateEntity? e)
-		{
-			if(e == null)
-				return 0;
-			var card = Database.GetCardFromId(e.CardId);
-			return card?.DbfId ?? 0;
-		}
+		private Hearthstone.Card? ResolveCard(BattlegroundsTeammateBoardStateEntity? e) =>
+			e == null ? null : Database.GetCardFromId(e.CardId);
+
+		private int DbfId(BattlegroundsTeammateBoardStateEntity? e) => ResolveCard(e)?.DbfId ?? 0;
 
 		private int? DbfIdOrNull(BattlegroundsTeammateBoardStateEntity? e)
 		{
@@ -33,6 +30,9 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		private int[] SortedDbfIds(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
 			entities.OrderBy(ZonePosition).Select(DbfId).ToArray();
+
+		private CardWithEnchantments[] ToSortedBoard(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
+			entities.OrderBy(ZonePosition).Select(e => new CardWithEnchantments(ToCardRef(ResolveCard(e)))).ToArray();
 
 		// a hero power position can be occupied by a hero power, a hero power quest reward or a hero
 		// power trinket, all keyed by ADDITIONAL_HERO_POWER_INDEX (0 = bottom/only, 1 = top)
@@ -93,8 +93,8 @@ namespace Hearthstone_Deck_Tracker.Live
 			var specialShopState = Watchers.SpecialShopChoicesStateWatcher.CurrentState;
 			var specialShopActive = specialShopState?.IsActive == true && specialShopState.BoardCards.Count > 0;
 			var opponentBoard = specialShopActive
-				? SortedDbfIds(specialShopState!.BoardCards)
-				: SortedDbfIds(opponent.Board.Where(x => x.TakesBoardSlot));
+				? ToSortedBoard(specialShopState!.BoardCards)
+				: ToSortedBoard(opponent.Board.Where(x => x.TakesBoardSlot));
 
 			// the primary hero power sits at the bottom for the player and at the top for the opponent
 			var playerHeroPowerPrimary = BgsHeroPowerSlot(player, 0);
@@ -105,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			return new Tuple<BoardStatePlayer, BoardStatePlayer>(
 				new BoardStatePlayer
 				{
-					Board = SortedDbfIds(player.Board.Where(x => x.TakesBoardSlot)),
+					Board = ToSortedBoard(player.Board.Where(x => x.TakesBoardSlot)),
 					Hero = HeroDbfId(playerEntity != null ? Find(player, HeroId(playerEntity)) : null),
 					HeroPower = playerHeroPowerSecondary == null ? playerHeroPowerPrimary : null,
 					HeroPowerTop = playerHeroPowerSecondary,
@@ -214,7 +214,7 @@ namespace Hearthstone_Deck_Tracker.Live
 
 			return new BoardStatePlayer
 			{
-				Board = SortedDbfIds(board),
+				Board = ToSortedBoard(board),
 				Hero = DbfId(hero),
 				HeroPower = heroPowerSecondary == null ? DbfIdOrNull(heroPowerPrimary) : null,
 				HeroPowerTop = DbfIdOrNull(heroPowerSecondary),
