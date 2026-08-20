@@ -894,7 +894,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			// this runs on every overlay update, so only touch the view models when something actually changed
 			var isDuos = Tier7PreLobbyViewModel.BattlegroundsGameMode == SelectedBattlegroundsGameMode.DUOS;
-			BattlegroundsGuidesTabsViewModel.IsInQueue = _game.QueueEvents.IsInQueue;
+			BattlegroundsGuidesTabsViewModel.OnQueueChanged(_game.QueueEvents.IsInQueue, _game.QueueEvents.GameFound);
 			if(BgsGuidesPreLobbyVisible)
 			{
 				if(BattlegroundsMinionsVM.IsDuos != isDuos)

@@ -41,6 +41,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool _isInQueue = false;
 		public bool IsInQueue => _isInQueue;
 
+		private bool _gameFound = false;
+
+		// the queue also ends when the search is canceled, which only the state before it tells apart
+		public bool GameFound => _gameFound;
+
 		public QueueEvents(IGame game)
 		{
 			_game = game;
@@ -51,6 +56,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void Handle(QueueEventArgs e)
 		{
 			_isInQueue = e.IsInQueue;
+			_gameFound = !e.IsInQueue && e.Previous is FindGameState.SERVER_GAME_CONNECTING or FindGameState.SERVER_GAME_STARTED;
 
 			if(!_game.IsInMenu)
 				return;

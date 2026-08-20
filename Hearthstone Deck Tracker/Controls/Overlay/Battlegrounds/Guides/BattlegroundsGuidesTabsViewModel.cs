@@ -42,19 +42,21 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 		Helper.TryOpenUrl(url);
 	});
 
-	public bool IsInQueue
+	private bool _isInQueue;
+	private bool _gameFound;
+
+	public void OnQueueChanged(bool isInQueue, bool gameFound)
 	{
-		get => GetProp(false);
-		set
-		{
-			if(IsInQueue == value)
-				return;
-			SetProp(value);
-			OnPropertyChanged(nameof(MetaSnapshotVisible));
-		}
+		if(_isInQueue == isInQueue)
+			return;
+		_isInQueue = isInQueue;
+		// the pre-lobby only goes away once the match has loaded in, so showing the meta snapshot as
+		// soon as the queue ends would flash it for as long as the match takes to load
+		_gameFound = !isInQueue && gameFound;
+		OnPropertyChanged(nameof(MetaSnapshotVisible));
 	}
 
-	public bool MetaSnapshotVisible => IsPreLobby && !IsInQueue && ActiveViewModel == null;
+	public bool MetaSnapshotVisible => IsPreLobby && !_isInQueue && !_gameFound && ActiveViewModel == null;
 
 	// the meta snapshot sits where the tab content goes, so both of these hide it without animating
 	public bool MetaSnapshotHasRoom => ActiveViewModel == null && HeroesTabVisible;
@@ -65,6 +67,8 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 		set
 		{
 			SetProp(value);
+			if(value)
+				_gameFound = false;
 			OnPropertyChanged(nameof(HeroesTabEnabled));
 			OnPropertyChanged(nameof(MetaSnapshotVisible));
 		}
