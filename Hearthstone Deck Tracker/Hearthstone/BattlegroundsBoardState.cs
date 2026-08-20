@@ -9,6 +9,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		Dictionary<int, BoardSnapshot> LastKnownBoardState { get; } = new Dictionary<int, BoardSnapshot>();
 
+		Dictionary<int, BoardSnapshot> LastKnownBoardStateByHeroEntityId { get; } = new Dictionary<int, BoardSnapshot>();
+
 		private GameV2 _game;
 
 		public BattlegroundsBoardState(GameV2 game)
@@ -22,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.FirstOrDefault(x => x.IsHero && x.IsInZone(Zone.PLAY) && x.IsControlledBy(_game.Opponent.Id));
 			if(opponentHero?.CardId == null)
 				return;
+			var heroEntityId = opponentHero.Id;
 			var playerId = opponentHero.GetTag(GameTag.PLAYER_ID);
 			if(playerId == 0)
 				return;
@@ -29,14 +32,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.Where(x => x.IsMinion && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Opponent.Id))
 				.Select(x => x.Clone())
 				.ToArray();
-			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with player id {playerId} ({entities.Length} entities");
-			LastKnownBoardState[playerId] = new BoardSnapshot(entities, _game.GetTurnNumber());
+			var snapshot = new BoardSnapshot(entities, _game.GetTurnNumber());
+			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with player id {playerId} hero entity {heroEntityId} ({entities.Length} entities)");
+			LastKnownBoardState[playerId] = snapshot;
+			LastKnownBoardStateByHeroEntityId[heroEntityId] = snapshot;
 		}
 
 		public BoardSnapshot? GetSnapshot(int entityId)
 		{
 			if(!_game.Entities.TryGetValue(entityId, out var entity))
-				return null;
+			{
+				Log.Info($"Entity {entityId} not found in game entities, trying direct lookup");
+				return LastKnownBoardStateByHeroEntityId.TryGetValue(entityId, out var directState) ? directState : null;
+			}
 
 			return LastKnownBoardState.TryGetValue(entity.GetTag(GameTag.PLAYER_ID), out var state) ? state : null;
 		}
@@ -44,6 +52,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void Reset()
 		{
 			LastKnownBoardState.Clear();
+			LastKnownBoardStateByHeroEntityId.Clear();
 		}
 	}
 }
