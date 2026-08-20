@@ -47,6 +47,9 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("battlegrounds_anomaly", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int? BattlegroundsAnomaly { get; set; }
 
+		[JsonProperty("battlegrounds_dark_gifts_slot", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public int? BattlegroundsDarkGiftsSlot { get; set; }
+
 		[JsonProperty("bobs_buddy_state", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public BobsBuddyState? BobsBuddyOutput { get; set; }
 

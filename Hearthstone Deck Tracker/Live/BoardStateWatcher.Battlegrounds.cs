@@ -112,11 +112,14 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		private int? BgsAnomaly(Entity? game)
 		{
-			// the "Discover a Dark Gift" button takes the same slot as anomalies
+			return BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(game);
+		}
+
+		private int? BgsDarkGifts(Entity? game)
+		{
 			if(game?.GetTag(GameTag.BACON_DARK_GIFTS_ACTIVE) == 1)
 				return Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Neutral.DarkGifts1)?.DbfId;
-
-			return BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(game);
+			return null;
 		}
 
 		private Tuple<BoardStatePlayer, BoardStatePlayer> GetBattlegroundsSoloPlayerBoardStates()
@@ -301,6 +304,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				GameType = gameType,
 				HearthstoneBuild = Core.Game.MetaData.HearthstoneBuild,
 				BattlegroundsAnomaly = BgsAnomaly(Core.Game.GameEntity),
+				BattlegroundsDarkGiftsSlot = BgsDarkGifts(Core.Game.GameEntity),
 				BobsBuddyOutput = GetBobsBuddyState()
 			};
 		}
