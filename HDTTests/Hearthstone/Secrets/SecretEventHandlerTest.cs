@@ -592,14 +592,54 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void MultipleSecrets_MinionPlayed_MinionDied()
+		public void MultipleSecrets_MinionPlayed_NoSecretTriggered_MinionDied()
 		{
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
 			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion1);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BargainBin, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_MinionPlayed_SecretTriggered_MinionDied()
+		{
+			_secretMage2.SetTag(GameTag.ZONE, (int)Zone.SECRET);
+			_gameEventHandler.HandleOpponentSecretPlayed(_secretMage2, "", 0, 0, Zone.HAND, _secretMage2.Id);
+			_game.Entities[_secretMage2.Id] = _secretMage2;
+
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
+
+			_secretMage2.CardId = MageSecrets.ExplosiveRunes.Ids[0];
+			_gameEventHandler.HandleOpponentSecretTrigger(_secretMage2, _secretMage2.CardId, 2, _secretMage2.Id);
+			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion1);
+
 			VerifySecrets(0, HunterSecrets.All);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.FrozenClone);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Kidnap);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_MinionPlayed_UnrelatedSecretTriggered_MinionDied()
+		{
+			_secretMage2.SetTag(GameTag.ZONE, (int)Zone.SECRET);
+			_gameEventHandler.HandleOpponentSecretPlayed(_secretMage2, "", 0, 0, Zone.HAND, _secretMage2.Id);
+			_game.Entities[_secretMage2.Id] = _secretMage2;
+
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
+
+			// Flames of Infinity destroys the minion at the end of the turn, long after the play
+			// itself resolved. That must not revert the exclusions made when it was played.
+			_secretMage2.CardId = MageSecrets.FlamesOfInfinity.Ids[0];
+			_gameEventHandler.HandleOpponentSecretTrigger(_secretMage2, _secretMage2.CardId, 2, _secretMage2.Id);
+			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion1);
+
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BargainBin, HunterSecrets.Snipe, HunterSecrets.Zombeeees);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone, MageSecrets.Objection, MageSecrets.FlamesOfInfinity);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush, RogueSecrets.Kidnap);
 		}
 
 		[TestMethod]

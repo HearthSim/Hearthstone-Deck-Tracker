@@ -1,4 +1,7 @@
 ## Unreleased
+**Hearthstone**:
+- Fixed the secret tracker bringing back already ruled out secrets when a minion you played died later in the turn, for example to Flames of Infinity.
+
 **Battlegrounds**:
 - Fixed Bob's Buddy not disappearing when returning to the pre-lobby screen.
 

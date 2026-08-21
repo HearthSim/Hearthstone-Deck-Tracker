@@ -232,6 +232,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Mage.Vaporize
 			};
 
+			// Secrets that trigger when the opponent plays a minion. Only one secret triggers per
+			// event, so if one of these goes off the others were not given a chance to.
+			public static readonly IReadOnlyList<MultiIdCard> MinionPlayed = new List<MultiIdCard>
+			{
+				Hunter.BargainBin,
+				Hunter.HiddenCache,
+				Hunter.Snipe,
+				Hunter.Zombeeees,
+				Mage.ExplosiveRunes,
+				Mage.FrozenClone,
+				Mage.MirrorEntity,
+				Mage.Objection,
+				Mage.PotionOfPolymorph,
+				Paladin.Repentance,
+				Rogue.Ambush,
+				Rogue.Kidnap
+			};
+
 			public static IReadOnlyList<MultiIdCard> All { get; } = Hunter.All.Concat(Mage.All).Concat(Paladin.All).Concat(Rogue.All).ToList();
 
 			public static MultiIdCard? GetSecretMultiIdCard(string id) =>

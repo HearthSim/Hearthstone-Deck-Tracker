@@ -48,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			_lastStartOfTurnMinionCheck = 0;
 			OpponentTookDamageDuringTurns.Clear();
 			EntititesInHandOnMinionsPlayed.Clear();
+			_triggeredSecrets.Clear();
 		}
 
 		public void HandleAttack(Entity attacker, Entity defender, bool fastOnly = false)
@@ -168,6 +169,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				return;
 
 			_lastPlayedMinionId = entity.Id;
+			_triggeredSecrets.Clear();
 
 			var exclude = new List<MultiIdCard>();
 
@@ -274,13 +276,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		public void HandlePlayerMinionDeath(Entity entity)
 		{
-			if(entity.Id == _lastPlayedMinionId && SavedSecrets.Count > 0)
-			{
-				foreach(var savedSecret in SavedSecrets)
-					foreach(var secret in Secrets)
-						secret.Include(savedSecret);
-				Refresh();
-			}
+			if(entity.Id != _lastPlayedMinionId || SavedSecrets.Count == 0)
+				return;
+			// Only one secret triggers per event, so the exclusions made when the minion was played
+			// are only invalid if one of those secrets actually triggered on it. Anything else
+			// killing the minion later in the turn (combat, board clears, end of turn effects)
+			// leaves them valid.
+			if(!_triggeredSecrets.Any(x => x.CardId != null && MinionPlayed.Any(s => s == x.CardId)))
+				return;
+			foreach(var savedSecret in SavedSecrets)
+				foreach(var secret in Secrets)
+					secret.Include(savedSecret);
+			Refresh();
 		}
 
 		public async void HandleAvengeAsync(int deathRattleCount)
