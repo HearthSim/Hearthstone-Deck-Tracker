@@ -1,14 +1,20 @@
-## Unreleased
+## **Release v1.56.5 - 2026-08-21**
+**Battlegrounds**:
+- Fixed a small number of remaining incorrect combat odds.
+
 **Streaming**:
 - Viewers can see the Dark Gifts on your minions by hovering them in the Twitch Extension!
 - Fixed the position of the hoverable Dark Gifts button in the Twitch Extension.
+
+**Compatibility**:
+- Fixed various Battlegrounds overlay buttons not working when running the deck tracker under Wine.
 
 ## **Release v1.56.4 - 2026-08-20**
 **Battlegrounds**:
 - Fixed a number of incorrect combat odds.
 - Fixed the Meta snapshot button briefly appearing when joining a match.
 
-**Performance**
+**Performance**:
 - Improved the responsiveness of the overlay, especially when running the deck tracker under Wine.
 
 ## **Release v1.56.3 - 2026-08-19**
