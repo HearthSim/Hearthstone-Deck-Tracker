@@ -39,13 +39,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 						StackPanelPlayer.Children.Add(ListViewPlayer);
 						break;
 					case DeckPanel.CardsTop:
-						StackPanelPlayer.Children.Add(PlayerTopDeckLens);
+						if(!Config.Instance.HidePlayerCardsTop)
+							StackPanelPlayer.Children.Add(PlayerTopDeckLens);
 						break;
 					case DeckPanel.CardsBottom:
-						StackPanelPlayer.Children.Add(PlayerBottomDeckLens);
+						if(!Config.Instance.HidePlayerCardsBottom)
+							StackPanelPlayer.Children.Add(PlayerBottomDeckLens);
 						break;
 					case DeckPanel.Sideboards:
-						StackPanelPlayer.Children.Add(PlayerSideboards);
+						if(!Config.Instance.HidePlayerSideboards)
+							StackPanelPlayer.Children.Add(PlayerSideboards);
 						break;
 				}
 			}
