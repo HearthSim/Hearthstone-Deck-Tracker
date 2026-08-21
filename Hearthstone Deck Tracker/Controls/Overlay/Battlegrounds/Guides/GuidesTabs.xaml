@@ -193,6 +193,7 @@
                     Margin="0,5,0,0"
                     Padding="10"
                     Visibility="Collapsed"
+                    anim:FadeAnimation.Enabled="{Binding AnimateMetaSnapshot}"
                     anim:FadeAnimation.Visibility="{Binding MetaSnapshotVisible, Converter={StaticResource BoolToVisibility}}"
                     anim:FadeAnimation.Direction="Down" anim:FadeAnimation.Distance="20" anim:FadeAnimation.Duration="0:0:0.2"
                 >

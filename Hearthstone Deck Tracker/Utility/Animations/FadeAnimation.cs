@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Animations
 		private static readonly Dictionary<FrameworkElement, Direction> _direction = new();
 		private static readonly Dictionary<FrameworkElement, int> _distance = new();
 		private static readonly Dictionary<FrameworkElement, Duration> _duration = new();
+		private static readonly Dictionary<FrameworkElement, bool> _enabled = new();
 
 		private static readonly Dictionary<FrameworkElement, Storyboard> _currentStoryboard = new();
 
@@ -66,6 +67,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Animations
 			var oldVisibility = (Visibility)e.OldValue;
 			var newVisibility = (Visibility)e.NewValue;
 			var wasVisible = oldVisibility == Visibility.Visible;
+
+			if(_enabled.TryGetValue(element, out var enabled) && !enabled)
+			{
+				if(element.RenderTransform is TranslateTransform)
+					element.RenderTransform = new TranslateTransform(0, 0);
+				element.Opacity = newVisibility == Visibility.Visible ? 1 : 0;
+				element.Visibility = newVisibility;
+				return;
+			}
 
 			var sb = new Storyboard();
 			sb.FillBehavior = FillBehavior.Stop;
@@ -142,6 +152,23 @@ namespace Hearthstone_Deck_Tracker.Utility.Animations
 		{
 			if(d is FrameworkElement element)
 				_distance[element] = (int)e.NewValue;
+		}
+
+		#endregion
+
+		#region Enabled
+
+		public static readonly DependencyProperty EnabledProperty =
+			DependencyProperty.RegisterAttached("Enabled", typeof(bool), typeof(FadeAnimation), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnEnabledChange)));
+
+		public static bool GetEnabled(DependencyObject obj) => (bool)obj.GetValue(EnabledProperty);
+
+		public static void SetEnabled(DependencyObject obj, bool value) => obj.SetValue(EnabledProperty, value);
+
+		private static void OnEnabledChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if(d is FrameworkElement element)
+				_enabled[element] = (bool)e.NewValue;
 		}
 
 		#endregion

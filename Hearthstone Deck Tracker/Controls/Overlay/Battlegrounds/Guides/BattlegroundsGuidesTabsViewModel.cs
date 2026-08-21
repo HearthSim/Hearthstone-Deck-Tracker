@@ -9,20 +9,35 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 {
 	public ICommand ShowMinionsCommand => new Command(() =>
 	{
-		ActiveViewModel = ActiveViewModel == Core.Overlay.BattlegroundsMinionsVM ? null : Core.Overlay.BattlegroundsMinionsVM;
+		ToggleTab(Core.Overlay.BattlegroundsMinionsVM);
 		Core.Game.Metrics.BattlegroundsCardsTabClicks++;
 	});
 	public ICommand ShowCompsCommand => new Command(() =>
 	{
-		ActiveViewModel = ActiveViewModel == Core.Overlay.BattlegroundsCompsGuidesVM ? null : Core.Overlay.BattlegroundsCompsGuidesVM;
+		ToggleTab(Core.Overlay.BattlegroundsCompsGuidesVM);
 		Core.Game.Metrics.BattlegroundsCompsTabClicks++;
 	});
 
 	public ICommand ShowHeroesCommand => new Command(() =>
 	{
-		ActiveViewModel = ActiveViewModel == Core.Overlay.BattlegroundsHeroGuideListViewModel ? null : Core.Overlay.BattlegroundsHeroGuideListViewModel;
+		ToggleTab(Core.Overlay.BattlegroundsHeroGuideListViewModel);
 		Core.Game.Metrics.BattlegroundsHeroesTabClicks++;
 	});
+
+	private void ToggleTab(ViewModel viewModel)
+	{
+		var isClosing = ActiveViewModel == viewModel;
+		// the meta snapshot takes over the space the tab content just gave up, so fading it in there looks like a glitch
+		AnimateMetaSnapshot = !isClosing;
+		ActiveViewModel = isClosing ? null : viewModel;
+		AnimateMetaSnapshot = true;
+	}
+
+	public bool AnimateMetaSnapshot
+	{
+		get => GetProp(true);
+		private set => SetProp(value);
+	}
 
 	public ViewModel? ActiveViewModel
 	{
