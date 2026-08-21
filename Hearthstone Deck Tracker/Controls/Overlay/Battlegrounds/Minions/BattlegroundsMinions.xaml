@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
@@ -174,14 +175,11 @@
                             </Border.Effect>
                         </Border>
 
-                        <Border RenderTransformOrigin="0.5, 0.5" Width="32" Cursor="Hand" Height="32" CornerRadius="3" BorderThickness="1" BorderBrush="#3f4346">
-                            <Border.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding FilterClickCommand}" />
-                            </Border.InputBindings>
-                            <Border.Resources>
+                        <battlegrounds:OverlayButton Command="{Binding FilterClickCommand}" RenderTransformOrigin="0.5, 0.5" Width="32" Cursor="Hand" Height="32" CornerRadius="3" BorderThickness="1" BorderBrush="#3f4346">
+                            <battlegrounds:OverlayButton.Resources>
                                 <system:Double x:Key="MinScale">0.25</system:Double>
-                            </Border.Resources>
-                            <Border.Style>
+                            </battlegrounds:OverlayButton.Resources>
+                            <battlegrounds:OverlayButton.Style>
                                 <Style TargetType="Border">
                                     <Setter Property="Background" Value="#141617"/>
                                     <!-- Animated properties need to be defined here, not on the element itself.
@@ -247,13 +245,13 @@
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </Border.Style>
+                            </battlegrounds:OverlayButton.Style>
                             <Rectangle Fill="White" Height="8" Width="14" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Visual="{DynamicResource bar_filter}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                        </Border>
+                        </battlegrounds:OverlayButton>
                     </Grid>
                 </Border>
             </Grid>

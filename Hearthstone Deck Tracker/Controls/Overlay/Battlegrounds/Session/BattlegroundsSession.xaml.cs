@@ -1,15 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 
 public partial class BattlegroundsSession : INotifyPropertyChanged
 {
-	private readonly BrushConverter _bc = new();
-
 	public event PropertyChangedEventHandler? PropertyChanged;
 
 	[NotifyPropertyChangedInvocator]
@@ -64,15 +61,5 @@ public partial class BattlegroundsSession : INotifyPropertyChanged
 	private void Panel_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 	{
 		CogBtnVisibility = Visibility.Hidden;
-	}
-
-	private void BtnOptions_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		BtnOptions.Background = (Brush)_bc.ConvertFromString("#22FFFFFF");
-	}
-
-	private void BtnOptions_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		BtnOptions.Background = (Brush)_bc.ConvertFromString("#00FFFFFF");
 	}
 }

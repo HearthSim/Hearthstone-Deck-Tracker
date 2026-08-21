@@ -11,17 +11,6 @@ public partial class CompButton : UserControl
 		InitializeComponent();
 	}
 
-	private void Comp_Click(object sender, RoutedEventArgs e)
-	{
-		if (sender is Button { DataContext: BattlegroundsCompGuideViewModel selectedComp })
-		{
-			if (DataContext is BattlegroundsCompsGuidesViewModel compsGuidesViewModel)
-			{
-				compsGuidesViewModel.SelectedComp = selectedComp;
-			}
-		}
-	}
-
 	public event EventHandler? CompClicked;
 
 	private void Button_OnClick(object sender, RoutedEventArgs e)
