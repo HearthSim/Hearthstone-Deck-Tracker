@@ -88,7 +88,7 @@ public class OverlayButton : Border
 
 		Click?.Invoke(this, new RoutedEventArgs());
 		command?.Execute(commandParameter);
-		// ponytail: unconditionally consume the click even with no handler attached -
+		// unconditionally consume the click even with no handler attached -
 		// prevents the raw mouse event from passing through the overlay to the game.
 		e.Handled = true;
 	}
