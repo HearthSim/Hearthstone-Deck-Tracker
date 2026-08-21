@@ -10,7 +10,6 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using HSReplay;
 using HSReplay.Requests;
 using HSReplay.Responses;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
@@ -155,37 +154,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Log.Error(e);
 				return null;
 			}
-		}
-
-		public class CompData
-		{
-			[JsonProperty("id")]
-			public int Id { get; set; }
-
-			[JsonProperty("popularity")]
-			public double Popularity { get; set; }
-
-			[JsonProperty("name")]
-			public string? Name { get; set; }
-
-			[JsonProperty("key_minions_top3")]
-			public List<int>? KeyMinionsTop3 { get; set; }
-
-			[JsonProperty("avg_final_placement")]
-			public double AvgFinalPlacement { get; set; }
-		}
-
-		public class DataItem
-		{
-			[JsonProperty("first_place_comps_lobby_races")]
-			public List<CompData>? FirstPlaceCompsLobbyRaces { get; set; }
-
-		}
-
-		public class MockData
-		{
-			[JsonProperty("data")]
-			public DataItem? Data { get; set; }
 		}
 
 		internal static async Task<BattlegroundsCompStats?> GetTier7CompStats(string token, BattlegroundsCompStatsParams parameters)
