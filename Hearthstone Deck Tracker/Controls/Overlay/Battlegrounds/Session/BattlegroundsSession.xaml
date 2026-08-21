@@ -10,6 +10,7 @@
              xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
              xmlns:animations="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
              xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -333,23 +334,29 @@
                     </ItemsControl>
                 </StackPanel>
             </StackPanel>
-            <Border
-                Name="BtnOptions"
+            <battlegrounds:OverlayButton
+                x:Name="BtnOptions"
                 Height="23"
                 Width="24"
                 CornerRadius="3"
-                Background="Transparent"
                 Cursor="Hand"
-                MouseEnter="BtnOptions_MouseEnter"
-                MouseLeave="BtnOptions_MouseLeave"
+                Command="{x:Static commands:GlobalCommands.ShowSettings}"
+                CommandParameter="Battlegrounds"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right"
                 Margin="4"
                 Visibility="{Binding CogBtnVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
             >
-                <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="commands:GlobalCommands.ShowSettings" CommandParameter="Battlegrounds" />
-                </Border.InputBindings>
+                <battlegrounds:OverlayButton.Style>
+                    <Style TargetType="battlegrounds:OverlayButton">
+                        <Setter Property="Background" Value="#00FFFFFF" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#22FFFFFF" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </battlegrounds:OverlayButton.Style>
                 <Rectangle
                     Height="14"
                     Width="14"
@@ -360,7 +367,7 @@
                         <VisualBrush Visual="{StaticResource appbar_settings}" />
                     </Rectangle.Fill>
                 </Rectangle>
-            </Border>
+            </battlegrounds:OverlayButton>
         </Grid>
     </Border>
 </UserControl>
