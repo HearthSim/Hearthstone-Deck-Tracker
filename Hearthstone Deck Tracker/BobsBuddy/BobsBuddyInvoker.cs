@@ -616,7 +616,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					else if(e.CardId == NonCollectible.Neutral.BloodGem1)
 						inputPlayer.Hand.Add(new BloodGem(null, simulator));
 					else if(e.CardId == NonCollectible.Neutral.BilgewaterBreakout_LockboxToken)
-						inputPlayer.Hand.Add(new LockboxCardEntity(null, simulator));
+						inputPlayer.Hand.Add(new LockboxCardEntity(null, simulator)
+						{
+							// Turns until the Lockbox opens
+							ScriptDataNum1 = e.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1),
+						});
 					else if(e.IsSpell)
 						inputPlayer.Hand.Add(new SpellCardEntity(null, simulator));
 					else
@@ -1566,7 +1570,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				else if(e.CardId == NonCollectible.Neutral.BloodGem1)
 					yield return new BloodGem(null, simulator);
 				else if(e.CardId == NonCollectible.Neutral.BilgewaterBreakout_LockboxToken)
-					yield return new LockboxCardEntity(null, simulator);
+					yield return new LockboxCardEntity(null, simulator)
+					{
+						// Turns until the Lockbox opens
+						ScriptDataNum1 = e.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1),
+					};
 				else if(e.IsSpell)
 					yield return new SpellCardEntity(null, simulator);
 				else if(!string.IsNullOrEmpty(e.CardId))
