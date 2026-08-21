@@ -49,8 +49,8 @@ namespace HDTTests.Hearthstone
 			var matching = Cards.All.Values
 				.Where(x => x.Entity.GetTag(GameTag.TECH_LEVEL) > 0)
 				.Where(x =>
-					x.Entity.GetTag(GameTag.IS_BACON_POOL_MINION) > 0
-					|| x.Entity.GetTag(GameTag.IS_BACON_POOL_SPELL) > 0
+					x.Entity.GetTag(GameTag.IS_BACON_POOL_MINION) == 1
+					|| x.Entity.GetTag(GameTag.IS_BACON_POOL_SPELL) == 1
 				)
 				.Where(x => Lockbox.Matches(x.Entity.GetTag, x.GetLocText(Locale.enUS)))
 				.ToList();

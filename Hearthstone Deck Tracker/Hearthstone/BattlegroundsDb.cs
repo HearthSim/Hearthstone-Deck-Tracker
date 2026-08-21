@@ -52,7 +52,8 @@ public class BattlegroundsDb
 		var baconCards = Cards.All.Values
 			.Where(x =>
 				GetTag(x, GameTag.TECH_LEVEL) > 0
-				&& GetTag(x, GameTag.IS_BACON_POOL_MINION) > 0
+				// explicitly check for == 1, as Rot Hide Gnoll has 2 but is not in the pool
+				&& GetTag(x, GameTag.IS_BACON_POOL_MINION) == 1
 			)
 			.ToList();
 
