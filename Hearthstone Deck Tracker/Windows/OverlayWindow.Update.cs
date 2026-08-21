@@ -430,7 +430,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Collapsed);
 				_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Collapsed);
 				if(turn == 0)
+				{
+					UpdateBobsBuddyPanelVisibility();
 					return;
+				}
 				var shouldShowOpponentInfo = false;
 				if(_leaderboardHoveredEntityId is int heroEntityId)
 				{
@@ -456,7 +459,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					BgsOpponentInfo.Visibility = Visibility.Visible;
 					BgsOpponentInfo.UpdateLayout();
-					_bgsBobsBuddyBehavior.Hide(AnimationType.Instant);
 					_bgsPastOpponentBoardBehavior.Show();
 				}
 				else
@@ -464,8 +466,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 					BgsOpponentInfo.Visibility = Visibility.Collapsed;
 					_bgsPastOpponentBoardBehavior.Hide();
 					BgsOpponentInfo.ClearLastKnownBoard();
-					ShowBobsBuddyPanelIfInMatch();
 				}
+
+				// handing the slot over to the past opponent board and taking it back should not animate
+				var swappingPastOpponentBoard = shouldShowOpponentInfo || _bgsPastOpponentBoardShown;
+				_bgsPastOpponentBoardShown = shouldShowOpponentInfo;
+				UpdateBobsBuddyPanelVisibility(swappingPastOpponentBoard ? AnimationType.Instant : null);
 
 				// Only fade the minions, if we're out of mulligan
 				if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
@@ -848,6 +854,37 @@ namespace Hearthstone_Deck_Tracker.Windows
 			),
 			_ => false
 		};
+
+		// the past opponent board takes the same slot as Bob's Buddy, so only one of them can be up
+		private bool _bgsPastOpponentBoardShown;
+
+		private bool ShouldShowBobsBuddyPanel()
+		{
+			if(!Config.Instance.RunBobsBuddy)
+				return false;
+
+			if(Remote.Config.Data?.BobsBuddy?.Disabled ?? false)
+				return false;
+
+			if(_bgsPastOpponentBoardShown)
+				return false;
+
+			// the game type outlives the match, and the two signals for leaving it (the scene and the
+			// log) do not arrive in a fixed order, so the match is over as soon as either one says so.
+			// A scene we cannot read is not one of them, or a stalled watcher would keep the panel down
+			if(SceneHandler.Scene is { } scene && scene != Mode.GAMEPLAY)
+				return false;
+
+			return _game.IsBattlegroundsMatch && !_game.IsInMenu;
+		}
+
+		internal void UpdateBobsBuddyPanelVisibility(AnimationType? animation = null)
+		{
+			if(ShouldShowBobsBuddyPanel())
+				_bgsBobsBuddyBehavior.Show(animation);
+			else
+				_bgsBobsBuddyBehavior.Hide(animation);
+		}
 
 		public void UpdateBattlegroundsSessionVisibility()
 		{

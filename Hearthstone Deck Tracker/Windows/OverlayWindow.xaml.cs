@@ -1136,7 +1136,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void ShowBgsTopBarAndBobsBuddyPanel()
 		{
 			ShowBgsTopBar();
-			ShowBobsBuddyPanel();
+			UpdateBobsBuddyPanelVisibility();
 			UpdateBgsChinaModulePanel();
 
 			// starting HDT mid-match, IsBattlegroundsMatch was still unknown when the scene event fired
@@ -1161,7 +1161,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HideBattlegroundsHeroPanel();
 			HideBattlegroundsTimewarpPanel();
 			TurnCounter.UpdateTurn(1);
-			HideBobsBuddyPanel();
+
+			// the panel hides itself once the match state says so, only its results are cleared here
+			BobsBuddyDisplay.ResetDisplays();
+			UpdateBobsBuddyPanelVisibility();
 
 			BattlegroundsInspirationViewModel.Reset();
 			HideBgsInspiration();
@@ -1284,21 +1287,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			PlayerResourcesViewModel.Initialize(maxHealth, maxMana, maxHandSize);
 			OpponentResourcesViewModel.Initialize(maxHealth, maxMana, maxHandSize);
-		}
-
-		internal void ShowBobsBuddyPanel(AnimationType? animation = null)
-		{
-			if(!Config.Instance.RunBobsBuddy)
-				return;
-			if(Remote.Config.Data?.BobsBuddy?.Disabled ?? false)
-				return;
-			_bgsBobsBuddyBehavior.Show(animation);
-		}
-
-		internal void HideBobsBuddyPanel()
-		{
-			_bgsBobsBuddyBehavior.Hide();
-			BobsBuddyDisplay.ResetDisplays();
 		}
 
 		internal void UpdateBgsChinaModulePanel()

@@ -451,8 +451,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.RunBobsBuddy = true;
 			SaveConfig(true);
-			if(Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.ShowBobsBuddyPanel();
+			Core.Overlay.UpdateBobsBuddyPanelVisibility();
 			Influx.OnBobsBuddyEnabledChanged(true);
 		}
 
@@ -462,8 +461,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.RunBobsBuddy = false;
 			SaveConfig(true);
-			if(Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.HideBobsBuddyPanel();
+			Core.Overlay.UpdateBobsBuddyPanelVisibility();
 			Influx.OnBobsBuddyEnabledChanged(false);
 		}
 

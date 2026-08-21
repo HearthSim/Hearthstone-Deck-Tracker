@@ -383,16 +383,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_leaderboardHoveredEntityId = entityId;
 		}
 
-		private void ShowBobsBuddyPanelIfInMatch()
-		{
-			if(_game.IsBattlegroundsMatch &&
-				_game.GetTurnNumber() != 0 &&
-				!_game.IsInMenu)
-			{
-				ShowBobsBuddyPanel(AnimationType.Instant);
-			}
-		}
-
 		public Point GetPlayerCardPosition(int position, int count)
 		{
 			var cardWidth = 0.0f;

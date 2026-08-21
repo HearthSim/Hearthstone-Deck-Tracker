@@ -1,3 +1,7 @@
+## Unreleased
+**Battlegrounds**:
+- Fixed Bob's Buddy not disappearing when returning to the pre-lobby screen.
+
 ## **Release v1.56.5 - 2026-08-21**
 **Battlegrounds**:
 - Fixed a small number of remaining incorrect combat odds.
