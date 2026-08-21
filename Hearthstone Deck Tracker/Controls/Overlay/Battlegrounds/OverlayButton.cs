@@ -11,8 +11,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds;
 /// The Battlegrounds in-game overlay uses a click-through WS_EX_TRANSPARENT window model.
 /// Under Wine/Linux, standard WPF Button Click/Command routing can be unreliable in that
 /// window configuration even when hover/rendering still works. OverlayButton keeps the
-/// ergonomic Command/Click authoring model while internally using the Border +
-/// MouseLeftButtonUp path that works reliably in the overlay.
+/// ergonomic Command/Click authoring model while internally using the Border + MouseUp
+/// path that works reliably in the overlay. Any mouse button counts as a click.
 /// </summary>
 public class OverlayButton : Border
 {
@@ -74,9 +74,11 @@ public class OverlayButton : Border
 		CoerceValue(IsEnabledProperty);
 	}
 
-	protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+	// hook MouseUp rather than the per-button events, so left, right, middle and the
+	// XButtons all trigger the button - handlers can tell them apart via ChangedButton
+	protected override void OnMouseUp(MouseButtonEventArgs e)
 	{
-		base.OnMouseLeftButtonUp(e);
+		base.OnMouseUp(e);
 
 		if(!IsEnabled)
 			return;
@@ -86,7 +88,7 @@ public class OverlayButton : Border
 		if(command != null && !command.CanExecute(commandParameter))
 			return;
 
-		Click?.Invoke(this, new RoutedEventArgs());
+		Click?.Invoke(this, e);
 		command?.Execute(commandParameter);
 		// unconditionally consume the click even with no handler attached -
 		// prevents the raw mouse event from passing through the overlay to the game.
