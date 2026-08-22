@@ -97,6 +97,10 @@ namespace Hearthstone_Deck_Tracker
 		[DllImport("user32.dll")]
 		public static extern bool PrintWindow(IntPtr hwnd, IntPtr hdcBlt, uint nFlags);
 
+		// Only available on Windows 10 1607+; callers must handle EntryPointNotFoundException.
+		[DllImport("user32.dll")]
+		private static extern uint GetDpiForWindow(IntPtr hWnd);
+
 		[DllImport("user32.dll")]
 		public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
@@ -272,13 +276,41 @@ namespace Hearthstone_Deck_Tracker
 
 			if(dpiScaling)
 			{
-				ptUL.X = (int)(ptUL.X / Helper.DpiScalingX);
-				ptUL.Y = (int)(ptUL.Y / Helper.DpiScalingY);
-				ptLR.X = (int)(ptLR.X / Helper.DpiScalingX);
-				ptLR.Y = (int)(ptLR.Y / Helper.DpiScalingY);
+				var (scaleX, scaleY) = GetDpiScalingForWindow(hsHandle);
+				ptUL.X = (int)(ptUL.X / scaleX);
+				ptUL.Y = (int)(ptUL.Y / scaleY);
+				ptLR.X = (int)(ptLR.X / scaleX);
+				ptLR.Y = (int)(ptLR.Y / scaleY);
 			}
 
 			return new Rectangle(ptUL.X, ptUL.Y, ptLR.X - ptUL.X, ptLR.Y - ptUL.Y);
+		}
+
+		// Helper.DpiScalingX/Y reflect the DPI of whichever HDT window last raised its
+		// Loaded event, which is not necessarily the monitor Hearthstone is on. On a
+		// multi-monitor setup with mixed scaling this produced the wrong client rect for
+		// the game window (HDT#3445 - opponent's cards/deck rendered off-screen).
+		// GetDpiForWindow (Windows 10 1607+) returns the DPI of the monitor the given
+		// window actually is on, so we prefer that and only fall back to the older,
+		// window-agnostic value on OS versions where the API doesn't exist.
+		private static (double X, double Y) GetDpiScalingForWindow(IntPtr hWnd)
+		{
+			try
+			{
+				var dpi = GetDpiForWindow(hWnd);
+				if(dpi > 0)
+				{
+					var scale = dpi / 96.0;
+					return (scale, scale);
+				}
+			}
+			catch(EntryPointNotFoundException)
+			{
+			}
+			catch(DllNotFoundException)
+			{
+			}
+			return (Helper.DpiScalingX, Helper.DpiScalingY);
 		}
 
 		public static void BringHsToForeground()
