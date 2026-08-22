@@ -1800,6 +1800,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					var enchantmentMapping = new Dictionary<string, string>
 					{
 						{ NonCollectible.Neutral.ChoralMrrrglr, NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment },
+						{ NonCollectible.Neutral.ChoralMrrrglr_ChoralMrrrglr, NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment },
 						{ NonCollectible.Neutral.TimewarpedMrrrglr, NonCollectible.Neutral.ChoralMrrrglr_ChorusEnchantment },
 						{ NonCollectible.Neutral.CostumeEnthusiast, NonCollectible.Neutral.CostumeEnthusiast_EnthusiasticEnchantment },
 						{ NonCollectible.Neutral.Dramaloc, NonCollectible.Neutral.Dramaloc_DramaticEnchantment },
