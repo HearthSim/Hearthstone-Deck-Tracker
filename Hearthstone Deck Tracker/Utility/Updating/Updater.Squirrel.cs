@@ -25,6 +25,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 		public static async void CheckForUpdates(bool force = false)
 		{
+			// An update has already been downloaded and installed, and is just waiting for a
+			// restart. Checking again would reset the status bar (UpdaterState.Checking/None
+			// both hide the "click to update" message) while leaving it visible but empty.
+			if(Status.UpdaterState == UpdaterState.Available)
+				return;
 			if(!force && !ShouldCheckForUpdates())
 				return;
 			_lastUpdateCheck = DateTime.Now;
