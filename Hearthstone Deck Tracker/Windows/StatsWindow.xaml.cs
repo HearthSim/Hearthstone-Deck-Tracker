@@ -1,7 +1,10 @@
 ﻿#region
 
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
+using Point = System.Drawing.Point;
 
 #endregion
 
@@ -24,6 +27,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Left = Config.Instance.StatsWindowLeft.Value;
 			if(Config.Instance.StatsWindowTop.HasValue)
 				Top = Config.Instance.StatsWindowTop.Value;
+
+			var titleBarCorners = new[]
+			{
+				new Point((int)Left + 5, (int)Top + 5),
+				new Point((int)(Left + Width) - 5, (int)Top + 5),
+				new Point((int)Left + 5, (int)(Top + TitlebarHeight) - 5),
+				new Point((int)(Left + Width) - 5, (int)(Top + TitlebarHeight) - 5)
+			};
+			if(!Screen.AllScreens.Any(s => titleBarCorners.Any(c => s.WorkingArea.Contains(c))))
+			{
+				Top = 100;
+				Left = 100;
+			}
 		}
 
 		public Thickness TitleBarMargin => new Thickness(0, TitlebarHeight, 0, 0);
