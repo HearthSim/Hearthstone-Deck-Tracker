@@ -145,6 +145,17 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						var health = attached.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
 						minion.SetBloodGemStats(atk, health);
 						break;
+					case TorethsBlessing.CardId:
+						var torethsBlessing = sim.EnchantmentFactory.Create(TorethsBlessing.CardId, minion.ControlledByPlayer);
+						if(torethsBlessing != null)
+						{
+							// The engine keeps the shield's remaining-hit count in the minion's
+							// DIVINE_SHIELD tag (not always 3 at combat start — can be lower
+							// due to card effects like persist poet);
+							torethsBlessing.ScriptDataNum1 = entity.GetTag(GameTag.DIVINE_SHIELD);
+							minion.AttachEnchantment(torethsBlessing);
+						}
+						break;
 					default:
 						if(attached.LatestCard.TypeEnum == CardType.ENCHANTMENT && attached.Info.LatestCardId != null)
 						{
