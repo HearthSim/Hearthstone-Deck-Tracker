@@ -1284,6 +1284,33 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
+		internal async void UpdateTrinketEnchantment(Entity enchantmentEntity, int trinketEntityId, bool isPlayerTrinket)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+
+			var targetPlayer = isPlayerTrinket ? _input.Player : _input.Opponent;
+			var trinket = targetPlayer.Trinkets.FirstOrDefault(t => t.game_id == trinketEntityId);
+
+			if(trinket == null || trinket.TrinketUpdatedDuringCombat)
+				return;
+
+			// Attach enchant to the trinket
+			if(enchantmentEntity.LatestCard.TypeEnum == CardType.ENCHANTMENT && enchantmentEntity.Info.LatestCardId != null)
+			{
+				var enchantment = new Simulator().EnchantmentFactory.Create(enchantmentEntity.Info.LatestCardId, trinket.ControlledByPlayer);
+				if(enchantment != null)
+				{
+					enchantment.ScriptDataNum1 = enchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+					enchantment.ScriptDataNum2 = enchantmentEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+					trinket.AttachEnchantment(enchantment);
+					trinket.TrinketUpdatedDuringCombat = true;
+				}
+			}
+
+			await TryRerun();
+		}
+
 		internal async void UpdateDrBoomsMonsterReborn(int sourceEntityId, int rebornMaxHealth, bool isPlayerMinion)
 		{
 			if(_input == null || !UpdateRevealedEntityValidStates)

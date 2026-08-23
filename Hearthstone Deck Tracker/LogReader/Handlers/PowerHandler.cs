@@ -1821,6 +1821,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 							if(enchantment != null)
 								BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber()).UpdateMinionEnchantment(enchantment, sourceEntity.Id, false);
+							else
+							{
+								// A trinket source (Dramaloc Sticker) attaches one enchantment per friendly minion with CREATOR = the
+								// trinket; the simulator reads the value from the trinket itself, so attach one to the captured trinket.
+								var trinketEnchantment = game.Entities.Values
+									.FirstOrDefault(e => e.CardId == enchantmentCardId &&
+									                     e.GetTag(GameTag.CREATOR) == sourceEntity.Id);
+
+								if(trinketEnchantment != null)
+									BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber()).UpdateTrinketEnchantment(trinketEnchantment, sourceEntity.Id, false);
+							}
 						}
 					}
 					if(gameState.CurrentBlock is { CardId: NonCollectible.Neutral.TimewarpedMagnanimoose or NonCollectible.Neutral.TimewarpedMagnanimoose_TimewarpedMagnanimoose, TriggerKeyword: "DEATHRATTLE" })
