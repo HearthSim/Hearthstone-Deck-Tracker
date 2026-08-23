@@ -703,6 +703,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				Log.Info($"pGoldrinnBeastAttack={goldrinnAttackBonus}, pGoldrinnBeastHealth={goldrinnHealthBonus}, friendly={friendly}");
 			}
 
+			// Fang Anklet's permanently improved amount. The trinket's own script data holds
+			// the separate this-combat grant, which Fang Anklet applies at start of combat.
+			var pFangAnklet = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.FangAnklet_FangAnkletPlayerEnchantDnt);
+			if(pFangAnklet != null)
+			{
+				inputPlayer.BeastAttackBonus += pFangAnklet.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+				inputPlayer.BeastHealthBonus += pFangAnklet.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);   // attached
+				Log.Info($"pFangAnkletBeastAttack={inputPlayer.BeastAttackBonus}, pFangAnkletBeastHealth={inputPlayer.BeastHealthBonus}, friendly={friendly}");
+			}
+
 			var pAncestralAutomaton = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomatonPlayerEnchantDnt);
 			if(pAncestralAutomaton != null)
 				inputPlayer.AncestralAutomatonCounter = pAncestralAutomaton.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
