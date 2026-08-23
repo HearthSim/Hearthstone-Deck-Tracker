@@ -3,6 +3,7 @@
 - Fixed the secret tracker bringing back already ruled out secrets when a minion you played died later in the turn, for example to Flames of Infinity.
 
 **Battlegrounds**:
+- Fixed the Naga spell counter not counting in threes.
 - Fixed Bob's Buddy not disappearing when returning to the pre-lobby screen.
 
 ## **Release v1.56.5 - 2026-08-21**

@@ -32,7 +32,7 @@ public class SpellsPlayedForNagasCounter : NumericCounter
 
 	public override string[] GetCardsToDisplay() => RelatedCards;
 
-	public override string ValueToShow() => $"{1 + (Counter / 4)}  ({Counter % 4}/4)";
+	public override string ValueToShow() => $"{1 + (Counter / 3)}  ({Counter % 3}/3)";
 	public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
 	{
 		if(!Game.IsBattlegroundsMatch)
