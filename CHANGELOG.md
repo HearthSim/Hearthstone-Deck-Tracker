@@ -1,11 +1,15 @@
-## Unreleased
+## **Release v1.56.6 - 2026-08-24**
 **Hearthstone**:
 - Fixed the secret tracker bringing back already ruled out secrets when a minion you played died later in the turn, for example to Flames of Infinity.
+- Fixed the stats window not being recoverable after going off-screen.
 
 **Battlegrounds**:
 - Fixed the Naga spell counter not counting in threes.
 - Fixed Bob's Buddy not disappearing when returning to the pre-lobby screen.
 - Fixed a number of incorrect combat odds.
+
+**Updater Improvements**:
+- Fixed the updater showing a blank bar when there was an update available.
 
 ## **Release v1.56.5 - 2026-08-21**
 **Battlegrounds**:
