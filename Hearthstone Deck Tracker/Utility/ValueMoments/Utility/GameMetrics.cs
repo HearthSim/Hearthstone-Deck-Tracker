@@ -20,6 +20,7 @@
 		public int BattlegroundsHeroesTabClicks { get; set; }
 		public int BattlegroundsCompGuidesInspirationClicks { get; set; }
 		public int BobsBuddyTerminalCases { get; set; }
+		public int BobsBuddyValidatedCombats { get; private set; }
 		public int MercenariesHoversOpponentMercToShowAbility { get; private set; }
 		public int MercenariesHoverTasksDuringMatch { get; private set; }
 		public bool Tier7HeroOverlayDisplayed { get; set; }
@@ -69,6 +70,11 @@
 		public void IncrementBobsBuddyTerminalCase()
 		{
 			BobsBuddyTerminalCases += 1;
+		}
+
+		public void IncrementBobsBuddyValidatedCombat()
+		{
+			BobsBuddyValidatedCombats += 1;
 		}
 
 		public void IncrementMercenariesHoversOpponentMercToShowAbility()

@@ -1029,8 +1029,11 @@ namespace Hearthstone_Deck_Tracker
 					CaptureMulliganGuideFeedback(_game.CurrentFormatType);
 				}
 
+				var battlegroundsGameType = GameType.GT_UNKNOWN;
 				if(_game.IsBattlegroundsMatch)
 				{
+					battlegroundsGameType = _game.CurrentGameType;
+
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
 
 					var finalPlacement = hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0;
@@ -1086,6 +1089,11 @@ namespace Hearthstone_Deck_Tracker
 						_game.Metrics,
 						_game.CurrentGameType,
 						_game.Spectator
+					);
+					Influx.OnBattlegroundsGameCompleted(
+						battlegroundsGameType,
+						_game.CurrentGameStats.Turns,
+						_game.Metrics
 					);
 				}
 

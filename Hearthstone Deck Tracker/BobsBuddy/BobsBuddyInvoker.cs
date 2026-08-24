@@ -1979,6 +1979,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				isOpposingKelThuzad: (_input?.Opponent?.HeroIsKelThuzad ?? false)
 			);
 
+			Core.Game.Metrics.IncrementBobsBuddyValidatedCombat();
+
 			if(terminalCase)
 				Core.Game.Metrics.IncrementBobsBuddyTerminalCase();
 		}

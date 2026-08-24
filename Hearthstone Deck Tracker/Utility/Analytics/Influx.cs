@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 
 namespace Hearthstone_Deck_Tracker.Utility.Analytics
 {
@@ -305,6 +306,28 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			point.Tag("opposing_akazamzarak", isOpposingAkazamzarak.ToString());
 			point.Tag("opposing_kelthuzad", isOpposingKelThuzad.ToString());
+
+			_queue.Add(point.Build());
+#endif
+		}
+
+		public static void OnBattlegroundsGameCompleted(HearthDb.Enums.GameType gameType, int turns, GameMetrics metrics)
+		{
+#if(SQUIRREL)
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+
+			// skip games where BobsBuddy validation never passed its reporting gates, since terminal cases were not counted there
+			if(metrics.BobsBuddyValidatedCombats == 0)
+				return;
+
+			var point = new InfluxPointBuilder("hdt_bb_game_result")
+				.HighPrecision()
+				.Tag("game_type", gameType.ToString())
+				.Tag("has_terminal_case", (metrics.BobsBuddyTerminalCases > 0).ToString())
+				.Tag("bb_version", BobsBuddyUtils.VersionString)
+				.Field("turns", turns)
+				.Field("terminal_cases", metrics.BobsBuddyTerminalCases);
 
 			_queue.Add(point.Build());
 #endif
