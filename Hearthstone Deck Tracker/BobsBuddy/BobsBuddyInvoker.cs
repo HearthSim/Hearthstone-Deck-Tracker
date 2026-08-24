@@ -82,6 +82,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public int LastAttackingHeroAttack;
 
 		private List<Entity> _opponentHand = new();
+		private List<Entity> _opponentTeammateHand = new();
 		private readonly Dictionary<Entity, Entity> _opponentHandMap = new();
 		private List<Entity> _opponentSecrets = new();
 
@@ -185,8 +186,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		public async void StartCombat()
 		{
-			_opponentHand = new();
-			_opponentSecrets = new();
+			// A duos teammate pass re-enters StartCombat after the primary snapshot. Clearing here would drop
+			// the opponent's own hand entities, which UpdateCardOpponentHand still rebuilds its hand from.
+			if(_input == null || !_game.IsBattlegroundsDuosMatch)
+			{
+				_opponentHand = new();
+				_opponentTeammateHand = new();
+				_opponentSecrets = new();
+			}
 
 			try
 			{
@@ -441,7 +448,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			Hearthstone.Player gamePlayer,
 			BobsBuddyPlayer inputPlayer,
 			Entity? playerEntity,
-			bool friendly
+			bool friendly,
+			bool isTeammate = false
 			)
 		{
 			var playerGameHero = gamePlayer.Hero;
@@ -641,9 +649,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						.ToList()
 				);
 
-				_opponentHand = GetOrderedHandEntities(gamePlayer.Hand).ToList();
+				var opponentHandEntities = GetOrderedHandEntities(gamePlayer.Hand).ToList();
+				if(isTeammate)
+					_opponentTeammateHand = opponentHandEntities;
+				else
+					_opponentHand = opponentHandEntities;
 				inputPlayer.Hand.Clear();
-				inputPlayer.Hand.AddRange(GetOpponentHandEntities(simulator));
+				inputPlayer.Hand.AddRange(GetOpponentHandEntities(opponentHandEntities, simulator));
 			}
 
 			// DUOS TEAMMATE (validated/verified against 276 duos combats):
@@ -838,12 +850,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				{
 					if(_game.DuosWasPlayerHeroModified && DuosInputPlayerTeammate == null && input.PlayerTeammate != null)
 					{
-						SetupInputPlayer(simulator, _game.Player, input.PlayerTeammate, _game.PlayerEntity, true);
+						SetupInputPlayer(simulator, _game.Player, input.PlayerTeammate, _game.PlayerEntity, true, isTeammate: true);
 						DuosInputPlayerTeammate = input.PlayerTeammate;
 					}
 					if(_game.DuosWasOpponentHeroModified && DuosInputOpponentTeammate == null && input.OpponentTeammate != null)
 					{
-						SetupInputPlayer(simulator, _game.Opponent, input.OpponentTeammate, _game.OpponentEntity, false);
+						SetupInputPlayer(simulator, _game.Opponent, input.OpponentTeammate, _game.OpponentEntity, false, isTeammate: true);
 						DuosInputOpponentTeammate = input.OpponentTeammate;
 					}
 				}
@@ -926,12 +938,23 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			// Wait for attached entities to be logged. This should happen at the exact same timestamp.
 			//await _game.GameTime.WaitForDuration(1);
 
-			var entities = GetOpponentHandEntities(new Simulator()).ToList();
-			if(entities.Count(x => x is MinionCardEntity) <= _input.Opponent.Hand.Count(x => x is MinionCardEntity))
+			// In duos both opponent-side players are set up from _game.Opponent, so a revealed card is
+			// attributed by the list it was captured in. Rebuilding the other one would write the
+			// opponent teammate's cards into the hand of the opponent fighting first.
+			var handEntities = _opponentHand;
+			var handOwner = _input.Opponent;
+			if(_input.OpponentTeammate != null && !_opponentHand.Contains(entity) && _opponentTeammateHand.Contains(entity))
+			{
+				handEntities = _opponentTeammateHand;
+				handOwner = _input.OpponentTeammate;
+			}
+
+			var entities = GetOpponentHandEntities(handEntities, new Simulator()).ToList();
+			if(entities.Count(x => x is MinionCardEntity) <= handOwner.Hand.Count(x => x is MinionCardEntity))
 				return;
 
-			_input.Opponent.Hand.Clear();
-			_input.Opponent.Hand.AddRange(entities);
+			handOwner.Hand.Clear();
+			handOwner.Hand.AddRange(entities);
 
 			await TryRerun();
 		}
@@ -1618,9 +1641,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return true;
 		}
 
-		private IEnumerable<CardEntity> GetOpponentHandEntities(Simulator simulator)
+		private IEnumerable<CardEntity> GetOpponentHandEntities(List<Entity> handEntities, Simulator simulator)
 		{
-			foreach(var _e in _opponentHand)
+			foreach(var _e in handEntities)
 			{
 				var e = _opponentHandMap.TryGetValue(_e, out var copy) ? copy : _e;
 				if(e.IsMinion)
