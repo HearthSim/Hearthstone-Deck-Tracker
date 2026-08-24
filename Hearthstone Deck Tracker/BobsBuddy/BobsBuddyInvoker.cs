@@ -1421,12 +1421,27 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private readonly Dictionary<int, (int TriggerMultiplier, List<bool> SummonedIsPremium)> _pendingAutoAssemblerDeathrattleSources =
 			new Dictionary<int, (int, List<bool>)>();
 
+		// All Auto Assembler deathrattle FIRINGS observed per host minion.
+		private readonly Dictionary<int, int> _observedAutoAssemblerFirings = new Dictionary<int, int>();
+
+		internal void ObserveAutoAssemblerDeathrattleFiring(int sourceEntityId)
+		{
+			if(!_pendingAutoAssemblerDeathrattleSources.ContainsKey(sourceEntityId))
+				return;
+			_observedAutoAssemblerFirings.TryGetValue(sourceEntityId, out var firings);
+			_observedAutoAssemblerFirings[sourceEntityId] = firings + 1;
+		}
+
 		internal void ObserveMagnetizedAutoAssemblerDeathrattles(int sourceEntityId, int extraDeathrattles, bool isGolden)
 		{
 			if(!_pendingAutoAssemblerDeathrattleSources.TryGetValue(sourceEntityId, out var observation))
 			{
 				observation = (1 + extraDeathrattles, new List<bool>());
 				_pendingAutoAssemblerDeathrattleSources[sourceEntityId] = observation;
+				// The registration above happens mid-block, so at this block's BLOCK_START the source was not in
+				// the dictionary yet and the firing counter returned without counting it.
+				// Count it here; every later firing of this source is counted at its own BLOCK_START.
+				_observedAutoAssemblerFirings[sourceEntityId] = 1;
 			}
 			observation.SummonedIsPremium.Add(isGolden);
 			CurrentCombatHasPendingAutoAssemblerObservations = true;
@@ -1469,8 +1484,20 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return false;
 
 			// Extra deathrattles (e.g., Titus Rivendare) resolve as full repeats of the whole deathrattle list —
-			// so the first (observed / triggerMultiplier) summons are the distinct deathrattles in their real order.
-			var automatons = summonedByIsPremium.Take(summonedByIsPremium.Count / triggerMultiplier).ToList();
+			// so the first (observed / triggerMultiplier) are the distinct deathrattles in their real order.
+			_observedAutoAssemblerFirings.TryGetValue(sourceEntityId, out var observedFirings);
+			var otherDeathrattles = (minion is IDeathrattle and not AutoAssembler ? 1 : 0)
+				+ minion.Enchantments.Count(e => e is IDeathrattle and not (AutoAssemblerEnchantment or AutoAssemblerEnchantmentGolden))
+				+ minion.AdditionalDeathrattles.Count(d => d.Method != AutoAssembler.Deathrattle().Method
+					&& d.Method != AutoAssembler.GoldenDeathrattle().Method);
+			var firedDeathrattles = Math.Max(observedFirings / triggerMultiplier - otherDeathrattles, 0);
+			var summonedDeathrattles = summonedByIsPremium.Count / triggerMultiplier;
+			var automatons = summonedByIsPremium.Take(Math.Max(summonedDeathrattles, firedDeathrattles)).ToList();
+
+			// A firing the board had no space for leaves no summon to read the premium flag from; repeat the last
+			// observed one, because every module fused into one host grants the same Automaton.
+			while(automatons.Count < firedDeathrattles && summonedByIsPremium.Count > 0)
+				automatons.Add(summonedByIsPremium[summonedByIsPremium.Count - 1]);
 
 			// A minion's own innate deathrattles and deathrattles from attached enchantments resolve before these
 			// AdditionalDeathrattles, and appear as the leading elements; drop them so automatons map to AdditionalDeathrattles only.

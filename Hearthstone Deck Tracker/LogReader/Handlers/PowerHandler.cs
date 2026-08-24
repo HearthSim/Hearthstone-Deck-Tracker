@@ -777,6 +777,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(gameState.CurrentBlock != null)
 						gameState.CurrentBlock.SourceEntityId = actionStartingEntityId;
 
+					// Count the Auto Assembler Deathrattle FIRINGS (not just those that summoned onto the board).
+					if(blockType == "TRIGGER" && triggerKeyword == "DEATHRATTLE"
+						&& game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null
+						&& game.Entities.TryGetValue(actionStartingEntityId, out var firingMinion)
+						&& firingMinion.IsMinion
+						&& firingMinion.GetTag(GameTag.ZONE) == (int)Zone.GRAVEYARD)
+					{
+						var firingRace = firingMinion.GetTag(GameTag.CARDRACE);
+						if(firingRace == (int)Race.MECHANICAL || firingRace == (int)Race.ALL)
+							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+								.ObserveAutoAssemblerDeathrattleFiring(actionStartingEntityId);
+					}
+
 					Entity? actionStartingEntity = null;
 
 					if(string.IsNullOrEmpty(actionStartingCardId))
