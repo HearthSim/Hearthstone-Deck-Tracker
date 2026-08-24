@@ -5,6 +5,7 @@
 **Battlegrounds**:
 - Fixed the Naga spell counter not counting in threes.
 - Fixed Bob's Buddy not disappearing when returning to the pre-lobby screen.
+- Fixed a number of incorrect combat odds.
 
 ## **Release v1.56.5 - 2026-08-21**
 **Battlegrounds**:
