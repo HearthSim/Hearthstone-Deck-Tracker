@@ -224,10 +224,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		// enchantment cannot give the count: repeated magnetizations accumulate into ONE enchantment
 		// and that tag holds the stats each module carried when it fused.
 		// Each module stays in the entity tree as its own REMOVEDFROMGAME minion instead,
-		// and three cases find them:
+		// and two cases find them:
 		//   - a magnetic enchantment on the host names its module in CREATOR
 		//   - a module records its host in TAG_SCRIPT_DATA_NUM_1 when it magnetizes
-		//   - a module the host's own effect duplicated carries CREATOR = the host.
 		private static void CheckForRepeatedMagnetizedAutoAssemblers(Minion minion, Entity host, IEnumerable<Entity> attachedEntities, IReadOnlyDictionary<int, Entity>? allEntities)
 		{
 			if(allEntities == null)
@@ -256,7 +255,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			foreach(var entity in allEntities.Values)
 			{
-				if(entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) != host.Id && entity.GetTag(GameTag.CREATOR) != host.Id)
+				// The played module is left in the entity tree as a REMOVEDFROMGAME minion whose CREATOR
+				// is the card that initiated the magnetization.
+				// Only a module's own record of where it fused (TAG_SCRIPT_DATA_NUM_1) identifies this host.
+				if(entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) != host.Id)
 					continue;
 
 				if(entity.GetTag(GameTag.ZONE) != (int)Zone.REMOVEDFROMGAME)
@@ -273,10 +275,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(modules.Count == 0)
 				return;
 
-			// Exclude one counted module when the host carries a BG32_172e, because EnchantmentFactory
+			// Exclude one counted module per BG32_172e the host carries, because EnchantmentFactory
 			// resolves that card id to an AutoAssemblerEnchantment which already summons one Automaton.
-			var carried = attachedEntities.Any(e => e.CardId == AutoAssemblerEnchantment.CardId
-				|| e.CardId == AutoAssemblerEnchantmentGolden.CardId) ? 1 : 0;
+			// A host can carry more than one instance (a golden formed by tripling brings each copy's).
+			var carried = attachedEntities.Count(e => e.CardId == AutoAssemblerEnchantment.CardId
+				|| e.CardId == AutoAssemblerEnchantmentGolden.CardId);
 
 			foreach(var module in modules.OrderBy(x => x.Key).Skip(carried))
 				minion.AdditionalDeathrattles.Add(module.Value ? AutoAssembler.GoldenDeathrattle() : AutoAssembler.Deathrattle());
