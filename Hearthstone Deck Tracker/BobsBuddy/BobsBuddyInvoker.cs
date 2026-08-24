@@ -1298,7 +1298,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
 			var minion = targetPlayer.Side.FirstOrDefault(m => m.game_id == attachedToEntityId);
 
-			if(minion == null)
+			if(minion == null || minion.MinionUpdatedDuringCombat)
 				return;
 
 			// Attach enchant to the minion
