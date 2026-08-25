@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.57.1 - 2026-08-25**
 **Hearthstone**:
 - Added Slime'em's Ectoplasm related cards.
 - Fixed the secret tracker revealing which secret The Origin Stone cast from a Discover, which is not public information. It now narrows to the pool of the card that offered the Discover, including when every unchosen option was a secret.
