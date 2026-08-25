@@ -795,50 +795,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 
 				}
-				else if(creator.CardId == NonCollectible.Mage.TheForbiddenSequence_TheOriginStoneToken)
-				{
-					// The Origin Stone reveals a copy of each unchosen discover option immediately
-					// before casting it, so the secret it puts into play is public information.
-					var revealedCast = _game.Entities.Values
-						.Where(e => e.Id < entity.Id && e.IsSecret && e.HasCardId
-									&& e.IsControlledBy(entity.GetTag(GameTag.CONTROLLER))
-									&& e.GetTag(GameTag.COPIED_FROM_ENTITY_ID) > 0
-									&& e.IsInZone(Zone.SETASIDE))
-						.OrderByDescending(e => e.Id)
-						.FirstOrDefault();
-					if(revealedCast?.CardId is not null)
-						entity.Info.StoredCardIds.Add(revealedCast.CardId);
-					else
-					{
-						// Copies of secrets are not revealed, but the unchosen discover options they
-						// were copied from are, which still narrows the secret down to those options.
-						foreach(var cardId in GetUnchosenDiscoveredSecretIds(entity, creator))
-							entity.Info.StoredCardIds.Add(cardId);
-					}
-				}
+				// The Origin Stone deliberately gets no handling here. It casts copies of the
+				// unchosen discover options, and the log reveals those options - but the secret
+				// copy it puts into play stays hidden until it triggers, exactly as it does in
+				// game. Naming it from the revealed options would leak private information.
 			}
-		}
-
-		private IEnumerable<string> GetUnchosenDiscoveredSecretIds(Entity secret, Entity creator)
-		{
-			var unchosenOptions = _game.Entities.Values
-				.Where(e => e.Id > creator.Id && e.Id < secret.Id && e.HasCardId
-							&& e.IsControlledBy(secret.GetTag(GameTag.CONTROLLER))
-							&& e.GetTag(GameTag.WAS_DISCOVER_OPTION) == 1
-							&& e.GetTag(GameTag.CREATOR) > 0
-							// The chosen option moves to hand, the unchosen ones are discarded.
-							&& (e.IsInZone(Zone.GRAVEYARD) || e.IsInZone(Zone.SETASIDE)))
-				.OrderByDescending(e => e.Id)
-				.ToList();
-
-			var discoverSourceId = unchosenOptions.FirstOrDefault()?.GetTag(GameTag.CREATOR) ?? 0;
-			if(discoverSourceId == 0)
-				return Enumerable.Empty<string>();
-
-			return unchosenOptions
-				.Where(e => e.IsSecret && e.GetTag(GameTag.CREATOR) == discoverSourceId)
-				.Select(e => e.CardId!)
-				.Distinct();
 		}
 
 		public void RemoveFromDeck(Entity entity, int turn)

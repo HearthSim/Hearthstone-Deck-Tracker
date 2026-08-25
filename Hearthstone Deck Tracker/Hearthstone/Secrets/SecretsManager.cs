@@ -241,14 +241,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				}
 				else if(creator is { CardId: HearthDb.CardIds.NonCollectible.Mage.TheForbiddenSequence_TheOriginStoneToken })
 				{
-					var storedIds = secret.Entity.Info.StoredCardIds;
-
-					if(!storedIds.IsEmpty())
-					{
-						// The Origin Stone revealed the copy it cast, so the exact secret is known.
-						secretsCreated.AddRange(GetFilteredSecrets(secret, storedIds.ToHashSet()));
-					}
-					else if(TryGetOriginStoneSourceGenerator(secret) is { } sourceGenerator)
+					// Which secret The Origin Stone cast is never public: the game hides the copy it
+					// puts into play until it triggers. The most we may narrow to is the pool the
+					// Discover it came from could offer.
+					if(TryGetOriginStoneSourceGenerator(secret) is { } sourceGenerator)
 					{
 						var creatableSecrets = GetCreatableSecretsFromGenerator(sourceGenerator, gameMode, format);
 						secretsCreated.AddRange(GetFilteredSecrets(secret, creatableSecrets));
@@ -398,20 +394,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		private ICardGenerator? TryGetOriginStoneSourceGenerator(Secret secret)
 		{
-			// The Origin Stone casts copies of unchosen discover options, revealing a copy of each
-			// non-secret option immediately before the cast entity is created. Trace such a copy
-			// back to the discover source to reuse its generator pool.
-			var revealedCast = Game.Opponent.RevealedEntities
-				.Where(e => e.Id < secret.Entity.Id
-							&& e.GetTag(GameTag.COPIED_FROM_ENTITY_ID) > 0
-							&& e.IsInZone(Zone.SETASIDE))
-				.OrderByDescending(e => e.Id)
-				.FirstOrDefault();
-			if(revealedCast is null)
-				return null;
-
-			var discoverOption = Game.Opponent.RevealedEntities
-				.FirstOrDefault(e => e.Id == revealedCast.GetTag(GameTag.COPIED_FROM_ENTITY_ID));
+			// Which unchosen option The Origin Stone turned into the face-down secret is private,
+			// but the Discover that offered them is not. Trace back to the card that offered them
+			// and reuse its generation pool - that is as narrow as we may legitimately get.
+			var discoverOption = TryGetOriginStoneDiscoverOption(secret);
 			var discoverSource = Game.Opponent.RevealedEntities
 				.FirstOrDefault(e => e.Id == discoverOption?.GetTag(GameTag.CREATOR));
 
@@ -419,6 +405,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				   && _relatedCardsManager.CardGeneratorCards.TryGetValue(generatorCardId, out var sourceGenerator)
 				? sourceGenerator
 				: null;
+		}
+
+		/// <summary>
+		/// Finds an option of the Discover whose leftovers The Origin Stone cast, so its creator can
+		/// be read off. Any option will do - all of them share one creator.
+		/// </summary>
+		private Entity? TryGetOriginStoneDiscoverOption(Secret secret)
+		{
+			// The options are revealed when The Origin Stone casts them, secrets included, so they
+			// are the reliable route back. The secret is created in the same block as the cast, so
+			// the newest option below it belongs to the Discover that triggered it.
+			var option = Game.Opponent.RevealedEntities
+				.Where(e => e.Id < secret.Entity.Id
+							&& e.GetTag(GameTag.WAS_DISCOVER_OPTION) == 1
+							&& e.GetTag(GameTag.CREATOR) > 0)
+				.OrderByDescending(e => e.Id)
+				.FirstOrDefault();
+			if(option is not null)
+				return option;
+
+			// Failing that, go through the copy The Origin Stone revealed just before casting it.
+			// Only non-secret options are revealed that way, so this alone misses a Discover that
+			// offered nothing but secrets.
+			var revealedCast = Game.Opponent.RevealedEntities
+				.Where(e => e.Id < secret.Entity.Id
+							&& e.GetTag(GameTag.COPIED_FROM_ENTITY_ID) > 0
+							&& e.IsInZone(Zone.SETASIDE))
+				.OrderByDescending(e => e.Id)
+				.FirstOrDefault();
+
+			return Game.Opponent.RevealedEntities
+				.FirstOrDefault(e => e.Id == revealedCast?.GetTag(GameTag.COPIED_FROM_ENTITY_ID));
 		}
 
 		private HashSet<string> GetCreatableSecretsFromGenerator(ICardGenerator generator, GameType gameMode, FormatType format)

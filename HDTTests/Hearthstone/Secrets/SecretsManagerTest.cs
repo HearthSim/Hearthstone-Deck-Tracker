@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -872,7 +872,7 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void CreatedByTheOriginStone_KnownCard()
+		public void CreatedByTheOriginStone_RevealedSecretCopyDoesNotNarrowSecret()
 		{
 			var game = new MockGame
 			{
@@ -887,16 +887,24 @@ namespace HDTTests.Hearthstone.Secrets
 			creator.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
 			game.Entities.Add(10, creator);
 
-			// The Origin Stone revealed a copy of Mana Bind before casting it,
-			// captured into StoredCardIds by Player.CreateInSecret.
+			// A revealed secret sitting in SETASIDE next to the cast must not be taken for the
+			// secret that went into play: the game keeps that one hidden until it triggers.
+			var revealedCopy = new Entity(20);
+			revealedCopy.CardId = HearthDb.CardIds.Collectible.Mage.ManaBind;
+			revealedCopy.SetTag(GameTag.SECRET, 1);
+			revealedCopy.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			revealedCopy.SetTag(GameTag.COPIED_FROM_ENTITY_ID, 15);
+			revealedCopy.SetTag(GameTag.ZONE, (int)Zone.SETASIDE);
+			game.Entities.Add(20, revealedCopy);
+
 			var createdSecret = new Entity(30);
 			createdSecret.SetTag(GameTag.SECRET, 1);
 			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
 			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
-			createdSecret.SetTag(GameTag.CREATOR, 10);
-			createdSecret.Info.Created = true;
-			createdSecret.Info.StoredCardIds.Add(HearthDb.CardIds.Collectible.Mage.ManaBind);
+			createdSecret.SetTag(GameTag.ZONE, (int)Zone.SECRET);
 			game.Entities.Add(30, createdSecret);
+
+			game.Opponent.CreateInSecret(createdSecret, 10, creator.Id);
 
 			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
 
@@ -904,9 +912,8 @@ namespace HDTTests.Hearthstone.Secrets
 
 			var cards = secretsManager.GetSecretList();
 
-			// We should know the secret is Mana Bind
-			Assert.AreEqual(1, cards.Count);
-			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.ManaBind == c.Id && c.Count == 1));
+			// The cast secret is private, so every available secret remains possible
+			Assert.AreEqual(Mage.All.Count, cards.Count);
 		}
 
 		[TestMethod]
@@ -974,7 +981,7 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void CreatedByTheOriginStone_UnchosenDiscoverOption()
+		public void CreatedByTheOriginStone_UnchosenDiscoverOptionDoesNotNarrowSecret()
 		{
 			var game = new MockGame
 			{
@@ -1045,9 +1052,77 @@ namespace HDTTests.Hearthstone.Secrets
 
 			var cards = secretsManager.GetSecretList();
 
-			// The only unchosen secret option was Potion of Polymorph, so the secret is known
-			Assert.AreEqual(1, cards.Count);
-			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.PotionOfPolymorph == c.Id && c.Count == 1));
+			// The revealed unchosen options say what the Discover offered, not which of them
+			// The Origin Stone turned into the face-down secret. Narrowing to Potion of Polymorph
+			// would leak private information, so we fall back to Alter Time's pool.
+			Assert.IsTrue(cards.Count > 1);
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.ManaBind == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.SplittingImage == c.Id && c.Count == 1));
+		}
+
+		[TestMethod]
+		public void CreatedByTheOriginStone_AllUnchosenOptionsAreSecrets()
+		{
+			var game = new MockGame
+			{
+				CurrentGameType = GameType.GT_RANKED,
+				CurrentFormatType = FormatType.FT_WILD
+			};
+			game.Player = new Player(game, true) { Id = 1 };
+			game.Opponent = new Player(game, false) { Id = 2 };
+
+			var creator = new Entity(159);
+			creator.CardId = HearthDb.CardIds.NonCollectible.Mage.TheForbiddenSequence_TheOriginStoneToken;
+			creator.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			game.Entities.Add(159, creator);
+
+			var alterTime = new Entity(17);
+			alterTime.CardId = HearthDb.CardIds.Collectible.Mage.AlterTime;
+			alterTime.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			game.Entities.Add(17, alterTime);
+
+			// Both unchosen options are secrets, so The Origin Stone reveals no cast copy at all:
+			// the only trace back to the Discover source is the options themselves.
+			var unchosenSecret1 = new Entity(257);
+			unchosenSecret1.CardId = HearthDb.CardIds.Collectible.Mage.PotionOfPolymorph;
+			unchosenSecret1.SetTag(GameTag.SECRET, 1);
+			unchosenSecret1.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			unchosenSecret1.SetTag(GameTag.CREATOR, 17);
+			unchosenSecret1.SetTag(GameTag.WAS_DISCOVER_OPTION, 1);
+			unchosenSecret1.SetTag(GameTag.ZONE, (int)Zone.GRAVEYARD);
+			game.Entities.Add(257, unchosenSecret1);
+
+			var unchosenSecret2 = new Entity(258);
+			unchosenSecret2.CardId = HearthDb.CardIds.Collectible.Mage.ManaBind;
+			unchosenSecret2.SetTag(GameTag.SECRET, 1);
+			unchosenSecret2.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			unchosenSecret2.SetTag(GameTag.CREATOR, 17);
+			unchosenSecret2.SetTag(GameTag.WAS_DISCOVER_OPTION, 1);
+			unchosenSecret2.SetTag(GameTag.ZONE, (int)Zone.GRAVEYARD);
+			game.Entities.Add(258, unchosenSecret2);
+
+			var createdSecret = new Entity(264);
+			createdSecret.SetTag(GameTag.SECRET, 1);
+			createdSecret.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			createdSecret.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
+			createdSecret.SetTag(GameTag.ZONE, (int)Zone.SECRET);
+			game.Entities.Add(264, createdSecret);
+
+			game.Opponent.CreateInSecret(createdSecret, 10, creator.Id);
+
+			var secretsManager = new SecretsManager(game, new MockAvailableSecrets(), new RelatedCardsManager());
+
+			secretsManager.NewSecret(createdSecret);
+
+			var cards = secretsManager.GetSecretList();
+
+			// Which of the two it cast stays private, but both came from Alter Time, so only
+			// Alter Time's pool (wild/classic-only Arcane spells) is possible.
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.ManaBind == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Mage.SplittingImage == c.Id && c.Count == 1));
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Counterspell == c.Id && c.Count == 1));
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.IceBarrier == c.Id && c.Count == 1));
+			Assert.IsNull(cards.SingleOrDefault(c => Mage.Vaporize == c.Id && c.Count == 1));
 		}
 
 		[TestMethod]
