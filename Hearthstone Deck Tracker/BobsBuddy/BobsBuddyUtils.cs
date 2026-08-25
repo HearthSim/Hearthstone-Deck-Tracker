@@ -319,8 +319,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 		}
 
-		// A specific Dark Gift (Jaws of Death) offered on a magnetic minion can be obtained from Ominous Stone.
-		// However, the enchantment is not directly visible on the attached minion at combat setup.
+		// Only specific Dark Gifts (Jaws of Death, Offensive Sacrifice) offered on a magnetic minion can be obtained
+		// from Ominous Stone. The enchantment might be attached to magnetized minion.
 		private static void CheckForDarkGiftsOnMagnetizedModules(Simulator sim, Minion minion, Entity host, IEnumerable<Entity> attachedEntities, IReadOnlyDictionary<int, Entity>? allEntities)
 		{
 			if(allEntities == null)
@@ -344,6 +344,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							var enchantment = sim.EnchantmentFactory.Create(JawsOfDeath.CardId, minion.ControlledByPlayer);
 							if(enchantment != null)
 								minion.AttachEnchantment(enchantment);
+							break;
+						case OffensiveSacrifice.CardId:
+							var offensiveSacrifice = sim.EnchantmentFactory.Create(OffensiveSacrifice.CardId, minion.ControlledByPlayer);
+							if(offensiveSacrifice != null)
+								minion.AttachEnchantment(offensiveSacrifice);
 							break;
 					}
 				}
