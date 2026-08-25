@@ -69,6 +69,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int PogoHopperPlayedCount { get; private set; }
 		public Entity? LastDiedMinionCard => DeadMinionsCards.LastOrDefault();
 		public List<Entity> DeadMinionsCards { get; } = new();
+		public List<Entity> SlimedMinions { get; } = new();
 		public string? LastDrawnCardId { get; set; }
 		public int LibramReductionCount { get; private set; }
 		public HashSet<SpellSchool> PlayedSpellSchools { get; private set; } = new HashSet<SpellSchool>();
@@ -539,6 +540,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			AbyssalCurseCount = 0;
 			PastHeroPowers.Clear();
 			DeadMinionsCards.Clear();
+			SlimedMinions.Clear();
 			IsPlayingWhizbang = false;
 			GodfreyCards.Clear();
 			BeatrixCardIds.Clear();

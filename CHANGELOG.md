@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Added Slime'em's Ectoplasm related cards.
+
 ## **Release v1.57.0 - 2026-08-25**
 **Updated for Hearthstone 36.4**
 

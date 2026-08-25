@@ -1566,6 +1566,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									}
 								}
 								break;
+							case Collectible.Priest.SlimeEm:
+								game.Player.SlimedMinions.Clear();
+								game.Player.SlimedMinions.AddRange(game.Player.Minions);
+								game.Opponent.SlimedMinions.Clear();
+								game.Opponent.SlimedMinions.AddRange(game.Opponent.Minions);
+								break;
 							case NonCollectible.Priest.Repackage_RepackagedBoxToken:
 								foreach(var card in actionStartingEntity?.Info.StoredCardIds ?? new List<string>())
 								{

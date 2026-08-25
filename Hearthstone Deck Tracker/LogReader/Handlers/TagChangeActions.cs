@@ -90,6 +90,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case DISPLAYED_CREATOR:
 						AzalinaCopyCreated(id, value, game);
 						CreatorChanged(id, value, game);
+						EctoplasmCreated(id, value, game);
 						break;
 					case WHIZBANG_DECK_ID:
 						WhizbangDeckIdChange(id, value, game);
@@ -620,6 +621,24 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var controller = copy.GetTag(CONTROLLER);
 			if(controller > 0)
 				game.ControllersWithDeckCopiedFromEnemy.Add(controller);
+		}
+
+		// The copy going to the enemy is created hidden and in SETASIDE, so the usual KnownCardIds
+		// guess (which skips SETASIDE) never claims it. Its DISPLAYED_CREATOR points back at
+		// Slime 'em! though, which is enough to name it while it is still on its way to hand.
+		// Only DISPLAYED_CREATOR is used, not CREATOR: the same block also creates hidden SETASIDE
+		// copies of the enemy's slimed minions, and those never carry a DISPLAYED_CREATOR.
+		private void EctoplasmCreated(int id, int value, IGame game)
+		{
+			if(value == 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity) || !string.IsNullOrEmpty(entity.CardId))
+				return;
+			if(!game.Entities.TryGetValue(value, out var creator) || creator.CardId != Collectible.Priest.SlimeEm)
+				return;
+
+			entity.CardId = NonCollectible.Priest.Slimeem_EctoplasmToken;
+			entity.Info.GuessedCardState = GuessedCardState.Guessed;
 		}
 
 		private void CreatorChanged(int id, int value, IGame game)
