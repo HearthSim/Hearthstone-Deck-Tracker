@@ -341,6 +341,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					switch(gift.CardId)
 					{
 						case JawsOfDeath.CardId:
+							// Do not attach if START_OF_COMBAT tag was cleared
+							if(host.GetTag(GameTag.START_OF_COMBAT) == 0)
+								break;
 							var enchantment = sim.EnchantmentFactory.Create(JawsOfDeath.CardId, minion.ControlledByPlayer);
 							if(enchantment != null)
 								minion.AttachEnchantment(enchantment);
