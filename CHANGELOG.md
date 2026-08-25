@@ -1,3 +1,6 @@
+## **Release v1.57.0 - 2026-08-25**
+**Updated for Hearthstone 36.4**
+
 ## **Release v1.56.6 - 2026-08-24**
 **Hearthstone**:
 - Fixed the secret tracker bringing back already ruled out secrets when a minion you played died later in the turn, for example to Flames of Infinity.
