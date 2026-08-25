@@ -680,6 +680,23 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				inputPlayer.EternalKnightCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
 				inputPlayer.EternalLegionCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);   // attached
 			}
+
+			// Eternal Portrait trinket's accumulated grant is also on a per-Knight enchantment.
+			// If it's missing from the attached player, read it here from an Eternal Knight.
+			if(inputPlayer.EternalLegionCounter == 0)
+			{
+				foreach(var boardEntity in gamePlayer.Board)
+				{
+					var legion = GetAttachedEntities(boardEntity.Id)
+						.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.EternalPortrait_GreaterEternalLegionEnchantment);
+					if(legion != null && legion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) > 0)
+					{
+						inputPlayer.EternalLegionCounter = legion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) / 4;
+						break;
+					}
+				}
+			}
+
 			var pUndeadBonus = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.NerubianDeathswarmer_UndeadBonusAttackPlayerEnchantDnt);
 			if(pUndeadBonus != null)
 			{
