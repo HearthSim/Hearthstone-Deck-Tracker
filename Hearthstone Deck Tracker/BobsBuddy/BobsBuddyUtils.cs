@@ -376,6 +376,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			var objective = factory.Create(entity.CardId ?? "", player);
 			SetScriptDataProperties(objective, entity);
+			var scriptDataNum3 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);
+			if(scriptDataNum3 > 0)
+				objective.ScriptDataNum3 = scriptDataNum3;
 			return objective;
 		}
 
