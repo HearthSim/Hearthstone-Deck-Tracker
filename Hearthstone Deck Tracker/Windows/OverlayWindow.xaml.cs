@@ -1739,13 +1739,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(args.IsActive && boardCards.Count > 0 && userHasTier7 && hasTimewarpMechanic)
 			{
 				ShowBattlegroundsTimewarpPanel(boardCards);
+
+				Core.Overlay.BattlegroundsMinionPinningViewModel.OnShopChange(boardCards, args.MousedOverSlot);
 			}
 			else
 			{
 				HideBattlegroundsTimewarpPanel();
 			}
-
-			Core.Overlay.BattlegroundsMinionPinningViewModel.OnShopChange(boardCards, args.MousedOverSlot);
 		}
 
 		private void BgsInspirationCover_OnMouseDown(object sender, MouseButtonEventArgs e) => HideBgsInspiration();
