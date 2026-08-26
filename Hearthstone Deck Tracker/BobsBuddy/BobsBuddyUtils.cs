@@ -281,6 +281,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var carried = attachedEntities.Count(e => e.CardId == AutoAssemblerEnchantment.CardId
 				|| e.CardId == AutoAssemblerEnchantmentGolden.CardId);
 
+			// An Auto Assembler minion directly on the board also has an innate deathrattle.
+			if(host.CardId == AutoAssembler.CardId || host.CardId == NonCollectible.Neutral.AutoAssembler_AutoAssembler1)
+				carried += 1;
+
 			foreach(var module in modules.OrderBy(x => x.Key).Skip(carried))
 				minion.AdditionalDeathrattles.Add(module.Value ? AutoAssembler.GoldenDeathrattle() : AutoAssembler.Deathrattle());
 		}
