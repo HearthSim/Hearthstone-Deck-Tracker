@@ -562,6 +562,25 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						pHpAttachedMinion = GetMinionFromEntity(simulator, friendly, attachedEntity,
 							GetAttachedEntities(attachedEntityId));
 					}
+					else
+					{
+						// If Lock and Load fired before snapshot assigned _input, UpdateLockAndLoadHeroPower does
+						// nor run if _input == null; for those cases, we can simply check here for free.
+						var firedEntity = _game.Entities.Values
+							.Where(e =>
+								e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
+								e.GetTag(GameTag.CREATOR) == heroPower.Id &&
+								(
+									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY ||
+									e.GetTag(GameTag.ZONE) == (int)Zone.GRAVEYARD
+								)
+							).ToArray().FirstOrDefault();
+						if(firedEntity != null)
+						{
+							pHpAttachedMinion = GetMinionFromEntity(simulator, friendly, firedEntity,
+								GetAttachedEntities(firedEntity.Id));
+						}
+					}
 				}
 				inputPlayer.AddHeroPower(heroPower?.CardId ?? "", friendly, WasHeroPowerActivated(heroPower), pHpData, pHpData2, pHpData3, pHpAttachedMinion, heroPower?.Id ?? 0);
 			}
