@@ -1467,8 +1467,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal void ObserveAutoAssemblerDeathrattleFiring(int sourceEntityId)
 		{
-			if(!_pendingAutoAssemblerDeathrattleSources.ContainsKey(sourceEntityId))
-				return;
+			// Counted unconditionally: DEATHRATTLE blocks that resolve before the first observed Automaton
+			// summon (the minion's innate deathrattle) must be in the count that
+			// ReconcileAutoAssemblerDeathrattles subtracts otherDeathrattles from.
 			_observedAutoAssemblerFirings.TryGetValue(sourceEntityId, out var firings);
 			_observedAutoAssemblerFirings[sourceEntityId] = firings + 1;
 		}
@@ -1479,10 +1480,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				observation = (1 + extraDeathrattles, new List<bool>());
 				_pendingAutoAssemblerDeathrattleSources[sourceEntityId] = observation;
-				// The registration above happens mid-block, so at this block's BLOCK_START the source was not in
-				// the dictionary yet and the firing counter returned without counting it.
-				// Count it here; every later firing of this source is counted at its own BLOCK_START.
-				_observedAutoAssemblerFirings[sourceEntityId] = 1;
 			}
 			observation.SummonedIsPremium.Add(isGolden);
 			CurrentCombatHasPendingAutoAssemblerObservations = true;
