@@ -1,3 +1,7 @@
+## **Release v1.57.2 - 2026-08-27**
+**Battlegrounds**:
+- Fixed a number of incorrect combat odds.
+
 ## **Release v1.57.1 - 2026-08-25**
 **Hearthstone**:
 - Added Slime'em's Ectoplasm related cards.
