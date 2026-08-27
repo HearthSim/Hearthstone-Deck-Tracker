@@ -681,6 +681,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				inputPlayer.EternalLegionCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);   // attached
 			}
 
+			// The accumulated count now also lives on the Greater Eternal Portrait player enchant.
+			if(inputPlayer.EternalLegionCounter == 0)
+			{
+				var pGreaterPortrait = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.EternalPortrait_GreaterEternalPortraitPlayerEnchDnt);
+				if(pGreaterPortrait != null)
+					inputPlayer.EternalLegionCounter = pGreaterPortrait.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+			}
+
 			// Eternal Portrait trinket's accumulated grant is also on a per-Knight enchantment.
 			// If it's missing from the attached player, read it here from an Eternal Knight.
 			if(inputPlayer.EternalLegionCounter == 0)
