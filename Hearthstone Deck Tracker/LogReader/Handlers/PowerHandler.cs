@@ -264,8 +264,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						&& deadMinion.IsMinion
 					)
 					{
-						var race = deadMinion.GetTag(GameTag.CARDRACE);
-						if(race == (int)Race.MECHANICAL || race == (int)Race.ALL)
+						if(deadMinion.Card.IsMech())
 						{
 							var isGolden = cardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomaton;
 							var sourceZone = deadMinion.GetTag(GameTag.ZONE);
@@ -784,8 +783,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						&& firingMinion.IsMinion
 						&& firingMinion.GetTag(GameTag.ZONE) == (int)Zone.GRAVEYARD)
 					{
-						var firingRace = firingMinion.GetTag(GameTag.CARDRACE);
-						if(firingRace == (int)Race.MECHANICAL || firingRace == (int)Race.ALL)
+						if(firingMinion.Card.IsMech())
 							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
 								.ObserveAutoAssemblerDeathrattleFiring(actionStartingEntityId);
 					}
