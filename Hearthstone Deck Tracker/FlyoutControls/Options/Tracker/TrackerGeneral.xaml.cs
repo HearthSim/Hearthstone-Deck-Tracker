@@ -223,9 +223,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			// TrayIcon
 			Core.TrayIcon.MenuItemStartHearthstone.Text = LocUtil.Get("TrayIcon_MenuItemStartHearthstone");
 			Core.TrayIcon.MenuItemUseNoDeck.Text = LocUtil.Get("TrayIcon_MenuItemUseNoDeck");
-			Core.TrayIcon.MenuItemAutoSelect.Text = LocUtil.Get("TrayIcon_MenuItemAutoSelect");
 			Core.TrayIcon.MenuItemShow.Text = LocUtil.Get("TrayIcon_MenuItemShow");
-			Core.TrayIcon.MenuItemExit.Text = LocUtil.Get("TrayIcon_MenuItemExit");
+			Core.TrayIcon.MenuItemSettings.Text = LocUtil.Get("TrayIcon_MenuItemSettings");
+			Core.TrayIcon.MenuItemQuit.Text = LocUtil.Get("TrayIcon_MenuItemQuit");
 
 			if(this.ParentMainWindow() is { } window)
 			{

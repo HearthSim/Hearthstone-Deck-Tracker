@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -16,15 +17,15 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public NotifyIcon NotifyIcon { get; }
 
-		public MenuItem MenuItemExit { get; }
-
 		public MenuItem MenuItemShow { get; }
 
-		public MenuItem MenuItemAutoSelect { get; }
+		public MenuItem MenuItemStartHearthstone { get; }
+
+		public MenuItem MenuItemSettings { get; }
 
 		public MenuItem MenuItemUseNoDeck { get; }
 
-		public MenuItem MenuItemStartHearthstone { get; }
+		public MenuItem MenuItemQuit { get; }
 
 		public TrayIcon()
 		{
@@ -41,26 +42,29 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Log.Error($"Cant find tray icon at \"{iconFile.FullName}\"");
 
-			MenuItemStartHearthstone = new MenuItem(LocUtil.Get("TrayIcon_MenuItemStartHearthstone"), (sender, args) => HearthstoneRunner.StartHearthstone().Forget());
-			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemStartHearthstone);
-			HearthstoneRunner.StartingHearthstone += starting => MenuItemStartHearthstone.Enabled = !starting;
-
-			MenuItemUseNoDeck = new MenuItem(LocUtil.Get("TrayIcon_MenuItemUseNoDeck"), (sender, args) => UseNoDeckContextMenu());
-			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemUseNoDeck);
-
-			MenuItemAutoSelect = new MenuItem(LocUtil.Get("TrayIcon_MenuItemAutoSelect"), (sender, args) => AutoDeckDetectionContextMenu());
-			MenuItemAutoSelect.Checked = ConfigWrapper.Bindable.AutoDeckDetection;
-			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemAutoSelect);
-
 			// TODO: Find a better way to interact with the MainWindow
 			MenuItemShow = new MenuItem(LocUtil.Get("TrayIcon_MenuItemShow"), (sender, args) => Core.MainWindow.ActivateWindow());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemShow);
 
-			MenuItemExit = new MenuItem(LocUtil.Get("TrayIcon_MenuItemExit"), (sender, args) =>
+			MenuItemStartHearthstone = new MenuItem(LocUtil.Get("TrayIcon_MenuItemStartHearthstone"), (sender, args) => HearthstoneRunner.StartHearthstone().Forget());
+			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemStartHearthstone);
+			HearthstoneRunner.StartingHearthstone += starting => MenuItemStartHearthstone.Enabled = !starting;
+
+			MenuItemSettings = new MenuItem(LocUtil.Get("TrayIcon_MenuItemSettings"), (sender, args) => GlobalCommands.ShowSettings.Execute(null));
+			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemSettings);
+
+			NotifyIcon.ContextMenu.MenuItems.Add("-");
+
+			MenuItemUseNoDeck = new MenuItem(LocUtil.Get("TrayIcon_MenuItemUseNoDeck"), (sender, args) => UseNoDeckContextMenu());
+			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemUseNoDeck);
+
+			NotifyIcon.ContextMenu.MenuItems.Add("-");
+
+			MenuItemQuit = new MenuItem(LocUtil.Get("TrayIcon_MenuItemQuit"), (sender, args) =>
 			{
 				_ = Core.Shutdown();
 			});
-			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemExit);
+			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemQuit);
 
 			NotifyIcon.MouseClick += (sender, args) =>
 			{
@@ -76,17 +80,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				MenuItemUseNoDeck.Checked = deck == null;
 			};
-
-			ConfigWrapper.Bindable.PropertyChanged += (_, args) =>
-			{
-				if(args.PropertyName == nameof(ConfigWrapper.Bindable.AutoDeckDetection))
-					MenuItemAutoSelect.Checked = ConfigWrapper.Bindable.AutoDeckDetection;
-			};
-		}
-
-		private void AutoDeckDetectionContextMenu()
-		{
-			ConfigWrapper.Bindable.AutoDeckDetection = !ConfigWrapper.Bindable.AutoDeckDetection;
 		}
 
 		private void UseNoDeckContextMenu()
