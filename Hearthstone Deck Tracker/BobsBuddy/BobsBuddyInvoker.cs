@@ -1448,6 +1448,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(minion == null)
 				return;
 
+			if(minion.Enchantments.Any(e => e is TimewarpedMagnanimooseEnchantment))
+				return;
+
 			var simulator = new Simulator();
 			var summonedMinions = summonedEntities
 				.Select(e => GetMinionFromEntity(simulator, isPlayerMinion, e, GetAttachedEntities(e.Id)))
@@ -1470,6 +1473,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var minion = targetPlayer.Side.FirstOrDefault(m => m.game_id == attachedToEntityId);
 
 			if(minion == null)
+				return;
+
+			if(minion.Enchantments.Any(e => e is TimewarpedNelliesShipEnchantment))
 				return;
 
 			var enchantment = new Simulator().EnchantmentFactory.Create(TimewarpedNelliesShipEnchantment.CardId, minion.ControlledByPlayer);
