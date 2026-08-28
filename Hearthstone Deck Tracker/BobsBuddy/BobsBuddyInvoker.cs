@@ -75,6 +75,20 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal static void OnGameReconnect() => _reconnectCounter++;
 		private int _reconnectCounterAtSnapshot;
 
+		// True when SnapshotBoardState found _input already set before this instance's first snapshot.
+		// Expected for a duos teammate re-snapshot; otherwise it means something outside the normal
+		// combat path populated the input first.
+		private bool _snapshotInputWasSet;
+
+		// Additional state for Sentry describing how this instance's input was obtained.
+		internal BobsBuddySentryReportContext ReportContext => new BobsBuddySentryReportContext(
+			CMActive: _game.IsChinaModuleActive,
+			ReconnectedAfterSnapshot: _reconnectCounterAtSnapshot != _reconnectCounter,
+			EntitiesCleared: _game.EntitiesClearedAtGamePlayStart,
+			SnapshotInputWasSet: _snapshotInputWasSet,
+			IsDuosPartialCombat: State is BobsBuddyState.ShoppingAfterPartial or BobsBuddyState.GameOverAfterPartial
+		);
+
 		private int _turn;
 		private Entity? _attackingHero;
 		private Entity? _defendingHero;
@@ -251,7 +265,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false));
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), ReportContext);
 				return;
 			}
 		}
@@ -290,7 +304,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, isDuos: true);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, isDuos: true, ReportContext);
 				return;
 			}
 		}
@@ -396,7 +410,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false));
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), ReportContext);
 				return;
 			}
 		}
@@ -420,7 +434,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			var isDuos = _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false);
 			if(ReportErrors)
-				Sentry.CaptureBobsBuddyException(pendingException, _input, _turn, isDuos);
+				Sentry.CaptureBobsBuddyException(pendingException, _input, _turn, isDuos, ReportContext);
 			Influx.OnBobsBuddyUnsupportedInteraction(
 				pendingException.Entity?.CardID, pendingMessage, _turn, isDuos, pendingException.Entity?.ControlledByPlayer);
 		}
@@ -882,7 +896,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(_input == null || !_game.IsBattlegroundsDuosMatch)
 				{
 					if(_input != null)
+					{
+						_snapshotInputWasSet = true;
 						DebugLog("Input was already set before this instance's first snapshot; Rebuilding the input from the current game state.");
+					}
 					SetupInputPlayer(simulator, _game.Player, input.Player, _game.PlayerEntity, true);
 					SetupInputPlayer(simulator, _game.Opponent, input.Opponent, _game.OpponentEntity, false);
 					DuosInputPlayer = input.Player;
@@ -1939,7 +1956,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false));
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), ReportContext);
 				Output = null;
 				return null;
 			}
@@ -2114,7 +2131,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_input != null && Output != null)
 				Sentry.QueueBobsBuddyTerminalCase(
 					_input, Output, result, _turn, _game.CurrentRegion,
-					isDuos: _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), isOpposingAkazamzarak: IsOpposingAkazamzarak()
+					isDuos: _game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), isOpposingAkazamzarak: IsOpposingAkazamzarak(),
+					reportContext: ReportContext
 				);
 		}
 

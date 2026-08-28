@@ -82,9 +82,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
 		private static Queue<SentryEvent> HDTToolsEvents = new Queue<SentryEvent>();
 
+#if(SQUIRREL)
+		private static void AddReportContextTags(Dictionary<string, string> tags, BobsBuddySentryReportContext context)
+		{
+			tags["cm_active"] = context.CMActive.ToString();
+			tags["reconnected_after_snapshot"] = context.ReconnectedAfterSnapshot.ToString();
+			tags["entities_cleared"] = context.EntitiesCleared.ToString();
+			tags["snapshot_input_was_set"] = context.SnapshotInputWasSet.ToString();
+			tags["duos_partial_combat"] = context.IsDuosPartialCombat.ToString();
+		}
+#endif
+
 		public static void QueueBobsBuddyTerminalCase(
 			Input testInput, Output output, string result, int turn, Region region,
-			bool isDuos, bool isOpposingAkazamzarak
+			bool isDuos, bool isOpposingAkazamzarak, BobsBuddySentryReportContext reportContext
 		)
 		{
 #if(SQUIRREL)
@@ -122,6 +133,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				{"is_duos", isDuos.ToString()},
 				{"opposing_akazamzarak", isOpposingAkazamzarak.ToString()}
 			};
+			AddReportContextTags(tags, reportContext);
 
 			if(testInput.Anomaly != null)
 			{
@@ -309,7 +321,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			};
 #endif
 
-		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, bool isDuos)
+		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, bool isDuos, BobsBuddySentryReportContext reportContext)
 		{
 #if(SQUIRREL)
 			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptionsPerGame)
@@ -333,6 +345,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				{"bobs_buddy_version", BobsBuddyUtils.VersionString},
 				{"turn", turn.ToString()},
 			};
+			AddReportContextTags(tags, reportContext);
 
 			var bbEvent = new SentryEvent(ex)
 			{
@@ -462,4 +475,22 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			public List<string>? Log { get; set; }
 		}
 	}
+
+	// Tracks how a BobsBuddyInvoker instance's input was obtained.
+	internal record BobsBuddySentryReportContext(
+		// The China module is running HDT Tools for this game (Core.Game.IsChinaModuleActive).
+		bool CMActive,
+
+		// A reconnect was detected after this instance snapshotted its board state.
+		bool ReconnectedAfterSnapshot,
+
+		// Core.Game.Entities was cleared mid-game.
+		bool EntitiesCleared,
+
+		// SnapshotBoardState found _input already set before this instance's first snapshot.
+		bool SnapshotInputWasSet,
+
+		// A duos combat that ran with a teammate missing from the input.
+		bool IsDuosPartialCombat
+	);
 }

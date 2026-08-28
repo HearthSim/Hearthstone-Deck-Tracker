@@ -145,6 +145,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					Core.Game.PowerLog.Clear();
 					Core.Game.Entities.Clear();
+					Core.Game.EntitiesClearedAtGamePlayStart = true;
 					return;
 				}
 				gameState.Reset();

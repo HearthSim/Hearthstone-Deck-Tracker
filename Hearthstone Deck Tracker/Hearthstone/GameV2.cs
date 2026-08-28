@@ -62,6 +62,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public RelatedCardsManager RelatedCardsManager { get; }
 		public ArenaPackagesManager ArenaPackagesManager { get; }
 		public bool IsChinaModuleActive { get; set; }
+
+		// True once a Gameplay.Start line cleared Entities instead of running HandleGameStart
+		// (LoadingScreenHandler, China module path)
+		public bool EntitiesClearedAtGamePlayStart { get; set; }
 		public GameV2()
 		{
 			Player = new Player(this, true);
@@ -469,6 +473,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ControllersWithDeckCopiedFromEnemy.Clear();
 			Entities.Clear();
 			IsBattlegroundsCombatPhase = false;
+			EntitiesClearedAtGamePlayStart = false;
 			GameEntityTurnAtShoppingStart = -1;
 			SecretsManager.Reset();
 			SetupDone = false;
