@@ -586,13 +586,19 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 								e.GetTag(GameTag.CREATOR) == heroPower.Id &&
 								(
 									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY ||
-									e.GetTag(GameTag.ZONE) == (int)Zone.GRAVEYARD
+									e.GetTag(GameTag.ZONE) == (int)Zone.GRAVEYARD ||
+									e.GetTag(GameTag.ZONE) == (int)Zone.REMOVEDFROMGAME
 								)
 							).ToArray().FirstOrDefault();
 						if(firedEntity != null)
 						{
-							pHpAttachedMinion = GetMinionFromEntity(simulator, friendly, firedEntity,
-								GetAttachedEntities(firedEntity.Id));
+							// A minion fired at the front of the combat can end in REMOVEDFROMGAME.
+							// Reconstruct from the card id instead.
+							if(firedEntity.GetTag(GameTag.ZONE) == (int)Zone.REMOVEDFROMGAME)
+								pHpData3 = firedEntity.LatestCard.DbfId;
+							else
+								pHpAttachedMinion = GetMinionFromEntity(simulator, friendly, firedEntity,
+									GetAttachedEntities(firedEntity.Id));
 						}
 					}
 				}
