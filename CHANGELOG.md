@@ -1,4 +1,4 @@
-## **Release v1.57.3 - 2026-08-31**
+## **Release v1.57.4 - 2026-08-31**
 **General**:
 - Updated the Tray Icon menu
 - Renamed "Options" to "Settings"

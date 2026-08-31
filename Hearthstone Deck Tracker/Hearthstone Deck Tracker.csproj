@@ -14,7 +14,7 @@
     <!-- Version is left unset so it composes to VersionPrefix(-VersionSuffix), which is what
          InformationalVersion and therefore the Sentry release name derive from. Both are rewritten
          by build-scripts/update_version.ps1. -->
-    <VersionPrefix>1.57.3</VersionPrefix>
+    <VersionPrefix>1.57.4</VersionPrefix>
     <VersionSuffix></VersionSuffix>
     <BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
     <AssemblyVersion>$(VersionPrefix).$(BuildNumber)</AssemblyVersion>
