@@ -111,24 +111,25 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			IsAuthenticating = authenticating;
 			if(authenticating)
-			{
-				Task.Run(async () =>
-				{
-					await Task.Delay(TimeSpan.FromSeconds(20));
-					if(IsAuthenticated)
-						return;
-					ShowTryAgain = true;
-					await Task.Delay(TimeSpan.FromSeconds(20));
-					if(IsAuthenticated)
-						return;
-					ShowContactUs = true;
-				}).Forget();
-			}
+				ShowRetryOptionsIfStuck().Forget();
 			else
 			{
 				ShowTryAgain = false;
 				ShowContactUs = false;
 			}
+		}
+
+		// stays on the dispatcher: IsAuthenticated reads ScopeConsideredLoggedIn, a DependencyProperty
+		private async Task ShowRetryOptionsIfStuck()
+		{
+			await Task.Delay(TimeSpan.FromSeconds(20));
+			if(IsAuthenticated)
+				return;
+			ShowTryAgain = true;
+			await Task.Delay(TimeSpan.FromSeconds(20));
+			if(IsAuthenticated)
+				return;
+			ShowContactUs = true;
 		}
 
 		[NotifyPropertyChangedInvocator]
