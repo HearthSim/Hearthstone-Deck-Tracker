@@ -93,6 +93,9 @@ namespace Hearthstone_Deck_Tracker
 				Config.Load();
 			}
 
+			// startup can fail before the regular setup below, and those errors should still be localized
+			LocUtil.UpdateCultureInfo();
+
 			if(!SingleInstance.TryClaim(OnSecondInstance))
 			{
 				Application.Current.Shutdown();

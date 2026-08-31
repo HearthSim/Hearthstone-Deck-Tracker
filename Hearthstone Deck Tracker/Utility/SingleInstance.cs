@@ -117,8 +117,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		{
 			// our own log file belongs to the instance we could not reach, so this only goes to sentry
 			SentryReporter.CaptureSingleInstanceProblem(reason);
-			MessageBox.Show("Hearthstone Deck Tracker is already running, but it is not responding. Please close it "
-				+ "using the task manager and try again.", "Error starting Hearthstone Deck Tracker",
+			MessageBox.Show(LocUtil.Get("Startup_Error_AlreadyRunning"), LocUtil.Get("Startup_Error_Title"),
 				MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 

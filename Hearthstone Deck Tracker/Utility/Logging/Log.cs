@@ -67,9 +67,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 				}
 				catch(Exception)
 				{
-					MessageBox.Show("Hearthstone Deck Tracker could not access its log file. Make sure no other "
-						+ "application is using it.", "Error starting Hearthstone Deck Tracker", MessageBoxButton.OK,
-						MessageBoxImage.Error);
+					MessageBox.Show(LocUtil.Get("Startup_Error_LogFileAccess"), LocUtil.Get("Startup_Error_Title"),
+						MessageBoxButton.OK, MessageBoxImage.Error);
 					Application.Current.Shutdown();
 					return;
 				}
