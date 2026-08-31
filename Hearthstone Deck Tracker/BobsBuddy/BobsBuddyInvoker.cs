@@ -75,17 +75,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal static void OnGameReconnect() => _reconnectCounter++;
 		private int _reconnectCounterAtSnapshot;
 
-		// True when SnapshotBoardState found _input already set before this instance's first snapshot.
-		// Expected for a duos teammate re-snapshot; otherwise it means something outside the normal
-		// combat path populated the input first.
-		private bool _snapshotInputWasSet;
-
-		// Additional state for Sentry describing how this instance's input was obtained.
 		internal BobsBuddySentryReportContext ReportContext => new BobsBuddySentryReportContext(
-			CMActive: _game.IsChinaModuleActive,
-			ReconnectedAfterSnapshot: _reconnectCounterAtSnapshot != _reconnectCounter,
-			EntitiesCleared: _game.EntitiesClearedAtGamePlayStart,
-			SnapshotInputWasSet: _snapshotInputWasSet,
 			IsDuosPartialCombat: State is BobsBuddyState.ShoppingAfterPartial or BobsBuddyState.GameOverAfterPartial
 		);
 
@@ -903,10 +893,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(_input == null || !_game.IsBattlegroundsDuosMatch)
 				{
 					if(_input != null)
-					{
-						_snapshotInputWasSet = true;
 						DebugLog("Input was already set before this instance's first snapshot; Rebuilding the input from the current game state.");
-					}
 					SetupInputPlayer(simulator, _game.Player, input.Player, _game.PlayerEntity, true);
 					SetupInputPlayer(simulator, _game.Opponent, input.Opponent, _game.OpponentEntity, false);
 					DuosInputPlayer = input.Player;

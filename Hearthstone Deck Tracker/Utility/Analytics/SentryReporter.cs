@@ -135,17 +135,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
 		private static Queue<SentryEvent> HDTToolsEvents = new Queue<SentryEvent>();
 
-#if(SQUIRREL)
-		private static void AddReportContextTags(SentryEvent e, BobsBuddySentryReportContext context)
-		{
-			e.SetTag("cm_active", context.CMActive.ToString());
-			e.SetTag("reconnected_after_snapshot", context.ReconnectedAfterSnapshot.ToString());
-			e.SetTag("entities_cleared", context.EntitiesCleared.ToString());
-			e.SetTag("snapshot_input_was_set", context.SnapshotInputWasSet.ToString());
-			e.SetTag("duos_partial_combat", context.IsDuosPartialCombat.ToString());
-		}
-#endif
-
 		public static void QueueBobsBuddyTerminalCase(
 			Input testInput, Output output, string result, int turn, Region region,
 			bool isDuos, bool isOpposingAkazamzarak, BobsBuddySentryReportContext reportContext
@@ -190,11 +179,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bbEvent.SetTag("opposing_akazamzarak", isOpposingAkazamzarak.ToString());
 			bbEvent.SetTag("exit_condition", output.myExitCondition.ToString());
 			bbEvent.SetTag("both_sides_empty", BothSidesEmpty(testInput, turn).ToString());
+			bbEvent.SetTag("duos_partial_combat", reportContext.IsDuosPartialCombat.ToString());
 
 			if(testInput.Anomaly != null)
 				bbEvent.SetTag("anomaly_card_id", testInput.Anomaly.CardID);
-
-			AddReportContextTags(bbEvent, reportContext);
 
 			bbEvent.Contexts[BobsBuddyKey] = context;
 			bbEvent.SetExtra(BobsBuddyUnitTestKey, testInput.UnitTestableVersion);
@@ -322,8 +310,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bbEvent.SetTag("bobs_buddy_version", BobsBuddyUtils.VersionString);
 			bbEvent.SetTag("turn", turn.ToString());
 			bbEvent.SetTag("both_sides_empty", BothSidesEmpty(input, turn).ToString());
-
-			AddReportContextTags(bbEvent, reportContext);
+			bbEvent.SetTag("duos_partial_combat", reportContext.IsDuosPartialCombat.ToString());
 
 			bbEvent.Contexts[BobsBuddyKey] = context;
 			bbEvent.SetExtra(BobsBuddyUnitTestKey, input.UnitTestableVersion);
@@ -461,20 +448,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		}
 	}
 
-	// Tracks how a BobsBuddyInvoker instance's input was obtained.
 	internal record BobsBuddySentryReportContext(
-		// The China module is running HDT Tools for this game (Core.Game.IsChinaModuleActive).
-		bool CMActive,
-
-		// A reconnect was detected after this instance snapshotted its board state.
-		bool ReconnectedAfterSnapshot,
-
-		// Core.Game.Entities was cleared mid-game.
-		bool EntitiesCleared,
-
-		// SnapshotBoardState found _input already set before this instance's first snapshot.
-		bool SnapshotInputWasSet,
-
 		// A duos combat that ran with a teammate missing from the input.
 		bool IsDuosPartialCombat
 	);
