@@ -69,11 +69,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal static bool CurrentCombatHasPendingCrabObservations;
 
 		// Incremented on every detected game reconnect. Each combat snapshot records the current value;
-		// a mismatch at validation time means the reconnect happened after this combat started, so the
-		// absence of the combat's outcome should not be deemed as CombatResult.Tie.
+		// a mismatch at validation time means the reconnect happened after this combat started, so we
+		// lost the state the simulation was based on. Such a combat is not validated at all: it reports
+		// no terminal case and goes to a separate Influx measurement.
 		private static int _reconnectCounter;
 		internal static void OnGameReconnect() => _reconnectCounter++;
 		private int _reconnectCounterAtSnapshot;
+		private bool DidReconnect => _reconnectCounterAtSnapshot != _reconnectCounter;
 
 		internal BobsBuddySentryReportContext ReportContext => new BobsBuddySentryReportContext(
 			IsDuosPartialCombat: State is BobsBuddyState.ShoppingAfterPartial or BobsBuddyState.GameOverAfterPartial
@@ -1974,7 +1976,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			if(LastAttackingHero == null)
 			{
-				if(_reconnectCounterAtSnapshot != _reconnectCounter)
+				if(DidReconnect)
 					return CombatResult.Reconnect;
 				return CombatResult.Tie;
 			}
@@ -2061,7 +2063,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if (IsIncorrectCombatResult(result))
 			{
 				terminalCase = true;
-				if (ReportErrors && metricSampling > 0 && _rnd.NextDouble() < metricSampling)
+				if (!DidReconnect && ReportErrors && metricSampling > 0 && _rnd.NextDouble() < metricSampling)
 					AlertWithLastInputOutput(result.ToString());
 			}
 
@@ -2076,15 +2078,18 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 
 				terminalCase = true;
-				if(ReportErrors && metricSampling > 0 && _rnd.NextDouble() < metricSampling)
+				if(!DidReconnect && ReportErrors && metricSampling > 0 && _rnd.NextDouble() < metricSampling)
 					AlertWithLastInputOutput(lethalResult.ToString());
 			}
 
 			Influx.OnBobsBuddySimulationCompleted(
 				result, Output, _turn, _game.CurrentRegion.ToString(), _input?.Anomaly, terminalCase,
 				isDuos:_game.IsBattlegroundsDuosMatch || (_input?.InputContainsDuosCards ?? false), isOpposingAkazamzarak: IsOpposingAkazamzarak(),
-				isOpposingKelThuzad: (_input?.Opponent?.HeroIsKelThuzad ?? false)
+				isOpposingKelThuzad: (_input?.Opponent?.HeroIsKelThuzad ?? false), reconnected: DidReconnect
 			);
+
+			if(DidReconnect)
+				return;
 
 			Core.Game.Metrics.IncrementBobsBuddyValidatedCombat();
 

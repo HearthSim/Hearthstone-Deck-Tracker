@@ -281,13 +281,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void OnBobsBuddySimulationCompleted(
 			CombatResult result, Output output, int turn, string region, Anomaly? anomaly, bool terminalCase,
-			bool isDuos, bool isOpposingAkazamzarak, bool isOpposingKelThuzad
+			bool isDuos, bool isOpposingAkazamzarak, bool isOpposingKelThuzad, bool reconnected
 		)
 		{
 #if(SQUIRREL)
 			if(!Config.Instance.GoogleAnalytics)
 				return;
-			var point = new InfluxPointBuilder("hdt_bb_combat_result_v3")
+			var point = new InfluxPointBuilder(reconnected ? "hdt_bb_combat_result_reconnect" : "hdt_bb_combat_result_v3")
 				.HighPrecision()
 				.Tag("result", result.ToString())
 				.Tag("terminal_case", terminalCase.ToString())
