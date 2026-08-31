@@ -335,7 +335,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 			{
 				// Ensure update after 20 seconds
 				await Task.Delay(20_000);
-				HideCompStatsOnError();
+				Application.Current.Dispatcher.Invoke(HideCompStatsOnError);
 			}).Forget();
 		}
 
