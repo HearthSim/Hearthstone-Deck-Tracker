@@ -584,6 +584,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							.Where(e =>
 								e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION &&
 								e.GetTag(GameTag.CREATOR) == heroPower.Id &&
+								e.Info.Turn == _game.GetTurnNumber() &&
 								(
 									e.GetTag(GameTag.ZONE) == (int)Zone.PLAY ||
 									e.GetTag(GameTag.ZONE) == (int)Zone.GRAVEYARD ||
