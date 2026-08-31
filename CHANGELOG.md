@@ -1,7 +1,10 @@
-## Unreleased
+## **Release v1.57.3 - 2026-08-31**
 **General**:
 - Updated the Tray Icon menu
 - Renamed "Options" to "Settings"
+
+**Battlegrounds**:
+- Fixed a number of incorrect combat odds.
 
 ## **Release v1.57.2 - 2026-08-27**
 **Battlegrounds**:
