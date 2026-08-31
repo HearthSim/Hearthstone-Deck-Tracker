@@ -1557,6 +1557,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			foreach(var kv_pair in sourceThatSummoned)
 				changed |= ReconcileAutoAssemblerDeathrattles(kv_pair.Key, kv_pair.Value.TriggerMultiplier, kv_pair.Value.SummonedIsPremium);
 
+			_observedAutoAssemblerFirings.Clear();
+
 			if(changed)
 				await TryRerun();
 		}
@@ -1581,11 +1583,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			// Extra deathrattles (e.g., Titus Rivendare) resolve as full repeats of the whole deathrattle list —
 			// so the first (observed / triggerMultiplier) are the distinct deathrattles in their real order.
 			_observedAutoAssemblerFirings.TryGetValue(sourceEntityId, out var observedFirings);
-			var otherDeathrattles = (minion is IDeathrattle and not AutoAssembler ? 1 : 0)
-				+ minion.Enchantments.Count(e => e is IDeathrattle and not (AutoAssemblerEnchantment or AutoAssemblerEnchantmentGolden))
-				+ minion.AdditionalDeathrattles.Count(d => d.Method != AutoAssembler.Deathrattle().Method
-					&& d.Method != AutoAssembler.GoldenDeathrattle().Method);
-			var firedDeathrattles = Math.Max(observedFirings / triggerMultiplier - otherDeathrattles, 0);
+			var firedDeathrattles = observedFirings / triggerMultiplier;
 			var summonedDeathrattles = summonedByIsPremium.Count / triggerMultiplier;
 			var automatons = summonedByIsPremium.Take(Math.Max(summonedDeathrattles, firedDeathrattles)).ToList();
 

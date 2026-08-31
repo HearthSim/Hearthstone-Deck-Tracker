@@ -28,6 +28,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		private readonly List<Entity> _tmpEntities = new List<Entity>();
 		const string TransferStudentToken = Collectible.Neutral.TransferStudent + "t";
 
+		// The spellPrefabGuid for Auto Assembler deathrattle trigger.
+		// It is the only thing inside a trigger block when triggered on a full board.
+		const string AutoAssemblerSpellPrefab = "ReuseFX_Mech_OverrideSpawn_Gears_Super";
+
 		public void Handle(string logLine, DateTime logLineTime, IHsGameState gameState, IGame game)
 		{
 			var isInsideMetaDataHistoryTarget = false;
@@ -707,6 +711,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				try
 				{
 					var sourceId = int.Parse(match.Groups["source"].Value);
+
+					// Count the Auto Assembler Deathrattle TRIGGERS (not just those that summoned onto the board).
+					if(match.Groups["spellPrefabGuid"].Value.StartsWith(AutoAssemblerSpellPrefab)
+						&& gameState.CurrentBlock is { Type: "TRIGGER", TriggerKeyword: "DEATHRATTLE" }
+						&& game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null
+						&& game.Entities.TryGetValue(sourceId, out var firingMinion)
+						&& firingMinion.IsMinion
+						&& (firingMinion.GetTag(GameTag.ZONE) == (int)Zone.PLAY
+							|| firingMinion.GetTag(GameTag.ZONE) == (int)Zone.GRAVEYARD))
+					{
+						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+							.ObserveAutoAssemblerDeathrattleFiring(sourceId);
+					}
+
 					if(game.Entities.TryGetValue(sourceId, out var entity))
 					{
 						if(entity.CardId == Collectible.Druid.BottomlessToyChest)
@@ -775,18 +793,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					var actionStartingEntityId = int.Parse(match.Groups["id"].Value);
 					if(gameState.CurrentBlock != null)
 						gameState.CurrentBlock.SourceEntityId = actionStartingEntityId;
-
-					// Count the Auto Assembler Deathrattle FIRINGS (not just those that summoned onto the board).
-					if(blockType == "TRIGGER" && triggerKeyword == "DEATHRATTLE"
-						&& game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null
-						&& game.Entities.TryGetValue(actionStartingEntityId, out var firingMinion)
-						&& firingMinion.IsMinion
-						&& firingMinion.GetTag(GameTag.ZONE) == (int)Zone.GRAVEYARD)
-					{
-						if(firingMinion.Card.IsMech())
-							BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
-								.ObserveAutoAssemblerDeathrattleFiring(actionStartingEntityId);
-					}
 
 					Entity? actionStartingEntity = null;
 
