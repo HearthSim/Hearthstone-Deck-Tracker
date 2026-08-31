@@ -6,8 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using System.Text;
 using System.Text.RegularExpressions;
 using BobsBuddy;
 using BobsBuddy.Simulation;
@@ -17,7 +16,6 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
-using Newtonsoft.Json.Linq;
 using Sentry;
 
 #if(SQUIRREL)
@@ -40,14 +38,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static List<string> _recentHDTLog = new List<string>();
 		static int LogLinesKept = Remote.Config.Data?.BobsBuddy?.LogLinesKept ?? 100;
 
-		private const string ExtraKey = "hdt";
+		private const string ToolsKey = "hdt_tools";
+		private const string BobsBuddyKey = "bobs_buddy";
+		private const string BobsBuddyUnitTestKey = "bobs_buddy_unit_test";
 
-		// BobsBuddy entities contain reference cycles (Enchantment.AttachedTo), which make serialization throw
-		private static readonly Newtonsoft.Json.JsonSerializerSettings SerializerSettings = new()
-		{
-			ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
-			Error = (_, args) => args.ErrorContext.Handled = true,
-		};
 		private static readonly TimeSpan CrashFlushTimeout = TimeSpan.FromSeconds(5);
 
 		static void AddHDTLogLine(string toLog)
@@ -85,11 +79,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #if(SQUIRREL)
 				options.AutoSessionTracking = true;
 #endif
-
-				// System.Text.Json ignores public fields, which the BobsBuddy payloads consist of
-				options.AddJsonConverter(new NewtonsoftConverter<BobsBuddyData>());
-				options.AddJsonConverter(new NewtonsoftConverter<HDTToolsData>());
-				options.AddJsonConverter(new NewtonsoftConverter<JObject>());
 			});
 		}
 
@@ -166,23 +155,24 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEventsPerGame)
 				return;
 
-			// Clean up data
-			output.ClearListsForReporting(); //ignoring for some temporary debugging
-
-			var data = new BobsBuddyData()
+			var context = new BobsBuddyContext()
 			{
 				ShortId = "",
 				Turn = turn,
 				Result = result,
+				Region = region.ToString(),
 				ThreadCount = BobsBuddyInvoker.ThreadCount,
 				Iterations = output.simulationCount,
 				ExitCondition = output.myExitCondition.ToString(),
-				Input = testInput,
-				UnitTestableVersion = testInput.UnitTestableVersion,
-				Output = output,
-				Log = ReverseAndClone(_recentHDTLog),
-				Region = region,
-
+				WinRate = output.winRate,
+				LossRate = output.lossRate,
+				TieRate = output.tieRate,
+				AvDamage = output.avDamage,
+				MedianDamage = output.medianDamage,
+				MyDeathRate = output.myDeathRate,
+				TheirDeathRate = output.theirDeathRate,
+				FriendlyHealth = output.friendlyHealth,
+				OpponentHealth = output.opponentHealth,
 			};
 
 			var bbEvent = new SentryEvent
@@ -195,16 +185,19 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			bbEvent.SetTag("bobs_buddy_version", BobsBuddyUtils.VersionString);
 			bbEvent.SetTag("turn", turn.ToString());
-			bbEvent.SetTag("region", data.Region.ToString());
+			bbEvent.SetTag("region", region.ToString());
 			bbEvent.SetTag("is_duos", isDuos.ToString());
 			bbEvent.SetTag("opposing_akazamzarak", isOpposingAkazamzarak.ToString());
+			bbEvent.SetTag("exit_condition", output.myExitCondition.ToString());
+			bbEvent.SetTag("both_sides_empty", BothSidesEmpty(testInput, turn).ToString());
 
 			if(testInput.Anomaly != null)
 				bbEvent.SetTag("anomaly_card_id", testInput.Anomaly.CardID);
 
 			AddReportContextTags(bbEvent, reportContext);
 
-			bbEvent.SetExtra(ExtraKey, data);
+			bbEvent.Contexts[BobsBuddyKey] = context;
+			bbEvent.SetExtra(BobsBuddyUnitTestKey, testInput.UnitTestableVersion);
 			bbEvent.SetFingerprint(result, BobsBuddyUtils.VersionString, isDuos.ToString());
 
 			BobsBuddyEvents.Enqueue(bbEvent);
@@ -268,16 +261,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 					ClearBobsBuddyEvents();
 					break;
 				}
-				var e = BobsBuddyEvents.Dequeue();
-				var bbData = GetBobsBuddyData(e);
-				if(bbData != null)
-					bbData.ShortId = shortId;
-
-				var toCapture = WithSerializableExtra(recode(e));
-				var extraSize = GetExtraSize(toCapture);
+				var toCapture = recode(BobsBuddyEvents.Dequeue());
+				if(GetBobsBuddyContext(toCapture) is { } context)
+					context.ShortId = shortId;
+				var extraSize = GetUnitTestSize(toCapture);
 				maxExtraBytes = Math.Max(maxExtraBytes, extraSize);
 				totalExtraBytes += extraSize;
-				StripIfTooLarge(toCapture, extraSize);
 
 				var eventId = SentrySdk.CaptureEvent(toCapture);
 				if(eventId != SentryId.Empty)
@@ -289,15 +278,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			Influx.OnBobsBuddySentryEventsSent(path, sent, captureFailed, maxExtraBytes, totalExtraBytes);
 		}
 
+		private static bool BothSidesEmpty(Input input, int turn) =>
+			turn > 5 && input.Player.Side.Count == 0 && input.Opponent.Side.Count == 0;
+
 		private static SentryEvent RecodeIfBothSidesEmpty(SentryEvent e)
 		{
-			var bbData = GetBobsBuddyData(e);
-			if(
-				bbData != null && bbData.Input != null &&
-				bbData.Turn > 5 &&
-				bbData.Input.Player.Side.Count == 0 &&
-				bbData.Input.Opponent.Side.Count == 0
-			)
+			if(e.Tags.TryGetValue("both_sides_empty", out var bothSidesEmpty) && bothSidesEmpty == bool.TrueString)
 				return Recode(e, $"BobsBuddy {BobsBuddyUtils.VersionString}: Both Sides Empty");
 			return e;
 		}
@@ -305,68 +291,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static SentryEvent RecodeAsStateCompleteFalse(SentryEvent e) =>
 			Recode(e, $"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: StateCompleteFalse");
 
-		// Structural guard against back-references that would otherwise re-expand large object
-		// graphs into a report (see the CardEntity.simulator incident, which alone blew a single
-		// BobsBuddy event up to ~17MB). Anything nested deeper than this is replaced with a marker.
-		private const int MaxExtraDepth = 10;
-
-		// Backstop for events that are still too big after depth pruning (e.g. a large flat list).
-		private const int MaxExtraSizeBytes = 500_000;
-
-		private static void PruneDeepTokens(JToken token, int depth)
-		{
-			if(depth >= MaxExtraDepth)
-				return;
-			switch(token)
-			{
-				case JObject obj:
-					foreach(var property in obj.Properties().ToList())
-					{
-						if(depth + 1 >= MaxExtraDepth && property.Value is JContainer)
-							property.Value = new JValue("[truncated: max depth exceeded]");
-						else
-							PruneDeepTokens(property.Value, depth + 1);
-					}
-					break;
-				case JArray arr:
-					for(var i = 0; i < arr.Count; i++)
-					{
-						if(depth + 1 >= MaxExtraDepth && arr[i] is JContainer)
-							arr[i] = new JValue("[truncated: max depth exceeded]");
-						else
-							PruneDeepTokens(arr[i], depth + 1);
-					}
-					break;
-			}
-		}
-
-		private static JObject? GetSerializedExtra(SentryEvent e) =>
-			e.Extra.TryGetValue(ExtraKey, out var extra) ? extra as JObject : null;
-
-		private static int GetExtraSize(SentryEvent e)
-			=> GetSerializedExtra(e)?.ToString(Newtonsoft.Json.Formatting.None).Length ?? 0;
-
-		private static void StripIfTooLarge(SentryEvent e, int extraSize)
-		{
-			if(extraSize <= MaxExtraSizeBytes)
-				return;
-			var extra = GetSerializedExtra(e);
-			if(extra == null)
-				return;
-			extra["Input"] = "[stripped: payload exceeded size limit]";
-			extra["Output"] = "[stripped: payload exceeded size limit]";
-			e.SetTag("stripped_for_size", "true");
-		}
-
-		private static SentryEvent WithSerializableExtra(SentryEvent e)
-		{
-			if(!e.Extra.TryGetValue(ExtraKey, out var data) || data == null)
-				return e;
-			var extra = JObject.FromObject(data, Newtonsoft.Json.JsonSerializer.Create(SerializerSettings));
-			PruneDeepTokens(extra, 0);
-			e.SetExtra(ExtraKey, extra);
-			return e;
-		}
+		private static int GetUnitTestSize(SentryEvent e) =>
+			e.Extra.TryGetValue(BobsBuddyUnitTestKey, out var unitTest) && unitTest is string s ? Encoding.UTF8.GetByteCount(s) : 0;
 #endif
 
 		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, bool isDuos, BobsBuddySentryReportContext reportContext)
@@ -378,15 +304,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				return;
 			BobsBuddyExceptionsSent++;
 
-			// Clean up data
-			var data = new BobsBuddyData()
+			var context = new BobsBuddyContext()
 			{
 				ShortId = "",
 				Turn = turn,
 				ThreadCount = BobsBuddyInvoker.ThreadCount,
-				Input = input,
-				UnitTestableVersion = input.UnitTestableVersion,
-				Log = ReverseAndClone(_recentHDTLog)
 			};
 
 			var bbEvent = new SentryEvent(ex)
@@ -399,10 +321,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			bbEvent.SetTag("bobs_buddy_version", BobsBuddyUtils.VersionString);
 			bbEvent.SetTag("turn", turn.ToString());
+			bbEvent.SetTag("both_sides_empty", BothSidesEmpty(input, turn).ToString());
 
 			AddReportContextTags(bbEvent, reportContext);
 
-			bbEvent.SetExtra(ExtraKey, data);
+			bbEvent.Contexts[BobsBuddyKey] = context;
+			bbEvent.SetExtra(BobsBuddyUnitTestKey, input.UnitTestableVersion);
 			bbEvent.SetFingerprint(BobsBuddyUtils.VersionString, isDuos.ToString());
 
 			BobsBuddyEvents.Enqueue(bbEvent);
@@ -420,8 +344,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			return toReturn;
 		}
 
-		private static BobsBuddyData? GetBobsBuddyData(SentryEvent e) =>
-			e.Extra.TryGetValue(ExtraKey, out var extra) ? extra as BobsBuddyData : null;
+		private static BobsBuddyContext? GetBobsBuddyContext(SentryEvent e) =>
+			e.Contexts.TryGetValue(BobsBuddyKey, out var context) ? context as BobsBuddyContext : null;
 
 		private static SentryEvent Recode(SentryEvent original, string message)
 		{
@@ -432,6 +356,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			};
 			foreach(var tag in original.Tags)
 				recoded.SetTag(tag.Key, tag.Value);
+			if(original.Contexts.TryGetValue(BobsBuddyKey, out var context))
+				recoded.Contexts[BobsBuddyKey] = context;
 			foreach(var extra in original.Extra)
 				recoded.SetExtra(extra.Key, extra.Value);
 			return recoded;
@@ -456,7 +382,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			hdttoolsEvent.SetTag("hdttools_version", HDTToolsManager.VersionString);
 			hdttoolsEvent.SetTag("problem", problem);
 
-			hdttoolsEvent.SetExtra(ExtraKey, data);
+			hdttoolsEvent.SetExtra(ToolsKey, data);
 			hdttoolsEvent.SetFingerprint(HDTToolsManager.VersionString, problem);
 
 			HDTToolsEvents.Enqueue(hdttoolsEvent);
@@ -482,7 +408,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			hdttoolsEvent.SetTag("hdttools_version", HDTToolsManager.VersionString);
 			hdttoolsEvent.SetTag("exit_problem", exitProblem);
 
-			hdttoolsEvent.SetExtra(ExtraKey, data);
+			hdttoolsEvent.SetExtra(ToolsKey, data);
 			hdttoolsEvent.SetFingerprint(HDTToolsManager.VersionString, exitProblem);
 
 			HDTToolsEvents.Enqueue(hdttoolsEvent);
@@ -503,15 +429,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		}
 
-		private class NewtonsoftConverter<T> : JsonConverter<T>
-		{
-			public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-				=> throw new NotSupportedException();
-
-			public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-				=> writer.WriteRawValue(Newtonsoft.Json.JsonConvert.SerializeObject(value, SerializerSettings));
-		}
-
 		private class HDTToolsData
 		{
 			public string? Problem { get; set; }
@@ -520,22 +437,27 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			public List<string>? HDTToolsLog { get; set; }
 		}
 
-		private class BobsBuddyData
+		// Kept flat: a Sentry context card renders a key/value table, and a nested object would land
+		// in it as a single JSON blob. The Output-derived values are nullable because exception
+		// reports have no simulation result and a zeroed win rate would read as a real one.
+		private class BobsBuddyContext
 		{
 			public string? ShortId { get; set; }
 			public int Turn { get; set; }
 			public string? Result { get; set; }
+			public string? Region { get; set; }
 			public int ThreadCount { get; set; }
-			public int Iterations { get; set; }
+			public int? Iterations { get; set; }
 			public string? ExitCondition { get; set; }
-			public Input? Input { get; set; }
-			// Captured explicitly (rather than derived from Input) so it survives StripIfTooLarge
-			public string? UnitTestableVersion { get; set; }
-			public Output? Output { get; set; }
-
-			public Region Region { get; set; }
-
-			public List<string>? Log { get; set; }
+			public float? WinRate { get; set; }
+			public float? LossRate { get; set; }
+			public float? TieRate { get; set; }
+			public float? AvDamage { get; set; }
+			public float? MedianDamage { get; set; }
+			public float? MyDeathRate { get; set; }
+			public float? TheirDeathRate { get; set; }
+			public int? FriendlyHealth { get; set; }
+			public int? OpponentHealth { get; set; }
 		}
 	}
 
