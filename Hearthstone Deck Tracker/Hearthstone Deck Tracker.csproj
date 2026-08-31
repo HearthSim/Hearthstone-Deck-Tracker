@@ -10,7 +10,7 @@
     <Product>Hearthstone Deck Tracker</Product>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Hearthstone Deck Tracker</Description>
-    <Copyright>Copyright © HearthSim 2026</Copyright>
+    <Copyright>Copyright 2026 HearthSim LLC. All rights reserved.</Copyright>
     <!-- Version is left unset so it composes to VersionPrefix(-VersionSuffix), which is what
          InformationalVersion and therefore the Sentry release name derive from. Both are rewritten
          by build-scripts/update_version.ps1. -->

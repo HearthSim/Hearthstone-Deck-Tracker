@@ -51,7 +51,9 @@ foreach ($asset in $json.assets) {
 msbuild "$baseDir\SignToolShim\SignToolShim.csproj" /p:Configuration=Release /v:minimal
 Copy-Item "$baseDir\SignToolShim\bin\Release\SignToolShim.exe" "$squirrelTools\signtool.exe" -Force -Verbose
 
-nuget pack "$PSScriptRoot\hdt.nuspec" -Version $packageVersion -Properties Configuration=Release -OutputDirectory "$buildDir\SquirrelNu"
+$csproj = [xml](Get-Content "$baseDir\Hearthstone Deck Tracker\Hearthstone Deck Tracker.csproj")
+$copyright = @($csproj.Project.PropertyGroup.Copyright | Where-Object { $_ })[0]
+nuget pack "$PSScriptRoot\hdt.nuspec" -Version $packageVersion -Properties "Configuration=Release;copyright=$copyright" -OutputDirectory "$buildDir\SquirrelNu"
 $icon = "$buildDir\Squirrel\Images\HearthstoneDeckTracker.ico"
 $nupkg = "$buildDir\SquirrelNu\HearthstoneDeckTracker.$packageVersion.nupkg"
 & $squirrel --releasify $nupkg --releaseDir=$output --setupIcon=$icon --icon=$icon --no-msi -n "shim" --framework-version=net472 | Out-Default
