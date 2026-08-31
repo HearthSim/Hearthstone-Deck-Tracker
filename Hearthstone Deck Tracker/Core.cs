@@ -302,8 +302,11 @@ namespace Hearthstone_Deck_Tracker
 			LogWatcherManger.IsEnabled = false;
 			await LogWatcherManger.Stop(true);
 			Influx.OnUnevenPermissions();
-			_ = MainWindow.ShowMessage(LocUtil.Get("MessageDialogs_Permissions_Title"), LocUtil.Get("MessageDialogs_Permissions_Description"));
-			MainWindow.ActivateWindow();
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				MainWindow.ShowMessage(LocUtil.Get("MessageDialogs_Permissions_Title"), LocUtil.Get("MessageDialogs_Permissions_Description")).Forget();
+				MainWindow.ActivateWindow();
+			});
 		}
 
 		internal static async Task Shutdown()
