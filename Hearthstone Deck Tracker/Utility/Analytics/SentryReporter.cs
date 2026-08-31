@@ -82,6 +82,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 				}
 				options.IsGlobalModeEnabled = true;
+#if(SQUIRREL)
+				options.AutoSessionTracking = true;
+#endif
 
 				// System.Text.Json ignores public fields, which the BobsBuddy payloads consist of
 				options.AddJsonConverter(new NewtonsoftConverter<BobsBuddyData>());
