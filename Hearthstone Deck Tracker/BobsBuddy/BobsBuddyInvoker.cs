@@ -873,6 +873,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private void SnapshotBoardState(int turn)
 		{
 			DebugLog("Snapshotting board state...");
+
+			_observedAutoAssemblerFirings.Clear();
+			_pendingAutoAssemblerDeathrattleSources.Clear();
+			_pendingCrabDeathrattleSources.Clear();
+
 			LastAttackingHero = null;
 			_attackingHero = null;
 			_defendingHero = null;
