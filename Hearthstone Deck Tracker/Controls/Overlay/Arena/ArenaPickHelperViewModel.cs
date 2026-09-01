@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -498,20 +499,23 @@ public class ArenaPickHelperViewModel : ViewModel
 		}
 	}
 
-	private float GetScore(ArenaCardPickApiResponse.CardStatsEntry? stats)
+	internal static float GetScore(ArenaCardPickApiResponse.CardStatsEntry? stats)
 	{
-		if (stats?.ArenasmithDyn?.Score != null && float.TryParse(stats.ArenasmithDyn.Score, out var score))
+		if (stats?.ArenasmithDyn?.Score != null && TryParseScore(stats.ArenasmithDyn.Score, out var score))
 		{
 			return score;
 		}
 
-		if (stats?.Arenasmith?.Score != null && float.TryParse(stats.Arenasmith.Score, out score))
+		if (stats?.Arenasmith?.Score != null && TryParseScore(stats.Arenasmith.Score, out score))
 		{
 			return score;
 		}
 
 		return -1;
 	}
+
+	private static bool TryParseScore(string score, out float value)
+		=> float.TryParse(score, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
 
 	public bool ShowErrorMessage
     {
