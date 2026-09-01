@@ -749,9 +749,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_bgsTopBarBehavior.UpdatePosition();
 			_bgsTopBarBehavior.UpdateScaling();
 
-			_bgsTopBarTriggerMaskBehavior.UpdatePosition();
-			_bgsTopBarTriggerMaskBehavior.UpdateScaling();
-
 			_heroNotificationBehavior.UpdatePosition();
 			_heroNotificationBehavior.UpdateScaling();
 
@@ -954,7 +951,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateBgsTopBarContentVisibility();
 
 			_bgsTopBarBehavior.Show();
-			_bgsTopBarTriggerMaskBehavior.Show();
 		}
 
 		public void UpdateTier7PreLobbyVisibility()

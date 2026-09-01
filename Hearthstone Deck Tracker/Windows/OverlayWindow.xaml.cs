@@ -105,7 +105,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private bool? _tavernMarkersPanelExpandedBeforeTimewarp;
 		private OverlayElementBehavior _bgsBobsBuddyBehavior;
 		private OverlayElementBehavior _bgsChinaModuleBehavior;
-		private OverlayElementBehavior _bgsTopBarTriggerMaskBehavior;
 		private OverlayElementBehavior _bgsPastOpponentBoardBehavior;
 		private OverlayElementBehavior _experienceCounterBehavior;
 		private OverlayElementBehavior _mercenariesTaskListBehavior;
@@ -270,14 +269,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
 				HideCallback = TearDownBgsTopBarState,
-			};
-
-			_bgsTopBarTriggerMaskBehavior = new OverlayElementBehavior(BgsTopBarMask)
-			{
-				GetRight = () => 0,
-				GetTop = () => 0,
-				GetScaling = () => AutoScaling,
-				AnchorSide = Side.Top,
 			};
 
 			_bgsBobsBuddyBehavior = new OverlayElementBehavior(BobsBuddyDisplay)
@@ -1057,7 +1048,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			UpdateBgsTopBarContentVisibility();
 			_bgsTopBarBehavior.Refresh();
-			_bgsTopBarTriggerMaskBehavior.Refresh();
 		}
 
 		// these panels are centered on their own width, which changes with the length of the localized labels
@@ -1126,11 +1116,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			BgsMinionPinningVisibility = ShouldShowBgsMinionPinning() ? Visible : Collapsed;
 			_bgsTopBarBehavior.Show();
-			_bgsTopBarTriggerMaskBehavior.Show();
 
 			// coming from the lobby the bar is already up, so it has to be re-measured for the wider content
 			_bgsTopBarBehavior.Refresh();
-			_bgsTopBarTriggerMaskBehavior.Refresh();
 		}
 
 		internal void ShowBgsTopBarAndBobsBuddyPanel()
@@ -1201,7 +1189,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			_bgsTopBarTeardownPending = true;
 			_bgsTopBarBehavior.Hide();
-			_bgsTopBarTriggerMaskBehavior.Hide();
 		}
 
 		internal void ShowBattlegroundsHeroPickingStats(

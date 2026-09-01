@@ -557,8 +557,12 @@
                 <chinaModule:ChinaModulePanel x:Name="ChinaModulePanel" Canvas.Top="0" Canvas.Left="0" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
                                               DataContext="{Binding ChinaModuleVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
 
+                <!-- hover trigger region shadowing BgsTopBar, a visible mask swallows hover
+                     events for the whole top right corner (deck list, counters) -->
                 <Grid Background="Black" Opacity="0.01" x:Name="BgsTopBarMask" Canvas.Right="0" Canvas.Top="0"
-                      Visibility="Visible"
+                      Visibility="{Binding Visibility, ElementName=BgsTopBar}"
+                      RenderTransform="{Binding RenderTransform, ElementName=BgsTopBar}"
+                      RenderTransformOrigin="1,0"
                       Width="350"
                       Height="120"
                       ext:OverlayExtensions.IsOverlayHoverVisible="True"
