@@ -1539,7 +1539,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			CurrentCombatHasPendingAutoAssemblerObservations = false;
 			if(_pendingAutoAssemblerDeathrattleSources.Count == 0)
+			{
+				// A firing with no summon to reconcile must still be dropped here, or it is counted again
+				// alongside a later firing by the same minion.
+				_observedAutoAssemblerFirings.Clear();
 				return;
+			}
 			var sourceThatSummoned = _pendingAutoAssemblerDeathrattleSources.ToList();
 			_pendingAutoAssemblerDeathrattleSources.Clear();
 
