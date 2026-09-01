@@ -38,7 +38,7 @@
                         <TreeViewItem Name="TreeViewItemOverlayMercenaries" Header="{lex:LocText Options_Overlay_Mercenaries_Header}" Selected="TreeViewItemMercenariesOverlay_OnSelected"/>
                     </TreeViewItem>
                     <TreeViewItem Header="{lex:LocText Options_Tracker_Header}">
-                        <TreeViewItem Name="TreeViewItemTrackerGeneral" Header="{lex:LocText Options_Tracker_General_Header}" Selected="TreeViewItemTrackerGeneral_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemTrackerMainWindow" Header="{lex:LocText Options_Tracker_MainWindow_Header}" Selected="TreeViewItemTrackerMainWindow_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerStats" Header="{lex:LocText Options_Tracker_Stats_Header}" Selected="TreeViewItemTrackerStats_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerImporting" Header="{lex:LocText Options_Tracker_Importing_Header}" Selected="TreeViewItemTrackerImporting_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemTrackerNotifications" Header="{lex:LocText Options_Tracker_Notifications_Header}" Selected="TreeViewItemTrackerNotifications_OnSelected"/>
@@ -46,7 +46,7 @@
                         <TreeViewItem Name="TreeViewItemTrackerHotKeys" Header="{lex:LocText Options_Tracker_Hotkeys_Header}" Selected="TreeViewItemTrackerHotKeys_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemTrackerBackups" Header="{lex:LocText Options_Tracker_Backups_Header}" Selected="TreeViewItemTrackerBackups_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemTrackerAppearance" Header="{lex:LocText Options_Tracker_Appearance_Header}" Selected="TreeViewItemTrackerAppearance_OnSelected"/>
-                        <TreeViewItem Name="TreeViewItemTrackerSettings" Header="{lex:LocText Options_Tracker_Settings_Header}" Selected="TreeViewItemTrackerSettings_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemTrackerSystem" Header="{lex:LocText Options_Tracker_System_Header}" Selected="TreeViewItemTrackerSystem_OnSelected"/>
                     </TreeViewItem>
                     <TreeViewItem Header="{lex:Loc Options_Streaming_Header}">
                         <TreeViewItem Name="TreeViewItemStreamingCapturableOverlay" Header="{lex:Loc Options_Streaming_CaptureableOverlay_Header}" Selected="TreeViewItemStreamingCapturableOverlay_OnSelected" />

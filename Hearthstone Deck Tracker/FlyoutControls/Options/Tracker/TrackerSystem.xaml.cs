@@ -4,13 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Navigation;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -18,13 +20,13 @@ using Hearthstone_Deck_Tracker.Windows;
 namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 {
 	/// <summary>
-	/// Interaction logic for OtherTracker.xaml
+	/// Interaction logic for TrackerSystem.xaml
 	/// </summary>
-	public partial class TrackerSettings
+	public partial class TrackerSystem
 	{
 		private bool _initialized;
 
-		public TrackerSettings()
+		public TrackerSystem()
 		{
 			InitializeComponent();
 #if(SQUIRREL)
@@ -38,6 +40,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public void Load()
 		{
+			ComboBoxLanguage.ItemsSource = Enum.GetValues(typeof(Language));
+			ComboBoxLanguage.SelectedItem = Config.Instance.Localization;
+
 			CheckboxCloseTray.IsChecked = Config.Instance.CloseToTray;
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
@@ -56,17 +61,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
 #endif
 
-			CheckboxShowNewsBar.IsChecked = null;
-
-			ConfigWrapper.IgnoreNewsIdChanged += () =>
-			{
-				CheckboxShowNewsBar.IsChecked = ConfigWrapper.IgnoreNewsId == -1;
-			};
-			Remote.Config.Loaded += data =>
-			{
-				CheckboxShowNewsBar.IsChecked = Config.Instance.IgnoreNewsId < data?.News?.Id;
-			};
-
 			_initialized = true;
 		}
 
@@ -83,6 +77,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.MinimizeToTray = true;
 			SaveConfig(false);
+			SyncMainWindowOptions();
 		}
 
 		private void CheckboxMinimizeTray_Unchecked(object sender, RoutedEventArgs e)
@@ -91,6 +86,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.MinimizeToTray = false;
 			SaveConfig(false);
+			SyncMainWindowOptions();
 		}
 
 		private void CheckboxCloseTray_Checked(object sender, RoutedEventArgs e)
@@ -99,6 +95,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.CloseToTray = true;
 			SaveConfig(false);
+			SyncMainWindowOptions();
 		}
 
 		private void CheckboxCloseTray_Unchecked(object sender, RoutedEventArgs e)
@@ -107,6 +104,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.CloseToTray = false;
 			SaveConfig(false);
+			SyncMainWindowOptions();
+		}
+
+		// the tray options also appear in the main window panel
+		private void SyncMainWindowOptions()
+		{
+			if(Helper.OptionsMain is not { } options)
+				return;
+			options.OptionsTrackerMainWindow.CheckboxCloseTray.IsChecked = Config.Instance.CloseToTray;
+			options.OptionsTrackerMainWindow.CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 		}
 
 		private void CheckboxStartMinimized_Checked(object sender, RoutedEventArgs e)
@@ -337,6 +344,52 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
+		private void ComboBoxLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.Localization = (Language)ComboBoxLanguage.SelectedItem;
+			Config.Save();
+			LocUtil.UpdateCultureInfo();
+			UpdateUIAfterChangeLanguage();
+			Core.Overlay.UpdateBgsChinaModulePanel();
+			Core.Overlay.RefreshCenteredBgsPanels();
+			if(Config.Instance.LastSeenHearthstoneLang == null)
+				Helper.UpdateCardLanguage();
+		}
+
+		private void UpdateUIAfterChangeLanguage()
+		{
+			// Options
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.ContentHeader = LocUtil.Get("Options_Tracker_System_Header");
+
+			// TrayIcon
+			Core.TrayIcon.MenuItemStartHearthstone.Text = LocUtil.Get("TrayIcon_MenuItemStartHearthstone");
+			Core.TrayIcon.MenuItemUseNoDeck.Text = LocUtil.Get("TrayIcon_MenuItemUseNoDeck");
+			Core.TrayIcon.MenuItemShow.Text = LocUtil.Get("TrayIcon_MenuItemShow");
+			Core.TrayIcon.MenuItemSettings.Text = LocUtil.Get("TrayIcon_MenuItemSettings");
+			Core.TrayIcon.MenuItemQuit.Text = LocUtil.Get("TrayIcon_MenuItemQuit");
+
+			if(this.ParentMainWindow() is { } window)
+			{
+				// My Games Panel
+				window.DeckCharts.ReloadUI();
+
+				// Deck Picker
+				window.DeckPickerList.ReloadUI();
+
+				//Overlay Panel
+				window.Options.OptionsOverlayPlayer.ReloadUI();
+				window.Options.OptionsOverlayOpponent.ReloadUI();
+			}
+
+			// Reload ComboBoxes
+			ComboBoxHelper.Update();
+		}
+
+		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
+
 		private void CheckBoxAnalytics_OnChecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -351,14 +404,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.GoogleAnalytics = false;
 			Config.Save();
-		}
-
-		private void CheckboxShowNewsBar_OnClick(object sender, RoutedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			ConfigWrapper.IgnoreNewsId = ConfigWrapper.IgnoreNewsId == -1
-				? Remote.Config.Data?.News?.Id ?? 0 : -1;
 		}
 
 		private void CheckboxAlternativeScreenCapture_Checked(object sender, RoutedEventArgs e)

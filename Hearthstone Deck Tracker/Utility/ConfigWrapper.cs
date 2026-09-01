@@ -297,16 +297,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
-		public static bool HsReplayUploadDuels
-		{
-			get { return Config.Instance.HsReplayUploadDuels; }
-			set
-			{
-				Config.Instance.HsReplayUploadDuels = value;
-				Config.Save();
-			}
-		}
-
 		public static bool HsReplayUploadMercenaries
 		{
 			get { return Config.Instance.HsReplayUploadMercenaries; }

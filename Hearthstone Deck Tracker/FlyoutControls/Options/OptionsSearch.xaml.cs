@@ -46,13 +46,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 				new UserControlWrapper(window.Options.OptionsOverlayPlayer, nameof(window.Options.OptionsOverlayPlayer)),
 				new UserControlWrapper(window.Options.OptionsTrackerAppearance, nameof(window.Options.OptionsTrackerAppearance)),
 				new UserControlWrapper(window.Options.OptionsTrackerBackups, nameof(window.Options.OptionsTrackerBackups)),
-				new UserControlWrapper(window.Options.OptionsTrackerGeneral, nameof(window.Options.OptionsTrackerGeneral)),
 				new UserControlWrapper(window.Options.OptionsTrackerHotKeys, nameof(window.Options.OptionsTrackerHotKeys)),
 				new UserControlWrapper(window.Options.OptionsTrackerImporting, nameof(window.Options.OptionsTrackerImporting)),
+				new UserControlWrapper(window.Options.OptionsTrackerMainWindow, nameof(window.Options.OptionsTrackerMainWindow)),
 				new UserControlWrapper(window.Options.OptionsTrackerNotifications, nameof(window.Options.OptionsTrackerNotifications)),
 				new UserControlWrapper(window.Options.OptionsTrackerPlugins, nameof(window.Options.OptionsTrackerPlugins)),
-				new UserControlWrapper(window.Options.OptionsTrackerSettings, nameof(window.Options.OptionsTrackerSettings)),
-				new UserControlWrapper(window.Options.OptionsTrackerStats, nameof(window.Options.OptionsTrackerStats))
+				new UserControlWrapper(window.Options.OptionsTrackerStats, nameof(window.Options.OptionsTrackerStats)),
+				new UserControlWrapper(window.Options.OptionsTrackerSystem, nameof(window.Options.OptionsTrackerSystem))
 			};
 			foreach(var optionsMenuItem in optionsMenuItems)
 			{

@@ -1,4 +1,4 @@
-<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerAppearance"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerAppearance"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,11 +6,15 @@
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:CardImageSizeBooleanConverter x:Key="CardImageSizeBooleanConverter" />
+    </UserControl.Resources>
     <StackPanel>
         <DockPanel Margin="10,5,10,0">
             <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Theme}" HorizontalAlignment="Left"
@@ -58,9 +62,10 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </DockPanel>
-        <DockPanel Margin="10,5,10,0">
+        <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
             <Label Content="{lex:Loc Options_Tracker_Appearance_Label_CardTheme}" HorizontalAlignment="Left"
-                   VerticalAlignment="Top" />
+                   VerticalAlignment="Top"
+                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" />
             <ComboBox x:Name="ComboBoxCardTheme" HorizontalAlignment="Right"
                       VerticalAlignment="Top" Width="150"
                       utility:ComboBoxHelper.SelectionChanged="ComboBoxCardTheme_SelectionChanged" />
@@ -100,5 +105,33 @@
                   Unchecked="CheckboxUseAnimations_Unchecked"
                   ToolTip="{lex:Loc Options_Tracker_Appearance_CheckBox_Metro_Tooltip}"
                   Checked="CheckboxUseAnimations_Checked" />
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_CardTooltips}" Margin="0,15,0,0">
+            <StackPanel>
+                <DockPanel Margin="5,5,5,0">
+                    <Slider x:Name="SliderCardImageSize" Margin="0,5,5,0" VerticalAlignment="Center" Value="{Binding Path=Bindable.CardImageSize, Source={StaticResource ConfigWrapper}}"
+                            Width="170"
+                            DockPanel.Dock="Right"
+                            Maximum="2"
+                            Minimum=".75"
+                            Ticks=".75, 1, 1.25, 1.5, 1.75, 2"
+                            SmallChange=".25"
+                            LargeChange=".25"
+                            TickPlacement="BottomRight"
+                            IsSnapToTickEnabled="True"/>
+                    <Label Content="{Binding Path=Bindable.CardImageSize, Source={StaticResource ConfigWrapper}}"
+                           ContentStringFormat="{}{0}x"
+                           HorizontalAlignment="Right" Margin="5,2,0,0"
+                           VerticalAlignment="Center" DockPanel.Dock="Right"
+                           Width="40"/>
+                    <Label Content="{lex:Loc Options_Overlay_General_Label_Tooltip_Size}"
+                           HorizontalAlignment="Left" Margin="0,2,0,0"
+                           VerticalAlignment="Center" DockPanel.Dock="Left" />
+                </DockPanel>
+                <CheckBox x:Name="CheckboxDownloadHiResolutionCardImages" Content="{lex:Loc Options_Tracker_General_CheckBox_UseHighResolutionImages}"
+                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                          IsChecked="{Binding Path=Bindable.UseHighResolutionCardImages, Source={StaticResource ConfigWrapper}}"
+                          IsEnabled="{Binding Path=Bindable.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeBooleanConverter}}"/>
+            </StackPanel>
+        </GroupBox>
     </StackPanel>
 </UserControl>

@@ -26,9 +26,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("stats_record_spectator")]
 		public bool StatsRecordSpectator { get => Config.Instance.RecordSpectator; }
 
-		[JsonProperty("stats_record_duels")]
-		public bool StatsRecordDuels { get => Config.Instance.RecordDuels; }
-
 		[JsonProperty("stats_record_other")]
 		public bool StatsRecordOther { get => Config.Instance.RecordOther; }
 	}

@@ -43,8 +43,8 @@
                 </Hyperlink>
                 <LineBreak/>
                 <Run Text="{lex:Loc OAuthLogin_Email}"/>:
-                <Hyperlink Command="commands:GlobalCommands.OpenUrl" CommandParameter="mailto:contact@hsreplay.net">
-                    <Run Text="contact@hsreplay.net"/>
+                <Hyperlink Command="commands:GlobalCommands.OpenUrl" CommandParameter="mailto:support@hsreplay.net">
+                    <Run Text="support@hsreplay.net"/>
                 </Hyperlink>
             </TextBlock>
         </StackPanel>

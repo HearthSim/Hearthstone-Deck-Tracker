@@ -26,12 +26,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly OverlayPlayer OptionsOverlayPlayer = new OverlayPlayer();
 		public readonly TrackerAppearance OptionsTrackerAppearance = new TrackerAppearance();
 		public readonly TrackerBackups OptionsTrackerBackups = new TrackerBackups();
-		public readonly TrackerGeneral OptionsTrackerGeneral = new TrackerGeneral();
+		public readonly TrackerMainWindow OptionsTrackerMainWindow = new TrackerMainWindow();
 		public readonly TrackerHotKeys OptionsTrackerHotKeys = new TrackerHotKeys();
 		public readonly TrackerImporting OptionsTrackerImporting = new TrackerImporting();
 		public readonly TrackerNotifications OptionsTrackerNotifications = new TrackerNotifications();
 		public readonly TrackerPlugins OptionsTrackerPlugins = new TrackerPlugins();
-		public readonly TrackerSettings OptionsTrackerSettings = new TrackerSettings();
+		public readonly TrackerSystem OptionsTrackerSystem = new TrackerSystem();
 		public readonly TrackerStats OptionsTrackerStats = new TrackerStats();
 		public readonly HSReplayAccount OptionsHSReplayAccount = new HSReplayAccount();
 		public readonly HSReplayReplays OptionsHSReplayReplays = new HSReplayReplays();
@@ -93,10 +93,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsOverlayDeckWindows.Load(game);
 			OptionsOverlayPlayer.Load(game);
 			OptionsOverlayOpponent.Load();
-			OptionsTrackerSettings.Load();
+			OptionsTrackerSystem.Load();
 			OptionsTrackerImporting.Load();
 			OptionsTrackerStats.Load();
-			OptionsTrackerGeneral.Load();
+			OptionsTrackerMainWindow.Load();
 			OptionsTrackerAppearance.Load();
 			OptionsTrackerBackups.Load();
 			OptionsTrackerNotifications.Load();
@@ -138,10 +138,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsContent = OptionsOverlayOpponent;
 		}
 
-		private void TreeViewItemTrackerGeneral_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemTrackerMainWindow_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentHeader = LocUtil.Get("Options_Tracker_General_Header");
-			OptionsContent = OptionsTrackerGeneral;
+			ContentHeader = LocUtil.Get("Options_Tracker_MainWindow_Header");
+			OptionsContent = OptionsTrackerMainWindow;
 		}
 
 		private void TreeViewItemTrackerStats_OnSelected(object sender, RoutedEventArgs e)
@@ -186,10 +186,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsContent = OptionsTrackerAppearance;
 		}
 
-		private void TreeViewItemTrackerSettings_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemTrackerSystem_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentHeader = LocUtil.Get("Options_Tracker_Settings_Header");
-			OptionsContent = OptionsTrackerSettings;
+			ContentHeader = LocUtil.Get("Options_Tracker_System_Header");
+			OptionsContent = OptionsTrackerSystem;
 		}
 
 		public event PropertyChangedEventHandler? PropertyChanged;

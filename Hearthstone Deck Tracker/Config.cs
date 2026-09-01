@@ -1,4 +1,4 @@
-#region
+﻿#region
 
 using System;
 using System.Collections.Generic;
@@ -532,9 +532,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool HsReplayUploadBattlegrounds = true;
 
 		[DefaultValue(true)]
-		public bool HsReplayUploadDuels = true;
-
-		[DefaultValue(true)]
 		public bool HsReplayUploadMercenaries = true;
 
 		[DefaultValue("00000000-0000-0000-0000-000000000000")]
@@ -717,9 +714,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool RecordSpectator = false;
-
-		[DefaultValue(true)]
-		public bool RecordDuels = true;
 
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;
@@ -1119,9 +1113,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(42)]
 		public double TimersVerticalSpacing = 42;
-
-		[DefaultValue(true)]
-		public bool TrackerCardToolTips = true;
 
 		[DefaultValue(null)]
 		public int? TrackerWindowLeft = null;

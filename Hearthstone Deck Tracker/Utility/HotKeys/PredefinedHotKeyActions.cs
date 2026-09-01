@@ -149,7 +149,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public static void ToggleMyGamesPanel()
 		{
 			Config.Instance.ShowMyGamesPanel = !Config.Instance.ShowMyGamesPanel;
-			Core.MainWindow.Options.OptionsTrackerGeneral.CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
+			Core.MainWindow.Options.OptionsTrackerMainWindow.CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
 			Core.MainWindow.UpdateMyGamesPanelVisibility();
 			Config.Save();
 		}

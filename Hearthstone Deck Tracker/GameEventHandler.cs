@@ -79,8 +79,7 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Ranked && Config.Instance.RecordRanked
 											 || _game.CurrentGameMode == Friendly && Config.Instance.RecordFriendly
 											 || _game.CurrentGameMode == Casual && Config.Instance.RecordCasual
-											 || _game.CurrentGameMode == Spectator && Config.Instance.RecordSpectator
-											 || _game.CurrentGameMode == Duels && Config.Instance.RecordDuels;
+											 || _game.CurrentGameMode == Spectator && Config.Instance.RecordSpectator;
 
 		public bool UploadCurrentGameMode => _game.CurrentGameMode == Practice && Config.Instance.HsReplayUploadPractice
 											 || _game.CurrentGameMode == Arena && Config.Instance.HsReplayUploadArena
@@ -90,7 +89,6 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Casual && Config.Instance.HsReplayUploadCasual
 											 || _game.CurrentGameMode == Spectator && Config.Instance.HsReplayUploadSpectator
 											 || _game.IsBattlegroundsMatch && Config.Instance.HsReplayUploadBattlegrounds
-											 || _game.CurrentGameMode == Duels && Config.Instance.HsReplayUploadDuels
 											 || _game.IsMercenariesMatch && Config.Instance.HsReplayUploadMercenaries;
 
 		public bool ShouldSuppressLog => _game.IsBattlegroundsMatch && (_game.CurrentGameStats?.IsReconnect ?? false);
@@ -1056,7 +1054,7 @@ namespace Hearthstone_Deck_Tracker
 
 				await SaveReplays(_game.CurrentGameStats);
 
-				if(_game.IsConstructedMatch || _game.CurrentGameMode is GameMode.Arena or GameMode.Duels)
+				if(_game.IsConstructedMatch || _game.CurrentGameMode is GameMode.Arena)
 				{
 					HSReplayNetClientAnalytics.OnConstructedMatchEnds(
 						_game.CurrentGameStats,
