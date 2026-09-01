@@ -78,7 +78,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private bool DidReconnect => _reconnectCounterAtSnapshot != _reconnectCounter;
 
 		internal BobsBuddySentryReportContext ReportContext => new BobsBuddySentryReportContext(
-			IsDuosPartialCombat: State is BobsBuddyState.ShoppingAfterPartial or BobsBuddyState.GameOverAfterPartial
+			IsDuosPartialCombat: State is BobsBuddyState.ShoppingAfterPartial or BobsBuddyState.GameOverAfterPartial,
+			ReRunCount: _reRunCount
 		);
 
 		private int _turn;

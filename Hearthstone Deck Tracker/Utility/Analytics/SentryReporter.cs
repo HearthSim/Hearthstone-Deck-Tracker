@@ -180,6 +180,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bbEvent.SetTag("exit_condition", output.myExitCondition.ToString());
 			bbEvent.SetTag("both_sides_empty", BothSidesEmpty(testInput, turn).ToString());
 			bbEvent.SetTag("duos_partial_combat", reportContext.IsDuosPartialCombat.ToString());
+			bbEvent.SetTag("re_run_count", reportContext.ReRunCount.ToString());
 
 			if(testInput.Anomaly != null)
 				bbEvent.SetTag("anomaly_card_id", testInput.Anomaly.CardID);
@@ -311,6 +312,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bbEvent.SetTag("turn", turn.ToString());
 			bbEvent.SetTag("both_sides_empty", BothSidesEmpty(input, turn).ToString());
 			bbEvent.SetTag("duos_partial_combat", reportContext.IsDuosPartialCombat.ToString());
+			bbEvent.SetTag("re_run_count", reportContext.ReRunCount.ToString());
 
 			bbEvent.Contexts[BobsBuddyKey] = context;
 			bbEvent.SetExtra(BobsBuddyUnitTestKey, input.UnitTestableVersion);
@@ -450,6 +452,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 	internal record BobsBuddySentryReportContext(
 		// A duos combat that ran with a teammate missing from the input.
-		bool IsDuosPartialCombat
+		bool IsDuosPartialCombat,
+		// How many times TryRerun() happened this combat.
+		int ReRunCount
 	);
 }
