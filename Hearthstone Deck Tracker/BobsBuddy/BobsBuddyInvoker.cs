@@ -1528,6 +1528,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			// ReconcileAutoAssemblerDeathrattles subtracts otherDeathrattles from.
 			_observedAutoAssemblerFirings.TryGetValue(sourceEntityId, out var firings);
 			_observedAutoAssemblerFirings[sourceEntityId] = firings + 1;
+			CurrentCombatHasPendingAutoAssemblerObservations = true;
 		}
 
 		internal void ObserveMagnetizedAutoAssemblerDeathrattles(int sourceEntityId, int extraDeathrattles, bool isGolden)
