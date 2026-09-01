@@ -196,7 +196,7 @@ public class RelatedCardsManager
 			foreach(var kvp in helper.OrderByDescending(x => x.Value))
 			{
 				var displayText = usePercentages
-					? $"{CalculatePercentage(kvp.Value, cardCount, pickConfig):0.#}%"
+					? FormatPercentage(CalculatePercentage(kvp.Value, cardCount, pickConfig))
 					: $"{kvp.Value}";
 				result[LocalizeKeywordName(kvp.Key)] = displayText;
 			}
@@ -290,7 +290,7 @@ public class RelatedCardsManager
 			foreach(var kvp in totalMatches.OrderByDescending(x => x.Value))
 			{
 				var displayText = usePercentages
-					? $"{CalculateBucketedPercentage(bucketMatches![kvp.Key], buckets, batchSize, isWithReplacement, affectsAllTargets):0.#}%"
+					? FormatPercentage(CalculateBucketedPercentage(bucketMatches![kvp.Key], buckets, batchSize, isWithReplacement, affectsAllTargets))
 					: $"{kvp.Value}";
 				result[LocalizeKeywordName(kvp.Key)] = displayText;
 			}
@@ -319,8 +319,10 @@ public class RelatedCardsManager
 		return string.IsNullOrEmpty(localized) ? rawKeyword : localized;
 	}
 
+	private static string FormatPercentage(double value) => value.ToString("0.#", LocUtil.Culture) + "%";
+
 	private static string FormatMedian(double value) =>
-		value == Math.Floor(value) ? ((int)value).ToString() : value.ToString("0.#");
+		value == Math.Floor(value) ? ((int)value).ToString() : value.ToString("0.#", LocUtil.Culture);
 
 	private static double CalculateMedian(int[] values, int count)
 	{

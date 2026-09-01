@@ -329,16 +329,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private static List<int>? _playerDamageDealtBounds;
 		private static List<int>? _opponentDamageDealtBounds;
 
+		internal static string Percent(double value, bool atLeast) =>
+			(atLeast ? "≥" : "") + value.ToString("0.#%", LocUtil.Culture);
+
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
 		{
 			ShowPercentagesHideSpinners();
 			_lastCombatPossibilities = possibleResults;
 			SetAverageDamage(possibleResults);
-			WinRateDisplay = string.Format("{0:0.#%}", winRate);
-			TieRateDisplay = string.Format("{0:0.#%}", tieRate);
-			LossRateDisplay = string.Format("{0:0.#%}", lossRate);
-			PlayerLethalDisplay = string.Format("{0:0.#%}", playerLethal);
-			OpponentLethalDisplay = string.Format("{0:0.#%}", opponentLethal);
+			WinRateDisplay = Percent(winRate, false);
+			TieRateDisplay = Percent(tieRate, false);
+			LossRateDisplay = Percent(lossRate, false);
+			PlayerLethalDisplay = Percent(playerLethal, false);
+			OpponentLethalDisplay = Percent(opponentLethal, false);
 
 			PlayerLethalOpacity = playerLethal > 0 ? 1 : SoftLabelOpacity;
 			OpponentLethalOpacity = opponentLethal > 0 ? 1 : SoftLabelOpacity;
@@ -363,17 +366,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 			if(winRate == 1 || lossRate == 1)
 			{
-				WinRateDisplay = string.Format("{0:0.#%}", winRate);
-				TieRateDisplay = string.Format("{0:0.#%}", tieRate);
-				LossRateDisplay = string.Format("{0:0.#%}", lossRate);
+				WinRateDisplay = Percent(winRate, false);
+				TieRateDisplay = Percent(tieRate, false);
+				LossRateDisplay = Percent(lossRate, false);
 			}
 			else if (friendlyWon)
 			{
-				WinRateDisplay = string.Format("≥{0:0.#%}", winRate);
+				WinRateDisplay = Percent(winRate, true);
 			}
 			else
 			{
-				LossRateDisplay = string.Format("≥{0:0.#%}", lossRate);
+				LossRateDisplay = Percent(lossRate, true);
 			}
 
 			OpponentLethalDisplay = "0%";
@@ -383,12 +386,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 			if(opponentCanDie)
 			{
-				OpponentLethalDisplay = string.Format(opponentLethal == 1 ? "" : "≥" + "{0:0.#%}", opponentLethal);
+				OpponentLethalDisplay = Percent(opponentLethal, opponentLethal != 1);
 				OpponentLethalOpacity = opponentLethal > 0 ? 1 : SoftLabelOpacity;
 			}
 			if(playerCanDie)
 			{
-				PlayerLethalDisplay = string.Format(playerLethal == 1 ? "" : "≥" + "{0:0.#%}", playerLethal);
+				PlayerLethalDisplay = Percent(playerLethal, playerLethal != 1);
 				PlayerLethalOpacity = playerLethal > 0 ? 1 : SoftLabelOpacity;
 			}
 			ShowPercentagesHideSpinners();
