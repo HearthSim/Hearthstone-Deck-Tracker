@@ -1,3 +1,11 @@
+## **Release v1.57.5 - 2026-09-01**
+**Hearthstone**:
+- Fixed deck list tooltips not working in the top right corner of the screen.
+
+**General**:
+- Reorganized the Tracker settings.
+- Improved how HDT handles a duplicate instance by bringing its window to the foreground.
+
 ## **Release v1.57.4 - 2026-08-31**
 **General**:
 - Updated the Tray Icon menu
