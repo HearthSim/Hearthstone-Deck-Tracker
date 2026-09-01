@@ -106,6 +106,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return string.Empty;
 		}
 
+		// LocalizeDictionary only applies the culture to the thread it is set on, so formatting off the UI thread
+		// would otherwise fall back to the OS culture
+		public static CultureInfo Culture => LocalizeDictionary.Instance.Culture;
+
 		public static void UpdateCultureInfo()
 		{
 			LocalizeDictionary.Instance.Culture = GetCultureInfoFromLocale(Config.Instance.Localization.ToString());

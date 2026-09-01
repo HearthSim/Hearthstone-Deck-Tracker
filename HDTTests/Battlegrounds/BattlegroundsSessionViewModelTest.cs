@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -53,6 +55,22 @@ namespace HDTTests.Battlegrounds
 			Assert.AreEqual(0, sessionGames.Count);
 		}
 
+		private static string CurrentRatingFormattedUnder(string culture)
+		{
+			var previousCulture = Thread.CurrentThread.CurrentCulture;
+			Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
+			try
+			{
+				var viewModel = new BattlegroundsSessionViewModel();
+				viewModel.UpdateCurrentRating(2014, null);
+				return viewModel.BgRatingCurrent ?? string.Empty;
+			}
+			finally
+			{
+				Thread.CurrentThread.CurrentCulture = previousCulture;
+			}
+		}
+
 		[TestMethod]
 		public void CurrentRating_UsesThePostGameRating()
 		{
@@ -82,6 +100,12 @@ namespace HDTTests.Battlegrounds
 			viewModel.UpdateCurrentRating(0, null);
 
 			Assert.AreEqual("665", viewModel.BgRatingCurrent);
+		}
+
+		[TestMethod]
+		public void CurrentRating_IsFormattedTheSameRegardlessOfTheThreadCulture()
+		{
+			Assert.AreEqual(CurrentRatingFormattedUnder("en-US"), CurrentRatingFormattedUnder("de-DE"));
 		}
 	}
 }

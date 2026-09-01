@@ -53,7 +53,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 	{
 		var currentRating = ratingAfter > 0 ? ratingAfter : clientRating;
 		if(currentRating > 0)
-			BgRatingCurrent = $"{currentRating:N0}";
+			BgRatingCurrent = currentRating.Value.ToString("N0", LocUtil.Culture);
 	}
 
 	private readonly SemaphoreSlim _updateCompStatsSemaphore = new SemaphoreSlim(1, 1);
@@ -75,8 +75,8 @@ public class BattlegroundsSessionViewModel : ViewModel
 		var ratingStart = firstGame == null ? rating : firstGame.SeasonReset ? 0 : firstGame.Rating;
 		if(rating == 0)
 			rating = ratingStart;
-		BgRatingStart = $"{ratingStart:N0}";
-		BgRatingCurrent = $"{rating:N0}";
+		BgRatingStart = ratingStart.ToString("N0", LocUtil.Culture);
+		BgRatingCurrent = rating.ToString("N0", LocUtil.Culture);
 
 		// Update method might be called multiple times.
 		// We need to prevent multiple calls to UpdateCompositionStatsIfNeeded to happen at the same time.
