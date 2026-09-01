@@ -10,7 +10,7 @@ Hearthstone Deck Tracker is an automatic deck tracker and deck manager for Heart
 - [Download and run the installer](https://hsdecktracker.net/download/).
 
 ## Community & Troubleshooting
-- [Follow HDT on X](https://twitter.com/hsdecktracker)
+- [Follow HDT on X](https://x.com/hsdecktracker)
 - Join the Community Discord: [![Join HearthSim Community Discord](https://discordapp.com/api/guilds/265636998700728321/widget.png)](https://hsreplay.net/discord)
 - You can find the [FAQ here](https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/FAQ).
 - Streamers: Please read [Streaming instructions for OBS and XSplit](https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Streaming-Instructions) and [Twitch extension setup](https://hsdecktracker.net/twitch/setup/).
