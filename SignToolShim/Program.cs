@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 
 namespace SignToolShim
 {
@@ -14,9 +16,11 @@ namespace SignToolShim
 			}
 
 			var filePath = args[2];
-			if (!filePath.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+			var signedDlls = new[] { "HearthWatcher.dll" };
+			if (!filePath.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)
+				&& !signedDlls.Contains(Path.GetFileName(filePath), StringComparer.OrdinalIgnoreCase))
 			{
-				Console.WriteLine($"[SignToolShim] Skipping non-exe file: {filePath}");
+				Console.WriteLine($"[SignToolShim] Skipping file: {filePath}");
 				return 0;
 			}
 
