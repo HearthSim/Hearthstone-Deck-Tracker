@@ -10,10 +10,10 @@ $projectFile = "$baseDir\Hearthstone Deck Tracker\Hearthstone Deck Tracker.cspro
 
 # Read version number from the csproj
 $assemblyInfo = [IO.File]::ReadAllText($projectFile)
-$versionRegex = New-Object System.Text.RegularExpressions.Regex('<VersionPrefix>(\d+)\.(\d+)\.(\d+)</VersionPrefix>')
+$versionRegex = New-Object System.Text.RegularExpressions.Regex('<Version>(\d+)\.(\d+)\.(\d+)[^<]*</Version>')
 $match = $versionRegex.Match($assemblyInfo)
 if(!$match.Success) {
-    throw "VersionPrefix not found in csproj"
+    throw "Version not found in csproj"
 }
 
 $major = $match.Groups[1].Value
@@ -32,11 +32,10 @@ if ($dev) {
     $packageVersion = "$versionPrefix-$versionSuffix"
 }
 
-# Update the csproj. AssemblyVersion derives from VersionPrefix and BuildNumber, while the Sentry
-# release name derives from VersionPrefix and VersionSuffix (via InformationalVersion).
+# Update the csproj. AssemblyVersion derives from Version (minus any suffix) and BuildNumber, while
+# the Sentry release name derives from the full Version (via InformationalVersion).
 $assemblyVersion = "$versionPrefix.$buildNumber"
-$assemblyInfo = $versionRegex.Replace($assemblyInfo, '<VersionPrefix>' + $versionPrefix + '</VersionPrefix>')
-$assemblyInfo = [Text.RegularExpressions.Regex]::Replace($assemblyInfo, '<VersionSuffix>[^<]*</VersionSuffix>', '<VersionSuffix>' + $versionSuffix + '</VersionSuffix>')
+$assemblyInfo = $versionRegex.Replace($assemblyInfo, '<Version>' + $packageVersion + '</Version>')
 $assemblyInfo = [Text.RegularExpressions.Regex]::Replace($assemblyInfo, '(<BuildNumber[^>]*>)\d+(</BuildNumber>)', '${1}' + $buildNumber + '${2}')
 
 [IO.File]::WriteAllText($projectFile, $assemblyInfo)

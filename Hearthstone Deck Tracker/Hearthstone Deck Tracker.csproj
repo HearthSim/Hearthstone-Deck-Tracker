@@ -11,13 +11,11 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Hearthstone Deck Tracker</Description>
     <Copyright>Copyright 2026 HearthSim LLC. All rights reserved.</Copyright>
-    <!-- Version is left unset so it composes to VersionPrefix(-VersionSuffix), which is what
-         InformationalVersion and therefore the Sentry release name derive from. Both are rewritten
-         by build-scripts/update_version.ps1. -->
-    <VersionPrefix>1.57.4</VersionPrefix>
-    <VersionSuffix></VersionSuffix>
+    <!-- InformationalVersion and therefore the Sentry release name derive from Version, which may
+         carry a -dev suffix. Version and BuildNumber are rewritten by build-scripts/update_version.ps1. -->
+    <Version>1.57.4</Version>
     <BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
-    <AssemblyVersion>$(VersionPrefix).$(BuildNumber)</AssemblyVersion>
+    <AssemblyVersion>$(Version.Split('-')[0]).$(BuildNumber)</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <UseWPF>true</UseWPF>
@@ -61,8 +59,7 @@
     <UseSentryCLI>true</UseSentryCLI>
     <!-- 32-bit MSBuild cannot reflect over the x64 exe to read InformationalVersion, so spell out the
          release name the SDK composes at runtime (otherwise sentry-cli falls back to the commit sha) -->
-    <SENTRY_RELEASE>$(AssemblyName)@$(VersionPrefix)</SENTRY_RELEASE>
-    <SENTRY_RELEASE Condition="'$(VersionSuffix)' != ''">$(AssemblyName)@$(VersionPrefix)-$(VersionSuffix)</SENTRY_RELEASE>
+    <SENTRY_RELEASE>$(AssemblyName)@$(Version)</SENTRY_RELEASE>
     <SentryCreateRelease>true</SentryCreateRelease>
     <SentrySetCommits>true</SentrySetCommits>
     <SentrySetCommitOptions>--auto --ignore-missing</SentrySetCommitOptions>
