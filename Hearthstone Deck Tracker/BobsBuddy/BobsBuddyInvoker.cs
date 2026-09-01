@@ -713,6 +713,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				inputPlayer.EternalLegionCounter = pEternalLegion.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);   // attached
 			}
 
+			var pSanlaynScribe = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.SanlaynScribe_SanlaynScribePlayerEnchantDnt);
+			if(pSanlaynScribe != null)
+				inputPlayer.SanlaynScribeCounter = pSanlaynScribe.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
+
 			// The accumulated count now also lives on the Greater Eternal Portrait player enchant.
 			if(inputPlayer.EternalLegionCounter == 0)
 			{
