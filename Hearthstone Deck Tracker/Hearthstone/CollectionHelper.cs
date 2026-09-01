@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					};
 				}
 			});
-			if(data.Collection?.Cards.Any() ?? false)
+			if(data.BattleTag != null && (data.Collection?.Cards.Any() ?? false))
 			{
 				return new Collection(key.Item1, key.Item2, data.BattleTag, data.Collection);
 			}
@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Collection = Reflection.Client.GetMercenariesCollection(), 
 				BattleTag = Reflection.Client.GetBattleTag()
 			});
-			if(data.Collection?.Any() ?? false)
+			if(data.BattleTag != null && (data.Collection?.Any() ?? false))
 			{
 				return new MercenariesCollection(key.Item1, key.Item2, data.BattleTag, data.Collection);
 			}
