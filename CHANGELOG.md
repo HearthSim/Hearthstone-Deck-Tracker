@@ -1,3 +1,6 @@
+## **Release v1.57.6 - 2026-09-03**
+**Updated for Hearthstone 36.4.2**
+
 ## **Release v1.57.5 - 2026-09-01**
 **Hearthstone**:
 - Fixed deck list tooltips not working in the top right corner of the screen.

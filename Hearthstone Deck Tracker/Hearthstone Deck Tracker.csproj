@@ -13,7 +13,7 @@
     <Copyright>Copyright 2026 HearthSim LLC. All rights reserved.</Copyright>
     <!-- InformationalVersion and therefore the Sentry release name derive from Version, which may
          carry a -dev suffix. Version and BuildNumber are rewritten by build-scripts/update_version.ps1. -->
-    <Version>1.57.5</Version>
+    <Version>1.57.6</Version>
     <BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
     <AssemblyVersion>$(Version.Split('-')[0]).$(BuildNumber)</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
