@@ -70,6 +70,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			TriangulatePlayed = false;
 			StarshipLauchBlockIds.Clear();
 			MinionsInPlay.Clear();
+			SlimedMinions.Clear();
 			LastCardPlayed = 0;
 			LastEntityChosenOnDiscover = 0;
 			LastPlayBlockTime = null;
@@ -106,6 +107,14 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool TriangulatePlayed { get; set; }
 		public List<int?> StarshipLauchBlockIds { get; } = new();
 		public List<string> MinionsInPlay { get; } = new();
+
+		/// <summary>
+		/// Board snapshot taken when Slime 'em! resolves, keyed by controller: the card ids of the
+		/// minions that side's Ectoplasm token will resummon. The tokens are created later in the
+		/// same block, by which point the board is already being destroyed, so the snapshot is
+		/// taken up front and copied onto each token as it appears.
+		/// </summary>
+		public Dictionary<int, List<string>> SlimedMinions { get; } = new();
 
 		public bool IsInsideMetaDataHistoryTarget { get; set; }
 		public bool IsInsideMetaDataBurnedCard { get; set; }

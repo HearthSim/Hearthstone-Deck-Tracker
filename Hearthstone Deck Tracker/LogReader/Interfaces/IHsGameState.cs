@@ -50,6 +50,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		bool IsInsideMetaDataBurnedCard { get; set; }
 		List<int?> StarshipLauchBlockIds { get; }
 		List<string> MinionsInPlay { get; }
+		Dictionary<int, List<string>> SlimedMinions { get; }
 		DateTime? LastPlayBlockTime { get; set; }
 	}
 }

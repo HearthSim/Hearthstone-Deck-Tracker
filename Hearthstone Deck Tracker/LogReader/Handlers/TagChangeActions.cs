@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case DISPLAYED_CREATOR:
 						AzalinaCopyCreated(id, value, game);
 						CreatorChanged(id, value, game);
-						EctoplasmCreated(id, value, game);
+						EctoplasmCreated(gameState, id, value, game);
 						break;
 					case WHIZBANG_DECK_ID:
 						WhizbangDeckIdChange(id, value, game);
@@ -623,22 +623,34 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				game.ControllersWithDeckCopiedFromEnemy.Add(controller);
 		}
 
-		// The copy going to the enemy is created hidden and in SETASIDE, so the usual KnownCardIds
-		// guess (which skips SETASIDE) never claims it. Its DISPLAYED_CREATOR points back at
-		// Slime 'em! though, which is enough to name it while it is still on its way to hand.
+		// Both Ectoplasms carry a DISPLAYED_CREATOR pointing back at the Slime 'em! that made them,
+		// which is the one signal that catches each of them exactly once. The copy going to the
+		// enemy needs it to even be named: it is created hidden and in SETASIDE, so the usual
+		// KnownCardIds guess (which skips SETASIDE) never claims it.
 		// Only DISPLAYED_CREATOR is used, not CREATOR: the same block also creates hidden SETASIDE
-		// copies of the enemy's slimed minions, and those never carry a DISPLAYED_CREATOR.
-		private void EctoplasmCreated(int id, int value, IGame game)
+		// copies of the slimed minions, and those never carry a DISPLAYED_CREATOR.
+		private void EctoplasmCreated(IHsGameState gameState, int id, int value, IGame game)
 		{
 			if(value == 0)
 				return;
-			if(!game.Entities.TryGetValue(id, out var entity) || !string.IsNullOrEmpty(entity.CardId))
+			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
 			if(!game.Entities.TryGetValue(value, out var creator) || creator.CardId != Collectible.Priest.SlimeEm)
 				return;
 
-			entity.CardId = NonCollectible.Priest.Slimeem_EctoplasmToken;
-			entity.Info.GuessedCardState = GuessedCardState.Guessed;
+			if(string.IsNullOrEmpty(entity.CardId))
+			{
+				entity.CardId = NonCollectible.Priest.Slimeem_EctoplasmToken;
+				entity.Info.GuessedCardState = GuessedCardState.Guessed;
+			}
+			else if(entity.CardId != NonCollectible.Priest.Slimeem_EctoplasmToken)
+				return;
+
+			// Stored on the token, not on the player: each Ectoplasm resummons the board its own
+			// Slime 'em! destroyed, and several of them can sit in hand at once.
+			if(entity.Info.StoredCardIds.Count == 0
+			   && gameState.SlimedMinions.TryGetValue(entity.GetTag(CONTROLLER), out var slimedMinions))
+				entity.Info.StoredCardIds.AddRange(slimedMinions);
 		}
 
 		private void CreatorChanged(int id, int value, IGame game)
