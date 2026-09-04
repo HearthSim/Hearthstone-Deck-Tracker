@@ -191,17 +191,54 @@
                                         Visibility="{Binding CompStatsWaitingMsgVisibility, FallbackValue=Collapsed}"
                                         Margin="0 26 0 26"
                                     />
-                                    <TextBlock
-                                        Text="{lex:Loc Battlegrounds_Session_CompStats_ErrorMessage}"
-                                        Foreground="#FFFFFF"
-                                        Opacity=".5"
-                                        TextWrapping="WrapWithOverflow"
-                                        TextAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Visibility="{Binding CompStatsErrorVisibility, FallbackValue=Collapsed}"
-                                        Margin="0 26 0 26"
-                                    />
+                                    <StackPanel Orientation="Vertical" Visibility="{Binding CompStatsErrorVisibility, FallbackValue=Collapsed}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 16 0 16">
+                                        <TextBlock
+                                            Text="{lex:Loc Battlegrounds_Session_CompStats_ErrorMessage}"
+                                            Foreground="#FFFFFF"
+                                            Opacity=".5"
+                                            TextWrapping="WrapWithOverflow"
+                                            TextAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            Margin="4 0 4 8"
+                                        />
+                                        <battlegrounds:OverlayButton
+                                            HorizontalAlignment="Center"
+                                            Command="{Binding RetryCompStatsCommand}"
+                                            Cursor="Hand"
+                                            Padding="16,10"
+                                            MinWidth="120"
+                                            CornerRadius="4"
+                                        >
+                                            <battlegrounds:OverlayButton.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="#F1C040" />
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#FFD966" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </battlegrounds:OverlayButton.Style>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <TextBlock
+                                                    Text="⟳"
+                                                    Foreground="#26200F"
+                                                    FontWeight="Bold"
+                                                    FontSize="14"
+                                                    Margin="0,0,6,0"
+                                                    VerticalAlignment="Center"
+                                                />
+                                                <TextBlock
+                                                    Text="{lex:Loc Battlegrounds_CompGuides_Error_Retry}"
+                                                    Foreground="#26200F"
+                                                    FontWeight="Bold"
+                                                    FontSize="13"
+                                                    VerticalAlignment="Center"
+                                                />
+                                            </StackPanel>
+                                        </battlegrounds:OverlayButton>
+                                        <TextBlock Text="{Binding CompStatsDebugInfo}" Visibility="{Binding CompStatsDebugVisibility, FallbackValue=Collapsed}" Foreground="#FFFFFF" Opacity=".6" FontSize="10" TextWrapping="Wrap" Margin="6,6,6,0" />
+                                    </StackPanel>
                                 </Grid>
                             </StackPanel>
                         </StackPanel>
