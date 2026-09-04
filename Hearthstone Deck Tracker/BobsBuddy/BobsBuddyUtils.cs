@@ -436,8 +436,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return aura > 0 ? aura * 3 : 0;
 		}
 
-		internal static bool WasHeroPowerActivated(Entity? heroPower)
-			=> heroPower != null && (heroPower.HasTag(GameTag.EXHAUSTED) || heroPower.HasTag(GameTag.BACON_HERO_POWER_ACTIVATED));
+		internal static bool WasHeroPowerActivated(Entity? heroPower, bool isDuos = false)
+		{
+			if(heroPower == null)
+				return false;
+			// In Duos, there is a repeat issue with "Embrace Your Rage" and BACON_HERO_POWER_ACTIVATED=1,
+			// but no trigger happens in combat; EXHAUSTED=0 is likely a more reliable signal.
+			if(isDuos && heroPower.CardId == NonCollectible.Neutral.EmbraceYourRageTavernBrawl)
+				return heroPower.HasTag(GameTag.EXHAUSTED);
+			return heroPower.HasTag(GameTag.EXHAUSTED) || heroPower.HasTag(GameTag.BACON_HERO_POWER_ACTIVATED);
+		}
 
 		internal static IOrderedEnumerable<Entity> GetOrderedMinions(IEnumerable<Entity> board)
 			=> board.Where(x => x.IsMinion).Select(x => x.Clone()).OrderBy(x => x.GetTag(GameTag.ZONE_POSITION));
