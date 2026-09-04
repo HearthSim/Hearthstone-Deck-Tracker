@@ -1,6 +1,9 @@
-## **Unreleased**
+## **Release v1.57.7 - 2026-09-04**
 **Hearthstone**:
 - Added Paladin Imbue's Emerald Portal to The OutFinder.
+
+**Battlegrounds**:
+- Fixed a number of incorrect combat odds.
 
 ## **Release v1.57.6 - 2026-09-03**
 **Updated for Hearthstone 36.4.2**
