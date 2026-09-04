@@ -70,17 +70,21 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			_setConfigValue(true);
 			Config.Save();
-			Core.Overlay.Update(false);
 			if(_isPlayerList)
 			{
+				Core.Overlay.UpdatePlayerLayout();
 				Core.Windows.PlayerWindow.Update();
 				Core.Windows.PlayerWindow.UpdatePlayerLayout();
+				Core.UpdatePlayerCards(true);
 			}
 			else
 			{
+				Core.Overlay.UpdateOpponentLayout();
 				Core.Windows.OpponentWindow.Update();
 				Core.Windows.OpponentWindow.UpdateOpponentLayout();
+				Core.UpdateOpponentCards(true);
 			}
+			Core.Overlay.Update(false);
 		}
 
 		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -89,17 +93,21 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			_setConfigValue(false);
 			Config.Save();
-			Core.Overlay.Update(false);
 			if(_isPlayerList)
 			{
+				Core.Overlay.UpdatePlayerLayout();
 				Core.Windows.PlayerWindow.Update();
 				Core.Windows.PlayerWindow.UpdatePlayerLayout();
+				Core.UpdatePlayerCards(true);
 			}
 			else
 			{
+				Core.Overlay.UpdateOpponentLayout();
 				Core.Windows.OpponentWindow.Update();
 				Core.Windows.OpponentWindow.UpdateOpponentLayout();
+				Core.UpdateOpponentCards(true);
 			}
+			Core.Overlay.Update(false);
 		}
 	}
 }
