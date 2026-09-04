@@ -1585,11 +1585,27 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(minion is SneedsNewShredder)
 				return false;
 
+			// Deathly Phylactery transiently adds +1 to EXTRA_DEATHRATTLES_ADDITIONAL and then removes it;
+			// Read the tag now, when the phylactery's +1 has been subtracted (titus values do not reduce)
+			var multiplierNow = 1;
+			if(_game.Entities.TryGetValue(sourceEntityId, out var source))
+			{
+				var controller = source.GetTag(GameTag.CONTROLLER);
+				var controllerEntity = _game.Entities.Values.FirstOrDefault(e => e.HasTag(GameTag.PLAYER_ID) && e.GetTag(GameTag.PLAYER_ID) == controller);
+				multiplierNow += controllerEntity?.GetTag(GameTag.EXTRA_DEATHRATTLES_ADDITIONAL) ?? 0;
+			}
+
+			// The stored multiplier was read at the first trigger; if it was higher than now, attribute it to Deathly Phylactery
+			var phylacteryExtra = triggerMultiplier > multiplierNow ? 1 : 0;
+
+			// Use the current value for the divisions below
+			triggerMultiplier = multiplierNow;
+
 			// Extra deathrattles (e.g., Titus Rivendare) resolve as full repeats of the whole deathrattle list —
 			// so the first (observed / triggerMultiplier) are the distinct deathrattles in their real order.
 			_observedAutoAssemblerFirings.TryGetValue(sourceEntityId, out var observedFirings);
-			var firedDeathrattles = observedFirings / triggerMultiplier;
-			var summonedDeathrattles = summonedByIsPremium.Count / triggerMultiplier;
+			var firedDeathrattles = (observedFirings - phylacteryExtra) / triggerMultiplier;
+			var summonedDeathrattles = (summonedByIsPremium.Count - phylacteryExtra) / triggerMultiplier;
 			var automatons = summonedByIsPremium.Take(Math.Max(summonedDeathrattles, firedDeathrattles)).ToList();
 
 			// A firing the board had no space for leaves no summon to read the premium flag from; repeat the last
