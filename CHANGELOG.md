@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Added Paladin Imbue's Emerald Portal to The OutFinder.
+
 ## **Release v1.57.6 - 2026-09-03**
 **Updated for Hearthstone 36.4.2**
 
