@@ -1,3 +1,7 @@
+## **Release v1.57.8 - 2026-09-04**
+**Hearthstone**:
+- Fixed Slime'em's Ectoplasm related cards when multiple copies were played.
+
 ## **Release v1.57.7 - 2026-09-04**
 **Hearthstone**:
 - Added Paladin Imbue's Emerald Portal to The OutFinder.
