@@ -357,6 +357,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							if(offensiveSacrifice != null)
 								minion.AttachEnchantment(offensiveSacrifice);
 							break;
+						case DefensiveSacrifice.CardId:
+							var defensiveSacrifice = sim.EnchantmentFactory.Create(DefensiveSacrifice.CardId, minion.ControlledByPlayer);
+							if(defensiveSacrifice != null)
+								minion.AttachEnchantment(defensiveSacrifice);
+							break;
 					}
 				}
 			}
