@@ -6,6 +6,7 @@ using BobsBuddy.Enchantments;
 using BobsBuddy.Factory;
 using BobsBuddy.HeroPowers;
 using BobsBuddy.Minions.Beast;
+using BobsBuddy.Minions.Buddy;
 using BobsBuddy.Minions.Mech;
 using BobsBuddy.Minions.Pirate;
 using BobsBuddy.Minions.Undead;
@@ -56,6 +57,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.ScriptDataNum2 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
 			minion.ScriptDataNum3 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);
 			minion.ScriptDataNum4 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_4);
+
+			// Eclipsion Illidari: SCORE_VALUE_2 is the number of "Immune while Attacking" grants left this turn
+			if(minion is EclipsionIllidari illidari && entity.Tags.ContainsKey(GameTag.SCORE_VALUE_2))
+				illidari.ScoreValue2 = entity.GetTag(GameTag.SCORE_VALUE_2);
 
 			// LatestCard, not Card: MODULAR_ENTITY_PART tags hold the dbf id of what the entity
 			// currently is, which differs from Card for in-place transforms via CHANGE_ENTITY
