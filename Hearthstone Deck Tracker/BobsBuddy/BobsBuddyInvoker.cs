@@ -1021,8 +1021,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(entities.Count(x => x is MinionCardEntity) <= handOwner.Hand.Count(x => x is MinionCardEntity))
 				return;
 
-			handOwner.Hand.Clear();
-			handOwner.Hand.AddRange(entities);
+			handOwner.Hand = entities;
 
 			await TryRerun();
 		}
