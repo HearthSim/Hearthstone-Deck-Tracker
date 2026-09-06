@@ -161,6 +161,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							minion.AttachEnchantment(torethsBlessing);
 						}
 						break;
+					case BoomingEnchantment.CardId:
+						var boomingModule = attachedEntities.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonsterEnchantment);
+						var booming = sim.EnchantmentFactory.Create(BoomingEnchantment.CardId, minion.ControlledByPlayer);
+						if(boomingModule != null && booming != null)
+						{
+							booming.ScriptDataNum1 = boomingModule.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
+							booming.ScriptDataNum2 = boomingModule.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
+							minion.AttachEnchantment(booming);
+						}
+						break;
 					default:
 						if(attached.LatestCard.TypeEnum == CardType.ENCHANTMENT && attached.Info.LatestCardId != null)
 						{
