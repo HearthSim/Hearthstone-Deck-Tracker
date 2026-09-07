@@ -816,6 +816,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			inputPlayer.PiratesSummonCounter = playerEntity.GetTag((GameTag)2358);   // direct
 
+			// Number of times this player has Magnetized this game.
+			inputPlayer.MagnetizeCounter = playerEntity.GetTag((GameTag)3670);   // direct
+
 			inputPlayer.ResourcesSpentThisGame = playerEntity.GetTag(GameTag.NUM_RESOURCES_SPENT_THIS_GAME);   // direct
 
 			// The tag is never sent for the opponent — derive the value if there is a Malorne on their board.
