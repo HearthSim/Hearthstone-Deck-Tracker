@@ -1691,6 +1691,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				game.OpponentEntity.SetTag(TAVERN_SPELL_ATTACK_INCREASE, 0);
 				game.OpponentEntity.SetTag(TAVERN_SPELL_HEALTH_INCREASE, 0);
+				// The Blood Gem buff tags can carry over from the previous opponent the same way: the reveal
+				// only writes non-zero values, so an opponent with no buff keeps the previous opponent's
+				// value in BobsBuddyInvoker's Math.Max of enchant and tag.
+				game.OpponentEntity.SetTag(BACON_BLOODGEMBUFFATKVALUE, 0);
+				game.OpponentEntity.SetTag(BACON_BLOODGEMBUFFHEALTHVALUE, 0);
 			}
 		}
 	}
