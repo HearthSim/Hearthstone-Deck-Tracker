@@ -268,7 +268,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						&& deadMinion.IsMinion
 					)
 					{
-						if(deadMinion.Card.IsMech())
+						// The card's static race misses a minion made a Mech by an enchantment (Amalgamation);
+						// the live CARDRACE tag carries it.
+						var liveRace = (Race)deadMinion.GetTag(GameTag.CARDRACE);
+						if(deadMinion.Card.IsMech() || liveRace == Race.MECHANICAL || liveRace == Race.ALL)
 						{
 							var isGolden = cardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomaton;
 							var sourceZone = deadMinion.GetTag(GameTag.ZONE);
