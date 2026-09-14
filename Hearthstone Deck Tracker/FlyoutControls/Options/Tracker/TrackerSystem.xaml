@@ -59,10 +59,6 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0"
                   VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
                   Unchecked="CheckboxMinimizeTray_Unchecked" />
-        <CheckBox x:Name="CheckBoxAnalytics" Content="{lex:Loc Options_Tracker_System_Label_Analytics}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckBoxAnalytics_OnChecked"
-                  Unchecked="CheckBoxAnalytics_OnUnchecked" />
         <CheckBox x:Name="CheckBoxShowSplashScreen" Content="{lex:Loc Options_Tracker_Settings_CheckBox_Splashscreen}"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
@@ -83,6 +79,10 @@
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxStartHearthstoneWithHDT_Checked"
                   Unchecked="CheckboxStartHearthstoneWithHDT_Unchecked" />
+        <CheckBox x:Name="CheckBoxAnalytics" Content="{lex:Loc Options_Tracker_System_Label_Analytics}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0"
+                  VerticalAlignment="Top" Checked="CheckBoxAnalytics_OnChecked"
+                  Unchecked="CheckBoxAnalytics_OnUnchecked" />
         <CheckBox x:Name="CheckboxCheckForUpdates" Content="{lex:Loc Options_Tracker_Settings_CheckBox_Updates}"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
