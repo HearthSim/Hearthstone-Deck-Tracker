@@ -60,20 +60,14 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 #if !DEBUG
 				if(!ValueMomentManager.ShouldSendEventToMixPanel(action, action.ValueMoments))
 					return;
-				if(TryGetToken(out var token))
-				{
-					while(_actionBuffer.Count > 0)
-					{
-						var buffered = _actionBuffer.Dequeue();
-						Client.Value.TrackEvent(token, buffered.Name, buffered).Forget();
-					}
-					Client.Value.TrackEvent(token, action.Name, action).Forget();
-				}
-				else
+				_actionBuffer.Enqueue(action);
+				if(!TryGetToken(out var token))
 				{
 					// We might not have a token yet if this event was fired before onboarding on first install.
-					_actionBuffer.Enqueue(action);
+					return;
 				}
+				while(_actionBuffer.Count > 0)
+					TrackEvent(token, _actionBuffer.Dequeue());
 #else
 				Log.Debug($"{action.Name}: {JsonConvert.SerializeObject(action)}");
 #endif
@@ -81,6 +75,18 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			catch(Exception e)
 			{
 				Log.Error(e);
+			}
+		}
+
+		private static async void TrackEvent(string token, VMAction action)
+		{
+			try
+			{
+				await Client.Value.TrackEvent(token, action.Name, action);
+			}
+			catch
+			{
+				// network failures here are not fatal
 			}
 		}
 
