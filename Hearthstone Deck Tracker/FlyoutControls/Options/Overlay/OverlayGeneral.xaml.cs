@@ -59,38 +59,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				Core.Overlay.Update(true);
 		}
 
-		private void CheckboxOverlayAdditionalCardToolTips_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AdditionalOverlayTooltips = true;
-			SaveConfig(false);
-		}
-
-		private void CheckboxOverlayAdditionalCardToolTips_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AdditionalOverlayTooltips = false;
-			SaveConfig(false);
-		}
-
-		private void CheckboxOverlaySetToolTips_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OverlaySetToolTips = true;
-			SaveConfig(false);
-		}
-
-		private void CheckboxOverlaySetToolTips_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OverlaySetToolTips = false;
-			SaveConfig(false);
-		}
-
 		private async void BtnUnlockOverlay_Click(object sender, RoutedEventArgs e)
 		{
 			if(User32.GetHearthstoneWindow() == IntPtr.Zero)

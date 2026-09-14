@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -91,8 +90,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				OnPropertyChanged();
 			}
 		}
-
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
 
 		public void Load()
 		{

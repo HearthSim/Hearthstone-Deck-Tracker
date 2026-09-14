@@ -38,7 +38,7 @@
                 <CheckBox x:Name="CheckboxAutoShowMulliganStats"
                           Content="{lex:LocText Options_Overlay_MulliganGuide_CheckBox_AutoShow}" Margin="10,5,0,0"
                           VerticalAlignment="Top"
-                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableMulliganGuide}"
+                          IsEnabled="{Binding IsChecked, ElementName=CheckboxEnableMulliganStats}"
                           Checked="CheckboxAutoShowMulliganStats_Checked"
                           Unchecked="CheckboxAutoShowMulliganStats_Unchecked"
                           HorizontalAlignment="Left" />
