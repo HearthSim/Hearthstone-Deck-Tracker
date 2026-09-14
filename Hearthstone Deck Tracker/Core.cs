@@ -333,7 +333,7 @@ namespace Hearthstone_Deck_Tracker
 			Influx.OnUnevenPermissions();
 			Application.Current.Dispatcher.Invoke(() =>
 			{
-				MainWindow.ShowMessage(LocUtil.Get("MessageDialogs_Permissions_Title"), LocUtil.Get("MessageDialogs_Permissions_Description")).Forget();
+				MainWindow.ShowUnevenPermissionsMessage().Forget();
 				MainWindow.ActivateWindow();
 			});
 		}

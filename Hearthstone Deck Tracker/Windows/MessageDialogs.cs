@@ -61,6 +61,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const string LocLogConfigButtonInstructions = "MessageDialogs_LogConfig_Button_Instructions";
 		private const string LocLogConfigButtonClose = "MessageDialogs_LogConfig_Button_Close";
 
+		private const string LocPermissionsTitle = "MessageDialogs_Permissions_Title";
+		private const string LocPermissionsDescription = "MessageDialogs_Permissions_Description";
+		private const string LocPermissionsButtonInstructions = "MessageDialogs_UnevenPermissions_Button_Instructions";
+		private const string LocPermissionsButtonClose = "MessageDialogs_UnevenPermissions_Button_Close";
+
 		public static async Task<MessageDialogResult> ShowDeleteGameStatsMessage(this MetroWindow window, GameStats stats)
 			=> await window.ShowMessageAsync(LocUtil.Get(LocDeleteGameStatsTitle),
 				stats + Environment.NewLine + Environment.NewLine + LocUtil.Get(LocDeleteGameStatsSure),
@@ -176,6 +181,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 										AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Affirmative)
 				Helper.TryOpenUrl("https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Setting-up-the-log.config");
+		}
+
+		public static async Task ShowUnevenPermissionsMessage(this MetroWindow window)
+		{
+			var settings = new Settings
+			{
+				AffirmativeButtonText = LocUtil.Get(LocPermissionsButtonInstructions),
+				NegativeButtonText = LocUtil.Get(LocPermissionsButtonClose)
+			};
+			var result = await window.ShowMessageAsync(LocUtil.Get(LocPermissionsTitle), LocUtil.Get(LocPermissionsDescription),
+										AffirmativeAndNegative, settings);
+			if(result == MessageDialogResult.Affirmative)
+				Helper.TryOpenUrl("https://help.hearthsim.net/en/articles/16945833-how-can-i-fix-the-error-unable-to-connect-to-hearthstone");
 		}
 
 		public static async Task<MessageDialogResult> ShowMissingCardsMessage(this MetroWindow window, Deck deck, bool exportDialog)
