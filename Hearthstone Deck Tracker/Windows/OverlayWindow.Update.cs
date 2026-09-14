@@ -961,7 +961,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				!_game.QueueEvents.IsInQueue &&
 				SceneHandler.Scene == Mode.BACON &&
 				Config.Instance.EnableBattlegroundsTier7Overlay &&
-				Config.Instance.ShowBattlegroundsTier7PreLobby &&
+				// subs can toggle this independently, non-subs can just toggle the Tier7 setting above
+				(Config.Instance.ShowBattlegroundsTier7PreLobby || !(HSReplayNetOAuth.AccountData?.IsTier7 ?? false)) &&
 				(
 					Tier7PreLobbyViewModel.BattlegroundsGameMode == SelectedBattlegroundsGameMode.SOLO ||
 					Tier7PreLobbyViewModel.BattlegroundsGameMode == SelectedBattlegroundsGameMode.DUOS
