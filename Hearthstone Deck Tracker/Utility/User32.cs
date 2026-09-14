@@ -94,12 +94,10 @@ namespace Hearthstone_Deck_Tracker
 		private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
 		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
-		public static extern IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string? lpszClass,
-			string? lpszWindow);
+		public static extern IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string? lpszClass, string? lpszWindow);
 
 		[DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-		public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam,
-			uint fuFlags, uint uTimeout, out IntPtr lpdwResult);
+		public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam, uint fuFlags, uint uTimeout, out IntPtr lpdwResult);
 
 		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
 		public static extern uint RegisterWindowMessage(string lpString);

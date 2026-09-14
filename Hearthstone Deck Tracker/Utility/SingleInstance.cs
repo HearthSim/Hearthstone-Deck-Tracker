@@ -103,20 +103,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 				if(sent != IntPtr.Zero && result != IntPtr.Zero)
 					return;
 
-				var error = Marshal.GetLastWin32Error();
-				OnRunningInstanceUnreachable(error == ErrorTimeout ? "timeout" : $"error {error}");
+				OnRunningInstanceUnreachable();
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				OnRunningInstanceUnreachable(ex.GetType().Name);
+				OnRunningInstanceUnreachable();
 			}
 		}
 
-		private static void OnRunningInstanceUnreachable(string reason)
+		private static void OnRunningInstanceUnreachable()
 		{
-			// our own log file belongs to the instance we could not reach, so this only goes to sentry
-			SentryReporter.CaptureSingleInstanceProblem(reason);
 			MessageBox.Show(LocUtil.Get("Startup_Error_AlreadyRunning"), LocUtil.Get("Startup_Error_Title"),
 				MessageBoxButton.OK, MessageBoxImage.Error);
 		}
