@@ -1,4 +1,4 @@
-## **Release v1.57.9 - 2026-09-14**
+## **Release v1.57.10 - 2026-09-14**
 **Battlegrounds**:
 - Fixed a number of incorrect combat odds.
 
