@@ -462,15 +462,6 @@ public class BattlegroundsSessionViewModel : ViewModel
 			? Visibility.Visible
 			: Visibility.Collapsed;
 
-	// Animation delay to update the layout height
-	private async Task UpdateBattlegroundsSessionLayoutHeightWithDelay()
-	{
-		await Task.Delay(300);
-
-		Application.Current.Dispatcher.Invoke(() =>
-			Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight());
-	}
-
 	private Visibility _availableCompStatsSectionVisibility;
 	public Visibility AvailableCompStatsSectionVisibility
 	{
@@ -478,11 +469,9 @@ public class BattlegroundsSessionViewModel : ViewModel
 		set
 		{
 			_availableCompStatsSectionVisibility = value;
-
-			UpdateBattlegroundsSessionLayoutHeightWithDelay().Forget();
-
 			OnPropertyChanged();
 			OnPropertyChanged(nameof(CompStatsSectionVisibility));
+			Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
 		}
 	}
 
