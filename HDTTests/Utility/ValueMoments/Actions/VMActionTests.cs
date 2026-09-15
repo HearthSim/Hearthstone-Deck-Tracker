@@ -12,7 +12,6 @@ using Newtonsoft.Json;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action;
 using Newtonsoft.Json.Linq;
-using NuGet;
 
 namespace HDTTests.Utility.ValueMoments.Actions
 {

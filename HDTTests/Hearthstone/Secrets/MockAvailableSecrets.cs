@@ -1,6 +1,6 @@
 ﻿using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
-using NuGet;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;

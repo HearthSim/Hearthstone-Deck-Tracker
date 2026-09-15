@@ -7,7 +7,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
-using NuGet;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Mercenaries_Deck_Tracker.Utility.ValueMoments.Actions;

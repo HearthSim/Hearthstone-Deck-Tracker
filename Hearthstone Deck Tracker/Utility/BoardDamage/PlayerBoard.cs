@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using NuGet;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.Enums.GameTag;
 
 #endregion

@@ -7,7 +7,6 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using NuGet;
 using static HearthDb.Enums.GameType;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets

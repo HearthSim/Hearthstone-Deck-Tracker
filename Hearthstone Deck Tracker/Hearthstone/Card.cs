@@ -22,7 +22,6 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.Themes;
 using Newtonsoft.Json;
-using NuGet;
 
 #endregion
 

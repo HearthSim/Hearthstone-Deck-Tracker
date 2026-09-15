@@ -11,7 +11,6 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
-using NuGet;
 using static HearthDb.CardIds;
 
 #endregion

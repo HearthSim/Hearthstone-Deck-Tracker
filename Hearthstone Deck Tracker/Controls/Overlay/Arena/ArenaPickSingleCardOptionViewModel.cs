@@ -3,8 +3,8 @@ using System.Linq;
 using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
-using NuGet;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Arena;
 
