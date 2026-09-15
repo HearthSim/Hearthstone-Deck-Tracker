@@ -68,17 +68,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			UserControl? infoControl = null;
 			if(previousVersion < new Version(0, 13, 18))
 				infoControl = new CardThemesInfo();
-#if(!SQUIRREL)
-			if(previousVersion < new Version(0, 15, 14) && Config.Instance.SaveConfigInAppData != false
-														&& Config.Instance.SaveDataInAppData != false)
-			{
-				ContentControlHighlight.Content = new SquirrelInfo();
-				ButtonContinue.Visibility = Visibility.Collapsed;
-				_continueToHighlight = true;
-				_animateTransition = true;
-				return;
-			}
-#endif
 			if(previousVersion < new Version(1, 2, 4))
 				infoControl = new HsReplayStatisticsInfo();
 

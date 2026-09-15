@@ -127,8 +127,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 						if(Config.Instance.StartWithWindows)
 							RegistryHelper.DeleteRunKey();
-					},
-					onFirstRun: CleanUpInstallerFile
+					}
 				);
 			}
 			catch(Exception ex)
@@ -206,20 +205,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				{
 					Log.Error("Could not move ExecutionStub");
 				}
-			}
-		}
-
-		private static void CleanUpInstallerFile()
-		{
-			try
-			{
-				var file = Path.Combine(Config.AppDataPath, "HDT-Installer.exe");
-				if(File.Exists(file))
-					File.Delete(file);
-			}
-			catch(Exception ex)
-			{
-				Log.Error(ex);
 			}
 		}
 
