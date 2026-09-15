@@ -42,6 +42,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int MaxHandSize { get; set; }
 		public int MaxGold { get; set; }
 		public int? CorpsesLeft { get; set; }
+
+		public bool ShouldShowMaxGold => _game.IsBattlegroundsMatch && MaxGold > InitialMaxGold
+			&& MaxGold > (_game.PlayerEntity?.GetTag(GameTag.RESOURCES) ?? 0);
+
 		public bool IsLocalPlayer { get; }
 		public int SpellsPlayedCount => SpellsPlayedCards.Count;
 		public List<Entity> SpellsPlayedCards { get; private set; } = new();

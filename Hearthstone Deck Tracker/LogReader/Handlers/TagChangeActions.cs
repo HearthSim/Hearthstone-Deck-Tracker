@@ -138,8 +138,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case MAXRESOURCES:
 						MaxResourcesChange(gameState, id, game, value, prevValue);
 						break;
+					// BaconMaxGold is the cap, RESOURCES the gold the game shows
 					case BaconMaxGold:
-						MaxGoldChange(gameState, id, game, value);
+					case RESOURCES:
+						MaxGoldChange(gameState, id, game);
 						break;
 					case MAXHANDSIZE:
 						MaxHandSizeChange(gameState, id, game, value, prevValue);
@@ -863,19 +865,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 		}
 
-		private void MaxGoldChange(IHsGameState gameState, int id, IGame game, int value)
+		private void MaxGoldChange(IHsGameState gameState, int id, IGame game)
 		{
-			if(value <= 0)
-				return;
 			if(!game.IsBattlegroundsMatch)
 				return;
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
+			if(!entity.IsControlledBy(game.Player.Id))
+				return;
 
-			if(entity.IsControlledBy(game.Player.Id))
-			{
-				gameState.GameHandler?.HandlePlayerMaxGoldChange(value);
-			}
+			var maxGold = entity.GetTag(BaconMaxGold);
+			if(maxGold > 0)
+				gameState.GameHandler?.HandlePlayerMaxGoldChange(maxGold);
 		}
 
 		private void MaxHandSizeChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
