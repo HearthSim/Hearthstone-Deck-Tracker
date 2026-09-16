@@ -801,7 +801,6 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)
 				{
 					Log.Info("Game was spectator mode without a game result. Probably exited spectator mode early.");
-					SentryReporter.DropBattlegroundsEvents("spectator_no_result");
 					return;
 				}
 				var player = _game.Entities.FirstOrDefault(e => e.Value?.IsPlayer ?? false).Value;
