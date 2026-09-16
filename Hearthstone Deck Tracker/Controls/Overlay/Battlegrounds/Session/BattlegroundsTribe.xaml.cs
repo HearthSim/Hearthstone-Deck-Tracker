@@ -37,6 +37,7 @@ public partial class BattlegroundsTribe : INotifyPropertyChanged
 		{Race.QUILBOAR , "quilboar"},
 		{Race.NAGA , "naga"},
 		{Race.UNDEAD , "undead"},
+		{Race.ABERRATION , "aberration"},
 	};
 
 	public string ImageSrc

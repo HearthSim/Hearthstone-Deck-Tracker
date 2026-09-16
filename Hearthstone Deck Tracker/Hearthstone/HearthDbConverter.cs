@@ -133,6 +133,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Race.NAGA => LocUtil.Get("Race_Naga", useCardLanguage: true),
 			Race.UNDEAD => LocUtil.Get("Race_Undead", useCardLanguage: true),
 			Race.TOTEM => LocUtil.Get("Race_Totem", useCardLanguage: true),
+			Race.ABERRATION => LocUtil.Get("Race_Aberration", useCardLanguage: true),
 			Race.ALL => LocUtil.Get("Race_All", useCardLanguage: true),
 			Race.INVALID => LocUtil.Get("Race_NoType", useCardLanguage: true),
 			(Race)(-1) => LocUtil.Get("GameTag_BGSpell", useCardLanguage: true),
