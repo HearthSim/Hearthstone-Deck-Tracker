@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using HearthDb;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
@@ -58,8 +59,7 @@ public class CardTooltipViewModel : ViewModel
 		set
 		{
 			SetProp(value);
-			OnPropertyChanged(nameof(AssetViewModel));
-			UpdateSecondaryCard();
+			UpdateTooltipCards();
 		}
 	}
 
@@ -69,21 +69,47 @@ public class CardTooltipViewModel : ViewModel
 		set
 		{
 			SetProp(value);
-			UpdateSecondaryCard();
+			UpdateTooltipCards();
 		}
 	}
 
-	private void UpdateSecondaryCard()
+	private void UpdateTooltipCards()
+	{
+		var tripleCard = GetTripleCard();
+		// ONLY_GOLD_IN_GUIDE minions have no normal version, so skip straight to the golden one
+		if(tripleCard != null && Card!.HasTag(GameTag.ONLY_GOLD_IN_GUIDE))
+		{
+			PrimaryCard = tripleCard;
+			SecondaryCard = null;
+		}
+		else
+		{
+			PrimaryCard = Card;
+			SecondaryCard = tripleCard;
+		}
+	}
+
+	private Hearthstone.Card? GetTripleCard()
 	{
 		if(!ShowTriple || Card is not { BaconCard: true } || !Cards.NormalToTripleCardIds.TryGetValue(Card.Id, out var tripleId))
-			return;
-		var secondaryCard = Database.GetCardFromId(tripleId);
-		if(secondaryCard != null)
+			return null;
+		var tripleCard = Database.GetCardFromId(tripleId);
+		if(tripleCard != null)
 		{
-			secondaryCard.BaconCard = true;
-			secondaryCard.BaconTriple = true;
+			tripleCard.BaconCard = true;
+			tripleCard.BaconTriple = true;
 		}
-		SecondaryCard = secondaryCard;
+		return tripleCard;
+	}
+
+	public Hearthstone.Card? PrimaryCard
+	{
+		get => GetProp<Hearthstone.Card?>(null);
+		private set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(AssetViewModel));
+		}
 	}
 
 	public Hearthstone.Card? SecondaryCard
@@ -112,9 +138,9 @@ public class CardTooltipViewModel : ViewModel
 		get
 		{
 			var value = GetProp<CardAssetViewModel?>(null);
-			if(value == null || value.Card?.Id != Card?.Id || value.CardAssetType != CardAssetType)
+			if(value == null || value.Card?.Id != PrimaryCard?.Id || value.CardAssetType != CardAssetType)
 			{
-				value = new CardAssetViewModel(Card, CardAssetType);
+				value = new CardAssetViewModel(PrimaryCard, CardAssetType);
 				SetProp(value);
 			}
 			return value;
