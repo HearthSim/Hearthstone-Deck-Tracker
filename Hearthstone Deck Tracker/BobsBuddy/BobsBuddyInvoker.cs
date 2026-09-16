@@ -788,17 +788,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				Log.Info($"pGoldrinnBeastAttack={goldrinnAttackBonus}, pGoldrinnBeastHealth={goldrinnHealthBonus}, friendly={friendly}");
 			}
 
-			// Fang Anklet: a ghost board appears to accumulate the Fangs Out enchantment from the prior player.
-			if(!friendly && inputPlayer.HeroIsKelThuzad)
-			{
-				var pFangAnklet = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.FangAnklet_FangAnkletPlayerEnchantDnt);
-				if(pFangAnklet != null)
-				{
-					inputPlayer.BeastAttackBonus += pFangAnklet.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
-					inputPlayer.BeastHealthBonus += pFangAnklet.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);   // attached
-				}
-			}
-
 			var pAncestralAutomaton = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.AncestralAutomaton_AncestralAutomatonPlayerEnchantDnt);
 			if(pAncestralAutomaton != null)
 				inputPlayer.AncestralAutomatonCounter = pAncestralAutomaton.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);   // attached
