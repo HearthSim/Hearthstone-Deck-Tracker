@@ -13,10 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 		public static DataLoader<RemoteData.LiveSecrets?> LiveSecrets { get; }
 			= DataLoader<RemoteData.LiveSecrets>.JsonFromWeb("https://hsreplay.net/api/v1/live/secrets/");
 
-		public static DataLoader<List<RemoteData.TagOverride>?> BattlegroundsTagOverrides { get; }
-			= DataLoader<List<RemoteData.TagOverride>>.JsonFromWeb("https://hsreplay.net/api/v1/battlegrounds/tag_overrides/");
-
-		public static DataLoader<List<RemoteData.MetaPeriod>?> BattlegroundsMetaPeriods { get; }
-			= DataLoader<List<RemoteData.MetaPeriod>>.JsonFromWeb("https://hsreplay.net/api/v1/battlegrounds/meta_periods/");
+		public static DataLoader<RemoteData.MetaPeriod?> BattlegroundsLiveMetaPeriod { get; }
+			= DataLoader<RemoteData.MetaPeriod>.JsonFromWeb("https://hsreplay.net/api/v1/battlegrounds/meta_periods/live/");
 	}
 }

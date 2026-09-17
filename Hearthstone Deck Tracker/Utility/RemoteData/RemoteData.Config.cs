@@ -174,6 +174,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 
 			[JsonProperty("mechanics")]
 			public List<string>? Mechanics { get; set; }
+
+			[JsonProperty("tag_overrides")]
+			public List<TagOverride>? TagOverrides { get; set; }
 		}
 	}
 }

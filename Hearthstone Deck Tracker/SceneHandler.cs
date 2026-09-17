@@ -103,6 +103,7 @@ public class SceneHandler
 			Core.Overlay.UpdateTier7PreLobbyVisibility();
 			Watchers.BaconWatcher.Run();
 			Remote.Config.Load();
+			Remote.BattlegroundsLiveMetaPeriod.Load();
 		}
 		else if(to == Mode.GAMEPLAY)
 		{
