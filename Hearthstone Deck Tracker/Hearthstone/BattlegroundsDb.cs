@@ -24,14 +24,18 @@ public class BattlegroundsDb
 
 	public HashSet<Race> Races { get; } = new();
 
-	public BattlegroundsDb()
+	public BattlegroundsDb() : this(Remote.BattlegroundsLiveMetaPeriod.Data)
 	{
-		Update(Remote.BattlegroundsLiveMetaPeriod.Data?.TagOverrides);
-		Remote.BattlegroundsLiveMetaPeriod.Loaded += d => Update(d?.TagOverrides);
+		Remote.BattlegroundsLiveMetaPeriod.Loaded += Update;
 		CardDefsManager.CardsChanged += () =>
 		{
-			Update(Remote.BattlegroundsLiveMetaPeriod.Data?.TagOverrides);
+			Update(Remote.BattlegroundsLiveMetaPeriod.Data);
 		};
+	}
+
+	internal BattlegroundsDb(RemoteData.MetaPeriod? metaPeriod)
+	{
+		Update(metaPeriod);
 	}
 
 	private class TagLookup
@@ -89,9 +93,9 @@ public class BattlegroundsDb
 			yield return secondaryRace;
 	}
 
-	private void Update(List<RemoteData.TagOverride>? tagOverrides)
+	internal void Update(RemoteData.MetaPeriod? metaPeriod)
 	{
-		var tags = new TagLookup(tagOverrides);
+		var tags = new TagLookup(metaPeriod?.TagOverrides);
 
 		var baconCards = Cards.All.Values
 			.Where(x =>
@@ -101,9 +105,20 @@ public class BattlegroundsDb
 			)
 			.ToList();
 
+		// the card data can carry minions of a tribe that is not in rotation (yet), so the meta period
+		// decides which tribes exist and the card scan is only the fallback until it has loaded
 		Races.Clear();
-		foreach(var race in baconCards.Select(tags.GetRace))
-			Races.Add(race);
+		if(metaPeriod?.MinionTypes is { } minionTypes)
+		{
+			Races.UnionWith(minionTypes);
+			Races.Add(Race.INVALID);
+			Races.Add(Race.ALL);
+		}
+		else
+		{
+			foreach(var race in baconCards.Select(tags.GetRace))
+				Races.Add(race);
+		}
 
 		_cardsByTier.Clear();
 		_solosExclusiveCardsByTier.Clear();

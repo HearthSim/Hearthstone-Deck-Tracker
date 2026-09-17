@@ -318,12 +318,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 			{
 				var isTierAvailable = AvailableTiers.Contains(tier);
 
-				foreach(var race in Db.Races)
+				foreach(var race in AvailableRaces ?? Db.Races)
 				{
-					if(AvailableRaces != null && !AvailableRaces.Contains(race) && race != Race.INVALID
-					   && race != Race.ALL)
-						continue;
-
 					IEnumerable<Hearthstone.Card> cards = Db.GetCards(tier, race, IsDuos);
 
 					if(!cards.Any())
