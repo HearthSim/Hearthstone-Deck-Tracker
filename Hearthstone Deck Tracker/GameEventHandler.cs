@@ -562,6 +562,24 @@ namespace Hearthstone_Deck_Tracker
 			HandleOpponentHandCostReduction(thaurissans.Count);
 		}
 
+		private void HandleMotherCostReduction(Entity entity)
+		{
+			if(entity.CardId != HearthDb.CardIds.Collectible.Neutral.MOTHER || !entity.HasTag(CARD_TARGET))
+				return;
+			if(!_game.Entities.TryGetValue(entity.GetTag(CARD_TARGET), out var target))
+				return;
+
+			var targetZonePos = target.ZonePosition;
+			foreach(var handCard in _game.Opponent.Hand)
+			{
+				if(handCard.Id == entity.Id)
+					continue;
+				var reduction = 5 - Math.Abs(handCard.ZonePosition - targetZonePos);
+				if(reduction > 0)
+					handCard.Info.CostReduction += reduction;
+			}
+		}
+
 		private void HandleIncindiusEndOfTurn(bool isOpponent, int turn)
 		{
 			var player = isOpponent ? _game.Opponent : _game.Player;
@@ -2670,6 +2688,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentPlay(Entity entity, string? cardId, int from, int turn)
 		{
 			_game.Opponent.Play(entity, turn);
+			HandleMotherCostReduction(entity);
 			PredictFabled(entity);
 			Core.UpdateOpponentCards();
 			var card = Database.GetCardFromId(cardId);
