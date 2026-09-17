@@ -36,6 +36,7 @@ public partial class BattlegroundsMinionType : INotifyPropertyChanged
 		{Race.QUILBOAR , "quilboar"},
 		{Race.NAGA , "naga"},
 		{Race.UNDEAD , "undead"},
+		{Race.ABERRATION , "aberration"},
 		{Race.INVALID, "other"},
 		{(Race)(-1), "spell"},
 		{(Race)(-2), "buddy"}

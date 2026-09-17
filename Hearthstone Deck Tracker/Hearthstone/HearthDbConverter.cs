@@ -154,6 +154,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Race.NAGA => LocUtil.Get("Race_Naga_Uppercase", useCardLanguage: true),
 			Race.UNDEAD => LocUtil.Get("Race_Undead_Uppercase", useCardLanguage: true),
 			Race.TOTEM => LocUtil.Get("Race_Totem_Uppercase", useCardLanguage: true),
+			Race.ABERRATION => LocUtil.Get("Race_Aberration_Uppercase", useCardLanguage: true),
 			Race.ALL => LocUtil.Get("Race_All_Uppercase", useCardLanguage: true),
 			Race.INVALID => LocUtil.Get("Race_NoType_Uppercase", useCardLanguage: true),
 			(Race)(-1) => LocUtil.Get("GameTag_BGSpell_Uppercase", useCardLanguage: true),
