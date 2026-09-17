@@ -254,12 +254,11 @@ public class BattlegroundsMinionsViewModel : ViewModel
 	{
 		get
 		{
-			var races = (AvailableRaces ?? Db.Races).ToList();
-			// Move OTHER to the end
-			races.Remove(Race.INVALID);
-			races.Add(Race.INVALID);
-
-			races.Remove(Race.ALL); // Don't show ALL
+			var races = (AvailableRaces ?? Db.Races)
+				.Where(x => x != Race.INVALID && x != Race.ALL) // Don't show ALL
+				.OrderBy(x => HearthDbConverter.GetLocalizedRace(x) ?? string.Empty)
+				.ToList();
+			races.Add(Race.INVALID); // Other
 			races.Add((Race)(-1)); // Spells
 			races.Add((Race)(-2)); // Buddies
 
