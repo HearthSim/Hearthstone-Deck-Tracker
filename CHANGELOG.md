@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Added deck highlight to Arrival of the Old Gods and Arrival of the Titans.
+
 ## **Release v1.57.11 - 2026-09-16**
 **Updated for Hearthstone 36.6.0**
 
