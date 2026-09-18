@@ -28,6 +28,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Controls.Overlay.BoardOrder;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Settings;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -218,6 +219,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Core.UpdatePlayerResourcesWidget();
 				Core.UpdateOpponentResourcesWidget();
 			};
+
+			RelatedCardVisibilitySettings.Instance.Changed += (_, _) => Core.UpdateOpponentCards();
 
 			for(int i = 0; i < MaxBoardSize; i++)
 			{

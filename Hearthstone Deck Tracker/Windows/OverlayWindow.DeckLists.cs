@@ -7,6 +7,8 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Settings;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -172,11 +174,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			// on current arena rotation, only 1 legendary is available per draft.
 			// so if a legendary package is active, no legendary should appear on related cards
+			// A card the user explicitly forced on is exempt: that is the point of forcing it.
 			var hasLegendaryPackage = !arenaPacakges.IsEmpty();
 			var relatedCards = cardsWithRelatedCards.Where(card =>
 					cards.All(c => c.Id != card.Id) &&
 					arenaPacakges.All(c => c.Id != card.Id) &&
-					!(hasLegendaryPackage && card.Rarity == Rarity.LEGENDARY)
+					(!(hasLegendaryPackage && card.Rarity == Rarity.LEGENDARY)
+					 || RelatedCardVisibilitySettings.Instance.GetOpponent(card.Id) == CounterVisibility.Enabled)
 				).ToSortedCardList();
 
 			OpponentPackageCardsDeckLens.Label = string.Format(LocUtil.Get("Arena_Legendary_Group_Cards"), arenaPackage.packageKey?.LocalizedName ?? "");

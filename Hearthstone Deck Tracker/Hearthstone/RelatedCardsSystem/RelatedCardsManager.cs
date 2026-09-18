@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Settings;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -133,7 +134,15 @@ public class RelatedCardsManager
 
 	public IEnumerable<Card> GetCardsOpponentMayHave(Player opponent, GameType gameType, FormatType format)
 	{
-		return RelatedCards.Values.Where(card => card.ShouldShowForOpponent(opponent) && card.IsCardLegal(gameType, format))
+		var settings = RelatedCardVisibilitySettings.Instance;
+		// Legality first: it stays a hard gate, so an override can never surface a card that cannot
+		// exist in this format. Only then does the user's override replace the card's own heuristic.
+		return RelatedCards.Values.Where(card => card.IsCardLegal(gameType, format)
+				&& RelatedCardVisibilitySettings.Resolve(settings.GetOpponent(card.GetCardId()), () => card.ShouldShowForOpponent(opponent)))
+			// A card with several ids (Core/Wild reprints) can be legal, and shown, under more than
+			// one of them in the same format. It is one card, so list it once.
+			.GroupBy(card => RelatedCardCatalog.GetVariantIds(card.GetCardId())[0])
+			.Select(group => group.OrderBy(card => card.GetCardId(), StringComparer.Ordinal).First())
 			.Select(card =>
 			{
 				var c =  Database.GetCardFromId(card.GetCardId());

@@ -1,4 +1,7 @@
 ## Unreleased
+**Hearthstone**:
+- Added a setting to choose which cards can appear in the opponent's Related Cards, including cards they have not played yet.
+
 **Battlegrounds**:
 - Added a setting to configure whether the Meta Snapshot button is shown.
 - Improved when the Max Gold counter is visible.

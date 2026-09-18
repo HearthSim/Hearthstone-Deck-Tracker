@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Settings;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using Newtonsoft.Json;
@@ -82,21 +83,29 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("mulligan_gv2_overlay")]
 		public bool MulliganGV2Overlay { get => Config.Instance.EnableMulliganGV2; }
 
-		// Counters the user forced on or off. Counters left on Auto appear in neither list, so a
-		// user who has not touched the setting adds nothing to the payload.
+		// Counters and opponent related cards the user forced on or off. Anything left on Auto appears
+		// in neither list, so a user who has not touched the setting adds nothing to the payload.
 		[JsonIgnore]
-		public IEnumerable<string> DynamicEnabledSettings => CounterSettings(CounterVisibility.Enabled);
+		public IEnumerable<string> DynamicEnabledSettings => DynamicSettings(CounterVisibility.Enabled);
 
 		[JsonIgnore]
-		public IEnumerable<string> DynamicDisabledSettings => CounterSettings(CounterVisibility.Disabled);
+		public IEnumerable<string> DynamicDisabledSettings => DynamicSettings(CounterVisibility.Disabled);
+
+		private static IEnumerable<string> DynamicSettings(CounterVisibility visibility) =>
+			CounterSettings(visibility)
+				.Concat(RelatedCardSettings(visibility))
+				.OrderBy(x => x, System.StringComparer.Ordinal);
 
 		private static IEnumerable<string> CounterSettings(CounterVisibility visibility)
 		{
 			var settings = CounterVisibilitySettings.Instance;
 			return settings.GetCounterIds(true, visibility).Select(id => $"player_counter_{MetricName(id)}")
-				.Concat(settings.GetCounterIds(false, visibility).Select(id => $"opponent_counter_{MetricName(id)}"))
-				.OrderBy(x => x, System.StringComparer.Ordinal);
+				.Concat(settings.GetCounterIds(false, visibility).Select(id => $"opponent_counter_{MetricName(id)}"));
 		}
+
+		private static IEnumerable<string> RelatedCardSettings(CounterVisibility visibility) =>
+			RelatedCardVisibilitySettings.Instance.GetOpponentCardIds(visibility)
+				.Select(id => $"opponent_related_card_{id.ToLowerInvariant()}");
 
 		private static string MetricName(string counterId)
 		{

@@ -41,6 +41,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly OverlayMulligan OptionsOverlayMulligan = new OverlayMulligan();
 		public readonly OverlayTheOutfinder OptionsOverlayTheOutfinder = new OverlayTheOutfinder();
 		public readonly OverlayCounters OptionsOverlayCounters = new OverlayCounters();
+		public readonly OverlayRelatedCards OptionsOverlayRelatedCards = new OverlayRelatedCards();
 		public readonly OverlayBattlegrounds OptionsOverlayBattlegrounds = new OverlayBattlegrounds();
 		public readonly OverlayArena OptionsOverlayArena = new OverlayArena();
 		public readonly OverlayMercenaries OptionsOverlayMercenaries = new OverlayMercenaries();
@@ -249,6 +250,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ContentHeader = LocUtil.Get("Options_Overlay_Counters_Header");
 			OptionsContent = OptionsOverlayCounters;
 			OptionsOverlayCounters.Load();
+		}
+
+		// Note: intentionally not part of Load(GameV2) below, for the same reason as the counters
+		// page: loading it builds the catalog, which instantiates every related card.
+		private void TreeViewItemOverlayRelatedCards_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Overlay_RelatedCards_Header");
+			OptionsContent = OptionsOverlayRelatedCards;
+			OptionsOverlayRelatedCards.Load();
 		}
 
 		private void TreeViewItemHSReplayReplays_OnSelected(object sender, RoutedEventArgs e)

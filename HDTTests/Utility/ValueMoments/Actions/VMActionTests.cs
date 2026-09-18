@@ -6,6 +6,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Settings;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 using Newtonsoft.Json;
@@ -28,6 +29,9 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			Config.Instance.CounterVisibilityOverrides.Clear();
 			CounterVisibilitySettings.Instance.Invalidate();
 			CounterVisibilitySettings.Instance.SaveConfig = () => { };
+			Config.Instance.RelatedCardVisibilityOverrides.Clear();
+			RelatedCardVisibilitySettings.Instance.Invalidate();
+			RelatedCardVisibilitySettings.Instance.SaveConfig = () => { };
 			VMAction.Environment = new FakeVMActionEnvironment();
 		}
 
@@ -37,6 +41,9 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			Config.Instance.CounterVisibilityOverrides.Clear();
 			CounterVisibilitySettings.Instance.Invalidate();
 			CounterVisibilitySettings.Instance.SaveConfig = Config.Save;
+			Config.Instance.RelatedCardVisibilityOverrides.Clear();
+			RelatedCardVisibilitySettings.Instance.Invalidate();
+			RelatedCardVisibilitySettings.Instance.SaveConfig = Config.Save;
 			VMAction.Environment = new VMActionEnvironment();
 		}
 
@@ -324,6 +331,45 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			var (enabled, _) = GeneralSettingsArrays();
 
 			Assert.IsFalse(enabled.Any(x => x.Contains("some_counter_from_a_newer_version")));
+		}
+
+		[TestMethod]
+		public void GeneralSettings_RelatedCardForcedOn_IsReportedAsEnabled()
+		{
+			var cardId = HearthDb.CardIds.Collectible.Demonhunter.JaceDarkweaver;
+			RelatedCardVisibilitySettings.Instance.SetOpponent(cardId, CounterVisibility.Enabled);
+
+			var (enabled, disabled) = GeneralSettingsArrays();
+
+			CollectionAssert.Contains(enabled, $"opponent_related_card_{cardId.ToLowerInvariant()}");
+			Assert.IsFalse(disabled.Any(x => x.StartsWith("opponent_related_card_")));
+		}
+
+		[TestMethod]
+		public void GeneralSettings_RelatedCardForcedOff_IsReportedAsDisabled()
+		{
+			var cardId = HearthDb.CardIds.Collectible.Demonhunter.JaceDarkweaver;
+			RelatedCardVisibilitySettings.Instance.SetOpponent(cardId, CounterVisibility.Disabled);
+
+			var (enabled, disabled) = GeneralSettingsArrays();
+
+			CollectionAssert.Contains(disabled, $"opponent_related_card_{cardId.ToLowerInvariant()}");
+			Assert.IsFalse(enabled.Any(x => x.StartsWith("opponent_related_card_")));
+		}
+
+		[TestMethod]
+		public void GeneralSettings_UnknownRelatedCardIsNotReported()
+		{
+			Config.Instance.RelatedCardVisibilityOverrides.Add(new RelatedCardVisibilityOverride
+			{
+				CardId = "CardFromANewerVersion",
+				Opponent = CounterVisibility.Enabled,
+			});
+			RelatedCardVisibilitySettings.Instance.Invalidate();
+
+			var (enabled, _) = GeneralSettingsArrays();
+
+			Assert.IsFalse(enabled.Any(x => x.Contains("cardfromanewerversion")));
 		}
 	}
 }
