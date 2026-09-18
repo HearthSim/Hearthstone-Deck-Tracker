@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
@@ -81,26 +82,25 @@
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Border>
-                        <Border DockPanel.Dock="Right" Padding="4 3" Margin="0 -3 2 -3" CornerRadius="3" Cursor="Hand"
-                                Visibility="{Binding IsMouseOver, ElementName=Tier7Panel, Converter={StaticResource BoolToVisibility}, ConverterParameter=Hidden}">
-                            <Border.Style>
-                                <Style TargetType="Border">
+                        <battlegrounds:OverlayButton DockPanel.Dock="Right" Padding="4 3" Margin="0 -3 2 -3" CornerRadius="3" Cursor="Hand"
+                                                     Command="{x:Static commands:GlobalCommands.ShowSettings}" CommandParameter="Battlegrounds"
+                                                     Visibility="{Binding IsMouseOver, ElementName=Tier7Panel, Converter={StaticResource BoolToVisibility}, ConverterParameter=Hidden}">
+                            <battlegrounds:OverlayButton.Style>
+                                <Style TargetType="battlegrounds:OverlayButton">
+                                    <Setter Property="Background" Value="Transparent"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
                                             <Setter Property="Background" Value="#22FFFFFF"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </Border.Style>
-                            <Border.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="commands:GlobalCommands.ShowSettings" CommandParameter="Battlegrounds" />
-                            </Border.InputBindings>
+                            </battlegrounds:OverlayButton.Style>
                             <Rectangle Height="14" Width="14">
                                 <Rectangle.Fill>
                                     <VisualBrush Visual="{StaticResource appbar_settings}" />
                                 </Rectangle.Fill>
                             </Rectangle>
-                        </Border>
+                        </battlegrounds:OverlayButton>
                         <TextBlock Text="{lex:Loc BattlegroundsPreLobby_InteractivePanel_Header}" Foreground="White" Margin="12 0" VerticalAlignment="Center" TextAlignment="Left" />
                     </DockPanel>
                 </Border>
