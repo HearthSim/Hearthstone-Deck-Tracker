@@ -697,7 +697,7 @@ public partial class OverlayWindow
 	{
 		try
 		{
-			if(!Config.Instance.ShowFlavorText || entity == null)
+			if(!Config.Instance.ShowFlavorText || _game.IsBattlegroundsMatch || entity == null)
 				return;
 			var card = entity.Info.LatestCardId == entity.CardId
 				? entity.Card
