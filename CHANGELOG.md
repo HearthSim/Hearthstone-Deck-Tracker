@@ -1,7 +1,7 @@
 ## Unreleased
 **Battlegrounds**:
-- Improve when the Max Gold counter appears.
 - Added a setting to configure whether the Meta Snapshot button is shown.
+- Improved when the Max Gold counter is visible.
 - Fixed UI bugs related to Minion Pinning.
 - Fixed the overlay not showing fully during a Timewarp tavern.
 
