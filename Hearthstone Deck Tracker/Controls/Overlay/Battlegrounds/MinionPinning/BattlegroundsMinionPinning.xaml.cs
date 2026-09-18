@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -13,8 +12,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning;
 
 public partial class BattlegroundsMinionPinning : INotifyPropertyChanged
 {
-	private readonly BrushConverter _bc = new();
-
 	public event PropertyChangedEventHandler? PropertyChanged;
 
 	[NotifyPropertyChangedInvocator]
@@ -151,27 +148,7 @@ public partial class BattlegroundsMinionPinning : INotifyPropertyChanged
 		IsQuickCompGuideVisible = false;
 	}
 
-	private void BtnOptions_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		BtnOptions.Background = (Brush)_bc.ConvertFromString("#22FFFFFF");
-	}
-
-	private void BtnOptions_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		BtnOptions.Background = (Brush)_bc.ConvertFromString("#00FFFFFF");
-	}
-
-	private void BtnHelp_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		BtnHelp.Background = (Brush)_bc.ConvertFromString("#22FFFFFF");
-	}
-
-	private void BtnHelp_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-	{
-		BtnHelp.Background = (Brush)_bc.ConvertFromString("#00FFFFFF");
-	}
-
-	private void BtnHelp_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+	private void BtnHelp_Click(object sender, RoutedEventArgs e)
 	{
 		if (Config.Instance.DismissedTavernMarkerQuickQuickGuide || Config.Instance.DismissedCompGuidesMarkerQuickGuide)
 			ShowGuide();

@@ -80,50 +80,60 @@
 
                                     <!-- Buttons StackPanel -->
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding CogBtnVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinionPinning}}">
-                                        <Border
-                                            Name="BtnHelp"
+                                        <battlegrounds:OverlayButton
+                                            x:Name="BtnHelp"
                                             Height="18"
                                             Width="18"
                                             CornerRadius="3"
-                                            Background="Transparent"
                                             Cursor="Hand"
-                                            MouseEnter="BtnHelp_MouseEnter"
-                                            MouseLeave="BtnHelp_MouseLeave"
+                                            Click="BtnHelp_Click"
                                             VerticalAlignment="Top"
                                             HorizontalAlignment="Right"
                                             Margin="4"
                                         >
-                                            <Border.InputBindings>
-                                                <MouseBinding MouseAction="LeftClick" Command="{x:Null}"/>
-                                            </Border.InputBindings>
+                                            <battlegrounds:OverlayButton.Style>
+                                                <Style TargetType="battlegrounds:OverlayButton">
+                                                    <Setter Property="Background" Value="#00FFFFFF" />
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#22FFFFFF" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </battlegrounds:OverlayButton.Style>
                                             <Rectangle
                                                 Height="14"
                                                 Width="12"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                MouseLeftButtonDown="BtnHelp_Click"
                                             >
                                                 <Rectangle.Fill>
                                                     <VisualBrush Visual="{StaticResource appbar_question}" />
                                                 </Rectangle.Fill>
                                             </Rectangle>
-                                        </Border>
-                                        <Border
-                                            Name="BtnOptions"
+                                        </battlegrounds:OverlayButton>
+                                        <battlegrounds:OverlayButton
+                                            x:Name="BtnOptions"
                                             Height="18"
                                             Width="18"
                                             CornerRadius="3"
-                                            Background="Transparent"
                                             Cursor="Hand"
-                                            MouseEnter="BtnOptions_MouseEnter"
-                                            MouseLeave="BtnOptions_MouseLeave"
+                                            Command="{x:Static commands:GlobalCommands.ShowSettings}"
+                                            CommandParameter="Battlegrounds"
                                             VerticalAlignment="Top"
                                             HorizontalAlignment="Right"
                                             Margin="4"
                                         >
-                                            <Border.InputBindings>
-                                                <MouseBinding MouseAction="LeftClick" Command="commands:GlobalCommands.ShowSettings" CommandParameter="Battlegrounds" />
-                                            </Border.InputBindings>
+                                            <battlegrounds:OverlayButton.Style>
+                                                <Style TargetType="battlegrounds:OverlayButton">
+                                                    <Setter Property="Background" Value="#00FFFFFF" />
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#22FFFFFF" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </battlegrounds:OverlayButton.Style>
                                             <Rectangle
                                                 Height="14"
                                                 Width="14"
@@ -134,7 +144,7 @@
                                                     <VisualBrush Visual="{StaticResource appbar_settings}" />
                                                 </Rectangle.Fill>
                                             </Rectangle>
-                                        </Border>
+                                        </battlegrounds:OverlayButton>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
