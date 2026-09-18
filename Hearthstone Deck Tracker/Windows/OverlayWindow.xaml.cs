@@ -528,8 +528,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		internal bool ShouldShowBgsMinionPinning()
+		private bool ShouldShowBgsMinionPinning()
 		{
+			if(!Config.Instance.ShowBattlegroundsBrowser)
+				return false;
+
 			if(!Config.Instance.ShowBattlegroundsTavernMarkers)
 				return false;
 
@@ -542,6 +545,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var gameId = _game.MetaData.ServerInfo?.GameHandle;
 			var userHasTier7 = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) || Tier7Trial.IsTrialForCurrentGameActive(gameId);
 			return userHasTier7;
+		}
+
+		internal void UpdateBgsMinionPinningVisibility()
+		{
+			BgsMinionPinningVisibility = ShouldShowBgsMinionPinning() ? Visible : Collapsed;
 		}
 
 		internal void ShowQuickGuide()
@@ -1114,7 +1122,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			BattlegroundsCompsGuidesVM.OnMatchStart();
 
-			BgsMinionPinningVisibility = ShouldShowBgsMinionPinning() ? Visible : Collapsed;
+			UpdateBgsMinionPinningVisibility();
 			_bgsTopBarBehavior.Show();
 
 			// coming from the lobby the bar is already up, so it has to be re-measured for the wider content

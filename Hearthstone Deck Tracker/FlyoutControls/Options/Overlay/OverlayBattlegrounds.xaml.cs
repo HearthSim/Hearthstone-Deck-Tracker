@@ -298,7 +298,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsBrowser = true;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
+			{
 				Core.Overlay.UpdateBgsTopBarContent();
+				Core.Overlay.UpdateBgsMinionPinningVisibility();
+			}
 			else
 				Core.Overlay.UpdateBattlegroundsGuidesPreLobbyVisibility();
 		}
@@ -310,7 +313,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsBrowser = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
+			{
 				Core.Overlay.UpdateBgsTopBarContent();
+				Core.Overlay.UpdateBgsMinionPinningVisibility();
+			}
 			else
 				Core.Overlay.UpdateBattlegroundsGuidesPreLobbyVisibility();
 		}
@@ -398,7 +404,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsTavernMarkers = true;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.BgsMinionPinningVisibility = Core.Overlay.ShouldShowBgsMinionPinning() ? Visibility.Visible : Visibility.Collapsed;
+				Core.Overlay.UpdateBgsMinionPinningVisibility();
 		}
 
 		private void CheckboxShowBattlegroundsTavernMarkers_Unchecked(object sender, RoutedEventArgs e)
@@ -408,7 +414,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsTavernMarkers = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
-				Core.Overlay.BgsMinionPinningVisibility = Visibility.Collapsed;
+				Core.Overlay.UpdateBgsMinionPinningVisibility();
 		}
 
 		private void CheckboxAutoEnableTavernMarkersRecommended_Checked(object sender, RoutedEventArgs e)
