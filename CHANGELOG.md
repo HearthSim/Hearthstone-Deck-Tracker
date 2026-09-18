@@ -1,3 +1,8 @@
+## Unreleased
+**Battlegrounds**:
+- Improve when the Max Gold counter appears.
+- Fixed UI bugs related to Minion Pinning.
+
 ## **Release v1.57.12 - 2026-09-17**
 **Hearthstone**:
 - Added deck highlight to Arrival of the Old Gods and Arrival of the Titans.
