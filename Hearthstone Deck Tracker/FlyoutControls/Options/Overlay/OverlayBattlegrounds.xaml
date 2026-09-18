@@ -36,6 +36,10 @@
                   VerticalAlignment="Top" Checked="CheckboxShowMinionBrowserBetweenGames_Checked"
                   IsEnabled="{Binding IsChecked, ElementName=CheckboxShowBattlegroundsBrowser}"
                   Unchecked="CheckboxShowMinionBrowserBetweenGames_Unchecked" Margin="30,5,0,0" />
+        <CheckBox x:Name="CheckboxShowBattlegroundsMetaSnapshot" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowMetaSnapshot}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsMetaSnapshot_Checked"
+                  Unchecked="CheckboxShowBattlegroundsMetaSnapshot_Unchecked" Margin="30,5,0,0" />
         <CheckBox x:Name="CheckboxAlwaysShowBattlegroundsTavernTier7" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_AlwaysShowTavernTier7}"
                   HorizontalAlignment="Left" VerticalAlignment="Top"
                   Checked="CheckboxAlwaysShowBattlegroundsTavernTier7_Checked" Unchecked="CheckboxAlwaysShowBattlegroundsTavernTier7_Unchecked"

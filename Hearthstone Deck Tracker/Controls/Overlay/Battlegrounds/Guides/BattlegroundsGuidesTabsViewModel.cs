@@ -71,7 +71,10 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 		OnPropertyChanged(nameof(MetaSnapshotVisible));
 	}
 
-	public bool MetaSnapshotVisible => IsPreLobby && !_isInQueue && !_gameFound && ActiveViewModel == null;
+	public bool MetaSnapshotVisible => Config.Instance.ShowBattlegroundsMetaSnapshot
+		&& IsPreLobby && !_isInQueue && !_gameFound && ActiveViewModel == null;
+
+	public void UpdateMetaSnapshotVisibility() => OnPropertyChanged(nameof(MetaSnapshotVisible));
 
 	// the meta snapshot sits where the tab content goes, so both of these hide it without animating
 	public bool MetaSnapshotHasRoom => ActiveViewModel == null && HeroesTabVisible;

@@ -76,6 +76,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowBattlegroundsGuides.IsChecked = Config.Instance.ShowBattlegroundsGuides;
 			CheckboxShowBattlegroundsBrowser.IsChecked = Config.Instance.ShowBattlegroundsBrowser;
 			CheckboxShowMinionBrowserBetweenGames.IsChecked = Config.Instance.ShowMinionBrowserBetweenGames;
+			CheckboxShowBattlegroundsMetaSnapshot.IsChecked = Config.Instance.ShowBattlegroundsMetaSnapshot;
+			UpdateMetaSnapshotCheckboxEnabled();
 			CheckboxAlwaysShowBattlegroundsTavernTier7.IsChecked = Config.Instance.AlwaysShowBattlegroundsTavernTier7;
 			CheckboxShowBattlegroundsTurnCounter.IsChecked = Config.Instance.ShowBattlegroundsTurnCounter;
 			CheckboxShowBattlegroundsMaxResourcesWidget.IsChecked = !Config.Instance.HidePlayerMaxResourcesWidgetBattlegrounds;
@@ -129,6 +131,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			}
 			TextBobsBuddyDisabled.Visibility = enabled ? Visibility.Collapsed : Visibility.Visible;
 		}
+
+		// the meta snapshot only ever shows in the guides panel of the pre-lobby browser
+		private void UpdateMetaSnapshotCheckboxEnabled() =>
+			CheckboxShowBattlegroundsMetaSnapshot.IsEnabled = Config.Instance.ShowBattlegroundsBrowser
+				&& Config.Instance.ShowBattlegroundsGuides
+				&& Config.Instance.ShowMinionBrowserBetweenGames;
 
 		private void SaveConfig(bool updateOverlay)
 		{
@@ -279,6 +287,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsGuides = true;
 			SaveConfig(true);
+			UpdateMetaSnapshotCheckboxEnabled();
 			Core.Overlay.UpdateBgsTopBarContent();
 		}
 
@@ -288,6 +297,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsGuides = false;
 			SaveConfig(true);
+			UpdateMetaSnapshotCheckboxEnabled();
 			Core.Overlay.UpdateBgsTopBarContent();
 		}
 
@@ -297,6 +307,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsBrowser = true;
 			SaveConfig(true);
+			UpdateMetaSnapshotCheckboxEnabled();
 			if(Core.Game.IsBattlegroundsMatch)
 			{
 				Core.Overlay.UpdateBgsTopBarContent();
@@ -312,6 +323,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsBrowser = false;
 			SaveConfig(true);
+			UpdateMetaSnapshotCheckboxEnabled();
 			if(Core.Game.IsBattlegroundsMatch)
 			{
 				Core.Overlay.UpdateBgsTopBarContent();
@@ -327,6 +339,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowMinionBrowserBetweenGames = true;
 			SaveConfig(true);
+			UpdateMetaSnapshotCheckboxEnabled();
 			Core.Overlay.UpdateBattlegroundsGuidesPreLobbyVisibility();
 		}
 
@@ -336,7 +349,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowMinionBrowserBetweenGames = false;
 			SaveConfig(true);
+			UpdateMetaSnapshotCheckboxEnabled();
 			Core.Overlay.UpdateBattlegroundsGuidesPreLobbyVisibility();
+		}
+
+		private void CheckboxShowBattlegroundsMetaSnapshot_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsMetaSnapshot = true;
+			SaveConfig(false);
+			Core.Overlay.BattlegroundsGuidesTabsViewModel.UpdateMetaSnapshotVisibility();
+		}
+
+		private void CheckboxShowBattlegroundsMetaSnapshot_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsMetaSnapshot = false;
+			SaveConfig(false);
+			Core.Overlay.BattlegroundsGuidesTabsViewModel.UpdateMetaSnapshotVisibility();
 		}
 
 		private void CheckboxAlwaysShowBattlegroundsTavernTier7_Checked(object sender, RoutedEventArgs e)
