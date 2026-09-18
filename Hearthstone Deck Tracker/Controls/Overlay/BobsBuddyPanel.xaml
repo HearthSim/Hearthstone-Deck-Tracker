@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
+             xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -182,19 +183,21 @@
                                     </Rectangle>
                                    <Run Text="{Binding StatusMessage, Mode=OneWay}"/>
                             </TextBlock>
-                            <Rectangle Width="12" Height="18" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Left" Visibility="{Binding SettingsVisibility}" MouseDown="Question_MouseDown">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_question}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <Rectangle Width="20" Height="20" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Right" Visibility="{Binding SettingsVisibility}">
-                                <Rectangle.InputBindings>
-                                    <MouseBinding MouseAction="LeftClick" Command="commands:GlobalCommands.ShowSettings" CommandParameter="Battlegrounds" />
-                                </Rectangle.InputBindings>
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_settings}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
+                            <battlegrounds:OverlayButton Background="Transparent" HorizontalAlignment="Left" Visibility="{Binding SettingsVisibility}" Click="Question_Click">
+                                <Rectangle Width="12" Height="18" Style="{StaticResource StatusBarIconStyle}">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Visual="{StaticResource appbar_question}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </battlegrounds:OverlayButton>
+                            <battlegrounds:OverlayButton Background="Transparent" HorizontalAlignment="Right" Visibility="{Binding SettingsVisibility}"
+                                                         Command="{x:Static commands:GlobalCommands.ShowSettings}" CommandParameter="Battlegrounds">
+                                <Rectangle Width="20" Height="20" Style="{StaticResource StatusBarIconStyle}">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Visual="{StaticResource appbar_settings}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </battlegrounds:OverlayButton>
                         </Grid>
                     </Border>
                 </StackPanel>

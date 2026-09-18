@@ -74,6 +74,18 @@ public class OverlayButton : Border
 		CoerceValue(IsEnabledProperty);
 	}
 
+	// consume the press as well (the click itself fires on mouse up), so it never reaches
+	// handlers on ancestors the way a real Button's press would not
+	protected override void OnMouseDown(MouseButtonEventArgs e)
+	{
+		base.OnMouseDown(e);
+
+		if(!IsEnabled)
+			return;
+
+		e.Handled = true;
+	}
+
 	// hook MouseUp rather than the per-button events, so left, right, middle and the
 	// XButtons all trigger the button - handlers can tell them apart via ChangedButton
 	protected override void OnMouseUp(MouseButtonEventArgs e)

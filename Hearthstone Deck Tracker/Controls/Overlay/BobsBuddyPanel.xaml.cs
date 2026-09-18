@@ -676,9 +676,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				ShowAverageDamagesPanels(false);
 		}
 
-		private void Question_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		private void Question_Click(object sender, RoutedEventArgs e)
 		{
-			e.Handled = true;
 			InfoVisibility = InfoVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 			UpdateSeenInfo();
 		}
