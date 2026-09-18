@@ -2,6 +2,7 @@
 **Battlegrounds**:
 - Improve when the Max Gold counter appears.
 - Fixed UI bugs related to Minion Pinning.
+- Fixed the overlay not showing fully during a Timewarp tavern.
 
 ## **Release v1.57.12 - 2026-09-17**
 **Hearthstone**:

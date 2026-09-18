@@ -1659,14 +1659,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private IReadOnlyList<string>? _pendingBgsCombatChoices;
 
-		internal void SetChoicesVisible(bool choicesVisible, IEnumerable<string>? cardIds)
+		internal void SetChoicesVisible(bool choicesVisible, bool isShopChoice, IEnumerable<string>? cardIds)
 		{
 			BattlegroundsTrinketPickingViewModel.ChoicesVisible = choicesVisible;
 
 			if(_game.IsBattlegroundsMatch)
 			{
 				var cardIdList = (cardIds ?? Array.Empty<string>()).ToList();
-				if(!choicesVisible || !cardIdList.Any())
+				// shop choices (Timewarp tavern) look like the regular shop, not like floating discover cards
+				if(!choicesVisible || isShopChoice || !cardIdList.Any())
 				{
 					_pendingBgsCombatChoices = null;
 					OpacityMaskOverlay.RemoveMaskedRegion("DiscoverCard");
