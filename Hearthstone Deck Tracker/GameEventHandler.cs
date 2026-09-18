@@ -1282,20 +1282,29 @@ namespace Hearthstone_Deck_Tracker
 					LastGames.Save();
 				}
 			}
-			else if(_assignedDeck != null && _game.CurrentGameStats != null && _assignedDeck.DeckStats.Games.Contains(_game.CurrentGameStats))
+			else if(_game.CurrentGameStats != null)
 			{
-				//game was not supposed to be recorded, remove from deck again.
-				_assignedDeck.RemoveGameResult(_game.CurrentGameStats);
-				Log.Info($"Local deck stats are disabled for {_game.CurrentGameMode}. Removed game from {_assignedDeck}.");
-			}
-			else if(_assignedDeck == null)
-			{
-				var defaultDeck = DefaultDeckStats.Instance.GetDeckStats(_game.Player.OriginalClass);
-				if(defaultDeck != null)
+				if(_assignedDeck != null)
 				{
-					if(_game.CurrentGameStats != null)
+					if(_assignedDeck.DeckStats.Games.Contains(_game.CurrentGameStats))
+					{
+						//game was not supposed to be recorded, remove from deck again.
+						_assignedDeck.RemoveGameResult(_game.CurrentGameStats);
+						Log.Info(
+							$"Local deck stats are disabled for {_game.CurrentGameMode}. Removed game from {_assignedDeck}."
+						);
+					}
+				}
+				else
+				{
+					var defaultDeck = DefaultDeckStats.Instance.GetDeckStats(_game.Player.OriginalClass);
+					if(defaultDeck != null && defaultDeck.Games.Contains(_game.CurrentGameStats))
+					{
 						defaultDeck.Games.Remove(_game.CurrentGameStats);
-					Log.Info($"Local deck stats are disabled for {_game.CurrentGameMode}. Removed game from default {_game.Player.OriginalClass}.");
+						Log.Info(
+							$"Local deck stats are disabled for {_game.CurrentGameMode}. Removed game from default {_game.Player.OriginalClass}."
+						);
+					}
 				}
 			}
 		}
