@@ -1295,7 +1295,7 @@ namespace Hearthstone_Deck_Tracker
 						);
 					}
 				}
-				else
+				else if(!_game.IsBattlegroundsMatch)
 				{
 					var defaultDeck = DefaultDeckStats.Instance.GetDeckStats(_game.Player.OriginalClass);
 					if(defaultDeck != null && defaultDeck.Games.Contains(_game.CurrentGameStats))

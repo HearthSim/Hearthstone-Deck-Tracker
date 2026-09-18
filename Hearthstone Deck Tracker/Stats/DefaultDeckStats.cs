@@ -31,6 +31,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			if(string.IsNullOrEmpty(hero))
 				return null;
+			if(hero == "BaconPHhero")
+				return null; // no deck stats in Battlegrounds
 			var ds = DeckStats.FirstOrDefault(d => d.Name == hero);
 			if(ds != null)
 				return ds;
