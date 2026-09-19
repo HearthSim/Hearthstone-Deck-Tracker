@@ -77,7 +77,7 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 	public void UpdateMetaSnapshotVisibility() => OnPropertyChanged(nameof(MetaSnapshotVisible));
 
 	// the meta snapshot sits where the tab content goes, so both of these hide it without animating
-	public bool MetaSnapshotHasRoom => ActiveViewModel == null && HeroesTabVisible;
+	public bool MetaSnapshotHasRoom => ActiveViewModel == null && HasRoomForExtras;
 
 	public bool IsPreLobby
 	{
@@ -88,6 +88,7 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 			if(value)
 				_gameFound = false;
 			OnPropertyChanged(nameof(HeroesTabEnabled));
+			OnPropertyChanged(nameof(HeroesTabVisible));
 			OnPropertyChanged(nameof(MetaSnapshotVisible));
 		}
 	}
@@ -111,7 +112,9 @@ public class BattlegroundsGuidesTabsViewModel : ViewModel
 		}
 	}
 
-	public bool HeroesTabVisible => AspectRatio >= MinAspectRatio;
+	private bool HasRoomForExtras => AspectRatio >= MinAspectRatio;
+
+	public bool HeroesTabVisible => !IsPreLobby || HasRoomForExtras;
 
 	public bool HasQuests
 	{

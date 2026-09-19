@@ -5,8 +5,9 @@
 **Battlegrounds**:
 - Added a setting to configure whether the Meta Snapshot button is shown.
 - Improved when the Max Gold counter is visible.
-- Fixed UI bugs related to Minion Pinning.
+- Fixed the hero guide tab not showing on small screens.
 - Fixed the overlay not showing fully during a Timewarp tavern.
+- Fixed UI bugs related to Minion Pinning.
 
 ## **Release v1.57.12 - 2026-09-17**
 **Hearthstone**:
