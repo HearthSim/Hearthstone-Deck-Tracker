@@ -85,8 +85,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				_optionsContent = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(HSReplayHeaderVisibility));
+				OnPropertyChanged(nameof(ContentScrollBarVisibility));
 			}
 		}
+
+		public ScrollBarVisibility ContentScrollBarVisibility =>
+			OptionsContent is IOptionsPageWithOwnScrolling ? ScrollBarVisibility.Disabled : ScrollBarVisibility.Auto;
 
 		public void Load(GameV2 game)
 		{

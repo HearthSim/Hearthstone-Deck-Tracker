@@ -2,7 +2,7 @@ using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
 
-public partial class OverlayRelatedCards : UserControl
+public partial class OverlayRelatedCards : UserControl, IOptionsPageWithOwnScrolling
 {
 	private readonly RelatedCardSettingsViewModel _viewModel = new();
 

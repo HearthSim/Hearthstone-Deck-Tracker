@@ -15,7 +15,8 @@
         <!-- One template for every related card: nothing here mentions a specific card, which is what
              keeps this page zero-touch when a new related card is added. -->
         <DataTemplate x:Key="RelatedCardRowTemplate" DataType="{x:Type overlay:RelatedCardSettingRow}">
-            <Grid Margin="0,3,0,3">
+            <!-- The right margin keeps the dropdown off the list's scrollbar. -->
+            <Grid Margin="0,3,10,3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -50,10 +51,21 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Margin="10">
-        <TextBlock Text="{lex:Loc OptionsRelatedCards_Description}" TextWrapping="Wrap" Margin="0,0,0,10"/>
+    <!-- The list is the only thing on this page that scrolls (see IOptionsPageWithOwnScrolling): the
+         host does not scroll this page, so the row above the list stays put and the list takes
+         whatever height is left. -->
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <DockPanel Margin="0,0,0,4">
+        <TextBlock Grid.Row="0" Text="{lex:Loc OptionsRelatedCards_Description}" TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+        <DockPanel Grid.Row="1" Margin="0,0,0,4">
             <Button DockPanel.Dock="Right" Content="{lex:Loc OptionsCounters_ResetAll}"
                     Padding="10,2" Margin="8,0,0,0"
                     Command="{Binding ResetAllCommand}"
@@ -66,18 +78,20 @@
                      controls:TextBoxHelper.Watermark="{lex:Loc OptionsRelatedCards_Filter_Placeholder}"/>
         </DockPanel>
 
-        <!-- Column header, aligned with the dropdown in the row template (and clear of the scrollbar). -->
-        <Grid Margin="0,6,17,0">
+        <!-- Column header, aligned with the dropdown in the row template: clear of the scrollbar (17)
+             plus the row's own right margin (10). -->
+        <Grid Grid.Row="2" Margin="0,6,27,0">
             <TextBlock Width="110" HorizontalAlignment="Right"
                        Text="{lex:Loc OptionsCounters_Column_Opponent}" Style="{StaticResource ColumnHeaderStyle}"/>
         </Grid>
 
-        <TextBlock Text="{lex:Loc OptionsRelatedCards_NoResults}" Margin="0,12,0,0"
+        <TextBlock Grid.Row="3" Text="{lex:Loc OptionsRelatedCards_NoResults}" Margin="0,12,0,0"
                    Visibility="{Binding NoResultsVisibility}"/>
 
         <!-- There are hundreds of related cards, so unlike the counters page this list is virtualized
-             inside its own bounded scroll area instead of being laid out all at once. -->
-        <ItemsControl ItemsSource="{Binding Rows}" ItemTemplate="{StaticResource RelatedCardRowTemplate}"
+             instead of being laid out all at once. That needs a bounded height, which the star row
+             above provides. -->
+        <ItemsControl Grid.Row="4" ItemsSource="{Binding Rows}" ItemTemplate="{StaticResource RelatedCardRowTemplate}"
                       VirtualizingPanel.IsVirtualizing="True"
                       VirtualizingPanel.VirtualizationMode="Recycling"
                       ScrollViewer.CanContentScroll="True"
@@ -89,11 +103,11 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.Template>
                 <ControlTemplate TargetType="ItemsControl">
-                    <ScrollViewer MaxHeight="420" VerticalScrollBarVisibility="Auto" CanContentScroll="True" Focusable="False">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Focusable="False">
                         <ItemsPresenter/>
                     </ScrollViewer>
                 </ControlTemplate>
             </ItemsControl.Template>
         </ItemsControl>
-    </StackPanel>
+    </Grid>
 </UserControl>
