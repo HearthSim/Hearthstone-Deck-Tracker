@@ -30,9 +30,9 @@ namespace HearthWatcher
 		private LogFileWatcher PowerLogWatcher => _logWatchers.Single(x => x.Info.Name == "Power");
 		private LogFileWatcher LoadingScreenLogWatcher => _logWatchers.Single(x => x.Info.Name == "LoadingScreen");
 
-		public event Action<List<LogLine>> OnNewLines;
-		public event Action<string> OnLogLineIgnored;
-		public event Action<string> OnLogFileFound;
+		public event Action<List<LogLine>>? OnNewLines;
+		public event Action<string>? OnLogLineIgnored;
+		public event Action<string>? OnLogFileFound;
 
 		public async void Start(string logDirectory)
 		{

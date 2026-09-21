@@ -37,5 +37,5 @@ public class LogLine
 	public string Namespace { get; }
 	public DateTime Time { get; } = DateTime.Now;
 	public string Line { get; }
-	public string LineContent { get; }
+	public string LineContent { get; } = "";
 }

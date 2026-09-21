@@ -39,16 +39,15 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		internal bool IsEnabled { get; set; } = true;
 
-		public static LogWatcherInfo AchievementsLogWatcherInfo => new LogWatcherInfo { Name = "Achievements" };
-		public static LogWatcherInfo PowerLogWatcherInfo => new LogWatcherInfo
+		public static LogWatcherInfo AchievementsLogWatcherInfo => new LogWatcherInfo("Achievements");
+		public static LogWatcherInfo PowerLogWatcherInfo => new LogWatcherInfo("Power")
 		{
-			Name = "Power",
 			StartsWithFilters = new[] {"PowerTaskList.DebugPrintPower", "GameState.", "PowerProcessor.EndCurrentTaskList", "ChoiceCardMgr."},
 			ContainsFilters = new[] {"Begin Spectating", "Start Spectator", "End Spectator"}
 		};
 
-		public static LogWatcherInfo ArenaLogWatcherInfo => new LogWatcherInfo {Name = "Arena" };
-		public static LogWatcherInfo LoadingScreenLogWatcherInfo => new LogWatcherInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded", "Gameplay", "LoadingScreen.OnScenePreUnload", "MulliganManager.HandleGameStart" } };
+		public static LogWatcherInfo ArenaLogWatcherInfo => new LogWatcherInfo("Arena");
+		public static LogWatcherInfo LoadingScreenLogWatcherInfo => new LogWatcherInfo("LoadingScreen") { StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded", "Gameplay", "LoadingScreen.OnScenePreUnload", "MulliganManager.HandleGameStart" } };
 
 		public LogWatcherManager()
 		{

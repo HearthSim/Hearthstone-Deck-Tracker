@@ -16,14 +16,14 @@ namespace HearthWatcher.LogReader
 	public class LogFileWatcher
 	{
 		internal readonly LogWatcherInfo Info;
-		private string _logDir;
+		private string _logDir = "";
 		private ConcurrentQueue<LogLine> _lines = new ConcurrentQueue<LogLine>();
 		private bool _logFileExists;
 		private long _offset;
 		private bool _running;
 		private DateTime _startingPoint;
 		private bool _stop;
-		private Thread _thread;
+		private Thread? _thread;
 
 		/**
 		 * Limit the amount of LogLines we keep in the ConcurrentQueue, so that we don't run out of memory.
@@ -33,11 +33,11 @@ namespace HearthWatcher.LogReader
 		 */
 		private const int MAX_LOG_LINE_BUFFER = 100_000;
 
-		private DirectoryInfo _latestActiveDir;
-		private DirectoryInfo _latestInactiveDir;
+		private DirectoryInfo? _latestActiveDir;
+		private DirectoryInfo? _latestInactiveDir;
 		private DateTime _lastCheck;
 
-		private DirectoryInfo GetActualLogDir()
+		private DirectoryInfo? GetActualLogDir()
 		{
 			var now = DateTime.Now;
 			if((now - _lastCheck).TotalSeconds < 5)
@@ -99,8 +99,8 @@ namespace HearthWatcher.LogReader
 			Info = info;
 		}
 
-		public event Action<string> OnLogFileFound;
-		public event Action<string> OnLogLineIgnored;
+		public event Action<string>? OnLogFileFound;
+		public event Action<string>? OnLogLineIgnored;
 
 		public void Start(DateTime startingPoint, string logDirectory)
 		{
