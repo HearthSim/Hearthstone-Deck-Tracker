@@ -69,6 +69,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				Attack = deity.Attack,
 				Health = deity.Health,
 				IsPremium = deity.IsGolden,
+				HighlightBuffedStats = false,
 			}));
 		}
 

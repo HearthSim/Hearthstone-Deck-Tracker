@@ -65,7 +65,7 @@ public class BattlegroundsMinionViewModel : ViewModel, ICardTooltip
 		set
 		{
 			SetProp(value);
-			AttackBrush = value > Card?.Attack ? Green : White;
+			UpdateStatBrushes();
 		}
 	}
 
@@ -75,7 +75,17 @@ public class BattlegroundsMinionViewModel : ViewModel, ICardTooltip
 		set
 		{
 			SetProp(value);
-			HealthBrush = value > Card?.Health ? Green : White;
+			UpdateStatBrushes();
+		}
+	}
+
+	public bool HighlightBuffedStats
+	{
+		get => GetProp(true);
+		set
+		{
+			SetProp(value);
+			UpdateStatBrushes();
 		}
 	}
 
@@ -87,9 +97,14 @@ public class BattlegroundsMinionViewModel : ViewModel, ICardTooltip
 		{
 			SetProp(value);
 			CardPortrait = new CardAssetViewModel(value, CardAssetType.Portrait);
-			AttackBrush = Attack > value?.Attack ? Green : White;
-			HealthBrush = Health > value?.Health ? Green : White;
+			UpdateStatBrushes();
 		}
+	}
+
+	private void UpdateStatBrushes()
+	{
+		AttackBrush = HighlightBuffedStats && Attack > Card?.Attack ? Green : White;
+		HealthBrush = HighlightBuffedStats && Health > Card?.Health ? Green : White;
 	}
 
 	private static readonly SolidColorBrush White = new(Color.FromScRgb(1, 1, 1, 1));
