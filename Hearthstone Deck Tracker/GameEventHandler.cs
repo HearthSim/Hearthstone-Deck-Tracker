@@ -1055,6 +1055,7 @@ namespace Hearthstone_Deck_Tracker
 					if(_game.CurrentGameStats.BattlegroundsDetails != null)
 					{
 						_game.CurrentGameStats.BattlegroundsDetails.AnomalyDbfId = _game.GameEntity?.GetTag(GameTag.BACON_GLOBAL_ANOMALY_DBID);
+						_game.CurrentGameStats.BattlegroundsDetails.DeityDbfId = BattlegroundsUtils.GetBattlegroundsDeityDbfId(_game.GameEntity);
 						_game.CurrentGameStats.BattlegroundsDetails.FinalPlacement = finalPlacement;
 						_game.CurrentGameStats.BattlegroundsDetails.FriendlyRawHeroDbfId = hero?.Card.DbfId;
 						_game.CurrentGameStats.BattlegroundsDetails.FriendlyPlayerEntityId = hero?.Id;

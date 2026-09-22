@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int? FriendlyRawHeroDbfId { get; set; }
 		public int? FinalPlacement {  get; set; }
 		public int? AnomalyDbfId { get; set; }
+		public int? DeityDbfId { get; set; }
 	}
 
 	public class GameStats : INotifyPropertyChanged

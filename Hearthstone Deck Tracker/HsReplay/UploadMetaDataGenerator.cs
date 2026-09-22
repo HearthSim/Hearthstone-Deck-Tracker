@@ -78,6 +78,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(game!.BattlegroundsDetails != null)
 				{
 					metaData.BattlegroundsDetails.AnomalyDbfId = game.BattlegroundsDetails.AnomalyDbfId;
+					metaData.BattlegroundsDetails.DeityDbfId = game.BattlegroundsDetails.DeityDbfId;
 					metaData.BattlegroundsDetails.FinalPlacement = game.BattlegroundsDetails.FinalPlacement;
 					metaData.BattlegroundsDetails.FriendlyPlayerEntityId = game.BattlegroundsDetails.FriendlyPlayerEntityId;
 					metaData.BattlegroundsDetails.FriendlyRawHeroDbfId = game.BattlegroundsDetails.FriendlyRawHeroDbfId;

@@ -100,6 +100,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return anomalyDbfId;
 			return null;
 		}
+
+		public static int? GetBattlegroundsDeityDbfId(Entity? game)
+		{
+			if(game == null) return null; // defensive to protect against wrong type of Core.Game.GameEntity
+			var deityDbfId = game.GetTag(GameTag.BACON_GLOBAL_OLD_GOD_DBID);
+			if(deityDbfId > 0)
+				return deityDbfId;
+			return null;
+		}
 		private static readonly List<BattlegroundsKeyword> _availableKeywords = new()
 		{
 			new TagKeyword(GameTag.BATTLECRY, "GameTag_Battlecry"),

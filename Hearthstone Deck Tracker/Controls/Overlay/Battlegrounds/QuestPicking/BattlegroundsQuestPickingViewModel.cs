@@ -173,6 +173,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 				Turn = Core.Game.GetTurnNumber(),
 				MinionTypes = availableRaces.Cast<int>().ToArray(),
 				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
+				DeityDbfId = BattlegroundsUtils.GetBattlegroundsDeityDbfId(Core.Game.GameEntity),
 				OfferedRewards = rewards,
 				LanguageCode = Helper.GetCardLanguage(),
 				GameType = (int)HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, Core.Game.CurrentFormat),
