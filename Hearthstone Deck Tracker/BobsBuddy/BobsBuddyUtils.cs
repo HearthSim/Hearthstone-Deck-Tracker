@@ -407,6 +407,35 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return objective;
 		}
 
+		/// <summary>
+		/// Builds the Deity that a Deity Sigil will summon. The Deity has no entity of its own until it
+		/// awakens, so until then it exists only as tags on the sigil: the card it is going to be, plus
+		/// the stats it has accumulated.
+		/// </summary>
+		internal static Minion? GetDeityFromSigil(Simulator sim, bool player, Entity sigil)
+		{
+			var card = Database.GetCardFromDbfId(sigil.GetTag(GameTag.BACON_EVOLUTION_CARD_ID), false);
+			if(card == null)
+				return null;
+
+			// Deliberately the base card id. A Deity is only ever Golden through Mask of Ancient Ones,
+			// which DeitySigil applies itself from the trinket.
+			var deity = sim.MinionFactory.CreateFromCardId(card.Id, player);
+
+			// These are the Deity's current total stats, not a bonus on top of the printed ones: they
+			// start at 1/1 when the sigil is created and grow with every "Give your Deity +X/+Y". The
+			// player entity carries the same pair as BACON_OLD_GOD_ATTACK/BACON_OLD_GOD_HEALTH, but the
+			// sigil-local tags stay correct per player in duos.
+			var attack = sigil.GetTag(GameTag.BACON_EVOLUTION_CARD_OVERWRITE_ATK);
+			var health = sigil.GetTag(GameTag.BACON_EVOLUTION_CARD_OVERWRITE_HEALTH);
+			deity.baseAttack = attack;
+			deity.maxAttack = attack;
+			deity.baseHealth = health;
+			deity.maxHealth = health;
+
+			return deity;
+		}
+
 		internal static Trinket GetTrinketFromEntity(TrinketFactory factory, bool player, Entity entity)
 		{
 			// Use LatestCardId, not CardId. A Lesser/Greater Crystal Ball that has transformed into a

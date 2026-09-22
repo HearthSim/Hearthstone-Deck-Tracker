@@ -1,4 +1,6 @@
 ## Unreleased
+**Updated for Hearthstone 36.6.1**
+
 **Hearthstone**:
 - Added a setting to choose which cards can appear in the opponent's Related Cards panel.
 

@@ -631,7 +631,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			foreach(var objective in gamePlayer.Objectives)
 			{
 				//TODO: [Duos] Check if friendly translates to player correctly
-				inputPlayer.Objectives.Add(GetObjectiveFromEntity(simulator.ObjectiveFactory, friendly, objective));
+				var inputObjective = GetObjectiveFromEntity(simulator.ObjectiveFactory, friendly, objective);
+
+				// The Deity Sigil carries the Deity it will summon, which is not an entity anywhere in
+				// the game until it awakens mid-combat.
+				if(objective.CardId == NonCollectible.Neutral.SecretDeityDnt && inputObjective is IOnAttachedMinion sigil)
+					sigil.AttachedMinion = GetDeityFromSigil(simulator, friendly, objective);
+
+				inputPlayer.Objectives.Add(inputObjective);
 			}
 
 			var playerSide = GetOrderedMinions(gamePlayer.Board)
