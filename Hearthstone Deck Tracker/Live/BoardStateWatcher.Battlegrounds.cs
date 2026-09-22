@@ -64,6 +64,28 @@ namespace Hearthstone_Deck_Tracker.Live
 			return new CardWithEnchantments(ToCardRef(ResolveCard(entity)), darkGifts);
 		}
 
+		// the Deity Sigil sits in the secret zone as an objective. A Deity has no entity of its own
+		// until it awakens, so report the Deity the sigil is holding instead of the sigil itself.
+		private Hearthstone.Card? ResolveSecretCard(Entity entity)
+		{
+			if(entity.CardId != HearthDb.CardIds.NonCollectible.Neutral.SecretDeityDnt)
+				return ResolveCard(entity);
+			return Database.GetCardFromDbfId(entity.GetTag(GameTag.BACON_EVOLUTION_CARD_ID), false) ?? ResolveCard(entity);
+		}
+
+		private Hearthstone.Card? ResolveSecretCard(BattlegroundsTeammateBoardStateEntity entity)
+		{
+			if(entity.CardId != HearthDb.CardIds.NonCollectible.Neutral.SecretDeityDnt)
+				return ResolveCard(entity);
+			return Database.GetCardFromDbfId(GetTag(entity, GameTag.BACON_EVOLUTION_CARD_ID), false) ?? ResolveCard(entity);
+		}
+
+		private int[] SortedSecretDbfIds(IEnumerable<Entity> entities) =>
+			entities.OrderBy(ZonePosition).Select(e => ResolveSecretCard(e)?.DbfId ?? 0).ToArray();
+
+		private int[] SortedSecretDbfIds(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
+			entities.OrderBy(ZonePosition).Select(e => ResolveSecretCard(e)?.DbfId ?? 0).ToArray();
+
 		// the enchantment has no art of its own, so report the dark gift that created it
 		private Hearthstone.Card? DarkGiftCard(Entity enchantment)
 		{
@@ -165,7 +187,7 @@ namespace Hearthstone_Deck_Tracker.Live
 						Cards = SortedDbfIds(player.Hand),
 						Size = player.HandCount
 					},
-					Secrets = SortedDbfIds(player.PlayerEntities.Where(x => x.IsInSecret)),
+					Secrets = SortedSecretDbfIds(player.PlayerEntities.Where(x => x.IsInSecret)),
 					Fatigue = playerEntity?.GetTag(GameTag.FATIGUE) ?? 0
 				}, new BoardStatePlayer
 				{
@@ -182,7 +204,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					{
 						Size = opponent.HandCount
 					},
-					Secrets = SortedDbfIds(opponent.PlayerEntities.Where(x => x.IsInSecret)),
+					Secrets = SortedSecretDbfIds(opponent.PlayerEntities.Where(x => x.IsInSecret)),
 					Fatigue = opponentEntity?.GetTag(GameTag.FATIGUE) ?? 0
 				}
 			);
@@ -268,7 +290,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					Cards = SortedDbfIds(hand),
 					Size = hand.Count,
 				},
-				Secrets = SortedDbfIds(secrets),
+				Secrets = SortedSecretDbfIds(secrets),
 				Fatigue = 0,
 			};
 		}
