@@ -327,6 +327,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool isDraenei() => HasRace(HearthDb.Enums.Race.DRAENEI);
 
+		public bool IsAberration() => HasRace(HearthDb.Enums.Race.ABERRATION);
+
 		public bool IsEmptyRace() => RaceEnum == HearthDb.Enums.Race.INVALID && SecondaryRaceEnum == HearthDb.Enums.Race.INVALID;
 
 		public string? Type => Data != null ? HearthDbConverter.CardTypeConverter(Data.Type) : null;

@@ -1,4 +1,5 @@
-﻿using HearthDb.Enums;
+﻿using System.Linq;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
@@ -7,7 +8,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.BgCounters;
 
 public class DeitySizeCounter : StatsCounter
 {
-	private const int ShowAboveStats = 10;
+	private const int MinStatsToShow = 25;
+	private const int MinAberrationsToShow = 3;
 
 	public override bool IsBattlegroundsCounter => true;
 
@@ -38,7 +40,24 @@ public class DeitySizeCounter : StatsCounter
 	}
 
 	public override bool ShouldShow() => Game.IsBattlegroundsMatch
-	                                     && (AttackCounter > ShowAboveStats || HealthCounter > ShowAboveStats);
+	                                     && (AttackCounter >= MinStatsToShow || HealthCounter >= MinStatsToShow
+	                                         || (HasValue && AberrationsOnBoard() >= MinAberrationsToShow));
+
+	private int AberrationsOnBoard()
+	{
+		var board = IsPlayerCounter ? Game.Player.Board : Game.Opponent.Board;
+		return board.Count(IsAberration);
+	}
+
+	// the static race misses a minion turned into an Aberration by an enchantment (Faceless Converter),
+	// which only the live CARDRACE tag carries
+	private static bool IsAberration(Entity entity)
+	{
+		if(!entity.IsMinion)
+			return false;
+		var liveRace = (Race)entity.GetTag(GameTag.CARDRACE);
+		return entity.Card.IsAberration() || liveRace == Race.ABERRATION || liveRace == Race.ALL;
+	}
 
 	public override string[] GetCardsToDisplay() => RelatedCards;
 

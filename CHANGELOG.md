@@ -1,3 +1,7 @@
+## Unreleased
+**Battlegrounds**:
+- Improved when the deity counter appears.
+
 ## **Release v1.58.0 - 2026-09-22**
 **Updated for Hearthstone 36.6.1**
 
