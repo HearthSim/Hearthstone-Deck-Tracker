@@ -1,11 +1,11 @@
-## Unreleased
+## **Release v1.5810 - 2026-09-22**
+**Updated for Hearthstone 36.6.1**
+
 **Battlegrounds**:
 - Changed Aberrations in the available minion types to use the match deity.
 - Improved when the deity counter appears.
 
 ## **Release v1.58.0 - 2026-09-22**
-**Updated for Hearthstone 36.6.1**
-
 **Hearthstone**:
 - Added a setting to choose which cards can appear in the opponent's Related Cards panel.
 
