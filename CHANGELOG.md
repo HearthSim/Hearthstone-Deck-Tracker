@@ -6,6 +6,8 @@
 
 **Battlegrounds**:
 - Added a last known deity size when hovering another player.
+- Added a counter for your own deity size\
+  *You can configure this as usual from Settings (Advanced) > Overlay > Counters.*
 - Added a setting to configure whether the Meta Snapshot button is shown.
 - Improved when the Max Gold counter is visible.
 - Fixed the hero guide tab not showing on small screens.
