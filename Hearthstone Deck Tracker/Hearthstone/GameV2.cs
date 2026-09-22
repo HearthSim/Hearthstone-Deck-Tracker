@@ -553,6 +553,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public DeitySnapshot? GetBattlegroundsDeityFor(int id) => _battlegroundsDeityState?.GetSnapshot(id);
 
+		public Card? BattlegroundsPlayerDeity => _battlegroundsDeityState?.GetPlayerDeity();
+
+		public Card? BattlegroundsGlobalOldGod => _battlegroundsDeityState?.GlobalOldGod;
+
 		public void UpdateBattlegroundsPlayerTechLevel(int id, int value)
 		{
 			if(!_battlegroundsHeroLatestTavernUpTurn.ContainsKey(id))

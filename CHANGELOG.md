@@ -1,5 +1,6 @@
 ## Unreleased
 **Battlegrounds**:
+- Changed Aberrations in the available minion types to use the match deity.
 - Improved when the deity counter appears.
 
 ## **Release v1.58.0 - 2026-09-22**

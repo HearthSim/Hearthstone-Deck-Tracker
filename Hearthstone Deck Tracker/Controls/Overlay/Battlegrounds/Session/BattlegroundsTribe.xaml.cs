@@ -6,6 +6,7 @@ using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 
@@ -76,6 +77,39 @@ public partial class BattlegroundsTribe : INotifyPropertyChanged
 	{
 		OnPropertyChanged(nameof(TribeName));
 		OnPropertyChanged(nameof(ImageSrc));
+		OnDeityChanged();
+	}
+	#endregion
+
+	#region Deity
+
+	public static readonly DependencyProperty DeityProperty = DependencyProperty.Register(
+		nameof(Deity),
+		typeof(Hearthstone.Card),
+		typeof(BattlegroundsTribe),
+		new FrameworkPropertyMetadata(null, (d, _) => ((BattlegroundsTribe)d).OnDeityChanged())
+	);
+
+	public Hearthstone.Card? Deity
+	{
+		get => (Hearthstone.Card?)GetValue(DeityProperty);
+		set => SetValue(DeityProperty, value);
+	}
+
+	// a banned Aberration type never gets a Deity, so it keeps the generic icon
+	private bool ShowsDeity => Deity != null && Tribe == Race.ABERRATION && Availability == MinionTypeAvailability.Available;
+
+	public CardAssetViewModel? DeityAsset => ShowsDeity ? new CardAssetViewModel(Deity, CardAssetType.Portrait) : null;
+
+	public Visibility DeityVisibility => ShowsDeity ? Visibility.Visible : Visibility.Collapsed;
+
+	public Visibility TribeIconVisibility => ShowsDeity ? Visibility.Collapsed : Visibility.Visible;
+
+	private void OnDeityChanged()
+	{
+		OnPropertyChanged(nameof(DeityAsset));
+		OnPropertyChanged(nameof(DeityVisibility));
+		OnPropertyChanged(nameof(TribeIconVisibility));
 	}
 	#endregion
 
@@ -94,6 +128,7 @@ public partial class BattlegroundsTribe : INotifyPropertyChanged
 		{
 			((BattlegroundsTribe)d).OnPropertyChanged(nameof(XVisibility));
 			((BattlegroundsTribe)d).OnPropertyChanged(nameof(BorderColor));
+			((BattlegroundsTribe)d).OnDeityChanged();
 		})
 	);
 
@@ -105,6 +140,7 @@ public partial class BattlegroundsTribe : INotifyPropertyChanged
 			SetValue(AvailabilityProperty, value);
 			OnPropertyChanged(nameof(XVisibility));
 			OnPropertyChanged(nameof(BorderColor));
+			OnDeityChanged();
 		}
 	}
 

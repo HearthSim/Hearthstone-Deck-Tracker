@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
@@ -31,11 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(playerId == 0)
 				return;
 
-			// the sigil is copied into the combat and dropped again right after, so take the newest one
-			var sigil = _game.Entities.Values
-				.Where(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.SecretDeityDnt && x.IsControlledBy(_game.Opponent.Id))
-				.OrderByDescending(x => x.Id)
-				.FirstOrDefault();
+			var sigil = GetSigil(_game.Opponent.Id);
 			if(sigil == null)
 				return;
 
@@ -54,6 +51,29 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			Log.Info($"Snapshotting {card.Name} ({attack}/{health}{(isGolden ? ", golden" : "")}) as the Deity of {opponentHero.Card.Name} with player id {playerId}");
 			LastKnownDeity[playerId] = new DeitySnapshot(card, attack, health, isGolden, _game.GetTurnNumber());
+		}
+
+		// the sigil is copied into the combat and dropped again right after, so take the newest one
+		private Entity? GetSigil(int controllerId) => _game.Entities.Values
+			.Where(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.SecretDeityDnt && x.IsControlledBy(controllerId))
+			.OrderByDescending(x => x.Id)
+			.FirstOrDefault();
+
+		/// <summary>
+		/// The whole lobby builds towards the same Deity, and the game entity carries it from
+		/// CREATE_GAME on. The sigils only show up about a minute later, so this is the only source
+		/// we have during hero picking.
+		/// </summary>
+		public Card? GlobalOldGod =>
+			Database.GetCardFromDbfId(_game.GameEntity?.GetTag(GameTag.BACON_GLOBAL_OLD_GOD_DBID) ?? 0, false);
+
+		// our own sigil is always readable, so our Deity needs no snapshot
+		public Card? GetPlayerDeity()
+		{
+			var sigil = GetSigil(_game.Player.Id);
+			if(sigil == null)
+				return GlobalOldGod;
+			return Database.GetCardFromDbfId(sigil.GetTag(GameTag.BACON_EVOLUTION_CARD_ID), false) ?? GlobalOldGod;
 		}
 
 		public DeitySnapshot? GetSnapshot(int entityId)

@@ -37,6 +37,14 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	public Race BannedMinionType1 => AvailableMinionTypes.FirstOrDefault();
 
+	public Hearthstone.Card? PlayerDeity
+	{
+		get => GetProp<Hearthstone.Card?>(null);
+		private set => SetProp(value);
+	}
+
+	public void UpdatePlayerDeity() => PlayerDeity = Core.Game.BattlegroundsPlayerDeity;
+
 	public void OnGameEnd()
 	{
 		if(Core.Game.Spectator)
@@ -68,6 +76,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 			await Task.Delay(1500);
 
 		UpdateMinionTypes();
+		UpdatePlayerDeity();
 
 		var firstGame = await UpdateLatestGames();
 

@@ -9,18 +9,38 @@
     <StackPanel Orientation="Vertical">
         <Canvas Width="38" Height="38">
             <Border BorderBrush="{Binding BorderColor, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}" BorderThickness="2" CornerRadius="36">
-                <Ellipse Height="34" Width="34">
-                    <Ellipse.Fill>
-                        <ImageBrush
-                            x:Name="ImgBrush"
-                            ImageSource="{Binding ImageSrc, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
-                        >
-                            <ImageBrush.Transform>
-                                <ScaleTransform ScaleX="1.1" ScaleY="1.1" CenterX="17" CenterY="35" />
-                            </ImageBrush.Transform>
-                        </ImageBrush>
-                    </Ellipse.Fill>
-                </Ellipse>
+                <Grid Height="34" Width="34">
+                    <Ellipse
+                        Height="34" Width="34"
+                        Visibility="{Binding TribeIconVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
+                    >
+                        <Ellipse.Fill>
+                            <ImageBrush
+                                x:Name="ImgBrush"
+                                ImageSource="{Binding ImageSrc, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
+                            >
+                                <ImageBrush.Transform>
+                                    <ScaleTransform ScaleX="1.1" ScaleY="1.1" CenterX="17" CenterY="35" />
+                                </ImageBrush.Transform>
+                            </ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Ellipse
+                        Height="34" Width="34"
+                        Visibility="{Binding DeityVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
+                    >
+                        <Ellipse.Fill>
+                            <ImageBrush
+                                x:Name="DeityImgBrush"
+                                ImageSource="{Binding DeityAsset.Asset, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
+                            >
+                                <ImageBrush.Transform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="18" CenterY="13" />
+                                </ImageBrush.Transform>
+                            </ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Grid>
             </Border>
             <Image
                 Width="26"

@@ -188,6 +188,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case NEXT_OPPONENT_PLAYER_ID:
 						OnNextOpponentPlayerId(id, value, game);
 						break;
+					case BACON_EVOLUTION_CARD_ID:
+						OnBaconEvolutionCardIdChange(id, game);
+						break;
+					case BACON_GLOBAL_OLD_GOD_DBID:
+						Core.Game.BattlegroundsSessionViewModel.UpdatePlayerDeity();
+						break;
 				}
 
 				game.CounterManager.HandleTagChange(tag, gameState, id, value, prevValue);
@@ -241,6 +247,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						.StartCombat();
 				}
 			}
+		}
+
+		private void OnBaconEvolutionCardIdChange(int id, IGame game)
+		{
+			if(!game.IsBattlegroundsMatch)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			if(entity.CardId != CardIds.NonCollectible.Neutral.SecretDeityDnt || !entity.IsControlledBy(game.Player.Id))
+				return;
+			Core.Game.BattlegroundsSessionViewModel.UpdatePlayerDeity();
 		}
 
 		private void OnHeroEntityChange(int playerEntityId, int heroEntityId, IGame game)

@@ -57,6 +57,7 @@
                                                 <local:BattlegroundsTribe
                                                     Tribe="{Binding}"
                                                     Availability="Available"
+                                                    Deity="{Binding DataContext.PlayerDeity, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                 />
                                             </Border>
                                         </DataTemplate>

@@ -15,9 +15,11 @@ public class DeitySizeCounter : StatsCounter
 
 	public override string LocalizedName => LocUtil.Get("Counter_Deity", useCardLanguage: true);
 
-	// until the sigil tells us which Deity it holds, fall back to generic Aberration art
+	// the sigil only appears a minute into the game, so until then we go by the lobby's Old God,
+	// and by generic Aberration art before the game entity even has that
 	protected override string? CardIdToShowInUI =>
-		_deityCardId ?? HearthDb.CardIds.NonCollectible.Neutral.ATaleofKings_KingOfAberrationsTavernBrawl;
+		_deityCardId ?? Game.BattlegroundsGlobalOldGod?.Id
+		?? HearthDb.CardIds.NonCollectible.Neutral.ATaleofKings_KingOfAberrationsTavernBrawl;
 
 	public override string[] RelatedCards => new[]
 	{
@@ -68,24 +70,53 @@ public class DeitySizeCounter : StatsCounter
 		if(!Game.IsBattlegroundsMatch)
 			return;
 
+		// the game entity has no controller, so this has to come before the controller check
+		if(tag == GameTag.BACON_GLOBAL_OLD_GOD_DBID)
+		{
+			NotifyDeityChanged();
+			return;
+		}
+
+		if(tag == GameTag.BACON_OLD_GOD_ATTACK || tag == GameTag.BACON_OLD_GOD_HEALTH)
+		{
+			HandleDeitySize(tag, entity, value);
+			return;
+		}
+
 		if(entity.IsControlledBy(Game.Player.Id) != IsPlayerCounter)
 			return;
 
 		if(entity.CardId != HearthDb.CardIds.NonCollectible.Neutral.SecretDeityDnt)
 			return;
 
-		// the stats are the Deity's current total, not a bonus on top of the printed ones
-		if(tag == GameTag.BACON_EVOLUTION_CARD_OVERWRITE_ATK)
-			AttackCounter = value;
-
-		if(tag == GameTag.BACON_EVOLUTION_CARD_OVERWRITE_HEALTH)
-			HealthCounter = value;
-
 		if(tag == GameTag.BACON_EVOLUTION_CARD_ID)
 		{
 			_deityCardId = Database.GetCardFromDbfId(value, false)?.Id;
-			OnPropertyChanged(nameof(CardToShowInUi));
-			OnPropertyChanged(nameof(CardAsset));
+			NotifyDeityChanged();
 		}
+	}
+
+	// the size lives on the player entity rather than the sigil, and is the Deity's current total
+	// rather than a bonus on top of the printed stats
+	private void HandleDeitySize(GameTag tag, Entity entity, int value)
+	{
+		if(entity.Id != (IsPlayerCounter ? Game.PlayerEntity : Game.OpponentEntity)?.Id)
+			return;
+
+		// the opponent entity only carries a size while we are facing them and drops back to 0 once
+		// their board is hidden again, so keep the last one we saw
+		if(value == 0 && !IsPlayerCounter)
+			return;
+
+		if(tag == GameTag.BACON_OLD_GOD_ATTACK)
+			AttackCounter = value;
+		else
+			HealthCounter = value;
+	}
+
+	private void NotifyDeityChanged()
+	{
+		OnPropertyChanged(nameof(CardToShowInUi));
+		OnPropertyChanged(nameof(CardAsset));
 	}
 }
