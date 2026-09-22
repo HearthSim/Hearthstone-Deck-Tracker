@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private MercenariesRatingInfo? _mercenariesRatingInfo;
 		private ArenaRatingInfo? _arenaRatingInfo;
 		private BattlegroundsBoardState? _battlegroundsBoardState;
+		private BattlegroundsDeityState? _battlegroundsDeityState;
 		public BattlegroundsDuosBoardState? BattlegroundsDuosBoardState { get; set; }
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
@@ -74,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SecretsManager = new SecretsManager(this, new RemoteArenaSettings(), RelatedCardsManager);
 			ArenaPackagesManager = new ArenaPackagesManager();
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
+			_battlegroundsDeityState = new BattlegroundsDeityState(this);
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
 			QueueEvents = new(this);
@@ -482,6 +484,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 			PowerLog.Clear();
 			_battlegroundsBoardState?.Reset();
+			_battlegroundsDeityState?.Reset();
 			BattlegroundsDuosBoardState = null;
 			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
@@ -540,9 +543,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			(x.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(GameTag.BACON_SKIN) || x.HasTag(GameTag.PLAYER_TECH_LEVEL))
 		).Count() + 1;
 
-		public void SnapshotBattlegroundsBoardState() => _battlegroundsBoardState?.SnapshotCurrentBoard();
+		public void SnapshotBattlegroundsBoardState()
+		{
+			_battlegroundsBoardState?.SnapshotCurrentBoard();
+			_battlegroundsDeityState?.SnapshotCurrentDeity();
+		}
 
 		public BoardSnapshot? GetBattlegroundsBoardStateFor(int id) => _battlegroundsBoardState?.GetSnapshot(id);
+
+		public DeitySnapshot? GetBattlegroundsDeityFor(int id) => _battlegroundsDeityState?.GetSnapshot(id);
 
 		public void UpdateBattlegroundsPlayerTechLevel(int id, int value)
 		{

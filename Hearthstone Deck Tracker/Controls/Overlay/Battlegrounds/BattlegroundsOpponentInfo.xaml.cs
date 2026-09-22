@@ -44,6 +44,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public void ShowNotFoughtOpponent()
 		{
 			BattlegroundsBoard.Children.Clear();
+			UpdateDeity(null);
 			NotFoughtOpponent.Visibility = Visibility.Visible;
 			HeroNoMinionsOnBoard.Visibility = Visibility.Collapsed;
 			TiersInfo.Visibility = Visibility.Collapsed;
@@ -52,6 +53,23 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public void ClearLastKnownBoard()
 		{
 			BattlegroundsBoard.Children.Clear();
+			UpdateDeity(null);
+		}
+
+		private void UpdateDeity(DeitySnapshot? deity)
+		{
+			DeityBoard.Children.Clear();
+			DeityPanel.Visibility = deity == null ? Visibility.Collapsed : Visibility.Visible;
+			if(deity == null)
+				return;
+
+			DeityBoard.Children.Add(new BattlegroundsMinion(new BattlegroundsMinionViewModel
+			{
+				Card = deity.Card,
+				Attack = deity.Attack,
+				Health = deity.Health,
+				IsPremium = deity.IsGolden,
+			}));
 		}
 
 		public void Update(int heroId, BoardSnapshot? state, int turnNumber)
@@ -73,6 +91,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				var age = turnNumber - state.Turn;
 				BattlegroundsAge.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turns"), age);
 			}
+
+			UpdateDeity(Core.Game.GetBattlegroundsDeityFor(heroId));
 
 			var heroTriples = Core.Game.GetBattlegroundsHeroTriplesByTier(heroId);
 			_heroTriples = heroTriples ?? new Dictionary<int, int>();

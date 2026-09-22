@@ -13,8 +13,24 @@
              mc:Ignorable="d">
     <StackPanel Orientation="Vertical">
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <Border x:Name="DeityPanel" BorderBrush="#404345" CornerRadius="0 0 0 3" BorderThickness="1 0 1 1" Opacity=".9" Height="150" VerticalAlignment="Top" Visibility="Collapsed">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#202427" Offset="0" />
+                        <GradientStop Color="#23272A" Offset="1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel x:Name="DeityBoard" Orientation="Horizontal" VerticalAlignment="Center" Margin="10 0">
+                    <StackPanel.Resources>
+                        <Style TargetType="controls:BattlegroundsMinion">
+                            <Setter Property="Width" Value="110"/>
+                            <Setter Property="Height" Value="110"/>
+                        </Style>
+                    </StackPanel.Resources>
+                </StackPanel>
+            </Border>
             <StackPanel Orientation="Vertical">
-                <Border BorderBrush="#404345" CornerRadius="0 0 0 3" BorderThickness="1 0 1 1" Opacity=".9" Height="150">
+                <Border BorderBrush="#404345" CornerRadius="0" BorderThickness="1 0 1 1" Opacity=".9" Height="150">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#202427" Offset="0" />

@@ -77,6 +77,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		bool DuosWasOpponentHeroModified { get; }
 
 		BoardSnapshot? GetBattlegroundsBoardStateFor(int entityId);
+		DeitySnapshot? GetBattlegroundsDeityFor(int entityId);
 		int GetTurnNumber();
 	}
 }

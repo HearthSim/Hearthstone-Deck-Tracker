@@ -415,7 +415,7 @@
                     />
                 </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
-                <StackPanel Width="1000" Name="BgsOpponentInfoContainer" Canvas.Top="0" Canvas.Right="0">
+                <StackPanel Width="1200" Name="BgsOpponentInfoContainer" Canvas.Top="0" Canvas.Right="0">
                     <battlegrounds:BattlegroundsOpponentInfo x:Name="BgsOpponentInfo" Visibility="Collapsed"/>
                 </StackPanel>
                 <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>

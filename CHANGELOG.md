@@ -5,6 +5,7 @@
 - Added a setting to choose which cards can appear in the opponent's Related Cards panel.
 
 **Battlegrounds**:
+- Added a last known deity size when hovering another player.
 - Added a setting to configure whether the Meta Snapshot button is shown.
 - Improved when the Max Gold counter is visible.
 - Fixed the hero guide tab not showing on small screens.

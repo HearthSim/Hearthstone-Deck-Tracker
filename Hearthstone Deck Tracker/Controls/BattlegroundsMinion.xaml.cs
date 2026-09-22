@@ -10,6 +10,11 @@ public partial class BattlegroundsMinion
 		InitializeComponent();
 	}
 
+	public BattlegroundsMinion(BattlegroundsMinionViewModel viewModel) : this()
+	{
+		DataContext = viewModel;
+	}
+
 	public BattlegroundsMinion(Entity entity) : this()
 	{
 		DataContext = new BattlegroundsMinionViewModel

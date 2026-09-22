@@ -93,6 +93,11 @@ namespace HDTTests.Hearthstone.Secrets
 			throw new NotImplementedException();
 		}
 
+		public DeitySnapshot GetBattlegroundsDeityFor(int entityId)
+		{
+			throw new NotImplementedException();
+		}
+
 		public int GetTurnNumber()
 		{
 			throw new NotImplementedException();
