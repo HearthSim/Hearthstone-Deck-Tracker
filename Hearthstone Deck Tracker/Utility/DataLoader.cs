@@ -69,6 +69,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			=> FromDisk(path, JsonConvert.DeserializeObject<T>);
 
 		public static DataLoader<T?> FromWeb(string url, Func<string, T?> deserializer, string? contentType)
+			=> FromWeb(() => url, deserializer, contentType);
+
+		public static DataLoader<T?> FromWeb(Func<string> url, Func<string, T?> deserializer, string? contentType)
 		{
 			return new DataLoader<T?>(async () =>
 			{
@@ -79,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 						client.Headers.Add("User-Agent", Helper.GetUserAgent());
 						if(contentType != null)
 							client.Headers.Add("accept", contentType);
-						var data = await client.DownloadStringTaskAsync(url);
+						var data = await client.DownloadStringTaskAsync(url());
 						return deserializer(data);
 					}
 				}
@@ -91,7 +94,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 			});
 		}
 
-		public static DataLoader<T?> JsonFromWeb(string url) 
+		public static DataLoader<T?> JsonFromWeb(string url)
+			=> FromWeb(url, JsonConvert.DeserializeObject<T>, "application/json");
+
+		public static DataLoader<T?> JsonFromWeb(Func<string> url)
 			=> FromWeb(url, JsonConvert.DeserializeObject<T>, "application/json");
 	}
 }

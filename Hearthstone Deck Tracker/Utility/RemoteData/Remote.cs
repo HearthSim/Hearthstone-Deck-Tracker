@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Enums;
 
 namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 {
@@ -14,6 +16,11 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			= DataLoader<RemoteData.LiveSecrets>.JsonFromWeb("https://hsreplay.net/api/v1/live/secrets/");
 
 		public static DataLoader<RemoteData.MetaPeriod?> BattlegroundsLiveMetaPeriod { get; }
-			= DataLoader<RemoteData.MetaPeriod>.JsonFromWeb("https://hsreplay.net/api/v1/battlegrounds/meta_periods/live/");
+			= DataLoader<RemoteData.MetaPeriod>.JsonFromWeb(() =>
+			{
+				const string url = "https://hsreplay.net/api/v1/battlegrounds/meta_periods/live/";
+				var region = Core.Game.CurrentRegion;
+				return region == Region.UNKNOWN ? url : $"{url}?region={(BnetRegion)region}";
+			});
 	}
 }
