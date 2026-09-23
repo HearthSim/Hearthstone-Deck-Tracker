@@ -55,6 +55,21 @@ public class BattlegroundsDb
 
 	public bool IsBanned(int dbfId) => _bannedDbfIds.Contains(dbfId);
 
+	/// <summary>
+	/// The Dark Paradox in the minion pool, which rolls a different Dark Gift, stats and tier each game.
+	/// </summary>
+	public Card? DarkParadox { get; private set; }
+
+	public int? DarkParadoxTier { get; private set; }
+
+	private static bool IsDarkParadox(HearthDb.Card dbCard)
+	{
+		if(!Cards.All.TryGetValue(HearthDb.CardIds.NonCollectible.Neutral.DarkParadox, out var darkParadox))
+			return false;
+		return dbCard.DbfId == darkParadox.DbfId
+			|| dbCard.Entity.GetTag(GameTag.BACON_EVOLUTION_CARD_ID) == darkParadox.DbfId;
+	}
+
 	private static readonly Dictionary<GameTag, Race> SubsetTagRaces = new()
 	{
 		{ GameTag.BACON_SUBSET_BEAST, Race.BEAST },
@@ -87,6 +102,12 @@ public class BattlegroundsDb
 			{
 				_bannedDbfIds.Add(entry.DbfId);
 				card.Count = 0;
+			}
+			// prefer this game's variant over the generic card, as only the variant knows the Dark Gift
+			else if(IsDarkParadox(dbCard) && (DarkParadox == null || DarkParadox.Id == HearthDb.CardIds.NonCollectible.Neutral.DarkParadox))
+			{
+				DarkParadox = card;
+				DarkParadoxTier = entry.Tier;
 			}
 
 			if(entry.CardType == (int)CardType.BATTLEGROUND_SPELL)

@@ -1,5 +1,6 @@
 ## **Unreleased**
 **Battlegrounds**:
+- Added an orange dot to the minion browser indicating which Dark Paradox is in the current match.
 - Reworked the minion browser to be driven off the game's library.
 
 ## **Release v1.58.2 - 2026-09-23**

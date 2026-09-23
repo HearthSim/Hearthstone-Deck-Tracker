@@ -144,6 +144,7 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 		OnPropertyChanged(nameof(IsLegendaryIconVisible));
 		OnPropertyChanged(nameof(IsCostVisible));
 		OnPropertyChanged(nameof(IsBaconSpell));
+		OnPropertyChanged(nameof(IsDarkParadoxVariant));
 		OnPropertyChanged(nameof(PreRenderedCard));
 		OnPropertyChanged(nameof(IsPreRendered));
 	}
@@ -268,6 +269,11 @@ public class CardTileViewModel : CardAssetViewModel, ICardTooltip
 
 	public bool IsCreatedIconVisible => Card.IsCreated;
 	public bool IsBaconSpell => Card.TypeEnum == CardType.BATTLEGROUND_SPELL;
+
+	// only this game's variant evolves from the generic card, which has no known tier or stats
+	public bool IsDarkParadoxVariant => Card.BaconCard
+		&& HearthDb.Cards.All.TryGetValue(HearthDb.CardIds.NonCollectible.Neutral.DarkParadox, out var darkParadox)
+		&& Card.GetTag(GameTag.BACON_EVOLUTION_CARD_ID) == darkParadox.DbfId;
 
 	public bool IsMulliganVisible => Card.CardWinrates != null;
 	public string? MulliganText => Card.CardWinrates != null ? $"{Card.CardWinrates.Value.MulliganWinrate:0.0}%" : null;

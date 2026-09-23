@@ -37,6 +37,7 @@ public partial class BattlegroundsTierButton : UserControl, INotifyPropertyChang
 			button.OnPropertyChanged(nameof(IconOpacity));
 			button.OnPropertyChanged(nameof(GlowVisibility));
 			button.OnPropertyChanged(nameof(GlowOpacity));
+			button.Update();
 		})
 	);
 
@@ -53,6 +54,18 @@ public partial class BattlegroundsTierButton : UserControl, INotifyPropertyChang
 		typeof(BattlegroundsTierButton),
 		new PropertyMetadata(VisualsChanged)
 	);
+
+	public static readonly DependencyProperty HasDarkParadoxProperty = DependencyProperty.Register(
+		nameof(HasDarkParadox),
+		typeof(bool),
+		typeof(BattlegroundsTierButton)
+	);
+
+	public bool HasDarkParadox
+	{
+		get => (bool)GetValue(HasDarkParadoxProperty);
+		set => SetValue(HasDarkParadoxProperty, value);
+	}
 
 	public static readonly DependencyProperty ClickTierCommandProperty = DependencyProperty.Register(
 		nameof(ClickTierCommand),

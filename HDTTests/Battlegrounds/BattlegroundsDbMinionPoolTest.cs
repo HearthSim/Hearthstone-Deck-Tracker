@@ -125,6 +125,33 @@ namespace HDTTests.Battlegrounds
 		}
 
 		[TestMethod]
+		public void DarkParadoxPrefersThisGamesVariantOverTheGenericCard()
+		{
+			var generic = Cards.All[HearthDb.CardIds.NonCollectible.Neutral.DarkParadox];
+			var variant = Cards.All[HearthDb.CardIds.NonCollectible.Neutral.DarkParadox_DarkParadoxToken2];
+			var beast = Fallback.GetCards(1, Race.BEAST, false).First();
+
+			var withVariant = BattlegroundsDb.FromMinionPool(Pool(
+				new[] { Race.BEAST },
+				Minion(generic.DbfId, 1, Race.INVALID),
+				Minion(variant.DbfId, 5, Race.INVALID),
+				Minion(beast.DbfId, 1, Race.BEAST)
+			), Fallback);
+			var genericOnly = BattlegroundsDb.FromMinionPool(Pool(new[] { Race.BEAST }, Minion(generic.DbfId, 1, Race.INVALID)), Fallback);
+			var without = BattlegroundsDb.FromMinionPool(Pool(new[] { Race.BEAST }, Minion(beast.DbfId, 1, Race.BEAST)), Fallback);
+			var bannedEntry = Minion(variant.DbfId, 5, Race.INVALID);
+			bannedEntry.Banned = true;
+			var banned = BattlegroundsDb.FromMinionPool(Pool(new[] { Race.BEAST }, bannedEntry), Fallback);
+
+			Assert.AreEqual(variant.DbfId, withVariant.DarkParadox?.DbfId);
+			Assert.AreEqual(5, withVariant.DarkParadoxTier);
+			Assert.AreEqual(generic.DbfId, genericOnly.DarkParadox?.DbfId);
+			Assert.IsNull(without.DarkParadox);
+			Assert.IsNull(without.DarkParadoxTier);
+			Assert.IsNull(banned.DarkParadox);
+		}
+
+		[TestMethod]
 		public void RacesAndBuddiesComeFromTheFallback()
 		{
 			var db = BattlegroundsDb.FromMinionPool(Pool(new[] { Race.BEAST }), Fallback);

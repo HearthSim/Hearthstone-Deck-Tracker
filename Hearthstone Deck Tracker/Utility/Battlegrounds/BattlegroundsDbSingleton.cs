@@ -1,6 +1,7 @@
 ﻿using System;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 
@@ -30,7 +31,10 @@ public class BattlegroundsDbSingleton : Singleton<BattlegroundsDb>
 		var pool = Reflection.Client.GetBattlegroundsMinionPool();
 		if(pool?.Cards is not { Count: > 0 })
 			return false;
-		_minionPoolDb = (gameId, BattlegroundsDb.FromMinionPool(pool, Instance));
+		var db = BattlegroundsDb.FromMinionPool(pool, Instance);
+		_minionPoolDb = (gameId, db);
+		if(db.DarkParadox is { } darkParadox)
+			Log.Info($"Dark Paradox in the minion pool: {darkParadox.Id} (tier {darkParadox.TechLevel})");
 		return true;
 	}
 }
