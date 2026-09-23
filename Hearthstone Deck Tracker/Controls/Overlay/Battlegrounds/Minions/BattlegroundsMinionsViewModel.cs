@@ -328,8 +328,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 				.Where(x => x != Race.INVALID && x != Race.ALL) // Don't show ALL
 				.OrderBy(x => HearthDbConverter.GetLocalizedRace(x) ?? string.Empty)
 				.ToList();
-			races.Add(Race.INVALID); // Other
 			races.Add(Race.ALL);
+			races.Add(Race.INVALID); // Other
 			races.Add((Race)(-1)); // Spells
 			races.Add((Race)(-2)); // Buddies
 
