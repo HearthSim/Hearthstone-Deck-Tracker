@@ -87,7 +87,7 @@ public partial class BattlegroundsTribe : INotifyPropertyChanged
 		nameof(Deity),
 		typeof(Hearthstone.Card),
 		typeof(BattlegroundsTribe),
-		new FrameworkPropertyMetadata(null, (d, _) => ((BattlegroundsTribe)d).OnDeityChanged())
+		new FrameworkPropertyMetadata(null, (d, _) => ((BattlegroundsTribe)d).OnDeityCardChanged())
 	);
 
 	public Hearthstone.Card? Deity
@@ -96,10 +96,32 @@ public partial class BattlegroundsTribe : INotifyPropertyChanged
 		set => SetValue(DeityProperty, value);
 	}
 
-	// a banned Aberration type never gets a Deity, so it keeps the generic icon
-	private bool ShowsDeity => Deity != null && Tribe == Race.ABERRATION && Availability == MinionTypeAvailability.Available;
+	private CardAssetViewModel? _deityAsset;
 
-	public CardAssetViewModel? DeityAsset => ShowsDeity ? new CardAssetViewModel(Deity, CardAssetType.Portrait) : null;
+	private void OnDeityCardChanged()
+	{
+		if(_deityAsset != null)
+			_deityAsset.PropertyChanged -= OnDeityAssetPropertyChanged;
+		_deityAsset = Deity != null ? new CardAssetViewModel(Deity, CardAssetType.Portrait) : null;
+		if(_deityAsset != null)
+			_deityAsset.PropertyChanged += OnDeityAssetPropertyChanged;
+		OnDeityChanged();
+	}
+
+	private void OnDeityAssetPropertyChanged(object sender, PropertyChangedEventArgs e)
+	{
+		if(e.PropertyName == nameof(CardAssetViewModel.IsLoaded))
+			OnDeityChanged();
+	}
+
+	// a banned Aberration type never gets a Deity, so it keeps the generic icon
+	private bool HasDeity => _deityAsset != null && Tribe == Race.ABERRATION && Availability == MinionTypeAvailability.Available;
+
+	// keep the generic icon until the portrait has loaded, rather than an empty circle or the placeholder
+	private bool ShowsDeity => HasDeity && _deityAsset!.IsLoaded;
+
+	// bound even while collapsed, since reading its Asset is what starts the download
+	public CardAssetViewModel? DeityAsset => HasDeity ? _deityAsset : null;
 
 	public Visibility DeityVisibility => ShowsDeity ? Visibility.Visible : Visibility.Collapsed;
 

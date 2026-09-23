@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var cached = card != null ? _assetDownloader?.TryGetAssetData(card) : null;
 			if(cached != null)
 			{
-				_resolved = true;
+				IsLoaded = true;
 				Asset = cached;
 			}
 			else
@@ -55,20 +55,26 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				if(Card == null)
 					return null;
 				// Asset holds a placeholder until the real asset resolves, so gate loading on
-				// _resolved rather than on the stored value. This keeps retrying on a transient
+				// IsLoaded rather than on the stored value. This keeps retrying on a transient
 				// failure instead of leaving the placeholder up permanently.
-				if(!_resolved)
+				if(!IsLoaded)
 					LoadAsset().Forget();
 				return GetProp<ImageSource?>(null);
 			}
 			private set => SetProp(value);
 		}
 
-		private bool _resolved;
+		// false while Asset is still the placeholder
+		public bool IsLoaded
+		{
+			get => GetProp(false);
+			private set => SetProp(value);
+		}
+
 		private bool _loading;
 		private async Task LoadAsset()
 		{
-			if(_loading || _resolved || Card == null || _assetDownloader == null)
+			if(_loading || IsLoaded || Card == null || _assetDownloader == null)
 				return;
 			_loading = true;
 			try
@@ -76,8 +82,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				var asset = await _assetDownloader.GetAssetData(Card);
 				if(asset != null)
 				{
-					_resolved = true;
 					Asset = asset;
+					IsLoaded = true;
 				}
 			}
 			finally
