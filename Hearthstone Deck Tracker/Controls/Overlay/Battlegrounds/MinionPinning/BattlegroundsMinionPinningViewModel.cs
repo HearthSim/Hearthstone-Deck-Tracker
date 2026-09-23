@@ -198,9 +198,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 			if(guidesVm == null)
 				return;
 
-			var availableRaces = AvailableRaces ?? BattlegroundsDbSingleton.Instance.Races;
+			var availableRaces = AvailableRaces ?? BattlegroundsDbSingleton.Current.Races;
 			var currentRaces = new HashSet<Race>(availableRaces.Concat(new[] { Race.ALL, Race.INVALID }));
-			var availableCards = BattlegroundsDbSingleton.Instance.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch);
+			var availableCards = BattlegroundsDbSingleton.Current.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch);
 			var availableDbfIds = new HashSet<int>(availableCards.Select(c => c.DbfId));
 
 			var allGuides = Enumerable.Empty<BattlegroundsCompGuideViewModel>();
@@ -420,13 +420,22 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 			OnPropertyChanged(nameof(MinionTypeButtons));
 		}
 
+		public void OnMinionPoolChanged()
+		{
+			RecomputeRacePinnedIds();
+			if(EnableRecommended)
+				RecomputeRecommendedFromGuides();
+			UpdatePinnedFlags();
+			OnPropertyChanged(nameof(MinionTypeButtons));
+		}
+
 		public IEnumerable<Race>? AvailableRaces
 		{
 			get => GetProp<IEnumerable<Race>?>(null);
 			set
 			{
 				SetProp(value);
-				var newSet = (value ?? BattlegroundsDbSingleton.Instance.Races).ToHashSet();
+				var newSet = (value ?? BattlegroundsDbSingleton.Current.Races).ToHashSet();
 				_selectedRaces.RemoveWhere(r => !newSet.Contains(r));
 				RecomputeRacePinnedIds();
 				if(EnableRecommended)
@@ -449,7 +458,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 		{
 			get
 			{
-				var races = (AvailableRaces ?? BattlegroundsDbSingleton.Instance.Races).ToList();
+				var races = (AvailableRaces ?? BattlegroundsDbSingleton.Current.Races).ToList();
 				// Don't show unwanted races in buttons
 				races.Remove(Race.INVALID);
 				races.Remove(Race.ALL);
@@ -493,7 +502,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 			if(_selectedRaces.Count == 0)
 				return;
 			var duos = Core.Game.IsBattlegroundsDuosMatch;
-			var cards = BattlegroundsDbSingleton.Instance
+			var cards = BattlegroundsDbSingleton.Current
 				.GetCardsByRaces(_selectedRaces, duos)
 				.Where(c => c.IsKnownCard && c.IsBaconMinion);
 			foreach(var c in cards)

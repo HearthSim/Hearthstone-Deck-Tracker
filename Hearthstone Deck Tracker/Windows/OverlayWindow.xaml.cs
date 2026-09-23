@@ -1132,6 +1132,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_bgsTopBarBehavior.Refresh();
 		}
 
+		internal void OnBattlegroundsMinionPoolLoaded()
+		{
+			BattlegroundsMinionsVM.OnMinionPoolChanged();
+			BattlegroundsMinionPinningViewModel.OnMinionPoolChanged();
+			BattlegroundsCompsGuidesVM.OnMinionPoolChanged();
+		}
+
 		internal void ShowBgsTopBarAndBobsBuddyPanel()
 		{
 			ShowBgsTopBar();

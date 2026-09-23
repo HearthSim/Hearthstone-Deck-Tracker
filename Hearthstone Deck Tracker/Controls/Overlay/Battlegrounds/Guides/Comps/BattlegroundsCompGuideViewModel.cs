@@ -195,6 +195,7 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 	public CardAssetViewModel CardAsset { get; }
 
 	private HashSet<int>? _availableCardIds;
+	private BattlegroundsDb? _availableCardIdsDb;
 
 	// null means every card is available, which is the case before a match, where there is no minion pool yet
 	private HashSet<int>? GetAvailableCardIds()
@@ -202,15 +203,25 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		if(_isPreLobby)
 			return null;
 
-		if (_availableCardIds == null)
+		var db = BattlegroundsDbSingleton.Current;
+		if (_availableCardIds == null || _availableCardIdsDb != db)
 		{
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+			if(availableRaces == null)
+				return null;
 			var currentRaces = new HashSet<Race>(availableRaces.Concat(new[] { Race.ALL, Race.INVALID }));
-			var availableCards = BattlegroundsDbSingleton.Instance.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch)
-				.Concat(BattlegroundsDbSingleton.Instance.GetSpells(Core.Game.IsBattlegroundsDuosMatch));
+			var availableCards = db.GetCardsByRaces(currentRaces, Core.Game.IsBattlegroundsDuosMatch)
+				.Concat(db.GetSpells(Core.Game.IsBattlegroundsDuosMatch));
 			_availableCardIds = new HashSet<int>(availableCards.Select(card => card.DbfId));
+			_availableCardIdsDb = db;
 		}
 		return _availableCardIds;
+	}
+
+	public void OnMinionPoolChanged()
+	{
+		OnPropertyChanged(nameof(CoreCards));
+		OnPropertyChanged(nameof(AddonCards));
 	}
 
 	private IEnumerable<BattlegroundsMinionViewModel> GetBattlegroundsMinions(IEnumerable<int> cardIds, bool checkAvailability = true)

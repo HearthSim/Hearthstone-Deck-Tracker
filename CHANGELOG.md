@@ -1,3 +1,7 @@
+## **Unreleased**
+**Battlegrounds**:
+- Reworked the minion browser to be driven off the game's library.
+
 ## **Release v1.58.2 - 2026-09-23**
 **Battlegrounds**:
 - Added an "All" type filter to the minion browser filters.

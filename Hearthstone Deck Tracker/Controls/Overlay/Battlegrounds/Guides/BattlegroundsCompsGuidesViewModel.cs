@@ -238,6 +238,13 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		private set => SetProp(value);
 	}
 
+	public void OnMinionPoolChanged()
+	{
+		var comps = CompsByTier?.Values.Where(v => v.Comps != null).SelectMany(v => v.Comps!) ?? Comps;
+		foreach(var comp in comps ?? Enumerable.Empty<BattlegroundsCompGuideViewModel>())
+			comp.OnMinionPoolChanged();
+	}
+
 	public async void OnMatchStart()
 	{
 		if(IsPreLobby)

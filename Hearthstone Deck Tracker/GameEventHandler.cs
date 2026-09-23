@@ -1995,12 +1995,30 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		// the game only requests the pool from the server once the match has initialized
+		private async void LoadBattlegroundsMinionPool()
+		{
+			for(var i = 0; i < 60; i++)
+			{
+				if(_game.IsInMenu)
+					return;
+				if(BattlegroundsDbSingleton.TryLoadMinionPool())
+				{
+					Core.Overlay.OnBattlegroundsMinionPoolLoaded();
+					return;
+				}
+				await Task.Delay(500);
+			}
+			Log.Warn("Battlegrounds minion pool was not available, falling back to the assembled database");
+		}
+
 		private async void HandleBattlegroundsStart()
 		{
 			Watchers.BattlegroundsLeaderboardWatcher.Run();
 			Watchers.BattlegroundsLobbyInfoWatcher.Run();
 			OpponentDeadForTracker.Reset();
 			Core.Overlay.BattlegroundsInspirationViewModel.Reset();
+			LoadBattlegroundsMinionPool();
 
 			IEnumerable<Entity> heroes = new List<Entity>();
 			for(var i = 0; i < 10; i++)

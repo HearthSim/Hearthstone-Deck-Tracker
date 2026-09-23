@@ -15,7 +15,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 
 public class BattlegroundsMinionsViewModel : ViewModel
 {
-	private static BattlegroundsDb Db => BattlegroundsDbSingleton.Instance;
+	private BattlegroundsDb Db => IsPreLobby ? BattlegroundsDbSingleton.Instance : BattlegroundsDbSingleton.Current;
+
+	public void OnMinionPoolChanged()
+	{
+		OnPropertyChanged(nameof(Groups));
+		OnPropertyChanged(nameof(MinionTypeButtons));
+		OnPropertyChanged(nameof(UnavailableRaces));
+		OnPropertyChanged(nameof(UnavailableMinionTypesVisibility));
+	}
 
 	public IEnumerable<Race>? AvailableRaces
 	{
