@@ -874,6 +874,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			inputPlayer.DeathrattleCounter = ReadPlayerCounter((GameTag)4639);   // direct or transfer
 
+			inputPlayer.VolumizerAtkBuff = ReadPlayerCounter((GameTag)4468);   // direct or transfer
+			inputPlayer.VolumizerHealthBuff = ReadPlayerCounter((GameTag)4469);   // direct or transfer
+
 			var pHaunted = playerAttached.FirstOrDefault(x => x.CardId == NonCollectible.Neutral.HauntedCarapace_HauntedCarapacePlayerEnchantDnt);
 			if(pHaunted != null)
 			{
