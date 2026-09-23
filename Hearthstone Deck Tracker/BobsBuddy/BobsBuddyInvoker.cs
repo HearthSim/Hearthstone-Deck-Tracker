@@ -56,10 +56,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private Input? _input;
 
-		// True while the current Battlegrounds combat contains a Dr. Boom's Monster, so the per-HEALTH-change reborn
-		// detection in TagChangeActions can skip the entity lookup for the (vast majority of) combats without one.
-		internal static bool CurrentCombatHasDrBoomsMonster;
-
 		// True in games where an opponent Malorne can be summoned during the current combat (the Bring in the Buddies anomaly)
 		internal static bool CurrentCombatMayHaveOpponentMalorne;
 
@@ -967,11 +963,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_input = input;
 			_turn = turn;
 
-			// Flag checking for Dr. Boom's Monster (to optimize redundantly checking in TagChangeAction)
-			CurrentCombatHasDrBoomsMonster =
-				input.Player.Side.Concat(input.Opponent.Side).Any(m => m.CardID == NonCollectible.Neutral.DrBoomsMonster || m.CardID == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1)
-				|| input.Player.Hand.Concat(input.Opponent.Hand).Any(h => h.Id == NonCollectible.Neutral.DrBoomsMonster || h.Id == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1);
-
 			// Flag checking it's possible to summon Malorne during combat (to optimize redundantly checking in TagChangeAction).
 			CurrentCombatMayHaveOpponentMalorne = input.Anomaly?.CardID == NonCollectible.Neutral.BringInTheBuddies;
 
@@ -1423,30 +1414,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 			}
 
-			await TryRerun();
-		}
-
-		internal async void UpdateDrBoomsMonsterReborn(int sourceEntityId, int rebornMaxHealth, bool isPlayerMinion)
-		{
-			if(_input == null || !UpdateRevealedEntityValidStates)
-				return;
-
-			// We need to know the magnetized count when a Dr. Boom's Monster is reborn
-			var targetPlayer = isPlayerMinion ? _input.Player : _input.Opponent;
-			if(targetPlayer.MagnetizeCounter != null)
-				return;
-
-			var source = targetPlayer.Side.FirstOrDefault(m => m.game_id == sourceEntityId
-				&& (m.CardID == NonCollectible.Neutral.DrBoomsMonster || m.CardID == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster1));
-			if(source == null)
-				return;
-
-			var statsGrantedPerMagnetize = source.golden ? 4 : 2;
-			var count = (rebornMaxHealth - statsGrantedPerMagnetize) / statsGrantedPerMagnetize;
-			if(count <= 0)
-				return;
-
-			targetPlayer.MagnetizeCounter = count;
 			await TryRerun();
 		}
 
