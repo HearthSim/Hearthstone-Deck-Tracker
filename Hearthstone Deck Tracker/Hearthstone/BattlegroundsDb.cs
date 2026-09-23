@@ -275,6 +275,12 @@ public class BattlegroundsDb
 		return allSpells;
 	}
 
+	private IEnumerable<Card> GetAllSpells(bool isDuos)
+	{
+		var exclusiveSpellsByTier = isDuos ? _duosExclusiveSpellsByTier : _solosExclusiveSpellsByTier;
+		return _spellsByTier.Values.Concat(exclusiveSpellsByTier.Values).SelectMany(x => x);
+	}
+
 	public List<Card> GetSpells(int tier, bool isDuos)
 	{
 		var spells = (
@@ -290,24 +296,7 @@ public class BattlegroundsDb
 	}
 
 	public List<Card> GetSpells(BattlegroundsKeyword keyword, bool isDuos)
-	{
-		var availableSpells = new List<Card>();
-		foreach(var card in _spells)
-		{
-			var duosExclusive = card.Entity.GetTag(GameTag.IS_BACON_DUOS_EXCLUSIVE);
-
-			if(duosExclusive > 0 && isDuos)
-				continue;
-			if(duosExclusive < 0 && !isDuos)
-				continue;
-
-			if(keyword.Matches(card.Entity.GetTag, card.GetLocText(Locale.enUS)))
-			{
-				availableSpells.Add(new Card(card, true));
-			}
-		}
-		return availableSpells;
-	}
+		=> GetAllSpells(isDuos).Where(card => keyword.Matches(card.GetTag, card.EnglishText)).ToList();
 
 	public List<Card> GetBuddies(int tier, bool isDuos)
 	{
