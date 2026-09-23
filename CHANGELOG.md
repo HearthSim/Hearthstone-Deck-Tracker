@@ -1,4 +1,4 @@
-## Unreleased
+## **Release v1.58.2 - 2026-09-23**
 **Battlegrounds**:
 - Added an "All" type filter to the minion browser filters.
 - Fixed the minion browser sometimes showing minion types twice.
