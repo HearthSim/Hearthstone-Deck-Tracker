@@ -159,7 +159,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 				// term
 				return string.Format(
 					LocUtil.Get("BattlegroundsMinions_TavernTier", useCardLanguage: false),
-					Tier
+					Tier > 0 ? Tier.ToString() : "?"
 				);
 			}
 

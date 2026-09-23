@@ -379,6 +379,18 @@ public class BattlegroundsMinionsViewModel : ViewModel
 
 	}
 
+	// outside of a match any game can roll a Dark Paradox, so its tier is never known
+	private Hearthstone.Card? UnknownDarkParadox
+	{
+		get
+		{
+			const string darkParadoxId = HearthDb.CardIds.NonCollectible.Neutral.DarkParadox;
+			if(!IsPreLobby)
+				return Db.DarkParadox is { Id: darkParadoxId } darkParadox ? darkParadox : null;
+			return HearthDb.Cards.All.TryGetValue(darkParadoxId, out var card) ? new Hearthstone.Card(card, true) : null;
+		}
+	}
+
 	public IEnumerable<CardGroup> Groups
 	{
 		get
@@ -489,6 +501,18 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						MinionType = minionType,
 						GroupedByMinionType = true,
 						Cards = cards,
+						IsInspirationEnabled = IsInspirationEnabled,
+					});
+				}
+
+				if(minionType == Race.ALL && UnknownDarkParadox is { } darkParadox)
+				{
+					groups.Insert(0, new CardGroup
+					{
+						Tier = 0,
+						MinionType = minionType,
+						GroupedByMinionType = true,
+						Cards = new[] { darkParadox },
 						IsInspirationEnabled = IsInspirationEnabled,
 					});
 				}
