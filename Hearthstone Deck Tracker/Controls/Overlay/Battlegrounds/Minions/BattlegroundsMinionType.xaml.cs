@@ -26,27 +26,28 @@ public partial class BattlegroundsMinionType : INotifyPropertyChanged
 #region Tribe
 
 	private Dictionary<Race, string> TribeImages = new() {
-		{Race.PET , "pet"},
-		{Race.MECHANICAL , "mech"},
-		{Race.MURLOC , "murloc"},
-		{Race.DEMON , "demon"},
-		{Race.DRAGON , "dragon"},
-		{Race.PIRATE , "pirate"},
-		{Race.ELEMENTAL , "elemental"},
-		{Race.QUILBOAR , "quilboar"},
-		{Race.NAGA , "naga"},
-		{Race.UNDEAD , "undead"},
-		{Race.ABERRATION , "aberration"},
-		{Race.INVALID, "other"},
-		{(Race)(-1), "spell"},
-		{(Race)(-2), "buddy"}
+		{Race.PET , "pet.jpg"},
+		{Race.MECHANICAL , "mech.jpg"},
+		{Race.MURLOC , "murloc.jpg"},
+		{Race.DEMON , "demon.jpg"},
+		{Race.DRAGON , "dragon.jpg"},
+		{Race.PIRATE , "pirate.jpg"},
+		{Race.ELEMENTAL , "elemental.jpg"},
+		{Race.QUILBOAR , "quilboar.jpg"},
+		{Race.NAGA , "naga.jpg"},
+		{Race.UNDEAD , "undead.jpg"},
+		{Race.ABERRATION , "aberration.jpg"},
+		{Race.INVALID, "other.png"},
+		{Race.ALL, "all.png"},
+		{(Race)(-1), "spell.jpg"},
+		{(Race)(-2), "buddy.jpg"}
 	};
 
 	public string ImageSrc
 	{
 		get
 		{
-			return $"/HearthstoneDeckTracker;component/Resources/TribeIcons/{TribeImages[Tribe]}.jpg";
+			return $"/HearthstoneDeckTracker;component/Resources/TribeIcons/{TribeImages[Tribe]}";
 		}
 	}
 

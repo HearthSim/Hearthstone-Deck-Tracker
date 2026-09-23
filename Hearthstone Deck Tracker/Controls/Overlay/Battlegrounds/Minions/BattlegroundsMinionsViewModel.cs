@@ -259,6 +259,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 				.OrderBy(x => HearthDbConverter.GetLocalizedRace(x) ?? string.Empty)
 				.ToList();
 			races.Add(Race.INVALID); // Other
+			races.Add(Race.ALL);
 			races.Add((Race)(-1)); // Spells
 			races.Add((Race)(-2)); // Buddies
 

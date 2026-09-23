@@ -1,5 +1,6 @@
 ## Unreleased
 **Battlegrounds**:
+- Added an "All" type filter to the minion browser filters.
 - Fixed the minion browser sometimes showing minion types twice.
 - Fixed a number of incorrect combat odds.
 
