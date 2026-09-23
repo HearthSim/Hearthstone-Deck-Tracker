@@ -3,6 +3,9 @@
 - Fixed the minion browser sometimes showing minion types twice.
 - Fixed a number of incorrect combat odds.
 
+**General**:
+- Fixed a rare bug that could cause the overlay to remain invisible after tabbing out.
+
 ## **Release v1.58.1 - 2026-09-22**
 **Updated for Hearthstone 36.6.1**
 

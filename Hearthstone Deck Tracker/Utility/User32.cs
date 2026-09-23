@@ -111,6 +111,11 @@ namespace Hearthstone_Deck_Tracker
 		[DllImport("user32.dll")]
 		public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
+		private delegate bool EnumWindowsProc(IntPtr hwnd, IntPtr lParam);
+
+		[DllImport("user32.dll")]
+		private static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
 		public delegate void WinEventCallback(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, uint idObject,
 			long idChild, uint idEventThread, uint dwmsEventTime);
 
@@ -162,6 +167,22 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public static bool IsTopmost(IntPtr hwnd) => (GetWindowLong(hwnd, GwlExstyle) & WsExTopmost) != 0;
+
+		// EnumWindows yields top-level windows in z-order, top to bottom
+		public static bool IsAbove(IntPtr hwnd, IntPtr other)
+		{
+			var found = false;
+			EnumWindows((h, _) =>
+			{
+				if(h == hwnd)
+				{
+					found = true;
+					return false;
+				}
+				return h != other;
+			}, IntPtr.Zero);
+			return found;
+		}
 
 		public static void SendWindowToBack(IntPtr hwnd)
 		{

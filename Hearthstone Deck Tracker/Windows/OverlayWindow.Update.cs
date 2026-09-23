@@ -33,23 +33,28 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		private async void SetTopmost()
 		{
-			if(User32.GetHearthstoneWindow() == IntPtr.Zero)
+			var hsWindow = User32.GetHearthstoneWindow();
+			if(hsWindow == IntPtr.Zero)
 			{
 				Log.Info("Hearthstone window not found");
 				return;
 			}
 
+			var hwnd = new WindowInteropHelper(this).Handle;
 			for(var i = 0; i < 20; i++)
 			{
 				if(_overlayZState == OverlayZState.Behind)
 					return;
 
-				var isTopmost = User32.IsTopmost(new WindowInteropHelper(this).Handle);
-				if(isTopmost)
+				// the topmost style can stay set while the window has dropped into the regular z-order band
+				var isTopmost = User32.IsTopmost(hwnd);
+				if(isTopmost && User32.IsAbove(hwnd, hsWindow))
 				{
 					Log.Info($"Overlay is topmost after {i + 1} tries.");
 					return;
 				}
+				if(isTopmost)
+					Log.Warn("Overlay has topmost style but is behind Hearthstone");
 
 				Topmost = false;
 				Topmost = true;
