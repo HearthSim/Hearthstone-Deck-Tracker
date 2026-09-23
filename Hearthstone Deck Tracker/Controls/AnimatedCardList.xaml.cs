@@ -61,25 +61,36 @@ public partial class AnimatedCardList
 	}
 
 	private readonly HashSet<AnimatedCard> _removingCards = new();
-	private Task? _activeUpdate;
-	private object? _pendingUpdate;
-	public async Task Update(List<Hearthstone.Card> cards, bool reset)
+	private (List<Hearthstone.Card> Cards, bool Reset)? _queuedUpdate;
+	private bool _isDraining;
+	private Task _drain = Task.CompletedTask;
+	public Task Update(List<Hearthstone.Card> cards, bool reset)
 	{
 		// Running multiple animations at the same time can cause weird visual effects at best, and exceptions at worst.
-		if(_activeUpdate != null)
+		// So updates are applied one after another, and only the latest queued one is kept.
+		_queuedUpdate = (cards, reset || (_queuedUpdate?.Reset ?? false));
+		if(!_isDraining)
 		{
-			var thisUpdate = new object();
-			_pendingUpdate = thisUpdate;
-			await _activeUpdate;
-			if(_pendingUpdate != thisUpdate)
+			_isDraining = true;
+			_drain = DrainUpdates();
+		}
+		return _drain;
+	}
+
+	private async Task DrainUpdates()
+	{
+		try
+		{
+			while(_queuedUpdate is { } update)
 			{
-				// Was called again with a different update. Discard this one.
-				return;
+				_queuedUpdate = null;
+				await DoUpdate(update.Cards, update.Reset);
 			}
 		}
-		_activeUpdate = DoUpdate(cards, reset);
-		await _activeUpdate;
-		_activeUpdate = null;
+		finally
+		{
+			_isDraining = false;
+		}
 	}
 
 	private async Task DoUpdate(List<Hearthstone.Card> cards, bool reset)

@@ -1,4 +1,8 @@
-## **Release v1.5810 - 2026-09-22**
+## Unreleased
+**Battlegrounds**:
+- Fixed the minion browser sometimes showing minion types twice.
+
+## **Release v1.58.1 - 2026-09-22**
 **Updated for Hearthstone 36.6.1**
 
 **Battlegrounds**:

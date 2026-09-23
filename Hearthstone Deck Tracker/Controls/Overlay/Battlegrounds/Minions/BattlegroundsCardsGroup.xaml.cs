@@ -50,36 +50,48 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 		nameof(GroupedByMinionType),
 		typeof(bool),
 		typeof(BattlegroundsCardsGroup),
-		new PropertyMetadata(false, null)
+		new PropertyMetadata(false, TitleInputChanged)
 	);
 
 	public static readonly DependencyProperty GroupedByKeywordProperty = DependencyProperty.Register(
 		nameof(GroupedByKeyword),
 		typeof(bool),
 		typeof(BattlegroundsCardsGroup),
-		new PropertyMetadata(false, null)
+		new PropertyMetadata(false, TitleInputChanged)
 	);
 
 	public static readonly DependencyProperty TierProperty = DependencyProperty.Register(
 		nameof(Tier),
 		typeof(int?),
 		typeof(BattlegroundsCardsGroup),
-		new PropertyMetadata()
+		new PropertyMetadata(TitleInputChanged)
 	);
 
 	public static readonly DependencyProperty MinionTypeProperty = DependencyProperty.Register(
 		nameof(MinionType),
 		typeof(Race?),
 		typeof(BattlegroundsCardsGroup),
-		new PropertyMetadata()
+		new PropertyMetadata(TitleInputChanged)
 	);
 
 	public static readonly DependencyProperty KeywordProperty = DependencyProperty.Register(
 		nameof(Keyword),
 		typeof(BattlegroundsKeyword),
 		typeof(BattlegroundsCardsGroup),
-		new PropertyMetadata()
+		new PropertyMetadata(TitleInputChanged)
 	);
+
+	// bindings write dependency properties via SetValue and bypass the CLR setters, so a recycled
+	// container would otherwise keep the header of the group it previously showed
+	private static void TitleInputChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+	{
+		var group = (BattlegroundsCardsGroup)d;
+		group.OnPropertyChanged(nameof(Title));
+		group.OnPropertyChanged(nameof(TitleVisibility));
+		group.OnPropertyChanged(nameof(SubTitle));
+		group.OnPropertyChanged(nameof(SubTitleVisibility));
+		group.OnPropertyChanged(nameof(HeaderCursor));
+	}
 
 	public static readonly DependencyProperty ClickFilterCommandProperty = DependencyProperty.Register(
 		nameof(ClickMinionTypeCommand),
@@ -102,67 +114,32 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 
 	public bool GroupedByMinionType
 	{
-		get { return (bool)GetValue(GroupedByMinionTypeProperty); }
-		set
-		{
-			SetValue(GroupedByMinionTypeProperty, value);
-			OnPropertyChanged(nameof(Title));
-			OnPropertyChanged(nameof(TitleVisibility));
-			OnPropertyChanged(nameof(SubTitle));
-			OnPropertyChanged(nameof(SubTitleVisibility));
-		}
+		get => (bool)GetValue(GroupedByMinionTypeProperty);
+		set => SetValue(GroupedByMinionTypeProperty, value);
 	}
 
 	public bool GroupedByKeyword
 	{
-		get { return (bool)GetValue(GroupedByKeywordProperty); }
-		set
-		{
-			SetValue(GroupedByKeywordProperty, value);
-			OnPropertyChanged(nameof(Title));
-			OnPropertyChanged(nameof(TitleVisibility));
-			OnPropertyChanged(nameof(SubTitle));
-			OnPropertyChanged(nameof(SubTitleVisibility));
-		}
+		get => (bool)GetValue(GroupedByKeywordProperty);
+		set => SetValue(GroupedByKeywordProperty, value);
 	}
 
 	public int Tier
 	{
-		get { return (int)GetValue(TierProperty); }
-		set
-		{
-			SetValue(TierProperty, value);
-			OnPropertyChanged(nameof(Title));
-			OnPropertyChanged(nameof(TitleVisibility));
-			OnPropertyChanged(nameof(SubTitle));
-			OnPropertyChanged(nameof(SubTitleVisibility));
-		}
+		get => (int)GetValue(TierProperty);
+		set => SetValue(TierProperty, value);
 	}
 
 	public Race MinionType
 	{
-		get { return (Race)GetValue(MinionTypeProperty); }
-		set
-		{
-			SetValue(MinionTypeProperty, value);
-			OnPropertyChanged(nameof(Title));
-			OnPropertyChanged(nameof(TitleVisibility));
-			OnPropertyChanged(nameof(SubTitle));
-			OnPropertyChanged(nameof(SubTitleVisibility));
-		}
+		get => (Race)GetValue(MinionTypeProperty);
+		set => SetValue(MinionTypeProperty, value);
 	}
 
 	public BattlegroundsKeyword? Keyword
 	{
-		get { return (BattlegroundsKeyword?)GetValue(KeywordProperty); }
-		set
-		{
-			SetValue(KeywordProperty, value);
-			OnPropertyChanged(nameof(Title));
-			OnPropertyChanged(nameof(TitleVisibility));
-			OnPropertyChanged(nameof(SubTitle));
-			OnPropertyChanged(nameof(SubTitleVisibility));
-		}
+		get => (BattlegroundsKeyword?)GetValue(KeywordProperty);
+		set => SetValue(KeywordProperty, value);
 	}
 
 	public bool IsInspirationEnabled
