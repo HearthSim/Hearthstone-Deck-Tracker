@@ -55,6 +55,7 @@ namespace HDTTests.Utility.MVVM
 				LocalizeDictionary.Instance.Culture = culture;
 			}
 
+			GC.KeepAlive(target);
 			return changed;
 		}
 
