@@ -20,6 +20,11 @@ public static class ArenaTrial
 	private static ArenaTrialStatus? _status;
 	public static (int StarterTrialsRemaining, int RecurringTrialsRemaining)? RemainingTrials => _status != null ? (_status.StarterTrialsRemaining, _status.RecurringTrialsRemaining) : null;
 	public static int? MaxRecurringTrials => _status?.MaxRecurringTrials;
+	public static int? HoursUntilReset => _status?.HoursUntilReset;
+
+	internal static string FormatDiagnostics(int starterTrials, int recurringTrials, int? hoursUntilReset)
+		=> $"starter={starterTrials}, recurring={recurringTrials}, total={starterTrials + recurringTrials}, "
+			+ $"resetInHours={hoursUntilReset?.ToString() ?? "n/a"}";
 
 	public static string? TimeRemaining => _status?.HoursUntilReset == null ? null
 		: string.Format(LocUtil.Get("BattlegroundsPreLobby_Trial_ResetTimeRemaining_DaysHours"), _status.HoursUntilReset / 24, _status.HoursUntilReset % 24);
