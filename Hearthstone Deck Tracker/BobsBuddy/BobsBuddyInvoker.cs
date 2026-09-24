@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
@@ -40,7 +41,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal static int ThreadCount => Environment.ProcessorCount / 2;
 
 		private readonly GameV2 _game;
-		private readonly Random _rnd = new Random();
 
 		private static BobsBuddyPanel BobsBuddyDisplay => Core.Overlay.BobsBuddyDisplay;
 		private static bool ReportErrors
@@ -2073,7 +2073,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if (IsIncorrectCombatResult(result))
 			{
 				terminalCase = true;
-				if (!DidReconnect && ReportErrors && metricSampling > 0 && _rnd.NextDouble() < metricSampling)
+				if (!DidReconnect && ReportErrors && Sampling.ShouldSample(metricSampling))
 					AlertWithLastInputOutput(result.ToString());
 			}
 
@@ -2088,7 +2088,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 
 				terminalCase = true;
-				if(!DidReconnect && ReportErrors && metricSampling > 0 && _rnd.NextDouble() < metricSampling)
+				if(!DidReconnect && ReportErrors && Sampling.ShouldSample(metricSampling))
 					AlertWithLastInputOutput(lethalResult.ToString());
 			}
 

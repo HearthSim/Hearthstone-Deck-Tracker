@@ -23,6 +23,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("tier7")]
 			public Tier7Data? Tier7 { get; set; }
 
+			[JsonProperty("battlegrounds_tavern_pool")]
+			public BattlegroundsTavernPoolData? BattlegroundsTavernPool { get; set; }
+
 			[JsonProperty("sales")]
 			public SalesData? Sales { get; set; }
 
@@ -141,6 +144,15 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 		{
 			[JsonProperty("disabled")]
 			public bool Disabled { get; set; }
+		}
+
+		internal class BattlegroundsTavernPoolData
+		{
+			[JsonProperty("disabled")]
+			public bool Disabled { get; set; }
+
+			[JsonProperty("sampling")]
+			public double Sampling { get; set; }
 		}
 
 		internal class MulliganGuideData

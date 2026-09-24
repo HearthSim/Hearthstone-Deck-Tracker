@@ -386,6 +386,22 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
+		public static async Task PostBattlegroundsTavernPoolObservation(
+			BattlegroundsTavernPoolObservationParams parameters
+		)
+		{
+			try
+			{
+				await Client.PostBattlegroundsTavernPoolObservation(parameters);
+			}
+			catch(Exception e)
+			{
+#if(DEBUG)
+				Log.Error(e);
+#endif
+			}
+		}
+
 		public static async Task<MulliganGuideStatusData?> GetMulliganGuideStatus(MulliganGuideStatusParams parameters)
 		{
 			try

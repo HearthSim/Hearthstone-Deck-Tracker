@@ -1,5 +1,6 @@
 ﻿using System;
 using HearthMirror;
+using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -24,17 +25,19 @@ public class BattlegroundsDbSingleton : Singleton<BattlegroundsDb>
 			? poolDb.Db
 			: Instance;
 
-	public static bool TryLoadMinionPool()
+	public static bool TryLoadMinionPool(out BattlegroundsMinionPool pool)
 	{
+		pool = null!;
 		if(Core.Game.CurrentGameStats?.GameId is not Guid gameId)
 			return false;
-		var pool = Reflection.Client.GetBattlegroundsMinionPool();
-		if(pool?.Cards is not { Count: > 0 })
+		var minionPool = Reflection.Client.GetBattlegroundsMinionPool();
+		if(minionPool?.Cards is not { Count: > 0 })
 			return false;
-		var db = BattlegroundsDb.FromMinionPool(pool, Instance);
+		var db = BattlegroundsDb.FromMinionPool(minionPool, Instance);
 		_minionPoolDb = (gameId, db);
 		if(db.DarkParadox is { } darkParadox)
 			Log.Info($"Dark Paradox in the minion pool: {darkParadox.Id} (tier {darkParadox.TechLevel})");
+		pool = minionPool;
 		return true;
 	}
 }

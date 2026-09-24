@@ -2002,14 +2002,45 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(_game.IsInMenu)
 					return;
-				if(BattlegroundsDbSingleton.TryLoadMinionPool())
+				if(BattlegroundsDbSingleton.TryLoadMinionPool(out var pool))
 				{
 					Core.Overlay.OnBattlegroundsMinionPoolLoaded();
+					PostBattlegroundsTavernPoolObservation(pool);
 					return;
 				}
 				await Task.Delay(500);
 			}
 			Log.Warn("Battlegrounds minion pool was not available, falling back to the assembled database");
+		}
+
+		private void PostBattlegroundsTavernPoolObservation(HearthMirror.Objects.BattlegroundsMinionPool pool)
+		{
+			if(!Config.Instance.GoogleAnalytics || _game.Spectator)
+				return;
+
+			var remoteConfig = Remote.Config.Data?.BattlegroundsTavernPool;
+			if(remoteConfig is null || remoteConfig.Disabled || !Sampling.ShouldSample(remoteConfig.Sampling))
+				return;
+
+			var parameters = new BattlegroundsTavernPoolObservationParams
+			{
+				GameType = (int)HearthDbConverter.GetBnetGameType(_game.CurrentGameType, _game.CurrentFormat),
+				BattlegroundsRating = _game.CurrentBattlegroundsRating,
+				PlayerRegion = _game.CurrentRegion != Region.UNKNOWN ? ((BnetRegion)_game.CurrentRegion).ToString() : null,
+				MinionTypes = BattlegroundsUtils.GetAvailableRaces()?.Cast<int>().OrderBy(x => x).ToArray() ?? Array.Empty<int>(),
+				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity),
+				DeityDbfId = BattlegroundsUtils.GetBattlegroundsDeityDbfId(_game.GameEntity),
+				HearthstoneBuild = Helper.GetHearthstoneBuild(),
+				TavernGuidePool = pool.Cards.Select(x => new BattlegroundsTavernPoolObservationParams.TavernGuidePoolEntry
+				{
+					DbfId = x.DbfId,
+					Tier = x.Tier,
+					CardType = x.CardType,
+					MinionTypes = x.MinionTypes?.ToArray() ?? Array.Empty<int>(),
+					Banned = x.Banned,
+				}).ToArray(),
+			};
+			ApiWrapper.PostBattlegroundsTavernPoolObservation(parameters).Forget();
 		}
 
 		private async void HandleBattlegroundsStart()
