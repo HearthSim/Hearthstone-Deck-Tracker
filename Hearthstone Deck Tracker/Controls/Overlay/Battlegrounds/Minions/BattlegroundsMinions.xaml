@@ -57,7 +57,7 @@
                                     Faded="{Binding Faded}"
                                     HasDarkParadox="{Binding HasDarkParadox}"
                                     ToolTipService.Placement="Left"
-                                    ToolTipService.InitialShowDelay="500"
+                                    ToolTipService.InitialShowDelay="300"
                                     Width="{Binding Size}"
                                     Height="{Binding Size}"
                                     ClickTierCommand="{Binding SetActiveTierCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
