@@ -2188,6 +2188,10 @@ namespace Hearthstone_Deck_Tracker
 			if(stats == null)
 				throw new HeroPickingException("Invalid server response");
 
+			// Echo the ref on subsequent requests (rerolls)
+			if(stats.HeroPickRef != null)
+				parameters.HeroPickRef = stats.HeroPickRef;
+
 			return stats;
 		}
 

@@ -800,6 +800,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					LanguageCode = Helper.GetCardLanguage(),
 					BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
 					IsReroll = isReroll,
+					HeroPickRef = _battlegroundsHeroPickStatsParams.HeroPickRef,
 				};
 				return;
 			}
