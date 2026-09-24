@@ -45,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int DredgeCounter { get; set; }
 		public int BoardOrderCounter { get; set; }
 		public Dictionary<string, int> PlayerIdsByPlayerName { get; set; } = new();
+		public bool ParsedBuildNumber { get; set; }
 
 		public int GetTurnNumber()
 		{
@@ -76,6 +77,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			LastPlayBlockTime = null;
 			IsInsideMetaDataHistoryTarget = false;
 			IsInsideMetaDataBurnedCard = false;
+			ParsedBuildNumber = false;
 		}
 
 		public void SetCurrentEntity(int id)

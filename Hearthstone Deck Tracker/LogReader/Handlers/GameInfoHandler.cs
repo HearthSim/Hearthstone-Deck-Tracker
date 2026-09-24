@@ -9,6 +9,17 @@ public class GameInfoHandler
 {
 	public void Handle(string logLine, IHsGameState gameState, IGame game)
 	{
+		if(!gameState.ParsedBuildNumber)
+		{
+			var buildMatch = BuildNumberRegex.Match(logLine);
+			if(buildMatch.Success && int.TryParse(buildMatch.Groups["buildNumber"].Value, out var build))
+			{
+				game.MetaData.HearthstoneBuild = build;
+				gameState.ParsedBuildNumber = true;
+				return;
+			}
+		}
+
 		if(PlayerRegex.IsMatch(logLine))
 		{
 			var match = PlayerRegex.Match(logLine);

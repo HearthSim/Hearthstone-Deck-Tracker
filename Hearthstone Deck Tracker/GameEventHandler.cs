@@ -2030,7 +2030,7 @@ namespace Hearthstone_Deck_Tracker
 				MinionTypes = BattlegroundsUtils.GetAvailableRaces()?.Cast<int>().OrderBy(x => x).ToArray() ?? Array.Empty<int>(),
 				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity),
 				DeityDbfId = BattlegroundsUtils.GetBattlegroundsDeityDbfId(_game.GameEntity),
-				HearthstoneBuild = Helper.GetHearthstoneBuild(),
+				HearthstoneBuild = _game.MetaData.HearthstoneBuild,
 				TavernGuidePool = pool.Cards.Select(x => new BattlegroundsTavernPoolObservationParams.TavernGuidePoolEntry
 				{
 					DbfId = x.DbfId,

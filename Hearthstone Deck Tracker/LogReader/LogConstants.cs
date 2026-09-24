@@ -61,5 +61,6 @@ public static class LogConstants
 	public static class GameInfo
 	{
 		public static readonly Regex PlayerRegex = CompileRegex(@"PlayerID=(?<playerId>(\d+)), PlayerName=(?<playerName>(.+))");
+		public static readonly Regex BuildNumberRegex = CompileRegex(@"BuildNumber=(?<buildNumber>(\d+))");
 	}
 }
