@@ -15,20 +15,21 @@
                Opacity="{Binding GlowOpacity, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}"
                d:Visibility="Visible"
                Source="/HearthstoneDeckTracker;component/Resources/tier-glow.png" />
-        <Grid RenderTransformOrigin="0.5,0.5">
-            <Grid.RenderTransform>
-                <ScaleTransform ScaleX="0.905" ScaleY="0.905"/>
-            </Grid.RenderTransform>
-            <bgs:BattlegroundsTier d:Tier="6" Cursor="Hand"
-                Width="{Binding Width, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Height="{Binding Height, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Tier="{Binding Tier, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}"
-                Opacity="{Binding IconOpacity, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}" />
-            <Image Name="ImageTierRemove" Visibility="Collapsed" Source="/HearthstoneDeckTracker;component/Resources/tier-x.png" RenderOptions.BitmapScalingMode="Fant" />
+        <Grid Opacity="{Binding IconOpacity, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}">
+            <Grid RenderTransformOrigin="0.5,0.5">
+                <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="0.905" ScaleY="0.905"/>
+                </Grid.RenderTransform>
+                <bgs:BattlegroundsTier d:Tier="6" Cursor="Hand"
+                    Width="{Binding Width, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    Height="{Binding Height, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    Tier="{Binding Tier, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}}" />
+                <Image Name="ImageTierRemove" Visibility="Collapsed" Source="/HearthstoneDeckTracker;component/Resources/tier-x.png" RenderOptions.BitmapScalingMode="Fant" />
+            </Grid>
+            <Ellipse Width="8" Height="8" Fill="#FF9F1C" Stroke="#141617" StrokeThickness="1"
+                     HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,2,0"
+                     Visibility="{Binding HasDarkParadox, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}, Converter={StaticResource BoolToVisibility}}"
+                     d:Visibility="Visible" />
         </Grid>
-        <Ellipse Width="8" Height="8" Fill="#FF9F1C" Stroke="#141617" StrokeThickness="1"
-                 HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,2,0"
-                 Visibility="{Binding HasDarkParadox, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierButton}, Converter={StaticResource BoolToVisibility}}"
-                 d:Visibility="Visible" />
     </Grid>
 </UserControl>
