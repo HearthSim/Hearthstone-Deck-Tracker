@@ -418,9 +418,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(card == null)
 				return null;
 
-			// Deliberately the base card id. A Deity is only ever Golden through Mask of Ancient Ones,
-			// which DeitySigil applies itself from the trinket.
 			var deity = sim.MinionFactory.CreateFromCardId(card.Id, player);
+
+			// Mask of Ancient Ones sets BACON_EVOLUTION_CARD_ID to the premium Deity dbf_id, and it stays premium
+			// even after the trinket is gone (e.g., Buttons' Growing Collection is replaced by another
+			// hero power).
+			if(HearthDb.Cards.TripleToNormalCardIds.ContainsKey(card.Id))
+				deity.golden = true;
 
 			// These are the Deity's current total stats, not a bonus on top of the printed ones: they
 			// start at 1/1 when the sigil is created and grow with every "Give your Deity +X/+Y". The
