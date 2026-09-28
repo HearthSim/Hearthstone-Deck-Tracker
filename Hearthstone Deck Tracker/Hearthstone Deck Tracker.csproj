@@ -96,7 +96,7 @@
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="Mono.Cecil" Version="0.9.6.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Sentry" Version="6.9.0" />
+    <PackageReference Include="Sentry" Version="6.11.1" />
     <PackageReference Include="SharpCompress" Version="0.17.1" />
     <PackageReference Include="Splat" Version="1.6.2" />
     <PackageReference Include="squirrel.windows" Version="1.9.1" />
