@@ -1,3 +1,6 @@
+## **Release v1.58.5 - 2026-09-28**
+**Updated for Hearthstone 36.6.2**
+
 ## **Release v1.58.4 - 2026-09-28**
 **General**:
 - Fixed a crash that occurred when Smart App Control blocked certain features of Hearthstone Deck Tracker on Windows 11.
