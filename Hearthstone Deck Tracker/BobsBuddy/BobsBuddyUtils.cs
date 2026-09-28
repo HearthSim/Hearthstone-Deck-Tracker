@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.maxAttack = entity.GetTag(GameTag.ATK);
 			minion.maxHealth = entity.GetTag(GameTag.HEALTH);
 			minion.taunt = entity.HasTag(GameTag.TAUNT);
-			minion.div = entity.HasTag(GameTag.DIVINE_SHIELD) ? 1 : 0;
+			minion.div = entity.GetTag(GameTag.DIVINE_SHIELD);
 			minion.cleave = MinionFactory.cardIDsWithCleave.Contains(minion.CardID);
 			minion.poisonous = entity.HasTag(GameTag.POISONOUS);
 			minion.venomous = entity.HasTag(GameTag.VENOMOUS);
