@@ -1,3 +1,11 @@
+## **Release v1.58.4 - 2026-09-28**
+**General**:
+- Fixed a crash that occurred when Smart App Control blocked certain features of Hearthstone Deck Tracker on Windows 11.
+
+**Battlegrounds**:
+- Fixed Aberrations occasionally showing the wrong Deity in the available minion types.
+- Fixed a number of incorrect combat odds.
+
 ## **Release v1.58.3 - 2026-09-24**
 **Battlegrounds**:
 - Added an orange dot to the minion browser indicating which Dark Paradox is in the current match.
