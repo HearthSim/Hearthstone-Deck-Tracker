@@ -54,8 +54,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		// the sigil is copied into the combat and dropped again right after, so take the newest one
+		// (a dropped copy is reset to the card's default Deity, which is always C'Thun)
 		private Entity? GetSigil(int controllerId) => _game.Entities.Values
-			.Where(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.SecretDeityDnt && x.IsControlledBy(controllerId))
+			.Where(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.SecretDeityDnt
+				&& x.IsControlledBy(controllerId)
+				&& !x.IsInZone(Zone.REMOVEDFROMGAME))
 			.OrderByDescending(x => x.Id)
 			.FirstOrDefault();
 

@@ -89,7 +89,7 @@ public class DeitySizeCounter : StatsCounter
 		if(entity.CardId != HearthDb.CardIds.NonCollectible.Neutral.SecretDeityDnt)
 			return;
 
-		if(tag == GameTag.BACON_EVOLUTION_CARD_ID)
+		if(tag == GameTag.BACON_EVOLUTION_CARD_ID && !entity.IsInZone(Zone.REMOVEDFROMGAME))
 		{
 			_deityCardId = Database.GetCardFromDbfId(value, false)?.Id;
 			NotifyDeityChanged();
