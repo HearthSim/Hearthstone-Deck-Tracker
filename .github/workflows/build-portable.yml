@@ -28,6 +28,10 @@ jobs:
   build:
     runs-on: windows-latest
 
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -114,6 +118,21 @@ jobs:
           $hdtReleaseDir = "Hearthstone Deck Tracker\bin\x64\Hearthstone Deck Tracker"
           smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\HDTUninstaller.exe"
           smctl sign --simple --keypair-alias=key_1409653344 --input="$hdtReleaseDir\Hearthstone Deck Tracker.exe"
+        env:
+          SM_HOST: ${{ vars.SM_HOST }}
+          SM_API_KEY: ${{ secrets.SM_API_KEY }}
+          SM_CLIENT_CERT_FILE: ${{ env.SM_CLIENT_CERT_FILE }}
+          SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_RELEASE_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_RELEASE_REGION }}
+
+      - name: Sign libraries
+        shell: pwsh
+        run: ./build-scripts/sign_libs.ps1 -dir "Hearthstone Deck Tracker\bin\x64\Hearthstone Deck Tracker" -bucket ${{ vars.AWS_RELEASE_LIBS_BUCKET }}
         env:
           SM_HOST: ${{ vars.SM_HOST }}
           SM_API_KEY: ${{ secrets.SM_API_KEY }}
