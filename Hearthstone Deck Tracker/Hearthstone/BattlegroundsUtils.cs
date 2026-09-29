@@ -4,7 +4,10 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using static HearthDb.CardIds;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
@@ -59,6 +62,112 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				_availableRacesCache[currentGameId.Value] = races;
 
 			return races;
+		}
+
+		private static readonly TimeSpan AvailableRacesTimeout = TimeSpan.FromSeconds(15);
+
+		// the memory read can come up empty right after the game starts, so keep trying for a while
+		// (null if it keeps failing, OperationCanceledException once the game is over so callers can stop quietly)
+		public static async Task<HashSet<Race>?> WaitForAvailableRaces()
+		{
+			CancellationToken token;
+			lock(PendingRacesWaitLock)
+				token = _gameplayCancellation.Token;
+
+			// without a game id the races can't be cached, and a game change can't be told apart from the id arriving
+			if(await WaitForCurrentGameId(token) is not Guid gameId)
+				return null;
+
+			// another caller may have read them since the shared wait's last attempt
+			if(_availableRacesCache.TryGetValue(gameId, out var cachedRaces))
+				return cachedRaces;
+
+			var races = await GetOrStartSharedRacesWait(gameId, () => WaitForAvailableRaces(
+				() => GetAvailableRaces(gameId),
+				() => IsCurrentGame(gameId),
+				AvailableRacesTimeout,
+				TimeSpan.FromMilliseconds(250),
+				token
+			));
+
+			if(!IsCurrentGame(gameId))
+				throw new OperationCanceledException();
+
+			return races;
+		}
+
+		// leaving gameplay ends every wait still in flight, instead of letting them run into the next game
+		public static void CancelAvailableRacesWaits()
+		{
+			CancellationTokenSource cancelled;
+			lock(PendingRacesWaitLock)
+			{
+				cancelled = _gameplayCancellation;
+				_gameplayCancellation = new CancellationTokenSource();
+				_pendingRacesWait = null;
+			}
+			cancelled.Cancel();
+		}
+
+		private static bool IsCurrentGame(Guid gameId) => !Core.Game.IsInMenu && Core.Game.CurrentGameStats?.GameId == gameId;
+
+		private static async Task<Guid?> WaitForCurrentGameId(CancellationToken token)
+		{
+			var stopwatch = Stopwatch.StartNew();
+			while(true)
+			{
+				if(Core.Game.CurrentGameStats?.GameId is Guid gameId)
+					return gameId;
+				if(Core.Game.IsInMenu)
+					throw new OperationCanceledException();
+				if(stopwatch.Elapsed >= AvailableRacesTimeout)
+					return null;
+				await Task.Delay(250, token);
+			}
+		}
+
+		private static readonly object PendingRacesWaitLock = new();
+		private static CancellationTokenSource _gameplayCancellation = new();
+		private static (Guid GameId, Task<HashSet<Race>?> Task)? _pendingRacesWait;
+
+		internal static Task<HashSet<Race>?> GetOrStartSharedRacesWait(Guid gameId, Func<Task<HashSet<Race>?>> start)
+		{
+			lock(PendingRacesWaitLock)
+			{
+				// a finished wait is not reused, so a caller after a timeout gets a fresh attempt
+				if(_pendingRacesWait is { } pending && pending.GameId == gameId && !pending.Task.IsCompleted)
+					return pending.Task;
+
+				var task = start();
+				_pendingRacesWait = (gameId, task);
+				return task;
+			}
+		}
+
+		internal static async Task<HashSet<Race>?> WaitForAvailableRaces(
+			Func<HashSet<Race>?> read,
+			Func<bool> isSameGame,
+			TimeSpan timeout,
+			TimeSpan initialDelay,
+			CancellationToken token
+		)
+		{
+			var stopwatch = Stopwatch.StartNew();
+			var delay = initialDelay;
+			var maxDelay = TimeSpan.FromSeconds(2);
+			while(true)
+			{
+				token.ThrowIfCancellationRequested();
+				var races = read();
+				if(races != null)
+					return races;
+				if(!isSameGame())
+					throw new OperationCanceledException();
+				if(stopwatch.Elapsed >= timeout)
+					return null;
+				await Task.Delay(delay, token);
+				delay = TimeSpan.FromTicks(Math.Min(delay.Ticks * 2, maxDelay.Ticks));
+			}
 		}
 
 		private static HashSet<Race>? ReadAvailableRacesFromMemory()

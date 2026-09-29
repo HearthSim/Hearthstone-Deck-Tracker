@@ -782,37 +782,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private BattlegroundsHeroPickStatsParams? _battlegroundsHeroPickStatsParams;
 
-		public void CacheBattlegroundsHeroPickParams(bool isReroll)
+		public void CacheBattlegroundsHeroPickParams(int[] heroDbfIds, HashSet<Race> availableRaces)
 		{
-			if(_battlegroundsHeroPickStatsParams != null)
-			{
-				// Already set? Probably a reroll - just update the hero dbf ids
-				var newHeroDbfIds = BattlegroundsHeroPickState.OfferedHeroDbfIds;
-				if(newHeroDbfIds == null)
-					return;
-
-				_battlegroundsHeroPickStatsParams = new BattlegroundsHeroPickStatsParams
-				{
-					HeroDbfIds = newHeroDbfIds,
-					BattlegroundsRaces = _battlegroundsHeroPickStatsParams.BattlegroundsRaces,
-					AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
-					DeityDbfId = BattlegroundsUtils.GetBattlegroundsDeityDbfId(Core.Game.GameEntity),
-					LanguageCode = Helper.GetCardLanguage(),
-					BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
-					IsReroll = isReroll,
-					HeroPickRef = _battlegroundsHeroPickStatsParams.HeroPickRef,
-				};
-				return;
-			}
-
-			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
-			if(availableRaces == null)
-				return;
-
-			var heroDbfIds = BattlegroundsHeroPickState.OfferedHeroDbfIds;
-			if(heroDbfIds == null)
-				return;
-
 			_battlegroundsHeroPickStatsParams = new BattlegroundsHeroPickStatsParams
 			{
 				HeroDbfIds = heroDbfIds,
@@ -821,7 +792,29 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				DeityDbfId = BattlegroundsUtils.GetBattlegroundsDeityDbfId(Core.Game.GameEntity),
 				LanguageCode = Helper.GetCardLanguage(),
 				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
-				IsReroll = isReroll,
+				IsReroll = false,
+			};
+		}
+
+		public void CacheBattlegroundsHeroRerollParams()
+		{
+			if(_battlegroundsHeroPickStatsParams == null)
+				return;
+
+			var newHeroDbfIds = BattlegroundsHeroPickState.OfferedHeroDbfIds;
+			if(newHeroDbfIds == null)
+				return;
+
+			_battlegroundsHeroPickStatsParams = new BattlegroundsHeroPickStatsParams
+			{
+				HeroDbfIds = newHeroDbfIds,
+				BattlegroundsRaces = _battlegroundsHeroPickStatsParams.BattlegroundsRaces,
+				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
+				DeityDbfId = BattlegroundsUtils.GetBattlegroundsDeityDbfId(Core.Game.GameEntity),
+				LanguageCode = Helper.GetCardLanguage(),
+				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
+				IsReroll = true,
+				HeroPickRef = _battlegroundsHeroPickStatsParams.HeroPickRef,
 			};
 		}
 
@@ -844,7 +837,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public void SnapshotBattlegroundsOfferedHeroes(IEnumerable<Entity> heroes) => BattlegroundsHeroPickState.SnapshotOfferedHeroes(heroes);
+		public int[] SnapshotBattlegroundsOfferedHeroes(IEnumerable<Entity> heroes) => BattlegroundsHeroPickState.SnapshotOfferedHeroes(heroes);
 		public void SnapshotBattlegroundsHeroPick() => BattlegroundsHeroPickState.SnapshotPickedHero();
 
 		public BattlegroundsHeroPickFeedbackParams? GetBattlegroundsHeroPickFeedbackParams(int finalPlacement)

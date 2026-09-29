@@ -64,6 +64,7 @@ public class SceneHandler
 		}
 		else if(from == Mode.GAMEPLAY)
 		{
+			BattlegroundsUtils.CancelAvailableRacesWaits();
 			Core.Overlay.UpdateBattlegroundsSessionVisibility();
 			Watchers.BattlegroundsTeammateBoardStateWatcher.Stop();
 			Watchers.BattlegroundsLobbyInfoWatcher.Stop();

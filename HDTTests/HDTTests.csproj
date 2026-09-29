@@ -48,6 +48,9 @@
     <Reference Include="HearthMirror">
       <HintPath>..\lib\HearthMirror.dll</HintPath>
     </Reference>
+    <Reference Include="HSReplay">
+      <HintPath>..\lib\HSReplay.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hearthstone Deck Tracker\Hearthstone Deck Tracker.csproj" />

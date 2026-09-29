@@ -1100,8 +1100,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(_game.GameEntity);
 			var anomalyCardId = anomalyDbfId.HasValue ? Database.GetCardFromDbfId(anomalyDbfId.Value, false)?.Id : null;
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
-			BattlegroundsMinionsVM.AvailableRaces = availableRaces?.Concat(new[] { Race.INVALID, Race.ALL });
-			BattlegroundsMinionPinningViewModel.AvailableRaces = availableRaces;
+			SetBgsAvailableRaces(availableRaces);
+			if(availableRaces == null)
+				SetBgsAvailableRacesOnceReadable().Forget();
 			BattlegroundsMinionsVM.IsDuos = _game.IsBattlegroundsDuosMatch;
 			BattlegroundsMinionsVM.Anomaly = anomalyCardId;
 			BattlegroundsMinionsVM.PreloadCardTiles();
@@ -1130,6 +1131,33 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			// coming from the lobby the bar is already up, so it has to be re-measured for the wider content
 			_bgsTopBarBehavior.Refresh();
+		}
+
+		private void SetBgsAvailableRaces(HashSet<Race>? availableRaces)
+		{
+			BattlegroundsMinionsVM.AvailableRaces = availableRaces?.Concat(new[] { Race.INVALID, Race.ALL });
+			BattlegroundsMinionPinningViewModel.AvailableRaces = availableRaces;
+		}
+
+		private async Task SetBgsAvailableRacesOnceReadable()
+		{
+			try
+			{
+				if(await BattlegroundsUtils.WaitForAvailableRaces() == null)
+					return;
+			}
+			catch(OperationCanceledException)
+			{
+				return;
+			}
+
+			// the match may have ended meanwhile, and the lobby's minion browser must not pick up its races
+			if(_game.IsInMenu || !_game.IsBattlegroundsMatch || BgsGuidesPreLobbyVisible)
+				return;
+
+			// read again rather than use the result, so a newer game only ever gets its own races
+			if(BattlegroundsUtils.GetAvailableRaces() is { } availableRaces)
+				SetBgsAvailableRaces(availableRaces);
 		}
 
 		internal void OnBattlegroundsMinionPoolLoaded()

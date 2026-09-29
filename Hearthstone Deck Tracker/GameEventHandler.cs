@@ -2079,10 +2079,10 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
-			_game.SnapshotBattlegroundsOfferedHeroes(heroes);
-			_game.CacheBattlegroundsHeroPickParams(false);
+			var heroIds = _game.SnapshotBattlegroundsOfferedHeroes(heroes);
+			var heroPickParamsTask = CacheInitialBattlegroundsHeroPickParams(heroIds);
+			_initialBattlegroundsHeroPickRequest = heroPickParamsTask;
 
-			var heroIds = heroes.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
 			if(Config.Instance.HideOverlay)
 			{
 				if(Config.Instance.ShowBattlegroundsToast)
@@ -2093,6 +2093,7 @@ namespace Hearthstone_Deck_Tracker
 					// Wait for screen to fade in
 					await Task.Delay(500);
 
+					heroIds = _game.BattlegroundsHeroPickState.OfferedHeroDbfIds ?? heroIds;
 					var anomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity);
 					ToastManager.ShowBattlegroundsToast(
 						heroIds,
@@ -2105,7 +2106,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				var statsTask = GetBattlegroundsHeroPickStats();
+				var statsTask = GetBattlegroundsHeroPickStats(heroPickParamsTask);
+				_initialBattlegroundsHeroPickRequest = statsTask;
 
 				// Wait for the mulligan to be ready
 				await WaitForMulliganStart();
@@ -2128,7 +2130,14 @@ namespace Hearthstone_Deck_Tracker
 					// pass
 				}
 
+				// the game ended while the params were waiting for races
+				if(statsTask.IsCanceled)
+					return;
+
 				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
+
+				// the stats were requested for the initial heroes, some may have been rerolled since
+				heroIds = _game.BattlegroundsHeroPickState.OfferedHeroDbfIds ?? heroIds;
 
 				Dictionary<string, string>? toastParams = null;
 				if(battlegroundsHeroPickStats is BattlegroundsHeroPickStats stats)
@@ -2163,7 +2172,16 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async Task<BattlegroundsHeroPickStats?> GetBattlegroundsHeroPickStats()
+		private Task? _initialBattlegroundsHeroPickRequest;
+
+		private async Task CacheInitialBattlegroundsHeroPickParams(int[] heroDbfIds)
+		{
+			var availableRaces = await BattlegroundsUtils.WaitForAvailableRaces();
+			if(availableRaces != null)
+				_game.CacheBattlegroundsHeroPickParams(heroDbfIds, availableRaces);
+		}
+
+		private async Task<BattlegroundsHeroPickStats?> GetBattlegroundsHeroPickStats(Task? paramsReady = null)
 		{
 			if(Core.Game.Spectator)
 				return null;
@@ -2180,6 +2198,9 @@ namespace Hearthstone_Deck_Tracker
 
 			if(!Tier7Trial.IsAvailable)
 				return null;
+
+			if(paramsReady != null)
+				await paramsReady;
 
 			var parameters = _game.GetBattlegroundsHeroPickParams();
 
@@ -2199,8 +2220,6 @@ namespace Hearthstone_Deck_Tracker
 			var json = JsonConvert.SerializeObject(parameters);
 			Log.Debug($"Fetching Battlegrounds Hero Pick stats with parameters={json}...");
 #endif
-
-			// At this point the user either owns tier7 or has an active trial!
 
 			var isDuos = Core.Game.IsBattlegroundsDuosMatch;
 			BattlegroundsHeroPickStats? stats;
@@ -2230,44 +2249,43 @@ namespace Hearthstone_Deck_Tracker
 
 			// refresh the offered heroes
 			_game.SnapshotBattlegroundsOfferedHeroes(heroes);
-			_game.CacheBattlegroundsHeroPickParams(true);
 
+			var latchOut = ++battlegroundsHeroPickingLatch;
+			BattlegroundsHeroPickStats? battlegroundsHeroPickStats = null;
 			try
 			{
-				var latchOut = ++battlegroundsHeroPickingLatch;
-				BattlegroundsHeroPickStats? battlegroundsHeroPickStats = null;
-				try
-				{
-					battlegroundsHeroPickStats = await GetBattlegroundsHeroPickStats();
-				}
-				catch(Exception)
-				{
-					// pass
-				}
+				// reroll params build on the initial params and echo the ref from its response
+				if(_initialBattlegroundsHeroPickRequest != null)
+					await _initialBattlegroundsHeroPickRequest;
 
-				// another task has updated them since (fast reroll)
+				// another reroll has happened while waiting, leave the request to that one
 				if(latchOut != battlegroundsHeroPickingLatch)
 					return;
 
-				// the stats are no longer relevant
-				if(_game.GameEntity?.GetTag(STEP) > (int)Step.BEGIN_MULLIGAN || _game.IsInMenu || Core.Overlay.BattlegroundsHeroPickingViewModel.HeroStats == null)
-					return;
-
-				Dictionary<string, string>? toastParams = null;
-				if(battlegroundsHeroPickStats is BattlegroundsHeroPickStats stats)
-				{
-					var heroIds = heroes.OrderBy(x => x.ZonePosition).Select(x => x.Card.DbfId).ToArray();
-					Core.Overlay.ShowBattlegroundsHeroPickingStats(
-						heroIds.Select(dbfId => stats.Data.FirstOrDefault(x => x.HeroDbfId == dbfId)),
-						stats.Toast.Parameters,
-						stats.Toast.MinMmr,
-						stats.Toast.AnomalyAdjusted ?? false
-					);
-				}
+				_game.CacheBattlegroundsHeroRerollParams();
+				battlegroundsHeroPickStats = await GetBattlegroundsHeroPickStats();
 			}
-			finally
+			catch(Exception)
 			{
-				battlegroundsHeroPickingLatch--;
+				// pass
+			}
+
+			// another task has updated them since (fast reroll)
+			if(latchOut != battlegroundsHeroPickingLatch)
+				return;
+
+			// the stats are no longer relevant
+			if(_game.GameEntity?.GetTag(STEP) > (int)Step.BEGIN_MULLIGAN || _game.IsInMenu || Core.Overlay.BattlegroundsHeroPickingViewModel.HeroStats == null)
+				return;
+
+			if(battlegroundsHeroPickStats is BattlegroundsHeroPickStats stats && _game.BattlegroundsHeroPickState.OfferedHeroDbfIds is int[] heroIds)
+			{
+				Core.Overlay.ShowBattlegroundsHeroPickingStats(
+					heroIds.Select(dbfId => stats.Data.FirstOrDefault(x => x.HeroDbfId == dbfId)),
+					stats.Toast.Parameters,
+					stats.Toast.MinMmr,
+					stats.Toast.AnomalyAdjusted ?? false
+				);
 			}
 		}
 

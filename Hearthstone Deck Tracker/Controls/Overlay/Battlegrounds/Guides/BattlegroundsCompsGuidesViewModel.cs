@@ -293,7 +293,16 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			return;
 		}
 
-		var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+		HashSet<Race>? availableRaces;
+		try
+		{
+			availableRaces = await BattlegroundsUtils.WaitForAvailableRaces();
+		}
+		catch(OperationCanceledException)
+		{
+			return;
+		}
+
 		if(availableRaces == null)
 		{
 			HandleCompGuidesError("NoRaces", "Unable to get available races");
