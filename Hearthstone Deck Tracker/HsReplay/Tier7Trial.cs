@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using HearthDb.Enums;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.Utility;
 using HSReplay.Responses;
 
@@ -32,6 +33,31 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static bool IsTrialForCurrentGameActive(uint? gameId) => Serializer.Load().GameID == gameId;
 
+		public static bool IsAvailable =>
+			(HSReplayNetOAuth.AccountData?.IsTier7 ?? false)
+			|| RemainingTrials > 0 && CanActivateNewTrial
+			|| Core.Game.MetaData.ServerInfo?.GameHandle is uint gameId && IsTrialForCurrentGameActive(gameId);
+
+		private static bool CanActivateNewTrial => (Core.Game.GameEntity?.GetTag(GameTag.STEP) ?? 0) <= (int)Step.BEGIN_MULLIGAN;
+
+		// call only once all request preconditions are met (so a trial is never wasted)
+		public static async Task<Tier7Access?> GetAccess()
+		{
+			if(HSReplayNetOAuth.AccountData?.IsTier7 ?? false)
+				return Tier7Access.Subscription;
+
+			var gameId = Core.Game.MetaData.ServerInfo?.GameHandle;
+			if(gameId == null)
+				return null;
+
+			var acc = Reflection.Client.GetAccountId();
+			if(acc == null)
+				return null;
+
+			var token = await ActivateOrContinue(acc.Hi, acc.Lo, gameId);
+			return token != null ? new Tier7Access(token) : null;
+		}
+
 		private static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
 		public static async Task<string?> ActivateOrContinue(ulong accountHi, ulong accountLo, uint? gameId, bool activateAfterMulligan = false)
@@ -50,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				}
 
 				// Prevent using trials after mulligan phase
-				if(!((Core.Game.GameEntity?.GetTag(GameTag.STEP) ?? 0) <= (int)Step.BEGIN_MULLIGAN) && !activateAfterMulligan)
+				if(!CanActivateNewTrial && !activateAfterMulligan)
 					return null;
 
 				if(_status == null || _status.TrialsRemaining == 0)
@@ -87,5 +113,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			_status = null;
 			Token = null;
 		}
+	}
+
+	public sealed class Tier7Access
+	{
+		public static readonly Tier7Access Subscription = new(null);
+
+		// null for subscribers, whose requests go through OAuth instead
+		public string? TrialToken { get; }
+
+		internal Tier7Access(string? trialToken) => TrialToken = trialToken;
 	}
 }

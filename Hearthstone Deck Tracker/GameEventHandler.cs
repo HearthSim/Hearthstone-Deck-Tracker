@@ -1560,14 +1560,15 @@ namespace Hearthstone_Deck_Tracker
 				return null;
 			}
 
-			var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
-			if(!userOwnsTier7 && Tier7Trial.Token == null)
+			// trinkets are offered after the mulligan, so this only continues a trial from hero picking
+			var access = await Tier7Trial.GetAccess();
+			if(access == null)
 				return null;
 
 			BattlegroundsTrinketPickStats? result;
 			using(new TimedSection("Fetching Trinket Stats"))
-				result = Tier7Trial.Token != null
-					? await ApiWrapper.GetTier7TrinketPickStats(Tier7Trial.Token, requestParams)
+				result = access.TrialToken is string token
+					? await ApiWrapper.GetTier7TrinketPickStats(token, requestParams)
 					: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7TrinketPickStats(requestParams));
 
 			return result;
@@ -2177,7 +2178,7 @@ namespace Hearthstone_Deck_Tracker
 			Core.Game.Metrics.IsSubscribed = userOwnsTier7;
 
 
-			if(!userOwnsTier7 && (Tier7Trial.RemainingTrials ?? 0) == 0)
+			if(!Tier7Trial.IsAvailable)
 				return null;
 
 			var parameters = _game.GetBattlegroundsHeroPickParams();
@@ -2186,17 +2187,13 @@ namespace Hearthstone_Deck_Tracker
 			if(parameters == null)
 				throw new HeroPickingException("Unable to get API parameters");
 
-			// Use a trial if we can
-			string? token = null;
-			if(!userOwnsTier7)
-			{
-				var acc = Reflection.Client.GetAccountId();
-				token = acc != null ? await Tier7Trial.ActivateOrContinue(acc.Hi, acc.Lo, _game.MetaData.ServerInfo?.GameHandle) : null;
-				if(token == null)
-					throw new HeroPickingException("Unable to get trial token");
+			var access = await Tier7Trial.GetAccess();
+			if(access == null)
+				throw new HeroPickingException("Unable to start Tier7 trial");
 
+			var token = access.TrialToken;
+			if(token != null)
 				Core.Game.Metrics.Tier7TrialsRemaining = Math.Max(0, (Tier7Trial.RemainingTrials ?? 0) - 1);
-			}
 
 #if(DEBUG)
 			var json = JsonConvert.SerializeObject(parameters);

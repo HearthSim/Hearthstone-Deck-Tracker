@@ -146,10 +146,8 @@ public class BattlegroundsInspirationViewModel : ViewModel
 	private const string Url = "https://hsreplay.net/api/v1/battlegrounds/inspiration/";
 	private async Task<InspirationApiResponse?> MakeRequest(List<int> minionDbfIds, List<int> boardDbfIds)
 	{
-		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
-		if(!userOwnsTier7 && (Tier7Trial.RemainingTrials ?? 0) == 0)
+		if(!Tier7Trial.IsAvailable)
 			return null;
-
 
 		var races = BattlegroundsUtils.GetAvailableRaces() ?? new HashSet<Race>();
 		if(races.Count != 5)
@@ -165,19 +163,12 @@ public class BattlegroundsInspirationViewModel : ViewModel
 			LineupDbfIds = boardDbfIds,
 		};
 
-		string? token = null;
-		if(!userOwnsTier7)
-		{
-			var acc = Reflection.Client.GetAccountId();
-			if(acc == null)
-				throw new HeroPickingException("Unable to get trial token"); // TODO
-			token = await Tier7Trial.ActivateOrContinue(acc.Hi, acc.Lo, Core.Game.MetaData.ServerInfo?.GameHandle);
-			if(token == null)
-				throw new HeroPickingException("Unable to get trial token"); // TODO
-		}
+		var access = await Tier7Trial.GetAccess();
+		if(access == null)
+			throw new HeroPickingException("Unable to start Tier7 trial"); // TODO
 
 		using HttpRequestMessage req = new(HttpMethod.Post, Url);
-		req.Headers.Add("X-Trial-Token", token);
+		req.Headers.Add("X-Trial-Token", access.TrialToken);
 		var data = JsonConvert.SerializeObject(reqData);
 		req.Content = new StringContent(data, Encoding.UTF8, "application/json");
 		Log.Info(data);

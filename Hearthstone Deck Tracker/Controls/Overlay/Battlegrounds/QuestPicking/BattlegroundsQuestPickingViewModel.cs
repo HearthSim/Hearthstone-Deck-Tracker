@@ -87,11 +87,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			if(Quests != null)
 				return;
 
-			var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
-
-			// The trial would have been activated at hero picking. If it is
-			// not active we do not try to activate it here.
-			if(!userOwnsTier7 && Tier7Trial.Token == null)
+			// quests are offered after the mulligan, so this only continues a trial from hero picking
+			var access = await Tier7Trial.GetAccess();
+			if(access == null)
 				return;
 
 			if(_entities.Count != ExpectedQuestCount())
@@ -115,8 +113,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 
 			BattlegroundsQuestPickStats[]? questData;
 			using(new TimedSection("Fetching Quest Stats"))
-				questData = Tier7Trial.Token != null
-					? await ApiWrapper.GetTier7QuestStats(Tier7Trial.Token, requestParams)
+				questData = access.TrialToken is string token
+					? await ApiWrapper.GetTier7QuestStats(token, requestParams)
 					: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7QuestPickStats(requestParams));
 			if(questData == null)
 			{

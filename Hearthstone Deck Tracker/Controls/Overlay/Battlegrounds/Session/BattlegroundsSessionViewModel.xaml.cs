@@ -187,11 +187,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	private async Task<BattlegroundsCompStats?> GetBattlegroundsCompStats()
 	{
-		var gameId = Core.Game.MetaData.ServerInfo?.GameHandle;
-		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
-		var userHasTrials = Tier7Trial.RemainingTrials > 0;
-
-		if(!userOwnsTier7 && !(userHasTrials || Tier7Trial.IsTrialForCurrentGameActive(gameId)))
+		if(!Tier7Trial.IsAvailable)
 			return null;
 
 		if(IsDuos)
@@ -221,17 +217,13 @@ public class BattlegroundsSessionViewModel : ViewModel
 	    if(compParams == null)
 			throw new CompositionStatsException("Unable to get API parameters");
 
-	    // Use a trial if we can
-	    string? token = null;
-	    if(!userOwnsTier7)
+	    var access = await Tier7Trial.GetAccess();
+	    if(access == null)
 	    {
-	        var acc = Reflection.Client.GetAccountId();
-	        token = acc != null ? await Tier7Trial.ActivateOrContinue(acc.Hi, acc.Lo, gameId) : null;
-	        if(!((Core.Game.GameEntity?.GetTag(GameTag.STEP) ?? 0) <= (int)Step.BEGIN_MULLIGAN) && token == null)
+	        if(!((Core.Game.GameEntity?.GetTag(GameTag.STEP) ?? 0) <= (int)Step.BEGIN_MULLIGAN))
 		        return null;
 
-	        if(token == null)
-	            throw new CompositionStatsException("Unable to get trial token");
+	        throw new CompositionStatsException("Unable to start Tier7 trial");
 	    }
 
 	#if(DEBUG)
@@ -244,7 +236,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 	    BattlegroundsCompStats? compStats;
 	    try
 	    {
-		    compStats = token != null && !userOwnsTier7
+		    compStats = access.TrialToken is string token
 			    ?  await ApiWrapper.GetTier7CompStats(token, compParams)
 			    : await HSReplayNetOAuth.MakeRequest(c => c.GetTier7CompStats(compParams)
 			);

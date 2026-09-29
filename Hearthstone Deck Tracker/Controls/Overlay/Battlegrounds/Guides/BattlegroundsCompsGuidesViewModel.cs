@@ -141,25 +141,10 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		}
 	}
 
-	public async Task<Dictionary<int,TieredComps>?> GetPremiumCompGuides(string? token)
+	public async Task<Dictionary<int,TieredComps>?> GetPremiumCompGuides(string? token, int[] currentRaces)
 	{
 		try
 		{
-			int[] currentRaces;
-			if(IsPreLobby)
-			{
-				// there is no minion pool before a match, so ask for the unfiltered list
-				currentRaces = Array.Empty<int>();
-			}
-			else
-			{
-				var availableRaces = BattlegroundsUtils.GetAvailableRaces();
-				if(availableRaces == null)
-					return null;
-
-				currentRaces = availableRaces.Cast<int>().ToArray();
-			}
-
 			var compsData = token != null
 				? await ApiWrapper.GetPremiumCompsGuides(token, Helper.GetCardLanguage(), currentRaces)
 				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7CompsGuides(Helper.GetCardLanguage(), currentRaces));
@@ -275,12 +260,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		{
 			await _updateCompGuidesSemaphore.WaitAsync();
 			SelectedComp = null;
-
-			// no trial is activated here, spending one before the player has even queued is not worth it
-			if(HSReplayNetOAuth.AccountData?.IsTier7 ?? false)
-				await SetPremiumCompGuides(null);
-			else
-				await SetFreeCompGuides();
+			await UpdateCompGuides();
 		}
 		finally
 		{
@@ -296,16 +276,38 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 
 	private async Task TrySetCompsGuides()
 	{
-		var token = await GetTier7Token();
-		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
+		if(IsPreLobby)
+		{
+			// no trial is activated here, spending one before the player has even queued is not worth it
+			if(HSReplayNetOAuth.AccountData?.IsTier7 ?? false)
+				// there is no minion pool before a match, so ask for the unfiltered list
+				await SetPremiumCompGuides(null, Array.Empty<int>());
+			else
+				await SetFreeCompGuides();
+			return;
+		}
 
-		if(token != null || userOwnsTier7)
-			await SetPremiumCompGuides(token);
+		if(!Tier7Trial.IsAvailable)
+		{
+			await SetFreeCompGuides();
+			return;
+		}
+
+		var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+		if(availableRaces == null)
+		{
+			HandleCompGuidesError("NoRaces", "Unable to get available races");
+			return;
+		}
+
+		var access = await Tier7Trial.GetAccess();
+		if(access != null)
+			await SetPremiumCompGuides(access.TrialToken, availableRaces.Cast<int>().ToArray());
 		else
 			await SetFreeCompGuides();
 	}
 
-	private async Task SetPremiumCompGuides(string? token)
+	private async Task SetPremiumCompGuides(string? token, int[] races)
 	{
 #if(DEBUG)
 		Log.Debug("Fetching Premium Battlegrounds Comp Guides...");
@@ -314,7 +316,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		Dictionary<int, TieredComps>? guides = null;
 		try
 		{
-			guides = await GetPremiumCompGuides(token);
+			guides = await GetPremiumCompGuides(token, races);
 		}
 		catch(Exception e)
 		{
@@ -412,30 +414,6 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			5 => CreateLinearGradientBrush(Color.FromRgb(160, 72, 54), Color.FromRgb(121, 66, 55)),
 			_ => CreateLinearGradientBrush(Color.FromRgb(112, 112, 112), Color.FromRgb(64, 64, 64))
 		};
-	}
-
-	private async Task<string?> GetTier7Token()
-	{
-		var gameId = Core.Game.MetaData.ServerInfo?.GameHandle;
-		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
-		var userHasTrials = Tier7Trial.RemainingTrials > 0;
-
-		if(!userOwnsTier7 && gameId == null)
-			return null;
-
-		if(!userOwnsTier7 && !(userHasTrials || Tier7Trial.IsTrialForCurrentGameActive(gameId)))
-			return null;
-
-		string? token = null;
-		if(!userOwnsTier7)
-		{
-			var acc = Reflection.Client.GetAccountId();
-			token = acc != null ? await Tier7Trial.ActivateOrContinue(acc.Hi, acc.Lo, gameId) : null;
-			if(!((Core.Game.GameEntity?.GetTag(GameTag.STEP) ?? 0) <= (int)Step.BEGIN_MULLIGAN) && token == null)
-				return null;
-		}
-
-		return token;
 	}
 
 	private void HandleCompGuidesError(string type, string message)
