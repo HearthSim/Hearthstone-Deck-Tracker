@@ -1,3 +1,8 @@
+## Unreleased
+**Battlegrounds**:
+- Fixed Tier7 features occasionally not loading.
+- Fixed the pre-lobby screen not showing the Tier7 widget.
+
 ## **Release v1.58.5 - 2026-09-28**
 **Updated for Hearthstone 36.6.2**
 
