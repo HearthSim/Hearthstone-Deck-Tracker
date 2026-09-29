@@ -266,6 +266,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				_hiding = false;
 				_hidingAnimation = null;
 				Element.Visibility = Collapsed;
+				Element.Opacity = _restingOpacity;
 				HideCallback?.Invoke();
 				return;
 			}
@@ -287,6 +288,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				_hiding = false;
 				_hidingAnimation = null;
 				Element.Visibility = Collapsed;
+				Element.Opacity = _restingOpacity;
 				HideCallback?.Invoke();
 				UpdatePosition();
 			};
