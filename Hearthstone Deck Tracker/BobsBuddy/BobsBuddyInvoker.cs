@@ -871,6 +871,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			inputPlayer.DeathrattleCounter = ReadPlayerCounter((GameTag)4639);   // direct or transfer
 
+			// Number of cards discarded
+			inputPlayer.DiscardCounter = ReadPlayerCounter((GameTag)4768);   // direct or transfer
+
 			inputPlayer.VolumizerAtkBuff = ReadPlayerCounter((GameTag)4468);   // direct or transfer
 			inputPlayer.VolumizerHealthBuff = ReadPlayerCounter((GameTag)4469);   // direct or transfer
 
