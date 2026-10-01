@@ -31,6 +31,12 @@ public class BattlegroundsSessionViewModel : ViewModel
 {
 	private readonly BattlegroundsDb _db = BattlegroundsDbSingleton.Instance;
 
+	public BattlegroundsSessionViewModel()
+	{
+		HSReplayNetOAuth.AccountDataUpdated += UpdateCompositionStatsVisibility;
+		HSReplayNetOAuth.LoggedOut += UpdateCompositionStatsVisibility;
+	}
+
 	public ObservableCollection<Race> AvailableMinionTypes { get; } = new();
 	public ObservableCollection<Race> BannedMinionTypes { get; } = new();
 	public ObservableCollection<BattlegroundsGameViewModel> SessionGames { get; } = new();
