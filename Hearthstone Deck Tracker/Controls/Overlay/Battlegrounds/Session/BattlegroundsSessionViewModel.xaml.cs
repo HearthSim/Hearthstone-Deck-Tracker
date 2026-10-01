@@ -247,6 +247,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 	    var compParams = new BattlegroundsCompStatsParams
 	    {
 		    BattlegroundsRaces = availableRaces.Cast<int>().ToArray(),
+		    DeityDbfId = BattlegroundsUtils.GetBattlegroundsDeityDbfId(Core.Game.GameEntity),
 		    LanguageCode = Helper.GetCardLanguage(),
 	    };
 
