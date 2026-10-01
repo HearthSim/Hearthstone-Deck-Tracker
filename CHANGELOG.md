@@ -1,4 +1,6 @@
-## Unreleased
+## **Release v1.58.6 - 2026-10-01**
+**Updated for Hearthstone 36.6.3**
+
 **Battlegrounds**:
 - Fixed the Latest Games showing a dash for MMR in certain situations.
 - Fixed Tier7 features occasionally not loading.
