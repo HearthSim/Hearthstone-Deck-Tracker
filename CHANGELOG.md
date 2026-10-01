@@ -1,5 +1,6 @@
 ## Unreleased
 **Battlegrounds**:
+- Fixed the Latest Games showing a dash for MMR in certain situations.
 - Fixed Tier7 features occasionally not loading.
 - Fixed the pre-lobby screen not showing the Tier7 widget.
 

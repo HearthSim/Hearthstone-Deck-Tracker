@@ -177,7 +177,8 @@ namespace Hearthstone_Deck_Tracker
 						await UpdatePostGameRanks(gs);
 						break;
 					case Battlegrounds:
-						await UpdatePostGameBattlegroundsRating(gs);
+						if(gs.BattlegroundsRatingAfter == 0)
+							await UpdatePostGameBattlegroundsRating(gs);
 						break;
 					case Mercenaries:
 						if(gs.MercenariesRating != 0)
@@ -268,6 +269,22 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			gs.BattlegroundsRatingAfter = data.NewRating;
+		}
+
+		// conceding during hero selection skips STATE COMPLETE, and the rating is gone once the end screen is left
+		private async void PollBattlegroundsHeroSelectionRating()
+		{
+			var gs = _game.CurrentGameStats;
+			while(gs != null && gs == _game.CurrentGameStats && !_game.IsInMenu && (_game.GameEntity?.GetTag(TURN) ?? 0) == 0)
+			{
+				var data = Reflection.Client.GetBaconRatingChangeData();
+				if(data != null)
+				{
+					gs.BattlegroundsRatingAfter = data.NewRating;
+					return;
+				}
+				await Task.Delay(500);
+			}
 		}
 
 		private async Task UpdatePostGameMercenariesRating(GameStats gs)
@@ -2078,6 +2095,9 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.ShowBgsTopBarAndBobsBuddyPanel();
 				return;
 			}
+
+			if(!_game.Spectator)
+				PollBattlegroundsHeroSelectionRating();
 
 			var heroIds = _game.SnapshotBattlegroundsOfferedHeroes(heroes);
 			var heroPickParamsTask = CacheInitialBattlegroundsHeroPickParams(heroIds);
