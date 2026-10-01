@@ -1688,11 +1688,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void SetBaconQueue(bool inQueue)
 		{
-			// hiding the panel resets the game mode, re-read it on cancel (the watcher only emits on change)
-			if(!inQueue)
-				SetBaconState(Reflection.Client.GetSelectedBattlegroundsGameMode());
-			else
-				UpdateTier7PreLobbyVisibility();
+			UpdateTier7PreLobbyVisibility();
 		}
 
 		private IReadOnlyList<string>? _pendingBgsCombatChoices;

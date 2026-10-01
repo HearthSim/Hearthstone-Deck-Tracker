@@ -25,12 +25,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			HSReplayNetOAuth.AccountDataUpdated += () =>
 			{
 				InvalidateUserState();
-				Update().Forget();
+				Core.Overlay.UpdateTier7PreLobbyVisibility();
 			};
 			HSReplayNetOAuth.LoggedOut += () =>
 			{
 				InvalidateUserState();
-				Update().Forget();
+				Core.Overlay.UpdateTier7PreLobbyVisibility();
 			};
 			Remote.Config.Loaded += (_) =>
 			{

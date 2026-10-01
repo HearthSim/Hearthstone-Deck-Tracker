@@ -960,6 +960,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void UpdateTier7PreLobbyVisibility()
 		{
+			// hiding the panel resets the game mode and the watcher only emits on change
+			if(Tier7PreLobbyViewModel.BattlegroundsGameMode == SelectedBattlegroundsGameMode.UNKNOWN && _game.IsInMenu && SceneHandler.Scene == Mode.BACON)
+			{
+				var mode = Reflection.Client.GetSelectedBattlegroundsGameMode();
+				Tier7PreLobbyViewModel.BattlegroundsGameMode = mode;
+				BattlegroundsSessionViewModelVM.BattlegroundsGameMode = mode;
+			}
+
 			var show = (
 				_game.IsRunning &&
 				_game.IsInMenu &&
