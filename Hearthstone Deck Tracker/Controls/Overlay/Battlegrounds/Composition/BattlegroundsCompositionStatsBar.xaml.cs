@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition
 {
@@ -38,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition
 				// Ensure MaxPercent is not zero to avoid division by zero
 				double safeMaxPercent = control.MaxPercent == 0 ? 100.0 : control.MaxPercent;
 				control.progressBar.Width = (control.ActualWidth * newPercent) / safeMaxPercent;
-				control.percentageText.Text = $"{newPercent:0.0}%";
+				control.percentageText.Text = newPercent.ToString("0.0", LocUtil.Culture) + "%";
 			}
 		}
 

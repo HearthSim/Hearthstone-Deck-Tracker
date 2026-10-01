@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition
@@ -29,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition
 
 		public double MaxBarPercentage => _maxPercentage;
 		public double FirstPlacePercent => _firstPlacePercent;
-		public string AvgPlacement => $"{_avgPlacement:0.00}";
+		public string AvgPlacement => _avgPlacement.ToString("0.00", LocUtil.Culture);
 
 		public string AvgPlacementColor
 		{
