@@ -103,13 +103,13 @@
                   VerticalAlignment="Top" Checked="CheckboxAlternativeScreenCapture_Checked"
                   Unchecked="CheckboxAlternativeScreenCapture_Unchecked"
                   ToolTip="{lex:Loc Options_Tracker_Settings_CheckBox_AltScreenCapture_Tooltip}" />
-        <CheckBox x:Name="CheckboxHardwareAcceleration" Content="{lex:Loc Options_Tracker_General_CheckBox_HardwareAcceleration}"
+        <CheckBox x:Name="CheckboxForceHardwareAccelerationOff" Content="{lex:Loc Options_Tracker_General_CheckBox_ForceHardwareAccelerationOff}"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                   HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckboxHardwareAcceleration_Checked"
-                  Unchecked="CheckboxHardwareAcceleration_Unchecked"
-                  ToolTip="{lex:Loc Options_Tracker_General_CheckBox_HardwareAcceleration_Tooltip}" />
+                  VerticalAlignment="Top" Checked="CheckboxForceHardwareAccelerationOff_Checked"
+                  Unchecked="CheckboxForceHardwareAccelerationOff_Unchecked"
+                  ToolTip="{lex:Loc Options_Tracker_General_CheckBox_ForceHardwareAccelerationOff_Tooltip}" />
         <Button Name="ButtonGamePath" Margin="10,5,10,0" Content="{lex:Loc Options_Tracker_Settings_Button_HearthstonePath}" Click="ButtonGamePath_OnClick"
                 Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                 Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />

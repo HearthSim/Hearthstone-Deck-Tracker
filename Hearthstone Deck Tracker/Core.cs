@@ -102,8 +102,8 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
-			var forceSoftwareRendering = !Config.Instance.UseHardwareAcceleration;
-			if(forceSoftwareRendering == null)
+			var forceSoftwareRendering = Config.Instance.UseHardwareAcceleration == false;
+			if(!forceSoftwareRendering)
 			{
 				// avoid using hardware acceleration if the render capability is low. This solves the most common OOM crashes
 				// more info: https://stackoverflow.com/questions/7737372/wpf-crash-with-intel-hd-video-cards and https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf/4951250#4951250
@@ -111,10 +111,9 @@ namespace Hearthstone_Deck_Tracker
 				// force Intel Arc gpus to use software rendering
 				var isIntelGpu = Helper.IsIntelGpu();
 				forceSoftwareRendering = renderingTier == 0 || isIntelGpu;
-
 			}
 
-			if (forceSoftwareRendering.Value)
+			if (forceSoftwareRendering)
 			{
 				RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
 			}
@@ -294,7 +293,7 @@ namespace Hearthstone_Deck_Tracker
 				PluginManager.Instance.Plugins.Count,
 				Config.Instance.CleanShutdown,
 				Updater.Status.SkipStartupCheck,
-				forceSoftwareRendering.Value
+				forceSoftwareRendering
 			);
 
 			Config.Instance.CleanShutdown = false;

@@ -48,8 +48,8 @@ namespace Hearthstone_Deck_Tracker
 #endif
 
 
-		[DefaultValue(null)]
-		public bool? UseHardwareAcceleration = null;
+		[DefaultValue(true)]
+		public bool? UseHardwareAcceleration = true;
 
 		[DefaultValue("Blue")]
 		public string AccentName = "Blue";

@@ -55,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxAnalytics.IsChecked = Config.Instance.GoogleAnalytics;
 
 			CheckboxAlternativeScreenCapture.IsChecked = Config.Instance.AlternativeScreenCapture;
-			CheckboxHardwareAcceleration.IsChecked = Config.Instance.UseHardwareAcceleration;
+			CheckboxForceHardwareAccelerationOff.IsChecked = Config.Instance.UseHardwareAcceleration == false;
 #if(!SQUIRREL)
 			CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
 			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
@@ -422,20 +422,20 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private void CheckboxHardwareAcceleration_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.UseHardwareAcceleration = true;
-			Config.Save();
-			this.ParentMainWindow()?.ShowRestartDialog();
-		}
-
-		private void CheckboxHardwareAcceleration_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxForceHardwareAccelerationOff_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			Config.Instance.UseHardwareAcceleration = false;
+			Config.Save();
+			this.ParentMainWindow()?.ShowRestartDialog();
+		}
+
+		private void CheckboxForceHardwareAccelerationOff_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.UseHardwareAcceleration = true;
 			Config.Save();
 			this.ParentMainWindow()?.ShowRestartDialog();
 		}
