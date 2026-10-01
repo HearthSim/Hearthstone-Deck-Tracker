@@ -121,7 +121,7 @@ namespace HDTTests.Battlegrounds
 
 			var viewModel = new BattlegroundsGameViewModel(AddGame(games, 665, 665, DateTime.Now));
 
-			Assert.AreEqual("0", viewModel.MMRDeltaText);
+			Assert.AreEqual("+0", viewModel.MMRDeltaText);
 		}
 	}
 }

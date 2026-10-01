@@ -62,7 +62,7 @@ public class BattlegroundsGameViewModel : ViewModel
 		MMRDelta = gameItem.RatingAfter is int ratingAfter
 			? gameItem.SeasonReset ? ratingAfter : ratingAfter - gameItem.Rating
 			: 0;
-		var signal = MMRDelta > 0 ? "+" : "";
+		var signal = MMRDelta >= 0 ? "+" : "";
 		var unknownDelta = gameItem.RatingAfter == null || Math.Abs(MMRDelta) > MaxPlausibleMMRDelta || gameItem.FriendlyGame;
 		MMRDeltaText = unknownDelta ? "-" : $"{signal}{MMRDelta}";
 
