@@ -7,7 +7,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 
 public class InfestTheSculleryCounter : NumericCounter
 {
-	private const int BaseCost = 3;
+	private const int BaseCost = 2;
 
 	protected override string? CardIdToShowInUI => HearthDb.CardIds.Collectible.Druid.InfestTheScullery;
 
