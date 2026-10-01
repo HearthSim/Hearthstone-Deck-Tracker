@@ -1,4 +1,5 @@
-﻿using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+﻿using HearthMirror.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
@@ -21,8 +22,11 @@ public class SceneHandler
 		Transitioning = null;
 	}
 
-	public static void OnSceneUpdate(Mode prevMode, Mode mode, bool sceneLoaded, bool transitioning)
+	public static void OnSceneUpdate(Mode prevMode, Mode mode, bool sceneLoaded, bool transitioning, LoadingScreenPhase loadingScreenPhase)
 	{
+		// the loading screen keeps covering the loaded scene until it starts fading it in
+		transitioning = transitioning || loadingScreenPhase is not (LoadingScreenPhase.INVALID or LoadingScreenPhase.FADING_IN);
+
 		if(Transitioning is null || transitioning)
 		{
 			OnSceneTransitionStart(prevMode, mode);

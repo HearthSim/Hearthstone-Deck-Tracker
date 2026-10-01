@@ -1,4 +1,5 @@
-﻿using HearthWatcher.EventArgs;
+﻿using HearthMirror.Enums;
+using HearthWatcher.EventArgs;
 using HearthWatcher.Providers;
 using System;
 using System.Threading.Tasks;
@@ -26,7 +27,8 @@ public class SceneWatcher : PollingWatcher
 			state?.PrevMode ?? 0,
 			state?.Mode ?? 0,
 			state?.SceneLoaded ?? false,
-			state?.Transitioning ?? false
+			state?.Transitioning ?? false,
+			state?.LoadingScreenPhase ?? LoadingScreenPhase.INVALID
 		);
 		if(_prev == null || !curr.Equals(_prev))
 		{

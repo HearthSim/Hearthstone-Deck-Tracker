@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			BaconWatcher.Change += OnBaconChange;
 			UiWatcher.Change += OnUiChange;
 			DeckPickerWatcher.Change += OnDeckPickerChange;
-			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning);
+			SceneWatcher.Change += (sender, args) => SceneHandler.OnSceneUpdate((Mode)args.PrevMode, (Mode)args.Mode, args.SceneLoaded, args.Transitioning, args.LoadingScreenPhase);
 			ChoicesWatcher.Change += (sender, args) => Core.Overlay.SetChoicesVisible(args.CurrentChoice?.IsVisible ?? false, args.CurrentChoice?.IsShopChoice ?? false, args.CurrentChoice?.Cards);
 			SpecialShopChoicesStateWatcher.Change += (sender, args) => Core.Overlay.HandleSpecialShop(args);
 			DiscoverStateWatcher.Change += OnDiscoverStateChange;

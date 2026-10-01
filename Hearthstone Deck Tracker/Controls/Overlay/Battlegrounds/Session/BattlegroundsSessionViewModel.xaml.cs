@@ -207,7 +207,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 			OnPropertyChanged(nameof(BannedMinionType1));
 		}
 
-		if((Core.Game.CurrentMode == Mode.GAMEPLAY || SceneHandler.Scene == Mode.GAMEPLAY) && validMinionTypes)
+		if(Core.Game.CurrentMode == Mode.GAMEPLAY && SceneHandler.Scene == Mode.GAMEPLAY && validMinionTypes)
 		{
 			MinionTypesBodyVisibility = Visibility.Visible;
 			MinionTypesWaitingMsgVisibility = Visibility.Collapsed;
