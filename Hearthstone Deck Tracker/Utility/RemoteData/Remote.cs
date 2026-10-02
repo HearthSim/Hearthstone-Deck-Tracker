@@ -16,11 +16,21 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			= DataLoader<RemoteData.LiveSecrets>.JsonFromWeb("https://hsreplay.net/api/v1/live/secrets/");
 
 		public static DataLoader<RemoteData.MetaPeriod?> BattlegroundsLiveMetaPeriod { get; }
-			= DataLoader<RemoteData.MetaPeriod>.JsonFromWeb(() =>
-			{
-				const string url = "https://hsreplay.net/api/v1/battlegrounds/meta_periods/live/";
-				var region = Core.Game.CurrentRegion;
-				return region == Region.UNKNOWN ? url : $"{url}?region={(BnetRegion)region}";
-			});
+			= DataLoader<RemoteData.MetaPeriod>.JsonFromWeb(() => GetLiveMetaPeriodUrl(BnetGameType.BGT_BATTLEGROUNDS));
+
+		public static DataLoader<RemoteData.MetaPeriod?> BattlegroundsDuosLiveMetaPeriod { get; }
+			= DataLoader<RemoteData.MetaPeriod>.JsonFromWeb(() => GetLiveMetaPeriodUrl(BnetGameType.BGT_BATTLEGROUNDS_DUO));
+
+		private static string GetLiveMetaPeriodUrl(BnetGameType gameType)
+		{
+			var query = new List<string> { $"game_type={gameType}" };
+			var region = Core.Game.CurrentRegion;
+			if(region != Region.UNKNOWN)
+				query.Add($"region={(BnetRegion)region}");
+			var build = Helper.GetHearthstoneBuild();
+			if(build.HasValue)
+				query.Add($"hearthstone_build={build}");
+			return $"https://hsreplay.net/api/v1/battlegrounds/meta_periods/live/?{string.Join("&", query)}";
+		}
 	}
 }

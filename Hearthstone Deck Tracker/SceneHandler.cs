@@ -109,6 +109,7 @@ public class SceneHandler
 			Watchers.BaconWatcher.Run();
 			Remote.Config.Load();
 			Remote.BattlegroundsLiveMetaPeriod.Load();
+			Remote.BattlegroundsDuosLiveMetaPeriod.Load();
 		}
 		else if(to == Mode.GAMEPLAY)
 		{

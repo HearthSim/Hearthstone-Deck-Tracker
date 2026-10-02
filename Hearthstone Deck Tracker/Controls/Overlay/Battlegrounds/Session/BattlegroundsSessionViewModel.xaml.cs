@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 
 public class BattlegroundsSessionViewModel : ViewModel
 {
-	private readonly BattlegroundsDb _db = BattlegroundsDbSingleton.Instance;
+	private BattlegroundsDb Db => BattlegroundsDbSingleton.Get(IsDuos);
 
 	public BattlegroundsSessionViewModel()
 	{
@@ -185,7 +185,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	private void SetMinionTypes(HashSet<Race>? races)
 	{
-		var allRaces = _db.Races.Where(x => x != Race.INVALID && x != Race.ALL).ToList();
+		var allRaces = Db.Races.Where(x => x != Race.INVALID && x != Race.ALL).ToList();
 		var availableRaces = races?.ToList() ?? allRaces;
 		var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x)).ToList();
 

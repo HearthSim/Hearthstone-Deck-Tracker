@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 
 public class BattlegroundsMinionsViewModel : ViewModel
 {
-	private BattlegroundsDb Db => IsPreLobby ? BattlegroundsDbSingleton.Instance : BattlegroundsDbSingleton.Current;
+	private BattlegroundsDb Db => IsPreLobby ? BattlegroundsDbSingleton.Get(IsDuos) : BattlegroundsDbSingleton.Current;
 
 	public void OnMinionPoolChanged()
 	{
@@ -113,7 +113,10 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		set
 		{
 			SetProp(value);
-			OnPropertyChanged(nameof(Groups));
+			if(IsPreLobby)
+				OnMinionPoolChanged();
+			else
+				OnPropertyChanged(nameof(Groups));
 		}
 	}
 

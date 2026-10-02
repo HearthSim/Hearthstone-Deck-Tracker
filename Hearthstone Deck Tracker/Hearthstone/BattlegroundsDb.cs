@@ -4,6 +4,7 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using HearthMirror.Objects;
 
@@ -25,13 +26,15 @@ public class BattlegroundsDb
 
 	public HashSet<Race> Races { get; } = new();
 
-	public BattlegroundsDb() : this(Remote.BattlegroundsLiveMetaPeriod.Data)
+	internal static BattlegroundsDb FromLiveMetaPeriod(DataLoader<RemoteData.MetaPeriod?> metaPeriod)
 	{
-		Remote.BattlegroundsLiveMetaPeriod.Loaded += Update;
+		var db = new BattlegroundsDb(metaPeriod.Data);
+		metaPeriod.Loaded += db.Update;
 		CardDefsManager.CardsChanged += () =>
 		{
-			Update(Remote.BattlegroundsLiveMetaPeriod.Data);
+			db.Update(metaPeriod.Data);
 		};
+		return db;
 	}
 
 	internal BattlegroundsDb(RemoteData.MetaPeriod? metaPeriod)

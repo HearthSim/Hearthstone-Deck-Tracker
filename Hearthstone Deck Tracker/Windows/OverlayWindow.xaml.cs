@@ -1749,7 +1749,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var gameId = _game.MetaData.ServerInfo?.GameHandle;
 			var userHasTier7 = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) || Tier7Trial.IsTrialForCurrentGameActive(gameId);
-			var currentPeriod = Remote.BattlegroundsLiveMetaPeriod.Data;
+			var currentPeriod = (_game.IsBattlegroundsDuosMatch ? Remote.BattlegroundsDuosLiveMetaPeriod : Remote.BattlegroundsLiveMetaPeriod).Data;
 			var hasTimewarpMechanic = currentPeriod?.Mechanics?.Contains("timewarp") ?? false;
 
 			if(args.IsActive && boardCards.Count > 0 && userHasTier7 && hasTimewarpMechanic)
