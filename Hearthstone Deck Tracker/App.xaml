@@ -45,6 +45,7 @@
                     <ImageSource x:Key="MulliganToastBackground">Resources/mulligan-toast-bg.jpg</ImageSource>
                     <ImageSource x:Key="MulliganToastBackgroundGrey">Resources/mulligan-toast-bg-grey.jpg</ImageSource>
                     <ImageSource x:Key="DivineShield">Resources/Minion/divine-shield.png</ImageSource>
+                    <ImageSource x:Key="EmpoweredDivineShield">Resources/Minion/divine-shield-empowered.png</ImageSource>
                     <ImageSource x:Key="MinionBorder">Resources/Minion/border.png</ImageSource>
                     <ImageSource x:Key="PremiumMinionBorder">Resources/Minion/border_premium.png</ImageSource>
                     <ImageSource x:Key="MinionStats">Resources/Minion/stats.png</ImageSource>

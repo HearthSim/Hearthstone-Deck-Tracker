@@ -26,6 +26,12 @@ public class BattlegroundsMinionViewModel : ViewModel, ICardTooltip
 		set => SetProp(value);
 	}
 
+	public bool HasEmpoweredDivineShield
+	{
+		get => GetProp(false);
+		set => SetProp(value);
+	}
+
 	public bool HasTaunt
 	{
 		get => GetProp(false);

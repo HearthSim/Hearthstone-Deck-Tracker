@@ -21,7 +21,8 @@ public partial class BattlegroundsMinion
 		{
 			HasPoisonous = entity.HasTag(GameTag.POISONOUS),
 			HasVenomous = entity.HasTag(GameTag.VENOMOUS),
-			HasDivineShield = entity.HasTag(GameTag.DIVINE_SHIELD),
+			HasDivineShield = entity.GetTag(GameTag.DIVINE_SHIELD) == 1,
+			HasEmpoweredDivineShield = entity.GetTag(GameTag.DIVINE_SHIELD) > 1,
 			HasDeathrattle = entity.HasTag(GameTag.DEATHRATTLE),
 			HasRally = entity.HasTag(GameTag.BACON_RALLY),
 			HasReborn = entity.HasTag(GameTag.REBORN),
