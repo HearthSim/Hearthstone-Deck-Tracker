@@ -4,7 +4,6 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using HearthMirror.Objects;
 
@@ -25,17 +24,6 @@ public class BattlegroundsDb
 	private readonly Dictionary<int, List<Card>> _duosExclusiveBuddiesByTier = new();
 
 	public HashSet<Race> Races { get; } = new();
-
-	internal static BattlegroundsDb FromLiveMetaPeriod(DataLoader<RemoteData.MetaPeriod?> metaPeriod)
-	{
-		var db = new BattlegroundsDb(metaPeriod.Data);
-		metaPeriod.Loaded += db.Update;
-		CardDefsManager.CardsChanged += () =>
-		{
-			db.Update(metaPeriod.Data);
-		};
-		return db;
-	}
 
 	internal BattlegroundsDb(RemoteData.MetaPeriod? metaPeriod)
 	{
@@ -198,17 +186,38 @@ public class BattlegroundsDb
 			yield return secondaryRace;
 	}
 
-	internal void Update(RemoteData.MetaPeriod? metaPeriod)
+	private void Update(RemoteData.MetaPeriod? metaPeriod)
 	{
 		var tags = new TagLookup(metaPeriod?.TagOverrides);
 
-		var baconCards = Cards.All.Values
+		var tavernPool = metaPeriod?.TavernPool?.Select(x => x.DbfId).ToHashSet();
+		var tavernPoolMinions = tavernPool == null ? null : Cards.All.Values
+			.Where(x =>
+				tags.GetTag(x, GameTag.TECH_LEVEL) > 0
+				&& x.Type == CardType.MINION
+				&& tavernPool.Contains(x.DbfId)
+				// the browser lists the Dark Paradox by itself, as its tier differs each game
+				&& !IsDarkParadox(x)
+			)
+			.ToList();
+		// a pool without a single minion we know is faulty, so fall back to the card data
+		if(tavernPoolMinions is not { Count: > 0 })
+		{
+			tavernPool = null;
+			tavernPoolMinions = null;
+		}
+
+		var baconCards = tavernPoolMinions ?? Cards.All.Values
 			.Where(x =>
 				tags.GetTag(x, GameTag.TECH_LEVEL) > 0
 				// explicitly check for == 1, as Rot Hide Gnoll has 2 but is not in the pool
 				&& tags.GetTag(x, GameTag.IS_BACON_POOL_MINION) == 1
 			)
 			.ToList();
+
+		// a tavern pool only lists what is offered in its game mode, so nothing in it is exclusive to another
+		int GetDuosExclusive(HearthDb.Card card)
+			=> tavernPool != null ? 0 : tags.GetTag(card, GameTag.IS_BACON_DUOS_EXCLUSIVE);
 
 		// the card data can carry minions of a tribe that is not in rotation (yet), so the meta period
 		// decides which tribes exist and the card scan is only the fallback until it has loaded
@@ -231,7 +240,7 @@ public class BattlegroundsDb
 		foreach(var card in baconCards)
 		{
 			var tier = tags.GetTag(card, GameTag.TECH_LEVEL);
-			var duosExclusive = tags.GetTag(card, GameTag.IS_BACON_DUOS_EXCLUSIVE);
+			var duosExclusive = GetDuosExclusive(card);
 			// the game doesn't actually set this ever to a negative value, but we use that as a sentinel
 			// value to hide Solos-exclusive cards in Duos
 			var targetDict = (
@@ -257,12 +266,12 @@ public class BattlegroundsDb
 			.Where(x => (
 				tags.GetTag(x, GameTag.TECH_LEVEL) > 0
 				&& x.Type == CardType.BATTLEGROUND_SPELL
-				&& tags.GetTag(x, GameTag.IS_BACON_POOL_SPELL) == 1
+				&& (tavernPool?.Contains(x.DbfId) ?? tags.GetTag(x, GameTag.IS_BACON_POOL_SPELL) == 1)
 			)));
 		foreach(var card in _spells)
 		{
 			var tier = tags.GetTag(card, GameTag.TECH_LEVEL);
-			var duosExclusive = tags.GetTag(card, GameTag.IS_BACON_DUOS_EXCLUSIVE);
+			var duosExclusive = GetDuosExclusive(card);
 			var targetDict = (
 				duosExclusive > 0 ? _duosExclusiveSpellsByTier :
 				duosExclusive < 0 ? _solosExclusiveSpellsByTier :

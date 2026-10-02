@@ -2,6 +2,7 @@
 using HearthMirror;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
@@ -9,13 +10,46 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 
 public static class BattlegroundsDbSingleton
 {
-	private static readonly Lazy<BattlegroundsDb> Solos = new(() => BattlegroundsDb.FromLiveMetaPeriod(Remote.BattlegroundsLiveMetaPeriod));
-	private static readonly Lazy<BattlegroundsDb> Duos = new(() => BattlegroundsDb.FromLiveMetaPeriod(Remote.BattlegroundsDuosLiveMetaPeriod));
+	/// <summary>
+	/// Replaces the database of a game mode rather than updating it, so holders of the previous one can tell it
+	/// changed by reference.
+	/// </summary>
+	private class GameModeDb
+	{
+		private readonly DataLoader<RemoteData.RemoteData.MetaPeriod?> _metaPeriod;
+		private RemoteData.RemoteData.MetaPeriod? _lastMetaPeriod;
+		private BattlegroundsDb? _db;
+
+		public GameModeDb(DataLoader<RemoteData.RemoteData.MetaPeriod?> metaPeriod, Action onUpdated)
+		{
+			_metaPeriod = metaPeriod;
+			metaPeriod.Loaded += data =>
+			{
+				// keep the last good data when a reload fails
+				if(data == null)
+					return;
+				_lastMetaPeriod = data;
+				_db = new BattlegroundsDb(data);
+				onUpdated();
+			};
+			CardDefsManager.CardsChanged += () => _db = null;
+		}
+
+		public BattlegroundsDb Db => _db ??= new BattlegroundsDb(_metaPeriod.Data ?? _lastMetaPeriod);
+	}
+
+	private static readonly GameModeDb Solos = new(Remote.BattlegroundsLiveMetaPeriod, () => Updated?.Invoke(false));
+	private static readonly GameModeDb Duos = new(Remote.BattlegroundsDuosLiveMetaPeriod, () => Updated?.Invoke(true));
 
 	/// <summary>
-	/// The assembled database for the game mode, kept up to date with its live meta period.
+	/// The assembled database for the game mode, rebuilt whenever its live meta period loads.
 	/// </summary>
-	public static BattlegroundsDb Get(bool isDuos) => (isDuos ? Duos : Solos).Value;
+	public static BattlegroundsDb Get(bool isDuos) => (isDuos ? Duos : Solos).Db;
+
+	/// <summary>
+	/// Raised with the game mode after its live meta period has loaded and its database has been replaced.
+	/// </summary>
+	public static event Action<bool>? Updated;
 
 	private static (Guid GameId, BattlegroundsDb Db)? _minionPoolDb;
 

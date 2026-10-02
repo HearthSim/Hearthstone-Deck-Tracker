@@ -18,6 +18,15 @@ public class BattlegroundsMinionsViewModel : ViewModel
 {
 	private BattlegroundsDb Db => IsPreLobby ? BattlegroundsDbSingleton.Get(IsDuos) : BattlegroundsDbSingleton.Current;
 
+	public BattlegroundsMinionsViewModel()
+	{
+		BattlegroundsDbSingleton.Updated += isDuos =>
+		{
+			if(IsPreLobby && IsDuos == isDuos)
+				OnMinionPoolChanged();
+		};
+	}
+
 	public void OnMinionPoolChanged()
 	{
 		OnPropertyChanged(nameof(Groups));

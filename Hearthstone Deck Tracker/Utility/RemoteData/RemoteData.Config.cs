@@ -190,6 +190,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("minion_types")]
 			public List<Race>? MinionTypes { get; set; }
 
+			[JsonProperty("tavern_pool")]
+			public List<CardInfo>? TavernPool { get; set; }
+
 			[JsonProperty("tag_overrides")]
 			public List<TagOverride>? TagOverrides { get; set; }
 		}
