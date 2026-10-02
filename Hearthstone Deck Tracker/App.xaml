@@ -50,6 +50,7 @@
                     <ImageSource x:Key="MinionStats">Resources/Minion/stats.png</ImageSource>
                     <ImageSource x:Key="PremiumMinionStats">Resources/Minion/stats_premium.png</ImageSource>
                     <ImageSource x:Key="Deathrattle">Resources/Minion/deathrattle.png</ImageSource>
+                    <ImageSource x:Key="Rally">Resources/Minion/rally.png</ImageSource>
                     <ImageSource x:Key="Legendary">Resources/Minion/legendary.png</ImageSource>
                     <ImageSource x:Key="PremiumLegendary">Resources/Minion/legendary_premium.png</ImageSource>
                     <ImageSource x:Key="Poisonous">Resources/Minion/poisonous.png</ImageSource>

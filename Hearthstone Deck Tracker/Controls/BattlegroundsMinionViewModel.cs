@@ -38,6 +38,12 @@ public class BattlegroundsMinionViewModel : ViewModel, ICardTooltip
 		set => SetProp(value);
 	}
 
+	public bool HasRally
+	{
+		get => GetProp(false);
+		set => SetProp(value);
+	}
+
 	public bool HasReborn
 	{
 		get => GetProp(false);

@@ -23,6 +23,7 @@ public partial class BattlegroundsMinion
 			HasVenomous = entity.HasTag(GameTag.VENOMOUS),
 			HasDivineShield = entity.HasTag(GameTag.DIVINE_SHIELD),
 			HasDeathrattle = entity.HasTag(GameTag.DEATHRATTLE),
+			HasRally = entity.HasTag(GameTag.BACON_RALLY),
 			HasReborn = entity.HasTag(GameTag.REBORN),
 			IsPremium = entity.HasTag(GameTag.PREMIUM),
 			HasTaunt = entity.HasTag(GameTag.TAUNT),

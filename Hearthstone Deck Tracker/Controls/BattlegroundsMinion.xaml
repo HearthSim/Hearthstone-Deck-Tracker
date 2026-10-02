@@ -96,6 +96,7 @@
                     </Image>
 
                     <Image Source="{StaticResource Deathrattle}" Visibility="{Binding HasDeathrattle, Converter={StaticResource BoolToVisibility}}" Canvas.Left="-24" Canvas.Top="-36" Height="350" Width="300"/>
+                    <Image Source="{StaticResource Rally}" Visibility="{Binding HasRally, Converter={StaticResource BoolToVisibility}}" Canvas.Left="-24" Canvas.Top="-36" Height="350" Width="300"/>
                     <Image Source="{StaticResource Poisonous}" Visibility="{Binding HasPoisonous, Converter={StaticResource BoolToVisibility}}" Canvas.Left="-24" Canvas.Top="-36" Height="350" Width="300"/>
                     <Image Source="{StaticResource Venomous}" Visibility="{Binding HasVenomous, Converter={StaticResource BoolToVisibility}}" Canvas.Left="-24" Canvas.Top="-36" Height="350" Width="300"/>
                     <Image Source="{StaticResource MinionStats}" Visibility="{Binding IsPremium, Converter={StaticResource InverseBoolToVisibility}}" Canvas.Left="-24" Canvas.Top="-36" Height="350" Width="300"/>
