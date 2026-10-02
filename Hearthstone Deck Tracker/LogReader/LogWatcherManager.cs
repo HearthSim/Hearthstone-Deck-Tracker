@@ -165,6 +165,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							{
 								_gameInfoHandler.Handle(line.Line, _gameState, _game);
 							}
+
+							OnPowerGamestateLogLine.Execute(line.Line);
 						}
 						else if(line.LineContent.StartsWith("PowerProcessor.EndCurrentTaskList"))
 						{

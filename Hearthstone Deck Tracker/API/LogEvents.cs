@@ -7,6 +7,7 @@
 		public static readonly ActionList<string> OnAssetLogLine = new ActionList<string>();
 		public static readonly ActionList<string> OnBobLogLine = new ActionList<string>();
 		public static readonly ActionList<string> OnPowerLogLine = new ActionList<string>();
+		public static readonly ActionList<string> OnPowerGamestateLogLine = new ActionList<string>();
 		public static readonly ActionList<string> OnGameplayLogLine = new ActionList<string>();
 	}
 }
