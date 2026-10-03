@@ -171,6 +171,21 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							minion.AttachEnchantment(booming);
 						}
 						break;
+					case PreservedInBronze.CardId:
+						// Bronze Timepiece trinket adds to a minion's existing Preserved in Bronze enchantment
+						// only when no stat-setting enchantment (tag 3224) was attached after it; otherwise the
+						// game creates a new one. Attach it only in the first case.
+						// When attached, this enchantment is necessary to resolve trigger resolution order
+						var lastPreservedInBronzeId = attachedEntities.Where(e => e.CardId == PreservedInBronze.CardId).Max(e => e.Id);
+						var statSetAfterIt = attachedEntities.Any(e => e.GetTag((GameTag)3224) > 0 && e.Id > lastPreservedInBronzeId);
+						if(attached.Id != lastPreservedInBronzeId || statSetAfterIt)
+							break;
+						var preservedInBronze = sim.EnchantmentFactory.Create(PreservedInBronze.CardId, minion.ControlledByPlayer);
+						if(preservedInBronze != null)
+						{
+							minion.AttachEnchantment(preservedInBronze);
+						}
+						break;
 					default:
 						if(attached.LatestCard.TypeEnum == CardType.ENCHANTMENT && attached.Info.LatestCardId != null)
 						{
