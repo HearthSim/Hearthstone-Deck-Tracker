@@ -530,6 +530,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var match = CreationTagRegex.Match(logLine);
 				_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, gameState.CurrentEntityId, match.Groups["value"].Value, game, true);
 				creationTag = true;
+				if(match.Groups["tag"].Value == "CREATOR"
+					&& int.TryParse(match.Groups["value"].Value, out var creatorId)
+					&& game.Entities.TryGetValue(gameState.CurrentEntityId, out var createdEntity))
+				{
+					// A revealed Golemancy enchantment on a summoned Golem indicates CREATOR has Golemancy Dark Gift.
+					if(createdEntity.CardId == NonCollectible.Neutral.GolemancyToken3
+						&& gameState.CurrentBlock is { Type: "TRIGGER", TriggerKeyword: "DEATHRATTLE" }
+						&& game.CurrentGameMode == GameMode.Battlegrounds
+						&& game.CurrentGameStats != null)
+						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+							.UpdateGolemancyEnchantment(creatorId);
+				}
 				if(gameState.TriangulatePlayed)
 				{
 					var tag = GameTagHelper.ParseEnum<GameTag>(match.Groups["tag"].Value);
