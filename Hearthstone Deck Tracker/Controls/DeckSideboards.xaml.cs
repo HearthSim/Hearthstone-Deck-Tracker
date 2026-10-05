@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			if(sideboards == null || sideboards.Count == 0 || sideboards.All(s => s.Cards.Count == 0))
 			{
-				Visibility = Visibility.Collapsed;
+				Container.Visibility = Visibility.Collapsed;
 				return;
 			}
 
@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				}
 			}
 
-			Visibility = ETCContainer.Visibility == Visibility.Visible
+			Container.Visibility = ETCContainer.Visibility == Visibility.Visible
 				|| KingOfTheUnderbellyContainer.Visibility == Visibility.Visible
 					? Visibility.Visible : Visibility.Collapsed;
 		}

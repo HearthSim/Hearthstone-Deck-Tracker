@@ -10,7 +10,7 @@
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Name="Container"  Width="221">
+    <StackPanel Name="Container"  Width="221" Visibility="Collapsed">
         <StackPanel Name="ETCContainer" Width="221" Visibility="Collapsed">
             <Border Background="#23272A" BorderBrush="#141617" BorderThickness="2,2,2,0" CornerRadius="3,3,0,0" Width="Auto" HorizontalAlignment="Left" Panel.ZIndex="1" Margin="2,5,2,0">
                 <StackPanel Orientation="Horizontal" Margin="5,2" HorizontalAlignment="Left">

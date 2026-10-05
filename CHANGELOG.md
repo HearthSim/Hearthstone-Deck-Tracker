@@ -1,3 +1,7 @@
+## Unreleased
+**Hearthstone**:
+- Fixed the deck list settings to hide Card on top/Cards on bottom/E.T.C.'s band not working.
+
 ## **Release v1.58.6 - 2026-10-01**
 **Updated for Hearthstone 36.6.3**
 

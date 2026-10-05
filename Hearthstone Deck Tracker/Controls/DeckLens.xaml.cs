@@ -100,10 +100,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public async Task Update(List<Hearthstone.Card> cards, bool reset)
 		{
 			if(cards.Count > 0)
-				Visibility = Visibility.Visible;
+				Container.Visibility = Visibility.Visible;
 			await CardList.Update(cards, reset);
 			if(cards.Count == 0)
-				Visibility = Visibility.Collapsed;
+				Container.Visibility = Visibility.Collapsed;
 		}
 	}
 
