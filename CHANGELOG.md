@@ -2,6 +2,11 @@
 **Hearthstone**:
 - Fixed the deck list settings to hide Card on top/Cards on bottom/E.T.C.'s band not working.
 
+**Battlegrounds**:
+- Added the Rally icon to the Last Known Board tooltip.
+- Added custom graphics for Divine Shields that take 4 hits in the Last Known Board tooltip.
+- Fixed a number of incorrect combat odds.
+
 ## **Release v1.58.6 - 2026-10-01**
 **Updated for Hearthstone 36.6.3**
 
