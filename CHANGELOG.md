@@ -4,7 +4,7 @@
 
 **Battlegrounds**:
 - Added the Rally icon to the Last Known Board tooltip.
-- Added custom graphics for Divine Shields that take 4 hits in the Last Known Board tooltip.
+- Added custom graphics for Divine Shields that take more than 1 hit in the Last Known Board tooltip.
 - Fixed a number of incorrect combat odds.
 
 **Streaming**:
