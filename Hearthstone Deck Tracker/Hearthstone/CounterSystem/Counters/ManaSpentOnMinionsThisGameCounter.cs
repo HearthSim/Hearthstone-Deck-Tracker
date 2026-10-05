@@ -17,11 +17,6 @@ public class ManaSpentOnMinionsThisGameCounter : NumericCounter
 		HearthDb.CardIds.Collectible.Neutral.YshaarjTitanBane,
 	};
 
-	private static readonly string[] YshaarjCards =
-	{
-		HearthDb.CardIds.Collectible.Neutral.YshaarjTitanBane
-	};
-
 	public ManaSpentOnMinionsThisGameCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
 	{
 	}

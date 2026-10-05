@@ -1,4 +1,3 @@
-using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility;
