@@ -66,7 +66,7 @@
   <Target Name="UpdateHDTLocalization" Condition="Exists('$(SlnDirectory)/HDT-Localization')" BeforeTargets="Bootstrap">
       <Message Importance="normal" Text="Fetching latest localizations from HDT-Localization repo." />
       <Exec WorkingDirectory="$(SlnDirectory)/HDT-Localization" Command="git fetch" />
-      <Exec WorkingDirectory="$(SlnDirectory)/HDT-Localization" Command="git reset --hard origin/master" />
+      <Exec WorkingDirectory="$(SlnDirectory)/HDT-Localization" Command="git merge --ff-only origin/master" />
       <Copy SourceFiles="@(LocalizationFiles)" DestinationFolder="$(HDTDirectory)/Properties" SkipUnchangedFiles="true"/>
   </Target>
 
