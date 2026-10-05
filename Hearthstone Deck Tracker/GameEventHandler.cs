@@ -2057,6 +2057,13 @@ namespace Hearthstone_Deck_Tracker
 					MinionTypes = x.MinionTypes?.ToArray() ?? Array.Empty<int>(),
 					Banned = x.Banned,
 				}).ToArray(),
+				ServerMinionData = pool.ServerMinionData?.Select(x => new BattlegroundsTavernPoolObservationParams.ServerMinionDataEntry
+				{
+					DbfId = x.DbfId,
+					ScriptDataNum1 = x.ScriptDataNum1,
+					ScriptDataNum2 = x.ScriptDataNum2,
+					TechLevel = x.TechLevel,
+				}).ToArray(),
 			};
 			ApiWrapper.PostBattlegroundsTavernPoolObservation(parameters).Forget();
 		}
