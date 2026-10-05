@@ -19,6 +19,9 @@ namespace Hearthstone_Deck_Tracker.Live
 		// what identifies cards in the twitch payload, hard-coded to dbf ids until the extension handles card ids
 		private const bool SendCardIds = false;
 
+		// disable the player's deck list (cards, sideboards and name)
+		private const bool SendDeckList = true;
+
 		private const int UpdateDelay = 1000;
 		private const int RepeatDelay = 10000;
 		private bool _update;
@@ -94,8 +97,6 @@ namespace Hearthstone_Deck_Tracker.Live
 				: Database.GetCardFromId(e.Info.LatestCardId);
 		}
 
-		private int DbfId(Entity? e) => ResolveCard(e)?.DbfId ?? 0;
-
 		private CardRef ToCardRef(Hearthstone.Card? card)
 		{
 			if(card == null)
@@ -103,15 +104,25 @@ namespace Hearthstone_Deck_Tracker.Live
 			return SendCardIds ? (CardRef)card.Id : (CardRef)card.DbfId;
 		}
 
-		private int? DbfIdOrNull(Entity? e)
+		private CardRef? CardRefFromDbfId(int? dbfId)
 		{
-			var dbfId = DbfId(e);
-			return dbfId != 0 ? dbfId : (int?)null;
+			if(dbfId is not > 0)
+				return null;
+			var card = SendCardIds ? Database.GetCardFromDbfId(dbfId.Value, false) : null;
+			return card != null ? ToCardRef(card) : dbfId.Value;
+		}
+
+		private CardRef Ref(Entity? e) => ToCardRef(ResolveCard(e));
+
+		private CardRef? RefOrNull(Entity? e)
+		{
+			var card = ResolveCard(e);
+			return card?.DbfId > 0 ? ToCardRef(card) : (CardRef?)null;
 		}
 
 		private int ZonePosition(Entity e) => e.GetTag(GameTag.ZONE_POSITION);
 
-		private int[] SortedDbfIds(IEnumerable<Entity> entities) => entities.OrderBy(ZonePosition).Select(DbfId).ToArray();
+		private CardRef[] SortedRefs(IEnumerable<Entity> entities) => entities.OrderBy(ZonePosition).Select(Ref).ToArray();
 
 		private CardWithEnchantments[] ToSortedBoard(IEnumerable<Entity> entities) =>
 			entities.OrderBy(ZonePosition).Select(e => new CardWithEnchantments(ToCardRef(ResolveCard(e)))).ToArray();
@@ -139,13 +150,13 @@ namespace Hearthstone_Deck_Tracker.Live
 				return null;
 			return new BoardStateQuest
 			{
-				DbfId = questEntity.Card.DbfId,
+				DbfId = ToCardRef(questEntity.Card),
 				Progress = questEntity.GetTag(GameTag.QUEST_PROGRESS),
 				Total = questEntity.GetTag(GameTag.QUEST_PROGRESS_TOTAL)
 			};
 		}
 
-		private int? BuddyDbfId(Player player)
+		private CardRef? Buddy(Player player)
 		{
 			if(!Core.Game.BattlegroundsBuddiesEnabled)
 				return null;
@@ -158,16 +169,17 @@ namespace Hearthstone_Deck_Tracker.Live
 			if(buddyDbfId == 0)
 				buddyDbfId = player.Hero?.GetTag(GameTag.BACON_COMPANION_ID);
 
-			return buddyDbfId != 0 ? buddyDbfId : null;
+			return CardRefFromDbfId(buddyDbfId);
 		}
 
-		private int? BgsQuestReward(Player player, bool heroPower)
+		private CardRef? BgsQuestReward(Player player, bool heroPower)
 		{
-			return player.QuestRewards.FirstOrDefault(x => x.HasTag(GameTag.BACON_IS_HEROPOWER_QUESTREWARD) == heroPower)?.Card.DbfId;
+			var questReward = player.QuestRewards.FirstOrDefault(x => x.HasTag(GameTag.BACON_IS_HEROPOWER_QUESTREWARD) == heroPower);
+			return questReward != null ? ToCardRef(questReward.Card) : (CardRef?)null;
 		}
 
-		// Return the dbf id for an entity, but blacklisted against common hero cards we don't want want to show in the overlay.
-		private int HeroDbfId(Entity? entity)
+		// Return the card for an entity, but blacklisted against common hero cards we don't want want to show in the overlay.
+		private CardRef HeroRef(Entity? entity)
 		{
 			if(entity == null)
 				return 0;
@@ -175,7 +187,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			if(entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.BaconphheroTavernBrawl)
 				return 0;
 
-			return DbfId(entity);
+			return Ref(entity);
 		}
 
 		private BoardState? GetBoardState()
@@ -211,8 +223,8 @@ namespace Hearthstone_Deck_Tracker.Live
 			}
 			int FullCount(int dbfId) => fullDeckList == null ? 0 : fullDeckList.TryGetValue(dbfId, out var count) ? count : 0;
 
-			var playerCardsList = new List<int[]>();
-			var playerSideboardsList = new List<int[]>();
+			var playerCardsList = new List<object[]>();
+			var playerSideboardsList = new List<object[]>();
 			if(deck != null)
 			{
 				foreach(var card in player.GetPlayerCardList(false, false, false))
@@ -223,12 +235,12 @@ namespace Hearthstone_Deck_Tracker.Live
 						if(zilliax == null)
 							continue;
 						var inDeck = FullCount(zilliax.DbfId);
-						playerCardsList.Add(new[] { zilliax.DbfId, card.Count, inDeck });
+						playerCardsList.Add(new object[] { ToCardRef(zilliax), card.Count, inDeck });
 					}
 					else
 					{
 						var inDeck = card.IsCreated ? 0 : FullCount(card.DbfId);
-						playerCardsList.Add(new[] { card.DbfId, card.Count, inDeck });
+						playerCardsList.Add(new object[] { ToCardRef(card), card.Count, inDeck });
 					}
 				}
 				var currentSideboards = player.GetPlayerSideboards(false);
@@ -242,7 +254,7 @@ namespace Hearthstone_Deck_Tracker.Live
 						foreach(var card in sideboard.Cards)
 						{
 							var initialCount = initialSideboard.TryGetValue(card.DbfId, out var count) ? count : 0;
-							playerSideboardsList.Add(new[] { owner.DbfId, card.DbfId, card.Count, initialCount });
+							playerSideboardsList.Add(new object[] { ToCardRef(owner), ToCardRef(card), card.Count, initialCount });
 						}
 					}
 				}
@@ -251,11 +263,13 @@ namespace Hearthstone_Deck_Tracker.Live
 
 			var format = Core.Game.CurrentFormat ?? Format.Wild;
 			var gameType = HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, format);
-			var playerWeapon = DbfId(Find(player, WeaponId(Core.Game.PlayerEntity)));
-			var opponentWeapon = DbfId(Find(opponent, WeaponId(Core.Game.OpponentEntity)));
+			var playerWeapon = RefOrNull(Find(player, WeaponId(Core.Game.PlayerEntity)));
+			var opponentWeapon = RefOrNull(Find(opponent, WeaponId(Core.Game.OpponentEntity)));
 
 			var anomalyId = new[] { GameTag.ANOMALY1, GameTag.ANOMALY2 }.Select(x => Core.Game.GameEntity?.GetTag(x)).FirstOrDefault(x => x is > 0);
-			var anomaly = anomalyId.HasValue && Core.Game.Entities.TryGetValue(anomalyId.Value, out var anomalyEntity) ? anomalyEntity?.Card.DbfId : null;
+			var anomaly = anomalyId.HasValue && Core.Game.Entities.TryGetValue(anomalyId.Value, out var anomalyEntity) && anomalyEntity != null
+				? ToCardRef(anomalyEntity.Card)
+				: (CardRef?)null;
 
 			// Check if the special shop (timewarped tavern) is currently active
 			var specialShopState = Watchers.SpecialShopChoicesStateWatcher.CurrentState;
@@ -271,24 +285,25 @@ namespace Hearthstone_Deck_Tracker.Live
 					Board = ToSortedBoard(player.Board.Where(x => x.TakesBoardSlot)),
 					Deck = new BoardStateDeck
 					{
-						Cards = playerCardsList,
-						Sideboards = playerSideboardsList,
-						Name = deck?.Name,
+						// the extension only hides the deck list (including its title) for an empty array, not a missing one
+						Cards = SendDeckList ? playerCardsList : new List<object[]>(),
+						Sideboards = SendDeckList ? playerSideboardsList : null,
+						Name = SendDeckList ? deck?.Name : null,
 						Format = deck?.GuessFormatType() ?? FormatType.FT_UNKNOWN,
-						Hero = Database.GetHeroCardFromClass(deck?.Class)?.DbfId ?? 0,
+						Hero = ToCardRef(Database.GetHeroCardFromClass(deck?.Class)),
 						Wins = games?.Count(g => g.Result == GameResult.Win) ?? 0,
 						Losses = games?.Count(g => g.Result == GameResult.Loss) ?? 0,
 						Size = player.DeckCount
 					},
-					Secrets = SortedDbfIds(player.PlayerEntities.Where(x => x.IsInSecret)),
-					Hero = HeroDbfId(Find(player, HeroId(Core.Game.PlayerEntity))),
+					Secrets = SortedRefs(player.PlayerEntities.Where(x => x.IsInSecret)),
+					Hero = HeroRef(Find(player, HeroId(Core.Game.PlayerEntity))),
 					Hand = new BoardStateHand
 					{
-						Cards = SortedDbfIds(player.Hand),
+						Cards = SortedRefs(player.Hand),
 						Size = player.HandCount
 					},
-					HeroPower = BgsQuestReward(player, true) ?? DbfIdOrNull(FindHeroPower(player)),
-					Weapon = playerWeapon != 0 ? playerWeapon : (BgsQuestReward(player, false) ?? BuddyDbfId(player) ?? 0),
+					HeroPower = BgsQuestReward(player, true) ?? RefOrNull(FindHeroPower(player)),
+					Weapon = playerWeapon ?? BgsQuestReward(player, false) ?? Buddy(player) ?? 0,
 					Fatigue = Core.Game.PlayerEntity.GetTag(GameTag.FATIGUE)
 				},
 				Opponent = new BoardStatePlayer
@@ -302,10 +317,10 @@ namespace Hearthstone_Deck_Tracker.Live
 					{
 						Size = opponent.HandCount
 					},
-					Secrets = SortedDbfIds(opponent.PlayerEntities.Where(x => x.IsInSecret)),
-					Hero = HeroDbfId(Find(opponent, HeroId(Core.Game.OpponentEntity))),
-					HeroPower = BgsQuestReward(opponent, true) ?? DbfIdOrNull(FindHeroPower(opponent)),
-					Weapon = opponentWeapon != 0 ? opponentWeapon : (BgsQuestReward(opponent, false) ?? BuddyDbfId(opponent) ?? 0),
+					Secrets = SortedRefs(opponent.PlayerEntities.Where(x => x.IsInSecret)),
+					Hero = HeroRef(Find(opponent, HeroId(Core.Game.OpponentEntity))),
+					HeroPower = BgsQuestReward(opponent, true) ?? RefOrNull(FindHeroPower(opponent)),
+					Weapon = opponentWeapon ?? BgsQuestReward(opponent, false) ?? Buddy(opponent) ?? 0,
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},
 				GameType = gameType,

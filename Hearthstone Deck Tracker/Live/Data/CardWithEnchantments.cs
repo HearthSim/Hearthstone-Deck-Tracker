@@ -33,6 +33,10 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		public override bool Equals(object? obj) => obj is CardRef other && Equals(other);
 
 		public override int GetHashCode() => _cardId?.GetHashCode() ?? _dbfId;
+
+		public static bool operator ==(CardRef left, CardRef right) => left.Equals(right);
+
+		public static bool operator !=(CardRef left, CardRef right) => !left.Equals(right);
 	}
 
 	/// <summary>

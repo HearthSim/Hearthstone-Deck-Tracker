@@ -42,13 +42,13 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		public int? HearthstoneBuild { get; set; }
 
 		[JsonProperty("traditional_anomaly", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? TraditionalAnomaly { get; set; }
+		public CardRef? TraditionalAnomaly { get; set; }
 
 		[JsonProperty("battlegrounds_anomaly", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? BattlegroundsAnomaly { get; set; }
+		public CardRef? BattlegroundsAnomaly { get; set; }
 
 		[JsonProperty("battlegrounds_dark_gifts_slot", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? BattlegroundsDarkGiftsSlot { get; set; }
+		public CardRef? BattlegroundsDarkGiftsSlot { get; set; }
 
 		[JsonProperty("bobs_buddy_state", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public BobsBuddyState? BobsBuddyOutput { get; set; }
@@ -79,31 +79,31 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		public BoardStateDeck? Deck { get; set; }
 
 		[JsonProperty("hero", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? Hero { get; set; }
+		public CardRef? Hero { get; set; }
 
 		[JsonProperty("hero_power", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? HeroPower { get; set; }
+		public CardRef? HeroPower { get; set; }
 
 		[JsonProperty("hero_power_top", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? HeroPowerTop { get; set; }
+		public CardRef? HeroPowerTop { get; set; }
 
 		[JsonProperty("hero_power_bottom", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? HeroPowerBottom { get; set; }
+		public CardRef? HeroPowerBottom { get; set; }
 
 		[JsonProperty("weapon", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int Weapon { get; set; }
+		public CardRef Weapon { get; set; }
 
 		[JsonProperty("first_trinket", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? FirstTrinket { get; set; }
+		public CardRef? FirstTrinket { get; set; }
 
 		[JsonProperty("second_trinket", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int? SecondTrinket { get; set; }
+		public CardRef? SecondTrinket { get; set; }
 
 		[JsonProperty("fatigue", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int Fatigue { get; set; }
 
 		[JsonProperty("secrets", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int[]? Secrets { get; set; }
+		public CardRef[]? Secrets { get; set; }
 
 		[JsonProperty("quest", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public BoardStateQuest? Quest { get; set; }
@@ -181,7 +181,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 	public class BoardStateQuest
 	{
 		[JsonProperty("dbfId")]
-		public int DbfId { get; set; }
+		public CardRef DbfId { get; set; }
 
 		[JsonProperty("progress")]
 		public int Progress { get; set; }
@@ -204,7 +204,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 	public class BoardStateHand
 	{
 		[JsonProperty("cards", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int[]? Cards { get; set; }
+		public CardRef[]? Cards { get; set; }
 
 		[JsonProperty("size")]
 		public int Size { get; set; }
@@ -222,16 +222,16 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 	public class BoardStateDeck
 	{
 		[JsonProperty("cards", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public List<int[]>? Cards { get; set; }
+		public List<object[]>? Cards { get; set; }
 
 		[JsonProperty("sideboards", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public List<int[]>? Sideboards { get; set; }
+		public List<object[]>? Sideboards { get; set; }
 
 		[JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public string? Name { get; set; }
 
 		[JsonProperty("hero", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int Hero { get; set; }
+		public CardRef Hero { get; set; }
 
 		[JsonProperty("format", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public FormatType Format { get; set; }

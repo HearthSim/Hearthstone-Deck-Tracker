@@ -18,19 +18,19 @@ namespace Hearthstone_Deck_Tracker.Live
 		private Hearthstone.Card? ResolveCard(BattlegroundsTeammateBoardStateEntity? e) =>
 			e == null ? null : Database.GetCardFromId(e.CardId);
 
-		private int DbfId(BattlegroundsTeammateBoardStateEntity? e) => ResolveCard(e)?.DbfId ?? 0;
+		private CardRef Ref(BattlegroundsTeammateBoardStateEntity? e) => ToCardRef(ResolveCard(e));
 
-		private int? DbfIdOrNull(BattlegroundsTeammateBoardStateEntity? e)
+		private CardRef? RefOrNull(BattlegroundsTeammateBoardStateEntity? e)
 		{
-			var dbfId = DbfId(e);
-			return dbfId != 0 ? dbfId : (int?)null;
+			var card = ResolveCard(e);
+			return card?.DbfId > 0 ? ToCardRef(card) : (CardRef?)null;
 		}
 
 		private int ZonePosition(BattlegroundsTeammateBoardStateEntity e) =>
 			e.Tags.TryGetValue((int)GameTag.ZONE_POSITION, out var position) ? position : 0;
 
-		private int[] SortedDbfIds(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
-			entities.OrderBy(ZonePosition).Select(DbfId).ToArray();
+		private CardRef[] SortedRefs(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
+			entities.OrderBy(ZonePosition).Select(Ref).ToArray();
 
 		private CardWithEnchantments[] ToSortedBoard(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
 			entities.OrderBy(ZonePosition).Select(e => new CardWithEnchantments(ToCardRef(ResolveCard(e)))).ToArray();
@@ -80,11 +80,11 @@ namespace Hearthstone_Deck_Tracker.Live
 			return Database.GetCardFromDbfId(GetTag(entity, GameTag.BACON_EVOLUTION_CARD_ID), false) ?? ResolveCard(entity);
 		}
 
-		private int[] SortedSecretDbfIds(IEnumerable<Entity> entities) =>
-			entities.OrderBy(ZonePosition).Select(e => ResolveSecretCard(e)?.DbfId ?? 0).ToArray();
+		private CardRef[] SortedSecretRefs(IEnumerable<Entity> entities) =>
+			entities.OrderBy(ZonePosition).Select(e => ToCardRef(ResolveSecretCard(e))).ToArray();
 
-		private int[] SortedSecretDbfIds(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
-			entities.OrderBy(ZonePosition).Select(e => ResolveSecretCard(e)?.DbfId ?? 0).ToArray();
+		private CardRef[] SortedSecretRefs(IEnumerable<BattlegroundsTeammateBoardStateEntity> entities) =>
+			entities.OrderBy(ZonePosition).Select(e => ToCardRef(ResolveSecretCard(e))).ToArray();
 
 		// the enchantment has no art of its own, so report the dark gift that created it
 		private Hearthstone.Card? DarkGiftCard(Entity enchantment)
@@ -101,47 +101,48 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		// a hero power position can be occupied by a hero power, a hero power quest reward or a hero
 		// power trinket, all keyed by ADDITIONAL_HERO_POWER_INDEX (0 = bottom/only, 1 = top)
-		private int? BgsHeroPowerSlot(Player player, int index)
+		private CardRef? BgsHeroPowerSlot(Player player, int index)
 		{
 			var questReward = player.QuestRewards.FirstOrDefault(x =>
 				x.HasTag(GameTag.BACON_IS_HEROPOWER_QUESTREWARD) && x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) == index);
 			if(questReward != null)
-				return questReward.Card.DbfId;
+				return ToCardRef(questReward.Card);
 			// the game treats any index >= 1 as the secondary trinket slot (ZoneBattlegroundTrinket)
 			var trinket = player.Trinkets.FirstOrDefault(x =>
 				x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_6) == TrinketHeroPowerSlot &&
 				(index == 0 ? x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) == 0 : x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) >= 1));
 			if(trinket != null)
-				return trinket.Card.DbfId;
+				return ToCardRef(trinket.Card);
 			var heroPower = player.PlayerEntities.FirstOrDefault(x =>
 				x.IsHeroPower && x.IsInPlay && x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) == index);
-			return heroPower != null ? DbfId(heroPower) : (int?)null;
+			return heroPower != null ? Ref(heroPower) : (CardRef?)null;
 		}
 
 		private const int TrinketFirstSlot = 1;
 		private const int TrinketSecondSlot = 2;
 		private const int TrinketHeroPowerSlot = 3;
 
-		private int? BgsTrinket(Player player, int trinketSlot)
+		private CardRef? BgsTrinket(Player player, int trinketSlot)
 		{
 			var trinketEntity = player.Trinkets.FirstOrDefault(x =>
 				x.HasTag(GameTag.TAG_SCRIPT_DATA_NUM_6) &&
 				x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_6) == trinketSlot
 			);
 
-			return trinketEntity?.Card.DbfId;
+			return trinketEntity != null ? ToCardRef(trinketEntity.Card) : (CardRef?)null;
 		}
 
-		private int? BgsAnomaly(Entity? game)
+		private CardRef? BgsAnomaly(Entity? game)
 		{
-			return BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(game);
+			return CardRefFromDbfId(BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(game));
 		}
 
-		private int? BgsDarkGifts(Entity? game)
+		private CardRef? BgsDarkGifts(Entity? game)
 		{
-			if(game?.GetTag(GameTag.BACON_DARK_GIFTS_ACTIVE) == 1)
-				return Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Neutral.DarkGifts)?.DbfId;
-			return null;
+			if(game?.GetTag(GameTag.BACON_DARK_GIFTS_ACTIVE) != 1)
+				return null;
+			var darkGifts = Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Neutral.DarkGifts);
+			return darkGifts != null ? ToCardRef(darkGifts) : (CardRef?)null;
 		}
 
 		private Tuple<BoardStatePlayer, BoardStatePlayer> GetBattlegroundsSoloPlayerBoardStates()
@@ -151,11 +152,11 @@ namespace Hearthstone_Deck_Tracker.Live
 
 			var playerEntity = Core.Game.PlayerEntity;
 			int? playerWeaponEntityId = playerEntity != null ? WeaponId(playerEntity) : null;
-			int playerWeapon = playerWeaponEntityId.HasValue ? DbfId(Find(player, playerWeaponEntityId.Value)) : 0;
+			var playerWeapon = playerWeaponEntityId.HasValue ? RefOrNull(Find(player, playerWeaponEntityId.Value)) : null;
 
 			var opponentEntity = Core.Game.OpponentEntity;
 			int? opponentWeaponEntityId = opponentEntity != null ? WeaponId(opponentEntity) : null;
-			int opponentWeapon = opponentWeaponEntityId.HasValue ? DbfId(Find(opponent, opponentWeaponEntityId.Value)) : 0;
+			var opponentWeapon = opponentWeaponEntityId.HasValue ? RefOrNull(Find(opponent, opponentWeaponEntityId.Value)) : null;
 
 			// Check if the special shop (timewarped tavern) is currently active
 			var specialShopState = Watchers.SpecialShopChoicesStateWatcher.CurrentState;
@@ -177,17 +178,17 @@ namespace Hearthstone_Deck_Tracker.Live
 					HeroPower = playerHeroPowerSecondary == null ? playerHeroPowerPrimary : null,
 					HeroPowerTop = playerHeroPowerSecondary,
 					HeroPowerBottom = playerHeroPowerSecondary != null ? playerHeroPowerPrimary : null,
-					Weapon = playerWeapon != 0 ? playerWeapon :
+					Weapon = playerWeapon ??
 						BgsQuestReward(player, false) ??
-						BuddyDbfId(player) ?? 0,
+						Buddy(player) ?? 0,
 					FirstTrinket = BgsTrinket(player, TrinketFirstSlot),
 					SecondTrinket = BgsTrinket(player, TrinketSecondSlot),
 					Hand = new BoardStateHand
 					{
-						Cards = SortedDbfIds(player.Hand),
+						Cards = SortedRefs(player.Hand),
 						Size = player.HandCount
 					},
-					Secrets = SortedSecretDbfIds(player.PlayerEntities.Where(x => x.IsInSecret)),
+					Secrets = SortedSecretRefs(player.PlayerEntities.Where(x => x.IsInSecret)),
 					Fatigue = playerEntity?.GetTag(GameTag.FATIGUE) ?? 0
 				}, new BoardStatePlayer
 				{
@@ -195,16 +196,16 @@ namespace Hearthstone_Deck_Tracker.Live
 					HeroPower = opponentHeroPowerSecondary == null ? opponentHeroPowerPrimary : null,
 					HeroPowerTop = opponentHeroPowerSecondary != null ? opponentHeroPowerPrimary : null,
 					HeroPowerBottom = opponentHeroPowerSecondary,
-					Weapon = opponentWeapon != 0 ? opponentWeapon :
+					Weapon = opponentWeapon ??
 						BgsQuestReward(opponent, false) ??
-						BuddyDbfId(opponent) ?? 0,
+						Buddy(opponent) ?? 0,
 					FirstTrinket = BgsTrinket(opponent, TrinketFirstSlot),
 					SecondTrinket = BgsTrinket(opponent, TrinketSecondSlot),
 					Hand = new BoardStateHand
 					{
 						Size = opponent.HandCount
 					},
-					Secrets = SortedSecretDbfIds(opponent.PlayerEntities.Where(x => x.IsInSecret)),
+					Secrets = SortedSecretRefs(opponent.PlayerEntities.Where(x => x.IsInSecret)),
 					Fatigue = opponentEntity?.GetTag(GameTag.FATIGUE) ?? 0
 				}
 			);
@@ -279,18 +280,18 @@ namespace Hearthstone_Deck_Tracker.Live
 			return new BoardStatePlayer
 			{
 				Board = ToSortedBoardWithDarkGifts(board),
-				HeroPower = heroPowerSecondary == null ? DbfIdOrNull(heroPowerPrimary) : null,
-				HeroPowerTop = DbfIdOrNull(heroPowerSecondary),
-				HeroPowerBottom = heroPowerSecondary != null ? DbfIdOrNull(heroPowerPrimary) : null,
-				Weapon = weapon != null ? DbfId(weapon) : buddyDbfId,
-				FirstTrinket = DbfId(lesserTrinket),
-				SecondTrinket = DbfId(greaterTrinket),
+				HeroPower = heroPowerSecondary == null ? RefOrNull(heroPowerPrimary) : null,
+				HeroPowerTop = RefOrNull(heroPowerSecondary),
+				HeroPowerBottom = heroPowerSecondary != null ? RefOrNull(heroPowerPrimary) : null,
+				Weapon = weapon != null ? Ref(weapon) : CardRefFromDbfId(buddyDbfId) ?? 0,
+				FirstTrinket = Ref(lesserTrinket),
+				SecondTrinket = Ref(greaterTrinket),
 				Hand = new BoardStateHand
 				{
-					Cards = SortedDbfIds(hand),
+					Cards = SortedRefs(hand),
 					Size = hand.Count,
 				},
-				Secrets = SortedSecretDbfIds(secrets),
+				Secrets = SortedSecretRefs(secrets),
 				Fatigue = 0,
 			};
 		}
