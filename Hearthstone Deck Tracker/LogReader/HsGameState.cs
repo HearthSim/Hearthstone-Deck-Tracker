@@ -144,6 +144,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public List<(Entity entity, HashSet<int> ids)> EntitiesCreatedInDeck { get; } = new();
 
+		// Entities revealed by a Soul Fermenter resummon, with only the tags from their SHOW_ENTITY lines,
+		// taken before later effects in the same block change these values
+		public List<Entity> SoulFermenterRevealedEntities { get; } = new();
+
 		public bool IsTradeableAction { get; set; }
 		public bool HideShowEntities { get; set; }
 

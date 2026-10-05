@@ -1427,6 +1427,24 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
+		internal async void UpdateSoulFermenterSavedMinions(int trinketEntityId, List<Entity> additionalSavedEntities)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+
+			var players = new[] { _input.Player, _input.PlayerTeammate, _input.Opponent, _input.OpponentTeammate };
+			var soulFermenter = players.Where(p => p != null).SelectMany(p => p!.Trinkets).OfType<SoulFermenter>().FirstOrDefault(t => t.game_id == trinketEntityId);
+			if(soulFermenter == null || soulFermenter.TrinketUpdatedDuringCombat)
+				return;
+
+			var simulator = new Simulator();
+			foreach(var savedEntity in additionalSavedEntities)
+				soulFermenter.ExtraSavedMinions.Add(GetMinionFromEntity(simulator, soulFermenter.ControlledByPlayer, savedEntity, Enumerable.Empty<Entity>()));
+			soulFermenter.TrinketUpdatedDuringCombat = true;
+
+			await TryRerun();
+		}
+
 		internal async void UpdateTrinketEnchantment(Entity enchantmentEntity, int trinketEntityId, bool isPlayerTrinket)
 		{
 			if(_input == null || !UpdateRevealedEntityValidStates)

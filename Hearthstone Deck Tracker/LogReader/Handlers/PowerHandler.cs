@@ -393,6 +393,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					entity.Info.LatestCardId = cardId;
 					if(type == "SHOW_ENTITY")
 					{
+						// Snapshot what a Soul Fermenter resummon reveals, before later effects in the block change the tags
+						if(gameState.CurrentBlock is { Type: "TRIGGER", CardId: NonCollectible.Neutral.SoulFermenter } soulFermenterBlock)
+						{
+							var revealed = new Entity(entityId) { CardId = cardId };
+							revealed.Info.LatestCardId = cardId;
+							soulFermenterBlock.SoulFermenterRevealedEntities.Add(revealed);
+						}
+
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
 
@@ -530,6 +538,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var match = CreationTagRegex.Match(logLine);
 				_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, gameState.CurrentEntityId, match.Groups["value"].Value, game, true);
 				creationTag = true;
+				if(gameState.CurrentBlock is { Type: "TRIGGER", CardId: NonCollectible.Neutral.SoulFermenter } soulFermenterRevealBlock
+					&& soulFermenterRevealBlock.SoulFermenterRevealedEntities.LastOrDefault() is { } revealedEntity
+					&& revealedEntity.Id == gameState.CurrentEntityId)
+				{
+					var revealedTag = GameTagHelper.ParseEnum<GameTag>(match.Groups["tag"].Value);
+					revealedEntity.SetTag(revealedTag, GameTagHelper.ParseTag(revealedTag, match.Groups["value"].Value));
+				}
 				if(match.Groups["tag"].Value == "CREATOR"
 					&& int.TryParse(match.Groups["value"].Value, out var creatorId)
 					&& game.Entities.TryGetValue(gameState.CurrentEntityId, out var createdEntity))
@@ -1834,6 +1849,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler?.HandleOpponentAbyssalCurse(nextDamage);
 					else
 						gameState.GameHandler?.HandlePlayerAbyssalCurse(nextDamage);
+				}
+
+				// Soul Fermenter typically resummons 3 minions; however in rare cases it can carry 3 extra minions
+				// from a prior combat if they were not yet resummoned (for a total of 6).
+				// These additional 3 minions are not knowable at combat setup
+				if(gameState.CurrentBlock is { Type: "TRIGGER", CardId: NonCollectible.Neutral.SoulFermenter } soulFermenterEndBlock
+					&& game.CurrentGameMode == GameMode.Battlegrounds && game.CurrentGameStats != null)
+				{
+					var resummoned = soulFermenterEndBlock.SoulFermenterRevealedEntities.Where(e => e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION).ToList();
+					if(resummoned.Count > 3)
+						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+							.UpdateSoulFermenterSavedMinions(soulFermenterEndBlock.SourceEntityId, resummoned.Take(resummoned.Count - 3).ToList());
 				}
 
 				// Handle Hand related enchantments in Battlegrounds
