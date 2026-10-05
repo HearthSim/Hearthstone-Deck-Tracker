@@ -55,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 			TavernMarkersDisplayed = gameMetrics.TavernMarkersDisplayed;
 			if(gameMetrics.TavernMarkersDisplayed)
 			{
+				TavernMarkersOnTrial = gameMetrics.TavernMarkersOnTrial;
 				TavernMarkersPinnedFromAnimatedCard = gameMetrics.TavernMarkersPinnedFromAnimatedCard;
 				TavernMarkersPinnedFromCompGuide = gameMetrics.TavernMarkersPinnedFromCompGuide;
 				TavernMarkersTribeToggled = gameMetrics.TavernMarkersTribeToggled;
@@ -170,6 +171,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("tavern_markers_displayed")]
 		public bool TavernMarkersDisplayed { get; set; }
+
+		[JsonIgnore]
+		public bool TavernMarkersOnTrial { get; }
 
 		[JsonProperty("tavern_markers_pinned_from_animated_card", NullValueHandling = NullValueHandling.Ignore)]
 		public bool? TavernMarkersPinnedFromAnimatedCard { get; }

@@ -121,6 +121,16 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 
 			if(battlegroundsAction.Tier7TrinketOverlayDisplayed)
 				yield return new ValueMoment(VMName.BGTrinketStatsOverlay, !isTrialActivated);
+
+			var isTavernMarkersPaid = !battlegroundsAction.TavernMarkersOnTrial;
+			if(battlegroundsAction.TavernMarkersPinnedFromAnimatedCard == true || battlegroundsAction.TavernMarkersPinnedFromCompGuide == true)
+				yield return new ValueMoment(VMName.BGPinTavernMinions, isTavernMarkersPaid);
+
+			if(battlegroundsAction.TavernMarkersTribeToggled == true)
+				yield return new ValueMoment(VMName.BGPinTavernTribe, isTavernMarkersPaid);
+
+			if(battlegroundsAction.TavernMarkersRecommendedEnabled == true)
+				yield return new ValueMoment(VMName.BGPinKeyCompPieces, isTavernMarkersPaid);
 		}
 
 		private static IEnumerable<ValueMoment> GetEndMatchMercenariesValueMoments(VMAction action)

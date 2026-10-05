@@ -521,7 +521,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 				BgsMinionPinning.Visibility = value;
 				if(value == Visible)
+				{
 					Core.Game.Metrics.TavernMarkersDisplayed = true;
+					Core.Game.Metrics.TavernMarkersOnTrial = !(HSReplayNetOAuth.AccountData?.IsTier7 ?? false);
+				}
 
 				// Clear all pins when the feature is hidden to prevent persistence
 				if(value == Collapsed)

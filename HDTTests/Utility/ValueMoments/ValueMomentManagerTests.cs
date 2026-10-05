@@ -198,6 +198,56 @@ namespace HDTTests.Utility.ValueMoments
 			Assert.IsTrue(valueMoment.IsFree);
 		}
 
+		private static readonly string[] TavernPinningValueMoments =
+		{
+			ValueMoment.VMName.BGPinTavernMinions,
+			ValueMoment.VMName.BGPinTavernTribe,
+			ValueMoment.VMName.BGPinKeyCompPieces,
+		};
+
+		private static GameMetrics CreateTavernPinningMetrics(bool onTrial) => new GameMetrics
+		{
+			TavernMarkersDisplayed = true,
+			TavernMarkersOnTrial = onTrial,
+			TavernMarkersPinnedFromCompGuide = true,
+			TavernMarkersTribeToggled = true,
+			TavernMarkersRecommendedEnabled = true,
+		};
+
+		[TestMethod]
+		public void GetValueMoments_ReturnsPaidTavernPinningValueMoments()
+		{
+			var action = new EndMatchBattlegroundsAction(123, "foo", 1, 2, GameType.GT_BATTLEGROUNDS, 5000, CreateTavernPinningMetrics(onTrial: false));
+
+			var valueMoments = ValueMomentManager.GetValueMoments(action).Where(vm => TavernPinningValueMoments.Contains(vm.Name)).ToList();
+
+			CollectionAssert.AreEquivalent(TavernPinningValueMoments, valueMoments.Select(vm => vm.Name).ToList());
+			Assert.IsTrue(valueMoments.All(vm => vm.IsPaid));
+		}
+
+		[TestMethod]
+		public void GetValueMoments_ReturnsFreeTavernPinningValueMomentsOnTrial()
+		{
+			var action = new EndMatchBattlegroundsAction(123, "foo", 1, 2, GameType.GT_BATTLEGROUNDS, 5000, CreateTavernPinningMetrics(onTrial: true));
+
+			var valueMoments = ValueMomentManager.GetValueMoments(action).Where(vm => TavernPinningValueMoments.Contains(vm.Name)).ToList();
+
+			CollectionAssert.AreEquivalent(TavernPinningValueMoments, valueMoments.Select(vm => vm.Name).ToList());
+			Assert.IsTrue(valueMoments.All(vm => vm.IsFree));
+		}
+
+		[TestMethod]
+		public void GetValueMoments_ReturnsNoTavernPinningValueMomentsWhenNotDisplayed()
+		{
+			var gameMetrics = CreateTavernPinningMetrics(onTrial: false);
+			gameMetrics.TavernMarkersDisplayed = false;
+			var action = new EndMatchBattlegroundsAction(123, "foo", 1, 2, GameType.GT_BATTLEGROUNDS, 5000, gameMetrics);
+
+			var valueMoments = ValueMomentManager.GetValueMoments(action).Where(vm => TavernPinningValueMoments.Contains(vm.Name));
+
+			Assert.IsFalse(valueMoments.Any());
+		}
+
 		[TestMethod]
 		public void GetValueMoments_ReturnsMercOpponentAbilitiesValueMoment()
 		{

@@ -28,6 +28,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments
 			public const string BGHeroPickOverlay = "Support Best Hero Choice";
 			public const string BGQuestStatsOverlay = "Support Best Quest/Reward Choice";
 			public const string BGTrinketStatsOverlay = "Support Best Trinket Choice";
+			public const string BGPinTavernMinions = "Pin Tavern Minions";
+			public const string BGPinTavernTribe = "Pin Tavern Tribe";
+			public const string BGPinKeyCompPieces = "Pin Key Comp Pieces";
 
 			// Mercenaries
 			public const string MercOpponentAbilities = "Hover Opponent Merc Abilities";

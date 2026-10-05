@@ -47,6 +47,7 @@
 
 		// Tavern Markers (Minion Pinning)
 		public bool TavernMarkersDisplayed { get; set; }
+		public bool TavernMarkersOnTrial { get; set; }
 		public bool TavernMarkersPinnedFromAnimatedCard { get; set; }
 		public bool TavernMarkersPinnedFromCompGuide { get; set; }
 		public bool TavernMarkersTribeToggled { get; set; }
