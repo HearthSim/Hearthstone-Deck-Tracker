@@ -12,7 +12,10 @@
         Title="{lex:Loc CrashDialog_Title}" Height="350" Width="600"
         Closed="CrashDialog_Closed">
     <DockPanel Margin="5">
-        <Label Content="{lex:Loc CrashDialog_Label_Crashed}" FontWeight="SemiBold" DockPanel.Dock="Top"/>
+        <Label Name="LabelCrashed" Content="{lex:Loc CrashDialog_Label_Crashed}" FontWeight="SemiBold" DockPanel.Dock="Top"/>
+        <TextBlock Name="TextBlockSpecialMessage" Visibility="Collapsed" FontWeight="SemiBold"
+                   Text="{Binding SpecialMessage, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}, Mode=OneWay}"
+                   Margin="5" TextWrapping="Wrap" DockPanel.Dock="Top"/>
         <DockPanel DockPanel.Dock="Top">
             <DockPanel.Resources>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
