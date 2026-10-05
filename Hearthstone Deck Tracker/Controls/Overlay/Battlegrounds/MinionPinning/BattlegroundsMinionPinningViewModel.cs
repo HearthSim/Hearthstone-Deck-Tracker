@@ -179,7 +179,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 			EnableRecommended = !EnableRecommended;
 			Core.Game.Metrics.TavernMarkersRecommendedToggled = true;
 
-			if(!EnableRecommended)
+			if(EnableRecommended)
+				Core.Game.Metrics.TavernMarkersRecommendedEnabled = true;
+			else
 				Core.Game.Metrics.TavernMarkersRecommendedDisabledTurn = Core.Game.GetTurnNumber();
 
 			// Show popup when turning off
@@ -403,15 +405,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 
 		public void Reset()
 		{
-			Core.Game.Metrics.TavernMarkersRecommendedEnabled = EnableRecommended;
-
 			MousedOverSlot = -1;
 			ClearShopCards();
 			ClearPins();
 			_selectedRaces.Clear();
 			_racePinnedCardIds.Clear();
 			EnableRecommended = Config.Instance.AutoEnableTavernMarkersRecommended;
-			if(!EnableRecommended)
+			if(EnableRecommended)
+				Core.Game.Metrics.TavernMarkersRecommendedEnabled = true;
+			else
 			{
 				_recommendedCardIds.Clear();
 				_recommendedCardGuides.Clear();
