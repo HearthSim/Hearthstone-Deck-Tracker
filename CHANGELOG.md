@@ -1,6 +1,9 @@
-## Unreleased
+## **Release v1.58.8 - 2026-10-06**
 **General**:
 - Fixed a bug that could cause HSReplay.net features to fail until logging in again.
+
+**Battlegrounds**:
+- Fixed a small remaining number of incorrect combat odds.
 
 ## **Release v1.58.7 - 2026-10-05**
 **Hearthstone**:
