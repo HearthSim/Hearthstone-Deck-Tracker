@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          # full history so "sentry-cli releases set-commits --auto" can resolve the commit range
+          fetch-depth: 0
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
@@ -41,9 +44,14 @@ jobs:
           vstest.console "HearthWatcher.Test\bin\x64\Release\HearthWatcher.Test.dll"
           vstest.console "HDTTests\bin\x64\Release\HDTTests.dll"
 
+      # SENTRY_AUTH_TOKEN enables the Sentry CLI steps in "Hearthstone Deck Tracker.csproj", same as for
+      # the Squirrel build in release.yml
       - name: Build (Dev)
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x64" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x64\Squirrel\"
         env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
           SENTRY_DSN: ${{ vars.SENTRY_DSN }}
           SENTRY_ENVIRONMENT: Dev
 

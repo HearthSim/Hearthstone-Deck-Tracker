@@ -38,6 +38,17 @@ jobs:
           $packageVersion = ./build-scripts/update_version.ps1 -dev $false -buildNumber $buildNumber
           echo "::set-output name=packageVersion::$packageVersion"
 
+      # Sentry's --auto starts the commit range at the newest release in the project, which can be an
+      # unfinalized dev build, so pin it to the previous release tag. Sentry knows the repo by its
+      # GitHub name, so set SENTRY_REPOSITORY only if a rename makes the two diverge.
+      - name: Determine Sentry commit range
+        shell: bash
+        run: |
+          previous_tag=$(git describe --tags --abbrev=0 --match "v*" "$GITHUB_SHA^")
+          previous_sha=$(git rev-list -n 1 "$previous_tag")
+          echo "Sentry commit range: $previous_tag ($previous_sha)..$GITHUB_SHA"
+          echo "SentrySetCommitOptions=--commit ${{ vars.SENTRY_REPOSITORY || github.repository }}@$previous_sha..$GITHUB_SHA" >> $GITHUB_ENV
+
       # SENTRY_AUTH_TOKEN is what enables the Sentry CLI steps in "Hearthstone Deck Tracker.csproj".
       # The release name is not passed in: both sentry-cli and the SDK derive it from
       # InformationalVersion, so they cannot drift apart.

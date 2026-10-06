@@ -36,7 +36,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -47,13 +47,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Squirrel|x64'">
     <DefineConstants>TRACE;SQUIRREL</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 
-  <!-- sentry-cli picks up SENTRY_ORG/SENTRY_PROJECT/SENTRY_AUTH_TOKEN from .github/workflows/main.yml.
-       The release name is composed from the same version the SDK resolves it from at runtime, so both
-       sides always agree. -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Squirrel|x64' and '$(SENTRY_AUTH_TOKEN)' != ''">
+  <!-- sentry-cli picks up SENTRY_ORG/SENTRY_PROJECT/SENTRY_AUTH_TOKEN from .github/workflows/release.yml
+       (Squirrel) and dev-build.yml (Debug with DEV). The release name is composed from the same version
+       the SDK resolves it from at runtime, so both sides always agree. -->
+  <PropertyGroup Condition="('$(Configuration)'=='Squirrel' or '$(Configuration)'=='Debug') and '$(Platform)'=='x64' and '$(SENTRY_AUTH_TOKEN)' != ''">
     <!-- the Sentry targets would only enable the CLI in a target running after "AfterBuild", which is
          already too late for the release targets hooked into it, so opt in here -->
     <UseSentryCLI>true</UseSentryCLI>
@@ -62,7 +62,8 @@
     <SENTRY_RELEASE>$(AssemblyName)@$(Version)</SENTRY_RELEASE>
     <SentryCreateRelease>true</SentryCreateRelease>
     <SentrySetCommits>true</SentrySetCommits>
-    <SentrySetCommitOptions>--auto --ignore-missing</SentrySetCommitOptions>
+    <!-- release.yml passes an explicit range from the previous release tag through the environment -->
+    <SentrySetCommitOptions Condition="'$(SentrySetCommitOptions)' == ''">--auto --ignore-missing</SentrySetCommitOptions>
     <SentryUploadSymbols>true</SentryUploadSymbols>
     <SentryUploadSources>true</SentryUploadSources>
   </PropertyGroup>
