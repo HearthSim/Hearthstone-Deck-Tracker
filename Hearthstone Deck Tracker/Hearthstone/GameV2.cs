@@ -341,7 +341,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public BrawlInfo? BrawlInfo => _brawlInfo ?? (_brawlInfo = HearthMirror.Reflection.Client.GetBrawlInfo());
 
-		public BattlegroundRatingInfo? BattlegroundsRatingInfo => _battlegroundsRatingInfo ?? (_battlegroundsRatingInfo = HearthMirror.Reflection.Client.GetBattlegroundRatingInfo());
+		public BattlegroundRatingInfo? BattlegroundsRatingInfo
+		{
+			get
+			{
+				if(_battlegroundsRatingInfo == null)
+					CacheBattlegroundsRatingInfo();
+				return _battlegroundsRatingInfo;
+			}
+		}
+
+		public DateTime? BattlegroundsRatingInfoCachedAt { get; private set; }
 
 		public int? CurrentBattlegroundsRating => IsBattlegroundsMatch
 			? (IsBattlegroundsDuosMatch ? BattlegroundsRatingInfo?.DuosRating : BattlegroundsRatingInfo?.Rating)
@@ -438,7 +448,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal void CacheBrawlInfo() => _brawlInfo = HearthMirror.Reflection.Client.GetBrawlInfo();
 
-		internal void CacheBattlegroundsRatingInfo() => _battlegroundsRatingInfo = HearthMirror.Reflection.Client.GetBattlegroundRatingInfo();
+		internal void CacheBattlegroundsRatingInfo()
+		{
+			_battlegroundsRatingInfo = HearthMirror.Reflection.Client.GetBattlegroundRatingInfo();
+			BattlegroundsRatingInfoCachedAt = DateTime.Now;
+		}
 
 		internal void CacheMercenariesRatingInfo() => _mercenariesRatingInfo = HearthMirror.Reflection.Client.GetMercenariesRatingInfo();
 

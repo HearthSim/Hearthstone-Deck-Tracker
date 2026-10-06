@@ -160,37 +160,37 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnInMenu.Execute();
 		}
 
+		private async Task UpdatePostGameRatings(GameStats gs)
+		{
+			if(!await LogIsComplete())
+			{
+				Log.Warn("Log is not complete!");
+				return;
+			}
+
+			switch(gs.GameMode)
+			{
+				case Ranked:
+					await UpdatePostGameRanks(gs);
+					break;
+				case Battlegrounds:
+					if(gs.BattlegroundsRatingAfter == 0)
+						await UpdatePostGameBattlegroundsRating(gs);
+					break;
+				case Mercenaries:
+					if(gs.MercenariesRating != 0)
+						await UpdatePostGameMercenariesRating(gs);
+					await UpdatePostGameMercenariesRewards(gs);
+					break;
+			}
+		}
+
 		private bool _savedReplay;
 		private async Task SaveReplays(GameStats gs)
 		{
 			if(gs == null || _savedReplay)
 				return;
 			_savedReplay = true;
-
-			var complete = await LogIsComplete();
-
-			if(complete)
-			{
-				switch(gs.GameMode)
-				{
-					case Ranked:
-						await UpdatePostGameRanks(gs);
-						break;
-					case Battlegrounds:
-						if(gs.BattlegroundsRatingAfter == 0)
-							await UpdatePostGameBattlegroundsRating(gs);
-						break;
-					case Mercenaries:
-						if(gs.MercenariesRating != 0)
-							await UpdatePostGameMercenariesRating(gs);
-						await UpdatePostGameMercenariesRewards(gs);
-						break;
-				}
-			}
-			else
-			{
-				Log.Warn("Log is not complete!");
-			}
 
 			var powerLog = new List<string>();
 			foreach(var stored in _game.StoredPowerLogs.Where(x => x.Item1 == _game.MetaData.ServerInfo?.GameHandle))
@@ -1087,6 +1087,16 @@ namespace Hearthstone_Deck_Tracker
 					CaptureBattlegroundsGame();
 				}
 
+				await UpdatePostGameRatings(_game.CurrentGameStats);
+
+				// show the new rating while the victory screen is still up rather than after the upload
+				if(_game.IsBattlegroundsMatch)
+				{
+					RecordBattlegroundsGame();
+					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
+					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
+				}
+
 				await SaveReplays(_game.CurrentGameStats);
 
 				if(_game.IsConstructedMatch || _game.CurrentGameMode is GameMode.Arena)
@@ -1105,10 +1115,6 @@ namespace Hearthstone_Deck_Tracker
 
 				if(_game.IsBattlegroundsMatch)
 				{
-					RecordBattlegroundsGame();
-					Core.Game.BattlegroundsSessionViewModel.OnGameEnd();
-					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
-
 					SentryReporter.FlushBattlegroundsEvents(_game.CurrentGameStats.HsReplay.UploadId, LogContainsStateComplete, _game.IsBattlegroundsDuosMatch);
 					Tier7Trial.Clear();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
@@ -1175,7 +1181,7 @@ namespace Hearthstone_Deck_Tracker
 			public bool Duos { get; }
 		}
 
-		// Capture entity-derived data before the SaveReplays await, since a return to menu or
+		// Capture entity-derived data before the post-game awaits, since a return to menu or
 		// the next game start can clear _game.Entities (and reset the game type) meanwhile.
 		private void CaptureBattlegroundsGame()
 		{
@@ -1205,7 +1211,7 @@ namespace Hearthstone_Deck_Tracker
 			_pendingBattlegroundsGame = new PendingBattlegroundsGame(stats, heroCardId, placement, finalBoard, friendlyGame, duos);
 		}
 
-		// Persist the captured game once SaveReplays has populated the post-game rating.
+		// Persist the captured game once UpdatePostGameRatings has populated the post-game rating.
 		private void RecordBattlegroundsGame()
 		{
 			var pending = _pendingBattlegroundsGame;

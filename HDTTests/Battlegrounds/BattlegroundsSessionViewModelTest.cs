@@ -103,6 +103,26 @@ namespace HDTTests.Battlegrounds
 		}
 
 		[TestMethod]
+		public void CurrentRating_PrefersTheLastGameOverAClientRatingReadBeforeItEnded()
+		{
+			var lastGame = RecentSession(2580, 2684, false)[0];
+
+			var rating = BattlegroundsSessionViewModel.CurrentRating(2580, DateTime.Now.AddHours(-1), lastGame);
+
+			Assert.AreEqual(2684, rating);
+		}
+
+		[TestMethod]
+		public void CurrentRating_PrefersAClientRatingReadAfterTheLastGameEnded()
+		{
+			var lastGame = RecentSession(2580, 2684, false)[0];
+
+			var rating = BattlegroundsSessionViewModel.CurrentRating(2700, DateTime.Now, lastGame);
+
+			Assert.AreEqual(2700, rating);
+		}
+
+		[TestMethod]
 		public void CurrentRating_IsFormattedTheSameRegardlessOfTheThreadCulture()
 		{
 			Assert.AreEqual(CurrentRatingFormattedUnder("en-US"), CurrentRatingFormattedUnder("de-DE"));

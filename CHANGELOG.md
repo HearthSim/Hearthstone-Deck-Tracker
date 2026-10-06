@@ -1,3 +1,7 @@
+## Unreleased
+**Battlegrounds**:
+- Fixed the MMR in the session widget briefly resetting at the end of a match.
+
 ## **Release v1.58.8 - 2026-10-06**
 **General**:
 - Fixed a bug that could cause HSReplay.net features to fail until logging in again.

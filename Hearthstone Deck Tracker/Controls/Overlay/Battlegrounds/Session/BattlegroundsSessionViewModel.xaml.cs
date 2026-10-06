@@ -84,9 +84,10 @@ public class BattlegroundsSessionViewModel : ViewModel
 		UpdateMinionTypes();
 		UpdatePlayerDeity();
 
-		var firstGame = await UpdateLatestGames();
+		var sessionGames = await UpdateLatestGames();
+		var firstGame = sessionGames.FirstOrDefault();
 
-		var rating = ClientRating(Core.Game.BattlegroundsRatingInfo, IsDuos) ?? 0;
+		var rating = CurrentRating(ClientRating(Core.Game.BattlegroundsRatingInfo, IsDuos), Core.Game.BattlegroundsRatingInfoCachedAt, sessionGames.LastOrDefault()) ?? 0;
 		var ratingStart = firstGame == null ? rating : firstGame.SeasonReset ? 0 : firstGame.Rating;
 		if(rating == 0)
 			rating = ratingStart;
@@ -114,6 +115,15 @@ public class BattlegroundsSessionViewModel : ViewModel
 	// Duos and Solos are separate ladders, so mixing them up makes a Duos rating look like a season reset
 	internal static int? ClientRating(BattlegroundRatingInfo? ratingInfo, bool duos)
 		=> duos ? ratingInfo?.DuosRating : ratingInfo?.Rating;
+
+	// the client rating is only re-read when entering the Battlegrounds menu, so a game that ended after that
+	// knows the newer rating
+	internal static int? CurrentRating(int? clientRating, DateTime? clientRatingCachedAt, GameItem? lastGame)
+	{
+		if(lastGame?.RatingAfter is int ratingAfter && (clientRatingCachedAt == null || DateTime.Parse(lastGame.EndTime) > clientRatingCachedAt))
+			return ratingAfter;
+		return clientRating;
+	}
 
 	public void UpdateSectionsVisibilities()
 	{
@@ -385,7 +395,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 		CompStatsWaitingMsgVisibility = Visibility.Hidden;
 	}
 
-	private async Task<GameItem?> UpdateLatestGames()
+	private async Task<List<GameItem>> UpdateLatestGames()
 	{
 		var duos = IsDuos;
 		var sortedGames = (await Instance.PlayerGames(duos))
@@ -394,7 +404,6 @@ public class BattlegroundsSessionViewModel : ViewModel
 		DeleteOldGames(sortedGames);
 
 		var sessionGames = GetSessionGames(sortedGames, Core.Game.BattlegroundsRatingInfo, duos);
-		var firstGame = sessionGames.FirstOrDefault();
 
 		SessionGames.Clear();
 		sessionGames
@@ -413,7 +422,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 		Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
 
-		return firstGame;
+		return sessionGames;
 	}
 
 	internal static List<GameItem> GetSessionGames(List<GameItem> sortedGames, BattlegroundRatingInfo? ratingInfo, bool duos)
