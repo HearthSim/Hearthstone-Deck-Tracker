@@ -1,5 +1,6 @@
-## Unreleased
+## **Release v1.58.9 - 2026-10-06**
 **Battlegrounds**:
+- Fixed a crash in Bob's Buddy related to De-volition-ist.
 - Fixed the MMR in the session widget briefly resetting at the end of a match.
 
 ## **Release v1.58.8 - 2026-10-06**
