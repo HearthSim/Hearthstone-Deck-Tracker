@@ -1,3 +1,7 @@
+## Unreleased
+**General**:
+- Fixed a bug that could cause HSReplay.net features to fail until logging in again.
+
 ## **Release v1.58.7 - 2026-10-05**
 **Hearthstone**:
 - Fixed the deck list settings to hide Card on top/Cards on bottom/E.T.C.'s band not working.

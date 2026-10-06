@@ -167,12 +167,15 @@ public class BattlegroundsInspirationViewModel : ViewModel
 		if(access == null)
 			throw new HeroPickingException("Unable to start Tier7 trial"); // TODO
 
-		using HttpRequestMessage req = new(HttpMethod.Post, Url);
-		req.Headers.Add("X-Trial-Token", access.TrialToken);
 		var data = JsonConvert.SerializeObject(reqData);
-		req.Content = new StringContent(data, Encoding.UTF8, "application/json");
 		Log.Info(data);
-		var resp = await HSReplayNetOAuth.SendAsyncWithAuth(req);
+		var resp = await HSReplayNetOAuth.SendAsyncWithAuth(() =>
+		{
+			HttpRequestMessage req = new(HttpMethod.Post, Url);
+			req.Headers.Add("X-Trial-Token", access.TrialToken);
+			req.Content = new StringContent(data, Encoding.UTF8, "application/json");
+			return req;
+		});
 		if(resp is { StatusCode: HttpStatusCode.OK })
 			return JsonConvert.DeserializeObject<InspirationApiResponse>(await resp.Content.ReadAsStringAsync());
 

@@ -27,6 +27,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private static readonly Lazy<OAuthClient> Client;
 		private static readonly Lazy<OAuthData> Data;
 		private static readonly Dictionary<string, CacheObj> Cache = new Dictionary<string, CacheObj>();
+		private static readonly OAuthTokenRefresher Refresher;
+		private static readonly TimeSpan TokenRefreshMargin = TimeSpan.FromMinutes(5);
 
 		public static bool AccountUpdateInProgress;
 
@@ -62,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			Serializer = new JsonSerializer<OAuthData>("hsreplay_oauth", true);
 			Data = new Lazy<OAuthData>(Serializer.Load);
 			Client = new Lazy<OAuthClient>(LoadClient);
+			Refresher = new OAuthTokenRefresher(() => Data.Value.TokenData?.AccessToken, HasFreshToken, RefreshTokenData);
 		}
 
 		private static readonly Scope[] _requiredScopes = { Scope.FullAccess };
@@ -142,11 +145,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			LoggedOut?.Invoke();
 		}
 
-		public static async Task<bool> UpdateToken()
+		public static Task<bool> UpdateToken() => Refresher.EnsureFresh();
+
+		private static bool HasFreshToken()
 		{
 			var data = Data.Value;
-			if(data.TokenData != null && data.TokenDataCreatedAt != null && (DateTime.Now - data.TokenDataCreatedAt.Value).TotalSeconds < data.TokenData.ExpiresIn)
-				return true;
+			if(data.TokenData == null || data.TokenDataCreatedAt == null)
+				return false;
+			var expiresIn = TimeSpan.FromSeconds(data.TokenData.ExpiresIn);
+			return DateTime.Now - data.TokenDataCreatedAt.Value < expiresIn - TokenRefreshMargin;
+		}
+
+		private static async Task<bool> RefreshTokenData()
+		{
+			var data = Data.Value;
 			if(string.IsNullOrEmpty(data.Code) || string.IsNullOrEmpty(data.RedirectUrl))
 			{
 				Log.Error("Could not update token, we don't have a code or redirect url.");
@@ -198,7 +210,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return false;
 				}
-				var twitchAccounts = await Client.Value.GetTwitchAccounts();
+				var twitchAccounts = await SendWithRetry(c => c.GetTwitchAccounts());
 				Data.Value.TwitchUsers = twitchAccounts;
 				Save();
 				Log.Info($"Saved {twitchAccounts.Count} account(s): {string.Join(", ", twitchAccounts.Select(x => x.Username))}");
@@ -222,7 +234,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return false;
 				}
-				var account = await Client.Value.GetHSReplayNetAccount();
+				var account = await SendWithRetry(c => c.GetHSReplayNetAccount());
 				Data.Value.Account = account;
 				Save();
 				Log.Info($"Found account: {account?.Username ?? "None"}");
@@ -272,7 +284,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return;
 				}
-				var response = await Client.Value.SendTwitchUpdate(Config.Instance.SelectedTwitchUser, TwitchExtensionId, payload);
+				var response = await SendWithRetry(c => c.SendTwitchUpdate(Config.Instance.SelectedTwitchUser, TwitchExtensionId, payload));
 				Log.Debug(response);
 			}
 			catch(Exception e)
@@ -290,7 +302,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return null;
 				}
-				CurrentVideo video = await Client.Value.GetUserCurrentVideo(user_id, TwitchExtensionId);
+				CurrentVideo video = await SendWithRetry(c => c.GetUserCurrentVideo(user_id, TwitchExtensionId));
 				if(Cache.TryGetValue(video.Url, out var cache) && cache.Valid)
 					return (UserCurrentVideo) cache.Data;
 				var data = TwitchApiHelper.GenerateTwitchVodUrl(video.Url, video.CreatedAt, video.Date);
@@ -314,7 +326,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return false;
 				}
-				return await Client.Value.IsUserStreaming(user_id, TwitchExtensionId);
+				return await SendWithRetry(c => c.IsUserStreaming(user_id, TwitchExtensionId));
 			}
 			catch(Exception e)
 			{
@@ -332,7 +344,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return false;
 				}
-				var response = await Client.Value.UploadCollection(collection, collection.AccountHi, collection.AccountLo, CollectionType.Constructed);
+				var response = await SendWithRetry(c => c.UploadCollection(collection, collection.AccountHi, collection.AccountLo, CollectionType.Constructed));
 				Log.Debug(response);
 				CollectionUpdated?.Invoke();
 				return true;
@@ -353,7 +365,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return false;
 				}
-				var response = await Client.Value.UploadCollection(collection, collection.AccountHi, collection.AccountLo, CollectionType.Mercenaries);
+				var response = await SendWithRetry(c => c.UploadCollection(collection, collection.AccountHi, collection.AccountLo, CollectionType.Mercenaries));
 				Log.Debug(response);
 				return true;
 			}
@@ -374,7 +386,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return false;
 				}
-				var response = await Client.Value.ClaimUploadToken(token);
+				var response = await SendWithRetry(c => c.ClaimUploadToken(token));
 				UploadTokenHistory.Write($"Claimed {token}: {response}");
 				Log.Debug(response);
 				UploadTokenClaimed?.Invoke();
@@ -400,7 +412,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					return ClaimBlizzardAccountResponse.Error;
 				}
 
-				var response = await Client.Value.ClaimBlizzardAccount(accountHi, accountLo, battleTag);
+				var response = await SendWithRetry(c => c.ClaimBlizzardAccount(accountHi, accountLo, battleTag));
 				Log.Debug($"Claimed {account}: {response}");
 				return ClaimBlizzardAccountResponse.Success;
 			}
@@ -444,7 +456,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return null;
 				}
-				return await Client.Value.IdentifyClientAnalyticsToken(token);
+				return await SendWithRetry(c => c.IdentifyClientAnalyticsToken(token));
 			}
 			catch(Exception e)
 			{
@@ -462,7 +474,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return null;
 				}
-				var response = await request(Client.Value);
+				var response = await SendWithRetry(request);
 				Log.Debug(response.ToString());
 				return response;
 			}
@@ -473,7 +485,24 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static async Task<HttpResponseMessage?> SendAsyncWithAuth(HttpRequestMessage req)
+		private static async Task<T> SendWithRetry<T>(Func<OAuthClient, Task<T>> request)
+		{
+			var accessToken = Refresher.AccessToken;
+			try
+			{
+				return await request(Client.Value);
+			}
+			catch(WebException e) when(e.Response is HttpWebResponse { StatusCode: HttpStatusCode.Unauthorized })
+			{
+				Log.Warn("Access token was rejected, refreshing and retrying...");
+				if(!await Refresher.RefreshRejected(accessToken))
+					throw;
+				return await request(Client.Value);
+			}
+		}
+
+		// requests can't be sent twice, so retries need a new one
+		public static async Task<HttpResponseMessage?> SendAsyncWithAuth(Func<HttpRequestMessage> createRequest)
 		{
 			try
 			{
@@ -482,16 +511,32 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return null;
 				}
-				req.Headers.Accept.ParseAdd("application/json");
-				var authToken = Data.Value.TokenData!;
-				req.Headers.Authorization = new AuthenticationHeaderValue(authToken.TokenType, authToken.AccessToken);
-				req.Headers.UserAgent.ParseAdd(Helper.GetUserAgent());
-				return await Core.HttpClient.SendAsync(req);
+				var accessToken = Refresher.AccessToken;
+				var response = await SendWithAuth(createRequest());
+				if(response.StatusCode != HttpStatusCode.Unauthorized)
+					return response;
+				Log.Warn("Access token was rejected, refreshing and retrying...");
+				if(!await Refresher.RefreshRejected(accessToken))
+					return response;
+				response.Dispose();
+				return await SendWithAuth(createRequest());
 			}
 			catch(Exception e)
 			{
 				Log.Error(e);
 				return null;
+			}
+		}
+
+		private static async Task<HttpResponseMessage> SendWithAuth(HttpRequestMessage req)
+		{
+			using(req)
+			{
+				req.Headers.Accept.ParseAdd("application/json");
+				var authToken = Data.Value.TokenData!;
+				req.Headers.Authorization = new AuthenticationHeaderValue(authToken.TokenType, authToken.AccessToken);
+				req.Headers.UserAgent.ParseAdd(Helper.GetUserAgent());
+				return await Core.HttpClient.SendAsync(req);
 			}
 		}
 	}
