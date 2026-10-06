@@ -1860,7 +1860,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					var resummoned = soulFermenterEndBlock.SoulFermenterRevealedEntities.Where(e => e.GetTag(GameTag.CARDTYPE) == (int)CardType.MINION).ToList();
 					if(resummoned.Count > 3)
 						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
-							.UpdateSoulFermenterSavedMinions(soulFermenterEndBlock.SourceEntityId, resummoned.Take(resummoned.Count - 3).ToList());
+							.UpdateSoulFermenterSavedMinions(soulFermenterEndBlock.SourceEntityId, resummoned);
 				}
 
 				// Handle Hand related enchantments in Battlegrounds

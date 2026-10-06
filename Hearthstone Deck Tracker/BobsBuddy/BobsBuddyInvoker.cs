@@ -1427,18 +1427,24 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
-		internal async void UpdateSoulFermenterSavedMinions(int trinketEntityId, List<Entity> additionalSavedEntities)
+		internal async void UpdateSoulFermenterSavedMinions(int trinketEntityId, List<Entity> resummonedEntities)
 		{
 			if(_input == null || !UpdateRevealedEntityValidStates)
 				return;
 
 			var players = new[] { _input.Player, _input.PlayerTeammate, _input.Opponent, _input.OpponentTeammate };
-			var soulFermenter = players.Where(p => p != null).SelectMany(p => p!.Trinkets).OfType<SoulFermenter>().FirstOrDefault(t => t.game_id == trinketEntityId);
-			if(soulFermenter == null || soulFermenter.TrinketUpdatedDuringCombat)
+			var side = players.FirstOrDefault(p => p != null && p.Trinkets.OfType<SoulFermenter>().Any(t => t.game_id == trinketEntityId));
+			var soulFermenter = side?.Trinkets.OfType<SoulFermenter>().First(t => t.game_id == trinketEntityId);
+			if(side == null || soulFermenter == null || soulFermenter.TrinketUpdatedDuringCombat)
+				return;
+
+			// Each soul Fermenter accounts for up to 3 minions from THIS combat
+			var extraCount = resummonedEntities.Count - (3 * side.Trinkets.OfType<SoulFermenter>().Count());
+			if(extraCount <= 0)
 				return;
 
 			var simulator = new Simulator();
-			foreach(var savedEntity in additionalSavedEntities)
+			foreach(var savedEntity in resummonedEntities.Take(extraCount))
 				soulFermenter.ExtraSavedMinions.Add(GetMinionFromEntity(simulator, soulFermenter.ControlledByPlayer, savedEntity, Enumerable.Empty<Entity>()));
 			soulFermenter.TrinketUpdatedDuringCombat = true;
 
