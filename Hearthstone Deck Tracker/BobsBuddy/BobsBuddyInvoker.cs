@@ -1427,6 +1427,33 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			await TryRerun();
 		}
 
+		internal async void UpdateOffensiveSacrificeEnchantment(int sourceEntityId)
+		{
+			if(_input == null || !UpdateRevealedEntityValidStates)
+				return;
+
+			var sides = new[] { _input.Player, _input.PlayerTeammate, _input.Opponent, _input.OpponentTeammate };
+			var minion = sides.Where(p => p != null).SelectMany(p => p!.Side).FirstOrDefault(m => m.game_id == sourceEntityId);
+			if(minion == null)
+				return;
+
+			// Do not proceed if Offensive Sacrifice was already captured
+			if(minion.Enchantments.Any(e => e is OffensiveSacrifice))
+				return;
+
+			if(minion is ICopiesDeathrattles)
+				return;
+
+			var enchantment = new Simulator().EnchantmentFactory.Create(OffensiveSacrifice.CardId, minion.ControlledByPlayer);
+			if(enchantment == null)
+				return;
+
+			enchantment.EnchantmentUpdatedDuringCombat = true;
+			minion.AttachEnchantment(enchantment);
+
+			await TryRerun();
+		}
+
 		internal async void UpdateSoulFermenterSavedMinions(int trinketEntityId, List<Entity> resummonedEntities)
 		{
 			if(_input == null || !UpdateRevealedEntityValidStates)
