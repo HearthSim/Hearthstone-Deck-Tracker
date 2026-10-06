@@ -2259,7 +2259,7 @@ namespace Hearthstone_Deck_Tracker
 						isDuos ? c.GetTier7DuosHeroPickStats(parameters) : c.GetTier7HeroPickStats(parameters)
 					);
 
-			if(stats == null)
+			if(stats?.Data == null || stats.Toast == null)
 				throw new HeroPickingException("Invalid server response");
 
 			// Echo the ref on subsequent requests (rerolls)
