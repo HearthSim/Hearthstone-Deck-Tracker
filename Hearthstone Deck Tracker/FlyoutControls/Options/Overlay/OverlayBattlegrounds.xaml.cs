@@ -210,7 +210,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsHeroPicking = true;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
+			{
 				Core.Overlay.BattlegroundsHeroPickingViewModel.StatsVisibility = Visibility.Visible;
+				Core.Overlay.BattlegroundsHeroPowerPickingViewModel.StatsVisibility = Visibility.Visible;
+			}
 		}
 
 		private void CheckboxShowBattlegroundsHeroPicking_Unchecked(object sender, RoutedEventArgs e)
@@ -220,7 +223,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsHeroPicking = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
+			{
 				Core.Overlay.BattlegroundsHeroPickingViewModel.StatsVisibility = Visibility.Collapsed;
+				Core.Overlay.BattlegroundsHeroPowerPickingViewModel.StatsVisibility = Visibility.Collapsed;
+			}
 		}
 
 		private void CheckboxShowBattlegroundsCompStats_Checked(object sender, RoutedEventArgs e)

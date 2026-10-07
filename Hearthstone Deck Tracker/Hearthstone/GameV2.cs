@@ -837,6 +837,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return _battlegroundsHeroPickStatsParams;
 		}
 
+		public BattlegroundsHeroPickStatsParams? GetBattlegroundsHeroPowerPickParams(int heroDbfId, int[] heroPowerDbfIds)
+		{
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces();
+			if(availableRaces == null)
+				return null;
+
+			return new BattlegroundsHeroPickStatsParams
+			{
+				HeroDbfIds = new[] { heroDbfId },
+				HeroPowerDbfIds = heroPowerDbfIds,
+				BattlegroundsRaces = availableRaces.Cast<int>().ToArray(),
+				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
+				DeityDbfId = BattlegroundsUtils.GetBattlegroundsDeityDbfId(Core.Game.GameEntity),
+				LanguageCode = Helper.GetCardLanguage(),
+				BattlegroundsRating = Core.Game.CurrentBattlegroundsRating,
+				IsReroll = false,
+				HeroPickRef = _battlegroundsHeroPickStatsParams?.HeroPickRef,
+			};
+		}
+
 		private BattlegroundsHeroPickState? _battlegroundsHeroPickState;
 		public BattlegroundsHeroPickState BattlegroundsHeroPickState
 		{

@@ -814,6 +814,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsTrinketPicking.Width = Width / scaling;
 			BattlegroundsTrinketPicking.Height = Height / scaling;
 
+			BattlegroundsHeroPowerPickingViewModel.Scaling = scaling;
+			BattlegroundsHeroPowerPicking.Width = Width / scaling;
+			BattlegroundsHeroPowerPicking.Height = Height / scaling;
+
 			ConstructedMulliganGuideViewModel.Scaling = scaling;
 			ConstructedMulliganGuide.Width = Width / scaling;
 			ConstructedMulliganGuide.Height = Height / scaling;

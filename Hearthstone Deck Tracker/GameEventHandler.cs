@@ -550,9 +550,12 @@ namespace Hearthstone_Deck_Tracker
 							break;
 				}
 			}
-			else if(player == ActivePlayer.Opponent && !_game.IsInMenu && _game.IsBattlegroundsSoloMatch)
+			else if(player == ActivePlayer.Opponent && !_game.IsInMenu && _game.IsBattlegroundsMatch)
 			{
-				Core.Overlay.BattlegroundsInspirationViewModel.OnShoppingEnd();
+				Core.Overlay.BattlegroundsHeroPowerPickingViewModel.Reset();
+
+				if(_game.IsBattlegroundsSoloMatch)
+					Core.Overlay.BattlegroundsInspirationViewModel.OnShoppingEnd();
 			}
 			Core.Overlay.TurnCounter.UpdateTurn(turn.Item2);
 		}
@@ -1539,11 +1542,56 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(
 						_game.Player.Board.Where(x => x.IsHeroPower).Concat(offered).Select(x => x.Card.Id)
 					);
+
+					if(source?.CardId == HearthDb.CardIds.NonCollectible.Neutral.AdventureTavernBrawl)
+						HandleBattlegroundsFinleyChoice(offered).Forget();
 				}
 			}
 
 			_game.Player.OfferedEntityIds = choice.OfferedEntityIds.ToList();
 			Core.Overlay.PlayerCounters.UpdateVisibleCounters();
+		}
+
+		private async Task HandleBattlegroundsFinleyChoice(List<Entity> offeredHeroPowers)
+		{
+			if(_game.Player.Hero?.Card.DbfId is not int heroDbfId)
+				return;
+
+			var heroPowerDbfIds = offeredHeroPowers.Select(x => x.Card.DbfId).ToArray();
+
+			var parameters = _game.GetBattlegroundsHeroPowerPickParams(heroDbfId, heroPowerDbfIds);
+			if(parameters == null)
+				return;
+
+			BattlegroundsHeroPickStats? stats = null;
+			Exception? error = null;
+			try
+			{
+				stats = await GetBattlegroundsHeroPickStats(parameters: parameters);
+			}
+			catch(Exception e)
+			{
+				error = e;
+			}
+
+			// the choice was completed while the stats were loading
+			if(!offeredHeroPowers.All(x => _game.Player.OfferedEntityIds.Contains(x.Id)))
+				return;
+
+			var viewModel = Core.Overlay.BattlegroundsHeroPowerPickingViewModel;
+			if(error is HeroPickingDisabledException)
+				viewModel.ShowDisabledMessage();
+			else if(error != null)
+				viewModel.ShowErrorMessage();
+			else if(stats != null)
+			{
+				viewModel.SetHeroPowerStats(
+					heroPowerDbfIds.Select(dbfId => stats.Data.FirstOrDefault(x => x.HeroDbfId == dbfId)),
+					stats.Toast.Parameters,
+					stats.Toast.MinMmr,
+					stats.Toast.AnomalyAdjusted ?? false
+				);
+			}
 		}
 
 		public async Task HandleBattlegroundsTrinketChoice(IHsChoice choice)
@@ -1650,6 +1698,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						Core.Overlay.BattlegroundsQuestPickingViewModel.Reset();
 						Core.Overlay.BattlegroundsTrinketPickingViewModel.Reset();
+						Core.Overlay.BattlegroundsHeroPowerPickingViewModel.Reset();
 						if((source?.GetTag(GameTag.BACON_IS_MAGIC_ITEM_DISCOVER) ?? 0) > 0)
 						{
 							Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Concat(chosen).Select(x => x.Card.Id));
@@ -2214,7 +2263,7 @@ namespace Hearthstone_Deck_Tracker
 				_game.CacheBattlegroundsHeroPickParams(heroDbfIds, availableRaces);
 		}
 
-		private async Task<BattlegroundsHeroPickStats?> GetBattlegroundsHeroPickStats(Task? paramsReady = null)
+		private async Task<BattlegroundsHeroPickStats?> GetBattlegroundsHeroPickStats(Task? paramsReady = null, BattlegroundsHeroPickStatsParams? parameters = null)
 		{
 			if(Core.Game.Spectator)
 				return null;
@@ -2235,7 +2284,7 @@ namespace Hearthstone_Deck_Tracker
 			if(paramsReady != null)
 				await paramsReady;
 
-			var parameters = _game.GetBattlegroundsHeroPickParams();
+			parameters ??= _game.GetBattlegroundsHeroPickParams();
 
 			// Avoid using a trial when we can't get the api params anyway.
 			if(parameters == null)

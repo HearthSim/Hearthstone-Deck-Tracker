@@ -36,6 +36,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.TrinketPicking;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPowerPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Session;
 using HearthMirror;
@@ -128,6 +129,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public BattlegroundsHeroPickingViewModel BattlegroundsHeroPickingViewModel { get; } = new();
 		public BattlegroundsQuestPickingViewModel BattlegroundsQuestPickingViewModel { get; } = new();
 		public BattlegroundsTrinketPickingViewModel BattlegroundsTrinketPickingViewModel { get; } = new();
+		public BattlegroundsHeroPowerPickingViewModel BattlegroundsHeroPowerPickingViewModel { get; } = new();
 		public BattlegroundsInspirationViewModel BattlegroundsInspirationViewModel { get; } = new();
 		public RelatedCardsPanelViewModel RelatedCardsPanelViewModel { get; } = new();
 
@@ -1195,6 +1197,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsHeroPickingViewModel.Reset();
 			BattlegroundsQuestPickingViewModel.Reset();
 			BattlegroundsTrinketPickingViewModel.Reset();
+			BattlegroundsHeroPowerPickingViewModel.Reset();
 			HideBattlegroundsHeroPanel();
 			HideBattlegroundsTimewarpPanel();
 			TurnCounter.UpdateTurn(1);
@@ -1699,6 +1702,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void SetChoicesVisible(bool choicesVisible, bool isShopChoice, IEnumerable<string>? cardIds)
 		{
 			BattlegroundsTrinketPickingViewModel.ChoicesVisible = choicesVisible;
+			BattlegroundsHeroPowerPickingViewModel.ChoicesVisible = choicesVisible;
 
 			if(_game.IsBattlegroundsMatch)
 			{
