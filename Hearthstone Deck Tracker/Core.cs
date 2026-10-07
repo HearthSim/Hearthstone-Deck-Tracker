@@ -491,14 +491,15 @@ namespace Hearthstone_Deck_Tracker
 					if(Overlay.IsContentVisible)
 						Overlay.UpdateBattlegroundsOverlay();
 
-					TrayIcon.MenuItemStartHearthstone.Visible = false;
-
 					Game.IsRunning = true;
-					GameIsRunningChanged?.Invoke(true);
 
 					// ContentVisibility depends on Game.IsRunning, so notify only after it is set.
 					if(gameStarted)
+					{
+						TrayIcon.MenuItemStartHearthstone.Visible = false;
+						GameIsRunningChanged?.Invoke(true);
 						Windows.CapturableOverlay?.UpdateContentVisibility();
+					}
 
 					Helper.GameWindowState = User32.GetHearthstoneWindowState();
 					Windows.CapturableOverlay?.Update();
