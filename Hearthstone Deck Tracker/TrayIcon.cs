@@ -42,21 +42,25 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Log.Error($"Cant find tray icon at \"{iconFile.FullName}\"");
 
+			NotifyIcon.ContextMenu.MenuItems.Add(new MenuItem($"Hearthstone Deck Tracker v{Helper.GetCurrentVersion().ToVersionString()}") { Enabled = false });
+			NotifyIcon.ContextMenu.MenuItems.Add("-");
+
 			// TODO: Find a better way to interact with the MainWindow
 			MenuItemShow = new MenuItem(LocUtil.Get("TrayIcon_MenuItemShow"), (sender, args) => Core.MainWindow.ActivateWindow());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemShow);
-
-			MenuItemStartHearthstone = new MenuItem(LocUtil.Get("TrayIcon_MenuItemStartHearthstone"), (sender, args) => HearthstoneRunner.StartHearthstone().Forget());
-			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemStartHearthstone);
-			HearthstoneRunner.StartingHearthstone += starting => MenuItemStartHearthstone.Enabled = !starting;
 
 			MenuItemSettings = new MenuItem(LocUtil.Get("TrayIcon_MenuItemSettings"), (sender, args) => GlobalCommands.ShowSettings.Execute(null));
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemSettings);
 
 			NotifyIcon.ContextMenu.MenuItems.Add("-");
 
-			MenuItemUseNoDeck = new MenuItem(LocUtil.Get("TrayIcon_MenuItemUseNoDeck"), (sender, args) => UseNoDeckContextMenu());
+			MenuItemStartHearthstone = new MenuItem(LocUtil.Get("TrayIcon_MenuItemStartHearthstone"), (sender, args) => HearthstoneRunner.StartHearthstone().Forget());
+			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemStartHearthstone);
+			HearthstoneRunner.StartingHearthstone += starting => MenuItemStartHearthstone.Enabled = !starting;
+
+			MenuItemUseNoDeck = new MenuItem(LocUtil.Get("TrayIcon_MenuItemUseNoDeck"), (sender, args) => UseNoDeckContextMenu()) { Visible = false };
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemUseNoDeck);
+			Core.GameIsRunningChanged += running => MenuItemUseNoDeck.Visible = running;
 
 			NotifyIcon.ContextMenu.MenuItems.Add("-");
 
