@@ -564,6 +564,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						&& game.CurrentGameStats != null)
 						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
 							.UpdateOffensiveSacrificeEnchantment(creatorId);
+
+					// A revealed Defensive Sacrifice from a Deathrattle indicates CREATOR has this Dark Gift.
+					if(createdEntity.CardId == NonCollectible.Neutral.DefensiveSacrificeToken4
+						&& gameState.CurrentBlock is { Type: "TRIGGER", TriggerKeyword: "DEATHRATTLE" }
+						&& game.CurrentGameMode == GameMode.Battlegrounds
+						&& game.CurrentGameStats != null)
+						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+							.UpdateDefensiveSacrificeEnchantment(creatorId);
 				}
 				if(gameState.TriangulatePlayed)
 				{
