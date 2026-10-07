@@ -186,6 +186,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							minion.AttachEnchantment(preservedInBronze);
 						}
 						break;
+					case Graduated.CardId:
+						// A Graduated enchantment from a prior combat Training Certificate buff (typically Tarecgosa).
+						// When attached, this enchantment is necessary to resolve trigger resolution order
+						if(minion.Enchantments.Any(e => e is Graduated))
+							break;
+						var graduated = sim.EnchantmentFactory.Create(Graduated.CardId, minion.ControlledByPlayer);
+						if(graduated != null)
+							minion.AttachEnchantment(graduated);
+						break;
 					default:
 						if(attached.LatestCard.TypeEnum == CardType.ENCHANTMENT && attached.Info.LatestCardId != null)
 						{
