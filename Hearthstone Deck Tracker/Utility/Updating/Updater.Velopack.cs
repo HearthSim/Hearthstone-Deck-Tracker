@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Velopack;
@@ -115,6 +116,56 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			Log.Info("Replaced the Squirrel stub with a copy of the Velopack stub");
 		}
 
+		private static (SemanticVersion Installed, SemanticVersion Pending)? _failedUpdate;
+
+		// Update.exe relaunches the old version when applying fails, leaving the newer package in place
+		private static void DetectFailedUpdate(SemanticVersion installed)
+		{
+			var pending = VelopackLocator.Current.GetLatestLocalFullPackage()?.Version;
+			if(pending != null && pending > installed)
+				_failedUpdate = (installed, pending);
+		}
+
+		public static void ReportFailedUpdate()
+		{
+			if(_failedUpdate is not { } failedUpdate)
+				return;
+			var (installed, pending) = failedUpdate;
+			Log.Warn($"Applying update {pending} failed, still running {installed}");
+			var repeated = Config.Instance.LastReportedFailedUpdate == pending.ToString();
+			Influx.OnUpdateApplyFailed(installed.ToString(), pending.ToString(), repeated);
+			if(repeated || !Config.Instance.GoogleAnalytics)
+				return;
+			SentryReporter.CaptureUpdateApplyFailed(installed.ToString(), pending.ToString(), ReadVelopackLogTail());
+			Config.Instance.LastReportedFailedUpdate = pending.ToString();
+			Config.Save();
+		}
+
+		private const int VelopackLogTailBytes = 64 * 1024;
+
+		private static byte[]? ReadVelopackLogTail()
+		{
+			try
+			{
+				// Update.exe's log, see default_file_windows in Velopack's logging.rs
+				var path = Path.Combine(
+					Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+					"velopack",
+					$"velopack_{VelopackLocator.Current.AppId}.log"
+				);
+				using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+				var length = (int)Math.Min(stream.Length, VelopackLogTailBytes);
+				stream.Seek(-length, SeekOrigin.End);
+				using var reader = new BinaryReader(stream);
+				return reader.ReadBytes(length);
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+				return null;
+			}
+		}
+
 		public static void SquirrelInit()
 		{
 			try
@@ -135,6 +186,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					.SetAppUserModelId(App.AppUserModelId)
 					.OnAfterInstallFastCallback(v => UpdateRunKey())
 					.OnAfterUpdateFastCallback(v => UpdateRunKey())
+					.OnRestarted(DetectFailedUpdate)
 					.OnBeforeUninstallFastCallback(v =>
 						{
 							if(Config.Instance.StartWithWindows)
@@ -161,6 +213,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 		public static void ApplyPendingUpdate()
 		{
+			if(_failedUpdate != null)
+				return;
 			var mgr = GetUpdateManager(false);
 			if(mgr.UpdatePendingRestart is not { } pending)
 				return;
@@ -185,7 +239,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 				if(updateInfo != null)
 				{
-					if(Status.SkipStartupCheck)
+					if(_failedUpdate != null)
+					{
+						Log.Info("Update complete, showing update bar since the last apply failed");
+						Status.StatusBarVisibility = Visibility.Visible;
+					}
+					else if(Status.SkipStartupCheck)
 					{
 						Log.Info("Update complete, showing update bar");
 						Status.StatusBarVisibility = Visibility.Visible;

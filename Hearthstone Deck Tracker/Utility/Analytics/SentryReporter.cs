@@ -97,6 +97,24 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
+		public static void CaptureUpdateApplyFailed(string installedVersion, string pendingVersion, byte[]? velopackLog)
+		{
+			var updateEvent = new SentryEvent
+			{
+				Message = $"Applying update {pendingVersion} failed",
+				Level = SentryLevel.Warning,
+			};
+			updateEvent.SetTag("installed_version", installedVersion);
+			updateEvent.SetTag("pending_version", pendingVersion);
+			updateEvent.SetFingerprint("update-apply-failed");
+
+			SentrySdk.CaptureEvent(updateEvent, scope =>
+			{
+				if(velopackLog != null)
+					scope.AddAttachment(velopackLog, "velopack.log", AttachmentType.Default, "text/plain");
+			});
+		}
+
 		// the crash dialog closes right into a shutdown, so give anything still queued a chance to go out
 		public static void FlushBeforeShutdown() => SentrySdk.Flush(CrashFlushTimeout);
 

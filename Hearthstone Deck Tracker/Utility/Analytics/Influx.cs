@@ -503,6 +503,18 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
+		public static void OnUpdateApplyFailed(string installedVersion, string pendingVersion, bool repeated)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_update_apply_failed")
+				.Tag("installed_version", installedVersion)
+				.Tag("pending_version", pendingVersion)
+				.Tag("repeated", repeated)
+				.Build()
+			);
+		}
+
 		public static void OnBobsBuddyUnsupportedInteraction(string? cardId, string message, int turn, bool isDuos, bool? friendly)
 		{
 			if(!Config.Instance.GoogleAnalytics)

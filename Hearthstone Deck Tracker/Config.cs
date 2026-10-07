@@ -582,6 +582,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("")]
 		public string LastBattlegroundsGameDate = "";
 
+		[DefaultValue(null)]
+		public string? LastReportedFailedUpdate = null;
+
 		[DefaultValue(Language.enUS)]
 		public Language Localization = Language.enUS;
 
