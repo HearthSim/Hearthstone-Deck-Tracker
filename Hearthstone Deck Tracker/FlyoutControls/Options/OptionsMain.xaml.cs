@@ -92,6 +92,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public ScrollBarVisibility ContentScrollBarVisibility =>
 			OptionsContent is IOptionsPageWithOwnScrolling ? ScrollBarVisibility.Disabled : ScrollBarVisibility.Auto;
 
+		public void Reset()
+		{
+			TreeViewItemHSReplayAccount.IsSelected = true;
+			ScrollViewerContent.ScrollToTop();
+			Helper.FindVisualChildren<ScrollViewer>(TreeViewOptions).FirstOrDefault()?.ScrollToTop();
+		}
+
 		public void Load(GameV2 game)
 		{
 			OptionsOverlayGeneral.Load();

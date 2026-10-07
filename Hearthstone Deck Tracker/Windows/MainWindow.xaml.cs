@@ -355,6 +355,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void MinimizeToTray()
 		{
+			FlyoutOptions.IsOpen = false;
+			Options.Reset();
 			Core.TrayIcon.NotifyIcon.Visible = true;
 			Hide();
 			Visibility = Collapsed;
