@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
@@ -19,6 +20,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		private const int InitialDownloadTimeout =  3_000;
 		private const int TotalDownloadTimeout   = 20_000;
 
+		private const int DownloadStallTimeout = 300_000;
+		private const int DownloadStallPoll    =  30_000;
+
+		private static bool _downloadInProgress;
+		private static bool _deltasDisabled;
+
 		private static TimeSpan _updateCheckDelay = new TimeSpan(0, 20, 0);
 		private static bool ShouldCheckForUpdates()
 			=> Config.Instance.CheckForUpdates && DateTime.Now - _lastUpdateCheck >= _updateCheckDelay;
@@ -29,6 +36,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			// restart. Checking again would reset the status bar (UpdaterState.Checking/None
 			// both hide the "click to update" message) while leaving it visible but empty.
 			if(Status.UpdaterState == UpdaterState.Available)
+				return;
+			// a slow download can outlast the check interval
+			if(_downloadInProgress)
 				return;
 			if(!force && !ShouldCheckForUpdates())
 				return;
@@ -235,10 +245,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				if(isStartupCheck)
 				{
 					Status.OnDownloadProgressChanged(0);
-					var downloadTask = mgr.DownloadUpdatesAsync(
-						updateInfo,
-						Status.OnDownloadProgressChanged
-					);
+					var downloadTask = DownloadUpdate(mgr, updateInfo, Status.OnDownloadProgressChanged);
 
 					var task = await Task.WhenAny(downloadTask,
 						Task.Delay(InitialDownloadTimeout));
@@ -269,7 +276,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				}
 				else
 				{
-					await mgr.DownloadUpdatesAsync(updateInfo);
+					await DownloadUpdate(mgr, updateInfo, null);
 				}
 
 				Status.OnInstalled();
@@ -295,6 +302,56 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				Status.UpdateProgress = 0;
 			}
 		}
+
+		private static async Task DownloadUpdate(UpdateManager mgr, UpdateInfo updateInfo, Action<int>? progress)
+		{
+			_downloadInProgress = true;
+			try
+			{
+				if(await DownloadUnlessStalled(mgr, _deltasDisabled ? WithoutDeltas(updateInfo) : updateInfo, progress))
+					return;
+				if(_deltasDisabled)
+					throw new TimeoutException("Update download stalled");
+				Log.Warn("Update download stalled, retrying without deltas");
+				_deltasDisabled = true;
+				if(!await DownloadUnlessStalled(mgr, WithoutDeltas(updateInfo), progress))
+					throw new TimeoutException("Update download stalled again");
+			}
+			finally
+			{
+				_downloadInProgress = false;
+				_lastUpdateCheck = DateTime.Now;
+			}
+		}
+
+		private static async Task<bool> DownloadUnlessStalled(UpdateManager mgr, UpdateInfo updateInfo, Action<int>? progress)
+		{
+			using var cts = new CancellationTokenSource();
+			var lastProgress = DateTime.Now;
+			var download = mgr.DownloadUpdatesAsync(updateInfo, p =>
+			{
+				lastProgress = DateTime.Now;
+				progress?.Invoke(p);
+			}, cts.Token);
+			// keep waiting after cancelling since Velopack only checks the token between reads
+			while(await Task.WhenAny(download, Task.Delay(DownloadStallPoll)) != download)
+			{
+				if((DateTime.Now - lastProgress).TotalMilliseconds > DownloadStallTimeout)
+					cts.Cancel();
+			}
+			try
+			{
+				await download;
+				return true;
+			}
+			catch(Exception) when(cts.IsCancellationRequested)
+			{
+				return false;
+			}
+		}
+
+		private static UpdateInfo WithoutDeltas(UpdateInfo updateInfo)
+			=> new(updateInfo.TargetFullRelease, updateInfo.IsDowngrade);
 
 		public static void RestartApp()
 		{
