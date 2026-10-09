@@ -298,10 +298,13 @@ public class BattlegroundsSessionViewModel : ViewModel
 	    return compStats;
 	}
 
+	private bool _compStatsFailed;
+
 	private void ClearCompositionStats()
 	{
 		CompositionStats = null;
-		CompStatsBodyVisibility = Visibility.Hidden;
+		_compStatsFailed = false;
+		CompStatsBodyVisibility = Visibility.Collapsed;
 		CompStatsWaitingMsgVisibility = Visibility.Visible;
 		CompStatsErrorVisibility = Visibility.Hidden;
 
@@ -319,20 +322,30 @@ public class BattlegroundsSessionViewModel : ViewModel
 
 	private async Task UpdateCompositionStatsIfNeeded()
 	{
-		if(Core.Game.CurrentMode != Mode.GAMEPLAY || SceneHandler.Scene != Mode.GAMEPLAY)
+		if(Core.Game.CurrentMode != Mode.GAMEPLAY)
 		{
 			ClearCompositionStats();
 			return;
 		}
 
-		// Ensures data was already fetched and no more API calls are needed
-		if(((CompositionStats != null && CompositionStats.Any()) || CompStatsErrorVisibility == Visibility.Visible) &&
-		   (Core.Game.CurrentMode == Mode.GAMEPLAY || SceneHandler.Scene == Mode.GAMEPLAY))
-		{
-			return;
-		}
+		// fetch while the loading screen still covers the game, so the stats are ready when it fades in
+		if(!(CompositionStats?.Any() ?? false) && !_compStatsFailed)
+			await TrySetCompStats();
 
-		await TrySetCompStats();
+		if(SceneHandler.Scene == Mode.GAMEPLAY)
+			RevealCompositionStats();
+	}
+
+	private void RevealCompositionStats()
+	{
+		if(_compStatsFailed)
+		{
+			CompStatsErrorVisibility = Visibility.Visible;
+			CompStatsBodyVisibility = Visibility.Hidden;
+			CompStatsWaitingMsgVisibility = Visibility.Hidden;
+		}
+		else if(CompositionStats != null)
+			ShowCompositionStats();
 	}
 
 	private async Task TrySetCompStats()
@@ -361,7 +374,6 @@ public class BattlegroundsSessionViewModel : ViewModel
 				SetBattlegroundsCompositionStatsViewModel(
 					firstPlaceComps
 				);
-				ShowCompositionStats();
 			}
 		}
 	}
@@ -390,9 +402,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 			}).Forget();
 		}
 
-		CompStatsErrorVisibility = Visibility.Visible;
-		CompStatsBodyVisibility = Visibility.Hidden;
-		CompStatsWaitingMsgVisibility = Visibility.Hidden;
+		_compStatsFailed = true;
 	}
 
 	private async Task<List<GameItem>> UpdateLatestGames()
