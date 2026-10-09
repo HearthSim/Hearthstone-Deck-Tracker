@@ -225,10 +225,11 @@
                 <ContentControl.Resources>
                     <minions:BattlegroundsMinions x:Key="Minions" />
                     <comps:CompGuideList x:Key="Comps" />
-                    <StackPanel x:Key="Heroes">
+                    <!-- a StackPanel would give the hero guides unbounded height, so their ScrollViewer could never scroll -->
+                    <DockPanel x:Key="Heroes">
+                        <quests:QuestGuide DockPanel.Dock="Bottom" DataContext="{Binding Source={x:Static hearthstoneDeckTracker:Core.Overlay}, Path=BattlegroundsQuestGuideListViewModel}" />
                         <heroes:HeroGuide />
-                        <quests:QuestGuide DataContext="{Binding Source={x:Static hearthstoneDeckTracker:Core.Overlay}, Path=BattlegroundsQuestGuideListViewModel}" />
-                    </StackPanel>
+                    </DockPanel>
 
                     <DataTemplate DataType="{x:Type minions:BattlegroundsMinionsViewModel}">
                         <ContentControl Content="{StaticResource Minions}"/>

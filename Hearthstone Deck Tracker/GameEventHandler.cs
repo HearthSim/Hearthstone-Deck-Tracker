@@ -536,6 +536,7 @@ namespace Hearthstone_Deck_Tracker
 					if(_game.CurrentGameStats != null && turn.Item2 > 1)
 						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShoppingAsync();
 					Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(_game.Player.Board.Where(x => x.IsHeroPower).Select(x => x.Card.Id));
+					Core.Overlay.BattlegroundsHeroGuideListViewModel.OnHeroPowers(_game.Player.Board.Where(x => x.IsHeroPower));
 					Core.Overlay.BattlegroundsMinionsVM.OnTrinkets(Core.Game.Player.Trinkets.Select(x => x.Card.Id));
 					Core.Overlay.BattlegroundsInspirationViewModel.OnShoppingStart();
 					Core.Overlay.BgsMinionPinningShop.Visibility = Visibility.Visible;
@@ -1706,9 +1707,9 @@ namespace Hearthstone_Deck_Tracker
 							_game.SnapshotChosenTrinket(choice);
 						}
 						// the entity of a chosen hero power is only created after the choice completes, concat the chosen one
-						Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(
-							_game.Player.Board.Where(x => x.IsHeroPower).Concat(chosen.Where(x => x.IsHeroPower)).Select(x => x.Card.Id)
-						);
+						var heroPowers = _game.Player.Board.Where(x => x.IsHeroPower).Concat(chosen.Where(x => x.IsHeroPower)).ToList();
+						Core.Overlay.BattlegroundsMinionsVM.OnHeroPowers(heroPowers.Select(x => x.Card.Id));
+						Core.Overlay.BattlegroundsHeroGuideListViewModel.OnHeroPowers(heroPowers);
 
 						// Quest choice
 						OnQuestChosen(chosen.FirstOrDefault());

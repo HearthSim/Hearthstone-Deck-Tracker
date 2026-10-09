@@ -73,7 +73,7 @@
                 </Style.Triggers>
             </Style>
         </Border.Style>
-        <StackPanel DataContext="{Binding SelectedHero}">
+        <Grid>
             <StackPanel Margin="10,20,10,20" Visibility="{Binding IsHeroSelected, Converter={StaticResource InverseBoolToVisibility}}">
                 <TextBlock
                     Text="{lex:Loc Battlegrounds_Guides_WaitingHeroPick}"
@@ -86,118 +86,129 @@
                     VerticalAlignment="Center"
                 />
             </StackPanel>
-            <Grid d:Background="#292d30"
-                  Visibility="{Binding IsHeroSelected, Converter={StaticResource BoolToVisibility}}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Border Grid.Row="1" BorderBrush="#4F565B" BorderThickness="1" CornerRadius="3" Background="#292d30">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid Height="48">
-                            <Border BorderThickness="0, 0, 0, 1" BorderBrush="#4A5256" Background="#141617" CornerRadius="3,3,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="#23272A" extensions:OverlayExtensions.IsOverlayHitTestVisible="True"
+                          Visibility="{Binding IsHeroSelected, Converter={StaticResource BoolToVisibility}}">
+                <ItemsControl ItemsSource="{Binding Heroes}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#4F565B" BorderThickness="1" CornerRadius="3" Background="#292d30">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Margin" Value="0,9,0,0"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                                                <Setter Property="Margin" Value="0"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <Grid>
-                                    <Rectangle Opacity="0.4">
-                                        <Rectangle.Fill>
-                                            <ImageBrush
-                                                ImageSource="{Binding CardAsset.Asset}" Stretch="None">
-                                                <ImageBrush.Transform>
-                                                    <TranslateTransform X="-30" Y="0" />
-                                                </ImageBrush.Transform>
-                                            </ImageBrush>
-                                        </Rectangle.Fill>
-                                        <Rectangle.OpacityMask>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0.80,0">
-                                                <GradientStop Color="#141617" Offset="0.5"/>
-                                                <GradientStop Color="Transparent" Offset="1"/>
-                                            </LinearGradientBrush>
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                    <Grid Margin="9,0,9,0" HorizontalAlignment="Stretch">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <hearthstoneDeckTracker:OutlinedTextBlock
-                                            Text="{Binding HeroCard.Name}"
-                                            FontSize="13"
-                                            TextWrapping="Wrap"
-                                            TextTrimming="None"
-                                            FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
-                                        />
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Height="48">
+                                        <Border BorderThickness="0, 0, 0, 1" BorderBrush="#4A5256" Background="#141617" CornerRadius="3,3,0,0">
+                                            <Grid>
+                                                <Rectangle Opacity="0.4">
+                                                    <Rectangle.Fill>
+                                                        <ImageBrush
+                                                            ImageSource="{Binding CardAsset.Asset}" Stretch="None">
+                                                            <ImageBrush.Transform>
+                                                                <TranslateTransform X="-30" Y="0" />
+                                                            </ImageBrush.Transform>
+                                                        </ImageBrush>
+                                                    </Rectangle.Fill>
+                                                    <Rectangle.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0.80,0">
+                                                            <GradientStop Color="#141617" Offset="0.5"/>
+                                                            <GradientStop Color="Transparent" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                                <Grid Margin="9,0,9,0" HorizontalAlignment="Stretch">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <hearthstoneDeckTracker:OutlinedTextBlock
+                                                        Text="{Binding HeroCard.Name}"
+                                                        FontSize="13"
+                                                        TextWrapping="Wrap"
+                                                        TextTrimming="None"
+                                                        FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+                                                    />
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
                                     </Grid>
-                                </Grid>
-                            </Border>
-                        </Grid>
-                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="#2e3235" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
-                            <StackPanel>
-                                <StackPanel Margin="10,30,10,30" Visibility="{Binding IsGuidePublished, Converter={StaticResource InverseBoolToVisibility}}">
-                                    <hearthstoneDeckTracker:OutlinedTextBlock  TextAlignment="Center" FontSize="11" Text="{lex:Loc Battlegrounds_Guides_NoGuideAvailable}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
-                                </StackPanel>
+                                    <Border Grid.Row="1" Background="#2e3235" CornerRadius="0,0,3,3">
+                                        <StackPanel>
+                                            <StackPanel Margin="10,30,10,30" Visibility="{Binding IsGuidePublished, Converter={StaticResource InverseBoolToVisibility}}">
+                                                <hearthstoneDeckTracker:OutlinedTextBlock  TextAlignment="Center" FontSize="11" Text="{lex:Loc Battlegrounds_Guides_NoGuideAvailable}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                                            </StackPanel>
 
-                                <StackPanel Visibility="{Binding IsGuidePublished, Converter={StaticResource BoolToVisibility}}">
-                                    <StackPanel Margin="9">
-                                        <hearthstoneDeckTracker:OutlinedTextBlock Margin="0,0,0,8" FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_HowToPlay}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
-                                        <TextBlock TextAlignment="Left" TextWrapping="Wrap" FontSize="11" LineHeight="17" Foreground="White" Opacity="0.7" guides:TextBlockExtensions.BindableInlines="{Binding HowToPlay}" />
-                                    </StackPanel>
+                                            <StackPanel Visibility="{Binding IsGuidePublished, Converter={StaticResource BoolToVisibility}}">
+                                                <StackPanel Margin="9">
+                                                    <hearthstoneDeckTracker:OutlinedTextBlock Margin="0,0,0,8" FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_HowToPlay}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                                                    <TextBlock TextAlignment="Left" TextWrapping="Wrap" FontSize="11" LineHeight="17" Foreground="White" Opacity="0.7" guides:TextBlockExtensions.BindableInlines="{Binding HowToPlay}" />
+                                                </StackPanel>
 
-                                    <StackPanel Margin="9" Visibility="{Binding IsBuddyGuidePublished, Converter={StaticResource BoolToVisibility}}">
-                                        <hearthstoneDeckTracker:OutlinedTextBlock Margin="0,0,0,8" FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_BuddyGuide}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
-                                        <TextBlock TextAlignment="Left" TextWrapping="Wrap" FontSize="11" LineHeight="17" Foreground="White" Opacity="0.7" guides:TextBlockExtensions.BindableInlines="{Binding HowToPlayBuddy}" />
-                                    </StackPanel>
+                                                <StackPanel Margin="9" Visibility="{Binding IsBuddyGuidePublished, Converter={StaticResource BoolToVisibility}}">
+                                                    <hearthstoneDeckTracker:OutlinedTextBlock Margin="0,0,0,8" FontSize="12" Text="{lex:Loc Battlegrounds_CompGuide_BuddyGuide}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                                                    <TextBlock TextAlignment="Left" TextWrapping="Wrap" FontSize="11" LineHeight="17" Foreground="White" Opacity="0.7" guides:TextBlockExtensions.BindableInlines="{Binding HowToPlayBuddy}" />
+                                                </StackPanel>
 
-                                    <Border Visibility="{Binding FavorableTribesVisibility}" BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256" Background="#1c1f22">
-                                        <StackPanel Margin="9">
-                                            <hearthstoneDeckTracker:OutlinedTextBlock Margin="0,0,0,7" FontSize="12" Text="{lex:Loc Battlegrounds_Guides_FavorableMinions}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
-                                            <ItemsControl ItemsSource="{Binding FavorableTribes}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"/>
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Grid>
-                                                            <session:BattlegroundsTribe Margin="0,0,12,0" Tribe="{Binding}" >
-                                                                <session:BattlegroundsTribe.LayoutTransform>
-                                                                    <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
-                                                                </session:BattlegroundsTribe.LayoutTransform>
-                                                            </session:BattlegroundsTribe>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
+                                                <Border Visibility="{Binding FavorableTribesVisibility}" BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256" Background="#1c1f22">
+                                                    <StackPanel Margin="9">
+                                                        <hearthstoneDeckTracker:OutlinedTextBlock Margin="0,0,0,7" FontSize="12" Text="{lex:Loc Battlegrounds_Guides_FavorableMinions}" FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+                                                        <ItemsControl ItemsSource="{Binding FavorableTribes}">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"/>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <Grid>
+                                                                        <session:BattlegroundsTribe Margin="0,0,12,0" Tribe="{Binding}" >
+                                                                            <session:BattlegroundsTribe.LayoutTransform>
+                                                                                <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                                                            </session:BattlegroundsTribe.LayoutTransform>
+                                                                        </session:BattlegroundsTribe>
+                                                                    </Grid>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <Border BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256" Background="#141617">
+                                                    <Grid Margin="7" HorizontalAlignment="Stretch">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackPanel HorizontalAlignment="Left">
+                                                            <TextBlock Text="{lex:Loc Battlegrounds_CompGuide_CreatedBy}" Foreground="White" FontSize="9" Opacity="0.8"/>
+                                                            <TextBlock Text="JeefHS" Foreground="White" FontSize="10" FontWeight="Bold" TextAlignment="Left"/>
+                                                        </StackPanel>
+
+                                                        <StackPanel Grid.Column="1">
+                                                            <TextBlock Text="{lex:Loc Battlegrounds_CompGuide_LastUpdated}" Foreground="White" HorizontalAlignment="Right" FontSize="9" Opacity="0.8"/>
+                                                            <TextBlock Text="{Binding LastUpdatedFormatted}" Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </Border>
+                                            </StackPanel>
                                         </StackPanel>
                                     </Border>
-
-                                    <Border BorderThickness="0, 1, 0, 0" BorderBrush="#4A5256" Background="#141617">
-                                        <Grid Margin="7" HorizontalAlignment="Stretch">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel HorizontalAlignment="Left">
-                                                <TextBlock Text="{lex:Loc Battlegrounds_CompGuide_CreatedBy}" Foreground="White" FontSize="9" Opacity="0.8"/>
-                                                <TextBlock Text="JeefHS" Foreground="White" FontSize="10" FontWeight="Bold" TextAlignment="Left"/>
-                                            </StackPanel>
-
-                                            <StackPanel Grid.Column="1">
-                                                <TextBlock Text="{lex:Loc Battlegrounds_CompGuide_LastUpdated}" Foreground="White" HorizontalAlignment="Right" FontSize="9" Opacity="0.8"/>
-                                                <TextBlock Text="{Binding LastUpdatedFormatted}" Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Grid>
-                </Border>
-            </Grid>
-        </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
     </Border>
 </UserControl>

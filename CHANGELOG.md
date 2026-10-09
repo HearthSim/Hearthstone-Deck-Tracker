@@ -1,6 +1,7 @@
 ## Unreleased
 **Battlegrounds**:
 - Added tiers, stats and armor when picking Sir Finley's hero power! (based on the hero's stats)
+- Changed the Hero Guides to match your current hero power(s) during the game.
 
 ## **Release v1.58.9 - 2026-10-06**
 **Battlegrounds**:
