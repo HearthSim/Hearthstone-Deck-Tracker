@@ -1,7 +1,8 @@
-## Unreleased
+## **Release v1.58.10 - 2026-10-09**
 **Battlegrounds**:
 - Added tiers, stats and armor when picking Sir Finley's hero power! (based on the hero's stats)
 - Changed the Hero Guides to match your current hero power(s) during the game.
+- Fixed a small remaining number of incorrect combat odds.
 
 ## **Release v1.58.9 - 2026-10-06**
 **Battlegrounds**:
@@ -3272,7 +3273,7 @@ Dredge support coming soon!
 
 **Bob's Buddy**:
 - Fixed an issue where King Bagurgle triggered by Monstrous Macaw would buff itself.
-- Fixed an issue where duplicate Hero Powers would not stack (e.g. Deathwing vs Sir Finnley).
+- Fixed an issue where duplicate Hero Powers would not stack (e.g. Deathwing vs Sir Finley).
 - Fixed an issue where Deflect-o-Bot Divine Shield trigger did not correctly interact with Deathrattles.
 - Updated Khadgar to be able to duplicate minions with Reborn (this was a server-side change by Blizzard).
 
