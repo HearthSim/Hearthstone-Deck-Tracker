@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.HeroPicking;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
@@ -54,9 +53,9 @@ public class BattlegroundsHeroPowerPickingViewModel : ViewModel
 		? LocUtil.Get("BattlegroundsHeroPicking_VisibilityToggle_Hide")
 		: LocUtil.Get("BattlegroundsHeroPicking_VisibilityToggle_Show");
 
-	public List<BattlegroundsSingleHeroViewModel>? HeroPowerStats
+	public List<BattlegroundsSingleHeroPowerViewModel>? HeroPowerStats
 	{
-		get => GetProp<List<BattlegroundsSingleHeroViewModel>?>(null);
+		get => GetProp<List<BattlegroundsSingleHeroPowerViewModel>?>(null);
 		set
 		{
 			SetProp(value);
@@ -79,13 +78,14 @@ public class BattlegroundsHeroPowerPickingViewModel : ViewModel
 	public double Scaling { get => GetProp(1.0); set => SetProp(value); }
 
 	public void SetHeroPowerStats(
-		IEnumerable<BattlegroundsHeroPickStats.BattlegroundsSingleHeroPickStats?> stats,
+		IEnumerable<int> heroPowerDbfIds,
+		BattlegroundsHeroPickStats.BattlegroundsSingleHeroPickStats[] stats,
 		Dictionary<string, string>? parameters,
 		int? minMmr,
 		bool anomalyAdjusted
 	)
 	{
-		HeroPowerStats = stats.Select(x => new BattlegroundsSingleHeroViewModel(x, SetPlacementVisible)).ToList();
+		HeroPowerStats = heroPowerDbfIds.Select(dbfId => new BattlegroundsSingleHeroPowerViewModel(dbfId, stats.FirstOrDefault(x => x.HeroDbfId == dbfId), SetPlacementVisible)).ToList();
 		var filterValue = parameters != null && parameters.TryGetValue("mmrPercentile", out var x) ? x : null;
 
 		Message.Mmr(filterValue, minMmr, anomalyAdjusted);

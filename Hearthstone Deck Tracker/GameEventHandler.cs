@@ -1586,7 +1586,8 @@ namespace Hearthstone_Deck_Tracker
 			else if(stats != null)
 			{
 				viewModel.SetHeroPowerStats(
-					heroPowerDbfIds.Select(dbfId => stats.Data.FirstOrDefault(x => x.HeroDbfId == dbfId)),
+					heroPowerDbfIds,
+					stats.Data,
 					stats.Toast.Parameters,
 					stats.Toast.MinMmr,
 					stats.Toast.AnomalyAdjusted ?? false

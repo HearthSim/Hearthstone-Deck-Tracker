@@ -8,6 +8,7 @@
              xmlns:tier7="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7"
              xmlns:anim="clr-namespace:Hearthstone_Deck_Tracker.Utility.Animations"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -36,6 +37,22 @@
                         <DataTemplate>
                             <Grid Height="430" Width="252" Margin="67.07,0">
                                 <heroPowerPicking:BattlegroundsSingleHeroPower DataContext="{Binding BgsHeroHeaderVM}" Width="243" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                                <!-- floats below the hero power without taking up layout space -->
+                                <Canvas HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Canvas Canvas.Left="221.9" Canvas.Top="403.6">
+                                        <Canvas.RenderTransform>
+                                            <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+                                        </Canvas.RenderTransform>
+                                        <Image Source="{Binding HeroRender.Asset}" Width="160" Height="170" />
+                                        <Grid Width="100" Height="100" Canvas.Left="85" Canvas.Top="95" Visibility="{Binding ArmorVisibility}" d:Visibility="Visible">
+                                            <Image Source="/HearthstoneDeckTracker;component/Resources/armor.png" />
+                                            <!-- not HearthstoneTextBlock, its own FontSize would override the one set in this template -->
+                                            <hdt:OutlinedTextBlock Text="{Binding Armor}" d:Text="5" FontSize="42" StrokeWidth="4.2" TextWrapping="NoWrap"
+                                                                   FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
+                                                                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0.14" />
+                                        </Grid>
+                                    </Canvas>
+                                </Canvas>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
