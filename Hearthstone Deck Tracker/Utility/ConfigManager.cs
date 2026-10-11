@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(Config.Instance.SelectedTags.Count == 0)
 				Config.Instance.SelectedTags.Add("All");
 
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			if(!Directory.Exists(Config.Instance.DataDir))
 				Config.Instance.Reset(nameof(Config.DataDirPath));
 #endif
@@ -147,7 +147,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				}
 
 
-#if(!SQUIRREL)
+#if(!INSTALLED)
 				if(configVersion <= new Version(0, 5, 1, 0))
 				{
 					Config.Instance.SaveConfigInAppData = Config.Instance.SaveInAppData;

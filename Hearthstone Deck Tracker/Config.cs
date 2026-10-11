@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker
 		                                            + @"\HearthstoneDeckTracker";
 
 
-#if(!SQUIRREL)
+#if(!INSTALLED)
 		[DefaultValue(".")]
 		public string DataDirPath = ".";
 
@@ -1247,7 +1247,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get
 			{
-#if(SQUIRREL)
+#if(INSTALLED)
 				return AppDataPath + "\\";
 #else
 				return Instance.SaveInAppData ? AppDataPath + "\\" : string.Empty;
@@ -1263,7 +1263,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get
 			{
-#if(SQUIRREL)
+#if(INSTALLED)
 				return AppDataPath + "\\";
 #else
 				return Instance.SaveConfigInAppData == false ? string.Empty : AppDataPath + "\\";
@@ -1275,7 +1275,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get
 			{
-#if(SQUIRREL)
+#if(INSTALLED)
 				return AppDataPath + "\\";
 #else
 				return Instance.SaveDataInAppData == false ? DataDirPath + "\\" : AppDataPath + "\\";
@@ -1393,7 +1393,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				var config = Path.Combine(AppDataPath, "config.xml");
-#if(SQUIRREL)
+#if(INSTALLED)
 				if(File.Exists(config))
 				{
 					_config = XmlManager<Config>.Load(config);
@@ -1442,7 +1442,7 @@ namespace Hearthstone_Deck_Tracker
 					Directory.CreateDirectory(Instance.ConfigDir);
 				Save();
 			}
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			else if(Instance.SaveConfigInAppData != null)
 			{
 				if(Instance.SaveConfigInAppData.Value) //check if config needs to be moved

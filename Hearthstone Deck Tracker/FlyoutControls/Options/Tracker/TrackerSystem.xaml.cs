@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public TrackerSystem()
 		{
 			InitializeComponent();
-#if(SQUIRREL)
+#if(INSTALLED)
 			CheckboxConfigSaveAppData.Visibility = Visibility.Collapsed;
 			CheckboxDataSaveAppData.Visibility = Visibility.Collapsed;
 			SelectSaveDataPath.Visibility = Visibility.Collapsed;
@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 			CheckboxAlternativeScreenCapture.IsChecked = Config.Instance.AlternativeScreenCapture;
 			CheckboxForceHardwareAccelerationOff.IsChecked = Config.Instance.UseHardwareAcceleration == false;
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
 			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
 #endif
@@ -182,7 +182,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private async void CheckboxConfigSaveAppData_Checked(object sender, RoutedEventArgs e)
 		{
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			if(!_initialized)
 				return;
 			var path = Config.Instance.ConfigPath;
@@ -196,7 +196,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private async void CheckboxConfigSaveAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			if(!_initialized)
 				return;
 			var path = Config.Instance.ConfigPath;
@@ -210,7 +210,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private async void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
 		{
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			if(!_initialized)
 				return;
 			Config.Instance.SaveDataInAppData = true;
@@ -223,7 +223,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private async void CheckboxDataSaveAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			if(!_initialized)
 				return;
 			Config.Instance.SaveDataInAppData = false;
@@ -266,7 +266,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private async void SelectSaveDataPath_Click(object sender, RoutedEventArgs e)
 		{
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			var dialog = new FolderBrowserDialog();
 			var dialogResult = dialog.ShowDialog();
 

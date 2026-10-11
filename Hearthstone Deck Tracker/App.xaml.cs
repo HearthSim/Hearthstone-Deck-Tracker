@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker
 			Shell32.SetCurrentProcessExplicitAppUserModelID("com.squirrel.HearthstoneDeckTracker.HearthstoneDeckTracker");
 			ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-#if(SQUIRREL)
+#if(INSTALLED)
 			Utility.Updating.Updater.SquirrelInit();
 #endif
 

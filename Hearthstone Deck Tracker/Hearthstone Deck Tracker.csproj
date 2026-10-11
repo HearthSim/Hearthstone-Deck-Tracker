@@ -45,7 +45,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Squirrel|x64'">
-    <DefineConstants>TRACE;SQUIRREL</DefineConstants>
+    <DefineConstants>TRACE;INSTALLED;SQUIRREL</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>portable</DebugType>
   </PropertyGroup>

@@ -47,7 +47,7 @@ jobs:
       # SENTRY_AUTH_TOKEN enables the Sentry CLI steps in "Hearthstone Deck Tracker.csproj", same as for
       # the Squirrel build in release.yml
       - name: Build (Dev)
-        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x64" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x64\Squirrel\"
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x64" /p:DefineConstants='"DEBUG;DEV;INSTALLED;SQUIRREL;TRACE"' /p:OutputPath="bin\x64\Squirrel\"
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG }}

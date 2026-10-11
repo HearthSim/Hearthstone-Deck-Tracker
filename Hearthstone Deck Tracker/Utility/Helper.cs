@@ -381,7 +381,7 @@ namespace Hearthstone_Deck_Tracker
 
 
 
-#if(!SQUIRREL)
+#if(!INSTALLED)
 		public static void CopyReplayFiles()
 		{
 			if(Config.Instance.SaveDataInAppData == null)
@@ -848,7 +848,7 @@ namespace Hearthstone_Deck_Tracker
 
 		internal static string GetUserAgent()
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			const string name = "HDT";
 #else
 			const string name = "HDTPortable";

@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		private static DeckStatsList Load()
 		{
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			SetupDeckStatsFile();
 #endif
 			var file = Path.Combine(Config.Instance.DataDir, "DeckStats.xml");
@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			return instance;
 		}
 
-#if(!SQUIRREL)
+#if(!INSTALLED)
 		internal static void SetupDeckStatsFile()
 		{
 			if(Config.Instance.SaveDataInAppData == null)

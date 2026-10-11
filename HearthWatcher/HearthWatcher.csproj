@@ -22,7 +22,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Squirrel|x64'">
-    <DefineConstants>TRACE;SQUIRREL</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <Optimize>true</Optimize>
     <DebugType>portable</DebugType>

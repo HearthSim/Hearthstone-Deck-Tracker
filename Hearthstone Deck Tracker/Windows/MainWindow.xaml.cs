@@ -507,7 +507,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			Updater.StartUpdate();
 #endif
 		}

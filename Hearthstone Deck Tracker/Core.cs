@@ -130,7 +130,7 @@ namespace Hearthstone_Deck_Tracker
 				Config.SetInitialLanguage();
 
 			Log.Info($"HDT: {Helper.GetCurrentVersion()}, Operating System: {Helper.GetWindowsVersion()}, .NET Framework: {Helper.GetInstalledDotNetVersion()}");
-#if(SQUIRREL)
+#if(INSTALLED)
 			if(Config.Instance.CheckForUpdates)
 			{
 				var updateCheck = Updater.StartupUpdateCheck();
@@ -227,14 +227,14 @@ namespace Hearthstone_Deck_Tracker
 				SquirrelConnection.FindBestRemote();
 #endif
 
-#if(SQUIRREL && !DEV)
+#if(INSTALLED && !DEV)
 				if(Config.Instance.CheckForDevUpdates && !Config.Instance.AllowDevUpdates.HasValue)
 					MainWindow.ShowDevUpdatesMessage();
 #endif
 			}
 			DataIssueResolver.Run();
 
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			Helper.CopyReplayFiles();
 #endif
 			BackupManager.Run();
@@ -392,7 +392,7 @@ namespace Hearthstone_Deck_Tracker
 			_restarting = true;
 			Log.Info("Restarting...");
 
-#if(SQUIRREL)
+#if(INSTALLED)
 			await PrepareShutdown();
 			Squirrel.UpdateManager.RestartApp();
 #else
@@ -435,7 +435,7 @@ namespace Hearthstone_Deck_Tracker
 			var hsForegroundChanged = false;
 			while(_updateOverlay)
 			{
-#if(SQUIRREL)
+#if(INSTALLED)
 				if(Config.Instance.CheckForUpdates)
 					Updater.CheckForUpdates();
 #endif

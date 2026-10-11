@@ -19,7 +19,7 @@ using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Updating;
 using Sentry;
 
-#if(SQUIRREL)
+#if(INSTALLED)
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 #endif
@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				var environment = GetBuildMetadata("SentryEnvironment");
 				options.Environment = string.IsNullOrWhiteSpace(environment) ? "Portable" : environment;
 				options.IsGlobalModeEnabled = true;
-#if(SQUIRREL)
+#if(INSTALLED)
 				options.AutoSessionTracking = true;
 #endif
 			});
@@ -100,7 +100,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		// the crash dialog closes right into a shutdown, so give anything still queued a chance to go out
 		public static void FlushBeforeShutdown() => SentrySdk.Flush(CrashFlushTimeout);
 
-#if(SQUIRREL)
+#if(INSTALLED)
 		private const int MaxBobsBuddyEventsPerGame = 5;
 		private const int MaxBobsBuddyExceptionsPerGame = 5;
 		private const int MaxHDTToolsEvents = 10;
@@ -116,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bool isDuos, bool isOpposingAkazamzarak, BobsBuddySentryReportContext reportContext
 		)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEventsPerGame)
 				return;
 
@@ -172,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void FlushBattlegroundsEvents(string? shortId, bool logContainsStateComplete, bool isDuos)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			if(logContainsStateComplete)
 			{
 				SendQueuedBobsBuddyEvents(shortId, "normal", RecodeIfBothSidesEmpty);
@@ -188,7 +188,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void DropBattlegroundsEvents(string reason)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			Influx.OnBobsBuddySentryEventsDropped(reason, BobsBuddyEvents.Count);
 #endif
 			ClearBattlegroundsEvents();
@@ -196,7 +196,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		private static void SendQueuedHDTToolsEvents()
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			while(HDTToolsEvents.Count > 0)
 			{
 				if(HDTToolsEventsSent >= MaxHDTToolsEvents)
@@ -211,7 +211,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		}
 
-#if(SQUIRREL)
+#if(INSTALLED)
 		private static void SendQueuedBobsBuddyEvents(string? shortId, string path, Func<SentryEvent, SentryEvent> recode)
 		{
 			var sent = 0;
@@ -262,7 +262,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, bool isDuos, BobsBuddySentryReportContext reportContext)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptionsPerGame)
 				return;
 			if(input == null)
@@ -301,7 +301,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		}
 
-#if(SQUIRREL)
+#if(INSTALLED)
 		private static List<string> ReverseAndClone(List<string> toReverseAndClone)
 		{
 			var toReturn = toReverseAndClone.ToList();
@@ -331,7 +331,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void CaptureHDTToolsExecutionProblem(string problem)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			var data = new HDTToolsData()
 			{
 				Problem = problem,
@@ -356,7 +356,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void CaptureHDTToolsExitProblem(string exitProblem, List<string> hdtToolsLog)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			var data = new HDTToolsData()
 			{
 				ExitProblem = exitProblem,
@@ -387,7 +387,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			ClearBobsBuddyEvents();
 			ClearHDTToolsEvents();
-#if(SQUIRREL)
+#if(INSTALLED)
 			// Reset the counters after each game
 			BobsBuddyEventsSent = 0;
 			BobsBuddyExceptionsSent = 0;

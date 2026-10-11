@@ -101,7 +101,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private static DeckList Load()
 		{
-#if(!SQUIRREL)
+#if(!INSTALLED)
 			SetupDeckListFile();
 #endif
 			var file = Config.Instance.DataDir + "PlayerDecks.xml";
@@ -155,7 +155,7 @@ namespace Hearthstone_Deck_Tracker
 			return instance;
 		}
 
-#if(!SQUIRREL)
+#if(!INSTALLED)
 		internal static void SetupDeckListFile()
 		{
 			if(Config.Instance.SaveDataInAppData == null)

@@ -278,7 +278,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bool isDuos, bool isOpposingAkazamzarak, bool isOpposingKelThuzad, bool reconnected
 		)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			var point = new InfluxPointBuilder(reconnected ? "hdt_bb_combat_result_reconnect" : "hdt_bb_combat_result_v3")
@@ -307,7 +307,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void OnBattlegroundsGameCompleted(HearthDb.Enums.GameType gameType, int turns, GameMetrics metrics)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 
@@ -327,7 +327,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #endif
 		}
 
-#if(SQUIRREL)
+#if(INSTALLED)
 		// funnel points are written immediately rather than queued, since SendQueuedMetrics only runs after the drops they measure
 		private static InfluxPointBuilder BobsBuddySentryFunnelPoint(string stage, int count) =>
 			new InfluxPointBuilder("hdt_bb_sentry_funnel", false)
@@ -338,7 +338,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void OnBobsBuddySentryEventQueued(string type, bool isDuos)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(BobsBuddySentryFunnelPoint("queued", 1).Tag("type", type).Tag("is_duos", isDuos.ToString()).Build());
@@ -347,7 +347,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void OnBobsBuddySentryEventsSent(string path, int sent, int captureFailed, int maxExtraBytes, int totalExtraBytes)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			if(sent > 0)
@@ -365,7 +365,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public static void OnBobsBuddySentryEventsDropped(string reason, int count)
 		{
-#if(SQUIRREL)
+#if(INSTALLED)
 			if(!Config.Instance.GoogleAnalytics || count == 0)
 				return;
 			WritePoint(BobsBuddySentryFunnelPoint("dropped", count).Tag("reason", reason).Build());
