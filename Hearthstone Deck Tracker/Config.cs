@@ -1038,8 +1038,8 @@ namespace Hearthstone_Deck_Tracker
 		public bool SortDecksFavoritesFirst = false;
 
 		// Using int here to be robust against enum changes
-		[DefaultValue((int)Utility.Updating.SquirrelRemote.Github)]
-		public int SquirrelRemote = (int)Utility.Updating.SquirrelRemote.Github;
+		[DefaultValue((int)Utility.Updating.UpdateMirror.Github)]
+		public int SquirrelRemote = (int)Utility.Updating.UpdateMirror.Github;
 
 		[DefaultValue(false)]
 		public bool StartMinimized = false;

@@ -28,11 +28,6 @@ using Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Windows.MainWindowControls;
 using MahApps.Metro.Controls;
-#if(SQUIRREL)
-using Squirrel;
-#else
-using MahApps.Metro.Controls.Dialogs;
-#endif
 using static System.Windows.Visibility;
 #endregion
 
@@ -508,7 +503,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e)
 		{
 #if(INSTALLED)
-			Updater.StartUpdate();
+			Updater.RestartApp();
 #endif
 		}
 

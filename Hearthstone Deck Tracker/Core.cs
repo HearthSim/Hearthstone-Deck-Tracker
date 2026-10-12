@@ -102,6 +102,10 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
+#if(INSTALLED && VELOPACK)
+			Updater.ApplyPendingUpdate();
+#endif
+
 			var forceSoftwareRendering = Config.Instance.UseHardwareAcceleration == false;
 			if(!forceSoftwareRendering)
 			{
@@ -221,10 +225,10 @@ namespace Hearthstone_Deck_Tracker
 					MainWindow.UpdateNotesControl.SetHighlight(ConfigManager.PreviousVersion);
 				}
 
-#if(SQUIRREL)
+#if(INSTALLED)
 				// Once per update, update the remote. We do this in case e.g. GitHub was down and switched
 				// every user to a different remote.
-				SquirrelConnection.FindBestRemote();
+				Updater.FindBestMirror();
 #endif
 
 #if(INSTALLED && !DEV)
@@ -394,7 +398,7 @@ namespace Hearthstone_Deck_Tracker
 
 #if(INSTALLED)
 			await PrepareShutdown();
-			Squirrel.UpdateManager.RestartApp();
+			Updater.RestartApp();
 #else
 			// This event is fired by Application.Shutdown
 			Application.Current.Exit += (_, _) =>

@@ -223,9 +223,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			TrackAction(new ToastAction(franchise, toastNameEnum));
 		}
 
-		public static void OnSquirrelRemoteChanged(SquirrelRemote oldValue, SquirrelRemote newValue)
+		public static void OnUpdateMirrorChanged(UpdateMirror oldValue, UpdateMirror newValue)
 		{
-			TrackAction(new SquirrelRemoteAction(oldValue, newValue));
+			TrackAction(new UpdateMirrorAction(oldValue, newValue));
 		}
 
 		public static void OnClickSubscribeNowLink(Franchise franchise, ClickSubscribeNowAction.Button button, int? trialsRemaining)

@@ -50,10 +50,16 @@
     <DebugType>portable</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Velopack|x64'">
+    <DefineConstants>TRACE;INSTALLED;VELOPACK</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
   <!-- sentry-cli picks up SENTRY_ORG/SENTRY_PROJECT/SENTRY_AUTH_TOKEN from .github/workflows/release.yml
-       (Squirrel) and dev-build.yml (Debug with DEV). The release name is composed from the same version
-       the SDK resolves it from at runtime, so both sides always agree. -->
-  <PropertyGroup Condition="('$(Configuration)'=='Squirrel' or '$(Configuration)'=='Debug') and '$(Platform)'=='x64' and '$(SENTRY_AUTH_TOKEN)' != ''">
+       (Squirrel and Velopack) and dev-build.yml (Debug with DEV). The release name is composed from the
+       same version the SDK resolves it from at runtime, so both sides always agree. -->
+  <PropertyGroup Condition="('$(Configuration)'=='Squirrel' or '$(Configuration)'=='Velopack' or '$(Configuration)'=='Debug') and '$(Platform)'=='x64' and '$(SENTRY_AUTH_TOKEN)' != ''">
     <!-- the Sentry targets would only enable the CLI in a target running after "AfterBuild", which is
          already too late for the release targets hooked into it, so opt in here -->
     <UseSentryCLI>true</UseSentryCLI>
@@ -88,6 +94,16 @@
     <CallTarget Targets="GenerateDesignerFiles" />
   </Target>
 
+  <!-- bootstrap.ps1 restores without a configuration, so both updaters are always referenced
+       and the unused one's assemblies are removed after the build -->
+  <Target Name="RemoveUnusedUpdaterAssemblies" AfterTargets="Build">
+    <ItemGroup>
+      <UnusedUpdaterAssembly Include="$(OutDir)Velopack.dll" Condition="!$(DefineConstants.Contains('VELOPACK'))" />
+      <UnusedUpdaterAssembly Include="$(OutDir)Squirrel.dll;$(OutDir)NuGet.Squirrel.dll;$(OutDir)Splat.dll;$(OutDir)SharpCompress.dll;$(OutDir)DeltaCompressionDotNet*.dll;$(OutDir)Mono.Cecil*.dll" Condition="!$(DefineConstants.Contains('SQUIRREL'))" />
+    </ItemGroup>
+    <Delete Files="@(UnusedUpdaterAssembly)" />
+  </Target>
+
   <ItemGroup>
     <PackageReference Include="ControlzEx" Version="3.0.2.4" />
     <PackageReference Include="DeltaCompressionDotNet" Version="1.1.0" />
@@ -96,12 +112,13 @@
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="Mono.Cecil" Version="0.9.6.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Sentry" Version="6.11.1" />
     <PackageReference Include="SharpCompress" Version="0.17.1" />
     <PackageReference Include="Splat" Version="1.6.2" />
     <PackageReference Include="squirrel.windows" Version="1.9.1" />
     <PackageReference Include="TaskScheduler" Version="2.12.1" />
+    <PackageReference Include="Velopack" Version="1.2.161" />
     <PackageReference Include="WPFLocalizeExtension" Version="3.5.0" />
     <PackageReference Include="XAMLMarkupExtensions" Version="1.8.0" />
   </ItemGroup>

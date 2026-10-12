@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 			catch(WebException ex)
 			{
-				SquirrelConnection.FindBestRemote();
+				FindBestMirror();
 				Status.OnFailed(ex);
 				Log.Error(ex);
 			}
@@ -71,10 +71,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			if(dev)
 				return await UpdateManager.GitHubUpdateManager(DevReleaseUrl);
 
-			var (remote, url) = SquirrelConnection.GetCurrentRemote();
-			return remote switch
+			var (mirror, url) = GetCurrentMirror();
+			return mirror switch
 			{
-				SquirrelRemote.Github => await UpdateManager.GitHubUpdateManager(url),
+				UpdateMirror.Github => await UpdateManager.GitHubUpdateManager(url),
 				_ => new UpdateManager(url)
 			};
 		}
@@ -154,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						Log.Warn($"UpdateManager{(dev ? " (dev)" : "")} init took longer than {UpdateCheckTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
 						if(!dev)
-							SquirrelConnection.FindBestRemote();
+							FindBestMirror();
 					}
 					using var mgr = await mgrTask;
 					return await SquirrelUpdate(mgr, dev, true);
@@ -180,7 +180,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 			catch(WebException ex)
 			{
-				SquirrelConnection.FindBestRemote();
+				FindBestMirror();
 				Status.OnFailed(ex);
 				Log.Error(ex);
 			}
@@ -229,7 +229,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 							$"Update check took longer than {UpdateCheckTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
 						if(!dev)
-							SquirrelConnection.FindBestRemote();
+							FindBestMirror();
 					}
 				}
 
@@ -269,7 +269,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 							$"Downloading the update is slow{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
 						if(!dev)
-							SquirrelConnection.FindBestRemote();
+							FindBestMirror();
 					}
 
 					// If the rest of download takes longer than 20 seconds in
@@ -282,7 +282,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 							$"Downloading the update is taking longer than {TotalDownloadTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
 						if(!dev)
-							SquirrelConnection.FindBestRemote();
+							FindBestMirror();
 					}
 
 					await downloadTask;
@@ -313,7 +313,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			catch(WebException ex)
 			{
 				if(!dev)
-					SquirrelConnection.FindBestRemote();
+					FindBestMirror();
 				Log.Error(ex);
 				Status.OnFailed(ex);
 				return false;
@@ -338,7 +338,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		internal static void StartUpdate()
+		public static void RestartApp()
 		{
 			Log.Info("Restarting...");
 			UpdateManager.RestartApp();

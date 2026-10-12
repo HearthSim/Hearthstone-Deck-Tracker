@@ -19,7 +19,6 @@ using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
-using Squirrel;
 
 #endregion
 
@@ -32,6 +31,8 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class App : Application
 	{
+		internal const string AppUserModelId = "com.squirrel.HearthstoneDeckTracker.HearthstoneDeckTracker";
+
 		private static bool _createdReport;
 
 		private bool HandlePluginExceptions(Exception e)
@@ -96,7 +97,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void App_OnStartup(object sender, StartupEventArgs e)
 		{
-			Shell32.SetCurrentProcessExplicitAppUserModelID("com.squirrel.HearthstoneDeckTracker.HearthstoneDeckTracker");
+			Shell32.SetCurrentProcessExplicitAppUserModelID(AppUserModelId);
 			ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
 #if(INSTALLED)

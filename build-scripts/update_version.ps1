@@ -28,7 +28,7 @@ $versionPrefix = "$major.$minor.$patch"
 $versionSuffix = ""
 $packageVersion = $versionPrefix
 if ($dev) {
-    $versionSuffix = "dev$buildNumber"
+    $versionSuffix = "dev.$buildNumber"
     $packageVersion = "$versionPrefix-$versionSuffix"
 }
 

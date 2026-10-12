@@ -28,7 +28,9 @@ using System.Windows;
 	// app, or any theme specific resource dictionaries)
 	)]
 
+#if(SQUIRREL)
 [assembly: AssemblyMetadata("SquirrelAwareVersion", "1")]
+#endif
 
 [assembly: InternalsVisibleTo("ResourceGenerator")]
 [assembly: InternalsVisibleTo("HDTTests")]

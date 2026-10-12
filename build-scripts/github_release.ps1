@@ -1,7 +1,7 @@
 Param(
     [Parameter(Mandatory=$True)]
     [string]$packageVersion,
-    [ValidateSet("squirrel", "dev")]
+    [ValidateSet("squirrel", "velopack", "dev")]
     $type
 )
 
@@ -21,6 +21,7 @@ Write-Host "Creating $type release $packageVersion..."
 $repo = @{
     dev = "HDT-dev-builds"
     squirrel = "HDT-Releases"
+    velopack = "HDT-Velopack-Releases"
 }[$type]
 
 $releaseBody = @{
@@ -30,6 +31,7 @@ $releaseBody = @{
 ### Download the latest stable build here: https://hsreplay.net/downloads/
 "@
     squirrel = ""
+    velopack = ""
 }[$type]
 
 $body = @{
@@ -56,11 +58,16 @@ Write-Host "Successfully created release"
 
 $responseContent = $response.Content | ConvertFrom-Json
 
-$baseDir = if ($type -eq "dev") {"dev-builds"} else {"builds"}
+$baseDir = @{
+    dev = "dev-builds"
+    squirrel = "builds"
+    velopack = "velopack-builds"
+}[$type]
 
 $assetFilter = @{
-    dev = "HDT-Installer.exe", "Hearthstone.Deck.Tracker-*.zip", "*.nupkg", "RELEASES"
+    dev = "HDT-Installer.exe", "Hearthstone.Deck.Tracker-*.zip", "*.nupkg", "RELEASES", "releases.win.json"
     squirrel = "HDT-Installer.exe", "*.nupkg", "RELEASES"
+    velopack = "HDT-Installer.exe", "*.nupkg", "RELEASES", "releases.win.json"
 }[$type]
 
 $assets = Get-ChildItem "$baseDir\$packageVersion\*" -Include $assetFilter

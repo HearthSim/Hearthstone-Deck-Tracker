@@ -39,3 +39,6 @@ jobs:
 
       - name: Build (Squirrel)
         run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x64"
+
+      - name: Build (Velopack)
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Velopack /p:Platform="x64"

@@ -5,9 +5,9 @@ using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions;
 
-public class SquirrelRemoteAction : VMAction
+public class UpdateMirrorAction : VMAction
 {
-	public SquirrelRemoteAction(SquirrelRemote oldValue, SquirrelRemote newValue) : base(Franchise.All, null, null)
+	public UpdateMirrorAction(UpdateMirror oldValue, UpdateMirror newValue) : base(Franchise.All, null, null)
 	{
 		OldValue = oldValue;
 		NewValue = newValue;
@@ -18,8 +18,8 @@ public class SquirrelRemoteAction : VMAction
 	public override string Type => "Updater Remote Change";
 
 	[JsonProperty("old_remote")]
-	public SquirrelRemote OldValue { get; }
+	public UpdateMirror OldValue { get; }
 
 	[JsonProperty("new_remote")]
-	public SquirrelRemote NewValue { get; }
+	public UpdateMirror NewValue { get; }
 }
