@@ -162,7 +162,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						}
 						break;
 					case BoomingEnchantment.CardId:
-						var boomingModule = attachedEntities.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonsterEnchantment);
+						var boomingModule = attachedEntities.FirstOrDefault(e => e.CardId == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonsterEnchantment
+							|| e.CardId == NonCollectible.Neutral.DrBoomsMonster_DrBoomsMonster2);
 						var booming = sim.EnchantmentFactory.Create(BoomingEnchantment.CardId, minion.ControlledByPlayer);
 						if(boomingModule != null && booming != null)
 						{
