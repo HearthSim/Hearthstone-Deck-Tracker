@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
+using Hearthstone_Deck_Tracker.Utility.Updating;
 
 #endregion
 
@@ -409,6 +410,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Instance.CheckForDevUpdates = value;
 				Config.Instance.AllowDevUpdates = null;
 				Config.Save();
+#if(INSTALLED)
+				if(value)
+					Updater.CheckForUpdates(true);
+#endif
 			}
 		}
 
