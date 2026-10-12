@@ -109,6 +109,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("$app_version_string")]
 		public string MixpanelAppVersionString => Environment.AppVersion;
 
+		[JsonProperty("hdt_updater")]
+		public string HDTUpdater => Environment.Updater;
+
 		[JsonProperty("hdt_plugins")]
 		public string?[] HDTPlugins => PluginManager.Instance.Plugins.Where(x => x.IsEnabled).Select(x => x.Name).ToArray();
 

@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		string OsMajor { get; }
 		string OsVersion { get; }
 		string AppVersion { get; }
+		string Updater { get; }
 	}
 
 	internal class VMActionEnvironment : IVMActionEnvironment
@@ -24,5 +25,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public string OsMajor => Helper.GetWindowsMajorVersionName();
 		public string OsVersion => Helper.GetFullWindowsVersion();
 		public string AppVersion => Helper.GetCurrentVersion().ToVersionString();
+		public string Updater => Updating.Updater.Name;
 	}
 }

@@ -71,7 +71,7 @@
   <PropertyGroup>
     <SentryDsn>$(SENTRY_DSN)</SentryDsn>
     <SentryDsn Condition="'$(SentryDsn)' == ''">https://63f3118ab76da59e220c259639c60330@o35918.ingest.us.sentry.io/80405</SentryDsn>
-    <!-- when unset SentryReporter falls back to Squirrel/Portable, based on the build configuration -->
+    <!-- when unset SentryReporter falls back to Portable -->
     <SentryEnvironment>$(SENTRY_ENVIRONMENT)</SentryEnvironment>
   </PropertyGroup>
   <ItemGroup>

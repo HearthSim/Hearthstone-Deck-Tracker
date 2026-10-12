@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.Updating;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Utility;
 
 namespace Hearthstone_Deck_Tracker.Utility.Analytics
@@ -57,11 +58,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Field("startup_duration", startupDuration)
 				.Field("collections_uploaded", Account.Instance.CollectionState.Count)
 				.Field("mercs_collections_uploaded", Account.Instance.MercenariesCollectionState.Count);
-#if(SQUIRREL)
-			point.Tag("squirrel", true);
-#else
-			point.Tag("squirrel", false);
-#endif
+			point.Tag("updater", Updater.Name);
 			WritePoint(point.Build());
 		}
 
@@ -75,11 +72,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("new", _new)
 				.Tag("stats_window_used", statsWindowUsed)
 				.Field("session_duration_seconds", (int)sessionDuration);
-#if(SQUIRREL)
-			point.Tag("squirrel", true);
-#else
-			point.Tag("squirrel", false);
-#endif
+			point.Tag("updater", Updater.Name);
 
 			if(_pctHsReplayDataTotal.HasValue)
 				point.Field("pct_hsreplay_data_total", _pctHsReplayDataTotal.Value);

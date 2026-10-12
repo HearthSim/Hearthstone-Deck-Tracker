@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Utility.Updating;
 using Sentry;
 
 #if(SQUIRREL)
@@ -66,15 +67,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				// Release is left unset so the SDK resolves it from InformationalVersion, which the csproj
 				// composes the sentry-cli release name from at build time
 				options.Distribution = Helper.GetCurrentVersion().Revision.ToString();
-				options.Environment = GetBuildMetadata("SentryEnvironment");
-				if(string.IsNullOrWhiteSpace(options.Environment))
-				{
-#if(SQUIRREL)
-					options.Environment = "Squirrel";
-#else
-					options.Environment = "Portable";
-#endif
-				}
+				var environment = GetBuildMetadata("SentryEnvironment");
+				options.Environment = string.IsNullOrWhiteSpace(environment) ? "Portable" : environment;
 				options.IsGlobalModeEnabled = true;
 #if(SQUIRREL)
 				options.AutoSessionTracking = true;
@@ -88,11 +82,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			ex.Data.Add("active-plugins", plugins.Any() ? string.Join(", ", plugins.Select(x => x.NameAndVersion)) : "none");
 
 			var exception = new SentryEvent(ex);
-#if(SQUIRREL)
-			exception.SetTag("squirrel", "true");
-#else
-			exception.SetTag("squirrel", "false");
-#endif
+			exception.SetTag("updater", Updater.Name);
 			exception.SetTag("hearthstone", Helper.GetHearthstoneBuild()?.ToString() ?? "");
 			exception.SetTag("os_arch", RuntimeInformation.OSArchitecture.ToString().ToLower());
 
