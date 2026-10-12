@@ -38,15 +38,23 @@ public static class SquirrelConnection
 
 	public static (SquirrelRemote, string) GetCurrentRemote()
 	{
+#if(DEV)
+		return (SquirrelRemote.Github, SquirrelRemoteUrls[SquirrelRemote.Github]);
+#else
 		var remote = (SquirrelRemote)Config.Instance.SquirrelRemote;
 		if(!SquirrelRemoteUrls.TryGetValue(remote, out var url))
 			return (SquirrelRemote.Github, SquirrelRemoteUrls[SquirrelRemote.Github]);
 		return (remote, url);
+#endif
 	}
 
 	private static bool _didRun;
 	public static async void FindBestRemote()
 	{
+#if(DEV)
+		// dev versions only exist on GitHub, so the speed test would always fail it
+		return;
+#else
 		if(_didRun)
 		{
 			// We only want to do this at most once per session
@@ -117,6 +125,7 @@ public static class SquirrelConnection
 			Influx.OnSquirrelFindBestRemote("Error", "None");
 			Log.Error(e);
 		}
+#endif
 	}
 
 	private static async Task<Result[]> TestReleasesDownload(int millisecondsTimeout, string version)

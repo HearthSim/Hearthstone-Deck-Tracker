@@ -37,12 +37,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			{
 				bool updated;
 				using(var mgr = await GetUpdateManager(false))
-					updated = await SquirrelUpdate(mgr, false);
+					updated = await SquirrelUpdate(mgr, false, false);
 
 				if(!updated && Config.Instance.CheckForDevUpdates)
 				{
 					using(var mgr = await GetUpdateManager(true))
-						updated = await SquirrelUpdate(mgr, false);
+						updated = await SquirrelUpdate(mgr, true, false);
 				}
 
 				if(updated)
@@ -153,10 +153,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					{
 						Log.Warn($"UpdateManager{(dev ? " (dev)" : "")} init took longer than {UpdateCheckTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
-						SquirrelConnection.FindBestRemote();
+						if(!dev)
+							SquirrelConnection.FindBestRemote();
 					}
 					using var mgr = await mgrTask;
-					return await SquirrelUpdate(mgr, true);
+					return await SquirrelUpdate(mgr, dev, true);
 				}
 
 				var updated = await Update(false);
@@ -208,7 +209,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		private static async Task<bool> SquirrelUpdate(UpdateManager mgr, bool isStartupCheck, bool ignoreDelta = false)
+		private static async Task<bool> SquirrelUpdate(UpdateManager mgr, bool dev, bool isStartupCheck, bool ignoreDelta = false)
 		{
 			try
 			{
@@ -227,7 +228,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						Log.Warn(
 							$"Update check took longer than {UpdateCheckTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
-						SquirrelConnection.FindBestRemote();
+						if(!dev)
+							SquirrelConnection.FindBestRemote();
 					}
 				}
 
@@ -266,7 +268,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						Log.Warn(
 							$"Downloading the update is slow{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
-						SquirrelConnection.FindBestRemote();
+						if(!dev)
+							SquirrelConnection.FindBestRemote();
 					}
 
 					// If the rest of download takes longer than 20 seconds in
@@ -278,7 +281,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						Log.Warn(
 							$"Downloading the update is taking longer than {TotalDownloadTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
 						Status.SkipStartupCheck = true;
-						SquirrelConnection.FindBestRemote();
+						if(!dev)
+							SquirrelConnection.FindBestRemote();
 					}
 
 					await downloadTask;
@@ -308,7 +312,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 			catch(WebException ex)
 			{
-				SquirrelConnection.FindBestRemote();
+				if(!dev)
+					SquirrelConnection.FindBestRemote();
 				Log.Error(ex);
 				Status.OnFailed(ex);
 				return false;
@@ -325,7 +330,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						"Not able to apply deltas, downloading full release");
 				else
 					Log.Error(ex);
-				return await SquirrelUpdate(mgr, isStartupCheck, true);
+				return await SquirrelUpdate(mgr, dev, isStartupCheck, true);
 			}
 			finally
 			{
