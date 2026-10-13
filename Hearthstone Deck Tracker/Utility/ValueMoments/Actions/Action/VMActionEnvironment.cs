@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
@@ -14,6 +15,7 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		string OsVersion { get; }
 		string AppVersion { get; }
 		string Updater { get; }
+		Elevation Elevation { get; }
 	}
 
 	internal class VMActionEnvironment : IVMActionEnvironment
@@ -26,5 +28,6 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public string OsVersion => Helper.GetFullWindowsVersion();
 		public string AppVersion => Helper.GetCurrentVersion().ToVersionString();
 		public string Updater => Updating.Updater.Name;
+		public Elevation Elevation => Helper.Elevation;
 	}
 }

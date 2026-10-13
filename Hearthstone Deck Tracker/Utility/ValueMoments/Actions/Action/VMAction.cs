@@ -5,7 +5,9 @@ using System.Linq;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.ValueMoments.Enums;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Enums;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 {
@@ -111,6 +113,10 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 
 		[JsonProperty("hdt_updater")]
 		public string HDTUpdater => Environment.Updater;
+
+		[JsonProperty("hdt_elevation")]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public Elevation HDTElevation => Environment.Elevation;
 
 		[JsonProperty("hdt_plugins")]
 		public string?[] HDTPlugins => PluginManager.Instance.Plugins.Where(x => x.IsEnabled).Select(x => x.Name).ToArray();

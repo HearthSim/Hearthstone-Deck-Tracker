@@ -54,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("forced_software_rendering", forceSoftwareRendering)
 				.Tag("os_arch", RuntimeInformation.OSArchitecture.ToString().ToLower())
 				.Tag("os_version", Helper.GetWindowsMajorVersionName())
+				.Tag("elevation", Helper.Elevation)
 				.Field("num_plugins", numPlugins)
 				.Field("startup_duration", startupDuration)
 				.Field("collections_uploaded", Account.Instance.CollectionState.Count)
@@ -114,7 +115,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_uneven_permissions", false).Tag("os", Regex.Escape(Helper.GetWindowsVersion()))
-				.Tag("net", Helper.GetInstalledDotNetVersion()).Build());
+				.Tag("net", Helper.GetInstalledDotNetVersion()).Tag("elevation", Helper.Elevation).Build());
 		}
 
 		public static void OnPluginLoaded(IPlugin plugin, TimeSpan startupTime)

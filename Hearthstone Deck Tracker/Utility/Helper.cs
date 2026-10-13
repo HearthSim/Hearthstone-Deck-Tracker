@@ -13,6 +13,7 @@ using System.Management;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -467,6 +468,23 @@ namespace Hearthstone_Deck_Tracker
 				return default;
 			return (T)(object)parent;
 		}
+
+		private static readonly Lazy<Elevation> _elevation = new(() =>
+		{
+			try
+			{
+				using var identity = WindowsIdentity.GetCurrent();
+				return new WindowsPrincipal(identity).IsInRole(WindowsBuiltInRole.Administrator) ? Enums.Elevation.Administrator : Enums.Elevation.User;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return Enums.Elevation.Unknown;
+			}
+		});
+
+		// Administrator when elevated, or when UAC is disabled and the user is an administrator
+		public static Elevation Elevation => _elevation.Value;
 
 		public static string GetWindowsMajorVersionName()
 		{

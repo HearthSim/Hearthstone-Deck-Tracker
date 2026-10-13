@@ -57,6 +57,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 			public string OsVersion => "Windows 11 (10.0.22631)";
 			public string AppVersion => "1.53.0";
 			public string Updater => "squirrel";
+			public Elevation Elevation => Elevation.User;
 		}
 
 		[TestMethod]
@@ -114,6 +115,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "$os_version", "Windows 11 (10.0.22631)" },
 				{ "$app_version_string", "1.53.0" },
 				{ "hdt_updater", "squirrel" },
+				{ "hdt_elevation", "User" },
 				{ "hdt_plugins", new string[]{ } },
 				{ "hdt_general_settings_enabled", new []{
 					"upload_my_collection_automatically",
