@@ -1,4 +1,4 @@
-## Release v1.59.0 - 2026-10-13
+## Release v1.59.1 - 2026-10-13
 **Updated for Hearthstone 37.0.0**
 
 **Battlegrounds**:
