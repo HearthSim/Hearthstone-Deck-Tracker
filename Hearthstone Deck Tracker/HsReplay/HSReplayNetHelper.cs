@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Toasts;
+using Hearthstone_Deck_Tracker.Windows;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -60,7 +61,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static async Task TryAuthenticate(string? successUrl = null, string? errorUrl = null)
 		{
 			Authenticating?.Invoke(true);
-			if(await HSReplayNetOAuth.Authenticate(successUrl, errorUrl))
+			var error = await HSReplayNetOAuth.Authenticate(successUrl, errorUrl);
+			if(error == AuthenticationErrorType.None)
 			{
 				if(!await HSReplayNetOAuth.UpdateAccountData())
 				{
@@ -72,14 +74,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				await SyncCollection();
 			}
 			else
-			{
-				ErrorManager.AddError("Could not authenticate with HSReplay.net",
-					"Please try running HDT as administrator "
-					+ "(right-click the exe and select 'Run as administrator').\n"
-					+ "If that does not help please try again later.", true);
-				AuthenticationError?.Invoke(AuthenticationErrorType.Authentication);
-			}
+				AuthenticationError?.Invoke(error);
 			Authenticating?.Invoke(false);
+			if(error != AuthenticationErrorType.None && await Core.MainWindow.ShowLoginFailedMessage(error))
+				await TryAuthenticate(successUrl, errorUrl);
 		}
 
 		public static async Task UpdateAccount()
@@ -248,7 +246,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			None,
 			Authentication,
-			AccountData
+			AccountData,
+			CallbackListener,
+			Token,
+			UploadToken
 		}
 	}
 }

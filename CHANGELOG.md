@@ -4,6 +4,9 @@
   *You will see a notification on the Comp Guide when this happens.*
 - Fixed a small remaining number of incorrect combat odds.
 
+**General**:
+- Improved the error message for better troubleshooting when the login to HSReplay.net fails.
+
 ## **Release v1.58.10 - 2026-10-09**
 **Battlegrounds**:
 - New Tier7 Feature: Added tiers, stats and armor when picking Sir Finley's hero power! (based on the hero's stats)

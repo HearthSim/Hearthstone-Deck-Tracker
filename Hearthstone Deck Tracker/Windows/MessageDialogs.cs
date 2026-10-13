@@ -12,6 +12,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -65,6 +66,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const string LocPermissionsDescription = "MessageDialogs_Permissions_Description";
 		private const string LocPermissionsButtonInstructions = "MessageDialogs_UnevenPermissions_Button_Instructions";
 		private const string LocPermissionsButtonClose = "MessageDialogs_UnevenPermissions_Button_Close";
+
+		private const string LocLoginFailedTitle = "MessageDialogs_LoginFailed_Title";
+		private const string LocLoginFailedDescriptionCallbackListener = "MessageDialogs_LoginFailed_Description_CallbackListener";
+		private const string LocLoginFailedDescriptionCancelled = "MessageDialogs_LoginFailed_Description_Cancelled";
+		private const string LocLoginFailedDescriptionServer = "MessageDialogs_LoginFailed_Description_Server";
+		private const string LocLoginFailedButtonTryAgain = "MessageDialogs_LoginFailed_Button_TryAgain";
+		private const string LocLoginFailedButtonClose = "MessageDialogs_LoginFailed_Button_Close";
 
 		public static async Task<MessageDialogResult> ShowDeleteGameStatsMessage(this MetroWindow window, GameStats stats)
 			=> await window.ShowMessageAsync(LocUtil.Get(LocDeleteGameStatsTitle),
@@ -194,6 +202,26 @@ namespace Hearthstone_Deck_Tracker.Windows
 										AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Affirmative)
 				Helper.TryOpenUrl("https://help.hearthsim.net/en/articles/16945833-how-can-i-fix-the-error-unable-to-connect-to-hearthstone");
+		}
+
+		internal static async Task<bool> ShowLoginFailedMessage(this MainWindow window, HSReplayNetHelper.AuthenticationErrorType error)
+		{
+			var description = error switch
+			{
+				HSReplayNetHelper.AuthenticationErrorType.CallbackListener => LocLoginFailedDescriptionCallbackListener,
+				HSReplayNetHelper.AuthenticationErrorType.Authentication => LocLoginFailedDescriptionCancelled,
+				_ => LocLoginFailedDescriptionServer
+			};
+			var settings = new Settings
+			{
+				AffirmativeButtonText = LocUtil.Get(LocLoginFailedButtonTryAgain),
+				NegativeButtonText = LocUtil.Get(LocLoginFailedButtonClose)
+			};
+			// the browser has focus after the login redirect
+			window.ActivateWindow();
+			var result = await window.ShowMessageAsync(LocUtil.Get(LocLoginFailedTitle), LocUtil.Get(description),
+										AffirmativeAndNegative, settings);
+			return result == MessageDialogResult.Affirmative;
 		}
 
 		public static async Task<MessageDialogResult> ShowMissingCardsMessage(this MetroWindow window, Deck deck, bool exportDialog)

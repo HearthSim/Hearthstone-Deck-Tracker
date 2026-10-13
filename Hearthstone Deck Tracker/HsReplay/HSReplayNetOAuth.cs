@@ -17,6 +17,7 @@ using HSReplay.OAuth;
 using HSReplay.OAuth.Data;
 using HSReplay.Responses;
 using Newtonsoft.Json;
+using static Hearthstone_Deck_Tracker.HsReplay.HSReplayNetHelper;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -76,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static void Save() => Serializer.Save(Data.Value);
 
-		public static async Task<bool> Authenticate(string? successUrl = null, string? errorUrl = null)
+		public static async Task<AuthenticationErrorType> Authenticate(string? successUrl = null, string? errorUrl = null)
 		{
 			Log.Info("Authenticating with HSReplay.net...");
 			string url;
@@ -87,12 +88,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			catch(Exception e)
 			{
 				Log.Error(e);
-				return false;
+				return AuthenticationErrorType.CallbackListener;
 			}
 			if(string.IsNullOrEmpty(url))
 			{
 				Log.Error("Authentication failed, could not create callback listener");
-				return false;
+				return AuthenticationErrorType.CallbackListener;
 			}
 			var callbackTask = Client.Value.ReceiveAuthenticationCallback(successUrl ?? SuccessUrl,
 				errorUrl ?? ErrorUrl);
@@ -106,13 +107,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(data == null)
 			{
 				Log.Error("Authentication failed, received no data");
-				return false;
+				return AuthenticationErrorType.Authentication;
 			}
 			Data.Value.Code = data.Code;
 			Data.Value.RedirectUrl = data.RedirectUrl;
 			Data.Value.TokenData = null;
-			Log.Info("Authentication complete");
-			await UpdateToken();
+			Log.Info("Received authorization code");
+			if(!await UpdateToken())
+			{
+				Log.Error("Authentication failed, could not exchange the authorization code for a token");
+				Data.Value.Code = null;
+				Data.Value.RedirectUrl = null;
+				Save();
+				return AuthenticationErrorType.Token;
+			}
 			Save();
 			Log.Info("Claiming upload token if necessary");
 			if(!Account.Instance.TokenClaimed.HasValue)
@@ -122,12 +130,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(Account.Instance.UploadToken == null)
 				{
 					Log.Error("Authentication failed, no upload token found");
-					return false;
+					return AuthenticationErrorType.UploadToken;
 				}
 				await ClaimUploadToken(Account.Instance.UploadToken);
 			}
 			Authenticated?.Invoke();
-			return true;
+			return AuthenticationErrorType.None;
 		}
 
 		public static async Task Logout()
