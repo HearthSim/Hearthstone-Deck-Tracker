@@ -1,4 +1,6 @@
-## Unreleased
+## Release v1.59.0 - 2026-10-13
+**Updated for Hearthstone 37.0.0**
+
 **Battlegrounds**:
 - In collaboration with Jeef, Comp Guides now occasionally adjust their tier based on what exactly is available in your specific match.\
   *You will see a notification on the Comp Guide when this happens.*
