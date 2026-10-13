@@ -154,10 +154,20 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 
 			var result = new Dictionary<int, TieredComps>();
 
-			foreach(var tierEntry in compsData.ByTier.OrderBy(t => t.Key))
+			var compsByAdjustedTier = compsData.ByTier
+				.SelectMany(t => t.Value)
+				.GroupBy(comp => comp.AdjustedTier ?? comp.Tier)
+				.OrderBy(g => g.Key);
+
+			foreach(var group in compsByAdjustedTier)
 			{
-				var tier = tierEntry.Key;
-				var comps = tierEntry.Value.OrderBy(comp => comp.TierRank).ToList();
+				var tier = group.Key;
+				// demoted comps go to the top of their adjusted tier, promoted ones to the bottom
+				var comps = group
+					.OrderBy(comp => Math.Sign(comp.Tier - tier))
+					.ThenBy(comp => comp.Tier)
+					.ThenBy(comp => comp.TierRank)
+					.ToList();
 
 				var viewModels = comps.Select(comp => new BattlegroundsCompGuideViewModel(comp, IsPreLobby)).ToList();
 

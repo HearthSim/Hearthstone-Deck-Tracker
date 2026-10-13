@@ -1,3 +1,8 @@
+## Unreleased
+**Battlegrounds**:
+- In collaboration with Jeef, Comp Guides now occasionally adjust their tier based on what exactly is available in your specific match.\
+  *You will see a notification on the Comp Guide when this happens.*
+
 ## **Release v1.58.10 - 2026-10-09**
 **Battlegrounds**:
 - Added tiers, stats and armor when picking Sir Finley's hero power! (based on the hero's stats)

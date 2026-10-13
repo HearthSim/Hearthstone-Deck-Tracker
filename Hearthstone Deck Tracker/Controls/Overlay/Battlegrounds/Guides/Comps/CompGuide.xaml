@@ -237,6 +237,15 @@
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="#2e3235" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
                     <StackPanel>
                         <StackPanel Margin="9">
+                            <Border BorderBrush="#4A5256" BorderThickness="1" Background="#1c1f22" CornerRadius="3" Padding="7,4" Margin="0,0,0,9" Visibility="{Binding IsTierAdjusted, Converter={StaticResource BoolToVisibility}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding TierAdjustedFromPrefix}" VerticalAlignment="Center" FontSize="10" FontStyle="Italic" Foreground="White" Opacity="0.6" />
+                                    <Border Background="{Binding BaseTierColor}" CornerRadius="2" Padding="5,1,5,2" Margin="4,0" VerticalAlignment="Center" Opacity="0.8">
+                                        <TextBlock Text="{Binding BaseTierText}" FontSize="10" Foreground="White" FontWeight="Black" />
+                                    </Border>
+                                    <TextBlock Text="{Binding TierAdjustedFromSuffix}" VerticalAlignment="Center" FontSize="10" FontStyle="Italic" Foreground="White" Opacity="0.6" />
+                                </StackPanel>
+                            </Border>
                             <Grid Margin="0,0,0,7" HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />

@@ -49,11 +49,19 @@
                     TextTrimming="None"
                     FontFamily="/HearthstoneDeckTracker;component/Resources/#Chunkfive"
                 />
-                <Rectangle Grid.Column="1" Width="8" Height="8" Opacity="0.5" Margin="0,0,14,0">
-                    <Rectangle.Fill>
-                        <VisualBrush Visual="{StaticResource appbar_chevron_right_white}" />
-                    </Rectangle.Fill>
-                </Rectangle>
+                <Path
+                    Grid.Column="1"
+                    Width="9"
+                    Height="9"
+                    Stretch="Fill"
+                    Fill="White"
+                    Margin="0,0,14,0"
+                    RenderTransformOrigin="0.5,0.5"
+                    Data="M5.06055 8.49219L5.18359 8.36914C5.27148 8.28125 5.27148 8.1582 5.18359 8.07031L2.05469 4.92383H8.66406C8.76953 4.92383 8.875 4.83594 8.875 4.71289V4.53711C8.875 4.43164 8.76953 4.32617 8.66406 4.32617H2.05469L5.18359 1.19727C5.27148 1.10938 5.27148 0.986328 5.18359 0.898438L5.06055 0.775391C4.97266 0.6875 4.84961 0.6875 4.76172 0.775391L1.05273 4.48438C0.964844 4.57227 0.964844 4.69531 1.05273 4.7832L4.76172 8.49219C4.84961 8.58008 4.97266 8.58008 5.06055 8.49219Z">
+                    <Path.RenderTransform>
+                        <ScaleTransform ScaleX="-1" />
+                    </Path.RenderTransform>
+                </Path>
             </Grid>
         </Grid>
     </battlegrounds:OverlayButton>

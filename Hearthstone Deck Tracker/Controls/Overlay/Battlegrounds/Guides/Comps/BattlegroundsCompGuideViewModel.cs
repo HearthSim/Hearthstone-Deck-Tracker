@@ -35,6 +35,26 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		return brush;
 	}
 
+	private static string GetTierText(int tier) => tier switch
+	{
+		1 => "S",
+		2 => "A",
+		3 => "B",
+		4 => "C",
+		5 => "D",
+		_ => "?"
+	};
+
+	private LinearGradientBrush GetTierColor(int tier) => tier switch
+	{
+		1 => CreateLinearGradientBrush(Color.FromRgb(64, 138, 191), Color.FromRgb(56, 95, 122)),
+		2 => CreateLinearGradientBrush(Color.FromRgb(107, 160, 54), Color.FromRgb(88, 121, 55)),
+		3 => CreateLinearGradientBrush(Color.FromRgb(146, 160, 54), Color.FromRgb(104, 121, 55)),
+		4 => CreateLinearGradientBrush(Color.FromRgb(160, 124, 54), Color.FromRgb(121, 95, 55)),
+		5 => CreateLinearGradientBrush(Color.FromRgb(160, 72, 54), Color.FromRgb(121, 66, 55)),
+		_ => CreateLinearGradientBrush(Color.FromRgb(112, 112, 112), Color.FromRgb(64, 64, 64))
+	};
+
 	private readonly bool _isPreLobby;
 
 	public BattlegroundsCompGuideViewModel(BattlegroundsCompGuide compGuide, bool isPreLobby)
@@ -60,25 +80,13 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 			_ => "#404040"
 		};
 
-		TierText = CompGuide.Tier switch
-		{
-			1 => "S",
-			2 => "A",
-			3 => "B",
-			4 => "C",
-			5 => "D",
-			_ => "?"
-		};
+		var tier = CompGuide.AdjustedTier ?? CompGuide.Tier;
+		IsTierAdjusted = tier != CompGuide.Tier;
 
-		TierColor = CompGuide.Tier switch
-		{
-			1 => CreateLinearGradientBrush(Color.FromRgb(64, 138, 191), Color.FromRgb(56, 95, 122)),
-			2 => CreateLinearGradientBrush(Color.FromRgb(107, 160, 54), Color.FromRgb(88, 121, 55)),
-			3 => CreateLinearGradientBrush(Color.FromRgb(146, 160, 54), Color.FromRgb(104, 121, 55)),
-			4 => CreateLinearGradientBrush(Color.FromRgb(160, 124, 54), Color.FromRgb(121, 95, 55)),
-			5 => CreateLinearGradientBrush(Color.FromRgb(160, 72, 54), Color.FromRgb(121, 66, 55)),
-			_ => CreateLinearGradientBrush(Color.FromRgb(112, 112, 112), Color.FromRgb(64, 64, 64))
-		};
+		TierText = GetTierText(tier);
+		TierColor = GetTierColor(tier);
+		BaseTierText = GetTierText(CompGuide.Tier);
+		BaseTierColor = GetTierColor(CompGuide.Tier);
 
 		PrimaryTribe = CompGuide.PrimaryTribe;
 		CommonEnablerTags = ReferencedCardRun.ParseCardsFromText(CompGuide.CommonEnablers);
@@ -187,6 +195,19 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 
 	public string TierText { get; }
 	public LinearGradientBrush TierColor { get; }
+	public string BaseTierText { get; }
+	public LinearGradientBrush BaseTierColor { get; }
+	// 1 when promoted, -1 when demoted (tier 1 is the best)
+	public bool IsTierAdjusted { get; }
+
+	// the base tier badge sits where {0} is in the localized string
+	private static string[] TierAdjustedFromParts => LocUtil.Get("Battlegrounds_CompGuide_TierAdjustedFrom").Split(new[] { "{0}" }, 2, StringSplitOptions.None);
+
+	[LocalizedProp]
+	public string TierAdjustedFromPrefix => TierAdjustedFromParts[0].Trim();
+
+	[LocalizedProp]
+	public string TierAdjustedFromSuffix => TierAdjustedFromParts.ElementAtOrDefault(1)?.Trim() ?? "";
 	public Hearthstone.Card? CardToShowInUi { get; }
 
 	public string DifficultyText { get; }
