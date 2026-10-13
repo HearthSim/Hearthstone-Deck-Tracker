@@ -336,7 +336,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Distance = 50,
 				HideCallback = () =>
 				{
-					Tier7PreLobbyViewModel.Reset();
+					Tier7PreLobbyViewModel.SoftReset();
 				},
 			};
 

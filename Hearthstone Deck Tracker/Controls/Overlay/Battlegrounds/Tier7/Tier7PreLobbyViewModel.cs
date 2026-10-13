@@ -19,12 +19,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 	public class Tier7PreLobbyViewModel : ViewModel
 	{
 		private RemoteData.SaleData? _data;
+		private bool _accountDataStale = true;
+		private Task<bool>? _accountUpdateTask;
 
 		public Tier7PreLobbyViewModel()
 		{
+			HSReplayNetOAuth.Authenticated += InvalidateUserState;
 			HSReplayNetOAuth.AccountDataUpdated += () =>
 			{
-				InvalidateUserState();
+				_accountDataStale = false;
 				Core.Overlay.UpdateTier7PreLobbyVisibility();
 			};
 			HSReplayNetOAuth.LoggedOut += () =>
@@ -81,6 +84,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 		public void InvalidateUserState()
 		{
 			UserState = UserState.Loading;
+			_accountDataStale = true;
 		}
 
 		public UserState UserState
@@ -227,28 +231,27 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 			if(BattlegroundsGameMode == SelectedBattlegroundsGameMode.UNKNOWN)
 				return;
 
-			if(HSReplayNetOAuth.AccountUpdateInProgress)
-			{
-				// AccountDataUpdated event was likely triggered by the
-				// UpdateAccountData request below. Skip this update.
-				return;
-			}
-
 			var ownsTier7 = false;
 			if(HSReplayNetOAuth.IsFullyAuthenticated && HSReplayNetOAuth.AccountData != null)
 			{
-				if(UserState == UserState.Loading)
+				if(_accountDataStale)
 				{
-					// This will fire a HSReplayNetOAuth.AccountDataUpdated event. We
-					// set a flag for the duration of the update check to avoid
-					// infinite recursion here.
-					HSReplayNetOAuth.AccountUpdateInProgress = true;
-					// (Unrelativ to the event) If we want to cut down the request
-					// volume here in the future we can only make this request for
-					// tier7 subscribers (still need to happen right here, not below to
-					// handle the case where tier7 ran out).
-					await HSReplayNetOAuth.UpdateAccountData();
-					HSReplayNetOAuth.AccountUpdateInProgress = false;
+					// UpdateAccountData fires HSReplayNetOAuth.AccountDataUpdated,
+					// whose handler clears the stale flag and calls Update() again.
+					// Storing the in-flight task lets any concurrent caller await the
+					// same request instead of starting a new one.
+					// If we want to cut down the request volume here in the future we
+					// can only make this request for tier7 subscribers (still needs to
+					// happen right here, not below, to handle the case where tier7 ran
+					// out).
+					try
+					{
+						await (_accountUpdateTask ??= HSReplayNetOAuth.UpdateAccountData());
+					}
+					finally
+					{
+						_accountUpdateTask = null;
+					}
 				}
 
 				IsAuthenticated = true;
@@ -299,10 +302,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Tier7
 
 		public void Reset()
 		{
-			UserState = UserState.Loading;
+			InvalidateUserState();
 			AllTimeHighMMR = null;
 			TrialTimeRemaining = null;
 			Username = null;
+			BattlegroundsGameMode = SelectedBattlegroundsGameMode.UNKNOWN;
+		}
+
+		// keep showing the current state until the next update replaces it
+		public void SoftReset()
+		{
+			_accountDataStale = true;
 			BattlegroundsGameMode = SelectedBattlegroundsGameMode.UNKNOWN;
 		}
 

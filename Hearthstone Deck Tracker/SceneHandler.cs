@@ -133,7 +133,7 @@ public class SceneHandler
 			Remote.Config.Load();
 		}
 
-		if(from == Mode.BACON)
+		if(from == Mode.BACON && to == Mode.GAMEPLAY)
 		{
 			Core.Overlay.Tier7PreLobbyViewModel.InvalidateUserState();
 		}
