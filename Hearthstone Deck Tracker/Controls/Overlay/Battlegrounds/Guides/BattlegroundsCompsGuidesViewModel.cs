@@ -141,13 +141,13 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		}
 	}
 
-	public async Task<Dictionary<int,TieredComps>?> GetPremiumCompGuides(string? token, int[] currentRaces)
+	public async Task<Dictionary<int,TieredComps>?> GetPremiumCompGuides(string? token, int[] currentRaces, int? deityDbfId)
 	{
 		try
 		{
 			var compsData = token != null
-				? await ApiWrapper.GetPremiumCompsGuides(token, Helper.GetCardLanguage(), currentRaces)
-				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7CompsGuides(Helper.GetCardLanguage(), currentRaces));
+				? await ApiWrapper.GetPremiumCompsGuides(token, Helper.GetCardLanguage(), currentRaces, deityDbfId)
+				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7CompsGuides(Helper.GetCardLanguage(), currentRaces, deityDbfId));
 
 			if(compsData?.ByTier == null)
 				return null;
@@ -291,7 +291,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			// no trial is activated here, spending one before the player has even queued is not worth it
 			if(HSReplayNetOAuth.AccountData?.IsTier7 ?? false)
 				// there is no minion pool before a match, so ask for the unfiltered list
-				await SetPremiumCompGuides(null, Array.Empty<int>());
+				await SetPremiumCompGuides(null, Array.Empty<int>(), null);
 			else
 				await SetFreeCompGuides();
 			return;
@@ -321,12 +321,16 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 
 		var access = await Tier7Trial.GetAccess();
 		if(access != null)
-			await SetPremiumCompGuides(access.TrialToken, availableRaces.Cast<int>().ToArray());
+			await SetPremiumCompGuides(
+				access.TrialToken,
+				availableRaces.Cast<int>().ToArray(),
+				BattlegroundsUtils.GetBattlegroundsDeityDbfId(Core.Game.GameEntity)
+			);
 		else
 			await SetFreeCompGuides();
 	}
 
-	private async Task SetPremiumCompGuides(string? token, int[] races)
+	private async Task SetPremiumCompGuides(string? token, int[] races, int? deityDbfId)
 	{
 #if(DEBUG)
 		Log.Debug("Fetching Premium Battlegrounds Comp Guides...");
@@ -335,7 +339,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		Dictionary<int, TieredComps>? guides = null;
 		try
 		{
-			guides = await GetPremiumCompGuides(token, races);
+			guides = await GetPremiumCompGuides(token, races, deityDbfId);
 		}
 		catch(Exception e)
 		{
