@@ -1,6 +1,9 @@
-## **Release v1.59.2 - 2026-10-14**
+## **Release v1.59.3 - 2026-10-14**
 **Hearthstone**:
 - Added support to multiclass tavern brawl decks.
+
+**Battlegrounds**:
+- Show Tavern Tier 7 in the minion browser when Greedy Conniver is in the pool.
 
 ## **Release v1.59.1 - 2026-10-13**
 **Updated for Hearthstone 37.0.0**
