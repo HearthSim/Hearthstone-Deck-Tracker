@@ -44,6 +44,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 			SetProp(value);
 			if(ActiveMinionKeyword is { } keyword && !AvailableKeywords.Contains(keyword))
 				ActiveMinionKeyword = null;
+			UpdateTierButtons();
 			OnPropertyChanged(nameof(Groups));
 			OnPropertyChanged(nameof(MinionTypeButtons));
 			OnPropertyChanged(nameof(KeywordButtons));
@@ -191,7 +192,10 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		}
 	}
 
-	private bool ShowTavernTier7 => IsPreLobby || Config.Instance.AlwaysShowBattlegroundsTavernTier7 || HasTier7HeroPower || HasTier7Trinket || HasTier7QuestReward;
+	private bool HasTier7Minion => Db.GetCardsByRaces(AvailableRaces?.ToList() ?? Db.Races.ToList(), IsDuos)
+		.Any(x => x.Id == HearthDb.CardIds.NonCollectible.Neutral.GreedyConniver);
+
+	private bool ShowTavernTier7 => IsPreLobby || Config.Instance.AlwaysShowBattlegroundsTavernTier7 || HasTier7HeroPower || HasTier7Trinket || HasTier7QuestReward || HasTier7Minion;
 
 	public void UpdateTavernTier7Visibility()
 	{
