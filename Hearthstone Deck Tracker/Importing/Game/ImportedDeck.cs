@@ -19,12 +19,16 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 			Deck = deck;
 			matches ??= new List<Deck>();
 			var hero = new Card(deck.Hero);
-			if(!hero.IsKnownCard || string.IsNullOrEmpty(hero.PlayerClass))
+			var heroClass = hero.PlayerClass;
+			// Multi-class Tavern Brawl heroes have no CLASS tag
+			if(string.IsNullOrEmpty(heroClass) && deck.Hero != null)
+				CardIds.HeroIdDict.TryGetValue(deck.Hero, out heroClass);
+			if(!hero.IsKnownCard || string.IsNullOrEmpty(heroClass))
 			{
 				Log.Error("Unknown hero with CardID=" + deck.Hero);
 				return;
 			}
-			var lowerClass = hero.PlayerClass!.ToLower();
+			var lowerClass = heroClass!.ToLower();
 			Class = lowerClass == "demonhunter" ? "DemonHunter" : CultureInfo.CurrentCulture.TextInfo.ToTitleCase(lowerClass);
 
 			var localOptions = localDecks.Where(d => d.Class == Class && !d.Archived && !d.IsArenaDeck)

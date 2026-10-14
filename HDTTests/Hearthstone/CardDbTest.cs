@@ -75,6 +75,13 @@ namespace HDTTests.Hearthstone
 		}
 
 		[TestMethod]
+		public void TestMultiClassBrawlHeroes()
+		{
+			Assert.AreEqual("Mage", Database.GetHeroNameFromId(CardIds.NonCollectible.Invalid.JainaProudmooreTavernBrawl1));
+			Assert.AreEqual("Priest", Database.GetHeroNameFromId(CardIds.NonCollectible.Invalid.AnduinWrynnTavernBrawl));
+		}
+
+		[TestMethod]
 		public void DungeonBossTest()
 		{
 			var name = Database.GetHeroNameFromId(CardIds.NonCollectible.Warlock.XolTheUnscathedHeroic);

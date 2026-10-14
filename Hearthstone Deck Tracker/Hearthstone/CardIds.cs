@@ -95,6 +95,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{"GILA_500", "Rogue"},
 			{"GILA_400", "Hunter"},
 			{"GILA_900", "Mage"},
+			// Multi-class Tavern Brawl heroes have no CLASS tag, only MULTIPLE_CLASSES
+			{NonCollectible.Invalid.TheLichKingTavernBrawl3, "Deathknight"},
+			{NonCollectible.Invalid.IllidanStormrageTavernBrawl3, "DemonHunter"},
+			{NonCollectible.Invalid.GarroshHellscreamTavernBrawl, "Warrior"},
+			{NonCollectible.Invalid.ThrallTavernBrawl, "Shaman"},
+			{NonCollectible.Invalid.ValeeraSanguinarTavernBrawl, "Rogue"},
+			{NonCollectible.Invalid.UtherLightbringerTavernBrawl, "Paladin"},
+			{NonCollectible.Invalid.RexxarTavernBrawl, "Hunter"},
+			{NonCollectible.Invalid.MalfurionStormrageTavernBrawl1, "Druid"},
+			{NonCollectible.Invalid.GuldanTavernBrawl, "Warlock"},
+			{NonCollectible.Invalid.JainaProudmooreTavernBrawl1, "Mage"},
+			{NonCollectible.Invalid.AnduinWrynnTavernBrawl, "Priest"},
 		};
 
 		public static readonly Dictionary<string, string> HeroNameDict = new Dictionary<string, string>
