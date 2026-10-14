@@ -385,27 +385,21 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					switch(gift.CardId)
 					{
 						case JawsOfDeath.CardId:
-							// Do not attach if START_OF_COMBAT tag was cleared
+						case Resistance.CardId:
+						case Hostility.CardId:
+							// Do not continue if START_OF_COMBAT tag was cleared
 							if(host.GetTag(GameTag.START_OF_COMBAT) == 0)
-								break;
-							var enchantment = sim.EnchantmentFactory.Create(JawsOfDeath.CardId, minion.ControlledByPlayer);
-							if(enchantment != null)
-								minion.AttachEnchantment(enchantment);
+								return;
+							var soc_enchantment = sim.EnchantmentFactory.Create(gift.CardId, minion.ControlledByPlayer);
+							if(soc_enchantment != null)
+								minion.AttachEnchantment(soc_enchantment);
 							break;
 						case OffensiveSacrifice.CardId:
-							var offensiveSacrifice = sim.EnchantmentFactory.Create(OffensiveSacrifice.CardId, minion.ControlledByPlayer);
-							if(offensiveSacrifice != null)
-								minion.AttachEnchantment(offensiveSacrifice);
-							break;
 						case DefensiveSacrifice.CardId:
-							var defensiveSacrifice = sim.EnchantmentFactory.Create(DefensiveSacrifice.CardId, minion.ControlledByPlayer);
-							if(defensiveSacrifice != null)
-								minion.AttachEnchantment(defensiveSacrifice);
-							break;
 						case Invulnerability.CardId:
-							var invulnerability = sim.EnchantmentFactory.Create(Invulnerability.CardId, minion.ControlledByPlayer);
-							if(invulnerability != null)
-								minion.AttachEnchantment(invulnerability);
+							var enchantment = sim.EnchantmentFactory.Create(gift.CardId, minion.ControlledByPlayer);
+							if(enchantment != null)
+								minion.AttachEnchantment(enchantment);
 							break;
 					}
 				}
