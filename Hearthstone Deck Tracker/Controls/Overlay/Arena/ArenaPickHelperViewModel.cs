@@ -294,10 +294,11 @@ public class ArenaPickHelperViewModel : ViewModel
 			{
 				if(starter + recurring == 0)
 				{
-					Log.Info("No trials left for hero pick, aborting");
+					Log.Info($"No trials left for hero pick, aborting ({ArenaTrial.FormatDiagnostics(starter, recurring, ArenaTrial.HoursUntilReset)})");
 					HSReplayNetClientAnalytics.OnArenaDraftStart(draftInfo, arenaOverlayVisible: false, IsTrialsActivated, trialsRemaining);
 					return;
 				}
+				Log.Info($"Trial activated for hero pick ({ArenaTrial.FormatDiagnostics(starter, recurring, ArenaTrial.HoursUntilReset)})");
 				IsTrialsActivated = true;
 			}
 
@@ -369,7 +370,7 @@ public class ArenaPickHelperViewModel : ViewModel
 			await ArenaTrial.EnsureLoaded(accountId.Hi, accountId.Lo);
 			if(!ArenaTrial.IsDeckResumable(deckId.Value))
 			{
-				Log.Info("Current deck is not registered for trials, aborting");
+				Log.Info($"Current deck ({deckId.Value}) is not registered for trials, aborting");
 				IsTrialsActivated = false;
 				ArenasmithScores.Clear();
 				return;
@@ -871,7 +872,7 @@ public class ArenaPickHelperViewModel : ViewModel
 				await ArenaTrial.EnsureLoaded(accountId.Hi, accountId.Lo);
 				if(!ArenaTrial.IsDeckResumable(deckId.Value))
 				{
-					Log.Info("Current deck is not registered for trials, aborting");
+					Log.Info($"Current deck ({deckId.Value}) is not registered for trials, aborting");
 					return;
 				}
 			}
