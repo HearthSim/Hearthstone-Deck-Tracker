@@ -516,6 +516,18 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
+		public static void OnUpdateAppliedInBackground(string installedVersion, string pendingVersion, int pendingMinutes)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_update_background_apply")
+				.Tag("pending_version", pendingVersion)
+				.Field("installed_version", installedVersion)
+				.Field("pending_minutes", pendingMinutes)
+				.Build()
+			);
+		}
+
 		public static void OnBobsBuddyUnsupportedInteraction(string? cardId, string message, int turn, bool isDuos, bool? friendly)
 		{
 			if(!Config.Instance.GoogleAnalytics)

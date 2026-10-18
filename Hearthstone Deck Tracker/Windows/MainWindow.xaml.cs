@@ -18,6 +18,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -163,12 +164,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Left = 100;
 			}
 
-			if(Config.Instance.StartMinimized)
+			if(Config.Instance.StartMinimized || StartupFlags.IsBackgroundUpdate)
 			{
 				WindowState = WindowState.Minimized;
-				if(Config.Instance.MinimizeToTray)
+				if(Config.Instance.MinimizeToTray || StartupFlags.IsBackgroundUpdate)
 					MinimizeToTray();
 			}
+
+			IsVisibleChanged += (_, e) =>
+			{
+				if(!(bool)e.NewValue)
+					_lastHidden = DateTime.Now;
+			};
 
 			MainWindowMenu.DataContext = new MainWindowMenuViewModel(this);
 			TagControlEdit.StackPanelFilterOptions.Visibility = Collapsed;
@@ -374,7 +381,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StateChanged += onStateChanged;
 		}
 
-		private void MinimizeToTray()
+		private DateTime _lastHidden = DateTime.Now;
+
+		public bool WasHiddenFor(TimeSpan duration) => !IsVisible && DateTime.Now - _lastHidden >= duration;
+
+		internal void MinimizeToTray()
 		{
 			FlyoutOptions.IsOpen = false;
 			Options.Reset();

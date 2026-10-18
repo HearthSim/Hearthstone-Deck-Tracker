@@ -75,6 +75,8 @@ namespace Hearthstone_Deck_Tracker
 
 		internal static event Action<bool>? GameIsRunningChanged;
 
+		internal static DateTime LastGameRunning { get; private set; } = DateTime.MinValue;
+
 #pragma warning disable 1998
 		public static async void Initialize()
 #pragma warning restore 1998
@@ -217,6 +219,9 @@ namespace Hearthstone_Deck_Tracker
 			ResourceMonitor.Run();
 			Game.SecretsManager.OnSecretsChanged += cards => Overlay.ShowSecrets(cards);
 			MainWindow.Show();
+			// StateChanged only sends the window to the tray when the user minimizes to tray
+			if(StartupFlags.IsBackgroundUpdate)
+				MainWindow.MinimizeToTray();
 			splashScreenWindow.Close();
 
 			if(ConfigManager.UpdatedVersion != null)
@@ -249,14 +254,17 @@ namespace Hearthstone_Deck_Tracker
 #endif
 			BackupManager.Run();
 
-			if(Config.Instance.PlayerWindowOnStart)
-				Windows.PlayerWindow.Show();
-			if(Config.Instance.OpponentWindowOnStart)
-				Windows.OpponentWindow.Show();
-			if(Config.Instance.TimerWindowOnStartup)
-				Windows.TimerWindow.Show();
-			if(Config.Instance.ShowBattlegroundsMechanicWindow)
-				Windows.BattlegroundsMechanicWindow.Show();
+			if(!StartupFlags.IsBackgroundUpdate)
+			{
+				if(Config.Instance.PlayerWindowOnStart)
+					Windows.PlayerWindow.Show();
+				if(Config.Instance.OpponentWindowOnStart)
+					Windows.OpponentWindow.Show();
+				if(Config.Instance.TimerWindowOnStartup)
+					Windows.TimerWindow.Show();
+				if(Config.Instance.ShowBattlegroundsMechanicWindow)
+					Windows.BattlegroundsMechanicWindow.Show();
+			}
 
 			PluginManager.Instance.LoadPluginsFromDefaultPath();
 			MainWindow.Options.OptionsTrackerPlugins.Load();
@@ -281,12 +289,12 @@ namespace Hearthstone_Deck_Tracker
 			Remote.Config.Load();
 			HotKeyManager.Load();
 
-			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)
+			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning && !StartupFlags.IsBackgroundUpdate)
 				HearthstoneRunner.StartHearthstone().Forget();
 
 			HSReplayNetHelper.UpdateAccount().Forget();
 
-			if(Config.Instance.BattlegroundsSessionRecapWindowOnStart)
+			if(Config.Instance.BattlegroundsSessionRecapWindowOnStart && !StartupFlags.IsBackgroundUpdate)
 				Windows.BattlegroundsSessionWindow.Show();
 
 			Helper.EnsureClientLogConfig();
@@ -395,6 +403,19 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private static bool _restarting;
+
+#if(VELOPACK)
+		internal static async void RestartInBackground()
+		{
+			if(_restarting)
+				return;
+			_restarting = true;
+			Log.Info("Restarting in the background...");
+			await PrepareShutdown();
+			Updater.RestartApp(background: true);
+		}
+#endif
+
 		internal static async void RestartApplication()
 		{
 			if(_restarting)
@@ -448,6 +469,9 @@ namespace Hearthstone_Deck_Tracker
 #if(INSTALLED)
 				if(Config.Instance.CheckForUpdates)
 					Updater.CheckForUpdates();
+#if(VELOPACK)
+				Updater.ApplyUpdateWhenIdle();
+#endif
 #endif
 				if(User32.GetHearthstoneWindow() != IntPtr.Zero)
 				{
@@ -502,6 +526,7 @@ namespace Hearthstone_Deck_Tracker
 						Overlay.UpdateBattlegroundsOverlay();
 
 					Game.IsRunning = true;
+					LastGameRunning = DateTime.Now;
 
 					// ContentVisibility depends on Game.IsRunning, so notify only after it is set.
 					if(gameStarted)

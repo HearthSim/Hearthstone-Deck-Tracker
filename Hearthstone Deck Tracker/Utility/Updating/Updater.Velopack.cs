@@ -220,7 +220,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			if(mgr.UpdatePendingRestart is not { } pending)
 				return;
 			Log.Info($"Applying downloaded update {pending.Version}");
-			ApplyUpdateAndRestart(mgr, pending);
+			ApplyUpdateAndRestart(mgr, pending, StartupFlags.IsBackgroundUpdate);
 		}
 
 		public static async Task StartupUpdateCheck()
@@ -253,7 +253,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					else
 					{
 						Log.Info("Update complete, restarting");
-						ApplyUpdateAndRestart(mgr, updateInfo);
+						ApplyUpdateAndRestart(mgr, updateInfo, StartupFlags.IsBackgroundUpdate);
 					}
 				}
 			}
@@ -340,6 +340,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				}
 
 				Status.OnInstalled();
+				_updateDownloaded = DateTime.Now;
 				Log.Info("Done");
 				return updateInfo;
 			}
@@ -413,23 +414,46 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		private static UpdateInfo WithoutDeltas(UpdateInfo updateInfo)
 			=> new(updateInfo.TargetFullRelease, updateInfo.IsDowngrade);
 
-		public static void RestartApp()
+		private static readonly TimeSpan BackgroundUpdateIdleTime = TimeSpan.FromMinutes(5);
+		private static DateTime _updateDownloaded;
+		private static bool _backgroundApplyStarted;
+
+		public static void ApplyUpdateWhenIdle()
+		{
+			if(_backgroundApplyStarted || Status.UpdaterState != UpdaterState.Available || _failedUpdate != null)
+				return;
+			if(DateTime.Now - Core.LastGameRunning < BackgroundUpdateIdleTime)
+				return;
+			if(!Core.MainWindow.WasHiddenFor(BackgroundUpdateIdleTime))
+				return;
+			var locator = VelopackLocator.Current;
+			if(locator.CurrentlyInstalledVersion is not { } installed || locator.GetLatestLocalFullPackage()?.Version is not { } pending)
+				return;
+			_backgroundApplyStarted = true;
+			Log.Info($"Hearthstone and HDT are idle, applying update {pending} in the background");
+			Influx.OnUpdateAppliedInBackground(installed.ToString(), pending.ToString(), (int)(DateTime.Now - _updateDownloaded).TotalMinutes);
+			Core.RestartInBackground();
+		}
+
+		public static void RestartApp(bool background = false)
 		{
 			Log.Info("Restarting...");
 			var mgr = GetUpdateManager(false);
 			if(mgr.UpdatePendingRestart is { } pending)
-				ApplyUpdateAndRestart(mgr, pending);
+				ApplyUpdateAndRestart(mgr, pending, background);
 			else
 			{
-				UpdateExe.Start(waitPid: VelopackLocator.Current.Process.GetCurrentProcessId());
+				UpdateExe.Start(waitPid: VelopackLocator.Current.Process.GetCurrentProcessId(), startArgs: RestartArgs(background));
 				Environment.Exit(0);
 			}
 		}
 
-		private static void ApplyUpdateAndRestart(UpdateManager mgr, VelopackAsset asset)
+		private static string[]? RestartArgs(bool background) => background ? new[] { StartupFlags.BackgroundUpdate } : null;
+
+		private static void ApplyUpdateAndRestart(UpdateManager mgr, VelopackAsset asset, bool background)
 		{
 			// silent also hides Update.exe's error dialogs, so a failed apply only shows up in Velopack's log
-			mgr.WaitExitThenApplyUpdates(asset, silent: true, restart: true);
+			mgr.WaitExitThenApplyUpdates(asset, silent: true, restart: true, restartArgs: RestartArgs(background));
 			Environment.Exit(0);
 		}
 	}
