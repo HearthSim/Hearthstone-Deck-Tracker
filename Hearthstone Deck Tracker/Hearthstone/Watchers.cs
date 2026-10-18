@@ -290,10 +290,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(Core.Game.IsTraditionalHearthstoneMatch)
 			{
 				var isFriendlyCard = state.Side == (int)Side.FRIENDLY;
-				Core.Overlay.HighlightPlayerDeckCards(isFriendlyCard ? state.CardId : null);
+				// Assembled cards highlight the synergies of their effect half.
+				var handEntity = isFriendlyCard && state.IsHand
+					? Core.Game.Player.Hand.FirstOrDefault(e => e.ZonePosition == state.ZonePosition)
+					: null;
+				var highlightCardId = isFriendlyCard ? RelatedCardsManager.GetEffectCardId(handEntity, state.CardId) : null;
+				Core.Overlay.HighlightPlayerDeckCards(highlightCardId);
 				if(Core.Windows.PlayerWindow.IsVisible)
 				{
-					Core.Windows.PlayerWindow.HighlightPlayerDeckCards(isFriendlyCard ? state.CardId : null);
+					Core.Windows.PlayerWindow.HighlightPlayerDeckCards(highlightCardId);
 				}
 			}
 
@@ -316,10 +321,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			if(Core.Game.IsTraditionalHearthstoneMatch)
 			{
-				Core.Overlay.HighlightPlayerDeckCards(args.CardId);
+				// Assembled cards highlight the synergies of their effect half.
+				var offeredEntity = state.EntityId is > 0 && Core.Game.Entities.TryGetValue((int)state.EntityId, out var offered) ? offered : null;
+				var highlightCardId = RelatedCardsManager.GetEffectCardId(offeredEntity, state.CardId);
+				Core.Overlay.HighlightPlayerDeckCards(highlightCardId);
 				if(Core.Windows.PlayerWindow.IsVisible)
 				{
-					Core.Windows.PlayerWindow.HighlightPlayerDeckCards(state.CardId);
+					Core.Windows.PlayerWindow.HighlightPlayerDeckCards(highlightCardId);
 				}
 			}
 		}

@@ -472,15 +472,18 @@ public partial class OverlayWindow
 
 		if(state is { IsHand: true } && Core.Game.IsTraditionalHearthstoneMatch && !Config.Instance.HidePlayerRelatedCards)
 		{
+			var hoveredEntity = Core.Game.Player.Hand.FirstOrDefault(e => e.ZonePosition == state.ZonePosition);
+			// Assembled cards take their related cards from their effect half.
+			var effectCardId = RelatedCardsManager.GetEffectCardId(hoveredEntity, state.CardId);
+
 			// May be null: some cards (Tidepool Pupil, Commander Sivara) have no registered
 			// related-cards class and carry their cards on the entity instead - see the
 			// StoredCardIds fallback below.
-			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId);
+			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(effectCardId);
 
 			if(cardWithRelatedCards is ICardWithRelatedCardsSummary or ICardWithDynamicRelatedCardsSummary && (!Config.Instance.OutfinderEnabled || !Config.Instance.OutfinderInHand))
 				return;
 
-			var hoveredEntity = Core.Game.Player.Hand.FirstOrDefault(e => e.ZonePosition == state.ZonePosition);
 			// Dynamic pools take the hovered entity so per-copy state (upgrade tags, costs)
 			// picks the right pool when multiple copies are in hand. The pool is built once and
 			// shared with the summary computation below.
@@ -507,7 +510,7 @@ public partial class OverlayWindow
 			vm.IsHandHover = true;
 			vm.SummaryMaxHeight = Height * 0.4;
 
-			ApplyRelatedCardsSummary(vm, cardWithRelatedCards, state.CardId,
+			ApplyRelatedCardsSummary(vm, cardWithRelatedCards, effectCardId,
 				Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInHand, hoveredEntity, pool, dynamicPool);
 
 			vm.Top = Height * 0.47;
@@ -589,7 +592,10 @@ public partial class OverlayWindow
 
 		if(!Config.Instance.HidePlayerRelatedCards)
 		{
-			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(state.CardId);
+			// Assembled cards take their related cards from their effect half.
+			var offeredEntity = state.EntityId is > 0 && Core.Game.Entities.TryGetValue((int)state.EntityId, out var offered) ? offered : null;
+			var effectCardId = RelatedCardsManager.GetEffectCardId(offeredEntity, state.CardId);
+			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(effectCardId);
 
 			if(cardWithRelatedCards is ICardWithRelatedCardsSummary or ICardWithDynamicRelatedCardsSummary && (!Config.Instance.OutfinderEnabled || !Config.Instance.OutfinderInDeck))
 				return;
@@ -613,7 +619,7 @@ public partial class OverlayWindow
 			if(pool == null || pool.Count == 0)
 				return;
 
-			ApplyRelatedCardsSummary(vm, cardWithRelatedCards, state.CardId,
+			ApplyRelatedCardsSummary(vm, cardWithRelatedCards, effectCardId,
 				Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInDeck, null, pool, dynamicPool);
 
 			vm.Top = Height * 0.2;

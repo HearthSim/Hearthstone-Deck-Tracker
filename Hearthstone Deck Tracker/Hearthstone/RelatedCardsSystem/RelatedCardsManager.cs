@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Settings;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
@@ -115,6 +116,26 @@ public class RelatedCardsManager
 		}
 
 		return (relatedCardsDict, highlightCardsDict, spellSchoolTutorCardsDict, cardGeneratorCardsDict);
+	}
+
+	/// <summary>
+	/// The card id whose related cards, pool and highlights apply to <paramref name="entity"/>.
+	///
+	/// An assembled card is built from two halves: a trigger (CRAFTABLE_FIRST_HALF_DBID) and an
+	/// effect (CRAFTABLE_SECOND_HALF_DBID), each the dbf id of the card the half was taken from.
+	/// The effect half decides what the card generates or synergizes with, so it is resolved
+	/// against that card rather than the assembled card's own id. Values of 1 or less are not
+	/// cards: no half, or a half still on offer.
+	/// </summary>
+	public static string GetEffectCardId(Entity? entity, string cardId)
+	{
+		// Hover entities are looked up by zone position, which is not always reliable.
+		if(entity == null || entity.CardId != cardId)
+			return cardId;
+		var effectDbfId = entity.GetTag(GameTag.CRAFTABLE_SECOND_HALF_DBID);
+		if(effectDbfId <= 1)
+			return cardId;
+		return Database.GetCardFromDbfId(effectDbfId, false)?.Id ?? cardId;
 	}
 
 	public ICardWithHighlight? GetCardWithHighlight(string cardId)
