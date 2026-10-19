@@ -4,6 +4,7 @@
 
 **Battlegrounds**:
 - Improved the shortened hero names in the session recap across many languages.
+- Changed the Tavern Pinning popup to only pop up automatically if you've explicitly enabled that setting.
 
 ## **Release v1.59.3 - 2026-10-14**
 **Hearthstone**:

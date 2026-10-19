@@ -517,11 +517,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 		public bool IsExpanded
 		{
 			get => GetProp(Config.Instance.TavernMarkersPanelExpanded);
-			set
-			{
-				SetProp(value);
-				ConfigWrapper.TavernMarkersPanelExpanded = value;
-			}
+			set => SetProp(value);
 		}
 
 		public Command ToggleExpandCommand => new (() => IsExpanded = !IsExpanded);

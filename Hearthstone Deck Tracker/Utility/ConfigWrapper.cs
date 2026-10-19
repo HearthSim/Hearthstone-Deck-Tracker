@@ -450,16 +450,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
-		public static bool TavernMarkersPanelExpanded
-		{
-			get => Config.Instance.TavernMarkersPanelExpanded;
-			set
-			{
-				Config.Instance.TavernMarkersPanelExpanded = value;
-				Config.Save();
-			}
-		}
-
 		public static bool DismissedTavernMarkerQuickGuide
 		{
 			get => Config.Instance.DismissedTavernMarkerQuickQuickGuide;
