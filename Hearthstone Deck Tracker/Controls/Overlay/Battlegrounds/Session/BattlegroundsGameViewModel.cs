@@ -46,18 +46,15 @@ public class BattlegroundsGameViewModel : ViewModel
 
 		CardImage = new CardAssetViewModel(heroCard, Utility.Assets.CardAssetType.Tile);
 
-		if(PreferTranslatedCardName)
-		{
-			// Some languages have short card names, so we'd rather use the language from the game than our English-only short version.
-			HeroName = heroCard?.LocalizedName ?? "-";
-		}
+		var heroShortNameMap = Remote.Config.Data?.BattlegroundsShortNames
+			?.Find(sn => sn.DbfId == heroCard?.DbfId);
+		string? shortName;
+		if(heroShortNameMap?.Localized?.TryGetValue(Helper.GetCardLanguage(), out var localizedShortName) == true)
+			shortName = localizedShortName;
 		else
-		{
-			var heroShortNameMap = Remote.Config.Data?.BattlegroundsShortNames
-				?.Find(sn => sn.DbfId == heroCard?.DbfId);
-			HeroName = heroShortNameMap?.ShortName ?? heroCard?.LocalizedName ?? "-";
-
-		}
+			// Some languages have short card names, so we'd rather use the language from the game than our English-only short version.
+			shortName = PreferTranslatedCardName ? null : heroShortNameMap?.ShortName;
+		HeroName = shortName ?? heroCard?.LocalizedName ?? "-";
 
 		MMRDelta = gameItem.RatingAfter is int ratingAfter
 			? gameItem.SeasonReset ? ratingAfter : ratingAfter - gameItem.Rating

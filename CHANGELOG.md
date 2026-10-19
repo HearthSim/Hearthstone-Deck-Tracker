@@ -1,3 +1,7 @@
+## Unreleased
+**Battlegrounds**:
+- Improved the shortened hero names in the session recap across many languages.
+
 ## **Release v1.59.3 - 2026-10-14**
 **Hearthstone**:
 - Added support to multiclass tavern brawl decks.

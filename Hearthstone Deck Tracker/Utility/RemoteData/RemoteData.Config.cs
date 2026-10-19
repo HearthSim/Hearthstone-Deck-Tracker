@@ -102,6 +102,10 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 
 			[JsonProperty("short_name")]
 			public string? ShortName { get; set; }
+
+			// a null value means the localized card name should be used instead of ShortName
+			[JsonProperty("localized")]
+			public Dictionary<string, string?>? Localized { get; set; }
 		}
 
 		internal class TagOverride
