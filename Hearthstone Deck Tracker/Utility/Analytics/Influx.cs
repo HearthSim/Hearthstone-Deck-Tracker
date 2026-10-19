@@ -55,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("os_arch", RuntimeInformation.OSArchitecture.ToString().ToLower())
 				.Tag("os_version", Helper.GetWindowsMajorVersionName())
 				.Tag("elevation", Helper.Elevation)
+				.Tag("autostart", StartupFlags.IsAutostart)
 				.Field("num_plugins", numPlugins)
 				.Field("startup_duration", startupDuration)
 				.Field("collections_uploaded", Account.Instance.CollectionState.Count)

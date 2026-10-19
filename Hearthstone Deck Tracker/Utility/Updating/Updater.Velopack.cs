@@ -95,6 +95,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			if(locator.CurrentlyInstalledVersion == null || locator.IsPortable || locator.AppContentDir == null)
 				return;
 			RegistryHelper.SetExecutablePath(Path.Combine(locator.AppContentDir, "HearthstoneDeckTracker.exe"));
+			RegistryHelper.SetExecutableArgs(StartupFlags.Autostart);
 			if(Config.Instance.StartWithWindows)
 				RegistryHelper.SetRunKey();
 		}

@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				using var initMgr = new UpdateManager("INVALID_PATH");
 
 				RegistryHelper.SetExecutablePath(Path.Combine(initMgr.RootAppDirectory, "Update.exe"));
-				RegistryHelper.SetExecutableArgs("--processStart \"HearthstoneDeckTracker.exe\"");
+				RegistryHelper.SetExecutableArgs($"--processStart \"HearthstoneDeckTracker.exe\" --process-start-args \"{StartupFlags.Autostart}\"");
 
 				// Should be safe, but we really want to make sure not to crash here.
 				try
