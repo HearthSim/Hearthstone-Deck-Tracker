@@ -337,8 +337,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal static async void ShowDevUpdatesMessage(this MetroWindow window)
 		{
-			while(window.Visibility != Visibility.Visible || window.WindowState == WindowState.Minimized)
-				await Task.Delay(1000);
 			var result = await window.ShowMessageAsync("Development updates",
 				"You just updated to a stable release but still have development updates enabled.\n"
 				+ "Keeping these enabled will automatically update HDT to the next development build once it becomes available.\n\n"

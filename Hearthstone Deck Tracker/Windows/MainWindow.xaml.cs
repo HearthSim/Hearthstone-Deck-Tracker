@@ -176,6 +176,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			TagControlEdit.GroupBoxSortingArena.Visibility = Collapsed;
 			SortFilterDecksFlyout.HideStuffToCreateNewTag();
 			FlyoutNotes.ClosingFinished += (sender, args) => DeckNotesEditor.SaveDeck();
+			FlyoutUpdateNotes.ClosingFinished += (_, _) => UpdateNotesControl.ReleaseNotes = null;
 			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
 			WarningFlyout.OnComplete += () =>
 			{
@@ -348,10 +349,38 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 #region GENERAL METHODS
 
+		private bool IsShownToUser => IsVisible && WindowState != WindowState.Minimized;
+
+		internal void WhenShown(Action action)
+		{
+			if(IsShownToUser)
+			{
+				action();
+				return;
+			}
+			DependencyPropertyChangedEventHandler? onVisibleChanged = null;
+			EventHandler? onStateChanged = null;
+			void Run()
+			{
+				if(!IsShownToUser)
+					return;
+				IsVisibleChanged -= onVisibleChanged;
+				StateChanged -= onStateChanged;
+				action();
+			}
+			onVisibleChanged = (_, _) => Run();
+			onStateChanged = (_, _) => Run();
+			IsVisibleChanged += onVisibleChanged;
+			StateChanged += onStateChanged;
+		}
+
 		private void MinimizeToTray()
 		{
 			FlyoutOptions.IsOpen = false;
 			Options.Reset();
+			FlyoutUpdateNotes.IsOpen = false;
+			// the closing animation may never finish while hidden, so don't wait for ClosingFinished
+			UpdateNotesControl.ReleaseNotes = null;
 			Core.TrayIcon.NotifyIcon.Visible = true;
 			Hide();
 			Visibility = Collapsed;

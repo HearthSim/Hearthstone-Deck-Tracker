@@ -223,9 +223,12 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(ConfigManager.ShouldShowUpdateNotes())
 				{
-					MainWindow.UpdateNotesControl.LoadReleaseNotes();
-					MainWindow.FlyoutUpdateNotes.IsOpen = true;
-					MainWindow.UpdateNotesControl.SetHighlight(ConfigManager.PreviousVersion);
+					MainWindow.WhenShown(() =>
+					{
+						MainWindow.UpdateNotesControl.LoadReleaseNotes();
+						MainWindow.FlyoutUpdateNotes.IsOpen = true;
+						MainWindow.UpdateNotesControl.SetHighlight(ConfigManager.PreviousVersion);
+					});
 				}
 
 #if(INSTALLED)
@@ -236,7 +239,7 @@ namespace Hearthstone_Deck_Tracker
 
 #if(INSTALLED && !DEV)
 				if(Config.Instance.CheckForDevUpdates && !Config.Instance.AllowDevUpdates.HasValue)
-					MainWindow.ShowDevUpdatesMessage();
+					MainWindow.WhenShown(MainWindow.ShowDevUpdatesMessage);
 #endif
 			}
 			DataIssueResolver.Run();
