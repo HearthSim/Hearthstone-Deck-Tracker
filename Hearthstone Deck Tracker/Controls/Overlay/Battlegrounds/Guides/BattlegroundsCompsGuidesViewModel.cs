@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
+using HSReplay.Requests;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 
@@ -141,13 +142,13 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		}
 	}
 
-	public async Task<Dictionary<int,TieredComps>?> GetPremiumCompGuides(string? token, int[] currentRaces, int? deityDbfId)
+	public async Task<Dictionary<int,TieredComps>?> GetPremiumCompGuides(string? token, BattlegroundsCompGuidesParams parameters)
 	{
 		try
 		{
 			var compsData = token != null
-				? await ApiWrapper.GetPremiumCompsGuides(token, Helper.GetCardLanguage(), currentRaces, deityDbfId)
-				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7CompsGuides(Helper.GetCardLanguage(), currentRaces, deityDbfId));
+				? await ApiWrapper.GetPremiumCompsGuides(token, parameters)
+				: await HSReplayNetOAuth.MakeRequest(c => c.GetTier7CompsGuides(parameters));
 
 			if(compsData?.ByTier == null)
 				return null;
@@ -291,7 +292,11 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 			// no trial is activated here, spending one before the player has even queued is not worth it
 			if(HSReplayNetOAuth.AccountData?.IsTier7 ?? false)
 				// there is no minion pool before a match, so ask for the unfiltered list
-				await SetPremiumCompGuides(null, Array.Empty<int>(), null);
+				await SetPremiumCompGuides(null, new BattlegroundsCompGuidesParams
+				{
+					MinionTypes = Array.Empty<int>(),
+					LanguageCode = Helper.GetCardLanguage(),
+				});
 			else
 				await SetFreeCompGuides();
 			return;
@@ -321,16 +326,19 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 
 		var access = await Tier7Trial.GetAccess();
 		if(access != null)
-			await SetPremiumCompGuides(
-				access.TrialToken,
-				availableRaces.Cast<int>().ToArray(),
-				BattlegroundsUtils.GetBattlegroundsDeityDbfId(Core.Game.GameEntity)
-			);
+			await SetPremiumCompGuides(access.TrialToken, new BattlegroundsCompGuidesParams
+			{
+				MinionTypes = availableRaces.Cast<int>().ToArray(),
+				DeityDbfId = BattlegroundsUtils.GetBattlegroundsDeityDbfId(Core.Game.GameEntity),
+				AnomalyDbfId = BattlegroundsUtils.GetBattlegroundsAnomalyDbfId(Core.Game.GameEntity),
+				LanguageCode = Helper.GetCardLanguage(),
+				GameType = (int)HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, Core.Game.CurrentFormat),
+			});
 		else
 			await SetFreeCompGuides();
 	}
 
-	private async Task SetPremiumCompGuides(string? token, int[] races, int? deityDbfId)
+	private async Task SetPremiumCompGuides(string? token, BattlegroundsCompGuidesParams parameters)
 	{
 #if(DEBUG)
 		Log.Debug("Fetching Premium Battlegrounds Comp Guides...");
@@ -339,7 +347,7 @@ public class BattlegroundsCompsGuidesViewModel : ViewModel
 		Dictionary<int, TieredComps>? guides = null;
 		try
 		{
-			guides = await GetPremiumCompGuides(token, races, deityDbfId);
+			guides = await GetPremiumCompGuides(token, parameters);
 		}
 		catch(Exception e)
 		{

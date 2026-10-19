@@ -441,11 +441,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static async Task<BattlegroundsTier7CompsGuidesData?> GetPremiumCompsGuides(string token, string gameLanguage, int[] availableRaces, int? deityDbfId)
+		public static async Task<BattlegroundsTier7CompsGuidesData?> GetPremiumCompsGuides(string token, BattlegroundsCompGuidesParams parameters)
 		{
 		    try
 		    {
-			    return await Client.GetTier7CompsGuides(token, gameLanguage, availableRaces, deityDbfId);
+			    return await Client.GetTier7CompsGuides(token, parameters);
 		    }
 		    catch(Exception e)
 		    {

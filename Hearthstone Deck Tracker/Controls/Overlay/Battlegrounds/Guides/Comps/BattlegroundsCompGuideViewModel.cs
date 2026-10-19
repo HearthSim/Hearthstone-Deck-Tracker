@@ -106,83 +106,47 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 		OnPropertyChanged(nameof(AreAllCompCardsPinned));
 	}
 
-	private bool AreAllDbfIdsPinned(IEnumerable<int> dbfIds)
-	{
-		var available = GetAvailableCardIds();
-		var any = false;
-		foreach(var dbfId in dbfIds)
-		{
-			if(available != null && !available.Contains(dbfId))
-				continue;
-			var card = Database.GetCardFromDbfId(dbfId, false);
-			if(card == null || !card.IsKnownCard)
-				continue;
-			any = true;
-			if(!Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(card.Id))
-				return false;
-		}
-		return any;
-	}
-
-	private bool AreAllInlinePinned(IEnumerable<Inline>[] tags)
-	{
-		var any = false;
-		foreach(var line in tags)
-		{
-			foreach(var inline in line)
-			{
-				if(inline is ReferencedCardRun r && r.Card?.DbfId is int dbfId)
-				{
-					var card = Database.GetCardFromDbfId(dbfId, false);
-					if(card == null || !card.IsKnownCard)
-						continue;
-					any = true;
-					if(!Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(card.Id))
-						return false;
-				}
-			}
-		}
-		return any;
-	}
-
-	private bool AreAllInlinePinned(IEnumerable<Inline>? inlines)
-	{
-		if(inlines == null)
-			return false;
-		var any = false;
-		foreach(var inline in inlines)
-		{
-			if(inline is ReferencedCardRun r && r.Card?.DbfId is int dbfId)
-			{
-				var card = Database.GetCardFromDbfId(dbfId, false);
-				if(card == null || !card.IsKnownCard)
-					continue;
-				any = true;
-				if(!Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(card.Id))
-					return false;
-			}
-		}
-		return any;
-	}
-
 	public bool AreAllCompCardsPinned
 	{
 		get
 		{
-			var coreCardsPinned = AreAllDbfIdsPinned(CompGuide.CoreCards);
-			var addonCardsPinned = AreAllDbfIdsPinned(CompGuide.AddonCards);
-			var whenToCommitPinned = AreAllInlinePinned(WhenToCommitTags);
-			var commonEnablersPinned = AreAllInlinePinned(CommonEnablerTags);
-			var howToPlayPinned = AreAllInlinePinned(HowToPlay);
-
-			var hasAnyCards = coreCardsPinned || addonCardsPinned || whenToCommitPinned || commonEnablersPinned || howToPlayPinned;
-			if(!hasAnyCards)
-				return false;
-
-			return coreCardsPinned && addonCardsPinned && whenToCommitPinned && commonEnablersPinned && howToPlayPinned;
+			var ids = GetCardIdsToPin();
+			return ids.Count > 0 && ids.All(id => Core.Overlay.BattlegroundsMinionPinningViewModel.IsCardPinned(id));
 		}
 	}
 
+	private List<string> GetCardIdsToPin()
+	{
+		var ids = new List<string>();
+		void Add(int dbfId)
+		{
+			var card = Database.GetCardFromDbfId(dbfId, false);
+			if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard && !ids.Contains(id))
+				ids.Add(id);
+		}
+
+		// premium guides come with a list filtered by the server, free ones have to be collected from the guide
+		if(CompGuide.MinionsToPin != null)
+		{
+			foreach(var dbfId in CompGuide.MinionsToPin)
+				Add(dbfId);
+			return ids;
+		}
+
+		var available = GetAvailableCardIds();
+		var inlineDbfIds = WhenToCommitTags.Concat(CommonEnablerTags)
+			.Append(HowToPlay ?? Enumerable.Empty<Inline>())
+			.SelectMany(line => line)
+			.OfType<ReferencedCardRun>()
+			.Select(r => r.Card?.DbfId)
+			.OfType<int>();
+		foreach(var dbfId in CompGuide.CoreCards.Concat(CompGuide.AddonCards).Concat(inlineDbfIds))
+		{
+			if(available == null || available.Contains(dbfId))
+				Add(dbfId);
+		}
+		return ids;
+	}
 
 	[LocalizedProp]
 	public string LastUpdatedFormatted => LocUtil.GetAge(CompGuide.LastUpdated);
@@ -291,71 +255,7 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 
 	public ICommand PinAllCompCardsCommand => new Command(() =>
 	{
-		var available = GetAvailableCardIds();
-		var ids = new List<string>();
-
-		foreach(var dbfId in CompGuide.CoreCards)
-		{
-			if(available != null && !available.Contains(dbfId))
-				continue;
-			var card = Database.GetCardFromDbfId(dbfId, false);
-			if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard)
-				ids.Add(id);
-		}
-
-		foreach(var dbfId in CompGuide.AddonCards)
-		{
-			if(available != null && !available.Contains(dbfId))
-				continue;
-			var card = Database.GetCardFromDbfId(dbfId, false);
-			if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard)
-				ids.Add(id);
-		}
-
-		foreach(var line in WhenToCommitTags)
-		{
-			foreach(var inline in line)
-			{
-				if(inline is ReferencedCardRun r && r.Card?.DbfId is int dbfId)
-				{
-					if(available != null && !available.Contains(dbfId))
-						continue;
-					var card = Database.GetCardFromDbfId(dbfId, false);
-					if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard && !ids.Contains(id))
-						ids.Add(id);
-				}
-			}
-		}
-
-		foreach(var line in CommonEnablerTags)
-		{
-			foreach(var inline in line)
-			{
-				if(inline is ReferencedCardRun r && r.Card?.DbfId is int dbfId)
-				{
-					if(available != null && !available.Contains(dbfId))
-						continue;
-					var card = Database.GetCardFromDbfId(dbfId, false);
-					if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard && !ids.Contains(id))
-						ids.Add(id);
-				}
-			}
-		}
-
-		if(HowToPlay != null)
-		{
-			foreach(var inline in HowToPlay)
-			{
-				if(inline is ReferencedCardRun r && r.Card?.DbfId is int dbfId)
-				{
-					if(available != null && !available.Contains(dbfId))
-						continue;
-					var card = Database.GetCardFromDbfId(dbfId, false);
-					if(card?.Id is string id && !string.IsNullOrEmpty(id) && card.IsKnownCard && !ids.Contains(id))
-						ids.Add(id);
-				}
-			}
-		}
+		var ids = GetCardIdsToPin();
 
 		if(ids.Count == 0)
 			return;
