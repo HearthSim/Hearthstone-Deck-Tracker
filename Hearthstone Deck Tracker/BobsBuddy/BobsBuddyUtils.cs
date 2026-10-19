@@ -58,6 +58,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.ScriptDataNum3 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);
 			minion.ScriptDataNum4 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_4);
 
+			// Opponent Timewarped Embalmers are revealing TAG_SCRIPT_DATA_NUM_1 incorrectly even when charges
+			// are already spent; TRIGGER_VISUAL=0 at combat snapshot appears to signal none are left
+			if(!player && minion is TimewarpedEmbalmer
+				&& entity.Tags.ContainsKey(GameTag.TRIGGER_VISUAL)
+				&& entity.GetTag(GameTag.TRIGGER_VISUAL) == 0)
+        		minion.ScriptDataNum1 = 0;
+
 			// Eclipsion Illidari: SCORE_VALUE_2 is the number of "Immune while Attacking" grants left this turn
 			if(minion is EclipsionIllidari illidari && entity.Tags.ContainsKey(GameTag.SCORE_VALUE_2))
 				illidari.ScoreValue2 = entity.GetTag(GameTag.SCORE_VALUE_2);
