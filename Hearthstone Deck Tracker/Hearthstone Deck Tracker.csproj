@@ -88,6 +88,25 @@
   <Target Name="GenerateDesignerFiles">
     <GenerateResource SdkToolsPath="$(TargetFrameworkSDKToolsDirectory)" Sources="Properties/Strings.resx" StronglyTypedLanguage="C#" StronglyTypedClassName="Strings" StronglyTypedNamespace="Hearthstone_Deck_Tracker.Properties" StronglyTypedFileName="Properties/Strings.Designer.cs" OutputResources="Hearthstone_Deck_Tracker.Properties.Strings.resources" PublicClass="true" />
     <Delete Files="Hearthstone_Deck_Tracker.Properties.Strings.resources" />
+    <!-- the default **/*.cs glob is expanded when the project is loaded, before this target creates the file
+         on a fresh checkout, so add it explicitly (removing it first in case the glob already picked it up) -->
+    <ItemGroup>
+      <Compile Remove="Properties\Strings.Designer.cs" />
+      <Compile Include="Properties\Strings.Designer.cs" />
+    </ItemGroup>
+  </Target>
+
+  <!-- embed the translations in the main assembly instead of building satellite assemblies (which would
+       need signing for Smart App Control). AssignCulture derives the culture from the file name, so it can
+       only be overridden once the resource names have been assigned. -->
+  <Target Name="EmbedLocalizedStrings" AfterTargets="PrepareResourceNames">
+    <ItemGroup>
+      <EmbeddedResource Condition="'%(EmbeddedResource.WithCulture)' == 'true' and $([System.String]::Copy('%(Filename)').StartsWith('Strings.'))">
+        <WithCulture>false</WithCulture>
+        <LogicalName>Hearthstone_Deck_Tracker.Properties.Strings.%(EmbeddedResource.Culture).resources</LogicalName>
+        <Culture></Culture>
+      </EmbeddedResource>
+    </ItemGroup>
   </Target>
 
   <Target Name="BeforeBuildMigrated" BeforeTargets="PreBuildEvent">

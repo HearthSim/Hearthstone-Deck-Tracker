@@ -1,4 +1,7 @@
 ## Unreleased
+**General**:
+- Reworked how resources are embedded into the app to reduce the occurrence of the "Part of this app has been blocked" message.
+
 **Battlegrounds**:
 - Improved the shortened hero names in the session recap across many languages.
 

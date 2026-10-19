@@ -35,6 +35,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private static bool _createdReport;
 
+		static App()
+		{
+			EmbeddedResourceManager.Install();
+		}
+
 		private bool HandlePluginExceptions(Exception e)
 		{
 			var plugin = PluginManager.Instance.Plugins.FirstOrDefault(p => e.Source == p.AssemblyName || e.StackTrace.Contains(p.AssemblyName));
