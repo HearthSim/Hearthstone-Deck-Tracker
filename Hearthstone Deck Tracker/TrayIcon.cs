@@ -29,11 +29,18 @@ namespace Hearthstone_Deck_Tracker
 
 		public TrayIcon()
 		{
+#if(DEV)
+			const string name = "Hearthstone Deck Tracker [DEV]";
+			const bool includeRevision = true;
+#else
+			const string name = "Hearthstone Deck Tracker";
+			const bool includeRevision = false;
+#endif
 			NotifyIcon = new NotifyIcon
 			{
 				Visible = true,
 				ContextMenu = new ContextMenu(),
-				Text = "Hearthstone Deck Tracker"
+				Text = name
 			};
 
 			var iconFile = new FileInfo("Images/HearthstoneDeckTracker16.ico");
@@ -42,7 +49,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Log.Error($"Cant find tray icon at \"{iconFile.FullName}\"");
 
-			NotifyIcon.ContextMenu.MenuItems.Add(new MenuItem($"Hearthstone Deck Tracker v{Helper.GetCurrentVersion().ToVersionString()}") { Enabled = false });
+			NotifyIcon.ContextMenu.MenuItems.Add(new MenuItem($"{name} v{Helper.GetCurrentVersion().ToVersionString(includeRevision)}") { Enabled = false });
 			NotifyIcon.ContextMenu.MenuItems.Add("-");
 
 			// TODO: Find a better way to interact with the MainWindow
