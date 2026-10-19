@@ -14,6 +14,7 @@ using static Hearthstone_Deck_Tracker.BobsBuddy.BobsBuddyUtils;
 using BobsBuddy.Simulation;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Updating;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 using BobsBuddy;
 using BobsBuddy.Enchantments;
@@ -172,22 +173,36 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return false;
 			if(Remote.Config.Data?.BobsBuddy?.Disabled ?? false)
 				return false;
-			if(ErrorState == BobsBuddyErrorState.None)
+			if(ErrorState == BobsBuddyErrorState.None && IsUpdateRequired)
 			{
-				var verStr = Remote.Config.Data?.BobsBuddy?.MinRequiredVersion;
-				if(Version.TryParse(verStr, out var requiredVersion))
-				{
-					if(requiredVersion > Helper.GetCurrentVersion())
-					{
-						DebugLog($"Update to {requiredVersion} required. Not running simulations.");
-						ErrorState = BobsBuddyErrorState.UpdateRequired;
-						BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.UpdateRequired);
-					}
-				}
+				DebugLog("Update required. Not running simulations.");
+				ErrorState = BobsBuddyErrorState.UpdateRequired;
+				BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.UpdateRequired);
 			}
 			if(ErrorState == BobsBuddyErrorState.UpdateRequired)
 				return false;
 			return true;
+		}
+
+		internal static bool IsUpdateRequired =>
+			Version.TryParse(Remote.Config.Data?.BobsBuddy?.MinRequiredVersion, out var requiredVersion)
+			&& requiredVersion > Helper.GetCurrentVersion();
+
+		private static bool _requiredUpdateCheckForced;
+
+		// download the required update right away instead of waiting for the next periodic check
+		internal static void ForceUpdateCheckIfRequired()
+		{
+			if(_requiredUpdateCheckForced || !IsUpdateRequired)
+				return;
+			_requiredUpdateCheckForced = true;
+#if(INSTALLED)
+			// a running check already downloads the update
+			if(Updater.Status.UpdaterState is UpdaterState.Checking or UpdaterState.Downloading or UpdaterState.Installing)
+				return;
+			Log.Info("Bob's Buddy requires an update, checking for updates");
+			Updater.CheckForUpdates(true);
+#endif
 		}
 
 		public async void StartCombat()

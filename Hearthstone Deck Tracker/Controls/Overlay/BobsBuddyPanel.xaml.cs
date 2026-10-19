@@ -3,6 +3,7 @@ using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Utility.Updating;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,8 +25,24 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			ResetDisplays();
 
 			_localizedPropNotifier = new LocalizedPropNotifier(GetType(), OnPropertyChanged);
-			WarningState = GetWarningState(Remote.Config.Data);
-			Remote.Config.Loaded += cfg => WarningState = GetWarningState(cfg);
+			OnRemoteConfigLoaded(Remote.Config.Data);
+			Remote.Config.Loaded += OnRemoteConfigLoaded;
+			Updater.Status.Changed += _ =>
+			{
+				OnPropertyChanged(nameof(StatusMessage));
+				OnPropertyChanged(nameof(StatusMessageSuffix));
+				OnPropertyChanged(nameof(UpdateNowText));
+			};
+		}
+
+		private void OnRemoteConfigLoaded(RemoteData.Config? config)
+		{
+			WarningState = GetWarningState(config);
+			if(BobsBuddyInvoker.IsUpdateRequired)
+			{
+				ErrorState = BobsBuddyErrorState.UpdateRequired;
+				BobsBuddyInvoker.ForceUpdateCheckIfRequired();
+			}
 		}
 
 		private static BobsBuddyWarningState GetWarningState(RemoteData.Config? config)
@@ -142,6 +159,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				_errorState = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(StatusMessage));
+				OnPropertyChanged(nameof(StatusMessageSuffix));
+				OnPropertyChanged(nameof(UpdateNowText));
 				OnPropertyChanged(nameof(WarningIconVisibility));
 				OnPropertyChanged(nameof(WarningIconTextTooltip));
 				OnPropertyChanged(nameof(WarningIconTooltipEnabled));
@@ -183,7 +202,33 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		const float SoftLabelOpacity = 0.3f;
 
 		[LocalizedProp]
-		public string StatusMessage => StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults, ErrorMessage);
+		public string StatusMessage => ShowUpdateNow ? UpdateNowMessageParts[0] : StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults, ErrorMessage);
+
+		[LocalizedProp]
+		public string StatusMessageSuffix => ShowUpdateNow ? UpdateNowMessageParts[1] : "";
+
+		// an empty hyperlink is neither visible nor clickable
+		[LocalizedProp]
+		public string UpdateNowText => ShowUpdateNow ? LocUtil.Get("BobsBuddyStatusMessage_UpdateNow") : "";
+
+		private bool ShowUpdateNow => ErrorState == BobsBuddyErrorState.UpdateRequired && IsUpdateDownloaded;
+
+		// the text around the {1} placeholder, which the hyperlink takes the place of
+		private static string[] UpdateNowMessageParts
+		{
+			get
+			{
+				var version = Remote.Config.Data?.BobsBuddy?.MinRequiredVersion ?? "";
+				var parts = LocUtil.Get("BobsBuddyStatusMessage_UpdateRequiredUpdateNow").Split(new[] { "{1}" }, 2, StringSplitOptions.None);
+				return new[] { string.Format(parts[0], version), parts.Length > 1 ? string.Format(parts[1], version) : "" };
+			}
+		}
+
+#if(INSTALLED)
+		private static bool IsUpdateDownloaded => Updater.Status.UpdaterState == UpdaterState.Available;
+#else
+		private static bool IsUpdateDownloaded => false;
+#endif
 
 		public Visibility WarningIconVisibility => ErrorState == BobsBuddyErrorState.None && WarningState == BobsBuddyWarningState.None ? Visibility.Collapsed : Visibility.Visible;
 
@@ -472,6 +517,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			OpponentAverageDamageOpacity = SoftLabelOpacity;
 			State = BobsBuddyState.Initial;
 			ClearErrorState();
+			if(BobsBuddyInvoker.IsUpdateRequired)
+				ErrorState = BobsBuddyErrorState.UpdateRequired;
 			ShowResults(false);
 			ShowPercentagesHideSpinners();
 			OnPropertyChanged(nameof(StatusMessage));
@@ -674,6 +721,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			AverageDamageInfoVisibility = Visibility.Collapsed;
 			if(!Config.Instance.AlwaysShowAverageDamage)
 				ShowAverageDamagesPanels(false);
+		}
+
+		private void UpdateNow_Click(object sender, RoutedEventArgs e)
+		{
+#if(VELOPACK)
+			Core.RestartInBackground();
+#else
+			Core.RestartApplication();
+#endif
 		}
 
 		private void Question_Click(object sender, RoutedEventArgs e)

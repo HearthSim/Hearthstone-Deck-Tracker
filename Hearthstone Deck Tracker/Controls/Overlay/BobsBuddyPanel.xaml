@@ -181,7 +181,8 @@
                                             </ToolTip>
                                         </Rectangle.ToolTip>
                                     </Rectangle>
-                                   <Run Text="{Binding StatusMessage, Mode=OneWay}"/>
+                                   <!-- no whitespace between these, the localized message brings its own spacing -->
+                                   <Run Text="{Binding StatusMessage, Mode=OneWay}"/><Hyperlink Foreground="White" FontWeight="Bold" Click="UpdateNow_Click"><Run Text="{Binding UpdateNowText, Mode=OneWay}"/></Hyperlink><Run Text="{Binding StatusMessageSuffix, Mode=OneWay}"/>
                             </TextBlock>
                             <battlegrounds:OverlayButton Background="Transparent" HorizontalAlignment="Left" Visibility="{Binding SettingsVisibility}" Click="Question_Click">
                                 <Rectangle Width="12" Height="18" Style="{StaticResource StatusBarIconStyle}">
