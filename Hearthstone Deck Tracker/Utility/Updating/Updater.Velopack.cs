@@ -209,18 +209,36 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				// This isn't good, and most likely means something about
 				// the installation is wrong, but HDT should work regardless.
 				Log.Error(ex);
+				_initException = ex;
 			}
+		}
+
+		// Sentry is only initialized after SquirrelInit
+		private static Exception? _initException;
+
+		public static void ReportInitFailure()
+		{
+			if(_initException == null || !Config.Instance.GoogleAnalytics)
+				return;
+			SentryReporter.CaptureVelopackInitFailed(_initException);
 		}
 
 		public static void ApplyPendingUpdate()
 		{
 			if(_failedUpdate != null)
 				return;
-			var mgr = GetUpdateManager(false);
-			if(mgr.UpdatePendingRestart is not { } pending)
-				return;
-			Log.Info($"Applying downloaded update {pending.Version}");
-			ApplyUpdateAndRestart(mgr, pending, StartupFlags.IsBackgroundUpdate);
+			try
+			{
+				var mgr = GetUpdateManager(false);
+				if(mgr.UpdatePendingRestart is not { } pending)
+					return;
+				Log.Info($"Applying downloaded update {pending.Version}");
+				ApplyUpdateAndRestart(mgr, pending, StartupFlags.IsBackgroundUpdate);
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+			}
 		}
 
 		public static async Task StartupUpdateCheck()

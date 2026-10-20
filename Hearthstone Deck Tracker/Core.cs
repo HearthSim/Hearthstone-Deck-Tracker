@@ -138,6 +138,7 @@ namespace Hearthstone_Deck_Tracker
 			Log.Info($"HDT: {Helper.GetCurrentVersion()}, Operating System: {Helper.GetWindowsVersion()}, .NET Framework: {Helper.GetInstalledDotNetVersion()}");
 #if(INSTALLED)
 #if(VELOPACK)
+			Updater.ReportInitFailure();
 			Updater.ReportFailedUpdate();
 #endif
 			if(Config.Instance.CheckForUpdates)

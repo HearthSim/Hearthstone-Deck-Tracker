@@ -115,6 +115,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			});
 		}
 
+		public static void CaptureVelopackInitFailed(Exception ex) => SentrySdk.CaptureException(ex);
+
 		// the crash dialog closes right into a shutdown, so give anything still queued a chance to go out
 		public static void FlushBeforeShutdown() => SentrySdk.Flush(CrashFlushTimeout);
 
