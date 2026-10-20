@@ -41,7 +41,10 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 
 	/// <summary>
 	/// A single board slot: the card itself plus any enchantments on it. Serializes as a bare card
-	/// when there are no enchantments, otherwise as an array with the card first.
+	/// when there are no enchantments, otherwise as an array with the card first. A card with extra
+	/// data, e.g. an assembled minion with the cards its text was assembled from, serializes as an
+	/// object instead: {"card": ..., "enchantments": [...], "assembled_first_half": ..., ...}. The
+	/// extension ignores object fields it does not know, so more can be added later.
 	/// </summary>
 	[JsonConverter(typeof(CardWithEnchantmentsConverter))]
 	public readonly struct CardWithEnchantments : IEquatable<CardWithEnchantments>
@@ -54,17 +57,49 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		}
 
 		public CardWithEnchantments(CardRef card, IEnumerable<CardRef> enchantments)
-			=> _cards = new[] { card }.Concat(enchantments).ToArray();
+			: this(new[] { card }.Concat(enchantments).ToArray(), null, null)
+		{
+		}
+
+		private CardWithEnchantments(CardRef[] cards, CardRef? firstHalf, CardRef? secondHalf)
+		{
+			_cards = cards;
+			FirstHalf = firstHalf;
+			SecondHalf = secondHalf;
+		}
+
+		/// <summary>
+		/// The card the first half of the text comes from, if it is assembled.
+		/// </summary>
+		public CardRef? FirstHalf { get; }
+
+		/// <summary>
+		/// The card the second half of the text comes from, if it is assembled.
+		/// </summary>
+		public CardRef? SecondHalf { get; }
+
+		internal bool HasExtraData => FirstHalf.HasValue || SecondHalf.HasValue;
+
+		public CardWithEnchantments WithHalves(CardRef? firstHalf, CardRef? secondHalf) => new(Cards, firstHalf, secondHalf);
 
 		public static implicit operator CardWithEnchantments(int dbfId) => new CardWithEnchantments(dbfId);
 
+		public static implicit operator CardWithEnchantments(CardRef card) => new CardWithEnchantments(card);
+
 		internal CardRef[] Cards => _cards ?? Array.Empty<CardRef>();
 
-		public bool Equals(CardWithEnchantments other) => Cards.SequenceEqual(other.Cards);
+		public bool Equals(CardWithEnchantments other)
+			=> Cards.SequenceEqual(other.Cards) && FirstHalf == other.FirstHalf && SecondHalf == other.SecondHalf;
 
 		public override bool Equals(object? obj) => obj is CardWithEnchantments other && Equals(other);
 
-		public override int GetHashCode() => Cards.Aggregate(17, (hash, card) => hash * 31 + card.GetHashCode());
+		public static bool operator ==(CardWithEnchantments left, CardWithEnchantments right) => left.Equals(right);
+
+		public static bool operator !=(CardWithEnchantments left, CardWithEnchantments right) => !left.Equals(right);
+
+		public override int GetHashCode()
+			=> (Cards.Aggregate(17, (hash, card) => hash * 31 + card.GetHashCode()) * 31 + FirstHalf.GetHashCode()) * 31
+				+ SecondHalf.GetHashCode();
 	}
 
 	public class CardRefConverter : JsonConverter
@@ -94,7 +129,13 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 
 		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		{
-			var cards = ((CardWithEnchantments)value!).Cards;
+			var slot = (CardWithEnchantments)value!;
+			var cards = slot.Cards;
+			if(slot.HasExtraData)
+			{
+				WriteObject(writer, slot, serializer);
+				return;
+			}
 			if(cards.Length == 1)
 			{
 				serializer.Serialize(writer, cards[0]);
@@ -106,9 +147,44 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 			writer.WriteEndArray();
 		}
 
+		// older extension versions do not understand the object, so only cards with extra data use it
+		private static void WriteObject(JsonWriter writer, CardWithEnchantments slot, JsonSerializer serializer)
+		{
+			var cards = slot.Cards;
+			writer.WriteStartObject();
+			writer.WritePropertyName("card");
+			serializer.Serialize(writer, cards[0]);
+			if(cards.Length > 1)
+			{
+				writer.WritePropertyName("enchantments");
+				writer.WriteStartArray();
+				foreach(var card in cards.Skip(1))
+					serializer.Serialize(writer, card);
+				writer.WriteEndArray();
+			}
+			if(slot.FirstHalf.HasValue)
+			{
+				writer.WritePropertyName("assembled_first_half");
+				serializer.Serialize(writer, slot.FirstHalf.Value);
+			}
+			if(slot.SecondHalf.HasValue)
+			{
+				writer.WritePropertyName("assembled_second_half");
+				serializer.Serialize(writer, slot.SecondHalf.Value);
+			}
+			writer.WriteEndObject();
+		}
+
 		public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
 		{
 			var token = JToken.Load(reader);
+			if(token is JObject obj)
+			{
+				var card = obj["card"] ?? throw new JsonSerializationException("Expected a card");
+				var enchantments = obj["enchantments"]?.Select(x => x.ToObject<CardRef>(serializer)) ?? Enumerable.Empty<CardRef>();
+				return new CardWithEnchantments(card.ToObject<CardRef>(serializer), enchantments)
+					.WithHalves(obj["assembled_first_half"]?.ToObject<CardRef>(serializer), obj["assembled_second_half"]?.ToObject<CardRef>(serializer));
+			}
 			if(token.Type != JTokenType.Array)
 				return new CardWithEnchantments(token.ToObject<CardRef>(serializer));
 			var cards = token.Select(x => x.ToObject<CardRef>(serializer)).ToArray();

@@ -13,6 +13,9 @@
 - Fixed the minion browser not showing tooltips when hovering the pinning or inspiration button.
 - Fixed the minion browser showing a broken inspiration button between matches.
 
+**Streaming**:
+- Viewers can see the Assembled minions and Hero Powers by hovering them in the Twitch Extension!
+
 ## **Release v1.59.3 - 2026-10-14**
 **Hearthstone**:
 - Added support to multiclass tavern brawl decks.

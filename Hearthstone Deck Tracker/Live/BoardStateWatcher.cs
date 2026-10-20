@@ -125,7 +125,23 @@ namespace Hearthstone_Deck_Tracker.Live
 		private CardRef[] SortedRefs(IEnumerable<Entity> entities) => entities.OrderBy(ZonePosition).Select(Ref).ToArray();
 
 		private CardWithEnchantments[] ToSortedBoard(IEnumerable<Entity> entities) =>
-			entities.OrderBy(ZonePosition).Select(e => new CardWithEnchantments(ToCardRef(ResolveCard(e)))).ToArray();
+			entities.OrderBy(ZonePosition).Select(e => WithHalves(new CardWithEnchantments(ToCardRef(ResolveCard(e))), e)).ToArray();
+
+		// an assembled minion's text comes from the halves of two other cards, and so does the hero power
+		// Rajh makes from one
+		private CardWithEnchantments WithHalves(CardWithEnchantments card, Entity entity) => card.WithHalves(
+			CardHalf(entity.GetTag(GameTag.CRAFTABLE_FIRST_HALF_DBID)),
+			CardHalf(entity.GetTag(GameTag.CRAFTABLE_SECOND_HALF_DBID))
+		);
+
+		// a value of 1 only marks a half that is still on offer, so it is not a card
+		private CardRef? CardHalf(int dbfId) => dbfId > 1 ? CardRefFromDbfId(dbfId) : null;
+
+		private CardWithEnchantments? HeroPowerRef(Entity? heroPower)
+		{
+			var card = RefOrNull(heroPower);
+			return card.HasValue ? WithHalves(new CardWithEnchantments(card.Value), heroPower!) : null;
+		}
 
 		private CardWithEnchantments[] ToSortedBoard(IEnumerable<BoardCard> boardCards) =>
 			boardCards
@@ -302,7 +318,7 @@ namespace Hearthstone_Deck_Tracker.Live
 						Cards = SortedRefs(player.Hand),
 						Size = player.HandCount
 					},
-					HeroPower = BgsQuestReward(player, true) ?? RefOrNull(FindHeroPower(player)),
+					HeroPower = BgsQuestReward(player, true) ?? HeroPowerRef(FindHeroPower(player)),
 					Weapon = playerWeapon ?? BgsQuestReward(player, false) ?? Buddy(player) ?? 0,
 					Fatigue = Core.Game.PlayerEntity.GetTag(GameTag.FATIGUE)
 				},
@@ -319,7 +335,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					},
 					Secrets = SortedRefs(opponent.PlayerEntities.Where(x => x.IsInSecret)),
 					Hero = HeroRef(Find(opponent, HeroId(Core.Game.OpponentEntity))),
-					HeroPower = BgsQuestReward(opponent, true) ?? RefOrNull(FindHeroPower(opponent)),
+					HeroPower = BgsQuestReward(opponent, true) ?? HeroPowerRef(FindHeroPower(opponent)),
 					Weapon = opponentWeapon ?? BgsQuestReward(opponent, false) ?? Buddy(opponent) ?? 0,
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},

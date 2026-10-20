@@ -81,8 +81,9 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("hero", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public CardRef? Hero { get; set; }
 
+		// may be assembled (Rajh), unlike the Battlegrounds-only top and bottom hero powers
 		[JsonProperty("hero_power", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public CardRef? HeroPower { get; set; }
+		public CardWithEnchantments? HeroPower { get; set; }
 
 		[JsonProperty("hero_power_top", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public CardRef? HeroPowerTop { get; set; }
