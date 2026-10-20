@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using HearthDb.Enums;
 using HearthMirror.Objects;
+using HearthWatcher.EventArgs;
 using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
@@ -573,6 +574,92 @@ public partial class OverlayWindow
 		}
 	}
 
+	/// <summary>
+	/// Fills <paramref name="vm"/> with the related cards of <paramref name="effectCardId"/> for a
+	/// card offered in a choice (Discover, Assemble). False when there is nothing to show.
+	/// </summary>
+	/// <param name="handCardId">The in-hand copy dynamic pools read their live state from.</param>
+	private bool TrySetChoiceRelatedCards(CardGridTooltipViewModel vm, string effectCardId, string? handCardId)
+	{
+		var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(effectCardId);
+
+		if(cardWithRelatedCards is ICardWithRelatedCardsSummary or ICardWithDynamicRelatedCardsSummary && (!Config.Instance.OutfinderEnabled || !Config.Instance.OutfinderInDeck))
+			return false;
+
+		// Deck hovers have no hovered hand entity; dynamic pools fall back to the in-hand copy
+		// so the grid reflects its live state. The pool is built once and shared with the
+		// summary (which, as before, resolves its own targets from null entity).
+		List<Card>? dynamicPool = null;
+		List<Card?>? relatedCards;
+		if(cardWithRelatedCards is ICardWithDynamicRelatedCardsSummary dynamicRelatedCards)
+		{
+			var handEntity = Core.Game.Player.Hand.FirstOrDefault(e => e.CardId == handCardId);
+			dynamicPool = dynamicRelatedCards.GetPool(Core.Game.Player, handEntity);
+			relatedCards = dynamicRelatedCards.GetRelatedCards(Core.Game.Player, handEntity, dynamicPool);
+		}
+		else
+			relatedCards = cardWithRelatedCards?.GetRelatedCards(Core.Game.Player);
+
+		// Deliberately not assigned to vm.Cards yet - see ApplyRelatedCardsSummary.
+		var pool = relatedCards?.WhereNotNull().ToList();
+		if(pool == null || pool.Count == 0)
+			return false;
+
+		ApplyRelatedCardsSummary(vm, cardWithRelatedCards, effectCardId,
+			Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInDeck, null, pool, dynamicPool);
+		return true;
+	}
+
+	// Assemble screen layout as fractions of the 4:3 play area (x) and of the height (y), measured
+	// at 1920x1080. Each offered card stacks its trigger half over its effect half.
+	private static readonly double[] AssembleChoiceLefts = { 0.096, 0.659 };
+	private const double AssembleHalfWidth = 0.262;
+	private const double AssembleHalfHeight = 0.104;
+	private const double AssembleTriggerHalfTop = 0.394;
+	private const double AssembleEffectHalfTop = 0.503;
+	private const double AssembleTargetLeft = 0.313;
+	private const double AssembleTargetTop = 0.19;
+	private const double AssembleTargetWidth = 0.44;
+	private const double AssembleTargetHeight = 0.496;
+
+
+	public void SetRelatedCardsTrigger(AssembleStateArgs state, string? effectCardId)
+	{
+		var vm = (CardGridTooltipViewModel)RelatedCardsTrigger.DataContext;
+		vm.Reset();
+		SetHoveredLargePool(null, null);
+		if(!state.IsShowing || string.IsNullOrEmpty(effectCardId) || Config.Instance.HidePlayerRelatedCards)
+			return;
+
+		vm.Scale = Height / 1080;
+
+		RelatedCardsTrigger.UpdateLayout(); // After reset, force layout to update mouse event
+		UpdateHoverable(); // Force mouse events to occur to update tooltip
+
+		if(!TrySetChoiceRelatedCards(vm, effectCardId!, null))
+			return;
+
+		var isHalfHovered = state.HoveredHalf > 0 && state.HoveredChoiceIndex >= 0
+			&& state.HoveredChoiceIndex < AssembleChoiceLefts.Length;
+		if(isHalfHovered)
+		{
+			vm.Left = Helper.GetScaledXPos(AssembleChoiceLefts[state.HoveredChoiceIndex], (int)Width, ScreenRatio);
+			vm.Top = Height * (state.HoveredHalf == 1 ? AssembleTriggerHalfTop : AssembleEffectHalfTop);
+			vm.Width = Height * AssembleHalfWidth;
+			vm.Height = Height * AssembleHalfHeight;
+			// Away from the center preview.
+			vm.TooltipPlacement = state.HoveredChoiceIndex == 0 ? PlacementMode.Left : PlacementMode.Right;
+		}
+		else
+		{
+			vm.Left = Helper.GetScaledXPos(AssembleTargetLeft, (int)Width, ScreenRatio);
+			vm.Top = Height * AssembleTargetTop;
+			vm.Width = Height * AssembleTargetWidth;
+			vm.Height = Height * AssembleTargetHeight;
+			vm.TooltipPlacement = PlacementMode.Right;
+		}
+	}
+
 	public void SetRelatedCardsTrigger(DiscoverState state)
 	{
 		// Note: To debug behavior here and/or implement new triggers set a translucent
@@ -595,32 +682,8 @@ public partial class OverlayWindow
 			// Assembled cards take their related cards from their effect half.
 			var offeredEntity = state.EntityId is > 0 && Core.Game.Entities.TryGetValue((int)state.EntityId, out var offered) ? offered : null;
 			var effectCardId = RelatedCardsManager.GetEffectCardId(offeredEntity, state.CardId);
-			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(effectCardId);
-
-			if(cardWithRelatedCards is ICardWithRelatedCardsSummary or ICardWithDynamicRelatedCardsSummary && (!Config.Instance.OutfinderEnabled || !Config.Instance.OutfinderInDeck))
+			if(!TrySetChoiceRelatedCards(vm, effectCardId, state.CardId))
 				return;
-
-			// Deck hovers have no hovered hand entity; dynamic pools fall back to the in-hand copy
-			// so the grid reflects its live state. The pool is built once and shared with the
-			// summary (which, as before, resolves its own targets from null entity).
-			List<Card>? dynamicPool = null;
-			List<Card?>? relatedCards;
-			if(cardWithRelatedCards is ICardWithDynamicRelatedCardsSummary dynamicRelatedCards)
-			{
-				var handEntity = Core.Game.Player.Hand.FirstOrDefault(e => e.CardId == state.CardId);
-				dynamicPool = dynamicRelatedCards.GetPool(Core.Game.Player, handEntity);
-				relatedCards = dynamicRelatedCards.GetRelatedCards(Core.Game.Player, handEntity, dynamicPool);
-			}
-			else
-				relatedCards = cardWithRelatedCards?.GetRelatedCards(Core.Game.Player);
-
-			// Deliberately not assigned to vm.Cards yet - see ApplyRelatedCardsSummary.
-			var pool = relatedCards?.WhereNotNull().ToList();
-			if(pool == null || pool.Count == 0)
-				return;
-
-			ApplyRelatedCardsSummary(vm, cardWithRelatedCards, effectCardId,
-				Config.Instance.OutfinderEnabled && Config.Instance.OutfinderInDeck, null, pool, dynamicPool);
 
 			vm.Top = Height * 0.2;
 			vm.Height = Height * 0.53;

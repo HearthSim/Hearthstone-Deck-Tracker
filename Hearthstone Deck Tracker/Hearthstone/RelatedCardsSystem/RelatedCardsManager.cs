@@ -138,6 +138,34 @@ public class RelatedCardsManager
 		return Database.GetCardFromDbfId(effectDbfId, false)?.Id ?? cardId;
 	}
 
+	/// <summary>
+	/// The choice entity behind one half button on the Assemble screen.
+	///
+	/// Each half of an offered card is its own choice entity. It is marked by setting the half it
+	/// does not provide to 1: CRAFTABLE_SECOND_HALF_DBID = 1 offers the trigger (first half),
+	/// CRAFTABLE_FIRST_HALF_DBID = 1 offers the effect (second half).
+	/// </summary>
+	/// <param name="choiceIndex">The offered card, left to right.</param>
+	/// <param name="half">1 for the trigger half, 2 for the effect half.</param>
+	public static Entity? GetAssembleChoice(IEnumerable<Entity> choices, int choiceIndex, int half)
+	{
+		if(choiceIndex < 0 || half is not (1 or 2))
+			return null;
+		var marker = half == 1 ? GameTag.CRAFTABLE_SECOND_HALF_DBID : GameTag.CRAFTABLE_FIRST_HALF_DBID;
+		return choices.Where(choice => choice.GetTag(marker) == 1).ElementAtOrDefault(choiceIndex);
+	}
+
+	/// <summary>
+	/// The card id whose related cards apply to the card that picking <paramref name="choice"/>
+	/// would assemble. An effect half brings its own effect; a trigger half keeps the target's.
+	/// </summary>
+	public static string? GetAssembleChoiceEffectCardId(Entity choice, Entity? target)
+	{
+		if(choice.GetTag(GameTag.CRAFTABLE_SECOND_HALF_DBID) != 1)
+			return choice.CardId;
+		return target?.CardId is { } targetCardId ? GetEffectCardId(target, targetCardId) : null;
+	}
+
 	public ICardWithHighlight? GetCardWithHighlight(string cardId)
 	{
 		return HighlightCards.TryGetValue(cardId, out var card) ? card : null;

@@ -77,6 +77,7 @@ public class SceneHandler
 			Watchers.ChoicesWatcher.Stop();
 			Watchers.SpecialShopChoicesStateWatcher.Stop();
 			Watchers.DiscoverStateWatcher.Stop();
+			Watchers.AssembleStateWatcher.Stop();
 			Watchers.MulliganTooltipWatcher.Stop();
 			Watchers.MulliganStateWatcher.Stop();
 		}
@@ -118,6 +119,7 @@ public class SceneHandler
 			Watchers.ChoicesWatcher.Run();
 			Watchers.SpecialShopChoicesStateWatcher.Run();
 			Watchers.DiscoverStateWatcher.Run();
+			Watchers.AssembleStateWatcher.Run();
 			Watchers.BaconWatcher.Run();
 			Watchers.MulliganTooltipWatcher.Run();
 			Watchers.MulliganStateWatcher.Run();

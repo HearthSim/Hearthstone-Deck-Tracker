@@ -51,6 +51,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ChoicesWatcher.Change += (sender, args) => Core.Overlay.SetChoicesVisible(args.CurrentChoice?.IsVisible ?? false, args.CurrentChoice?.IsShopChoice ?? false, args.CurrentChoice?.Cards);
 			SpecialShopChoicesStateWatcher.Change += (sender, args) => Core.Overlay.HandleSpecialShop(args);
 			DiscoverStateWatcher.Change += OnDiscoverStateChange;
+			AssembleStateWatcher.Change += OnAssembleStateChange;
 			BigCardWatcher.Change += OnBigCardChange;
 			PlayZoneWatcher.Change += OnPlayZoneChange;
 			BattlegroundsTeammateBoardStateWatcher.Change += OnBattlegroundsTeammateBoardStateChange;
@@ -78,6 +79,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SpecialShopChoicesStateWatcher.Stop();
 			BigCardWatcher.Stop();
 			DiscoverStateWatcher.Stop();
+			AssembleStateWatcher.Stop();
 			PlayZoneWatcher.Stop();
 			BattlegroundsTeammateBoardStateWatcher.Stop();
 			BattlegroundsLeaderboardWatcher.Stop();
@@ -332,6 +334,44 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		internal static void OnAssembleStateChange(object sender, HearthWatcher.EventArgs.AssembleStateArgs args)
+		{
+			var effectCardId = args.IsShowing ? GetAssembleEffectCardId(args) : null;
+			Core.Overlay.SetRelatedCardsTrigger(args, effectCardId);
+
+			if(Core.Game.IsTraditionalHearthstoneMatch)
+			{
+				// Highlight only for an intent: a hovered half, or the half picked for the preview.
+				var highlightCardId = args.HoveredHalf > 0 || args.SelectedChoiceEntityId > 0 ? effectCardId : null;
+				Core.Overlay.HighlightPlayerDeckCards(highlightCardId);
+				if(Core.Windows.PlayerWindow.IsVisible)
+				{
+					Core.Windows.PlayerWindow.HighlightPlayerDeckCards(highlightCardId);
+				}
+			}
+		}
+
+		private static string? GetAssembleEffectCardId(HearthWatcher.EventArgs.AssembleStateArgs args)
+		{
+			var entities = Core.Game.Entities;
+			var target = entities.TryGetValue(args.TargetEntityId, out var t) ? t : null;
+
+			Entity? choice = null;
+			if(args.HoveredHalf > 0)
+			{
+				var choices = args.ChoiceEntityIds
+					.Select(id => entities.TryGetValue(id, out var entity) ? entity : null)
+					.WhereNotNull();
+				choice = RelatedCardsManager.GetAssembleChoice(choices, args.HoveredChoiceIndex, args.HoveredHalf);
+			}
+			else if(args.SelectedChoiceEntityId > 0)
+				choice = entities.TryGetValue(args.SelectedChoiceEntityId, out var c) ? c : null;
+
+			if(choice != null)
+				return RelatedCardsManager.GetAssembleChoiceEffectCardId(choice, target);
+			return target?.CardId is { } targetCardId ? RelatedCardsManager.GetEffectCardId(target, targetCardId) : null;
+		}
+
 		internal static void OnMulliganTooltipChange(object sender, HearthWatcher.EventArgs.MulliganTooltipArgs args)
 		{
 			var buddiesEnabled = Core.Game.GameEntity?.GetTag(GameTag.BACON_BUDDY_ENABLED) > 0;
@@ -429,6 +469,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static PlayZoneWatcher PlayZoneWatcher { get; } =
 			new(new HearthMirrorBoardStateProvider());
 		public static DiscoverStateWatcher DiscoverStateWatcher { get; } = new(new HearthMirrorDiscoverStateProvider());
+		public static AssembleStateWatcher AssembleStateWatcher { get; } = new(new HearthMirrorAssembleStateProvider());
 		public static BattlegroundsTeammateBoardStateWatcher BattlegroundsTeammateBoardStateWatcher { get; } = new(new HearthMirrorBattlegroundsTeammateBoardStateProvider());
 		public static BattlegroundsLeaderboardWatcher BattlegroundsLeaderboardWatcher { get; } = new(new HearthMirrorBattlegroundsLeaderboardProvider());
 		public static BattlegroundsLobbyInfoWatcher BattlegroundsLobbyInfoWatcher { get; } = new(new HearthMirrorBattlegroundsLobbyInfoProvider());
@@ -529,6 +570,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorDiscoverStateProvider : IDiscoverStateProvider
 	{
 		public DiscoverState? State => Reflection.Client.GetDiscoverState();
+	}
+
+	public class HearthMirrorAssembleStateProvider : IAssembleStateProvider
+	{
+		public AssembleState? State => Reflection.Client.GetAssembleState();
 	}
 
 	public class HearthMirrorBattlegroundsTeammateBoardStateProvider : IBattlegroundsTeammateBoardStateProvider

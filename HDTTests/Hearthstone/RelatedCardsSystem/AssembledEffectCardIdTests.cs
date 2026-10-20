@@ -60,5 +60,69 @@ namespace HDTTests.Hearthstone.RelatedCardsSystem
 		{
 			Assert.AreEqual(AssembledCardId, RelatedCardsManager.GetEffectCardId(null, AssembledCardId));
 		}
+
+		// From a real game: Shadow Sculpt assembled a Grimestreet Outfitter, offering Eyemaul and
+		// Veteran Warmedic. Each half is its own choice entity, marked by setting the half it does
+		// not provide to 1.
+		private const string Target = "CORE_CFM_753";
+		private const string Eyemaul = "BE_349";
+		private const string Warmedic = "CORE_BAR_878";
+
+		private static Entity Choice(int id, string cardId, GameTag marker)
+		{
+			var entity = new Entity(id) { CardId = cardId };
+			entity.SetTag(marker, 1);
+			return entity;
+		}
+
+		private static readonly Entity[] Choices =
+		{
+			Choice(121, Eyemaul, GameTag.CRAFTABLE_SECOND_HALF_DBID),
+			Choice(122, Eyemaul, GameTag.CRAFTABLE_FIRST_HALF_DBID),
+			Choice(123, Warmedic, GameTag.CRAFTABLE_SECOND_HALF_DBID),
+			Choice(124, Warmedic, GameTag.CRAFTABLE_FIRST_HALF_DBID),
+		};
+
+		[DataTestMethod]
+		[DataRow(0, 1, 121)]
+		[DataRow(0, 2, 122)]
+		[DataRow(1, 1, 123)]
+		[DataRow(1, 2, 124)]
+		public void FindsChoiceBehindHalfButton(int choiceIndex, int half, int expectedEntityId)
+		{
+			Assert.AreEqual(expectedEntityId, RelatedCardsManager.GetAssembleChoice(Choices, choiceIndex, half)?.Id);
+		}
+
+		[DataTestMethod]
+		[DataRow(-1, 1)]
+		[DataRow(2, 1)]
+		[DataRow(0, 0)]
+		[DataRow(0, 3)]
+		public void NoChoiceOutsideTheButtons(int choiceIndex, int half)
+		{
+			Assert.IsNull(RelatedCardsManager.GetAssembleChoice(Choices, choiceIndex, half));
+		}
+
+		[TestMethod]
+		public void EffectHalfChoiceBringsItsOwnEffect()
+		{
+			var target = new Entity(120) { CardId = Target };
+			Assert.AreEqual(Eyemaul, RelatedCardsManager.GetAssembleChoiceEffectCardId(Choices[1], target));
+		}
+
+		[TestMethod]
+		public void TriggerHalfChoiceKeepsTargetEffect()
+		{
+			var target = new Entity(120) { CardId = Target };
+			Assert.AreEqual(Target, RelatedCardsManager.GetAssembleChoiceEffectCardId(Choices[0], target));
+		}
+
+		[TestMethod]
+		public void TriggerHalfChoiceKeepsAlreadyAssembledTargetEffect()
+		{
+			var target = new Entity(120) { CardId = Target };
+			target.SetTag(GameTag.CRAFTABLE_SECOND_HALF_DBID, DbfId(EffectHalfCardId));
+			Assert.AreEqual(EffectHalfCardId, RelatedCardsManager.GetAssembleChoiceEffectCardId(Choices[2], target));
+		}
 	}
 }
