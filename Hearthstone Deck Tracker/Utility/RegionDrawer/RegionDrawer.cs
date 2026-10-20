@@ -450,5 +450,24 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 
 			return new List<Rect> { block };
 		}
+
+		public List<Rect> DrawAssembleScreenRegions()
+		{
+			return new List<Rect>
+			{
+				DrawScaledRegion(0.257, 0.079, 0.588, 0.12), // banner
+				DrawScaledRegion(0.082, 0.257, 0.287, 0.386), // left choice
+				DrawScaledRegion(0.656, 0.257, 0.287, 0.386), // right choice
+				DrawScaledRegion(0.306, 0.196, 0.456, 0.577), // target and Assemble button
+				DrawScaledRegion(0.087, 0.69, 0.157, 0.079), // Hide button
+			};
+		}
+
+		// left is a fraction of the 4:3 play area, width and height are fractions of the height.
+		private Rect DrawScaledRegion(double left, double top, double width, double height)
+		{
+			var posX = Helper.GetScaledXPos(left, (int)Width, ScreenRatio) / Width;
+			return new Rect(posX, top, width * Height / Width, height);
+		}
 	}
 }

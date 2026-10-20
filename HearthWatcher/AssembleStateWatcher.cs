@@ -10,6 +10,8 @@ public class AssembleStateWatcher : PollingWatcher
 {
 	public delegate void AssembleStateEventHandler(object sender, AssembleStateArgs args);
 
+	private static readonly AssembleStateArgs Hidden = new(false, 0, 0, new List<int>(), -1, 0);
+
 	private readonly IAssembleStateProvider _provider;
 	private AssembleStateArgs? _prev;
 
@@ -33,7 +35,7 @@ public class AssembleStateWatcher : PollingWatcher
 				state.Value.ChoiceEntityIds ?? new List<int>(),
 				state.Value.HoveredChoiceIndex ?? -1,
 				state.Value.HoveredHalf ?? 0)
-			: new AssembleStateArgs(false, 0, 0, new List<int>(), -1, 0);
+			: Hidden;
 		if(_prev == null || !curr.Equals(_prev))
 		{
 			_prev = curr;
@@ -42,5 +44,11 @@ public class AssembleStateWatcher : PollingWatcher
 		return Task.FromResult(false);
 	}
 
-	protected override void OnLoopEnd() => _prev = null;
+	protected override void OnLoopEnd()
+	{
+		// Watching can stop mid-Assemble (e.g. the game ends), so clear what the last state showed.
+		if(_prev is { IsShowing: true })
+			Dispatch(() => Change?.Invoke(this, Hidden));
+		_prev = null;
+	}
 }

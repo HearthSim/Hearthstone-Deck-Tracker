@@ -968,6 +968,44 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OpacityMaskOverlay.AddMaskedRegion("DiscoverCard", rect);
 		}
 
+		private bool _isAssembleShowing;
+		private Rect? _relatedCardsTooltipBounds;
+
+		public void SetAssembleOpacityMask(bool isShowing)
+		{
+			// Called on every hover change, so only rebuild when the screen shows or hides.
+			if(_isAssembleShowing == isShowing)
+				return;
+			_isAssembleShowing = isShowing;
+			UpdateAssembleOpacityMask();
+		}
+
+		private void SetRelatedCardsTooltipBounds(Rect? bounds)
+		{
+			if(_relatedCardsTooltipBounds == bounds)
+				return;
+			_relatedCardsTooltipBounds = bounds;
+			if(_isAssembleShowing)
+				UpdateAssembleOpacityMask();
+		}
+
+		private void UpdateAssembleOpacityMask()
+		{
+			using var _ = OpacityMaskOverlay.StartBatchUpdate();
+			OpacityMaskOverlay.RemoveMaskedRegion("AssembleScreen");
+			if(!_isAssembleShowing)
+				return;
+
+			var regionDrawer = new RegionDrawer(Height, Width, ScreenRatio);
+			foreach(var rect in regionDrawer.DrawAssembleScreenRegions())
+			{
+				// The related cards tooltip (and its Outfinder summary) opens over the screen on purpose.
+				if(_relatedCardsTooltipBounds is { } tooltip && rect.IntersectsWith(tooltip))
+					continue;
+				OpacityMaskOverlay.AddMaskedRegion("AssembleScreen", rect);
+			}
+		}
+
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{

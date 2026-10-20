@@ -38,6 +38,8 @@ public partial class OverlayWindow
 		{
 			_activeTooltips.Remove(target);
 			OverlayTooltip.Children.Remove(current);
+			if(target == RelatedCardsTrigger)
+				SetRelatedCardsTooltipBounds(null);
 		}
 
 		if(getTooltip == null)
@@ -194,6 +196,11 @@ public partial class OverlayWindow
 
 		Canvas.SetLeft(OverlayTooltip, actualLeft);
 		Canvas.SetTop(OverlayTooltip, actualTop);
+
+		// Keeps opacity masks (e.g. the Assemble screen) from cutting holes in the related cards tooltip.
+		if(target == RelatedCardsTrigger && ActualWidth > 0 && ActualHeight > 0)
+			SetRelatedCardsTooltipBounds(new Rect(actualLeft / ActualWidth, actualTop / ActualHeight,
+				tooltipWidth / ActualWidth, tooltipHeight / ActualHeight));
 
 		if(target is UIElement uiElement)
 			uiElement.RaiseEvent(new RoutedEventArgs(OverlayExtensions.TooltipLoadedEvent));

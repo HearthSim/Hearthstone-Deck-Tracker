@@ -338,6 +338,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var effectCardId = args.IsShowing ? GetAssembleEffectCardId(args) : null;
 			Core.Overlay.SetRelatedCardsTrigger(args, effectCardId);
+			Core.Overlay.SetAssembleOpacityMask(args.IsShowing);
 
 			if(Core.Game.IsTraditionalHearthstoneMatch)
 			{
