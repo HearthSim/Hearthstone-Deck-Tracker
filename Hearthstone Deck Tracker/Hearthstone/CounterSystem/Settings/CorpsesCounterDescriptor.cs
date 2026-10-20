@@ -10,7 +10,7 @@ public sealed class CorpsesCounterDescriptor : CounterDescriptor
 
 	public static CorpsesCounterDescriptor Instance { get; } = new();
 
-	private CorpsesCounterDescriptor() : base(Id)
+	private CorpsesCounterDescriptor() : base(Id, isBattlegroundsCounter: false)
 	{
 	}
 

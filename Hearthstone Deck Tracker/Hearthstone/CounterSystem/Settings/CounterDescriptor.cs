@@ -25,9 +25,10 @@ public class CounterDescriptor
 		IsBattlegroundsCounter = probe.IsBattlegroundsCounter;
 	}
 
-	protected CounterDescriptor(string counterId)
+	protected CounterDescriptor(string counterId, bool isBattlegroundsCounter)
 	{
 		CounterId = counterId;
+		IsBattlegroundsCounter = isBattlegroundsCounter;
 	}
 
 	public string CounterId { get; }

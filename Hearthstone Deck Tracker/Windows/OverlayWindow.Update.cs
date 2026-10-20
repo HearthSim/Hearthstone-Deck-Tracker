@@ -313,9 +313,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			else
 			{
-				var hidePlayerWidget = _game.IsBattlegroundsMatch
-					? Config.Instance.HidePlayerMaxResourcesWidgetBattlegrounds
-					: Config.Instance.HidePlayerMaxResourcesWidget;
+				var hidePlayerWidget = !_game.IsBattlegroundsMatch && Config.Instance.HidePlayerMaxResourcesWidget;
 				PlayerResourcesWidget.Visibility = hidePlayerWidget ? Collapsed : Visible;
 				OpponentResourcesWidget.Visibility = Config.Instance.HideOpponentMaxResourcesWidget || _game.IsBattlegroundsMatch ? Collapsed : Visible;
 			}

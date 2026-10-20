@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Settings;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -291,6 +292,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 						return new[] { DeckPanel.CardsBottom, DeckPanel.Sideboards };
 					return new[] { x };
 				}).ToArray();
+				converted = true;
+			}
+
+			if(Config.Instance.HidePlayerMaxResourcesWidgetBattlegrounds)
+			{
+				CounterVisibilitySettings.Instance.Set(MaxGoldCounterDescriptor.Id, true, CounterVisibility.Disabled);
+				Config.Instance.Reset(nameof(Config.HidePlayerMaxResourcesWidgetBattlegrounds));
 				converted = true;
 			}
 

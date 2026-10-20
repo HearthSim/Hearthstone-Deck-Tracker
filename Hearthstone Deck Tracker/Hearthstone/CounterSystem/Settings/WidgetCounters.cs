@@ -12,6 +12,7 @@ public static class WidgetCounters
 	public static IReadOnlyList<CounterDescriptor> Descriptors { get; } = new CounterDescriptor[]
 	{
 		CorpsesCounterDescriptor.Instance,
+		MaxGoldCounterDescriptor.Instance,
 	};
 
 	public static IEnumerable<string> Ids => Descriptors.Select(d => d.CounterId);

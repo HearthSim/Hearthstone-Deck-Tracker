@@ -479,6 +479,7 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HidePlayerMaxResourcesWidget = false;
 
+		// only read to migrate it to the MaxGoldCounter visibility override
 		[DefaultValue(false)]
 		public bool HidePlayerMaxResourcesWidgetBattlegrounds = false;
 

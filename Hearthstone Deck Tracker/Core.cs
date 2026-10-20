@@ -709,7 +709,7 @@ namespace Hearthstone_Deck_Tracker
 
 		internal static void UpdatePlayerResourcesWidget()
 		{
-			var shouldShowMaxGold = Game.Player.ShouldShowMaxGold;
+			var shouldShowMaxGold = Game.IsBattlegroundsMatch && MaxGoldCounterDescriptor.IsVisible(Game.Player.ShouldShowMaxGold);
 			var shouldShowCorpsesLeft = CorpsesCounterDescriptor.IsVisible(true, false);
 
 			Overlay.UpdatePlayerResourcesWidget(Game.Player.MaxHealth, Game.Player.MaxMana, Game.Player.MaxHandSize,
