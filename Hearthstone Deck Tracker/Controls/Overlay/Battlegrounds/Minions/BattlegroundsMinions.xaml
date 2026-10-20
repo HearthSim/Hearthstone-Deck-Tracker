@@ -304,8 +304,9 @@
                             GroupedByMinionType="{Binding GroupedByMinionType}"
                             Keyword="{Binding Keyword}"
                             GroupedByKeyword="{Binding GroupedByKeyword}"
-                            Cards="{Binding Cards}"
                             IsInspirationEnabled="{Binding IsInspirationEnabled}"
+                            IsPinEnabled="{Binding IsPinEnabled}"
+                            Cards="{Binding Cards}"
                             ClickMinionTypeCommand="{Binding SetActiveMinionTypeCommand, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"
                         />
                     </DataTemplate>

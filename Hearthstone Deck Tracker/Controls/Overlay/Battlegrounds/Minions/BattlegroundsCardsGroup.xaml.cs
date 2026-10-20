@@ -106,6 +106,13 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 		new PropertyMetadata()
 	);
 
+	public static readonly DependencyProperty IsPinEnabledProperty = DependencyProperty.Register(
+		nameof(IsPinEnabled),
+		typeof(bool),
+		typeof(BattlegroundsCardsGroup),
+		new PropertyMetadata()
+	);
+
 	public Command<Race>? ClickMinionTypeCommand
 	{
 		get { return (Command<Race>?)GetValue(ClickFilterCommandProperty); }
@@ -146,6 +153,12 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 	{
 		get => (bool)GetValue(IsInspirationEnabledProperty);
 		set => SetValue(IsInspirationEnabledProperty, value);
+	}
+
+	public bool IsPinEnabled
+	{
+		get => (bool)GetValue(IsPinEnabledProperty);
+		set => SetValue(IsPinEnabledProperty, value);
 	}
 
 	[LocalizedProp]
@@ -217,7 +230,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 	{
 		_repopulateOnLoad = false;
 		CardsList.ShowTier7InspirationButton = IsInspirationEnabled;
-		CardsList.ShowPinButton = true;
+		CardsList.ShowPinButton = IsPinEnabled;
 		CardsList.UseBattlegroundsTile = true;
 		CardsList.Update(cards, true);
 	}

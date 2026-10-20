@@ -9,6 +9,7 @@
 - Changed the Tavern Pinning popup to only pop up automatically if you've explicitly enabled that setting.
 - Fixed Wrath Weaver having an outdated icon and card art.
 - Fixed the minion browser not showing tooltips when hovering the pinning or inspiration button.
+- Fixed the minion browser showing a broken inspiration button between matches.
 
 ## **Release v1.59.3 - 2026-10-14**
 **Hearthstone**:

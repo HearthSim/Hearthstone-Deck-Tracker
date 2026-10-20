@@ -393,7 +393,13 @@ public class BattlegroundsMinionsViewModel : ViewModel
 
 		public bool IsInspirationEnabled { get; set; }
 
+		public bool IsPinEnabled { get; set; }
+
 	}
+
+	// a trial from the previous match must not carry over, and nothing can be pinned outside a match
+	private bool ShowInspirationButtons => IsInspirationEnabled && !IsPreLobby;
+	private bool ShowPinButtons => !IsPreLobby;
 
 	// outside of a match any game can roll a Dark Paradox, so its tier is never known
 	private Hearthstone.Card? UnknownDarkParadox
@@ -428,7 +434,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						Tier = tier,
 						MinionType = race,
 						Cards = cards.OrderBy(x => x.LocalizedName),
-						IsInspirationEnabled = IsInspirationEnabled,
+						IsInspirationEnabled = ShowInspirationButtons,
+						IsPinEnabled = ShowPinButtons,
 					});
 				}
 
@@ -450,7 +457,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						Tier = tier,
 						MinionType = (Race)(-1), // Spells are encoded as a -1 race
 						Cards = spells.OrderBy(x => x.Cost).ThenBy(x => x.LocalizedName),
-						IsInspirationEnabled = IsInspirationEnabled,
+						IsInspirationEnabled = ShowInspirationButtons,
+						IsPinEnabled = ShowPinButtons,
 					});
 				}
 
@@ -517,7 +525,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						MinionType = minionType,
 						GroupedByMinionType = true,
 						Cards = cards,
-						IsInspirationEnabled = IsInspirationEnabled,
+						IsInspirationEnabled = ShowInspirationButtons,
+						IsPinEnabled = ShowPinButtons,
 					});
 				}
 
@@ -529,7 +538,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						MinionType = minionType,
 						GroupedByMinionType = true,
 						Cards = new[] { darkParadox },
-						IsInspirationEnabled = IsInspirationEnabled,
+						IsInspirationEnabled = ShowInspirationButtons,
+						IsPinEnabled = ShowPinButtons,
 					});
 				}
 			}
@@ -552,7 +562,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						Keyword = activeMinionKeyword,
 						GroupedByKeyword = true,
 						Cards = cards,
-						IsInspirationEnabled = IsInspirationEnabled,
+						IsInspirationEnabled = ShowInspirationButtons,
+						IsPinEnabled = ShowPinButtons,
 					});
 				}
 
@@ -566,7 +577,8 @@ public class BattlegroundsMinionsViewModel : ViewModel
 						MinionType = (Race)(-1), // Spells are encoded as a -1 race
 						Cards = spells.OrderBy(x => x.Cost).ThenBy(x => x.LocalizedName),
 						GroupedByKeyword = true,
-						IsInspirationEnabled = IsInspirationEnabled,
+						IsInspirationEnabled = ShowInspirationButtons,
+						IsPinEnabled = ShowPinButtons,
 					});
 				}
 			}
@@ -629,6 +641,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		HasTier7HeroPower = false;
 		HasTier7Trinket = false;
 		HasTier7QuestReward = false;
+		IsInspirationEnabled = false;
 	}
 
 	private bool _preloadedCardTiles;
