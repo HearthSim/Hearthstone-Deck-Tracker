@@ -274,6 +274,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 						converted = true;
 					}
 				}
+
+				// we used to save this every time it was toggled and made it an explicit setting in 1.59.4
+				if(configVersion < new Version(1, 59, 4, 0))
+				{
+					Config.Instance.Reset(nameof(Config.TavernMarkersPanelExpanded));
+					converted = true;
+				}
 			}
 
 			if(!Config.Instance.DeckPanelOrderLocalPlayer.Contains(DeckPanel.Sideboards))

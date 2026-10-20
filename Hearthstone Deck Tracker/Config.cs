@@ -851,8 +851,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool AutoEnableTavernMarkersRecommended = false;
 
-		[DefaultValue(true)]
-		public bool TavernMarkersPanelExpanded = true;
+		[DefaultValue(false)]
+		public bool TavernMarkersPanelExpanded = false;
 
 		[DefaultValue(false)]
 		public bool DismissedTavernMarkerQuickQuickGuide = false;
