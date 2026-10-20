@@ -19,6 +19,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			: string.Format(LocUtil.Get("BattlegroundsPreLobby_Trial_ResetTimeRemaining_DaysHours"), _status.HoursUntilReset / 24, _status.HoursUntilReset % 24);
 
 		public static event Action? OnTrialActivated;
+		public static event Action? OnStatusUpdated;
 
 		static Tier7Trial()
 		{
@@ -105,7 +106,22 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			if(_status?.HoursUntilReset < 2)
 				_status = null;
-			_status ??= await ApiWrapper.GetPlayerTrialStatus("tier7-overlay", accountHi, accountLo);
+			if(_status != null)
+				return;
+			_status = await ApiWrapper.GetPlayerTrialStatus("tier7-overlay", accountHi, accountLo);
+			OnStatusUpdated?.Invoke();
+		}
+
+		// refetch right away so the next match can start a trial even when queued straight from the menu
+		public static async Task Refresh()
+		{
+			Clear();
+			if(HSReplayNetOAuth.AccountData?.IsTier7 ?? false)
+				return;
+			var acc = Reflection.Client.GetAccountId();
+			if(acc == null)
+				return;
+			await Update(acc.Hi, acc.Lo);
 		}
 
 		public static void Clear()

@@ -35,6 +35,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 	{
 		HSReplayNetOAuth.AccountDataUpdated += UpdateCompositionStatsVisibility;
 		HSReplayNetOAuth.LoggedOut += UpdateCompositionStatsVisibility;
+		Tier7Trial.OnStatusUpdated += UpdateCompositionStatsVisibility;
 	}
 
 	public ObservableCollection<Race> AvailableMinionTypes { get; } = new();
@@ -146,7 +147,7 @@ public class BattlegroundsSessionViewModel : ViewModel
 		Core.Windows.BattlegroundsSessionWindow.UpdateBattlegroundsSessionLayoutHeight();
 	}
 
-	public async void UpdateCompositionStatsVisibility()
+	public void UpdateCompositionStatsVisibility()
 	{
 		if(IsDuos || !Config.Instance.ShowBattlegroundsTier7SessionCompStats
 		          || !Config.Instance.EnableBattlegroundsTier7Overlay)
@@ -154,15 +155,16 @@ public class BattlegroundsSessionViewModel : ViewModel
 			AvailableCompStatsSectionVisibility = Visibility.Collapsed;
 			return;
 		}
-		var acc = Reflection.Client.GetAccountId();
-		if(acc != null)
-			await Tier7Trial.Update(acc.Hi, acc.Lo);
 
 		var userOwnsTier7 = HSReplayNetOAuth.AccountData?.IsTier7 ?? false;
 
-		AvailableCompStatsSectionVisibility =
-			Tier7Trial.RemainingTrials > 0 || Tier7Trial.IsTrialForCurrentGameActive(Core.Game.MetaData.ServerInfo?.GameHandle) || userOwnsTier7 || CompositionStats != null ? Visibility.Visible
-				: Visibility.Collapsed;
+		bool available;
+		if(Core.Game.IsInMenu)
+			available = userOwnsTier7 || Tier7Trial.RemainingTrials > 0;
+		else
+			available = Tier7Trial.RemainingTrials > 0 || Tier7Trial.IsTrialForCurrentGameActive(Core.Game.MetaData.ServerInfo?.GameHandle) || userOwnsTier7 || CompositionStats != null;
+
+		AvailableCompStatsSectionVisibility = available ? Visibility.Visible : Visibility.Collapsed;
 	}
 
 	private void UpdateMinionTypes()

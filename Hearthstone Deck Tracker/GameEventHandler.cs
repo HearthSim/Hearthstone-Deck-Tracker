@@ -138,6 +138,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Core.Game.BattlegroundsSessionViewModel.Update();
 				Core.Overlay.BattlegroundsCompsGuidesVM.Reset();
+				Tier7Trial.Refresh().Forget();
 			}
 
 			if(!_game.IsUsingPremade)
@@ -1120,7 +1121,6 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.IsBattlegroundsMatch)
 				{
 					SentryReporter.FlushBattlegroundsEvents(_game.CurrentGameStats.HsReplay.UploadId, LogContainsStateComplete, _game.IsBattlegroundsDuosMatch);
-					Tier7Trial.Clear();
 					var hero = _game.Entities.Values.FirstOrDefault(x => x.HasTag(PLAYER_LEADERBOARD_PLACE) && x.IsControlledBy(_game.Player.Id));
 					var finalPlacement = hero?.GetTag(PLAYER_LEADERBOARD_PLACE) ?? 0;
 					CaptureBattlegroundsFeedback(finalPlacement);
