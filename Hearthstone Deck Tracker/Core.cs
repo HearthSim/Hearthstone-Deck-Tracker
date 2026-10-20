@@ -222,6 +222,9 @@ namespace Hearthstone_Deck_Tracker
 			// StateChanged only sends the window to the tray when the user minimizes to tray
 			if(StartupFlags.IsBackgroundUpdate)
 				MainWindow.MinimizeToTray();
+			// flash the taskbar if the user moved on during startup (Show alone stays silent)
+			else if(MainWindow.WindowState != WindowState.Minimized)
+				MainWindow.Activate();
 			splashScreenWindow.Close();
 
 			if(ConfigManager.UpdatedVersion != null)
