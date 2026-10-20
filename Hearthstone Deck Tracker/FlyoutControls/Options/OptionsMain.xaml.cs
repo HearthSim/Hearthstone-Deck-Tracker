@@ -90,6 +90,35 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
+		public (TreeViewItem TreeViewItem, UserControl Page)[] Pages => new (TreeViewItem, UserControl)[]
+		{
+			(TreeViewItemHSReplayAccount, OptionsHSReplayAccount),
+			(TreeViewItemHSReplayCollection, OptionsHSReplayCollection),
+			(TreeViewItemHSReplayReplays, OptionsHSReplayReplays),
+			(TreeViewItemOverlayGeneral, OptionsOverlayGeneral),
+			(TreeViewItemOverlayMulligan, OptionsOverlayMulligan),
+			(TreeViewItemOverlayTheOutfinder, OptionsOverlayTheOutfinder),
+			(TreeViewItemOverlayCounters, OptionsOverlayCounters),
+			(TreeViewItemOverlayRelatedCards, OptionsOverlayRelatedCards),
+			(TreeViewItemOverlayDeckWindows, OptionsOverlayDeckWindows),
+			(TreeViewItemOverlayPlayer, OptionsOverlayPlayer),
+			(TreeViewItemOverlayOpponent, OptionsOverlayOpponent),
+			(TreeViewItemOverlayBattlegrounds, OptionsOverlayBattlegrounds),
+			(TreeViewItemOverlayArena, OptionsOverlayArena),
+			(TreeViewItemOverlayMercenaries, OptionsOverlayMercenaries),
+			(TreeViewItemTrackerMainWindow, OptionsTrackerMainWindow),
+			(TreeViewItemTrackerStats, OptionsTrackerStats),
+			(TreeViewItemTrackerImporting, OptionsTrackerImporting),
+			(TreeViewItemTrackerNotifications, OptionsTrackerNotifications),
+			(TreeViewItemTrackerPlugins, OptionsTrackerPlugins),
+			(TreeViewItemTrackerHotKeys, OptionsTrackerHotKeys),
+			(TreeViewItemTrackerBackups, OptionsTrackerBackups),
+			(TreeViewItemTrackerAppearance, OptionsTrackerAppearance),
+			(TreeViewItemTrackerSystem, OptionsTrackerSystem),
+			(TreeViewItemStreamingCapturableOverlay, OptionsStreamingCapturableOverlay),
+			(TreeViewItemStreamingTwitchExtension, OptionsStreamingTwitchExtension),
+		};
+
 		public ScrollBarVisibility ContentScrollBarVisibility =>
 			OptionsContent is IOptionsPageWithOwnScrolling ? ScrollBarVisibility.Disabled : ScrollBarVisibility.Auto;
 
@@ -98,6 +127,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			TreeViewItemHSReplayAccount.IsSelected = true;
 			ScrollContentToTop();
 			ScrollTreeToTop();
+			OptionsSearch.Reset();
 		}
 
 		private void ScrollTreeToTop() => Helper.FindVisualChildren<ScrollViewer>(TreeViewOptions).FirstOrDefault()?.ScrollToTop();

@@ -1,6 +1,7 @@
 ## Unreleased
 **General**:
 - Reworked how resources are embedded into the app to reduce the occurrence of the "Part of this app has been blocked" message.
+- Improved the settings search to find all settings and show more accurate labels.
 
 **Battlegrounds**:
 - Tavern Pinning is now permanently available for free!\

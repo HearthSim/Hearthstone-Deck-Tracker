@@ -2,11 +2,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Hearthstone_Deck_Tracker.Windows;
+using WPFLocalizeExtension.Engine;
 
 #endregion
 
@@ -15,13 +20,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 	/// <summary>
 	/// Interaction logic for OptionsSearch.xaml
 	/// </summary>
-	public partial class OptionsSearch : UserControl
+	public partial class OptionsSearch : UserControl, IOptionsPageWithOwnScrolling
 	{
 		private List<IOptionWrapper>? _optionWrappers;
 
 		public OptionsSearch()
 		{
 			InitializeComponent();
+			LocalizeDictionary.Instance.PropertyChanged += LocalizeDictionary_OnPropertyChanged;
+		}
+
+		private void LocalizeDictionary_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if(e.PropertyName != nameof(LocalizeDictionary.Culture))
+				return;
+			// wait for the localized headers and checkbox texts to update first
+			Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => UpdateSearchResult(TextBoxSearch.Text)));
 		}
 
 		private void TextBoxSearchLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -31,6 +45,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 
 		private List<IOptionWrapper> OptionWrappers => _optionWrappers ??= LoadWrappers();
 
+		public void Reset()
+		{
+			TextBoxSearch.Text = string.Empty;
+			ListBoxSearchResult.Items.Clear();
+		}
+
 		private void ButtonSearch_OnClick(object sender, RoutedEventArgs e) => UpdateSearchResult(TextBoxSearch.Text);
 
 		private List<IOptionWrapper> LoadWrappers()
@@ -38,22 +58,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			var optionWrappers = new List<IOptionWrapper>();
 			if(this.ParentMainWindow() is not { } window)
 				return optionWrappers;
-			var optionsMenuItems = new[]
-			{
-				new UserControlWrapper(window.Options.OptionsOverlayDeckWindows, nameof(window.Options.OptionsOverlayDeckWindows)),
-				new UserControlWrapper(window.Options.OptionsOverlayGeneral, nameof(window.Options.OptionsOverlayGeneral)),
-				new UserControlWrapper(window.Options.OptionsOverlayOpponent, nameof(window.Options.OptionsOverlayOpponent)),
-				new UserControlWrapper(window.Options.OptionsOverlayPlayer, nameof(window.Options.OptionsOverlayPlayer)),
-				new UserControlWrapper(window.Options.OptionsTrackerAppearance, nameof(window.Options.OptionsTrackerAppearance)),
-				new UserControlWrapper(window.Options.OptionsTrackerBackups, nameof(window.Options.OptionsTrackerBackups)),
-				new UserControlWrapper(window.Options.OptionsTrackerHotKeys, nameof(window.Options.OptionsTrackerHotKeys)),
-				new UserControlWrapper(window.Options.OptionsTrackerImporting, nameof(window.Options.OptionsTrackerImporting)),
-				new UserControlWrapper(window.Options.OptionsTrackerMainWindow, nameof(window.Options.OptionsTrackerMainWindow)),
-				new UserControlWrapper(window.Options.OptionsTrackerNotifications, nameof(window.Options.OptionsTrackerNotifications)),
-				new UserControlWrapper(window.Options.OptionsTrackerPlugins, nameof(window.Options.OptionsTrackerPlugins)),
-				new UserControlWrapper(window.Options.OptionsTrackerStats, nameof(window.Options.OptionsTrackerStats)),
-				new UserControlWrapper(window.Options.OptionsTrackerSystem, nameof(window.Options.OptionsTrackerSystem))
-			};
+			var optionsMenuItems = window.Options.Pages.Select(x => new UserControlWrapper(x.Page, x.TreeViewItem));
 			foreach(var optionsMenuItem in optionsMenuItems)
 			{
 				var option = Helper.FindLogicalDescendants<DependencyObject>(IsSearchableOption, optionsMenuItem.UserControl);
@@ -109,25 +114,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 
 		private void ListBoxSearchResult_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
-			if(this.ParentMainWindow() is not { } window)
+			if((sender as ListBox)?.SelectedItem is not IOptionWrapper selected)
 				return;
-			var selected = (sender as ListBox)?.SelectedItem as IOptionWrapper;
-			if(selected == null)
-				return;
-			var tvis = Helper.FindLogicalChildrenDeep<TreeViewItem>(window.Options.TreeViewOptions);
-			var target = tvis.FirstOrDefault(x => x.Name.Contains(selected.MenuItem.Name.Substring(7)));
-			if(target != null)
-			{
-				if(selected.Visibility == Visibility.Collapsed)
-					AdvancedOptions.Instance.Show = true;
-				target.IsSelected = true;
-			}
+			if(selected.IsAdvanced)
+				AdvancedOptions.Instance.Show = true;
+			selected.MenuItem.TreeViewItem.IsSelected = true;
 		}
 
 		public interface IOptionWrapper
 		{
 			UserControlWrapper MenuItem { get; }
-			Visibility Visibility { get; }
+			bool IsAdvanced { get; }
 
 			// Returns true if the option matches the search query.
 			bool Matches(string query);
@@ -142,11 +139,25 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			{
 				MenuItem = menuItem;
 				Control = control;
+				IsAdvanced = IsBoundToAdvancedOptions(menuItem.TreeViewItem) || IsWithinAdvancedOption(control, menuItem.UserControl);
 			}
 
 			public UserControlWrapper MenuItem { get; }
-			public Visibility Visibility => Control.Visibility;
+			public bool IsAdvanced { get; }
 			public T Control { get; }
+
+			private static bool IsWithinAdvancedOption(DependencyObject? element, UserControl page)
+			{
+				for(; element != null && element != page; element = LogicalTreeHelper.GetParent(element))
+				{
+					if(IsBoundToAdvancedOptions(element))
+						return true;
+				}
+				return false;
+			}
+
+			private static bool IsBoundToAdvancedOptions(DependencyObject element) =>
+				BindingOperations.GetBinding(element, UIElement.VisibilityProperty)?.Source == AdvancedOptions.Instance;
 
 			public abstract bool Matches(string query);
 			public override abstract string ToString();
@@ -158,32 +169,52 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			{
 			}
 
+			private string Text => GetText(Control.Content);
+
 			public override bool Matches(string query)
 			{
-				return Control.Content.ToString().ToUpperInvariant().Contains(query.ToUpperInvariant())
+				return Text.ToUpperInvariant().Contains(query.ToUpperInvariant())
 					|| Control.Name.ToUpperInvariant().Replace("CHECKBOX", "").Contains(query.ToUpperInvariant());
 			}
 
-			public override string ToString() => $"{(Control.Visibility == Visibility.Collapsed ? "[Adv.] " : "")}{MenuItem.Name.Substring(7).Insert(7, " > ")}: {Control.Content}";
+			public override string ToString() => $"{(IsAdvanced ? "[Adv.] " : "")}{MenuItem.DisplayName}: {Text}";
+
+			private static string GetText(object? content) => content switch
+			{
+				string text => text,
+				TextBlock textBlock => textBlock.Text,
+				ContentControl contentControl => GetText(contentControl.Content),
+				Panel panel => string.Join(" ", panel.Children.Cast<object>().Select(GetText).Where(x => x.Length > 0)),
+				_ => "",
+			};
 		}
 
 		public class UserControlWrapper
 		{
-			public UserControlWrapper(UserControl userControl, string name)
+			public UserControlWrapper(UserControl userControl, TreeViewItem treeViewItem)
 			{
 				UserControl = userControl;
-				Name = name;
+				TreeViewItem = treeViewItem;
 			}
 
-			public UserControl UserControl { get; set; }
-			public string Name { get; set; }
+			public UserControl UserControl { get; }
+			public TreeViewItem TreeViewItem { get; }
+
+			public string DisplayName => TreeViewItem.Parent is TreeViewItem section
+				? $"{section.Header} > {TreeViewItem.Header}"
+				: $"{TreeViewItem.Header}";
 		}
 
 		private void TextBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			if (TextBoxSearch.Text.Length < 3)
+			if (TextBoxSearch.Text.Length < MinQueryLength(TextBoxSearch.Text))
 				return;
 			UpdateSearchResult(TextBoxSearch.Text);
 		}
+
+		// a single Chinese, Japanese or Korean character is already a meaningful term
+		private static readonly Regex CjkCharacter = new(@"[\p{IsHiragana}\p{IsKatakana}\p{IsCJKUnifiedIdeographsExtensionA}\p{IsCJKUnifiedIdeographs}\p{IsHangulSyllables}]");
+
+		private static int MinQueryLength(string query) => CjkCharacter.IsMatch(query) ? 1 : 3;
 	}
 }
