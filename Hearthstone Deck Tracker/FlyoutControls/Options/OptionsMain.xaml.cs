@@ -58,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			try
 			{
 				foreach(var treeItem in TreeViewOptions.Items.Cast<TreeViewItem>())
-					treeItem.ExpandSubtree();
+					treeItem.IsExpanded = true;
 				TreeViewOptions.Items.Cast<TreeViewItem>().ToArray()[1].Items.Cast<TreeViewItem>().First().IsSelected = true;
 			}
 			catch(Exception ex)
@@ -83,6 +83,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			set
 			{
 				_optionsContent = value;
+				ScrollContentToTop();
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(HSReplayHeaderVisibility));
 				OnPropertyChanged(nameof(ContentScrollBarVisibility));
@@ -95,9 +96,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public void Reset()
 		{
 			TreeViewItemHSReplayAccount.IsSelected = true;
-			ScrollViewerContent.ScrollToTop();
-			Helper.FindVisualChildren<ScrollViewer>(TreeViewOptions).FirstOrDefault()?.ScrollToTop();
+			ScrollContentToTop();
+			ScrollTreeToTop();
 		}
+
+		private void ScrollTreeToTop() => Helper.FindVisualChildren<ScrollViewer>(TreeViewOptions).FirstOrDefault()?.ScrollToTop();
+
+		private void ScrollContentToTop() => ScrollViewerContent.ScrollToTop();
 
 		public void Load(GameV2 game)
 		{
