@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:comp="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Composition"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
              xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -54,19 +53,16 @@
                 </DockPanel>
             </Border>
 
-            <Border BorderBrush="{Binding TierGradient}" Background="{Binding TierGradient}" Grid.Column="1" BorderThickness="1" CornerRadius="4" Margin="4 0">
+            <Grid Grid.Column="1" Width="53" Height="53" VerticalAlignment="Top">
+                <Border Background="{Binding TierGradient}" CornerRadius="4"/>
+                <Border BorderBrush="#2E000000" BorderThickness="1" CornerRadius="4" IsHitTestVisible="False"/>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="TIER" VerticalAlignment="Center"  FontSize="10"/>
-                    <TextBlock
-                        Style="{StaticResource StatTextStyle}"
-                        Text="{Binding TierChar, TargetNullValue=&#8211;, FallbackValue=&#8211;}"
-                        FontSize="28"
-                    />
+                    <TextBlock Text="{lex:Loc BattlegroundsHeroPicking_Header_Tier}" d:Text="TIER" FontSize="10" Margin="0 4 0 0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="{Binding TierChar, TargetNullValue=&#8211;, FallbackValue=&#8211;}" d:Text="1" FontSize="28" FontWeight="Bold" Margin="0 -5 0 0" />
                 </StackPanel>
-            </Border>
-            <Border BorderBrush="#2E000000" Grid.Column="1" BorderThickness="1" CornerRadius="4" Margin="4 0" IsHitTestVisible="False"/>
+            </Grid>
 
-            <Border Background="{StaticResource Tier7Black}" BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="1" Grid.Column="2"
+            <Border Background="{StaticResource Tier7Black}" BorderBrush="{StaticResource Tier7Purple}" BorderThickness="1" CornerRadius="4" Grid.Column="2"
 					ToolTipService.InitialShowDelay="0" extensions:OverlayExtensions.IsOverlayHitTestVisible="True">
 				<Border.ToolTip>
 					<TextBlock TextAlignment="Left" FontSize="12" TextWrapping="Wrap">
@@ -86,7 +82,5 @@
                 </DockPanel>
             </Border>
         </Grid>
-
-        <comp:BattlegroundsCompositionPopularity DataContext="{Binding CompVM}" Margin="0 667 0 0"/>
     </StackPanel>
 </UserControl>
