@@ -2332,7 +2332,8 @@ namespace Hearthstone_Deck_Tracker
 			var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN)) && !x.HasTag(BACON_LOCKED_MULLIGAN_HERO)).ToList();
 
 			// refresh the offered heroes
-			_game.SnapshotBattlegroundsOfferedHeroes(heroes);
+			var offeredHeroIds = _game.SnapshotBattlegroundsOfferedHeroes(heroes);
+			Core.Overlay.UpdateBattlegroundsHeroPanel(offeredHeroIds, Core.Overlay.HeroNotificationPanel.Parameters);
 
 			var latchOut = ++battlegroundsHeroPickingLatch;
 			BattlegroundsHeroPickStats? battlegroundsHeroPickStats = null;
@@ -2359,11 +2360,16 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			// the stats are no longer relevant
-			if(_game.GameEntity?.GetTag(STEP) > (int)Step.BEGIN_MULLIGAN || _game.IsInMenu || Core.Overlay.BattlegroundsHeroPickingViewModel.HeroStats == null)
+			if(_game.GameEntity?.GetTag(STEP) > (int)Step.BEGIN_MULLIGAN || _game.IsInMenu)
 				return;
 
 			if(battlegroundsHeroPickStats is BattlegroundsHeroPickStats stats && _game.BattlegroundsHeroPickState.OfferedHeroDbfIds is int[] heroIds)
 			{
+				Core.Overlay.UpdateBattlegroundsHeroPanel(heroIds, stats.Toast.Parameters);
+
+				if(Core.Overlay.BattlegroundsHeroPickingViewModel.HeroStats == null)
+					return;
+
 				Core.Overlay.ShowBattlegroundsHeroPickingStats(
 					heroIds.Select(dbfId => stats.Data.FirstOrDefault(x => x.HeroDbfId == dbfId)),
 					stats.Toast.Parameters,

@@ -29,7 +29,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void UserControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			Core.Overlay.HideBattlegroundsHeroPanel();
 			if(HeroIds != null)
 				Helper.OpenBattlegroundsHeroPicker(HeroIds, Duos, AnomalyDbfId, Parameters);
 		}

@@ -6,6 +6,7 @@
 **Battlegrounds**:
 - Per-minion and per-tribe Tavern Pinning is now available for free!\
   *You can pin minions by clicking the pin icon in the minion browser. You can also click a minion type in the popup to highlight any minion of that type.*
+- The Hero picking notification now stays after clicking and takes you to the updated list of heroes after rerolling.
 - Improved the shortened hero names in the session recap across many languages.
 - Changed the Tavern Pinning popup to only pop up automatically if you've explicitly enabled that setting.
 - Fixed Wrath Weaver having an outdated icon and card art.

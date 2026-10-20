@@ -1009,6 +1009,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_heroNotificationBehavior.Show();
 		}
 
+		internal void UpdateBattlegroundsHeroPanel(int[] heroIds, Dictionary<string, string>? parameters)
+		{
+			HeroNotificationPanel.HeroIds = heroIds;
+			HeroNotificationPanel.Parameters = parameters;
+		}
+
 		internal void HideBattlegroundsHeroPanel()
 		{
 			_heroNotificationBehavior.Hide();
