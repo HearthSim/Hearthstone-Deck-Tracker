@@ -100,5 +100,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		CATACLYSM = 1980,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_EscapeFromVioletHold")]
 		ESCAPEFROM_VIOLET_HOLD = 1988,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_BlackEmpire")]
+		BE = 1994,
 	}
 }
