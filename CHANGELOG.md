@@ -1,4 +1,7 @@
 ## Unreleased
+**Hearthstone**:
+- Show The OutFinder, Related Cards and Highlights the deck when hovering an effect while assembling.
+
 **Battlegrounds**:
 - Fixed the Quest Picking overlay not appearing (for Sire Denathrius).
 
