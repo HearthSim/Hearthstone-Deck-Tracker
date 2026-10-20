@@ -1,7 +1,10 @@
-## Unreleased
+## **Release v1.59.4 - 2026-10-20**
 **General**:
 - Reworked how resources are embedded into the app to reduce the occurrence of the "Part of this app has been blocked" message.
 - Improved the settings search to find all settings and show more accurate labels.
+
+**Hearthstone**:
+- Assembled minions now show The OutFinder, Related Cards and Highlight the deck with their assembled effect when hovered.
 
 **Battlegrounds**:
 - Per-minion and per-tribe Tavern Pinning is now available for free!\
