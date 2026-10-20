@@ -1,4 +1,4 @@
-## Unreleased
+## **Release v1.59.5 - 2026-10-20**
 **Hearthstone**:
 - Show The OutFinder, Related Cards and Highlights the deck when hovering an effect while assembling.
 
