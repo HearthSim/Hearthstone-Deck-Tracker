@@ -1,3 +1,7 @@
+## Unreleased
+**Battlegrounds**:
+- Fixed the Quest Picking overlay not appearing (for Sire Denathrius).
+
 ## **Release v1.59.4 - 2026-10-20**
 **General**:
 - Reworked how resources are embedded into the app to reduce the occurrence of the "Part of this app has been blocked" message.

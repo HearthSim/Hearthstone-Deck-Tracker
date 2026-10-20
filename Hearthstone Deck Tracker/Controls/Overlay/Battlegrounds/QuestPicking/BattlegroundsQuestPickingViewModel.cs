@@ -98,7 +98,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.QuestPicking
 			// delay to allow tag changes to update
 			await Task.Delay(500);
 
+			// choices are only reported once revealed, which can lag behind the quest tags (e.g. for Sire Denathrius)
 			var choices = Reflection.Client.GetCardChoices();
+			for(var i = 0; choices == null && _entities.Count > 0 && i < 50; i++)
+			{
+				await Task.Delay(100);
+				choices = Reflection.Client.GetCardChoices();
+			}
 			if(choices == null)
 				return;
 
