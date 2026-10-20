@@ -1609,8 +1609,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(minion == null)
 				return;
 
-			if(minion.Enchantments.Any(e => e is TimewarpedNelliesShipEnchantment))
+			var existing = minion.Enchantments.OfType<TimewarpedNelliesShipEnchantment>().FirstOrDefault();
+			if(existing != null)
+			{
+				// A golden ship summons two Pirates; the first call can arrive after the first summon.
+				if(!minion.golden || existing.ScriptDataNum2 != 0 || cardDbfids.Length < 2)
+					return;
+				existing.ScriptDataNum2 = cardDbfids[1];
+				await TryRerun();
 				return;
+			}
 
 			var enchantment = new Simulator().EnchantmentFactory.Create(TimewarpedNelliesShipEnchantment.CardId, minion.ControlledByPlayer);
 			if(enchantment != null)
