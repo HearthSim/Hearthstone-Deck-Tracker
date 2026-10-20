@@ -8,8 +8,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Minions;
+using Hearthstone_Deck_Tracker.Controls.Tooltips;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Themes;
 
 namespace Hearthstone_Deck_Tracker.Controls;
@@ -70,6 +72,10 @@ public partial class AnimatedCard : IPoolItem, IDisposable, INotifyPropertyChang
 			return;
 		_tileIsBattlegrounds = useBattlegroundsTile;
 		TileHost.Content = useBattlegroundsTile ? new BattlegroundsCardTile() : (object)new CardTile();
+		if(useBattlegroundsTile)
+			OverlayExtensions.SetToolTip(Grid, typeof(CardTooltip));
+		else
+			Grid.ClearValue(OverlayExtensions.ToolTipProperty);
 	}
 
 	public void Update(Hearthstone.Card card, bool showTier7InspirationBtn = false, bool showDeckListFeatures = true, bool useBattlegroundsTile = false)

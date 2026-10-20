@@ -113,7 +113,9 @@
     <UserControl.LayoutTransform>
         <ScaleTransform ScaleY="1" ScaleX="1" />
     </UserControl.LayoutTransform>
-    <Grid Name="Grid" MouseEnter="Grid_OnMouseEnter" MouseLeave="Grid_OnMouseLeave">
+    <!-- the Battlegrounds card tooltip lives here (see EnsureTile) so hovering the buttons keeps it open -->
+    <Grid Name="Grid" MouseEnter="Grid_OnMouseEnter" MouseLeave="Grid_OnMouseLeave"
+          ToolTipService.Placement="Right" ToolTipService.InitialShowDelay="100">
         <!-- filled with a CardTile or BattlegroundsCardTile on first Update, so construction
         only pays for the tile flavor actually needed -->
         <ContentControl x:Name="TileHost" Focusable="False" IsTabStop="False"

@@ -3,16 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
-             xmlns:extensions="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
-             ToolTipService.Placement="Right"
-             ToolTipService.InitialShowDelay="100"
              mc:Ignorable="d"
              MaxHeight="34"
              d:DataContext="{d:DesignInstance controls:CardTileViewModel}"
-             extensions:OverlayExtensions.ToolTip="{x:Type tooltips:CardTooltip}"
              d:DesignHeight="34" d:DesignWidth="217">
     <!-- CardTile reduced to what the Battlegrounds minion browser shows, kept in sync with its
     look. Deliberately no per-instance resources, styles or storyboards and no layout-feedback
