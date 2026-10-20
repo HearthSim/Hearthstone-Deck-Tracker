@@ -547,16 +547,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(!_game.IsBattlegroundsHeroPickingDone)
 				return false;
 
-			if(!_game.SetupDone)
-				return false;
-
-			var gameId = _game.MetaData.ServerInfo?.GameHandle;
-			var userHasTier7 = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) || Tier7Trial.IsTrialForCurrentGameActive(gameId);
-			return userHasTier7;
+			return _game.SetupDone;
 		}
 
 		internal void UpdateBgsMinionPinningVisibility()
 		{
+			BattlegroundsMinionPinningViewModel.UpdateIsTier7Enabled();
 			BgsMinionPinningVisibility = ShouldShowBgsMinionPinning() ? Visible : Collapsed;
 		}
 

@@ -3,6 +3,8 @@
 - Reworked how resources are embedded into the app to reduce the occurrence of the "Part of this app has been blocked" message.
 
 **Battlegrounds**:
+- Tavern Pinning is now permanently available for free!\
+  *You can pin minions by clicking the pin icon in the minion browser. You can also click a minion type in the popup to highlight any minion of that type.*
 - Improved the shortened hero names in the session recap across many languages.
 - Changed the Tavern Pinning popup to only pop up automatically if you've explicitly enabled that setting.
 - Fixed Wrath Weaver having an outdated icon and card art.
@@ -109,7 +111,7 @@
 - Improved when the Max Gold counter is visible.
 - Fixed the hero guide tab not showing on small screens.
 - Fixed the overlay not showing fully during a Timewarp tavern.
-- Fixed UI bugs related to Minion Pinning.
+- Fixed UI bugs related to Tavern Pinning.
 
 ## **Release v1.57.12 - 2026-09-17**
 **Hearthstone**:

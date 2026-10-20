@@ -50,34 +50,8 @@
                     <StackPanel Orientation="Vertical" x:Name="MainContentGrid">
                         <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" CornerRadius="3,0,0,0" Background="#1C2022" VerticalAlignment="Center" Padding="8,0,0,0">
                             <Grid>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <tier7:Tier7Logo Width="14" Height="14"  VerticalAlignment="Center" />
-                                    <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc BattlegroundsTavernPinning_Title}" FontSize="11" HorizontalAlignment="Center" Margin="6,6, 0, 6"/>
-                                </StackPanel>
+                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc BattlegroundsTavernPinning_Title}" FontSize="11" HorizontalAlignment="Left" Margin="0,6, 0, 6"/>
                                 <Grid HorizontalAlignment="Right">
-                                    <!-- Tier 7 Feature "Badge" (visible when on trial) -->
-                                    <Border
-                                        Padding="4,2"
-                                        Margin="4"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Right">
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding IsOnTrial, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinionPinning}}" Value="True"/>
-                                                            <Condition Binding="{Binding CogBtnVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinionPinning}}" Value="Hidden"/>
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </MultiDataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-                                        <TextBlock Text="{lex:Loc BattlegroundsTavernPinning_Tier7Tag}" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource Tier7Orange}" Margin="0,-1,0,0"/>
-                                    </Border>
-
                                     <!-- Buttons StackPanel -->
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding CogBtnVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinionPinning}}">
                                         <battlegrounds:OverlayButton
@@ -239,27 +213,6 @@
                                                 </Border.Resources>
                                                 <Grid>
                                                     <Image Source="/HearthstoneDeckTracker;component/Resources/Tier7/browser-pin-example.png"
-                                                           Stretch="Uniform" Visibility="Hidden"/>
-                                                    <Rectangle RadiusX="2" RadiusY="2" Fill="{StaticResource ImageBrush}"/>
-                                                </Grid>
-                                            </Border>
-                                            <TextBlock
-                                                Text="{lex:Loc BattlegroundsTavernPinning_QuickGuide_Comp}"
-                                                FontSize="11"
-                                                Foreground="White"
-                                                Opacity="0.8"
-                                                TextWrapping="Wrap"
-                                                Margin="0,0,0,0"/>
-                                            <Border BorderBrush="#3f4346" BorderThickness="1" CornerRadius="3"
-                                                    HorizontalAlignment="Center" VerticalAlignment="Top"
-                                                    Margin="0,4,0,8" Height="108">
-                                                <Border.Resources>
-                                                    <ImageBrush x:Key="ImageBrush"
-                                                                ImageSource="/HearthstoneDeckTracker;component/Resources/Tier7/comp-pin-example.png"
-                                                                Stretch="Uniform"/>
-                                                </Border.Resources>
-                                                <Grid>
-                                                    <Image Source="/HearthstoneDeckTracker;component/Resources/Tier7/comp-pin-example.png"
                                                            Stretch="Uniform" Visibility="Hidden"/>
                                                     <Rectangle RadiusX="2" RadiusY="2" Fill="{StaticResource ImageBrush}"/>
                                                 </Grid>
@@ -474,6 +427,7 @@
 
                 <battlegrounds:OverlayButton
                         Command="{Binding ToggleRecommendedCommand}"
+                        Visibility="{Binding IsTier7Enabled, Converter={StaticResource BoolToVisibility}}"
                         Margin="0,0,248,0"
                         Width="55"
                         Height="54.2"

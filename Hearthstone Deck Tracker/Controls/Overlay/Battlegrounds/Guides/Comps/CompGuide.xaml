@@ -198,15 +198,22 @@
                                         BorderBrush="#141617"
                                         BorderThickness="1"
                                         CornerRadius="3"
-                                        Cursor="Hand"
-                                        Visibility="{Binding BgsMinionPinningVisibility, RelativeSource={RelativeSource AncestorType={x:Type windows:OverlayWindow}}}">
+                                        Cursor="Hand">
                                     <battlegrounds:OverlayButton.RenderTransform>
                                         <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
                                     </battlegrounds:OverlayButton.RenderTransform>
                                     <battlegrounds:OverlayButton.Style>
                                         <Style TargetType="Border">
                                             <Setter Property="Background" Value="#23272a" />
+                                            <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding BgsMinionPinningVisibility, RelativeSource={RelativeSource AncestorType={x:Type windows:OverlayWindow}}}" Value="Visible" />
+                                                        <Condition Binding="{Binding PinAllCompCardsAvailable}" Value="True" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </MultiDataTrigger>
                                                 <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter Property="Background" Value="#43474a" />
                                                 </Trigger>

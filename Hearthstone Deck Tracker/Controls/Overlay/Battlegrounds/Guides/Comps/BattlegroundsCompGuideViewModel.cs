@@ -280,6 +280,8 @@ public class BattlegroundsCompGuideViewModel : ViewModel
 
 	public bool ExampleBoardsButtonEnabled => IsTier7Enabled;
 
+	public bool PinAllCompCardsAvailable => IsTier7Enabled;
+
 	// the example boards are filtered by the current minion pool, which only exists during a match
 	public Visibility ExampleBoardsButtonVisibility => _isPreLobby ? Visibility.Collapsed : Visibility.Visible;
 

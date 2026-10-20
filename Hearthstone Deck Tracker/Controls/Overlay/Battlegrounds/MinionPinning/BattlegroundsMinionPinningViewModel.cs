@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.Guides.Comps;
 using System.Collections.ObjectModel;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.HsReplay;
 using HSReplay.Responses;
 
 
@@ -46,6 +47,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 				PinnedSlots.Add(new PinnedSlotViewModel(this));
 
 			AvailableRaces = BattlegroundsUtils.GetAvailableRaces();
+
+			HSReplayNetOAuth.AccountDataUpdated += UpdateIsTier7Enabled;
+			HSReplayNetOAuth.LoggedOut += UpdateIsTier7Enabled;
 		}
 
 		private void EnsureCapacity(int required)
@@ -171,6 +175,22 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 
 				UpdatePinnedFlags();
 			}
+		}
+
+		public bool IsTier7Enabled
+		{
+			get => GetProp(false);
+			private set
+			{
+				SetProp(value);
+				UpdatePinnedFlags();
+			}
+		}
+
+		public void UpdateIsTier7Enabled()
+		{
+			var gameId = Core.Game.MetaData.ServerInfo?.GameHandle;
+			IsTier7Enabled = (HSReplayNetOAuth.AccountData?.IsTier7 ?? false) || Tier7Trial.IsTrialForCurrentGameActive(gameId);
 		}
 
 		public Command ToggleRecommendedCommand => new Command(() =>
@@ -336,7 +356,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning
 					slot.TribeIconRace = pinnedRace;
 
 					// Recommended pin indicator (separate)
-					if(EnableRecommended && slot.CardId != null && _recommendedCardIds.Contains(slot.CardId))
+					if(EnableRecommended && IsTier7Enabled && slot.CardId != null && _recommendedCardIds.Contains(slot.CardId))
 					{
 						slot.IsRecommendedPinned = true;
 						if(_recommendedCardGuides.TryGetValue(slot.CardId, out var guides) && guides.Count > 0)

@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.HsReplay;
 
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning;
@@ -27,9 +26,6 @@ public partial class BattlegroundsMinionPinning : INotifyPropertyChanged
 
 		ConfigWrapper.DismissedTavernMarkerQuickGuideChanged += UpdateQuickGuideVisibility;
 		ConfigWrapper.DismissedCompGuidesMarkerQuickGuideChanged += UpdateQuickGuideVisibility;
-
-		HSReplayNetOAuth.AccountDataUpdated += () => OnPropertyChanged(nameof(IsOnTrial));
-		HSReplayNetOAuth.LoggedOut += () => OnPropertyChanged(nameof(IsOnTrial));
 
 		// Set the View reference on the ViewModel when DataContext changes
 		DataContextChanged += (s, e) =>
@@ -60,11 +56,6 @@ public partial class BattlegroundsMinionPinning : INotifyPropertyChanged
 	public Visibility CompGuidesMarkerQuickGuideVisibility
 	{
 		get => Config.Instance.DismissedCompGuidesMarkerQuickGuide ? Visibility.Collapsed : Visibility.Visible;
-	}
-
-	public bool IsOnTrial
-	{
-		get => !(HSReplayNetOAuth.AccountData?.IsTier7 ?? false);
 	}
 
 	private void UpdateQuickGuideVisibility()
