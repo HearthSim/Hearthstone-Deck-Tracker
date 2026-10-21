@@ -181,6 +181,17 @@ namespace HDTTests.Hearthstone.RelatedCardsSystem
 		}
 
 		[TestMethod]
+		public void AssembledNameSuffixNamesTheHalfCards()
+		{
+			var eyemaul = Database.GetCardFromId(Eyemaul).LocalizedName;
+			var warmedic = Database.GetCardFromId(Warmedic).LocalizedName;
+			Assert.AreEqual($"({eyemaul})", new AssembledHalves(0, DbfId(Eyemaul)).CardNameSuffix);
+			Assert.AreEqual($"({eyemaul})", new AssembledHalves(DbfId(Eyemaul), 0).CardNameSuffix);
+			Assert.AreEqual($"({warmedic} + {eyemaul})", new AssembledHalves(DbfId(Warmedic), DbfId(Eyemaul)).CardNameSuffix);
+			Assert.AreNotEqual(new AssembledHalves(0, DbfId(Eyemaul)).CardNameSuffix, new AssembledHalves(0, DbfId(Warmedic)).CardNameSuffix);
+		}
+
+		[TestMethod]
 		public void AssembledRelatedCardsComeFromTheEffectHalf()
 		{
 			Assert.AreEqual(Eyemaul, new AssembledHalves(0, DbfId(Eyemaul)).EffectCardId(Target));

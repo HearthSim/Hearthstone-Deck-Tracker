@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text.RegularExpressions;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -17,7 +18,11 @@ public class AssembledHalves : ICardExtraInfo
 
 	public int SecondHalfDbfId { get; }
 
-	public string? CardNameSuffix => "*";
+	private string? _cardNameSuffix;
+
+	// Entities build a new instance every time their info is read, so the names are only looked up
+	// once something shows them.
+	public string? CardNameSuffix => _cardNameSuffix ??= GetCardNameSuffix();
 
 	public AssembledHalves(int firstHalfDbfId, int secondHalfDbfId)
 	{
@@ -57,6 +62,22 @@ public class AssembledHalves : ICardExtraInfo
 		return $"{trigger} {effect}".Trim();
 	}
 
+	/// <summary>
+	/// The names of the cards the halves were taken from, e.g. "(Eyemaul)", or "(A + B)" when both
+	/// halves come from other cards.
+	/// </summary>
+	private string GetCardNameSuffix()
+	{
+		var names = new[] { FirstHalfDbfId, SecondHalfDbfId }
+			.Where(dbfId => dbfId > 0)
+			.Select(dbfId => Database.GetCardFromDbfId(dbfId, false)?.LocalizedName)
+			.ToList();
+		// Fall back to a plain marker when a half's card is missing from the database.
+		if(names.Count == 0 || names.Any(string.IsNullOrEmpty))
+			return "*";
+		return $"({string.Join(" + ", names)})";
+	}
+
 	private static string? GetHalfText(Card? card, int half)
 	{
 		var parts = card?.FormattedText.Split(new[] { HalfSeparator }, 2);
@@ -80,5 +101,5 @@ public class AssembledHalves : ICardExtraInfo
 		}
 	}
 
-	public object Clone() => new AssembledHalves(FirstHalfDbfId, SecondHalfDbfId);
+	public object Clone() => new AssembledHalves(FirstHalfDbfId, SecondHalfDbfId) { _cardNameSuffix = _cardNameSuffix };
 }
