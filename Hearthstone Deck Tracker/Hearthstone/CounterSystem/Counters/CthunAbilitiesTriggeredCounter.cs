@@ -1,3 +1,4 @@
+using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
@@ -16,6 +17,14 @@ public class CthunAbilitiesTriggeredCounter : NumericCounter
 		HearthDb.CardIds.Collectible.Neutral.CthunEyeOfTheEmpire,
 	};
 
+	private static readonly string[] AbilityCardIds =
+	{
+		HearthDb.CardIds.NonCollectible.Neutral.CThunEyeoftheEmpire_WrathOfCthunToken,
+		HearthDb.CardIds.NonCollectible.Neutral.CThunEyeoftheEmpire_DomainOfCthunToken,
+		HearthDb.CardIds.NonCollectible.Neutral.CThunEyeoftheEmpire_GlareOfCthunToken1,
+		HearthDb.CardIds.NonCollectible.Neutral.CThunEyeoftheEmpire_ServantsOfCthunToken,
+	};
+
 	private readonly bool[] _abilitiesUsed = new bool[AbilityCount];
 
 	public CthunAbilitiesTriggeredCounter(bool controlledByPlayer, GameV2 game) : base(controlledByPlayer, game)
@@ -32,6 +41,8 @@ public class CthunAbilitiesTriggeredCounter : NumericCounter
 
 	public override string[] GetCardsToDisplay()
 	{
+		if(Counter > 0)
+			return AbilityCardIds.Where((_, i) => _abilitiesUsed[i]).ToArray();
 		return IsPlayerCounter ?
 			GetCardsInDeckOrKnown(RelatedCards).ToArray() :
 			FilterCardsByClassAndFormat(RelatedCards, Game.Opponent.OriginalClass);
