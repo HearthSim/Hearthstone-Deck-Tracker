@@ -7,6 +7,7 @@
              xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              mc:Ignorable="d"
              DataContextChanged="CardTooltip_OnDataContextChanged"
              d:DesignHeight="256" d:DesignWidth="256">
@@ -73,7 +74,49 @@
                 </Style>
             </Grid.Style>
             <hdt:HearthstoneTextBlock Text="{Binding Text}" Visibility="{Binding Text, Converter={StaticResource NullableToVisibility}}" HorizontalAlignment="Center" VerticalAlignment="Top" d:Text="Created By" FontSize="16"/>
-            <Image Source="{Binding AssetViewModel.Asset}" HorizontalAlignment="Center" />
+            <Grid HorizontalAlignment="Center">
+                <Image Source="{Binding AssetViewModel.Asset}"/>
+                <!-- Assembled cards: the render shows the base card, so their actual text replaces its description.
+                     Laid out in the pixels of a 512x776 minion render, scaled to the image. -->
+                <Viewbox Stretch="Fill" Visibility="{Binding AssembledText, Converter={StaticResource NullableToVisibility}}">
+                    <Canvas Width="512" Height="776">
+                        <!-- The parchment of the description box, taken from the game's card textures -->
+                        <Border Canvas.Left="96" Canvas.Top="465.6" Width="326" Height="182.5" CornerRadius="9.6">
+                            <Border.Background>
+                                <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Resources/card_text_background.png" Stretch="Fill"/>
+                            </Border.Background>
+                            <!-- The attack and health gems overlap the bottom corners of the box, so leave them showing,
+                                 and so does the minion type banner at its bottom center -->
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Clip">
+                                        <Setter.Value>
+                                            <PathGeometry Figures="M 0,0 L 326,0 326,120.45 312.96,133.23 301.55,155.13 295.03,182.5 34.23,182.5 27.71,162.43 16.3,142.35 0,129.58 Z"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasRaceBanner}" Value="True">
+                                            <Setter Property="Clip">
+                                                <Setter.Value>
+                                                    <PathGeometry Figures="M 0,0 L 326,0 326,120.45 312.96,133.23 301.55,155.13 295.03,182.5 262.4,182.5 266,176.4 257,157.4 62,157.4 52,176.4 55.6,182.5 34.23,182.5 27.71,162.43 16.3,142.35 0,129.58 Z"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <!-- Shrink long texts until they fit, keeping clear of the gems -->
+                            <Viewbox Margin="13,16,13,29.3" Stretch="Uniform" StretchDirection="DownOnly" VerticalAlignment="Center">
+                                <!-- A condensed font like the printed one, sized to wrap like it -->
+                                <TextBlock Width="300" TextWrapping="Wrap" TextAlignment="Center"
+                                           FontFamily="Bahnschrift, Arial" FontStretch="SemiCondensed" FontSize="28"
+                                           LineHeight="34" LineStackingStrategy="BlockLineHeight" Foreground="#1E1710"
+                                           utility:AttachedFormattedString.FormattedText="{Binding AssembledText}"/>
+                            </Viewbox>
+                        </Border>
+                    </Canvas>
+                </Viewbox>
+            </Grid>
         </Grid>
 
         <!-- Secondary Image, e.g. Battlegrounds Triple -->

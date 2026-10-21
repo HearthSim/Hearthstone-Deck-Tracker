@@ -331,7 +331,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public IEnumerable<Card> RevealedCards
 			=> RevealedEntities.Where(x => x != null && !string.IsNullOrEmpty(x.CardId) && (!x.Info.Created || x.Info.OriginalEntityWasCreated == false) && x.IsPlayableCard
 									   && ((!x.IsInDeck && (!x.Info.Stolen || x.Info.OriginalController == Id)) || (x.Info.Stolen && x.Info.OriginalController == Id)))
-								.GroupBy(x => new {x.CardId, Stolen = x.Info.Stolen && x.Info.OriginalController != Id})
+								.GroupBy(x => new {x.CardId, Stolen = x.Info.Stolen && x.Info.OriginalController != Id, x.Info.ExtraInfo})
 								.Select(x =>
 								{
 									var card = Database.GetCardFromId(x.Key.CardId);
@@ -340,18 +340,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 									card.ControllerPlayer = this;
 									card.Count = x.Count();
 									card.IsCreated = x.Key.Stolen;
+									card.ExtraInfo = x.Key.ExtraInfo?.Clone() as ICardExtraInfo;
 									card.HighlightInHand = x.Any(c => c.IsInHand && c.IsControlledBy(Id));
 									return card;
 								}).WhereNotNull();
 
-		public IEnumerable<Card> CreatedCardsInHand => Hand.Where(x => x != null && !string.IsNullOrEmpty(x.CardId) && (x.Info.Created || x.Info.Stolen)).GroupBy(x => x.CardId).Select(x =>
+		public IEnumerable<Card> CreatedCardsInHand => Hand.Where(x => x != null && !string.IsNullOrEmpty(x.CardId) && (x.Info.Created || x.Info.Stolen)).GroupBy(x => new {x.CardId, x.Info.ExtraInfo}).Select(x =>
 		{
-			var card = Database.GetCardFromId(x.Key);
+			var card = Database.GetCardFromId(x.Key.CardId);
 			if(card == null)
 				return null;
 			card.ControllerPlayer = this;
 			card.Count = x.Count();
 			card.IsCreated = true;
+			card.ExtraInfo = x.Key.ExtraInfo?.Clone() as ICardExtraInfo;
 			card.HighlightInHand = true;
 			return card;
 		}).WhereNotNull();

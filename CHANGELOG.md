@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- We now display the new text from assembled cards when hovered in the decklist.
+
 ## **Release v1.59.5 - 2026-10-20**
 **Hearthstone**:
 - Show The OutFinder, Related Cards and Highlights the deck when hovering an effect while assembling.

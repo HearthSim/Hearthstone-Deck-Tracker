@@ -116,7 +116,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			// May be null: some cards (Tidepool Pupil, Commander Sivara) have no registered
 			// related-cards class and carry their cards on the entity instead - see the
 			// StoredCardIds fallback below.
-			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(Id);
+			// Assembled cards take their related cards from their effect half.
+			var cardWithRelatedCards = Core.Game.RelatedCardsManager.GetCardWithRelatedCards(
+				ExtraInfo is AssembledHalves halves ? halves.EffectCardId(Id) : Id);
 
 			// Decklist hovers also happen in the menu, where there is no hero to take the class
 			// from. Pools built below read it off the player, so resolve it first. Only needed
@@ -639,6 +641,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string FormattedFlavorText => CleanUpText(Data?.GetLocFlavorText(SelectedLanguage), false) ?? "";
 
+		public string FormattedText => CleanUpText(Data?.GetLocText(SelectedLanguage), false);
+
 		public bool Collectible => Data?.Collectible ?? false;
 
 		public object Clone()
@@ -660,6 +664,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			card.BaconCard = BaconCard;
 			card.ControllerPlayer = ControllerPlayer;
+			card.ExtraInfo = ExtraInfo?.Clone() as ICardExtraInfo;
 
 			return card;
 		}
@@ -689,6 +694,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			viewModel.Card = this;
 			viewModel.ShowTriple = BaconCard;
+			// The text is drawn over the description box of a minion render, other renders lay it out differently.
+			viewModel.AssembledText = TypeEnum == CardType.MINION ? (ExtraInfo as AssembledHalves)?.GetText(this) : null;
+			viewModel.HasRaceBanner = RaceEnum is not (null or HearthDb.Enums.Race.INVALID or HearthDb.Enums.Race.BLANK);
 
 			var info = GetRelatedCardsInfo();
 			var relatedCards = info.Cards;

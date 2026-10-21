@@ -1,4 +1,6 @@
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -123,6 +125,66 @@ namespace HDTTests.Hearthstone.RelatedCardsSystem
 			var target = new Entity(120) { CardId = Target };
 			target.SetTag(GameTag.CRAFTABLE_SECOND_HALF_DBID, DbfId(EffectHalfCardId));
 			Assert.AreEqual(EffectHalfCardId, RelatedCardsManager.GetAssembleChoiceEffectCardId(Choices[2], target));
+		}
+
+		private static Entity Outfitter(int firstHalfDbfId, int secondHalfDbfId)
+		{
+			var entity = new Entity(120) { CardId = Target };
+			entity.SetTag(GameTag.CRAFTABLE_FIRST_HALF_DBID, firstHalfDbfId);
+			entity.SetTag(GameTag.CRAFTABLE_SECOND_HALF_DBID, secondHalfDbfId);
+			return entity;
+		}
+
+		[TestMethod]
+		public void UnassembledCardHasNoHalves()
+		{
+			Assert.IsNull(AssembledHalves.FromEntity(new Entity(120) { CardId = Target }));
+		}
+
+		[TestMethod]
+		public void ChoiceEntityIsNotAnAssembledCard()
+		{
+			foreach(var choice in Choices)
+				Assert.IsNull(AssembledHalves.FromEntity(choice));
+		}
+
+		[TestMethod]
+		public void AssembledCardIsToldApartByItsHalves()
+		{
+			var assembled = Outfitter(0, DbfId(Eyemaul));
+			Assert.AreEqual(new AssembledHalves(0, DbfId(Eyemaul)), assembled.Info.ExtraInfo);
+			Assert.AreEqual(assembled.Info.ExtraInfo, Outfitter(0, DbfId(Eyemaul)).Info.ExtraInfo);
+			Assert.AreNotEqual(assembled.Info.ExtraInfo, Outfitter(0, DbfId(Warmedic)).Info.ExtraInfo);
+		}
+
+		[TestMethod]
+		public void SetExtraInfoWinsOverHalves()
+		{
+			var assembled = Outfitter(0, DbfId(Eyemaul));
+			var counter = new IncindiusCounter(1);
+			assembled.Info.ExtraInfo = counter;
+			Assert.AreSame(counter, assembled.Info.ExtraInfo);
+		}
+
+		[TestMethod]
+		public void AssembledTextTakesTheEffectHalf()
+		{
+			var halves = new AssembledHalves(0, DbfId(Eyemaul));
+			Assert.AreEqual("<b>Battlecry:</b> summon two 2/2 Elementals with <b>Rush</b>.", halves.GetText(Database.GetCardFromId(Target)));
+		}
+
+		[TestMethod]
+		public void AssembledTextTakesTheTriggerHalf()
+		{
+			var halves = new AssembledHalves(DbfId(Eyemaul), 0);
+			Assert.AreEqual("After your hero attacks, Give all minions in your hand +1/+1.", halves.GetText(Database.GetCardFromId(Target)));
+		}
+
+		[TestMethod]
+		public void AssembledRelatedCardsComeFromTheEffectHalf()
+		{
+			Assert.AreEqual(Eyemaul, new AssembledHalves(0, DbfId(Eyemaul)).EffectCardId(Target));
+			Assert.AreEqual(Target, new AssembledHalves(DbfId(Eyemaul), 0).EffectCardId(Target));
 		}
 	}
 }

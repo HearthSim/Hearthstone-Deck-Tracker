@@ -211,6 +211,25 @@ public class CardTooltipViewModel : ViewModel
 		set => SetProp(value);
 	}
 
+	/// <summary>
+	/// The text of an assembled card, with bold and italic tags, drawn over the description of the card
+	/// image (which shows the base card).
+	/// </summary>
+	public string? AssembledText
+	{
+		get => GetProp<string?>(null);
+		set => SetProp(value);
+	}
+
+	/// <summary>
+	/// Whether the card image has a minion type banner, which the assembled text leaves showing.
+	/// </summary>
+	public bool HasRaceBanner
+	{
+		get => GetProp(false);
+		set => SetProp(value);
+	}
+
 	public Dock ImageDock
 	{
 		get => GetProp(Dock.Left);

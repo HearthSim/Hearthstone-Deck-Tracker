@@ -286,7 +286,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				DeckIndex = DeckIndex,
 				BoardOrder = BoardOrder,
 				CopyOfCardId = CopyOfCardId,
-				ExtraInfo = ExtraInfo,
+				_extraInfo = _extraInfo,
 				ShatterCombined = ShatterCombined,
 				Prepared = Prepared,
 			};
@@ -394,7 +394,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public bool PendingStartOfGameReveal { get; set; }
 
-		public ICardExtraInfo? ExtraInfo { get; set; }
+		private ICardExtraInfo? _extraInfo;
+
+		// Assembled cards are told apart by their halves, read from the tags so they are never stale.
+		public ICardExtraInfo? ExtraInfo
+		{
+			get => _extraInfo ?? AssembledHalves.FromEntity(_entity);
+			set => _extraInfo = value;
+		}
 
 		public string? LatestCardId
 		{
