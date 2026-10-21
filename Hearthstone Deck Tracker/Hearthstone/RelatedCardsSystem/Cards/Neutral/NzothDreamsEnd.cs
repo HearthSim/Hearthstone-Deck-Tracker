@@ -1,20 +1,13 @@
-using System.Collections.Generic;
-
 namespace Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Cards.Neutral;
 
 // "Old God Cost (1) less for each Deathrattle minion you've summoned this game."
-public class NzothDreamsEnd : ICardWithRelatedCards
+// Shows the candidates of its Army of N'Zoth ability: "Resurrect 4 different Deathrattle minions."
+// "Different" means each resurrected minion is distinct, so the grid is de-duplicated.
+public class NzothDreamsEnd : ResurrectionCard
 {
-	public string GetCardId() => HearthDb.CardIds.Collectible.Neutral.NzothDreamsEnd;
+	public override string GetCardId() => HearthDb.CardIds.Collectible.Neutral.NzothDreamsEnd;
 
-	public bool ShouldShowForOpponent(Player opponent) => false;
+	protected override bool FilterCard(Card card) => card.TypeEnum == HearthDb.Enums.CardType.MINION && card.HasDeathrattle();
 
-	public List<Card?> GetRelatedCards(Player player) =>
-		new List<Card?>
-		{
-			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Neutral.NZothDreamsEnd_CallOfNzothToken),
-			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Neutral.NZothDreamsEnd_MasteryOfNzothToken),
-			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Neutral.NZothDreamsEnd_ArmyOfNzothToken),
-			Database.GetCardFromId(HearthDb.CardIds.NonCollectible.Neutral.NZothDreamsEnd_DomainOfNzothToken1),
-		};
+	protected override bool ResurrectsMultipleCards() => false;
 }
