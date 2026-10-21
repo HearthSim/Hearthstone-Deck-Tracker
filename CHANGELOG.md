@@ -1,9 +1,8 @@
-## **Unreleased**
+## **Release v1.59.6 - 2026-10-21**
 **Hearthstone**:
 - We now display the new text from assembled cards when hovered in the decklist.
 - Updated N'zoth Dreams End related cards to show the deathrattle minions that died.
 - Updated C'Thun, Eye of the Empire counter to show which abilities were already used.
-
 
 ## **Release v1.59.5 - 2026-10-20**
 **Hearthstone**:
