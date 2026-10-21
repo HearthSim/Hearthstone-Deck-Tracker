@@ -128,6 +128,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case PARENT_CARD:
 						OnParentCardChange(gameState, id, game, value, prevValue);
 						break;
+					case HEALTH:
+						HealthChange(gameState, id, game, value, prevValue);
+						break;
 					case ATK:
 						OpponentMalorneAtkChange(id, value, prevValue, game);
 						break;

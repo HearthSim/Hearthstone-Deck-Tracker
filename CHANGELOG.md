@@ -1,3 +1,7 @@
+## Unreleased
+**Hearthstone**:
+- Fixed the Max Health not showing.
+
 ## **Release v1.59.6 - 2026-10-21**
 **Hearthstone**:
 - We now display the new text from assembled cards when hovered in the decklist.
