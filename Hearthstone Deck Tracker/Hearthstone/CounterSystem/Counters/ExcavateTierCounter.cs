@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility;
@@ -103,12 +104,14 @@ public class ExcavateTierCounter : NumericCounter
 		return rewards.ToArray();
 	}
 
-
 	public override string[] GetCardsToDisplay()
 	{
-		return IsPlayerCounter ?
-			FilterCardsByClassAndFormat(GetExcavateRewards(), Game.Player.OriginalClass) :
-			FilterCardsByClassAndFormat(GetExcavateRewards(), Game.Opponent.OriginalClass);
+		var playerClass = IsPlayerCounter ? Game.Player.OriginalClass : Game.Opponent.OriginalClass;
+		return GetExcavateRewards()
+			.Select(Database.GetCardFromId)
+			.FilterCardsByPlayerClass(playerClass)
+			.Select(card => card!.Id)
+			.ToArray();
 	}
 
 	public override string ValueToShow() => ExcavateTierLabel;
