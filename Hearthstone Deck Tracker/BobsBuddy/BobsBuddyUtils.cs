@@ -53,6 +53,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.golden = entity.HasTag(GameTag.PREMIUM);
 			minion.tier = entity.GetTag(GameTag.TECH_LEVEL);
 			minion.reborn = entity.HasTag(GameTag.REBORN);
+			minion.hasBeenReborn = entity.HasTag(GameTag.HAS_BEEN_REBORN);
 			minion.ScriptDataNum1 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
 			minion.ScriptDataNum2 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
 			minion.ScriptDataNum3 = entity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_3);
