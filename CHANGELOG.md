@@ -1,4 +1,4 @@
-## Unreleased
+## **Release v1.59.7 - 2026-10-23**
 **Hearthstone**:
 - Fixed the Max Health not showing.
 - Fixed Excavate cards and counter not showing their rewards.
