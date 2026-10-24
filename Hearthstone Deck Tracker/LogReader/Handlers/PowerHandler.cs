@@ -412,7 +412,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						var beforeMulligan =
 							game.GameEntity?.GetTag(GameTag.STEP) < (int)Step.BEGIN_MULLIGAN;
 
-						entity.Info.Hidden = shouldHideForBlock || beforeMulligan;
+						// Forging an opponent's card reveals its pre-created Choose One options (e.g. Gloomstone Guardian's)
+						// before the block's OVERRIDE_HISTORY, which would leak the identity of the card in hand.
+						var revealedByOpponentForge =
+							gameState.CurrentBlock is { Type: "POWER", Parent.Type: "DECK_ACTION" } forgeBlock
+							&& forgeBlock.SourceEntityId != entityId
+							&& game.Entities.TryGetValue(forgeBlock.SourceEntityId, out var forgeSource)
+							&& forgeSource.Info.Forged
+							&& forgeSource.IsInHand
+							&& forgeSource.IsControlledBy(game.Opponent.Id);
+
+						entity.Info.Hidden = shouldHideForBlock || beforeMulligan || revealedByOpponentForge;
 
 						if(entity.Info.DeckIndex < 0 && gameState.CurrentBlock != null && gameState.CurrentBlock.SourceEntityId != 0)
 						{
