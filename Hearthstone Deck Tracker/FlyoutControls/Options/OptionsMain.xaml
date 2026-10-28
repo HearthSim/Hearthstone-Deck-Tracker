@@ -6,6 +6,7 @@
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -16,10 +17,35 @@
         <Border Margin="4,5,-6,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
             <DockPanel>
                 <Border DockPanel.Dock="Bottom" Margin="-1,0,-1,-1" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-                    <CheckBox Content="{lex:LocText Options_CheckBoxAdvanced}" Margin="5" IsChecked="{Binding Show, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                    <CheckBox Content="{lex:LocText Options_CheckBoxAdvanced}" Margin="5" IsChecked="{Binding Show, Source={x:Static options:AdvancedOptions.Instance}}">
+                        <CheckBox.Style>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" Value="Visible">
+                                        <Setter Property="Foreground" Value="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </CheckBox.Style>
+                    </CheckBox>
                 </Border>
+                <Grid DockPanel.Dock="Top" Width="{Binding ActualWidth, ElementName=TreeViewOptions}">
+                    <TextBox Name="TextBoxSearch" Margin="5"
+                             controls:TextBoxHelper.Watermark="{lex:Loc Options_Search_Placeholder}"
+                             TextChanged="TextBoxSearch_OnTextChanged" PreviewKeyDown="TextBoxSearch_OnPreviewKeyDown">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                                <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="">
+                                        <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="False"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </Grid>
                 <TreeView Name="TreeViewOptions" MinWidth="150">
-                    <TreeViewItem Name="TreeViewItemSearch" Header="{lex:LocText Options_Search_Header}" Selected="TreeViewItemSearch_OnSelected"></TreeViewItem>
                     <TreeViewItem Header="HSReplay.net">
                         <TreeViewItem Name="TreeViewItemHSReplayAccount" Header="{lex:Loc Options_HSReplay_Account_Header}" Selected="TreeViewItemHSReplayAccount_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemHSReplayCollection" Header="{lex:Loc Options_HSReplay_Collection_Header}" Selected="TreeViewItemHSReplayCollection_OnSelected"/>
@@ -57,6 +83,24 @@
             </DockPanel>
         </Border>
         <GroupBox Header="{Binding ContentHeader}">
+            <GroupBox.Style>
+                <Style TargetType="GroupBox" BasedOn="{StaticResource {x:Type GroupBox}}">
+                    <Style.Triggers>
+                        <!-- a search without results shows the empty state without a header bar -->
+                        <Trigger Property="Header" Value="{x:Null}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="GroupBox">
+                                        <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                                            <TextBlock Text="{lex:Loc Options_Search_NoResults}" Margin="10"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Style>
             <DockPanel>
                 <StackPanel Visibility="{Binding HSReplayHeaderVisibility}" DockPanel.Dock="Top">
                     <Image Source="../../Resources/hsreplay_banner.jpg" RenderOptions.BitmapScalingMode="Fant" Margin="-4">

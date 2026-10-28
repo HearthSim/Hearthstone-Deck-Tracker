@@ -286,6 +286,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					ImportFromClipboard();
 				}
 			}
+			else if(e.Key == Key.F && Keyboard.Modifiers == ModifierKeys.Control && FlyoutOptions.IsOpen)
+			{
+				Options.FocusSearch();
+				e.Handled = true;
+			}
 		}
 	}
 }

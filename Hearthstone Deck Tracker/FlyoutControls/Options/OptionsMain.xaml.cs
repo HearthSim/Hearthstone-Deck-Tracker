@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options;
@@ -15,6 +17,7 @@ using Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using WPFLocalizeExtension.Engine;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls
 {
@@ -45,7 +48,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly OverlayBattlegrounds OptionsOverlayBattlegrounds = new OverlayBattlegrounds();
 		public readonly OverlayArena OptionsOverlayArena = new OverlayArena();
 		public readonly OverlayMercenaries OptionsOverlayMercenaries = new OverlayMercenaries();
-		public readonly OptionsSearch OptionsSearch = new OptionsSearch();
+		private readonly OptionsSearch _search;
+		private TreeViewItem? _pageBeforeEmptySearch;
 		private string? _contentHeader;
 		private object? _optionsContent;
 		private readonly object[] _hsreplayOptions;
@@ -55,16 +59,101 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			_hsreplayOptions = new object[] { OptionsHSReplayAccount, OptionsHSReplayCollection ,OptionsHSReplayReplays };
 			InitializeComponent();
 			Helper.OptionsMain = this;
+			_search = new OptionsSearch(Pages);
 			try
 			{
 				foreach(var treeItem in TreeViewOptions.Items.Cast<TreeViewItem>())
 					treeItem.IsExpanded = true;
-				TreeViewOptions.Items.Cast<TreeViewItem>().ToArray()[1].Items.Cast<TreeViewItem>().First().IsSelected = true;
+				TreeViewItemHSReplayAccount.IsSelected = true;
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
 			}
+			AdvancedOptions.Instance.PropertyChanged += (_, e) =>
+			{
+				// wait for the advanced options bindings to update first
+				if(e.PropertyName == nameof(AdvancedOptions.Show))
+					Dispatcher.BeginInvoke(new Action(() => ApplySearchFilter(false)));
+			};
+			LocalizeDictionary.Instance.PropertyChanged += (_, e) =>
+			{
+				// wait for the localized headers and checkbox texts to update first
+				if(e.PropertyName == nameof(LocalizeDictionary.Culture))
+					Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => ApplySearchFilter(false)));
+			};
+		}
+
+		public void FocusSearch()
+		{
+			TextBoxSearch.Focus();
+			TextBoxSearch.SelectAll();
+		}
+
+		private void TextBoxSearch_OnTextChanged(object sender, TextChangedEventArgs e) => ApplySearchFilter(true);
+
+		private void TextBoxSearch_OnPreviewKeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.Key != Key.Escape || TextBoxSearch.Text.Length == 0)
+				return;
+			TextBoxSearch.Clear();
+			e.Handled = true;
+		}
+
+		private void ApplySearchFilter(bool selectBestMatch)
+		{
+			var query = TextBoxSearch.Text.Trim();
+			List<TreeViewItem>? matches = null;
+			var hasAdvanced = false;
+			if(OptionsSearch.IsValidQuery(query))
+				(matches, hasAdvanced) = _search.FindPages(query);
+			AdvancedOptions.Instance.Revealed = hasAdvanced;
+			foreach(var category in TreeViewOptions.Items.Cast<TreeViewItem>())
+			{
+				var anyVisible = false;
+				foreach(var page in category.Items.Cast<TreeViewItem>())
+				{
+					var visible = matches?.Contains(page) ?? true;
+					SetFilterVisibility(page, visible);
+					anyVisible |= visible;
+				}
+				SetFilterVisibility(category, anyVisible);
+			}
+			if(matches == null)
+			{
+				// the selected page may have been an advanced page revealed by the search
+				if(OptionsContent == null || TreeViewOptions.SelectedItem is not TreeViewItem { Visibility: Visibility.Visible })
+					(_pageBeforeEmptySearch is { Visibility: Visibility.Visible } ? _pageBeforeEmptySearch : FirstVisiblePage()).IsSelected = true;
+				_pageBeforeEmptySearch = null;
+				return;
+			}
+			if(matches.Count == 0)
+			{
+				if(TreeViewOptions.SelectedItem is TreeViewItem previous)
+				{
+					_pageBeforeEmptySearch = IsPage(previous) ? previous : null;
+					previous.IsSelected = false;
+				}
+				ContentHeader = null;
+				OptionsContent = null;
+				return;
+			}
+			_pageBeforeEmptySearch = null;
+			if(selectBestMatch || TreeViewOptions.SelectedItem is not TreeViewItem selected || !matches.Contains(selected))
+				matches[0].IsSelected = true;
+		}
+
+		private bool IsPage(TreeViewItem item) => Pages.Any(x => x.TreeViewItem == item);
+
+		private TreeViewItem FirstVisiblePage() => Pages.First(x => x.TreeViewItem.Visibility == Visibility.Visible).TreeViewItem;
+
+		// keep the advanced options visibility bindings intact
+		private static void SetFilterVisibility(TreeViewItem item, bool visible)
+		{
+			if(visible && item.GetBindingExpression(VisibilityProperty) is { } binding)
+				binding.UpdateTarget();
+			else
+				item.SetCurrentValue(VisibilityProperty, visible ? Visibility.Visible : Visibility.Collapsed);
 		}
 
 		public string? ContentHeader
@@ -124,10 +213,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		public void Reset()
 		{
+			TextBoxSearch.Clear();
 			TreeViewItemHSReplayAccount.IsSelected = true;
 			ScrollContentToTop();
 			ScrollTreeToTop();
-			OptionsSearch.Reset();
 		}
 
 		private void ScrollTreeToTop() => Helper.FindVisualChildren<ScrollViewer>(TreeViewOptions).FirstOrDefault()?.ScrollToTop();
@@ -152,12 +241,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsOverlayBattlegrounds.Load();
 			OptionsOverlayArena.Load();
 			OptionsOverlayMercenaries.Load();
-		}
-
-		private void TreeViewItemSearch_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentHeader = LocUtil.Get("Options_Search_Header");
-			OptionsContent = OptionsSearch;
 		}
 
 		private void TreeViewItemGeneralOverlay_OnSelected(object sender, RoutedEventArgs e)

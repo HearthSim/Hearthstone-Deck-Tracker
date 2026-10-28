@@ -13,7 +13,23 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 	public class AdvancedOptions : INotifyPropertyChanged
 	{
 		public static AdvancedOptions Instance { get; } = new AdvancedOptions();
-		public Visibility Visibility => Config.Instance.AdvancedOptions ? Visibility.Visible : Visibility.Collapsed;
+		private bool _revealed;
+
+		public Visibility Visibility => Config.Instance.AdvancedOptions || Revealed ? Visibility.Visible : Visibility.Collapsed;
+
+		// show advanced options temporarily (e.g. for search results) without persisting it
+		public bool Revealed
+		{
+			get => _revealed;
+			set
+			{
+				if(_revealed == value)
+					return;
+				_revealed = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(Visibility));
+			}
+		}
 
 		public bool Show
 		{
