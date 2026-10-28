@@ -22,12 +22,19 @@ public class CounterSettingsViewModel : INotifyPropertyChanged
 	public ObservableCollection<CounterSettingRow> ConstructedRows { get; } = new();
 	public ObservableCollection<CounterSettingRow> BattlegroundsRows { get; } = new();
 
+	private List<CounterSettingRow> AllRows
+	{
+		get
+		{
+			if(_allRows.Count == 0)
+				_allRows = CounterCatalog.Descriptors.Select(d => new CounterSettingRow(d)).ToList();
+			return _allRows;
+		}
+	}
+
 	public void Load()
 	{
-		if(_allRows.Count == 0)
-			_allRows = CounterCatalog.Descriptors.Select(d => new CounterSettingRow(d)).ToList();
-
-		foreach(var row in _allRows)
+		foreach(var row in AllRows)
 			row.Refresh();
 
 		ApplyFilter();
@@ -49,8 +56,8 @@ public class CounterSettingsViewModel : INotifyPropertyChanged
 
 	private void ApplyFilter()
 	{
-		Fill(ConstructedRows, _allRows.Where(r => !r.Descriptor.IsBattlegroundsCounter));
-		Fill(BattlegroundsRows, _allRows.Where(r => r.Descriptor.IsBattlegroundsCounter));
+		Fill(ConstructedRows, AllRows.Where(r => !r.Descriptor.IsBattlegroundsCounter));
+		Fill(BattlegroundsRows, AllRows.Where(r => r.Descriptor.IsBattlegroundsCounter));
 
 		OnPropertyChanged(nameof(ConstructedVisibility));
 		OnPropertyChanged(nameof(BattlegroundsVisibility));
@@ -60,7 +67,7 @@ public class CounterSettingsViewModel : INotifyPropertyChanged
 	private void Fill(ObservableCollection<CounterSettingRow> target, IEnumerable<CounterSettingRow> source)
 	{
 		var rows = source
-			.Where(Matches)
+			.Where(r => Matches(r, _filter))
 			.OrderBy(r => r.DisplayName, StringComparer.CurrentCultureIgnoreCase)
 			.ToList();
 
@@ -69,13 +76,15 @@ public class CounterSettingsViewModel : INotifyPropertyChanged
 			target.Add(row);
 	}
 
-	private bool Matches(CounterSettingRow row)
+	public bool HasMatches(string filter) => AllRows.Any(r => Matches(r, filter));
+
+	private static bool Matches(CounterSettingRow row, string filter)
 	{
-		if(string.IsNullOrWhiteSpace(_filter))
+		if(string.IsNullOrWhiteSpace(filter))
 			return true;
 
-		return row.DisplayName.IndexOf(_filter, StringComparison.CurrentCultureIgnoreCase) >= 0
-			|| row.Descriptor.CounterId.IndexOf(_filter, StringComparison.OrdinalIgnoreCase) >= 0;
+		return row.DisplayName.IndexOf(filter, StringComparison.CurrentCultureIgnoreCase) >= 0
+			|| row.Descriptor.CounterId.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0;
 	}
 
 	public Visibility ConstructedVisibility => ConstructedRows.Count > 0 ? Visibility.Visible : Visibility.Collapsed;

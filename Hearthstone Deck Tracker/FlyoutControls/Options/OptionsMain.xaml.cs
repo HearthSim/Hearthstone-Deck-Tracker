@@ -100,7 +100,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			e.Handled = true;
 		}
 
-		private void ApplySearchFilter(bool selectBestMatch)
+		private void ApplySearchFilter(bool queryChanged)
 		{
 			var query = TextBoxSearch.Text.Trim();
 			List<TreeViewItem>? matches = null;
@@ -119,6 +119,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				}
 				SetFilterVisibility(category, anyVisible);
 			}
+			// clearing the search keeps the page filters until a new query is typed
+			if(queryChanged && query.Length > 0)
+				ApplySearchToPageFilters(query, matches);
 			if(matches == null)
 			{
 				// the selected page may have been an advanced page revealed by the search
@@ -139,8 +142,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				return;
 			}
 			_pageBeforeEmptySearch = null;
-			if(selectBestMatch || TreeViewOptions.SelectedItem is not TreeViewItem selected || !matches.Contains(selected))
+			if(queryChanged || TreeViewOptions.SelectedItem is not TreeViewItem selected || !matches.Contains(selected))
 				matches[0].IsSelected = true;
+		}
+
+		private void ApplySearchToPageFilters(string query, List<TreeViewItem>? matches)
+		{
+			foreach(var (treeViewItem, page) in Pages)
+			{
+				if(page is IOptionsPageWithFilter filterable)
+					filterable.Filter = matches?.Contains(treeViewItem) == true && filterable.HasFilterMatches(query) ? query : "";
+			}
 		}
 
 		private bool IsPage(TreeViewItem item) => Pages.Any(x => x.TreeViewItem == item);

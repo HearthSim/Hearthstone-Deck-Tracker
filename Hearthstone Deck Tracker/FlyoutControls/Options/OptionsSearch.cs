@@ -37,12 +37,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 				.GroupBy(x => x.MenuItem.TreeViewItem)
 				.ToDictionary(x => x.Key, x => x.Count());
 			var pages = _pages
-				.Select(x => x.TreeViewItem)
 				.Select(x => (
-					TreeViewItem: x,
-					HeaderMatches: HeaderContains(x, query),
-					CategoryMatches: x.Parent is TreeViewItem category && HeaderContains(category, query),
-					OptionMatches: optionMatches.TryGetValue(x, out var count) ? count : 0
+					x.TreeViewItem,
+					HeaderMatches: HeaderContains(x.TreeViewItem, query),
+					CategoryMatches: x.TreeViewItem.Parent is TreeViewItem category && HeaderContains(category, query),
+					// a filterable list counts as one option, however many of its entries match
+					OptionMatches: (optionMatches.TryGetValue(x.TreeViewItem, out var count) ? count : 0)
+						+ (x.Page is IOptionsPageWithFilter page && page.HasFilterMatches(query) ? 1 : 0)
 				))
 				.Where(x => x.HeaderMatches || x.CategoryMatches || x.OptionMatches > 0)
 				.OrderByDescending(x => x.HeaderMatches)

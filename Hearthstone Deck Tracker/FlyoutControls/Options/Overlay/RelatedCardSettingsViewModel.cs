@@ -29,12 +29,19 @@ public class RelatedCardSettingsViewModel : INotifyPropertyChanged
 
 	public ObservableCollection<RelatedCardSettingRow> Rows { get; } = new();
 
+	private List<RelatedCardSettingRow> AllRows
+	{
+		get
+		{
+			if(_allRows.Count == 0)
+				_allRows = RelatedCardCatalog.Descriptors.Select(d => new RelatedCardSettingRow(d)).ToList();
+			return _allRows;
+		}
+	}
+
 	public void Load()
 	{
-		if(_allRows.Count == 0)
-			_allRows = RelatedCardCatalog.Descriptors.Select(d => new RelatedCardSettingRow(d)).ToList();
-
-		foreach(var row in _allRows)
+		foreach(var row in AllRows)
 			row.Refresh();
 
 		ApplyFilter();
@@ -69,8 +76,8 @@ public class RelatedCardSettingsViewModel : INotifyPropertyChanged
 
 	private void ApplyFilter()
 	{
-		var rows = _allRows
-			.Where(Matches)
+		var rows = AllRows
+			.Where(r => (!_customizedOnly || r.OpponentVisibility != CounterVisibility.Auto) && Matches(r, _filter))
 			.OrderBy(r => r.DisplayName, StringComparer.CurrentCultureIgnoreCase)
 			.ThenBy(r => r.CardId, StringComparer.Ordinal)
 			.ToList();
@@ -82,16 +89,15 @@ public class RelatedCardSettingsViewModel : INotifyPropertyChanged
 		OnPropertyChanged(nameof(NoResultsVisibility));
 	}
 
-	private bool Matches(RelatedCardSettingRow row)
-	{
-		if(_customizedOnly && row.OpponentVisibility == CounterVisibility.Auto)
-			return false;
+	public bool HasMatches(string filter) => AllRows.Any(r => Matches(r, filter));
 
-		if(string.IsNullOrWhiteSpace(_filter))
+	private static bool Matches(RelatedCardSettingRow row, string filter)
+	{
+		if(string.IsNullOrWhiteSpace(filter))
 			return true;
 
-		return row.DisplayName.IndexOf(_filter, StringComparison.CurrentCultureIgnoreCase) >= 0
-			|| row.CardIdsText.IndexOf(_filter, StringComparison.OrdinalIgnoreCase) >= 0;
+		return row.DisplayName.IndexOf(filter, StringComparison.CurrentCultureIgnoreCase) >= 0
+			|| row.CardIdsText.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0;
 	}
 
 	public Visibility NoResultsVisibility => Rows.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
