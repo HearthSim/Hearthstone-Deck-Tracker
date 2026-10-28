@@ -164,10 +164,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Left = 100;
 			}
 
-			if(Config.Instance.StartMinimized || StartupFlags.IsBackgroundUpdate)
+			if(BackgroundMode.StartMinimized || StartupFlags.IsBackgroundUpdate)
 			{
 				WindowState = WindowState.Minimized;
-				if(Config.Instance.MinimizeToTray || StartupFlags.IsBackgroundUpdate)
+				if(BackgroundMode.MinimizeToTray || StartupFlags.IsBackgroundUpdate)
 					MinimizeToTray();
 			}
 
@@ -276,6 +276,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.TrayIcon.MenuItemUseNoDeck.Checked = DeckList.Instance.ActiveDeck == null;
 			UpdateMyGamesPanelVisibility();
 			UpdateFlyoutAnimationsEnabled();
+			UpdateMinimizeButtonVisibility();
 		}
 
 		private void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -313,7 +314,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void MetroWindow_StateChanged(object sender, EventArgs e)
 		{
-			if(Config.Instance.MinimizeToTray && WindowState == WindowState.Minimized)
+			if(BackgroundMode.MinimizeToTray && WindowState == WindowState.Minimized)
 				MinimizeToTray();
 		}
 
@@ -339,7 +340,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			e.Cancel = true;
-			if (Config.Instance.CloseToTray)
+			if (BackgroundMode.CloseToTray)
 				MinimizeToTray();
 			else
 			{
@@ -689,6 +690,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
 			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
 		}
+
+		public void UpdateMinimizeButtonVisibility() => ShowMinButton = !BackgroundMode.IsActive;
 
 		public void UpdateFlyoutAnimationsEnabled()
 		{

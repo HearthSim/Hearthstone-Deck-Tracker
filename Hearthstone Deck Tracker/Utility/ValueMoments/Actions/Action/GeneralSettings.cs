@@ -47,6 +47,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("minimize_to_tray")]
 		public bool MinimizeToTray { get => Config.Instance.MinimizeToTray; }
 
+		[JsonProperty("background_mode")]
+		public bool BackgroundMode { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.IsActive; }
+
 		[JsonProperty("show_news_bar")]
 		public bool ShowNewsBar { get => Config.Instance.IgnoreNewsId < (Remote.Config.Data?.News?.Id ?? 0); }
 

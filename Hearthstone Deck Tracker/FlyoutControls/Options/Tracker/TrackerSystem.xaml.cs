@@ -36,17 +36,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 #else
 			CheckboxCheckForUpdates.Visibility = Visibility.Collapsed;
 #endif
+#if(!VELOPACK)
+			BackgroundBehaviorPanel.Visibility = Visibility.Collapsed;
+#endif
 		}
 
 		public void Load()
 		{
 			ComboBoxLanguage.ItemsSource = Enum.GetValues(typeof(Language));
 			ComboBoxLanguage.SelectedItem = Config.Instance.Localization;
+			ComboBoxBackgroundBehavior.ItemsSource = new[] { BackgroundBehavior.KeepRunning, BackgroundBehavior.Custom };
+			ComboBoxBackgroundBehavior.SelectedItem = Config.Instance.BackgroundBehavior;
+			UpdateBackgroundBehaviorState();
 
 			CheckboxCloseTray.IsChecked = Config.Instance.CloseToTray;
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
-			CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
 			CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
 			CheckboxStartHearthstoneWithHDT.IsChecked = Config.Instance.StartHearthstoneWithHDT;
 			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.UseAnyUnityWindow;
@@ -69,6 +74,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 			if(updateOverlay)
 				Core.Overlay.Update(true);
+		}
+
+		private void ComboBoxBackgroundBehavior_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.BackgroundBehavior = (BackgroundBehavior)ComboBoxBackgroundBehavior.SelectedItem;
+			Config.Save();
+			UpdateBackgroundBehaviorState();
+			Helper.OptionsMain?.OptionsTrackerMainWindow.UpdateTrayOptionsVisibility();
+			this.ParentMainWindow()?.UpdateMinimizeButtonVisibility();
+		}
+
+		private void UpdateBackgroundBehaviorState()
+		{
+			CustomLifecyclePanel.Visibility = BackgroundMode.IsActive ? Visibility.Collapsed : Visibility.Visible;
+			CheckboxCheckForUpdates.IsChecked = BackgroundMode.CheckForUpdates;
+			CheckboxCheckForUpdates.IsEnabled = !BackgroundMode.IsActive;
 		}
 
 		private void CheckboxMinimizeTray_Checked(object sender, RoutedEventArgs e)
@@ -134,7 +157,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxCheckForUpdates_Checked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized)
+			// background mode only displays updates as on
+			if(!_initialized || BackgroundMode.IsActive)
 				return;
 			Config.Instance.CheckForUpdates = true;
 			SaveConfig(false);
@@ -142,7 +166,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxCheckForUpdates_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized)
+			if(!_initialized || BackgroundMode.IsActive)
 				return;
 			Config.Instance.CheckForUpdates = false;
 			SaveConfig(false);

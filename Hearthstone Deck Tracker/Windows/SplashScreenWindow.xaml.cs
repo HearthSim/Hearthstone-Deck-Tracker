@@ -24,8 +24,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void ShowConditional()
 		{
-			var startsInTray = StartupFlags.IsAutostart && Config.Instance.StartMinimized && Config.Instance.MinimizeToTray;
-			if(Config.Instance.ShowSplashScreen && !StartupFlags.IsBackgroundUpdate && !startsInTray)
+			var startsInTray = StartupFlags.IsAutostart && BackgroundMode.StartMinimized && BackgroundMode.MinimizeToTray;
+			if(BackgroundMode.ShowSplashScreen && !StartupFlags.IsBackgroundUpdate && !startsInTray)
 			{
 				Log.Info("Showing splashscreen...");
 				Show();

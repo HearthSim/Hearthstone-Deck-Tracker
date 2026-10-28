@@ -30,7 +30,62 @@
                 <Run Text="{lex:Loc Options_Tracker_System_Hyperlink_Translate}"/>
             </Hyperlink>
         </TextBlock>
-        <Separator Margin="10,10,10,5" />
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_System_Label_StartupAndBackground}" Margin="10,10,10,5">
+            <StackPanel Margin="5">
+                <CheckBox x:Name="CheckboxStartWithWindows" Content="{lex:Loc Options_Tracker_Settings_CheckBox_StartWithWindows}"
+                          HorizontalAlignment="Left" Margin="0"
+                          VerticalAlignment="Top" Checked="CheckboxStartWithWindows_Checked"
+                          Unchecked="CheckboxStartWithWindows_Unchecked" />
+                <DockPanel x:Name="BackgroundBehaviorPanel" Margin="0,5,0,0">
+                    <Label Content="{lex:Loc Options_Tracker_System_Label_BackgroundBehavior}" HorizontalAlignment="Left"
+                           VerticalAlignment="Top" />
+                    <ComboBox x:Name="ComboBoxBackgroundBehavior" HorizontalAlignment="Right"
+                              VerticalAlignment="Top" Width="230"
+                              utility:ComboBoxHelper.SelectionChanged="ComboBoxBackgroundBehavior_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"
+                                           TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+                <StackPanel x:Name="CustomLifecyclePanel">
+                    <CheckBox x:Name="CheckboxStartMinimized" Content="{lex:Loc Options_Tracker_Settings_CheckBox_StartMinimized}"
+                              HorizontalAlignment="Left" Margin="0,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxStartMinimized_Checked"
+                              Unchecked="CheckboxStartMinimized_Unchecked" />
+                    <CheckBox x:Name="CheckboxCloseTray" Content="{lex:Loc Options_Tracker_Settings_CheckBox_CloseToTray}"
+                              HorizontalAlignment="Left" Margin="0,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxCloseTray_Checked"
+                              Unchecked="CheckboxCloseTray_Unchecked" />
+                    <CheckBox x:Name="CheckboxMinimizeTray" Content="{lex:Loc Options_Tracker_Settings_CheckBox_MinimizeToTray}"
+                              HorizontalAlignment="Left" Margin="0,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
+                              Unchecked="CheckboxMinimizeTray_Unchecked" />
+                    <CheckBox x:Name="CheckBoxShowSplashScreen" Content="{lex:Loc Options_Tracker_Settings_CheckBox_Splashscreen}"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              HorizontalAlignment="Left" Margin="0,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxShowSplashScreen_Checked"
+                              Unchecked="CheckboxShowSplashScreen_Unchecked" />
+                    <CheckBox x:Name="CheckboxCloseWithHearthstone"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Content="{lex:Loc Options_Tracker_Settings_CheckBox_CloseWithHearthstone}" HorizontalAlignment="Left"
+                              Margin="0,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxCloseWithHearthstone_Checked"
+                              Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
+                    <CheckBox x:Name="CheckboxStartHearthstoneWithHDT"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Content="{lex:Loc Options_Tracker_Settings_CheckBox_StartHearthstone}" HorizontalAlignment="Left"
+                              Margin="0,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxStartHearthstoneWithHDT_Checked"
+                              Unchecked="CheckboxStartHearthstoneWithHDT_Unchecked" />
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
         <CheckBox x:Name="CheckboxConfigSaveAppData" Content="{lex:Loc Options_Tracker_Settings_CheckBox_SaveConfigAppData}"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
@@ -43,42 +98,6 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0"
                   VerticalAlignment="Top" Checked="CheckboxDataSaveAppData_Checked"
                   Unchecked="CheckboxDataSaveAppData_Unchecked" />
-        <CheckBox x:Name="CheckboxStartWithWindows" Content="{lex:Loc Options_Tracker_Settings_CheckBox_StartWithWindows}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckboxStartWithWindows_Checked"
-                  Unchecked="CheckboxStartWithWindows_Unchecked" />
-        <CheckBox x:Name="CheckboxStartMinimized" Content="{lex:Loc Options_Tracker_Settings_CheckBox_StartMinimized}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckboxStartMinimized_Checked"
-                  Unchecked="CheckboxStartMinimized_Unchecked" />
-        <CheckBox x:Name="CheckboxCloseTray" Content="{lex:Loc Options_Tracker_Settings_CheckBox_CloseToTray}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckboxCloseTray_Checked"
-                  Unchecked="CheckboxCloseTray_Unchecked" />
-        <CheckBox x:Name="CheckboxMinimizeTray" Content="{lex:Loc Options_Tracker_Settings_CheckBox_MinimizeToTray}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
-                  Unchecked="CheckboxMinimizeTray_Unchecked" />
-        <CheckBox x:Name="CheckBoxShowSplashScreen" Content="{lex:Loc Options_Tracker_Settings_CheckBox_Splashscreen}"
-                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckboxShowSplashScreen_Checked"
-                  Unchecked="CheckboxShowSplashScreen_Unchecked" />
-        <CheckBox x:Name="CheckboxCloseWithHearthstone"
-                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                  Content="{lex:Loc Options_Tracker_Settings_CheckBox_CloseWithHearthstone}" HorizontalAlignment="Left"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxCloseWithHearthstone_Checked"
-                  Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
-        <CheckBox x:Name="CheckboxStartHearthstoneWithHDT"
-                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                  Content="{lex:Loc Options_Tracker_Settings_CheckBox_StartHearthstone}" HorizontalAlignment="Left"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxStartHearthstoneWithHDT_Checked"
-                  Unchecked="CheckboxStartHearthstoneWithHDT_Unchecked" />
         <CheckBox x:Name="CheckBoxAnalytics" Content="{lex:Loc Options_Tracker_System_Label_Analytics}"
                   HorizontalAlignment="Left" Margin="10,5,0,0"
                   VerticalAlignment="Top" Checked="CheckBoxAnalytics_OnChecked"

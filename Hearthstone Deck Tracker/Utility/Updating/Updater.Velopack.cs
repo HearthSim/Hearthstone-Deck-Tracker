@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 		private static TimeSpan _updateCheckDelay = new TimeSpan(0, 20, 0);
 		private static bool ShouldCheckForUpdates()
-			=> Config.Instance.CheckForUpdates && DateTime.Now - _lastUpdateCheck >= _updateCheckDelay;
+			=> BackgroundMode.CheckForUpdates && DateTime.Now - _lastUpdateCheck >= _updateCheckDelay;
 
 		public static async void CheckForUpdates(bool force = false)
 		{

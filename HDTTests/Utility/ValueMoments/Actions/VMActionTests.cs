@@ -143,7 +143,8 @@ namespace HDTTests.Utility.ValueMoments.Actions
 					"start_with_windows",
 					"start_minimized",
 					"close_to_tray",
-					"minimize_to_tray"
+					"minimize_to_tray",
+					"background_mode"
 				}},
 				{ "cur_daily_occurrences", 1 },
 				{ "max_daily_occurrences", 1 },

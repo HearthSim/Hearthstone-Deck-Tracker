@@ -294,6 +294,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool CleanShutdown = true;
 
+		[DefaultValue(BackgroundBehavior.Custom)]
+		public BackgroundBehavior BackgroundBehavior = BackgroundBehavior.Custom;
+
 		[DefaultValue(false)]
 		public bool CloseToTray = false;
 

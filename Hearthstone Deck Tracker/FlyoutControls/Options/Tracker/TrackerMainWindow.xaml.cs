@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxAutoArchiveArenaDecks.IsChecked = Config.Instance.AutoArchiveArenaDecks;
 			CheckboxCloseTray.IsChecked = Config.Instance.CloseToTray;
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
+			UpdateTrayOptionsVisibility();
 
 			CheckboxShowNewsBar.IsChecked = null;
 
@@ -206,6 +207,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AutoArchiveArenaDecks = false;
 			Config.Save();
 		}
+
+		public void UpdateTrayOptionsVisibility()
+			=> TrayOptionsPanel.Visibility = BackgroundMode.IsActive ? Visibility.Collapsed : Visibility.Visible;
 
 		// the tray options also appear in the system panel
 		private void SyncSystemOptions()

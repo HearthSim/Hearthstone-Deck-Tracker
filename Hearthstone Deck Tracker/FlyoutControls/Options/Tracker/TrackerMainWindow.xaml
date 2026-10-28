@@ -70,14 +70,16 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0"
                   VerticalAlignment="Top" Checked="CheckBoxAutoArchiveArenaDecks_Checked"
                   Unchecked="CheckBoxAutoArchiveArenaDecks_Unchecked"/>
-        <Separator Margin="10,10,10,5" />
-        <CheckBox x:Name="CheckboxCloseTray" Content="{lex:Loc Options_Tracker_Settings_CheckBox_CloseToTray}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckboxCloseTray_Checked"
-                  Unchecked="CheckboxCloseTray_Unchecked" />
-        <CheckBox x:Name="CheckboxMinimizeTray" Content="{lex:Loc Options_Tracker_Settings_CheckBox_MinimizeToTray}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
-                  Unchecked="CheckboxMinimizeTray_Unchecked" />
+        <StackPanel x:Name="TrayOptionsPanel">
+            <Separator Margin="10,10,10,5" />
+            <CheckBox x:Name="CheckboxCloseTray" Content="{lex:Loc Options_Tracker_Settings_CheckBox_CloseToTray}"
+                      HorizontalAlignment="Left" Margin="10,5,0,0"
+                      VerticalAlignment="Top" Checked="CheckboxCloseTray_Checked"
+                      Unchecked="CheckboxCloseTray_Unchecked" />
+            <CheckBox x:Name="CheckboxMinimizeTray" Content="{lex:Loc Options_Tracker_Settings_CheckBox_MinimizeToTray}"
+                      HorizontalAlignment="Left" Margin="10,5,0,0"
+                      VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
+                      Unchecked="CheckboxMinimizeTray_Unchecked" />
+        </StackPanel>
     </StackPanel>
 </UserControl>

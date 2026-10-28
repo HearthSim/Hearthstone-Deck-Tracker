@@ -141,7 +141,7 @@ namespace Hearthstone_Deck_Tracker
 			Updater.ReportInitFailure();
 			Updater.ReportFailedUpdate();
 #endif
-			if(Config.Instance.CheckForUpdates)
+			if(BackgroundMode.CheckForUpdates)
 			{
 				var updateCheck = Updater.StartupUpdateCheck();
 				while(!updateCheck.IsCompleted)
@@ -221,7 +221,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.SecretsManager.OnSecretsChanged += cards => Overlay.ShowSecrets(cards);
 			MainWindow.Show();
 			// StateChanged only sends the window to the tray when the user minimizes to tray
-			if(StartupFlags.IsBackgroundUpdate)
+			if(BackgroundMode.StartsInTray)
 				MainWindow.MinimizeToTray();
 			// flash the taskbar if the user moved on during startup (Show alone stays silent)
 			else if(MainWindow.WindowState != WindowState.Minimized)
@@ -258,7 +258,7 @@ namespace Hearthstone_Deck_Tracker
 #endif
 			BackupManager.Run();
 
-			if(!StartupFlags.IsBackgroundUpdate)
+			if(!BackgroundMode.StartsInTray)
 			{
 				if(Config.Instance.PlayerWindowOnStart)
 					Windows.PlayerWindow.Show();
@@ -293,12 +293,12 @@ namespace Hearthstone_Deck_Tracker
 			Remote.Config.Load();
 			HotKeyManager.Load();
 
-			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning && !StartupFlags.IsBackgroundUpdate && !StartupFlags.IsAutostart)
+			if(Helper.HearthstoneDirExists && BackgroundMode.StartHearthstoneWithHDT && !Game.IsRunning && !StartupFlags.IsBackgroundUpdate && !StartupFlags.IsAutostart)
 				HearthstoneRunner.StartHearthstone().Forget();
 
 			HSReplayNetHelper.UpdateAccount().Forget();
 
-			if(Config.Instance.BattlegroundsSessionRecapWindowOnStart && !StartupFlags.IsBackgroundUpdate)
+			if(Config.Instance.BattlegroundsSessionRecapWindowOnStart && !BackgroundMode.StartsInTray)
 				Windows.BattlegroundsSessionWindow.Show();
 
 			Helper.EnsureClientLogConfig();
@@ -471,7 +471,7 @@ namespace Hearthstone_Deck_Tracker
 			while(_updateOverlay)
 			{
 #if(INSTALLED)
-				if(Config.Instance.CheckForUpdates)
+				if(BackgroundMode.CheckForUpdates)
 					Updater.CheckForUpdates();
 #if(VELOPACK)
 				Updater.ApplyUpdateWhenIdle();
@@ -619,7 +619,7 @@ namespace Hearthstone_Deck_Tracker
 
 					Reflection.StopIpcClient();
 
-					if(Config.Instance.CloseWithHearthstone)
+					if(BackgroundMode.CloseWithHearthstone)
 						MainWindow.Close();
 				}
 
