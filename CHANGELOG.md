@@ -2,6 +2,9 @@
 **General**:
 - Reworked how the settings search works to make it easier to jump to the right setting.
 
+**Battlegrounds**:
+- Fixed a number of incorrect combat odds.
+
 ## **Release v1.59.7 - 2026-10-23**
 **Hearthstone**:
 - Fixed the Max Health not showing.
