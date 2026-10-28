@@ -55,7 +55,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 
 		private static bool Contains(string text, string query) => text.ToUpperInvariant().Contains(query.ToUpperInvariant());
 
-		private static bool HeaderContains(TreeViewItem item, string query) => Contains(item.Header?.ToString() ?? "", query);
+		private static bool HeaderContains(TreeViewItem item, string query) =>
+			Contains(item.Header?.ToString() ?? "", query) || KeywordsContain(item, query);
+
+		private static bool KeywordsContain(DependencyObject element, string query) =>
+			GetKeywords(element).Split(',').Any(keyword => Contains(keyword.Trim(), query));
+
+		public static readonly DependencyProperty KeywordsProperty = DependencyProperty.RegisterAttached(
+			"Keywords", typeof(string), typeof(OptionsSearch), new PropertyMetadata(""));
+
+		public static string GetKeywords(DependencyObject element) => (string)element.GetValue(KeywordsProperty);
+
+		public static void SetKeywords(DependencyObject element, string value) => element.SetValue(KeywordsProperty, value);
 
 		private static bool IsBoundToAdvancedOptions(DependencyObject element) =>
 			BindingOperations.GetBinding(element, UIElement.VisibilityProperty)?.Source == AdvancedOptions.Instance;
@@ -122,7 +133,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 
 			public override bool Matches(string query)
 			{
-				return Contains(Text, query) || Contains(Control.Name.ToUpperInvariant().Replace("CHECKBOX", ""), query);
+				return Contains(Text, query)
+					|| Contains(Control.Name.ToUpperInvariant().Replace("CHECKBOX", ""), query)
+					|| KeywordsContain(Control, query);
 			}
 
 			private static string GetText(object? content) => content switch

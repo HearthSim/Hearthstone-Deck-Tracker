@@ -33,6 +33,7 @@
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_System_Label_StartupAndBackground}" Margin="10,10,10,5">
             <StackPanel Margin="5">
                 <CheckBox x:Name="CheckboxStartWithWindows" Content="{lex:Loc Options_Tracker_Settings_CheckBox_StartWithWindows}"
+                          options:OptionsSearch.Keywords="{lex:Loc Options_Tracker_Settings_CheckBox_StartWithWindows_SearchKeywords}"
                           HorizontalAlignment="Left" Margin="0"
                           VerticalAlignment="Top" Checked="CheckboxStartWithWindows_Checked"
                           Unchecked="CheckboxStartWithWindows_Unchecked" />

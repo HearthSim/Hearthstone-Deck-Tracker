@@ -48,7 +48,7 @@
                 <TreeView Name="TreeViewOptions" MinWidth="150">
                     <TreeViewItem Header="HSReplay.net">
                         <TreeViewItem Name="TreeViewItemHSReplayAccount" Header="{lex:Loc Options_HSReplay_Account_Header}" Selected="TreeViewItemHSReplayAccount_OnSelected"/>
-                        <TreeViewItem Name="TreeViewItemHSReplayCollection" Header="{lex:Loc Options_HSReplay_Collection_Header}" Selected="TreeViewItemHSReplayCollection_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemHSReplayCollection" Header="{lex:Loc Options_HSReplay_Collection_Header}" options:OptionsSearch.Keywords="{lex:Loc Options_HSReplay_Collection_Header_SearchKeywords}" Selected="TreeViewItemHSReplayCollection_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemHSReplayReplays" Header="{lex:Loc Options_Tracker_Replays_Header}" Selected="TreeViewItemHSReplayReplays_OnSelected"/>
                     </TreeViewItem>
                     <TreeViewItem Header="{lex:LocText Options_Overlay_Header}">
@@ -75,7 +75,7 @@
                         <TreeViewItem Name="TreeViewItemTrackerAppearance" Header="{lex:LocText Options_Tracker_Appearance_Header}" Selected="TreeViewItemTrackerAppearance_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerSystem" Header="{lex:LocText Options_Tracker_System_Header}" Selected="TreeViewItemTrackerSystem_OnSelected"/>
                     </TreeViewItem>
-                    <TreeViewItem Header="{lex:Loc Options_Streaming_Header}">
+                    <TreeViewItem Header="{lex:Loc Options_Streaming_Header}" options:OptionsSearch.Keywords="{lex:Loc Options_Streaming_Header_SearchKeywords}">
                         <TreeViewItem Name="TreeViewItemStreamingCapturableOverlay" Header="{lex:Loc Options_Streaming_CaptureableOverlay_Header}" Selected="TreeViewItemStreamingCapturableOverlay_OnSelected" />
                         <TreeViewItem Name="TreeViewItemStreamingTwitchExtension" Header="{lex:Loc Options_Streaming_TwitchExt_Header}" Selected="TreeViewItemStreamingTwitchExtension_OnSelected" />
                     </TreeViewItem>
