@@ -293,7 +293,7 @@ namespace Hearthstone_Deck_Tracker
 			Remote.Config.Load();
 			HotKeyManager.Load();
 
-			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning && !StartupFlags.IsBackgroundUpdate)
+			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning && !StartupFlags.IsBackgroundUpdate && !StartupFlags.IsAutostart)
 				HearthstoneRunner.StartHearthstone().Forget();
 
 			HSReplayNetHelper.UpdateAccount().Forget();
