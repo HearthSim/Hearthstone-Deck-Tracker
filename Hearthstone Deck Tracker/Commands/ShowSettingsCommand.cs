@@ -35,28 +35,16 @@ public class ShowSettingsCommand : ICommand
 		if(ParseParameter(parameter) is not { } focus)
 			return;
 
-		switch(focus)
+		var options = Core.MainWindow.Options;
+		options.ShowPage(focus switch
 		{
-			case Focus.Default:
-			case Focus.Account:
-				Core.MainWindow.Options.TreeViewItemHSReplayAccount.IsSelected = true;
-				break;
-			case Focus.Battlegrounds:
-				Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
-				break;
-			case Focus.Notifications:
-				Core.MainWindow.Options.TreeViewItemTrackerNotifications.IsSelected = true;
-				break;
-			case Focus.Arena:
-				Core.MainWindow.Options.TreeViewItemOverlayArena.IsSelected = true;
-				break;
-			case Focus.General:
-				Core.MainWindow.Options.TreeViewItemOverlayGeneral.IsSelected = true;
-				break;
-			case Focus.Mulligan:
-				Core.MainWindow.Options.TreeViewItemOverlayMulligan.IsSelected = true;
-				break;
-		}
+			Focus.Battlegrounds => options.TreeViewItemOverlayBattlegrounds,
+			Focus.Notifications => options.TreeViewItemTrackerNotifications,
+			Focus.Arena => options.TreeViewItemOverlayArena,
+			Focus.General => options.TreeViewItemOverlayGeneral,
+			Focus.Mulligan => options.TreeViewItemOverlayMulligan,
+			_ => options.TreeViewItemHSReplayAccount,
+		});
 		Core.MainWindow.FlyoutOptions.IsOpen = true;
 		Core.MainWindow.ActivateWindow();
 	}

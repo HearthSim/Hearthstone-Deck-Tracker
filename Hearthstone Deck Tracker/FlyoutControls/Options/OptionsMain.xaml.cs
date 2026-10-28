@@ -90,6 +90,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			TextBoxSearch.SelectAll();
 		}
 
+		public void ShowPage(TreeViewItem page)
+		{
+			TextBoxSearch.Clear();
+			ApplySearchToPageFilters("", null);
+			page.IsSelected = true;
+		}
+
 		private void TextBoxSearch_OnTextChanged(object sender, TextChangedEventArgs e) => ApplySearchFilter(true);
 
 		private void TextBoxSearch_OnPreviewKeyDown(object sender, KeyEventArgs e)
