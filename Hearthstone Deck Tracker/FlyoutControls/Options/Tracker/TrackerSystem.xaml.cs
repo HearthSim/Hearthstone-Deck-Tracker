@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.Updating;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -80,8 +81,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
+			var wasCheckingForUpdates = BackgroundMode.CheckForUpdates;
 			Config.Instance.BackgroundBehavior = (BackgroundBehavior)ComboBoxBackgroundBehavior.SelectedItem;
 			Config.Save();
+#if(INSTALLED)
+			if(!wasCheckingForUpdates && BackgroundMode.CheckForUpdates)
+				Updater.CheckForUpdates(true);
+#endif
 			UpdateBackgroundBehaviorState();
 			Helper.OptionsMain?.OptionsTrackerMainWindow.UpdateTrayOptionsVisibility();
 			this.ParentMainWindow()?.UpdateMinimizeButtonVisibility();
@@ -162,6 +168,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.CheckForUpdates = true;
 			SaveConfig(false);
+#if(INSTALLED)
+			Updater.CheckForUpdates(true);
+#endif
 		}
 
 		private void CheckboxCheckForUpdates_Unchecked(object sender, RoutedEventArgs e)
