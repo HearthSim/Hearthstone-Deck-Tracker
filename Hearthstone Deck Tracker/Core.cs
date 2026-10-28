@@ -135,7 +135,7 @@ namespace Hearthstone_Deck_Tracker
 			if(ConfigManager.PreviousVersion == null)
 				Config.SetInitialLanguage();
 
-			Log.Info($"HDT: {Helper.GetCurrentVersion()}, Operating System: {Helper.GetWindowsVersion()}, .NET Framework: {Helper.GetInstalledDotNetVersion()}");
+			Log.Info($"HDT: {Helper.GetCurrentVersion()}, Operating System: {Helper.GetWindowsVersion()}, .NET Framework: {Helper.GetInstalledDotNetVersion()}, Updater: {Updater.Name}");
 #if(INSTALLED)
 #if(VELOPACK)
 			Updater.ReportInitFailure();
