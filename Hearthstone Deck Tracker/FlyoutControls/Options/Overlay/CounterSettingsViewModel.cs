@@ -137,10 +137,10 @@ public class CounterSettingRow : INotifyPropertyChanged
 
 	public CounterVisibility PlayerVisibility
 	{
-		get => CounterVisibilitySettings.Instance.Get(CounterId, true);
+		get => IsPlayerSupported ? CounterVisibilitySettings.Instance.Get(CounterId, true) : CounterVisibility.Disabled;
 		set
 		{
-			if(PlayerVisibility == value)
+			if(!IsPlayerSupported || PlayerVisibility == value)
 				return;
 			CounterVisibilitySettings.Instance.Set(CounterId, true, value);
 			OnPropertyChanged();
@@ -149,10 +149,10 @@ public class CounterSettingRow : INotifyPropertyChanged
 
 	public CounterVisibility OpponentVisibility
 	{
-		get => CounterVisibilitySettings.Instance.Get(CounterId, false);
+		get => IsOpponentSupported ? CounterVisibilitySettings.Instance.Get(CounterId, false) : CounterVisibility.Disabled;
 		set
 		{
-			if(OpponentVisibility == value)
+			if(!IsOpponentSupported || OpponentVisibility == value)
 				return;
 			CounterVisibilitySettings.Instance.Set(CounterId, false, value);
 			OnPropertyChanged();
