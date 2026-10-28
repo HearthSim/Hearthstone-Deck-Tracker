@@ -19,8 +19,7 @@ public class CounterSettingsViewModel : INotifyPropertyChanged
 	private List<CounterSettingRow> _allRows = new();
 	private string _filter = string.Empty;
 
-	public ObservableCollection<CounterSettingRow> ConstructedRows { get; } = new();
-	public ObservableCollection<CounterSettingRow> BattlegroundsRows { get; } = new();
+	public ObservableCollection<object> Rows { get; } = new();
 
 	private List<CounterSettingRow> AllRows
 	{
@@ -56,24 +55,27 @@ public class CounterSettingsViewModel : INotifyPropertyChanged
 
 	private void ApplyFilter()
 	{
-		Fill(ConstructedRows, AllRows.Where(r => !r.Descriptor.IsBattlegroundsCounter));
-		Fill(BattlegroundsRows, AllRows.Where(r => r.Descriptor.IsBattlegroundsCounter));
-
-		OnPropertyChanged(nameof(ConstructedVisibility));
-		OnPropertyChanged(nameof(BattlegroundsVisibility));
-		OnPropertyChanged(nameof(NoResultsVisibility));
-	}
-
-	private void Fill(ObservableCollection<CounterSettingRow> target, IEnumerable<CounterSettingRow> source)
-	{
-		var rows = source
+		var rows = AllRows
 			.Where(r => Matches(r, _filter))
 			.OrderBy(r => r.DisplayName, StringComparer.CurrentCultureIgnoreCase)
 			.ToList();
+		var constructed = rows.Where(r => !r.Descriptor.IsBattlegroundsCounter).ToList();
+		var battlegrounds = rows.Where(r => r.Descriptor.IsBattlegroundsCounter).ToList();
 
-		target.Clear();
+		Rows.Clear();
+		AddGroup("OptionsCounters_Group_Traditional", constructed);
+		AddGroup("OptionsCounters_Group_Battlegrounds", battlegrounds);
+
+		OnPropertyChanged(nameof(NoResultsVisibility));
+	}
+
+	private void AddGroup(string titleKey, List<CounterSettingRow> rows)
+	{
+		if(rows.Count == 0)
+			return;
+		Rows.Add(new CounterGroupHeader(LocUtil.Get(titleKey)));
 		foreach(var row in rows)
-			target.Add(row);
+			Rows.Add(row);
 	}
 
 	public bool HasMatches(string filter) => AllRows.Any(r => Matches(r, filter));
@@ -87,11 +89,7 @@ public class CounterSettingsViewModel : INotifyPropertyChanged
 			|| row.Descriptor.CounterId.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0;
 	}
 
-	public Visibility ConstructedVisibility => ConstructedRows.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
-	public Visibility BattlegroundsVisibility => BattlegroundsRows.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
-
-	public Visibility NoResultsVisibility =>
-		ConstructedRows.Count == 0 && BattlegroundsRows.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+	public Visibility NoResultsVisibility => Rows.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
 
 	public bool HasAnyOverride => CounterVisibilitySettings.Instance.HasAnyOverride;
 
@@ -174,6 +172,16 @@ public class CounterSettingRow : INotifyPropertyChanged
 	[NotifyPropertyChangedInvocator]
 	protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		=> PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+}
+
+public class CounterGroupHeader
+{
+	public CounterGroupHeader(string title)
+	{
+		Title = title;
+	}
+
+	public string Title { get; }
 }
 
 public class CounterVisibilityOption

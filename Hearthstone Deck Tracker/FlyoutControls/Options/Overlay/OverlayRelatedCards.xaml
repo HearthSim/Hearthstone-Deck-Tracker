@@ -58,8 +58,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -75,27 +73,26 @@
                       IsChecked="{Binding CustomizedOnly}"/>
             <TextBox x:Name="TextBoxFilter"
                      Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged, Delay=150}"
-                     controls:TextBoxHelper.Watermark="{lex:Loc OptionsRelatedCards_Filter_Placeholder}"/>
+                     controls:TextBoxHelper.Watermark="{lex:Loc OptionsRelatedCards_Filter_Placeholder}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                        <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="False"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
         </DockPanel>
 
-        <!-- Column header, aligned with the dropdown in the row template: clear of the scrollbar (17)
-             plus the row's own right margin (10). -->
-        <Grid Grid.Row="2" Margin="0,6,27,0">
-            <TextBlock Width="110" HorizontalAlignment="Right"
-                       Text="{lex:Loc OptionsCounters_Column_Opponent}" Style="{StaticResource ColumnHeaderStyle}"/>
-        </Grid>
-
-        <TextBlock Grid.Row="3" Text="{lex:Loc OptionsRelatedCards_NoResults}" Margin="0,12,0,0"
-                   Visibility="{Binding NoResultsVisibility}"/>
-
-        <!-- There are hundreds of related cards, so unlike the counters page this list is virtualized
-             instead of being laid out all at once. That needs a bounded height, which the star row
-             above provides. -->
-        <ItemsControl Grid.Row="4" ItemsSource="{Binding Rows}" ItemTemplate="{StaticResource RelatedCardRowTemplate}"
+        <!-- There are hundreds of related cards, so this list is virtualized instead of being laid
+             out all at once. That needs a bounded height, which the star row above provides. -->
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding Rows}" ItemTemplate="{StaticResource RelatedCardRowTemplate}"
                       VirtualizingPanel.IsVirtualizing="True"
                       VirtualizingPanel.VirtualizationMode="Recycling"
-                      ScrollViewer.CanContentScroll="True"
-                      Margin="0,4,0,0">
+                      ScrollViewer.CanContentScroll="True">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel/>
@@ -103,9 +100,23 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.Template>
                 <ControlTemplate TargetType="ItemsControl">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Focusable="False">
-                        <ItemsPresenter/>
-                    </ScrollViewer>
+                    <DockPanel>
+                        <!-- Sized to the list's viewport and padded like the rows, so the headers line up
+                             with the dropdowns. The scrollbar always shows, so filtering never shifts them. -->
+                        <Border DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="0,6,0,0" Padding="0,0,10,0"
+                                Width="{Binding ViewportWidth, ElementName=Scroller}">
+                            <TextBlock Width="110" HorizontalAlignment="Right"
+                                       Text="{lex:Loc OptionsCounters_Column_Opponent}" Style="{StaticResource ColumnHeaderStyle}"/>
+                        </Border>
+
+                        <TextBlock DockPanel.Dock="Top" Text="{lex:Loc OptionsRelatedCards_NoResults}" Margin="0,12,0,0"
+                                   Visibility="{Binding NoResultsVisibility}"/>
+
+                        <ScrollViewer x:Name="Scroller" Margin="0,4,0,0" VerticalScrollBarVisibility="Visible"
+                                      HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Focusable="False">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </DockPanel>
                 </ControlTemplate>
             </ItemsControl.Template>
         </ItemsControl>

@@ -14,8 +14,9 @@
     <UserControl.Resources>
         <!-- One template for every counter: nothing here mentions a specific counter, which is what
              keeps this page zero-touch when a new counter is added. -->
-        <DataTemplate x:Key="CounterRowTemplate" DataType="{x:Type overlay:CounterSettingRow}">
-            <Grid Margin="0,3,0,3">
+        <DataTemplate DataType="{x:Type overlay:CounterSettingRow}">
+            <!-- The right margin keeps the dropdown off the list's scrollbar. -->
+            <Grid Margin="0,3,10,3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -62,56 +63,91 @@
             </Grid>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type overlay:CounterGroupHeader}">
+            <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="14" Margin="0,12,0,4"/>
+        </DataTemplate>
+
         <Style x:Key="ColumnHeaderStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
         </Style>
-
-        <Style x:Key="GroupHeaderStyle" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="0,12,0,4"/>
-        </Style>
     </UserControl.Resources>
 
-    <StackPanel Margin="10">
-        <TextBlock Text="{lex:Loc OptionsCounters_Description}" TextWrapping="Wrap" Margin="0,0,0,10"/>
+    <!-- The list is the only thing on this page that scrolls (see IOptionsPageWithOwnScrolling): the
+         host does not scroll this page, so the rows above the list stay put and the list takes
+         whatever height is left. -->
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <DockPanel Margin="0,0,0,4">
+        <TextBlock Grid.Row="0" Text="{lex:Loc OptionsCounters_Description}" TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+        <DockPanel Grid.Row="1" Margin="0,0,0,4">
             <Button DockPanel.Dock="Right" Content="{lex:Loc OptionsCounters_ResetAll}"
                     Padding="10,2" Margin="8,0,0,0"
                     Command="{Binding ResetAllCommand}"
                     IsEnabled="{Binding HasAnyOverride}"/>
             <TextBox x:Name="TextBoxFilter"
                      Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged, Delay=150}"
-                     controls:TextBoxHelper.Watermark="{lex:Loc OptionsCounters_Filter_Placeholder}"/>
+                     controls:TextBoxHelper.Watermark="{lex:Loc OptionsCounters_Filter_Placeholder}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                        <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="False"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
         </DockPanel>
 
-        <!-- Column headers, aligned with the two dropdowns in the row template. -->
-        <Grid Margin="0,6,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="1" Width="110" Margin="0,0,6,0"
-                       Text="{lex:Loc OptionsCounters_Column_Player}" Style="{StaticResource ColumnHeaderStyle}"/>
-            <TextBlock Grid.Column="2" Width="110"
-                       Text="{lex:Loc OptionsCounters_Column_Opponent}" Style="{StaticResource ColumnHeaderStyle}"/>
-        </Grid>
+        <!-- Every row carries two dropdowns, so laying them all out at once froze the options window
+             on every visit. Virtualizing needs a bounded height, which the star row above provides. -->
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding Rows}"
+                      VirtualizingPanel.IsVirtualizing="True"
+                      VirtualizingPanel.VirtualizationMode="Recycling"
+                      ScrollViewer.CanContentScroll="True">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.Template>
+                <ControlTemplate TargetType="ItemsControl">
+                    <DockPanel>
+                        <!-- Sized to the list's viewport and padded like the rows, so the headers line up
+                             with the dropdowns. The scrollbar always shows, so filtering never shifts them. -->
+                        <Border DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="0,6,0,0" Padding="0,0,10,0"
+                                Width="{Binding ViewportWidth, ElementName=Scroller}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="1" Width="110" Margin="0,0,6,0"
+                                           Text="{lex:Loc OptionsCounters_Column_Player}" Style="{StaticResource ColumnHeaderStyle}"/>
+                                <TextBlock Grid.Column="2" Width="110"
+                                           Text="{lex:Loc OptionsCounters_Column_Opponent}" Style="{StaticResource ColumnHeaderStyle}"/>
+                            </Grid>
+                        </Border>
 
-        <TextBlock Text="{lex:Loc OptionsCounters_NoResults}" Margin="0,12,0,0"
-                   Visibility="{Binding NoResultsVisibility}"/>
+                        <TextBlock DockPanel.Dock="Top" Text="{lex:Loc OptionsCounters_NoResults}" Margin="0,12,0,0"
+                                   Visibility="{Binding NoResultsVisibility}"/>
 
-        <StackPanel Visibility="{Binding ConstructedVisibility}">
-            <TextBlock Text="{lex:Loc OptionsCounters_Group_Traditional}" Style="{StaticResource GroupHeaderStyle}"/>
-            <ItemsControl ItemsSource="{Binding ConstructedRows}" ItemTemplate="{StaticResource CounterRowTemplate}"/>
-        </StackPanel>
-
-        <StackPanel Visibility="{Binding BattlegroundsVisibility}">
-            <TextBlock Text="{lex:Loc OptionsCounters_Group_Battlegrounds}" Style="{StaticResource GroupHeaderStyle}"/>
-            <ItemsControl ItemsSource="{Binding BattlegroundsRows}" ItemTemplate="{StaticResource CounterRowTemplate}"/>
-        </StackPanel>
-    </StackPanel>
+                        <ScrollViewer x:Name="Scroller" VerticalScrollBarVisibility="Visible"
+                                      HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Focusable="False">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </DockPanel>
+                </ControlTemplate>
+            </ItemsControl.Template>
+        </ItemsControl>
+    </Grid>
 </UserControl>

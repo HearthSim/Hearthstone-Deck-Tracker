@@ -2,7 +2,7 @@ using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
 
-public partial class OverlayCounters : UserControl, IOptionsPageWithFilter
+public partial class OverlayCounters : UserControl, IOptionsPageWithOwnScrolling, IOptionsPageWithFilter
 {
 	private readonly CounterSettingsViewModel _viewModel = new();
 
