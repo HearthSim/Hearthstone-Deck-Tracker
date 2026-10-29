@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json;
@@ -79,6 +80,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				{
 					using(var client = new WebClient())
 					{
+						client.Encoding = Encoding.UTF8;
 						client.Headers.Add("User-Agent", Helper.GetUserAgent());
 						if(contentType != null)
 							client.Headers.Add("accept", contentType);
