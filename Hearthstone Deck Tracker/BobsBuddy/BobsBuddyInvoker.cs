@@ -1514,7 +1514,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			var simulator = new Simulator();
 			foreach(var savedEntity in resummonedEntities.Take(extraCount))
-				soulFermenter.ExtraSavedMinions.Add(GetMinionFromEntity(simulator, soulFermenter.ControlledByPlayer, savedEntity, Enumerable.Empty<Entity>()));
+				soulFermenter.ExtraSavedMinions.Add(GetMinionFromEntity(simulator, soulFermenter.ControlledByPlayer, savedEntity, GetAttachedEntities(savedEntity.Id)));
 			soulFermenter.TrinketUpdatedDuringCombat = true;
 
 			await TryRerun();
