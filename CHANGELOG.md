@@ -1,4 +1,6 @@
-## **Unreleased**
+## **Release v1.59.8 - 2026-11-03**
+**Updated for Hearthstone 37.0.2**
+
 **General**:
 - Reworked how the settings search works to make it easier to jump to the right setting.
 
