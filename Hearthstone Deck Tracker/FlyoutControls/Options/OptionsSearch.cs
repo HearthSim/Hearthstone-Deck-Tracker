@@ -72,19 +72,35 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 		private static bool IsBoundToAdvancedOptions(DependencyObject element) =>
 			BindingOperations.GetBinding(element, UIElement.VisibilityProperty)?.Source == AdvancedOptions.Instance;
 
+		private static IEnumerable<DependencyObject> FindOptions(DependencyObject parent)
+		{
+			foreach(var child in LogicalTreeHelper.GetChildren(parent).OfType<DependencyObject>())
+			{
+				if(IsSearchableOption(child))
+				{
+					yield return child;
+					// a group box's content holds further options
+					if(child is not GroupBox)
+						continue;
+				}
+				foreach(var option in FindOptions(child))
+					yield return option;
+			}
+		}
+
 		private List<IOptionWrapper> LoadWrappers()
 		{
 			var optionWrappers = new List<IOptionWrapper>();
 			var optionsMenuItems = _pages.Select(x => new UserControlWrapper(x.Page, x.TreeViewItem));
 			foreach(var optionsMenuItem in optionsMenuItems)
 			{
-				var option = Helper.FindLogicalDescendants<DependencyObject>(IsSearchableOption, optionsMenuItem.UserControl);
+				var option = FindOptions(optionsMenuItem.UserControl);
 				optionWrappers.AddRange(option.Select(cb => WrapOption(optionsMenuItem, cb)));
 			}
 			return optionWrappers;
 		}
 
-		private static bool IsSearchableOption(DependencyObject depObj) => depObj is CheckBox or Label;
+		private static bool IsSearchableOption(DependencyObject depObj) => depObj is CheckBox or Label or GroupBox or Button;
 
 		private static IOptionWrapper WrapOption(UserControlWrapper menuItem, DependencyObject depObj) =>
 			new ContentControlWrapper(menuItem, (ContentControl)depObj);
@@ -130,7 +146,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			{
 			}
 
-			private string Text => GetText(Control.Content);
+			// a group box's content holds its options, which are searched on their own
+			private string Text => GetText(Control is HeaderedContentControl headered ? headered.Header : Control.Content);
 
 			public override bool Matches(string query)
 			{

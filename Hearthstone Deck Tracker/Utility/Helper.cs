@@ -647,23 +647,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		// Finds all descendants of depObj that match filter, but does not recurse into matching objects (ie will not return both a parent and its child).
-		public static IEnumerable<T> FindLogicalDescendants<T>(Func<T, bool> filter, DependencyObject depObj) where T : DependencyObject
-		{
-			if(depObj == null)
-				yield break;
-			foreach(var child in LogicalTreeHelper.GetChildren(depObj).OfType<DependencyObject>())
-			{
-				if(child is T childT && filter(childT))
-				{
-					yield return childT;
-					continue;
-				}
-				foreach(var childOfChild in FindLogicalDescendants<T>(filter, child))
-					yield return childOfChild;
-			}
-		}
-
 		public static async Task WaitForFileAccess(string path, int delay)
 		{
 			while(true)
