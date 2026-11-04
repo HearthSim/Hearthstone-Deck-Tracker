@@ -25,7 +25,7 @@ public class ReferencedCardRun : Run, ICardTooltip
 	private static void UpdateCards()
 	{
 		var heroes = Cards.All.Values
-			.Where(x => x.Type == CardType.BATTLEGROUND_SPELL || x.Type is CardType.HERO && x.Entity.Tags.Any(t => t.EnumId == (int)GameTag.BACON_HERO_CAN_BE_DRAFTED));
+			.Where(x => x.Type == CardType.BATTLEGROUND_SPELL || x.Type is CardType.HERO && x.Entity.GetTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) > 0);
 		_cardsByDbfId = Cards.BaconPoolMinions.Values.Concat(heroes).ToDictionary(x => x.DbfId, x => x);
 	}
 

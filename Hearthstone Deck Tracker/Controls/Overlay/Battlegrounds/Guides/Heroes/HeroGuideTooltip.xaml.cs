@@ -45,8 +45,8 @@ public partial class HeroGuideTooltip : UserControl
 
 		var heroPowerCard = HearthDb.Cards.GetFromDbfId(heroPowerDbfId.Value);
 
-		var heroDbfId = heroPowerCard?.Entity.Tags
-			.FirstOrDefault(tag => tag.EnumId == (int)GameTag.BACON_HEROPOWER_BASE_HERO_ID)?.Value;
+		var baseHeroDbfId = heroPowerCard?.Entity.GetTag(GameTag.BACON_HEROPOWER_BASE_HERO_ID);
+		var heroDbfId = baseHeroDbfId > 0 ? baseHeroDbfId : null;
 
 		ViewModel.HoveredHeroDbfid = heroDbfId;
 
