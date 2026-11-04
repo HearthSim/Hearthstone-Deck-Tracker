@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Hearthstone_Deck_Tracker.Enums;
 
 #endregion
 
@@ -100,10 +101,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			return optionWrappers;
 		}
 
-		private static bool IsSearchableOption(DependencyObject depObj) => depObj is CheckBox or Label or GroupBox or Button;
+		private static bool IsSearchableOption(DependencyObject depObj) => depObj is CheckBox or Label or GroupBox or Button or ComboBox;
 
-		private static IOptionWrapper WrapOption(UserControlWrapper menuItem, DependencyObject depObj) =>
-			new ContentControlWrapper(menuItem, (ContentControl)depObj);
+		private static IOptionWrapper WrapOption(UserControlWrapper menuItem, DependencyObject depObj) => depObj switch
+		{
+			ComboBox comboBox => new ComboBoxWrapper(menuItem, comboBox),
+			_ => new ContentControlWrapper(menuItem, (ContentControl)depObj),
+		};
 
 		public interface IOptionWrapper
 		{
@@ -155,16 +159,45 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 					|| Contains(Control.Name.ToUpperInvariant().Replace("CHECKBOX", ""), query)
 					|| KeywordsContain(Control, query);
 			}
-
-			private static string GetText(object? content) => content switch
-			{
-				string text => text,
-				TextBlock textBlock => textBlock.Text,
-				ContentControl contentControl => GetText(contentControl.Content),
-				Panel panel => string.Join(" ", panel.Children.Cast<object>().Select(GetText).Where(x => x.Length > 0)),
-				_ => "",
-			};
 		}
+
+		public class ComboBoxWrapper : OptionWrapper<ComboBox>
+		{
+			public ComboBoxWrapper(UserControlWrapper menuItem, ComboBox control) : base(menuItem, control)
+			{
+			}
+
+			public override bool Matches(string query)
+			{
+				return Control.Items.Cast<object?>().Any(item => Contains(GetItemText(item), query))
+					|| KeywordsContain(Control, query);
+			}
+
+			// mirror what the dropdown displays (item templates are expected to show an enum's description)
+			private string GetItemText(object? item)
+			{
+				if(item is null or string or ContentControl)
+					return GetText(item);
+				if(!string.IsNullOrEmpty(Control.DisplayMemberPath))
+					return item.GetType().GetProperty(Control.DisplayMemberPath)?.GetValue(item)?.ToString() ?? "";
+				if(Control.ItemTemplate == null)
+					return HasOwnToString(item) ? item.ToString() ?? "" : "";
+				return item is Enum en ? EnumDescriptionConverter.GetDescription(en) : "";
+			}
+
+			// skip the type name that object.ToString() would return
+			private static bool HasOwnToString(object item) =>
+				item.GetType().GetMethod(nameof(ToString), Type.EmptyTypes)?.DeclaringType != typeof(object);
+		}
+
+		private static string GetText(object? content) => content switch
+		{
+			string text => text,
+			TextBlock textBlock => textBlock.Text,
+			ContentControl contentControl => GetText(contentControl.Content),
+			Panel panel => string.Join(" ", panel.Children.Cast<object>().Select(GetText).Where(x => x.Length > 0)),
+			_ => "",
+		};
 
 		public class UserControlWrapper
 		{
