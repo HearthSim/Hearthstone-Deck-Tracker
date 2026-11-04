@@ -66,8 +66,8 @@ public class GoldNextTurnCounter : StatsCounter
     {
         var sureAmount = GoldSureAmount + Accordotron;
         if (ExtraGoldFromOverconfidence > 0)
-            return $"{sureAmount} ({sureAmount + ExtraGoldFromOverconfidence})";
-        return $"{sureAmount}";
+            return $"+{sureAmount} (+{sureAmount + ExtraGoldFromOverconfidence})";
+        return $"+{sureAmount}";
     }
 
     public override void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue)
