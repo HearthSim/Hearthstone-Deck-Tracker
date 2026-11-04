@@ -57,8 +57,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private const string LocLogConfigTitle = "MessageDialogs_LogConfig_Title";
 		private const string LocLogConfigDescription1 = "MessageDialogs_LogConfig_Description1";
-		private const string LocLogConfigDescription2 = "MessageDialogs_LogConfig_Description2";
-		private const string LocLogConfigDescription3 = "MessageDialogs_LogConfig_Description3";
+		private const string LocLogConfigInstructions = "MessageDialogs_LogConfig_Instructions";
 		private const string LocLogConfigButtonInstructions = "MessageDialogs_LogConfig_Button_Instructions";
 		private const string LocLogConfigButtonClose = "MessageDialogs_LogConfig_Button_Close";
 
@@ -184,8 +183,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 			var result = await window.ShowMessageAsync(LocUtil.Get(LocLogConfigTitle),
 										LocUtil.Get(LocLogConfigDescription1) + Environment.NewLine + Environment.NewLine
-										+ LocUtil.Get(LocLogConfigDescription2) + Environment.NewLine + Environment.NewLine
-										+ LocUtil.Get(LocLogConfigDescription3),
+										+ LocUtil.Get(LocLogConfigInstructions),
 										AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Affirmative)
 				Helper.TryOpenUrl("https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Setting-up-the-log.config");

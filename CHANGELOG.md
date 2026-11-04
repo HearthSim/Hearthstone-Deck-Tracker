@@ -4184,7 +4184,6 @@ __Fixes__:
 
 __Changes__:
 - Hopefully made some improvements to issues with the overlay hiding behind Hearthstone.
-  - If you are still having problems, try running HDT as administrator.
 - Drag & Dropping plugins into the plugins options menu will now install them without requiring a restart.
 
 __Fixes__:
