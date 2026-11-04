@@ -471,7 +471,7 @@
                                 Opacity="0.8">
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="#FF5252"/>
+                                    <Setter Property="Background" Value="#757575"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding EnableRecommended}" Value="True">
                                             <Setter Property="Background" Value="#4CAF50"/>
