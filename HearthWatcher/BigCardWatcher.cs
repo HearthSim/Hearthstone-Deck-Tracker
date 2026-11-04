@@ -30,7 +30,8 @@ public class BigCardStateWatcher : PollingWatcher
 			state?.ZonePosition ?? 0,
 			state?.ZoneSize ?? 0,
 			state?.Side ?? 0,
-			state?.IsHand ?? false
+			state?.IsHand ?? false,
+			state?.EntityId
 		);
 		if(_prev == null || !curr.Equals(_prev))
 		{

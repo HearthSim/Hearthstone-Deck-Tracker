@@ -290,6 +290,9 @@ namespace Hearthstone_Deck_Tracker.Utility.RegionDrawer
 			return rect;
 		}
 
+		public Rect DrawPlayerHeroPowerRegion(double offsetX, double offsetY) =>
+			DrawHeroPowerRegion(offsetX, offsetY, HeroPowerHeight + 0.02);
+
 		public List<Rect> DrawWeaponRegions(bool isPlayerBoard, double tooltipHeight, double enchantHeight)
 		{
 			var baseOffsetX = isPlayerBoard? 0.45 : 0.46;

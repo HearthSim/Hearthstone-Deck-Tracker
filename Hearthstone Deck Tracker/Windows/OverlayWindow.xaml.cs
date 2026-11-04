@@ -850,12 +850,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(card.Id is "BG30_Trinket_1st" or "BG30_Trinket_2nd")
 					return;
 
-				var trinkets = isFriendly ? _game.Player.Trinkets : _game.Opponent.Trinkets;
-
-				 var trinketEntity = trinkets.FirstOrDefault(x =>
-					 x.HasTag(GameTag.TAG_SCRIPT_DATA_NUM_6) &&
-					 x.Card.DbfId == card.DbfId
-				 );
+				 var trinketEntity = GetHoveredTrinketEntity(state, card, isFriendly);
 
 				 var hasAttachedCard = trinketEntity?.HasTag(GameTag.BACON_EVOLUTION_CARD_ID) ?? false;
 
@@ -877,7 +872,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(card.Type == "Hero Power" && !isHand)
 			{
 
-				var rect = regionDrawer.DrawHeroPowerRegion(isFriendly);
+				Rect rect;
+				if(isFriendly)
+				{
+					var entity = state.EntityId is { } entityId && _game.Entities.TryGetValue(entityId, out var e) ? e : null;
+					var (left, top) = GetHeroPowerBigCard(entity);
+					rect = regionDrawer.DrawPlayerHeroPowerRegion(left, top);
+				}
+				else
+					rect = regionDrawer.DrawHeroPowerRegion(false);
 
 				OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
 			}
@@ -902,6 +905,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 					OpacityMaskOverlay.AddMaskedRegion("BigCard", rect);
 				}
 			}
+		}
+
+		// duplicate trinkets share a card id, so only the entity id tells the hovered copy apart
+		private Entity? GetHoveredTrinketEntity(BigCardState state, Card card, bool isFriendly)
+		{
+			if(state.EntityId is { } entityId && _game.Entities.TryGetValue(entityId, out var entity))
+				return entity;
+			return (isFriendly ? _game.Player : _game.Opponent).Trinkets
+				.FirstOrDefault(x => x.HasTag(GameTag.TAG_SCRIPT_DATA_NUM_6) && x.Card.DbfId == card.DbfId);
 		}
 
 		public void SetHeroPickingTooltipMask(int zoneSize, int zonePosition, bool tooltipOnRight, int numCards, bool buddiesEnabled = false)

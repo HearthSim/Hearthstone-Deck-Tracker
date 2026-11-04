@@ -197,6 +197,19 @@ public partial class OverlayWindow
 		Canvas.SetLeft(OverlayTooltip, actualLeft);
 		Canvas.SetTop(OverlayTooltip, actualTop);
 
+		if(placement == PlacementMode.Top)
+		{
+			// grow upwards so the edge facing the target stays put
+			var bottom = top + tooltipHeight;
+			tooltip.SizeChanged += (_, _) =>
+			{
+				if(!_activeTooltips.TryGetValue(target, out var active) || active != tooltip)
+					return;
+				var height = Helper.GetTotalScaleTransform(tooltip).Y * tooltip.ActualHeight;
+				Canvas.SetTop(OverlayTooltip, Math.Max(0, Math.Min(bottom - height, ActualHeight - height)));
+			};
+		}
+
 		// Keeps opacity masks (e.g. the Assemble screen) from cutting holes in the related cards tooltip.
 		if(target == RelatedCardsTrigger && ActualWidth > 0 && ActualHeight > 0)
 			SetRelatedCardsTooltipBounds(new Rect(actualLeft / ActualWidth, actualTop / ActualHeight,
@@ -280,9 +293,115 @@ public partial class OverlayWindow
 		vm.Top = Height * 0.33;
 		vm.Height = Height * 0.1;
 		vm.Width = Height * 0.13;
-		vm.TooltipHorizontalOffset = -340 * vm.Scale;
+		vm.TooltipHorizontalOffset = -345 * vm.Scale;
 		vm.TooltipVerticalOffset = 100 * vm.Scale;
 		vm.TooltipPlacement = PlacementMode.Bottom;
+	}
+
+	public void SetBoardGuidesTrigger(BigCardState state)
+	{
+		if(!_game.IsBattlegroundsMatch || state.IsHand || state.CardId == "" || state.Side != (int)PlayerSide.FRIENDLY)
+			return;
+
+		var card = Database.GetCardFromId(state.CardId);
+
+		if(card is { TypeEnum: CardType.HERO_POWER })
+		{
+			var entity = state.EntityId is { } entityId && _game.Entities.TryGetValue(entityId, out var e) ? e : null;
+			SetHeroPowerGuidesTrigger(card, entity);
+		}
+		else if(card is { TypeEnum: CardType.BATTLEGROUND_TRINKET })
+			SetBoardTrinketGuidesTrigger(card, GetHoveredTrinketEntity(state, card, true));
+	}
+
+	// the game's own card for the player's hero power (left edge and top of the cost gem), dual slots measured
+	// at 2560x1440, see RegionDrawer.DrawHeroPowerRegion
+	private static readonly (double Left, double Top) SingleHeroPowerBigCard = (0.7, 0.57);
+	private static readonly (double Left, double Top) PrimaryHeroPowerBigCard = (0.691, 0.606);
+	private static readonly (double Left, double Top) SecondaryHeroPowerBigCard = (0.742, 0.537);
+
+	private (double Left, double Top) GetHeroPowerBigCard(Entity? entity)
+	{
+		if(entity == null)
+			return SingleHeroPowerBigCard;
+
+		var player = _game.Player;
+		var hasSecondarySlot =
+			player.PlayerEntities.Any(x => x.IsHeroPower && x.IsInPlay && x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) >= 1) ||
+			player.Trinkets.Any(x => x.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_6) == 3 && x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) >= 1) ||
+			player.QuestRewards.Any(x => x.HasTag(GameTag.BACON_IS_HEROPOWER_QUESTREWARD) && x.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) >= 1);
+		if(!hasSecondarySlot)
+			return SingleHeroPowerBigCard;
+
+		return entity.GetTag(GameTag.ADDITIONAL_HERO_POWER_INDEX) >= 1 ? SecondaryHeroPowerBigCard : PrimaryHeroPowerBigCard;
+	}
+
+	private void SetHeroPowerGuidesTrigger(Card heroPower, Entity? entity)
+	{
+		// resolve on every hover so swapped and secondary hero powers show their own hero
+		var baseHeroDbfId = heroPower.Data?.Entity.GetTag(GameTag.BACON_HEROPOWER_BASE_HERO_ID) ?? 0;
+		var hero = baseHeroDbfId > 0
+			? Database.GetCardFromDbfId(baseHeroDbfId, false)
+			: _game.Player.Hero?.Card;
+		if(hero == null)
+			return;
+
+		// covers both slots of dual hero powers (measured at 2560x1440 as 1331,903 to 1718,1290)
+		var bigCard = GetHeroPowerBigCard(entity);
+		SetBoardGuidesTrigger(hero, 0.53, 0.73, 0.63, 0.27, bigCard.Left, bigCard.Top, 4);
+	}
+
+	private void SetBoardTrinketGuidesTrigger(Card trinket, Entity? entity)
+	{
+		if(trinket.Id is "BG30_Trinket_1st" or "BG30_Trinket_2nd")
+			return;
+
+		var position = entity?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_6) ?? 0;
+		if(position == 0)
+			return;
+
+		// the game's trinket card, see RegionDrawer.DrawBgTrinketRegions and DrawBgHeroTrinketRegions
+		double bigCardLeft, bigCardTop;
+		if(position == 3)
+		{
+			// best guess until measured: hero power trinkets move with their slot like hero powers do
+			var heroPowerBigCard = GetHeroPowerBigCard(entity);
+			bigCardLeft = 0.383 + heroPowerBigCard.Left - SingleHeroPowerBigCard.Left;
+			bigCardTop = 0.48 + heroPowerBigCard.Top - SingleHeroPowerBigCard.Top;
+		}
+		else
+		{
+			var relativePosition = position - 1;
+			bigCardLeft = 0.463 - relativePosition * 0.0525;
+			bigCardTop = 0.525 - relativePosition * 0.06;
+		}
+
+		// generous on purpose, the hover itself comes from memory and the zone only has to contain the cursor
+		SetBoardGuidesTrigger(trinket, 0.3, 0.62, 0.62, 0.38, bigCardLeft, bigCardTop, 0);
+	}
+
+	// zone and big card coordinates are fractions of the 4:3 play area width (x) and of the height (y)
+	private void SetBoardGuidesTrigger(Card card, double zoneLeft, double zoneRight, double zoneTop,
+		double zoneHeight, double bigCardLeft, double bigCardTop, double leftMargin)
+	{
+		var vm = (CardGridTooltipViewModel)GuidesTooltipTrigger.DataContext;
+		vm.Reset();
+		vm.Cards = new List<Card> { card };
+
+		GuidesTooltipTrigger.UpdateLayout();
+		UpdateHoverable();
+
+		vm.Scale = Height / 1080;
+		vm.Left = Helper.GetScaledXPos(zoneLeft, (int)Width, ScreenRatio);
+		vm.Width = Helper.GetScaledXPos(zoneRight, (int)Width, ScreenRatio) - vm.Left;
+		vm.Top = Height * zoneTop;
+		vm.Height = Height * zoneHeight;
+
+		// sit above the game's big cards, since attached cards and exhausted hero powers move them sideways
+		vm.TooltipAlignment = AlignmentMode.Start;
+		vm.TooltipHorizontalOffset = Helper.GetScaledXPos(bigCardLeft, (int)Width, ScreenRatio) - vm.Left + leftMargin * vm.Scale;
+		vm.TooltipPlacement = PlacementMode.Top;
+		vm.TooltipVerticalOffset = Height * (zoneTop - bigCardTop) + 10 * vm.Scale;
 	}
 
 	public void SetTrinketGuidesTrigger(int zoneSize, int zonePosition, string cardId)
@@ -398,7 +517,7 @@ public partial class OverlayWindow
 		vm.Top = Height * 0.0825;
 		vm.Height = Height * 0.123;
 		vm.Width = Height * 0.1188;
-		vm.TooltipHorizontalOffset = -600 * vm.Scale;
+		vm.TooltipHorizontalOffset = -605 * vm.Scale;
 		vm.TooltipVerticalOffset = 20 * vm.Scale;
 		vm.TooltipPlacement = PlacementMode.Bottom;
 	}

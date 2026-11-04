@@ -282,7 +282,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					ZonePosition = args.ZonePosition,
 					ZoneSize = args.ZoneSize,
 					Side = args.Side,
-					IsHand = args.IsHand
+					IsHand = args.IsHand,
+					EntityId = args.EntityId
 				}
 			;
 
@@ -305,6 +306,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 
 			Core.Overlay.SetAnomalyGuidesTrigger(state.CardId);
+			Core.Overlay.SetBoardGuidesTrigger(state);
 		}
 
 		internal static void OnDiscoverStateChange(object sender, HearthWatcher.EventArgs.DiscoverStateArgs args)

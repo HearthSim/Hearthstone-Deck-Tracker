@@ -38,15 +38,24 @@ public partial class HeroGuideTooltip : UserControl
 
 	private void Update()
 	{
-		var heroPowerDbfId = Cards?.FirstOrDefault()?.DbfId;
+		var card = Cards?.FirstOrDefault();
 
-		if(heroPowerDbfId == null)
+		if(card == null)
 			return;
 
-		var heroPowerCard = HearthDb.Cards.GetFromDbfId(heroPowerDbfId.Value);
-
-		var baseHeroDbfId = heroPowerCard?.Entity.GetTag(GameTag.BACON_HEROPOWER_BASE_HERO_ID);
-		var heroDbfId = baseHeroDbfId > 0 ? baseHeroDbfId : null;
+		int? heroDbfId;
+		if(card.TypeEnum == CardType.HERO)
+		{
+			// in-play hovers pass the resolved hero, which may be a skin
+			heroDbfId = card.BattlegroundsSkinParentId > 0 ? card.BattlegroundsSkinParentId : card.DbfId;
+			ViewModel.IsInPlay = true;
+		}
+		else
+		{
+			var baseHeroDbfId = HearthDb.Cards.GetFromDbfId(card.DbfId)?.Entity.GetTag(GameTag.BACON_HEROPOWER_BASE_HERO_ID);
+			heroDbfId = baseHeroDbfId > 0 ? baseHeroDbfId : null;
+			ViewModel.IsInPlay = false;
+		}
 
 		ViewModel.HoveredHeroDbfid = heroDbfId;
 
@@ -87,6 +96,16 @@ public class BattlegroundsHeroGuideTooltipViewModel : ViewModel
 		}
 	}
 
+	public bool IsInPlay
+	{
+		get => GetProp(false);
+		set
+		{
+			SetProp(value);
+			OnPropertyChanged(nameof(HeroGuideVisibility));
+		}
+	}
+
 	public string? AuthorName
 	{
 		get => GetProp<string?>(null);
@@ -118,10 +137,15 @@ public class BattlegroundsHeroGuideTooltipViewModel : ViewModel
 		get
 		{
 			if(HoveredHeroDbfid == null ||
-			   Core.Game.BattlegroundsHeroPickState.OfferedHeroDbfIds == null ||
 			   Config.Instance.ShowBattlegroundsBrowser == false ||
 			   Config.Instance.ShowBattlegroundsGuides == false
 			)
+				return Collapsed;
+
+			if(IsInPlay)
+				return Visible;
+
+			if(Core.Game.BattlegroundsHeroPickState.OfferedHeroDbfIds == null)
 				return Collapsed;
 
 			var offeredHeroDbfIds = Core.Game.BattlegroundsHeroPickState.OfferedHeroDbfIds;

@@ -12,9 +12,11 @@ namespace HearthWatcher.EventArgs
 		public int ZoneSize { get; }
 		public int Side { get; }
 		public bool IsHand { get; }
+		public int? EntityId { get; }
 
-		public BigCardArgs(List<float> tooltipHeights, List<float> enchantmentHeights, string cardId, int zonePosition, int zoneSize, int side, bool isHand)
+		public BigCardArgs(List<float> tooltipHeights, List<float> enchantmentHeights, string cardId, int zonePosition, int zoneSize, int side, bool isHand, int? entityId)
 		{
+			EntityId = entityId;
 			TooltipHeights = tooltipHeights;
 			EnchantmentHeights = enchantmentHeights;
 			CardId = cardId;
@@ -31,7 +33,8 @@ namespace HearthWatcher.EventArgs
 			&& args.ZonePosition == ZonePosition
 			&& args.ZoneSize == ZoneSize
 			&& args.Side == Side
-			&& args.IsHand == IsHand;
+			&& args.IsHand == IsHand
+			&& args.EntityId == EntityId;
 
 		public override int GetHashCode()
 		{
@@ -43,6 +46,7 @@ namespace HearthWatcher.EventArgs
 			hashCode = hashCode * -1521134295 + ZoneSize.GetHashCode();
 			hashCode = hashCode * -1521134295 + Side.GetHashCode();
 			hashCode = hashCode * -1521134295 + IsHand.GetHashCode();
+			hashCode = hashCode * -1521134295 + EntityId.GetHashCode();
 			return hashCode;
 		}
 	}
