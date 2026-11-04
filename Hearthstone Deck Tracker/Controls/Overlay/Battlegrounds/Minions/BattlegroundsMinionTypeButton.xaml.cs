@@ -132,7 +132,7 @@ public partial class BattlegroundsMinionTypeButton : UserControl, INotifyPropert
 		}
 	}
 
-	public string TribeName => (HearthDbConverter.GetUppercaseLocalizedRace(MinionType) ?? "");
+	public string TribeName => (HearthDbConverter.GetUppercaseLocalizedBattlegroundsRace(MinionType) ?? "");
 
 	public Visibility RemoveIconVisibility => _hovering && Active ? Visibility.Visible : Visibility.Collapsed;
 

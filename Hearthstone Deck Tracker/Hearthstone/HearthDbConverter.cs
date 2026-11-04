@@ -162,6 +162,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_ => RaceConverter(race),
 		};
 
+		public static string? GetLocalizedBattlegroundsRace(Race race) => race switch
+		{
+			Race.DEMON => LocUtil.Get("Race_Demon_Battlegrounds", useCardLanguage: true),
+			Race.MECHANICAL => LocUtil.Get("Race_Mechanical_Battlegrounds", useCardLanguage: true),
+			Race.BEAST => LocUtil.Get("Race_Beast_Battlegrounds", useCardLanguage: true),
+			Race.DRAGON => LocUtil.Get("Race_Dragon_Battlegrounds", useCardLanguage: true),
+			Race.MURLOC => LocUtil.Get("Race_Murloc_Battlegrounds", useCardLanguage: true),
+			Race.PIRATE => LocUtil.Get("Race_Pirate_Battlegrounds", useCardLanguage: true),
+			Race.ELEMENTAL => LocUtil.Get("Race_Elemental_Battlegrounds", useCardLanguage: true),
+			Race.QUILBOAR => LocUtil.Get("Race_Quilboar_Battlegrounds", useCardLanguage: true),
+			Race.NAGA => LocUtil.Get("Race_Naga_Battlegrounds", useCardLanguage: true),
+			Race.UNDEAD => LocUtil.Get("Race_Undead_Battlegrounds", useCardLanguage: true),
+			Race.ABERRATION => LocUtil.Get("Race_Aberration_Battlegrounds", useCardLanguage: true),
+			_ => GetLocalizedRace(race),
+		};
+
+		public static string? GetUppercaseLocalizedBattlegroundsRace(Race race) => race switch
+		{
+			Race.DEMON => LocUtil.Get("Race_Demon_Battlegrounds_Uppercase", useCardLanguage: true),
+			Race.MECHANICAL => LocUtil.Get("Race_Mechanical_Battlegrounds_Uppercase", useCardLanguage: true),
+			Race.BEAST => LocUtil.Get("Race_Beast_Battlegrounds_Uppercase", useCardLanguage: true),
+			Race.DRAGON => LocUtil.Get("Race_Dragon_Battlegrounds_Uppercase", useCardLanguage: true),
+			Race.MURLOC => LocUtil.Get("Race_Murloc_Battlegrounds_Uppercase", useCardLanguage: true),
+			Race.PIRATE => LocUtil.Get("Race_Pirate_Battlegrounds_Uppercase", useCardLanguage: true),
+			Race.ELEMENTAL => LocUtil.Get("Race_Elemental_Battlegrounds_Uppercase", useCardLanguage: true),
+			Race.QUILBOAR => LocUtil.Get("Race_Quilboar_Battlegrounds_Uppercase", useCardLanguage: true),
+			Race.NAGA => LocUtil.Get("Race_Naga_Battlegrounds_Uppercase", useCardLanguage: true),
+			Race.UNDEAD => LocUtil.Get("Race_Undead_Battlegrounds_Uppercase", useCardLanguage: true),
+			Race.ABERRATION => LocUtil.Get("Race_Aberration_Battlegrounds_Uppercase", useCardLanguage: true),
+			_ => GetUppercaseLocalizedRace(race),
+		};
+
 		public static string? GetLocalizedSpellSchool(SpellSchool spellSchool) => spellSchool switch
 		{
 			SpellSchool.NONE => null,

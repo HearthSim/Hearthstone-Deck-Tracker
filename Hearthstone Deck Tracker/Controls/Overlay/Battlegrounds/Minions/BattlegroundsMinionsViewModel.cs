@@ -342,7 +342,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 		{
 			var races = (AvailableRaces ?? Db.Races)
 				.Where(x => x != Race.INVALID && x != Race.ALL) // Don't show ALL
-				.OrderBy(x => HearthDbConverter.GetLocalizedRace(x) ?? string.Empty)
+				.OrderBy(x => HearthDbConverter.GetLocalizedBattlegroundsRace(x) ?? string.Empty)
 				.ToList();
 			races.Add(Race.ALL);
 			races.Add(Race.INVALID); // Other
@@ -472,7 +472,7 @@ public class BattlegroundsMinionsViewModel : ViewModel
 							_ => 0, // Minion Types
 						}
 					)
-					.ThenBy(x => HearthDbConverter.GetLocalizedRace(x.MinionType) ?? string.Empty);
+					.ThenBy(x => HearthDbConverter.GetLocalizedBattlegroundsRace(x.MinionType) ?? string.Empty);
 			}
 			else if(ActiveMinionType is Race minionType)
 			{

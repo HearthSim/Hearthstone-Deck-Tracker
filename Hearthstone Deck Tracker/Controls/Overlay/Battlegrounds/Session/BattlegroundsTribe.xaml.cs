@@ -71,7 +71,7 @@ public partial class BattlegroundsTribe : INotifyPropertyChanged
 		}
 	}
 
-	public string TribeName => HearthDbConverter.GetLocalizedRace(Tribe) ?? "";
+	public string TribeName => HearthDbConverter.GetLocalizedBattlegroundsRace(Tribe) ?? "";
 
 	private void OnTribeChanged()
 	{

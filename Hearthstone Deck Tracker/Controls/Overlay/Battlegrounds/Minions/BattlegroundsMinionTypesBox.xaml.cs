@@ -56,5 +56,5 @@ public partial class BattlegroundsMinionTypesBox : UserControl, INotifyPropertyC
 		box.OnPropertyChanged(nameof(MinionTypesText));
 	}
 
-	public string MinionTypesText => string.Join(", ", MinionTypes.Select(HearthDbConverter.GetLocalizedRace).OrderBy(x => x));
+	public string MinionTypesText => string.Join(", ", MinionTypes.Select(HearthDbConverter.GetLocalizedBattlegroundsRace).OrderBy(x => x));
 }

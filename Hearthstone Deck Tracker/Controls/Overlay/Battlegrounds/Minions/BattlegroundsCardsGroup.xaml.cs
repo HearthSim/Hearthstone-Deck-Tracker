@@ -178,7 +178,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 
 			return (int)MinionType == -1
 				?  LocUtil.Get("Battlegrounds_Spells", useCardLanguage: true)
-				: HearthDbConverter.GetLocalizedRace(MinionType) ?? string.Empty;
+				: HearthDbConverter.GetLocalizedBattlegroundsRace(MinionType) ?? string.Empty;
 		}
 	}
 
@@ -190,7 +190,7 @@ public partial class BattlegroundsCardsGroup : UserControl, INotifyPropertyChang
 				return Keyword?.Name ?? string.Empty;
 
 			if(GroupedByMinionType)
-				return HearthDbConverter.GetLocalizedRace(MinionType) ?? string.Empty;
+				return HearthDbConverter.GetLocalizedBattlegroundsRace(MinionType) ?? string.Empty;
 
 			return string.Empty;
 		}

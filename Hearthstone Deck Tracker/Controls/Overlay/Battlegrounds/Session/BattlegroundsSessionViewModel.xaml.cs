@@ -205,13 +205,13 @@ public class BattlegroundsSessionViewModel : ViewModel
 		if(validMinionTypes)
 		{
 			AvailableMinionTypes.Clear();
-			foreach(var race in availableRaces.OrderBy(t => HearthDbConverter.GetLocalizedRace(t) ?? ""))
+			foreach(var race in availableRaces.OrderBy(t => HearthDbConverter.GetLocalizedBattlegroundsRace(t) ?? ""))
 			{
 				AvailableMinionTypes.Add(race);
 			}
 
 			BannedMinionTypes.Clear();
-			foreach(var race in unavailableRaces.OrderBy(t => HearthDbConverter.GetLocalizedRace(t) ?? ""))
+			foreach(var race in unavailableRaces.OrderBy(t => HearthDbConverter.GetLocalizedBattlegroundsRace(t) ?? ""))
 			{
 				BannedMinionTypes.Add(race);
 			}
