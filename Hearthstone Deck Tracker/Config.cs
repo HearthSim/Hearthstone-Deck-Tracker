@@ -1368,11 +1368,12 @@ namespace Hearthstone_Deck_Tracker
 			var systemRegionName = LocUtil.GetRegionNameFromRegistry();
 
 			var supportedGameLanguages = Helper.LanguageDict.Values.Where(x => x != "enGB").ToList();
+			var mappedGameLanguage = gameLanguage == "enGB" ? "enUS" : gameLanguage;
 
-			if(supportedGameLanguages.Contains(gameLanguage))
+			if(supportedGameLanguages.Contains(mappedGameLanguage))
 			{
-				Instance.Localization = (Language)Enum.Parse(typeof(Language), gameLanguage);
-				HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("game_language", gameLanguage, systemLanguage,
+				Instance.Localization = (Language)Enum.Parse(typeof(Language), mappedGameLanguage);
+				HSReplayNetClientAnalytics.OnSetInitialConfigLanguage("game_language", mappedGameLanguage, systemLanguage,
 					gameLanguage, systemRegionName);
 			}
 			else if(supportedGameLanguages.Contains(systemLanguage))
