@@ -1,3 +1,7 @@
+## **Release v1.59.9 - 2026-11-04**
+**Battlegrounds**:
+- Fixed incorrect combat odds with Jar o'Gems.
+
 ## **Release v1.59.8 - 2026-11-03**
 **Updated for Hearthstone 37.0.2**
 
