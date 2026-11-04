@@ -1171,6 +1171,8 @@ namespace Hearthstone_Deck_Tracker
 			_ => lang.ToString()
 		};
 
+		public static bool IsOfficialHearthstoneLanguage(Language lang) => LanguageDict.ContainsValue(lang.ToString());
+
 		public static string GetCardLanguage() => Config.Instance.LastSeenHearthstoneLang ?? UpdateCardLanguage();
 
 		public static Action? CardLanguageChanged;

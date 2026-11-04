@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -44,7 +45,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public void Load()
 		{
-			ComboBoxLanguage.ItemsSource = Enum.GetValues(typeof(Language));
+			ComboBoxLanguage.ItemsSource = Enum.GetValues(typeof(Language)).Cast<Language>()
+				.Where(x => Helper.IsOfficialHearthstoneLanguage(x) || x == Config.Instance.Localization)
+				.ToList();
 			ComboBoxLanguage.SelectedItem = Config.Instance.Localization;
 			ComboBoxBackgroundBehavior.ItemsSource = new[] { BackgroundBehavior.KeepRunning, BackgroundBehavior.Custom };
 			ComboBoxBackgroundBehavior.SelectedItem = Config.Instance.BackgroundBehavior;
