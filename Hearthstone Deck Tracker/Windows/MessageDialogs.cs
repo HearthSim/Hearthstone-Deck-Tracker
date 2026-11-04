@@ -326,6 +326,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return true;
 		}
 
+		public static async Task<bool> ShowPluginInstallDialog(this MetroWindow window, string title, bool requireAcknowledgement)
+		{
+			var dialog = new PluginInstallDialog(title, requireAcknowledgement);
+			await window.ShowMetroDialogAsync(dialog, new Settings());
+			var install = await dialog.WaitForButtonPressAsync();
+			await window.HideMetroDialogAsync(dialog);
+			return install;
+		}
+
 		public static async Task<SelectLanguageOperation> ShowSelectLanguageDialog(this MetroWindow window)
 		{
 			var dialog = new SelectLanguageDialog();

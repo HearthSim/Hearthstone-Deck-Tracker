@@ -15,13 +15,22 @@
             <RowDefinition/>
             <RowDefinition Height="41"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" BorderBrush="Orange" BorderThickness="1" CornerRadius="3" Margin="5" Padding="8,6">
+        <Border Grid.Row="0" Name="BorderWarning" BorderBrush="Orange" BorderThickness="1" CornerRadius="3" Margin="5" Padding="8,6">
             <Border.Background>
                 <SolidColorBrush Color="Orange" Opacity="0.15"/>
             </Border.Background>
             <TextBlock TextWrapping="Wrap">
                 <Run FontWeight="Bold" Text="{lex:Loc Options_Tracker_Plugins_Warning_Prefix}"/>
                 <Run Text="{lex:Loc Options_Tracker_Plugins_Warning}"/>
+            </TextBlock>
+        </Border>
+        <Border Grid.Row="0" Name="BorderWarningAdmin" Visibility="Collapsed" BorderBrush="Red" BorderThickness="1" CornerRadius="3" Margin="5" Padding="8,6">
+            <Border.Background>
+                <SolidColorBrush Color="Red" Opacity="0.15"/>
+            </Border.Background>
+            <TextBlock TextWrapping="Wrap">
+                <Run FontWeight="Bold" Text="{lex:Loc Options_Tracker_Plugins_Warning_Prefix}"/>
+                <Run Text="{lex:Loc Options_Tracker_Plugins_Warning_Admin}"/>
             </TextBlock>
         </Border>
         <ListBox Grid.Row="1" Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged"

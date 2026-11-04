@@ -11,7 +11,6 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
-using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
@@ -22,9 +21,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 	/// </summary>
 	public partial class TrackerPlugins : UserControl
 	{
+		private static bool IsAdmin => Helper.Elevation == Enums.Elevation.Administrator;
+
 		public TrackerPlugins()
 		{
 			InitializeComponent();
+			if(IsAdmin)
+			{
+				BorderWarning.Visibility = Visibility.Collapsed;
+				BorderWarningAdmin.Visibility = Visibility.Visible;
+			}
 		}
 
 		public void Load()
@@ -67,17 +73,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(pluginFiles.Count == 0 || this.ParentMainWindow() is not { } window)
 				return;
 
-			var result = await window.ShowMessageAsync(
-				string.Format(LocUtil.Get("Options_Tracker_Plugins_Dialog_Install_Title"), string.Join(", ", pluginFiles.Select(Path.GetFileName))),
-				LocUtil.Get("Options_Tracker_Plugins_Dialog_Install_Desc"),
-				MessageDialogStyle.AffirmativeAndNegative,
-				new MessageDialogs.Settings
-				{
-					AffirmativeButtonText = LocUtil.Get("Options_Tracker_Plugins_Dialog_Install_Button_Install"),
-					NegativeButtonText = LocUtil.Get("Options_Tracker_Plugins_Dialog_Install_Button_Cancel"),
-					DefaultButtonFocus = MessageDialogResult.Negative
-				});
-			if(result != MessageDialogResult.Affirmative)
+			var title = string.Format(LocUtil.Get("Options_Tracker_Plugins_Dialog_Install_Title"), string.Join(", ", pluginFiles.Select(Path.GetFileName)));
+			if(!await window.ShowPluginInstallDialog(title, IsAdmin))
 				return;
 
 			var dir = PluginManager.PluginDirectory.FullName;
