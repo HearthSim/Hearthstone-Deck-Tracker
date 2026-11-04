@@ -33,4 +33,7 @@ public record BattlegroundsAnomalyGuide
 
 	[JsonProperty("ready")]
 	public bool Ready { get; init; }
+
+	[JsonProperty("author_name")]
+	public string? AuthorName { get; init; }
 }

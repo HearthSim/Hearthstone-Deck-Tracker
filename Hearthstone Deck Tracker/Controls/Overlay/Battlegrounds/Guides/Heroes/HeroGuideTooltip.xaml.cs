@@ -57,6 +57,8 @@ public partial class HeroGuideTooltip : UserControl
 			.Select(GetRace)
 			.Where(race => availableRaces?.Contains(race) == true);
 
+		ViewModel.AuthorName = heroGuide?.AuthorName;
+
 		if (heroGuide != null && !string.IsNullOrEmpty(heroGuide.PublishedGuide))
 			ViewModel.PublishedGuide = ReferencedCardRun.ParseCardsFromText(heroGuide.PublishedGuide).FirstOrDefault();
 		else
@@ -83,6 +85,12 @@ public class BattlegroundsHeroGuideTooltipViewModel : ViewModel
 			SetProp(value);
 			OnPropertyChanged(nameof(HeroGuideVisibility));
 		}
+	}
+
+	public string? AuthorName
+	{
+		get => GetProp<string?>(null);
+		set => SetProp(value);
 	}
 
 	public IEnumerable<Inline>? PublishedGuide

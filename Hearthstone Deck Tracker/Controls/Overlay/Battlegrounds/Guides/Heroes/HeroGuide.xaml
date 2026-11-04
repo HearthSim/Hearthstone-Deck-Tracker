@@ -189,9 +189,9 @@
                                                             <ColumnDefinition Width="*" />
                                                             <ColumnDefinition Width="Auto"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <StackPanel HorizontalAlignment="Left">
-                                                            <TextBlock Text="{lex:Loc Battlegrounds_CompGuide_CreatedBy}" Foreground="White" FontSize="9" Opacity="0.8"/>
-                                                            <TextBlock Text="JeefHS" Foreground="White" FontSize="10" FontWeight="Bold" TextAlignment="Left"/>
+                                                        <StackPanel HorizontalAlignment="Left" Visibility="{Binding HeroGuide.AuthorName, Converter={StaticResource NullableToVisibility}}">
+                                                            <TextBlock Text="{lex:Loc Battlegrounds_Guides_WrittenBy}" Foreground="White" FontSize="9" Opacity="0.8" TextAlignment="Left"/>
+                                                            <TextBlock Text="{Binding HeroGuide.AuthorName}" Foreground="White" FontSize="10" FontWeight="Bold" TextAlignment="Left"/>
                                                         </StackPanel>
 
                                                         <StackPanel Grid.Column="1">

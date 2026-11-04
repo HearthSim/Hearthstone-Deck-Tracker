@@ -34,6 +34,9 @@ public record BattlegroundsHeroGuide
 	[JsonProperty("ready")]
 	public bool Ready { get; init; }
 
+	[JsonProperty("author_name")]
+	public string? AuthorName { get; init; }
+
 	[JsonProperty("buddy_guide")]
 	public string BuddyGuide { get; init; } = string.Empty;
 }

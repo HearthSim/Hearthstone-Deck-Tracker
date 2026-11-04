@@ -21,9 +21,9 @@
                         CornerRadius="0,10,0,0"
                         Visibility="{Binding IsGuidePublished, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Stretch" Background="#292D30"
                     >
-                        <StackPanel VerticalAlignment="Center" Margin="10,0,10,0">
-                            <TextBlock HorizontalAlignment="Center" Text="{lex:Loc Battlegrounds_CompGuide_CreatedBy}" Foreground="White" FontSize="9" Opacity="0.8"/>
-                            <TextBlock HorizontalAlignment="Center" Text="JeefHS" Foreground="White" FontSize="10" FontWeight="Bold"/>
+                        <StackPanel VerticalAlignment="Center" Margin="10,0,10,0" Visibility="{Binding AuthorName, Converter={StaticResource NullableToVisibility}}">
+                            <TextBlock HorizontalAlignment="Center" Text="{lex:Loc Battlegrounds_Guides_WrittenBy}" Foreground="White" FontSize="9" Opacity="0.8"/>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding AuthorName}" Foreground="White" FontSize="10" FontWeight="Bold"/>
                         </StackPanel>
                     </Border>
                     <hearthstoneDeckTracker:HearthstoneTextBlock
