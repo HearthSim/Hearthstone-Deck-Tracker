@@ -11,10 +11,20 @@
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="300">
     <Grid AllowDrop="True" Drop="DockPanel_Drop">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="41"/>
         </Grid.RowDefinitions>
-        <ListBox Grid.Row="0" Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged"
+        <Border Grid.Row="0" BorderBrush="Orange" BorderThickness="1" CornerRadius="3" Margin="5" Padding="8,6">
+            <Border.Background>
+                <SolidColorBrush Color="Orange" Opacity="0.15"/>
+            </Border.Background>
+            <TextBlock TextWrapping="Wrap">
+                <Run FontWeight="Bold" Text="{lex:Loc Options_Tracker_Plugins_Warning_Prefix}"/>
+                <Run Text="{lex:Loc Options_Tracker_Plugins_Warning}"/>
+            </TextBlock>
+        </Border>
+        <ListBox Grid.Row="1" Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged"
                  SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
@@ -57,18 +67,23 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Row="1">
+        <TextBlock Grid.Row="1" Text="{lex:Loc Options_Tracker_Plugins_Empty}" TextWrapping="Wrap" TextAlignment="Center"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Opacity="0.6">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasItems, ElementName=ListBoxPlugins}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <StackPanel Grid.Row="2">
             <Separator Background="{DynamicResource AccentColorBrush}" DockPanel.Dock="Bottom" Margin="0"/>
-            <Grid Margin="0,4,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Click="ButtonOpenPluginsFolder_OnClick"
-                    Content="{lex:Loc Options_Tracker_Plugins_Button_Folder}" Margin="5"/>
-                <Button Grid.Column="1" Click="ButtonAvailablePlugins_OnClick"
-                    Content="{lex:Loc Options_Tracker_Plugins_Button_Avilable}" Margin="5"/>
-            </Grid>
+            <Button Click="ButtonOpenPluginsFolder_OnClick"
+                    Content="{lex:Loc Options_Tracker_Plugins_Button_Folder}" Margin="5,9,5,5"/>
         </StackPanel>
     </Grid>
 </UserControl>

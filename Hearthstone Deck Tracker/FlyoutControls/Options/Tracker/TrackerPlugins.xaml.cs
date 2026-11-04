@@ -3,12 +3,15 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
+using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
@@ -38,8 +41,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			((sender as Control)?.DataContext as PluginWrapper)?.OnButtonPress();
 		}
 
-		private void ButtonAvailablePlugins_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Available-Plugins");
-
 		private void ButtonOpenPluginsFolder_OnClick(object sender, RoutedEventArgs e)
 		{
 			var dir = PluginManager.PluginDirectory;
@@ -58,42 +59,46 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Helper.TryOpenUrl(dir.FullName);
 		}
 
-		private void DockPanel_Drop(object sender, DragEventArgs e)
+		private async void DockPanel_Drop(object sender, DragEventArgs e)
 		{
+			if(!e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetData(DataFormats.FileDrop) is not string[] droppedFiles)
+				return;
+			var pluginFiles = droppedFiles.Where(x => x.EndsWith(".dll") || x.EndsWith(".zip")).ToList();
+			if(pluginFiles.Count == 0 || this.ParentMainWindow() is not { } window)
+				return;
+
+			var result = await window.ShowMessageAsync(
+				string.Format(LocUtil.Get("Options_Tracker_Plugins_Dialog_Install_Title"), string.Join(", ", pluginFiles.Select(Path.GetFileName))),
+				LocUtil.Get("Options_Tracker_Plugins_Dialog_Install_Desc"),
+				MessageDialogStyle.AffirmativeAndNegative,
+				new MessageDialogs.Settings
+				{
+					AffirmativeButtonText = LocUtil.Get("Options_Tracker_Plugins_Dialog_Install_Button_Install"),
+					NegativeButtonText = LocUtil.Get("Options_Tracker_Plugins_Dialog_Install_Button_Cancel"),
+					DefaultButtonFocus = MessageDialogResult.Negative
+				});
+			if(result != MessageDialogResult.Affirmative)
+				return;
+
 			var dir = PluginManager.PluginDirectory.FullName;
-			var prevCount = PluginManager.Instance.Plugins.Count;
 			try
 			{
-				if(e.Data.GetDataPresent(DataFormats.FileDrop))
+				foreach(var pluginPath in pluginFiles)
 				{
-
-					var plugins = 0;
-					var droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
-					if(droppedFiles == null)
-						return;
-					foreach(var pluginPath in droppedFiles)
+					if(pluginPath.EndsWith(".dll"))
+						File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
+					else
 					{
-						if(pluginPath.EndsWith(".dll"))
+						var path = Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath));
+						ZipFile.ExtractToDirectory(pluginPath, path);
+						if (Directory.GetDirectories(path).Length == 1 && Directory.GetFiles(path).Length == 0)
 						{
-							File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
-							plugins++;
-						}
-						else if(pluginPath.EndsWith(".zip"))
-						{
-							var path = Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath));
-							ZipFile.ExtractToDirectory(pluginPath, path);
-							if (Directory.GetDirectories(path).Length == 1 && Directory.GetFiles(path).Length == 0)
-							{
-								Directory.Delete(path, true);
-								ZipFile.ExtractToDirectory(pluginPath, dir);
-							}
-							plugins++;
+							Directory.Delete(path, true);
+							ZipFile.ExtractToDirectory(pluginPath, dir);
 						}
 					}
-					if(plugins <= 0)
-						return;
-					PluginManager.Instance.LoadPlugins(PluginManager.Instance.SyncPlugins());
 				}
+				PluginManager.Instance.LoadPlugins(PluginManager.Instance.SyncPlugins());
 			}
 			catch(Exception ex)
 			{
