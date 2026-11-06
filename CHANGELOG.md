@@ -1,3 +1,16 @@
+## **Release v1.59.10 - 2026-11-06**
+**General**:
+- The tray icon now shows when an HDT update is available and lets you search for and install updates.
+- Improved the memory usage of HDT while running in the background.
+- Improved the Settings search.
+- Fixed a recent bug that caused Hearthstone to jump into the Foreground when HDT was launched.
+
+**Battlegrounds**:
+- Jeef's Hero Guides now appear while hovering hero powers.
+- Jeef's Trinkets Guides now appear while hovering them, even outside the Trinket shop.
+- The icon for Key Minion pinning is now a bit subtler while disabled.
+- Fixed a small number of incorrect combat odds.
+
 ## **Release v1.59.9 - 2026-11-04**
 **Battlegrounds**:
 - Fixed incorrect combat odds with Jar o'Gems.
