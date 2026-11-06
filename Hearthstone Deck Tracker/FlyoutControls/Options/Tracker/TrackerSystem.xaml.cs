@@ -86,6 +86,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			var wasCheckingForUpdates = BackgroundMode.CheckForUpdates;
 			Config.Instance.BackgroundBehavior = (BackgroundBehavior)ComboBoxBackgroundBehavior.SelectedItem;
+			// if the user opts out, remember that, so later migrations don't opt them back in again
+			if(Config.Instance.BackgroundBehavior == BackgroundBehavior.Custom)
+				Config.Instance.BackgroundModeOptedOut = true;
 			Config.Save();
 #if(INSTALLED)
 			if(!wasCheckingForUpdates && BackgroundMode.CheckForUpdates)

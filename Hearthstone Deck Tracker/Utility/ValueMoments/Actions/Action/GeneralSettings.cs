@@ -62,6 +62,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("background_mode")]
 		public bool BackgroundMode { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.IsActive; }
 
+		[JsonProperty("background_mode_opted_out")]
+		public bool BackgroundModeOptedOut { get => Config.Instance.BackgroundModeOptedOut; }
+
 		[JsonProperty("show_news_bar")]
 		public bool ShowNewsBar { get => Config.Instance.IgnoreNewsId < (Remote.Config.Data?.News?.Id ?? 0); }
 

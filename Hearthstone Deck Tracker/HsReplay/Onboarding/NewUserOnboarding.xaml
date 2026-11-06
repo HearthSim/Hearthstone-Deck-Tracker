@@ -59,9 +59,19 @@
             <Label Content="{Binding WelcomeLabelText}" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0" Opacity="0.74" FontSize="24" />
             <Label Content="Hearthstone Deck Tracker" DockPanel.Dock="Top"
                    FontSize="36" HorizontalAlignment="Center" Margin="0,-15,0,5" FontWeight="Bold"/>
-            <TextBlock TextWrapping="Wrap" FontSize="15" TextAlignment="Center" Opacity="0.74" HorizontalAlignment="Center" Width="600" Text="{lex:Loc NewUserOnboarding_Preamble}" />
+            <TextBlock TextWrapping="Wrap" FontSize="15" TextAlignment="Center" Opacity="0.74" HorizontalAlignment="Center" Width="600" Text="{lex:Loc NewUserOnboarding_Preamble}"
+                       Visibility="{Binding IsBackgroundModeOnly, Converter={StaticResource InverseBoolToVisibility}}" />
+            <Border Visibility="{Binding ShowBackgroundMode, Converter={StaticResource BoolToVisibility}}"
+                    Background="#99000000" CornerRadius="4" Width="600" Padding="15,10,15,12" Margin="0,20,0,0">
+                <TextBlock TextWrapping="Wrap" FontSize="14" TextAlignment="Center" Opacity="0.9" Text="{lex:Loc NewUserOnboarding_BackgroundMode}" />
+            </Border>
             <Button Command="{Binding ContinueCommand}" Style="{DynamicResource AccentedSquareButtonStyle}" Width="250" Margin="0, 20, 0, 0">
-                <TextBlock FontSize="16" Padding="0,5" Text="{lex:Loc NewUserOnboarding_Continue}"/>
+                <Grid>
+                    <TextBlock FontSize="16" Padding="0,5" Text="{lex:Loc NewUserOnboarding_Continue}"
+                               Visibility="{Binding ClosesToTray, Converter={StaticResource InverseBoolToVisibility}}"/>
+                    <TextBlock FontSize="16" Padding="0,5" Text="{lex:Loc NewUserOnboarding_GotItCloseToTray}"
+                               Visibility="{Binding ClosesToTray, Converter={StaticResource BoolToVisibility}}"/>
+                </Grid>
             </Button>
         </StackPanel>
     </Grid>

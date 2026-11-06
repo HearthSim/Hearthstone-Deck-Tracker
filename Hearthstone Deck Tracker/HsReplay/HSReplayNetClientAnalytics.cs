@@ -266,7 +266,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 
 			// otherwise, show the onboarding screen
-			OnboardingViewModel.IsVisible = true;
+			OnboardingViewModel.ShowAnalyticsOnboarding();
 			return false;
 		}
 

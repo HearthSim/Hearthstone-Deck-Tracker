@@ -90,6 +90,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			};
 		}
 
+		// false when not launched from a Velopack install (e.g. from the build output), where a run key would point at the wrong executable
+		public static bool IsRunningFromInstall { get; private set; }
+
 		private static void UpdateRunKey()
 		{
 			RegistryHelper.SetExecutablePath(Path.Combine(VelopackLocator.Current.AppContentDir, "HearthstoneDeckTracker.exe"));
@@ -199,6 +202,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				var locator = VelopackLocator.Current;
 				if(locator.CurrentlyInstalledVersion != null && !locator.IsPortable && locator.AppContentDir != null && locator.RootAppDir != null)
 				{
+					IsRunningFromInstall = true;
 					UpdateRunKey();
 					ReplaceSquirrelStub();
 				}

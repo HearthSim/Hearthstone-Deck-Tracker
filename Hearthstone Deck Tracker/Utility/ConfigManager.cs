@@ -28,6 +28,11 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 			ConvertLegacyConfig(currentVersion, PreviousVersion);
 
+#if(VELOPACK)
+			if(PreviousVersion == null && Updating.Updater.IsRunningFromInstall)
+				EnableBackgroundModeForNewInstall();
+#endif
+
 			if(Config.Instance.SelectedTags.Count == 0)
 				Config.Instance.SelectedTags.Add("All");
 
@@ -36,6 +41,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Instance.Reset(nameof(Config.DataDirPath));
 #endif
 		}
+
+#if(VELOPACK)
+		private static void EnableBackgroundModeForNewInstall()
+		{
+			Log.Info("New install, enabling background mode and starting with Windows");
+			Config.Instance.BackgroundBehavior = BackgroundBehavior.KeepRunning;
+			Config.Instance.BackgroundModeEnabledAutomatically = true;
+			Config.Instance.StartWithWindows = true;
+			// the startup run key update in SquirrelInit ran before this was enabled
+			RegistryHelper.SetRunKey();
+		}
+#endif
 
 		// Logic to silently skip hotfix releases to fix some regressions that players haven't noticed yet
 		private static readonly (Version, Version)[] SilentUpgrades =

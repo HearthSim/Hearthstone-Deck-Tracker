@@ -131,6 +131,7 @@ namespace Hearthstone_Deck_Tracker
 			ConfigManager.Run();
 			if(Config.Instance.GoogleAnalytics)
 				HSReplayNetClientAnalytics.Initialize();
+			HSReplayNetClientAnalytics.OnboardingViewModel.ShowBackgroundModeOnboarding();
 
 			if(ConfigManager.PreviousVersion == null)
 				Config.SetInitialLanguage();

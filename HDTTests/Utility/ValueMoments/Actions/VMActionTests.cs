@@ -148,7 +148,8 @@ namespace HDTTests.Utility.ValueMoments.Actions
 					"minimize_to_tray",
 					"close_with_hearthstone",
 					"launch_hearthstone_on_start",
-					"background_mode"
+					"background_mode",
+					"background_mode_opted_out"
 				}},
 				{ "cur_daily_occurrences", 1 },
 				{ "max_daily_occurrences", 1 },

@@ -11,12 +11,54 @@ public class NewUserOnboardingViewModel : ViewModel
 	public bool IsVisible
 	{
 		get => GetProp(false);
-		set => SetProp(value);
+		private set => SetProp(value);
 	}
 
 	public string WelcomeLabelText => ConfigManager.PreviousVersion != null ? LocUtil.Get("NewUserOnboarding_WelcomeBackTo") : LocUtil.Get("NewUserOnboarding_WelcomeTo");
 
+	public bool ShowBackgroundMode
+	{
+		get => GetProp(false);
+		private set
+		{
+			SetProp(value);
+			ClosesToTray = value && BackgroundMode.CloseToTray;
+			// the onboarding explains the tray, even if the user minimizes before dismissing it
+			if(value)
+				Config.Instance.SeenTrayNotification = true;
+		}
+	}
+
+	public bool ClosesToTray
+	{
+		get => GetProp(false);
+		private set => SetProp(value);
+	}
+
+	public bool IsBackgroundModeOnly
+	{
+		get => GetProp(false);
+		private set => SetProp(value);
+	}
+
 	public event Action? Continue;
+
+	public void ShowAnalyticsOnboarding()
+	{
+		ShowBackgroundMode = BackgroundMode.NeedsOnboarding;
+		IsBackgroundModeOnly = false;
+		IsVisible = true;
+	}
+
+	public void ShowBackgroundModeOnboarding()
+	{
+		// the analytics onboarding already covers background mode
+		if(IsVisible || !BackgroundMode.NeedsOnboarding)
+			return;
+		ShowBackgroundMode = true;
+		IsBackgroundModeOnly = true;
+		IsVisible = true;
+	}
 
 	public ICommand ContinueCommand => new Command(() =>
 	{
@@ -24,9 +66,16 @@ public class NewUserOnboardingViewModel : ViewModel
 			return;
 		IsVisible = false;
 
-		Config.Instance.OnboardingSeen = true;
+		if(ShowBackgroundMode)
+			Config.Instance.BackgroundModeOnboardingSeen = true;
+		if(!IsBackgroundModeOnly)
+			Config.Instance.OnboardingSeen = true;
 		Config.Save();
 
-		Continue?.Invoke();
+		if(!IsBackgroundModeOnly)
+			Continue?.Invoke();
+
+		if(ClosesToTray)
+			Core.MainWindow.MinimizeToTray();
 	});
 }

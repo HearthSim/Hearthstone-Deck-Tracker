@@ -31,4 +31,6 @@ internal static class BackgroundMode
 	public static bool CloseWithHearthstone => !IsActive && Config.Instance.CloseWithHearthstone;
 
 	public static bool StartHearthstoneWithHDT => !IsActive && Config.Instance.StartHearthstoneWithHDT;
+
+	public static bool NeedsOnboarding => IsActive && Config.Instance.BackgroundModeEnabledAutomatically && !Config.Instance.BackgroundModeOnboardingSeen;
 }
