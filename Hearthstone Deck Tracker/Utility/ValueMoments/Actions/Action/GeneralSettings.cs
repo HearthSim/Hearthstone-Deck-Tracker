@@ -39,13 +39,25 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		public bool StartWithWindows { get => Config.Instance.StartWithWindows; }
 
 		[JsonProperty("start_minimized")]
-		public bool StartMinimized { get => Config.Instance.StartMinimized; }
+		public bool StartMinimized { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.StartMinimized; }
 
 		[JsonProperty("close_to_tray")]
-		public bool CloseToTray { get => Config.Instance.CloseToTray; }
+		public bool CloseToTray { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.CloseToTray; }
 
 		[JsonProperty("minimize_to_tray")]
-		public bool MinimizeToTray { get => Config.Instance.MinimizeToTray; }
+		public bool MinimizeToTray { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.MinimizeToTray; }
+
+		[JsonProperty("show_splash_screen")]
+		public bool ShowSplashScreen { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.ShowSplashScreen; }
+
+		[JsonProperty("check_for_updates")]
+		public bool CheckForUpdates { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.CheckForUpdates; }
+
+		[JsonProperty("close_with_hearthstone")]
+		public bool CloseWithHearthstone { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.CloseWithHearthstone; }
+
+		[JsonProperty("launch_hearthstone_on_start")]
+		public bool LaunchHearthstoneOnStart { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.StartHearthstoneWithHDT; }
 
 		[JsonProperty("background_mode")]
 		public bool BackgroundMode { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.IsActive; }

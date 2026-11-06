@@ -125,6 +125,8 @@ namespace HDTTests.Utility.ValueMoments.Actions
 					"overlay_menu_hide_if_hs_in_background",
 					"card_tooltips",
 					"analytics_submit_anonymous_data",
+					"show_splash_screen",
+					"check_for_updates",
 					"show_news_bar",
 					"player_active_effects",
 					"opponent_active_effects",
@@ -144,6 +146,8 @@ namespace HDTTests.Utility.ValueMoments.Actions
 					"start_minimized",
 					"close_to_tray",
 					"minimize_to_tray",
+					"close_with_hearthstone",
+					"launch_hearthstone_on_start",
 					"background_mode"
 				}},
 				{ "cur_daily_occurrences", 1 },
