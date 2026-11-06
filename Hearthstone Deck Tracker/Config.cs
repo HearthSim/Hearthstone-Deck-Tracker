@@ -934,6 +934,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool SeenMulliganToast = false;
 
 		[DefaultValue(false)]
+		public bool SeenTrayNotification = false;
+
+		[DefaultValue(false)]
 		public bool BobsBuddyAverageDamageInfoClosed = false;
 
 		[DefaultValue(false)]

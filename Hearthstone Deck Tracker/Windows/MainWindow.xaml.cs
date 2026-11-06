@@ -315,7 +315,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void MetroWindow_StateChanged(object sender, EventArgs e)
 		{
 			if(BackgroundMode.MinimizeToTray && WindowState == WindowState.Minimized)
+			{
 				MinimizeToTray();
+				ShowTrayNotificationOnce();
+			}
 		}
 
 		private void Window_Closing(object sender, CancelEventArgs e)
@@ -341,7 +344,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			e.Cancel = true;
 			if (BackgroundMode.CloseToTray)
+			{
 				MinimizeToTray();
+				ShowTrayNotificationOnce();
+			}
 			else
 			{
 				// Round trip through Core.Shutdown. This will set IsExiting and close this window again.
@@ -397,6 +403,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Hide();
 			Visibility = Collapsed;
 			ShowInTaskbar = false;
+		}
+
+		private void ShowTrayNotificationOnce()
+		{
+			if(Config.Instance.SeenTrayNotification)
+				return;
+			Config.Instance.SeenTrayNotification = true;
+			Config.Save();
+			Core.TrayIcon.ShowMessage(LocUtil.Get("TrayIcon_Notification_MinimizedToTray"));
 		}
 
 		public void ActivateWindow()
