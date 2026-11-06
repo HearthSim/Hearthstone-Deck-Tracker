@@ -798,6 +798,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void CacheBattlegroundsHeroPickParams(int[] heroDbfIds, HashSet<Race> availableRaces)
 		{
+			if(heroDbfIds.Length == 0)
+				return;
+
 			_battlegroundsHeroPickStatsParams = new BattlegroundsHeroPickStatsParams
 			{
 				HeroDbfIds = heroDbfIds,
@@ -816,7 +819,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return;
 
 			var newHeroDbfIds = BattlegroundsHeroPickState.OfferedHeroDbfIds;
-			if(newHeroDbfIds == null)
+			if(newHeroDbfIds == null || newHeroDbfIds.Length == 0)
 				return;
 
 			_battlegroundsHeroPickStatsParams = new BattlegroundsHeroPickStatsParams
