@@ -92,10 +92,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 		private static void UpdateRunKey()
 		{
-			var locator = VelopackLocator.Current;
-			if(locator.CurrentlyInstalledVersion == null || locator.IsPortable || locator.AppContentDir == null)
-				return;
-			RegistryHelper.SetExecutablePath(Path.Combine(locator.AppContentDir, "HearthstoneDeckTracker.exe"));
+			RegistryHelper.SetExecutablePath(Path.Combine(VelopackLocator.Current.AppContentDir, "HearthstoneDeckTracker.exe"));
 			RegistryHelper.SetExecutableArgs(StartupFlags.Autostart);
 			if(Config.Instance.StartWithWindows)
 				RegistryHelper.SetRunKey();
@@ -104,12 +101,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		// Squirrel's stub starts the newest app-* folder directly, which no longer exists after the migration
 		private static void ReplaceSquirrelStub()
 		{
-			var locator = VelopackLocator.Current;
-			if(locator.CurrentlyInstalledVersion == null || locator.IsPortable || locator.RootAppDir == null)
-				return;
-			var squirrelStub = Path.Combine(locator.RootAppDir, "HearthstoneDeckTracker.exe");
+			var rootAppDir = VelopackLocator.Current.RootAppDir;
+			var squirrelStub = Path.Combine(rootAppDir, "HearthstoneDeckTracker.exe");
 			// named after --packTitle in build-scripts/package.ps1
-			var velopackStub = Path.Combine(locator.RootAppDir, "Hearthstone Deck Tracker.exe");
+			var velopackStub = Path.Combine(rootAppDir, "Hearthstone Deck Tracker.exe");
 			if(!File.Exists(squirrelStub) || !File.Exists(velopackStub))
 				return;
 			if(File.ReadAllBytes(squirrelStub).SequenceEqual(File.ReadAllBytes(velopackStub)))
@@ -201,9 +196,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					)
 					.Run();
 
-				// also repoint run keys that still launch through Squirrel's Update.exe
-				UpdateRunKey();
-				ReplaceSquirrelStub();
+				var locator = VelopackLocator.Current;
+				if(locator.CurrentlyInstalledVersion != null && !locator.IsPortable && locator.AppContentDir != null && locator.RootAppDir != null)
+				{
+					UpdateRunKey();
+					ReplaceSquirrelStub();
+				}
 			}
 			catch(Exception ex)
 			{
