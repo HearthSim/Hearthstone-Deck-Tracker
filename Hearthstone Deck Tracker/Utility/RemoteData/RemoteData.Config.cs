@@ -40,6 +40,16 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 
 			[JsonProperty("draw_card_blacklist")]
 			public List<CardInfo>? DrawCardBlacklist { get; set; }
+
+			[JsonProperty("velopack")]
+			public VelopackData? Velopack { get; set; }
+		}
+
+		internal class VelopackData
+		{
+			// share of Squirrel installs, from 0 to 1
+			[JsonProperty("rollout")]
+			public double Rollout { get; set; }
 		}
 
 		internal class NewsData

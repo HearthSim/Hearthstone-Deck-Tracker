@@ -22,23 +22,47 @@ public enum UpdateMirror
 
 internal static partial class Updater
 {
-#if(VELOPACK)
-	public static readonly Dictionary<UpdateMirror, string> MirrorUrls = new()
+	private static readonly Dictionary<UpdateMirror, string> VelopackMirrorUrls = new()
 	{
 		[UpdateMirror.Github] = "https://github.com/HearthSim/HDT-Velopack-Releases",
 		[UpdateMirror.AwsHongKong] = "https://hdt-downloads-hongkong.s3.ap-east-1.amazonaws.com/velopack"
 	};
 
+#if(VELOPACK)
+	public static Dictionary<UpdateMirror, string> MirrorUrls => VelopackMirrorUrls;
+
 	private const string ReleaseFeedFileName = "releases.win.json";
 #else
-	public static readonly Dictionary<UpdateMirror, string> MirrorUrls = new()
+	private static readonly Dictionary<UpdateMirror, string> SquirrelMirrorUrls = new()
 	{
 		[UpdateMirror.Github] = "https://github.com/HearthSim/HDT-Releases",
 		[UpdateMirror.AwsHongKong] = "https://hdt-downloads-hongkong.s3.ap-east-1.amazonaws.com"
 	};
 
+	public static Dictionary<UpdateMirror, string> MirrorUrls
+		=> Config.Instance.MigrateToVelopack ? VelopackMirrorUrls : SquirrelMirrorUrls;
+
 	private const string ReleaseFeedFileName = "RELEASES";
 #endif
+
+	public static void UpdateVelopackRollout(RemoteData.RemoteData.Config? remoteConfig)
+	{
+		if(remoteConfig == null)
+			return;
+		var migrateToVelopack = IsInVelopackRollout(Config.Instance.Id, remoteConfig.Velopack?.Rollout ?? 0);
+		if(migrateToVelopack == Config.Instance.MigrateToVelopack)
+			return;
+		Log.Info(migrateToVelopack ? "Joined the Velopack rollout" : "Left the Velopack rollout");
+		Config.Instance.MigrateToVelopack = migrateToVelopack;
+		Config.Save();
+	}
+
+	internal static bool IsInVelopackRollout(string id, double rollout)
+	{
+		if(!Guid.TryParse(id, out var guid) || guid == Guid.Empty)
+			return false;
+		return BitConverter.ToUInt32(guid.ToByteArray(), 0) / (uint.MaxValue + 1d) < rollout;
+	}
 
 	private static string GetReleaseFeedUrl(UpdateMirror mirror, string version)
 	{

@@ -1062,6 +1062,9 @@ namespace Hearthstone_Deck_Tracker
 		public int SquirrelRemote = (int)Utility.Updating.UpdateMirror.Github;
 
 		[DefaultValue(false)]
+		public bool MigrateToVelopack = false;
+
+		[DefaultValue(false)]
 		public bool StartMinimized = false;
 
 		[DefaultValue(false)]

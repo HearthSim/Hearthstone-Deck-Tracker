@@ -248,7 +248,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		{
 			try
 			{
-				Log.Info($"Checking for updates, using {Config.Instance.SquirrelRemote}");
+				Log.Info($"Checking for updates, using {GetCurrentMirror().Item2}");
 				_lastUpdateCheck = DateTime.Now;
 				var mgr = GetUpdateManager(false);
 
