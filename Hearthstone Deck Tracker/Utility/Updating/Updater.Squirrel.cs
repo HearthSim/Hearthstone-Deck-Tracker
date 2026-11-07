@@ -341,7 +341,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		public static void RestartApp()
 		{
 			Log.Info("Restarting...");
-			UpdateManager.RestartApp();
+			UpdateManager.RestartApp(arguments: StartupFlags.Restart);
 		}
 	}
 }

@@ -236,7 +236,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				if(mgr.UpdatePendingRestart is not { } pending)
 					return;
 				Log.Info($"Applying downloaded update {pending.Version}");
-				ApplyUpdateAndRestart(mgr, pending, StartupFlags.IsBackgroundUpdate, StartupFlags.IsAutostart);
+				ApplyUpdateAndRestart(mgr, pending, StartupFlags.Active);
 			}
 			catch(Exception ex)
 			{
@@ -274,7 +274,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					else
 					{
 						Log.Info("Update complete, restarting");
-						ApplyUpdateAndRestart(mgr, updateInfo, StartupFlags.IsBackgroundUpdate, StartupFlags.IsAutostart);
+						ApplyUpdateAndRestart(mgr, updateInfo, StartupFlags.Active);
 					}
 				}
 			}
@@ -460,29 +460,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		{
 			Log.Info("Restarting...");
 			var mgr = GetUpdateManager(false);
+			var restartArgs = new[] { background ? StartupFlags.BackgroundUpdate : StartupFlags.Restart };
 			if(mgr.UpdatePendingRestart is { } pending)
-				ApplyUpdateAndRestart(mgr, pending, background, false);
+				ApplyUpdateAndRestart(mgr, pending, restartArgs);
 			else
 			{
-				UpdateExe.Start(waitPid: VelopackLocator.Current.Process.GetCurrentProcessId(), startArgs: RestartArgs(background, false));
+				UpdateExe.Start(waitPid: VelopackLocator.Current.Process.GetCurrentProcessId(), startArgs: restartArgs);
 				Environment.Exit(0);
 			}
 		}
 
-		private static string[]? RestartArgs(bool background, bool autostart)
-		{
-			var args = new List<string>();
-			if(background)
-				args.Add(StartupFlags.BackgroundUpdate);
-			if(autostart)
-				args.Add(StartupFlags.Autostart);
-			return args.Count > 0 ? args.ToArray() : null;
-		}
-
-		private static void ApplyUpdateAndRestart(UpdateManager mgr, VelopackAsset asset, bool background, bool autostart)
+		private static void ApplyUpdateAndRestart(UpdateManager mgr, VelopackAsset asset, string[] restartArgs)
 		{
 			// silent also hides Update.exe's error dialogs, so a failed apply only shows up in Velopack's log
-			mgr.WaitExitThenApplyUpdates(asset, silent: true, restart: true, restartArgs: RestartArgs(background, autostart));
+			mgr.WaitExitThenApplyUpdates(asset, silent: true, restart: true, restartArgs: restartArgs.Length > 0 ? restartArgs : null);
 			Environment.Exit(0);
 		}
 	}

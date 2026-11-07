@@ -435,7 +435,7 @@ namespace Hearthstone_Deck_Tracker
 			// This event is fired by Application.Shutdown
 			Application.Current.Exit += (_, _) =>
 			{
-				Process.Start(Application.ResourceAssembly.Location);
+				Process.Start(Application.ResourceAssembly.Location, StartupFlags.Restart);
 			};
 			await Shutdown();
 #endif
