@@ -232,6 +232,12 @@
 
                                 <StackPanel Visibility="{Binding IsTrialEnabledForDeck, Converter={StaticResource InverseBoolToVisibility}}">
                                     <TextBlock Text="{lex:Loc ArenaPreDraft_Panel_JoinThisDraft}" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 8 0 0" Visibility="{Binding ResetTimeVisibility}">
+                                        <TextBlock>
+                                        <Run Text="{lex:Loc ArenaPreDraft_Panel_TrialsResetsIn}" />
+                                        <Bold><Run Text="{Binding TrialTimeRemaining}" /></Bold>
+                                        </TextBlock>
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                             <Grid>
