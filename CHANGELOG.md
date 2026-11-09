@@ -1,4 +1,4 @@
-## **Release v1.59.10 - 2026-11-06**
+## **Release v1.59.11 - 2026-11-09**
 **General**:
 - The tray icon now shows when an HDT update is available and lets you search for and install updates.
 - Improved the memory usage of HDT while running in the background.

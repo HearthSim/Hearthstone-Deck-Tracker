@@ -72,6 +72,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			(new(1, 55, 9), new(1, 55, 10)),
 			(new(1, 57, 3), new(1, 57, 4)),
 			(new(1, 57, 9), new(1, 57, 10)),
+			(new(1, 59, 10), new(1, 59, 11)),
 		};
 		public static bool ShouldShowUpdateNotes()
 		{
