@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Add The OutFinder for Assemble cards.
+
 ## **Release v1.59.10 - 2026-11-06**
 **General**:
 - The tray icon now shows when an HDT update is available and lets you search for and install updates.
