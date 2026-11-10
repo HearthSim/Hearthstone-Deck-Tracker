@@ -40,6 +40,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.CardExtraInfo;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem;
 using Hearthstone_Deck_Tracker.Hearthstone.CounterSystem.Counters;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Assemble;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -692,6 +693,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				CardLegalityChecker.LoadCardsByFormat(_game.CurrentGameType, _game.CurrentFormatType);
 				LoadOutfinderKeywordsIfEntitled();
+				AssemblePools.Load();
 			}
 
 			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
@@ -757,6 +759,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				CardLegalityChecker.LoadCardsByFormat(_game.CurrentGameType, _game.CurrentFormatType);
 				LoadOutfinderKeywordsIfEntitled();
+				AssemblePools.Load();
 			}
 
 			if(_game.IsBattlegroundsMatch)

@@ -696,6 +696,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			viewModel.ShowTriple = BaconCard;
 			// The text is drawn over the description box of a minion render, other renders lay it out differently.
 			viewModel.AssembledText = TypeEnum == CardType.MINION ? (ExtraInfo as AssembledHalves)?.GetText(this) : null;
+			viewModel.AlternativeAssembledText = null;
 			viewModel.HasRaceBanner = RaceEnum is not (null or HearthDb.Enums.Race.INVALID or HearthDb.Enums.Race.BLANK);
 
 			var info = GetRelatedCardsInfo();

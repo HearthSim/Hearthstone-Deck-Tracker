@@ -54,6 +54,8 @@ using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.Mulligan.V2;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.PlayerResourcesWidget;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.RelatedCardsPanel;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.AssemblePanel;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Assemble;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -132,6 +134,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public BattlegroundsHeroPowerPickingViewModel BattlegroundsHeroPowerPickingViewModel { get; } = new();
 		public BattlegroundsInspirationViewModel BattlegroundsInspirationViewModel { get; } = new();
 		public RelatedCardsPanelViewModel RelatedCardsPanelViewModel { get; } = new();
+		public AssemblePanelViewModel AssemblePanelViewModel { get; } = new();
 
 		public BattlegroundsGuidesTabsViewModel BattlegroundsGuidesTabsViewModel { get; } = new();
 		public BattlegroundsHeroGuideListViewModel BattlegroundsHeroGuideListViewModel { get; } = new();
@@ -468,6 +471,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 			BattlegroundsInspirationViewModel.OnClose += HideBgsInspiration;
 			RelatedCardsPanelViewModel.OnClose += HideRelatedCardsPanel;
+			AssemblePanelViewModel.OnClose += HideAssemblePanel;
 			MulliganGuideTrialsExhaustedViewModel.OnClose += DismissMulliganGuideTrialsExhausted;
 			Tier7Trial.OnTrialActivated += () =>
 			{
@@ -1501,6 +1505,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void ShowRelatedCardsPanel(Card sourceCard, List<Card> relatedCards)
 		{
+			// Assemble cards have a panel of their own, to browse the options of each middle card.
+			if(Core.Game.RelatedCardsManager.GetAssembleCard(sourceCard.Id) is { } assembleCard
+			   && assembleCard.GetPool(sourceCard.ControllerPlayer ?? Core.Game.Player) is { } pool)
+			{
+				ShowAssemblePanel(pool);
+				return;
+			}
+
 			RelatedCardsPanelViewModel.CardName = sourceCard.LocalizedName;
 			RelatedCardsPanelViewModel.Cards = relatedCards;
 			RelatedCardsPanelControl.Visibility = Visibility.Visible;
@@ -1514,6 +1526,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		private void RelatedCardsCover_OnMouseDown(object sender, MouseButtonEventArgs e) => HideRelatedCardsPanel();
+
+		private void ShowAssemblePanel(AssemblePool pool)
+		{
+			AssemblePanelViewModel.Pool = pool;
+			AssemblePanelControl.Visibility = Visibility.Visible;
+		}
+
+		private void HideAssemblePanel()
+		{
+			AssemblePanelControl.Visibility = Visibility.Collapsed;
+			AssemblePanelViewModel.Pool = null;
+		}
+
+		private void AssembleCover_OnMouseDown(object sender, MouseButtonEventArgs e) => HideAssemblePanel();
 
 		public static bool AnimatingXPBar = false;
 

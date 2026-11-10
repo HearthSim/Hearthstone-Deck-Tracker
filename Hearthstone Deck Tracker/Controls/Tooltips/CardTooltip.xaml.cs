@@ -222,6 +222,16 @@ public class CardTooltipViewModel : ViewModel
 	}
 
 	/// <summary>
+	/// The text of another card assembled from the same base card, drawn on a second copy of the card
+	/// image next to the first: the other minion an Assemble option makes. Null for one image.
+	/// </summary>
+	public string? AlternativeAssembledText
+	{
+		get => GetProp<string?>(null);
+		set => SetProp(value);
+	}
+
+	/// <summary>
 	/// Whether the card image has a minion type banner, which the assembled text leaves showing.
 	/// </summary>
 	public bool HasRaceBanner

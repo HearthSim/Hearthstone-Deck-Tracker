@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Assemble;
 using Hearthstone_Deck_Tracker.Hearthstone.RelatedCardsSystem.Settings;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
@@ -82,7 +83,9 @@ public class RelatedCardsManager
 		{
 			allTypes = ex.Types.Where(t => t != null).ToArray();
 		}
-		var cards = allTypes.Where(t => t.IsClass && !t.IsAbstract && typeof(ICard).IsAssignableFrom(t));
+		// Types that need constructor arguments, like AssembleCard, are built per card elsewhere.
+		var cards = allTypes.Where(t => t.IsClass && !t.IsAbstract && typeof(ICard).IsAssignableFrom(t)
+		                                && t.GetConstructor(System.Type.EmptyTypes) != null);
 
 		var relatedCardsDict = new Dictionary<string, ICardWithRelatedCards>();
 		var highlightCardsDict = new Dictionary<string, ICardWithHighlight>();
@@ -173,7 +176,26 @@ public class RelatedCardsManager
 
 	public ICardWithRelatedCards? GetCardWithRelatedCards(string cardId)
 	{
+		// The Assemble pool wins over a class for the card's other clauses (Darkest Depths' Guards,
+		// Tinker's Overdrive): it is what the card mostly generates.
+		if(GetAssembleCard(cardId) is { } assembleCard)
+			return assembleCard;
 		return RelatedCards.TryGetValue(cardId, out var card) ? card : null;
+	}
+
+	private readonly Dictionary<string, AssembleCard> _assembleCards = new();
+
+	/// <summary>
+	/// The Assemble card for the card id, when the current game has a pool for it.
+	/// </summary>
+	public AssembleCard? GetAssembleCard(string cardId)
+	{
+		var dbfId = Database.GetCardFromId(cardId)?.DbfId ?? 0;
+		if(dbfId == 0 || !AssemblePools.HasPool(dbfId))
+			return null;
+		if(!_assembleCards.TryGetValue(cardId, out var assembleCard))
+			_assembleCards[cardId] = assembleCard = new AssembleCard(cardId);
+		return assembleCard;
 	}
 
 	public ISpellSchoolTutor? GetSpellSchoolTutor(string cardId)

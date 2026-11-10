@@ -31,6 +31,7 @@
         xmlns:chinaModule="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.ChinaModule"
         xmlns:minionPinning="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.MinionPinning"
         xmlns:relatedCardsPanel="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.RelatedCardsPanel"
+        xmlns:assemblePanel="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Constructed.AssemblePanel"
         xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -597,6 +598,24 @@
                     Height="{Binding ActualHeight, ElementName=CanvasInfo}"
                     ext:OverlayExtensions.IsOverlayHitTestVisible="True"
                     DataContext="{Binding RelatedCardsPanelViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                />
+
+                <!-- Dismisses AssemblePanel when clicking outside it, like RelatedCardsPanel -->
+                <Grid Background="Black" Opacity="0.01" Canvas.Top="0" Canvas.Left="0"
+                      Width="{Binding Width, ElementName=CanvasInfo}"
+                      Height="{Binding Height, ElementName=CanvasInfo}"
+                      Visibility="{Binding Visibility, ElementName=AssemblePanelControl}"
+                      ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                      MouseDown="AssembleCover_OnMouseDown" />
+
+                <assemblePanel:AssemblePanel
+                    x:Name="AssemblePanelControl"
+                    Visibility="Collapsed"
+                    Canvas.Right="0"
+                    Canvas.Top="0"
+                    Height="{Binding ActualHeight, ElementName=CanvasInfo}"
+                    ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                    DataContext="{Binding AssemblePanelViewModel, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                 />
 
                 <!-- Dismisses the Mulligan Guide trials alert when clicking outside it -->

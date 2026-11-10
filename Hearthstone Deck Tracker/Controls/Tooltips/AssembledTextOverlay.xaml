@@ -1,0 +1,51 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Tooltips.AssembledTextOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:tooltips="clr-namespace:Hearthstone_Deck_Tracker.Controls.Tooltips"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             mc:Ignorable="d"
+             x:Name="Root"
+             d:DesignHeight="776" d:DesignWidth="512">
+    <!-- Assembled cards: the render shows the base card, so their actual text replaces its description.
+         Laid out in the pixels of a 512x776 minion render, scaled to the image. -->
+    <Viewbox Stretch="Fill" Visibility="{Binding Text, ElementName=Root, Converter={StaticResource NullableToVisibility}}">
+        <Canvas Width="512" Height="776">
+            <!-- The parchment of the description box, taken from the game's card textures -->
+            <Border Canvas.Left="96" Canvas.Top="465.6" Width="326" Height="182.5" CornerRadius="9.6">
+                <Border.Background>
+                    <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Resources/card_text_background.png" Stretch="Fill"/>
+                </Border.Background>
+                <!-- The attack and health gems overlap the bottom corners of the box, so leave them showing,
+                     and so does the minion type banner at its bottom center -->
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Clip">
+                            <Setter.Value>
+                                <PathGeometry Figures="M 0,0 L 326,0 326,120.45 312.96,133.23 301.55,155.13 295.03,182.5 34.23,182.5 27.71,162.43 16.3,142.35 0,129.58 Z"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HasRaceBanner, RelativeSource={RelativeSource AncestorType=tooltips:AssembledTextOverlay}}" Value="True">
+                                <Setter Property="Clip">
+                                    <Setter.Value>
+                                        <PathGeometry Figures="M 0,0 L 326,0 326,120.45 312.96,133.23 301.55,155.13 295.03,182.5 262.4,182.5 266,176.4 257,157.4 62,157.4 52,176.4 55.6,182.5 34.23,182.5 27.71,162.43 16.3,142.35 0,129.58 Z"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <!-- Shrink long texts until they fit, keeping clear of the gems -->
+                <Viewbox Margin="13,16,13,29.3" Stretch="Uniform" StretchDirection="DownOnly" VerticalAlignment="Center">
+                    <!-- A condensed font like the printed one, sized to wrap like it -->
+                    <TextBlock Width="300" TextWrapping="Wrap" TextAlignment="Center"
+                               FontFamily="Bahnschrift, Arial" FontStretch="SemiCondensed" FontSize="28"
+                               LineHeight="34" LineStackingStrategy="BlockLineHeight" Foreground="#1E1710"
+                               utility:AttachedFormattedString.FormattedText="{Binding Text, ElementName=Root}"/>
+                </Viewbox>
+            </Border>
+        </Canvas>
+    </Viewbox>
+</UserControl>
