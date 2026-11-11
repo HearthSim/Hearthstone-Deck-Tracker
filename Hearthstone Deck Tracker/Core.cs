@@ -341,6 +341,8 @@ namespace Hearthstone_Deck_Tracker
 			if(!Initialized)
 			{
 				_activationPending = true;
+				if(BackgroundMode.StartsInTray)
+					Updater.Status.SkipStartupCheck = true;
 				return;
 			}
 			_activationPending = false;

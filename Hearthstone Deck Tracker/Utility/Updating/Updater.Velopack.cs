@@ -19,6 +19,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 	internal static partial class Updater
 	{
 		private const int UpdateCheckTimeout     =  2_000;
+		private const int TrayUpdateCheckTimeout = 20_000;
+
 		private const int InitialDownloadTimeout =  3_000;
 		private const int TotalDownloadTimeout   = 20_000;
 
@@ -301,18 +303,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 				if(isStartupCheck)
 				{
-					// If it takes more than two seconds to get the update info
-					// i.e. the RELEASES file, just update in the background.
+					// if it takes too long to get the RELEASES file, just update in the background
+					var timeout = BackgroundMode.StartsInTray ? TrayUpdateCheckTimeout : UpdateCheckTimeout;
 					var task = await Task.WhenAny(updateInfoTask,
-						Task.Delay(UpdateCheckTimeout));
+						Task.Delay(timeout));
 					if(task != updateInfoTask)
-					{
-						Log.Warn(
-							$"Update check took longer than {UpdateCheckTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
-						Status.SkipStartupCheck = true;
-						if(!dev)
-							FindBestMirror();
-					}
+						OnSlowStartupUpdate($"Update check took longer than {timeout}ms", dev);
 				}
 
 				var updateInfo = await updateInfoTask;
@@ -331,26 +327,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					var task = await Task.WhenAny(downloadTask,
 						Task.Delay(InitialDownloadTimeout));
 					if(task != downloadTask && Status.UpdateProgress < 10)
-					{
-						Log.Warn(
-							$"Downloading the update is slow{(Status.SkipStartupCheck ? "" : ", showing app")}");
-						Status.SkipStartupCheck = true;
-						if(!dev)
-							FindBestMirror();
-					}
+						OnSlowStartupUpdate("Downloading the update is slow", dev);
 
-					// If the rest of download takes longer than 20 seconds in
-					// total also show the app and continue in the background.
+					// if the rest of download takes longer than 20 seconds in
+					// total also show the app and continue in the background
 					task = await Task.WhenAny(downloadTask,
 						Task.Delay(TotalDownloadTimeout));
 					if(task != downloadTask)
-					{
-						Log.Warn(
-							$"Downloading the update is taking longer than {TotalDownloadTimeout}ms{(Status.SkipStartupCheck ? "" : ", showing app")}");
-						Status.SkipStartupCheck = true;
-						if(!dev)
-							FindBestMirror();
-					}
+						OnSlowStartupUpdate($"Downloading the update is taking longer than {TotalDownloadTimeout}ms", dev);
 
 					await downloadTask;
 					Status.OnDownloadProgressChanged(100);
@@ -383,6 +367,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			{
 				Status.UpdateProgress = 0;
 			}
+		}
+
+		private static void OnSlowStartupUpdate(string message, bool dev)
+		{
+			Log.Warn($"{message}{(Status.SkipStartupCheck ? "" : ", showing app")}");
+			Status.SkipStartupCheck = true;
+			if(!dev)
+				FindBestMirror();
 		}
 
 		private static async Task DownloadUpdate(UpdateManager mgr, UpdateInfo updateInfo, Action<int>? progress)
@@ -443,9 +435,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		{
 			if(_backgroundApplyStarted || Status.UpdaterState != UpdaterState.Available || _failedUpdate != null)
 				return;
-			if(DateTime.Now - Core.LastGameRunning < BackgroundUpdateIdleTime)
+			// only consider the main window cooldown real if the main window was ever opened
+			var idleTime = BackgroundMode.StartsInTray && !Core.MainWindow.WasActivated ? TimeSpan.Zero : BackgroundUpdateIdleTime;
+			if(DateTime.Now - Core.LastGameRunning < idleTime || User32.GetHearthstoneWindow() != IntPtr.Zero)
 				return;
-			if(!Core.MainWindow.WasHiddenFor(BackgroundUpdateIdleTime))
+			if(!Core.MainWindow.WasHiddenFor(idleTime))
 				return;
 			var locator = VelopackLocator.Current;
 			if(locator.CurrentlyInstalledVersion is not { } installed || locator.GetLatestLocalFullPackage()?.Version is not { } pending)

@@ -414,8 +414,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.TrayIcon.ShowMessage(LocUtil.Get("TrayIcon_Notification_MinimizedToTray"));
 		}
 
+		public bool WasActivated { get; private set; }
+
 		public void ActivateWindow()
 		{
+			WasActivated = true;
 			try
 			{
 				Show();
