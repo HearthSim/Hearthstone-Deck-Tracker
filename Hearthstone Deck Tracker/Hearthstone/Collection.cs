@@ -63,6 +63,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						)
 					)
 			);
+
+			Pets = new SortedDictionary<int, Pet>(
+				collection.Pets.GroupBy(x => x.Id).ToDictionary(x => x.Key, x => new Pet(x.First()))
+			);
+			PetVariants = new SortedDictionary<int, PetVariant>(
+				collection.PetVariants.GroupBy(x => x.Id).ToDictionary(x => x.Key, x => new PetVariant(x.First()))
+			);
 		}
 
 		public int Size()
@@ -89,6 +96,64 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[JsonProperty("player_records")]
 		public SortedDictionary<int, SortedDictionary<int, int[]>> PlayerRecords { get; }
+
+		/// <summary>
+		/// Owned pets by PET dbf id.
+		/// </summary>
+		[JsonProperty("pets")]
+		public SortedDictionary<int, Pet> Pets { get; }
+
+		/// <summary>
+		/// Owned pet variants (the looks of the pets) by PET_VARIANT dbf id.
+		/// </summary>
+		[JsonProperty("pet_variants")]
+		public SortedDictionary<int, PetVariant> PetVariants { get; }
+
+		public class Pet
+		{
+			public Pet(HearthMirror.Objects.Pet pet)
+			{
+				Level = pet.Level;
+				Xp = pet.Xp;
+				IsHsFavorite = pet.IsHsFavorite;
+				IsBgFavorite = pet.IsBgFavorite;
+			}
+
+			[JsonProperty("level")]
+			public int Level { get; }
+
+			[JsonProperty("xp")]
+			public int Xp { get; }
+
+			[JsonProperty("hs_favorite")]
+			public bool IsHsFavorite { get; }
+
+			[JsonProperty("bg_favorite")]
+			public bool IsBgFavorite { get; }
+		}
+
+		public class PetVariant
+		{
+			public PetVariant(HearthMirror.Objects.PetVariant variant)
+			{
+				PetId = variant.PetId;
+				CardDbfId = variant.CardDbfId;
+				IsHsFavorite = variant.IsHsFavorite;
+				IsBgFavorite = variant.IsBgFavorite;
+			}
+
+			[JsonProperty("pet_id")]
+			public int PetId { get; }
+
+			[JsonProperty("card_dbf_id")]
+			public int CardDbfId { get; }
+
+			[JsonProperty("hs_favorite")]
+			public bool IsHsFavorite { get; }
+
+			[JsonProperty("bg_favorite")]
+			public bool IsBgFavorite { get; }
+		}
 	}
 
 	public class MercenariesCollection : CollectionBase
