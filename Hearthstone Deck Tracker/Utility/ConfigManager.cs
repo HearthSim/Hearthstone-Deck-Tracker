@@ -54,39 +54,25 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 #endif
 
-		// Logic to silently skip hotfix releases to fix some regressions that players haven't noticed yet
-		private static readonly (Version, Version)[] SilentUpgrades =
+		// the update notes only open automatically when an update crosses one of these
+		private static readonly Version[] MajorChangeVersions =
 		{
-			(new(1, 31, 2), new(1, 31, 3)),
-			(new(1, 31, 4), new(1, 31, 5)),
-			(new(1, 32, 0), new(1, 33, 1)),
-			(new(1, 33, 1), new(1, 33, 2)),
-			(new(1, 37, 1), new(1, 37, 2)),
-			(new(1, 38, 5), new(1, 38, 6)),
-			(new(1, 38, 8), new(1, 38, 9)),
-			(new(1, 41, 0), new(1, 41, 2)),
-			(new(1, 43, 5), new(1, 43, 6)),
-			(new(1, 45, 1), new(1, 45, 2)),
-			(new(1, 46, 9), new(1, 46, 10)),
-			(new(1, 55, 7), new(1, 55, 8)),
-			(new(1, 55, 9), new(1, 55, 10)),
-			(new(1, 57, 3), new(1, 57, 4)),
-			(new(1, 57, 9), new(1, 57, 10)),
-			(new(1, 59, 10), new(1, 59, 11)),
-			(new(1, 59, 10), new(1, 59, 12)),
-			(new(1, 59, 11), new(1, 59, 12)),
 		};
+
 		public static bool ShouldShowUpdateNotes()
 		{
-			if(UpdatedVersion == null)
+			if(UpdatedVersion == null || PreviousVersion == null)
 				return false;
 
-			if(PreviousVersion == null)
-				return true;
+			return CrossesMajorChange(PreviousVersion, UpdatedVersion, MajorChangeVersions);
+		}
 
-			var fromVersion = new Version(PreviousVersion.Major, PreviousVersion.Minor, PreviousVersion.Build);
-			var toVersion = new Version(UpdatedVersion.Major, UpdatedVersion.Minor, UpdatedVersion.Build);
-			return !SilentUpgrades.Any(x => x.Item1 == fromVersion && x.Item2 == toVersion);
+		internal static bool CrossesMajorChange(Version from, Version to, Version[] majorChangeVersions)
+		{
+			// three-part versions compare below their four-part equivalents (Revision -1 < 0)
+			var fromVersion = new Version(from.Major, from.Minor, from.Build);
+			var toVersion = new Version(to.Major, to.Minor, to.Build);
+			return majorChangeVersions.Any(x => fromVersion < x && x <= toVersion);
 		}
 
 		// Logic for dealing with legacy config file semantics
