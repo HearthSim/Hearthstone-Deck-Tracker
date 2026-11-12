@@ -74,6 +74,24 @@ public class CounterManager
 		}
 	}
 
+	public void HandleHealthSpent(IHsGameState gameState, int amount)
+	{
+		if(!Game.IsTraditionalHearthstoneMatch)
+			return;
+
+		foreach(var playerCounter in PlayerCounters)
+		{
+			if(!playerCounter.IsBattlegroundsCounter)
+				playerCounter.HandleHealthSpent(gameState, amount);
+		}
+
+		foreach(var opponentCounter in OpponentCounters)
+		{
+			if(!opponentCounter.IsBattlegroundsCounter)
+				opponentCounter.HandleHealthSpent(gameState, amount);
+		}
+	}
+
 	public void HandleChoicePicked(IHsCompletedChoice choice)
 	{
 		foreach(var playerCounter in PlayerCounters)

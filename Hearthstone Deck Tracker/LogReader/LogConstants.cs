@@ -45,6 +45,9 @@ public static class LogConstants
 		public static readonly Regex SubSpellStartRegex =
 			CompileRegex(@"SUB_SPELL_START - SpellPrefabGUID=(?<spellPrefabGuid>(.*)) Source=(?<source>(\d+))");
 
+		public static readonly Regex SpendHealthRegex =
+			CompileRegex(@"META_DATA\ -\ Meta=SPEND_HEALTH\ Data=(?<amount>(\d+))");
+
 		public static readonly Regex MetaInfoRegex =
 			CompileRegex(@"Info\[\d+\]\s*=\s*(?:.*\bid=(?<id>\d+).*]|\b(?<id>\d+)\b)");
 	}

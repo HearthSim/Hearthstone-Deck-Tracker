@@ -112,6 +112,12 @@ public abstract class BaseCounter : INotifyPropertyChanged
 
 	public virtual void HandleTagChange(GameTag tag, IHsGameState gameState, Entity entity, int value, int prevValue){}
 
+	/// <summary>
+	/// Called for a SPEND_HEALTH meta data line: Health paid in place of a cost, within
+	/// <see cref="IHsGameState.CurrentBlock"/>. Note that block's SourceEntityId is not set for PLAY blocks.
+	/// </summary>
+	public virtual void HandleHealthSpent(IHsGameState gameState, int amount){}
+
 	public virtual void HandleChoicePicked(IHsCompletedChoice choice){}
 
 	private bool InDeckOrKnown(string cardId)

@@ -669,6 +669,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(gameState.CurrentBlock != null && !isPlayerHemet)
 					gameState.CurrentBlock.HideShowEntities = true;
 			}
+			else if(SpendHealthRegex.IsMatch(logLine))
+			{
+				// Health paid in place of a cost, e.g. cards that cost Health instead of Mana
+				var match = SpendHealthRegex.Match(logLine);
+				if(int.TryParse(match.Groups["amount"].Value, out var amount) && amount > 0)
+					game.CounterManager.HandleHealthSpent(gameState, amount);
+			}
 			else if(logLine.Contains("META_DATA - Meta=HISTORY_TARGET"))
 			{
 				gameState.IsInsideMetaDataHistoryTarget = true;

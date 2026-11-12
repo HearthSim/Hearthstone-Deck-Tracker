@@ -1,3 +1,7 @@
+## **Unreleased**
+**Hearthstone**:
+- Fix Y'Shaarj's counter.
+
 ## **Release v1.60.0 - 2026-11-11**
 **Hearthstone**:
 - Add The OutFinder for Assemble cards.
