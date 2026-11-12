@@ -1,4 +1,4 @@
-## **Unreleased**
+## **Release v1.60.1 - 2026-11-12**
 **Hearthstone**:
 - Fix Y'Shaarj's counter.
 
