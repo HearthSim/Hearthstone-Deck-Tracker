@@ -219,6 +219,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 			}
 
+			// fix for when a Mech has IMMUNE_WHILE_ATTACKING=1 and magnetized Invulnerability enchantment is hidden
+			if(minion.IsMech() && entity.HasTag(GameTag.IMMUNE_WHILE_ATTACKING) && !minion.ImmuneWhileAttacking
+				&& !minion.Enchantments.Any(e => e is Invulnerability))
+			{
+				var invulnerability = sim.EnchantmentFactory.Create(Invulnerability.CardId, minion.ControlledByPlayer);
+				if(invulnerability != null)
+					minion.AttachEnchantment(invulnerability);
+			}
+
 			if(attachedEntities.Any(e => e.HasTag(GameTag.MAGNETIC)))
 			{
 				if(minion.IsMech())
