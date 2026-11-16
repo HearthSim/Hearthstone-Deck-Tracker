@@ -1,5 +1,6 @@
 ﻿using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.BobsBuddy;
+using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
@@ -27,12 +29,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			_localizedPropNotifier = new LocalizedPropNotifier(GetType(), OnPropertyChanged);
 			OnRemoteConfigLoaded(Remote.Config.Data);
 			Remote.Config.Loaded += OnRemoteConfigLoaded;
-			Updater.Status.Changed += _ =>
-			{
-				OnPropertyChanged(nameof(StatusMessage));
-				OnPropertyChanged(nameof(StatusMessageSuffix));
-				OnPropertyChanged(nameof(UpdateNowText));
-			};
+			Updater.Status.Changed += _ => OnPropertyChanged(nameof(StatusMessage));
 		}
 
 		private void OnRemoteConfigLoaded(RemoteData.Config? config)
@@ -159,8 +156,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				_errorState = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(StatusMessage));
-				OnPropertyChanged(nameof(StatusMessageSuffix));
-				OnPropertyChanged(nameof(UpdateNowText));
 				OnPropertyChanged(nameof(WarningIconVisibility));
 				OnPropertyChanged(nameof(WarningIconTextTooltip));
 				OnPropertyChanged(nameof(WarningIconTooltipEnabled));
@@ -202,27 +197,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		const float SoftLabelOpacity = 0.3f;
 
 		[LocalizedProp]
-		public string StatusMessage => ShowUpdateNow ? UpdateNowMessageParts[0] : StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults, ErrorMessage);
-
-		[LocalizedProp]
-		public string StatusMessageSuffix => ShowUpdateNow ? UpdateNowMessageParts[1] : "";
-
-		// an empty hyperlink is neither visible nor clickable
-		[LocalizedProp]
-		public string UpdateNowText => ShowUpdateNow ? LocUtil.Get("BobsBuddyStatusMessage_UpdateNow") : "";
+		public string StatusMessage => ShowUpdateNow
+			? AttachedFormattedString.Localize("BobsBuddyStatusMessage_UpdateRequired_UpdateNowLink", Remote.Config.Data?.BobsBuddy?.MinRequiredVersion)
+			: AttachedFormattedString.Escape(StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults, ErrorMessage));
 
 		private bool ShowUpdateNow => ErrorState == BobsBuddyErrorState.UpdateRequired && IsUpdateDownloaded;
 
-		// the text around the {1} placeholder, which the hyperlink takes the place of
-		private static string[] UpdateNowMessageParts
+		public ICommand UpdateNowCommand => new Command(() =>
 		{
-			get
-			{
-				var version = Remote.Config.Data?.BobsBuddy?.MinRequiredVersion ?? "";
-				var parts = LocUtil.Get("BobsBuddyStatusMessage_UpdateRequiredUpdateNow").Split(new[] { "{1}" }, 2, StringSplitOptions.None);
-				return new[] { string.Format(parts[0], version), parts.Length > 1 ? string.Format(parts[1], version) : "" };
-			}
-		}
+#if(VELOPACK)
+			Core.RestartInBackground();
+#else
+			Core.RestartApplication();
+#endif
+		});
 
 #if(INSTALLED)
 		private static bool IsUpdateDownloaded => Updater.Status.UpdaterState == UpdaterState.Available;
@@ -721,15 +709,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			AverageDamageInfoVisibility = Visibility.Collapsed;
 			if(!Config.Instance.AlwaysShowAverageDamage)
 				ShowAverageDamagesPanels(false);
-		}
-
-		private void UpdateNow_Click(object sender, RoutedEventArgs e)
-		{
-#if(VELOPACK)
-			Core.RestartInBackground();
-#else
-			Core.RestartApplication();
-#endif
 		}
 
 		private void Question_Click(object sender, RoutedEventArgs e)

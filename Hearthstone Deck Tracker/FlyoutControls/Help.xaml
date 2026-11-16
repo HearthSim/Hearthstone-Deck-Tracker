@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -111,18 +112,12 @@
                 </GroupBox>
                 <GroupBox Header="{lex:Loc Help_Label_BugsFeatures}">
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                        <Run Text="{lex:Loc Help_BugsFeatures_Option1_Text1}" />
-                        <Hyperlink
-                            NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/issues?state=open"
-                            RequestNavigate="Hyperlink_RequestNavigate">
-                            <Run Text="{lex:Loc Help_BugsFeatures_Option1_Hyperlink_Github1}" />
-                        </Hyperlink>
-                        <Run Text="{lex:Loc Help_BugsFeatures_Option1_Text2}"/> 
-                        <Hyperlink
-                            NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Reporting-Issues"
-                            RequestNavigate="Hyperlink_RequestNavigate">
-                            <Run Text="{lex:Loc Help_BugsFeatures_Option1_Hyperlink_Github2}" />
-                        </Hyperlink>
+                        <Span utility:AttachedFormattedString.LocKey="Help_BugsFeatures_Option1_Text">
+                            <utility:AttachedFormattedString.Links>
+                                <utility:FormattedLink Url="https://github.com/HearthSim/Hearthstone-Deck-Tracker/issues?state=open"/>
+                                <utility:FormattedLink Url="https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Reporting-Issues"/>
+                            </utility:AttachedFormattedString.Links>
+                        </Span>
                         <LineBreak />
                         <Run Text="{lex:Loc Help_BugsFeatures_Text_Or}" />
                         <LineBreak />
@@ -132,19 +127,17 @@
                 <GroupBox Header="{lex:Loc Help_Label_Github}">
                     <StackPanel>
                         <TextBlock Margin="10,0,10,0" VerticalAlignment="Top">
-                            <Run Text="{lex:Loc Help_Github_Text1}" />
-                            <Hyperlink NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/"
-                                       RequestNavigate="Hyperlink_RequestNavigate">
-                             <Run Text="{lex:Loc Help_Github_Hyperlink1}" />
-                            </Hyperlink>
+                            <Span utility:AttachedFormattedString.LocKey="Help_Github_Text_Project">
+                                <utility:AttachedFormattedString.Links>
+                                    <utility:FormattedLink Url="https://github.com/HearthSim/Hearthstone-Deck-Tracker/"/>
+                                </utility:AttachedFormattedString.Links>
+                            </Span>
                             <LineBreak />
-                            <Run Text="{lex:Loc Help_Github_Text2}" /> 
-                            <Hyperlink
-                                NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/blob/master/README.md"
-                                RequestNavigate="Hyperlink_RequestNavigate">
-                                <Run Text="{lex:Loc Help_Github_Hyperlink2}" />
-                            </Hyperlink>
-                            <Run Text="{lex:Loc Help_Github_Text3}" />
+                            <Span utility:AttachedFormattedString.LocKey="Help_Github_Text_Readme">
+                                <utility:AttachedFormattedString.Links>
+                                    <utility:FormattedLink Url="https://github.com/HearthSim/Hearthstone-Deck-Tracker/blob/master/README.md"/>
+                                </utility:AttachedFormattedString.Links>
+                            </Span>
                         </TextBlock>
                     </StackPanel>
                 </GroupBox>

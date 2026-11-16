@@ -8,6 +8,7 @@
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:commands="clr-namespace:Hearthstone_Deck_Tracker.Commands"
              xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -181,8 +182,17 @@
                                             </ToolTip>
                                         </Rectangle.ToolTip>
                                     </Rectangle>
-                                   <!-- no whitespace between these, the localized message brings its own spacing -->
-                                   <Run Text="{Binding StatusMessage, Mode=OneWay}"/><Hyperlink Foreground="White" FontWeight="Bold" Click="UpdateNow_Click"><Run Text="{Binding UpdateNowText, Mode=OneWay}"/></Hyperlink><Run Text="{Binding StatusMessageSuffix, Mode=OneWay}"/>
+                                   <Span utility:AttachedFormattedString.FormattedText="{Binding StatusMessage, Mode=OneWay}">
+                                       <Span.Resources>
+                                           <Style TargetType="Hyperlink" BasedOn="{StaticResource {x:Type Hyperlink}}">
+                                               <Setter Property="Foreground" Value="White"/>
+                                               <Setter Property="FontWeight" Value="Bold"/>
+                                           </Style>
+                                       </Span.Resources>
+                                       <utility:AttachedFormattedString.Links>
+                                           <utility:FormattedLink Command="{Binding UpdateNowCommand}"/>
+                                       </utility:AttachedFormattedString.Links>
+                                   </Span>
                             </TextBlock>
                             <battlegrounds:OverlayButton Background="Transparent" HorizontalAlignment="Left" Visibility="{Binding SettingsVisibility}" Click="Question_Click">
                                 <Rectangle Width="12" Height="18" Style="{StaticResource StatusBarIconStyle}">

@@ -6,6 +6,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Commands;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 using static System.Windows.Visibility;
 using static Hearthstone_Deck_Tracker.HsReplay.Enums.AccountStatus;
 
@@ -16,10 +17,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 		private bool _logoutButtonEnabled = true;
 		private bool _logoutTriggered;
 		private bool _claimTokenButtonEnabled = true;
+		private readonly LocalizedPropNotifier _localizedPropNotifier;
 
 		public HSReplayAccount()
 		{
 			InitializeComponent();
+			_localizedPropNotifier = new LocalizedPropNotifier(GetType(), OnPropertyChanged);
 			HSReplayNetOAuth.AccountDataUpdated += () =>
 			{
 				Update();
@@ -99,6 +102,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 
 		public string Username => HSReplayNetOAuth.AccountData?.Username ?? Account.Instance.Username ?? string.Empty;
 
+		[LocalizedProp]
+		public string ReplayInfoText => AttachedFormattedString.Localize("Options_HSReplay_Account_ReplayInfo_Username", Username);
+
 		public ICommand LogoutCommand => new Command(async () =>
 		{
 			if(LogoutTriggered)
@@ -156,6 +162,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 		public void Update()
 		{
 			OnPropertyChanged(nameof(Username));
+			OnPropertyChanged(nameof(ReplayInfoText));
 			OnPropertyChanged(nameof(IsAuthenticated));
 			OnPropertyChanged(nameof(ReplaysClaimedVisibility));
 			OnPropertyChanged(nameof(LoginInfoVisibility));
