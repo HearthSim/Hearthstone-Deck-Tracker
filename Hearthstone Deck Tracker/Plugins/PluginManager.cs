@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				Log.Error(ex);
 			}
 			SyncPlugins();
+			PluginFileLocks.Lock();
 			CreateNoticeFile();
 		}
 

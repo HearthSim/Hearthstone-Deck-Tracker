@@ -80,18 +80,21 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			var dir = PluginManager.PluginDirectory.FullName;
 			try
 			{
-				foreach(var pluginPath in pluginFiles)
+				using(PluginFileLocks.Unlock())
 				{
-					if(pluginPath.EndsWith(".dll"))
-						File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
-					else
+					foreach(var pluginPath in pluginFiles)
 					{
-						var path = Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath));
-						ZipFile.ExtractToDirectory(pluginPath, path);
-						if (Directory.GetDirectories(path).Length == 1 && Directory.GetFiles(path).Length == 0)
+						if(pluginPath.EndsWith(".dll"))
+							File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
+						else
 						{
-							Directory.Delete(path, true);
-							ZipFile.ExtractToDirectory(pluginPath, dir);
+							var path = Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath));
+							ZipFile.ExtractToDirectory(pluginPath, path);
+							if (Directory.GetDirectories(path).Length == 1 && Directory.GetFiles(path).Length == 0)
+							{
+								Directory.Delete(path, true);
+								ZipFile.ExtractToDirectory(pluginPath, dir);
+							}
 						}
 					}
 				}
