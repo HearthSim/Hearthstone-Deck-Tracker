@@ -398,6 +398,9 @@ namespace Hearthstone_Deck_Tracker
 		public int HideCollectionSyncingBanner = 0;
 
 		[DefaultValue(false)]
+		public bool SeenPluginsDeprecationNotice = false;
+
+		[DefaultValue(false)]
 		public bool HideDecksInOverlay = false;
 
 		[DefaultValue(true)]

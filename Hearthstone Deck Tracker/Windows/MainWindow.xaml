@@ -9,6 +9,7 @@
                       xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
                       xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
                       xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility.Updating"
+                      xmlns:hdtUtility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
                       xmlns:deckScreenshot="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot"
                       xmlns:deckExport="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckExport"
@@ -226,6 +227,29 @@
                             </TextBlock>
                         </StackPanel>
                     </Grid>
+                </StatusBarItem>
+            </StatusBar>
+            <StatusBar DockPanel.Dock="Top" Margin="1,1,1,0" Background="{DynamicResource AccentBaseColorBrush}"
+                       Visibility="{Binding PluginsDeprecationBannerVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
+                <StatusBarItem DockPanel.Dock="Right" Margin="0,0,5,0">
+                    <Button Height="24" Width="24" Opacity="0.7" Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent"
+                            BorderThickness="0" Click="ButtonClosePluginsDeprecationBanner_OnClick">
+                        <TextBlock Text="❌" Foreground="White"/>
+                    </Button>
+                </StatusBarItem>
+                <StatusBarItem Margin="0,5,0,5" HorizontalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap" TextAlignment="Center"
+                               hdtUtility:AttachedFormattedString.LocKey="Banner_PluginsDeprecation">
+                        <TextBlock.Resources>
+                            <Style TargetType="Hyperlink" BasedOn="{StaticResource {x:Type Hyperlink}}">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Style>
+                        </TextBlock.Resources>
+                        <hdtUtility:AttachedFormattedString.Links>
+                            <hdtUtility:FormattedLink Url="https://help.hearthsim.net/en/articles/18470784-what-s-changing-about-plugins-in-hdt"/>
+                        </hdtUtility:AttachedFormattedString.Links>
+                    </TextBlock>
                 </StatusBarItem>
             </StatusBar>
             <mainWindowControls:NewsBarView x:Name="NewsBar" DockPanel.Dock="Top"/>

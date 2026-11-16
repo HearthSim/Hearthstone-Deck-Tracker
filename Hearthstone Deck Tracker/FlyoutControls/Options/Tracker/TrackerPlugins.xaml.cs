@@ -26,11 +26,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public TrackerPlugins()
 		{
 			InitializeComponent();
-			if(IsAdmin)
-			{
-				BorderWarning.Visibility = Visibility.Collapsed;
-				BorderWarningAdmin.Visibility = Visibility.Visible;
-			}
 		}
 
 		public void Load()
@@ -40,6 +35,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ListBoxPlugins_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
+		}
+
+		private void ToggleSwitchPlugin_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(sender is FrameworkElement { IsLoaded: true })
+				this.ParentMainWindow()?.MarkPluginsDeprecationNoticeSeen();
 		}
 
 		private void ButtonSettings_OnClick(object sender, RoutedEventArgs e)
@@ -99,6 +100,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					}
 				}
 				PluginManager.Instance.LoadPlugins(PluginManager.Instance.SyncPlugins());
+				window.MarkPluginsDeprecationNoticeSeen();
 			}
 			catch(Exception ex)
 			{

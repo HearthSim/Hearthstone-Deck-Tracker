@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -15,22 +16,14 @@
             <RowDefinition/>
             <RowDefinition Height="41"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Name="BorderWarning" BorderBrush="Orange" BorderThickness="1" CornerRadius="3" Margin="5" Padding="8,6">
+        <Border Grid.Row="0" BorderBrush="Gold" BorderThickness="1" CornerRadius="3" Margin="5" Padding="8,6">
             <Border.Background>
-                <SolidColorBrush Color="Orange" Opacity="0.15"/>
+                <SolidColorBrush Color="Gold" Opacity="0.15"/>
             </Border.Background>
-            <TextBlock TextWrapping="Wrap">
-                <Run FontWeight="Bold" Text="{lex:Loc Options_Tracker_Plugins_Warning_Prefix}"/>
-                <Run Text="{lex:Loc Options_Tracker_Plugins_Warning}"/>
-            </TextBlock>
-        </Border>
-        <Border Grid.Row="0" Name="BorderWarningAdmin" Visibility="Collapsed" BorderBrush="Red" BorderThickness="1" CornerRadius="3" Margin="5" Padding="8,6">
-            <Border.Background>
-                <SolidColorBrush Color="Red" Opacity="0.15"/>
-            </Border.Background>
-            <TextBlock TextWrapping="Wrap">
-                <Run FontWeight="Bold" Text="{lex:Loc Options_Tracker_Plugins_Warning_Prefix}"/>
-                <Run Text="{lex:Loc Options_Tracker_Plugins_Warning_Admin}"/>
+            <TextBlock TextWrapping="Wrap" utility:AttachedFormattedString.LocKey="Options_Tracker_Plugins_Deprecation">
+                <utility:AttachedFormattedString.Links>
+                    <utility:FormattedLink Url="https://help.hearthsim.net/en/articles/18470784-what-s-changing-about-plugins-in-hdt"/>
+                </utility:AttachedFormattedString.Links>
             </TextBlock>
         </Border>
         <ListBox Grid.Row="1" Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged"
@@ -49,7 +42,7 @@
                                            TextWrapping="Wrap" HorizontalAlignment="Left"
                                            VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16"/>
                                 <controls:ToggleSwitch HorizontalAlignment="Right" OnLabel="" OffLabel=""
-                                                       IsChecked="{Binding Path=IsEnabled}" />
+                                                       IsChecked="{Binding Path=IsEnabled}" Checked="ToggleSwitchPlugin_OnChecked" />
                             </DockPanel>
                         </Expander.Header>
                         <StackPanel>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -18,6 +19,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
+using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Assets;
@@ -185,6 +187,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlyoutNotes.ClosingFinished += (sender, args) => DeckNotesEditor.SaveDeck();
 			FlyoutUpdateNotes.ClosingFinished += (_, _) => UpdateNotesControl.ReleaseNotes = null;
 			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
+			PluginManager.Instance.Plugins.CollectionChanged += Plugins_CollectionChanged;
 			WarningFlyout.OnComplete += () =>
 			{
 				FlyoutWarnings.IsOpen = false;
@@ -671,6 +674,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Config.Instance.HideCollectionSyncingBanner = CollectionBannerId;
 			Config.Save();
 			OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
+		}
+
+		public Visibility PluginsDeprecationBannerVisibility =>
+			!Config.Instance.SeenPluginsDeprecationNotice && PluginManager.Instance.Plugins.Any(p => p.IsEnabled) ? Visible : Collapsed;
+
+		private void Plugins_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			foreach(var plugin in e.NewItems?.OfType<PluginWrapper>() ?? Enumerable.Empty<PluginWrapper>())
+				plugin.PropertyChanged += Plugin_PropertyChanged;
+			OnPropertyChanged(nameof(PluginsDeprecationBannerVisibility));
+		}
+
+		private void Plugin_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if(e.PropertyName == nameof(PluginWrapper.IsEnabled))
+				OnPropertyChanged(nameof(PluginsDeprecationBannerVisibility));
+		}
+
+		private void ButtonClosePluginsDeprecationBanner_OnClick(object sender, RoutedEventArgs e) => MarkPluginsDeprecationNoticeSeen();
+
+		public void MarkPluginsDeprecationNoticeSeen()
+		{
+			Config.Instance.SeenPluginsDeprecationNotice = true;
+			Config.Save();
+			OnPropertyChanged(nameof(PluginsDeprecationBannerVisibility));
 		}
 
 		public Visibility CollectionSyncingBannerVisbiility
