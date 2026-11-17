@@ -1,6 +1,5 @@
-## **Unreleased**
-**Hearthstone**:
-- Updated Y'Shaarj's counter for Patch 37.0.3.
+## **Release v1.60.4 - 2026-11-17**
+**Updated for Hearthstone 37.0.3**
 
 ## **Release v1.60.1 - 2026-11-12**
 **Hearthstone**:
