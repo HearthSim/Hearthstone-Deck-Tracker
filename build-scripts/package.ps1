@@ -71,7 +71,7 @@ if ($updater -eq "squirrel") {
     Remove-Item $oldFullPkg
 }
 else {
-    $repoUrl = if ($dev) { "https://github.com/HearthSim/HDT-dev-builds" } else { "https://github.com/HearthSim/HDT-Velopack-Releases" }
+    $repoUrl = if ($dev) { "https://github.com/HearthSim/HDT-dev-builds" } else { "https://github.com/HearthSim/HDT-Releases" }
 
     # vpk is pinned in .config/dotnet-tools.json to match the Velopack package version
     dotnet tool restore
