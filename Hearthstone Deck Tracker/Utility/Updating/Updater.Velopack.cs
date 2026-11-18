@@ -303,7 +303,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 				if(isStartupCheck)
 				{
-					// if it takes too long to get the RELEASES file, just update in the background
+					// if it takes too long to get releases.win.json, just update in the background
 					var timeout = BackgroundMode.StartsInTray ? TrayUpdateCheckTimeout : UpdateCheckTimeout;
 					var task = await Task.WhenAny(updateInfoTask,
 						Task.Delay(timeout));
