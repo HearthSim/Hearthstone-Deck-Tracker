@@ -297,15 +297,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(BackgroundBehavior.Custom)]
 		public BackgroundBehavior BackgroundBehavior = BackgroundBehavior.Custom;
 
-		// set when HDT switched to background mode on its own (new install default or a later migration)
-		[DefaultValue(false)]
-		public bool BackgroundModeEnabledAutomatically = false;
-
 		[DefaultValue(false)]
 		public bool BackgroundModeOptedOut = false;
-
-		[DefaultValue(false)]
-		public bool BackgroundModeOnboardingSeen = false;
 
 		[DefaultValue(false)]
 		public bool CloseToTray = false;

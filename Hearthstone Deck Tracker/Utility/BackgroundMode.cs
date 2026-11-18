@@ -32,5 +32,8 @@ internal static class BackgroundMode
 
 	public static bool StartHearthstoneWithHDT => !IsActive && Config.Instance.StartHearthstoneWithHDT;
 
-	public static bool NeedsOnboarding => IsActive && Config.Instance.BackgroundModeEnabledAutomatically && !Config.Instance.BackgroundModeOnboardingSeen;
+	// in memory only, so a stale value can't bring the onboarding back in a later session
+	public static bool OnboardingPending { get; set; }
+
+	public static bool NeedsOnboarding => IsActive && OnboardingPending;
 }

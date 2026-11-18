@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		{
 			Log.Info("New install, enabling background mode and starting with Windows");
 			Config.Instance.BackgroundBehavior = BackgroundBehavior.KeepRunning;
-			Config.Instance.BackgroundModeEnabledAutomatically = true;
+			BackgroundMode.OnboardingPending = true;
 			Config.Instance.StartWithWindows = true;
 			// the startup run key update in Updater.Initialize ran before this was enabled
 			RegistryHelper.SetRunKey();

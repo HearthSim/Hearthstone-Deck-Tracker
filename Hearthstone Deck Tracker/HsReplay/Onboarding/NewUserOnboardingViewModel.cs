@@ -67,7 +67,7 @@ public class NewUserOnboardingViewModel : ViewModel
 		IsVisible = false;
 
 		if(ShowBackgroundMode)
-			Config.Instance.BackgroundModeOnboardingSeen = true;
+			BackgroundMode.OnboardingPending = false;
 		if(!IsBackgroundModeOnly)
 			Config.Instance.OnboardingSeen = true;
 		Config.Save();
