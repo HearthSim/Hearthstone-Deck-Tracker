@@ -1,8 +1,9 @@
 Param(
     [Parameter(Mandatory=$True)]
     [string]$packageVersion,
-    [ValidateSet("squirrel", "velopack", "dev")]
-    $type
+    [ValidateSet("velopack", "dev")]
+    $type,
+    [string]$repo
 )
 
 if ($type -eq "dev" -and !$packageVersion.Contains("dev")) {
@@ -16,13 +17,14 @@ $authHeader = @{
     Authorization = "token $env:HDT_GITHUB_TOKEN"
 }
 
-Write-Host "Creating $type release $packageVersion..."
+if (!$repo) {
+    $repo = @{
+        dev = "HDT-dev-builds"
+        velopack = "HDT-Releases"
+    }[$type]
+}
 
-$repo = @{
-    dev = "HDT-dev-builds"
-    squirrel = "HDT-Releases"
-    velopack = "HDT-Velopack-Releases"
-}[$type]
+Write-Host "Creating $type release $packageVersion on $repo..."
 
 $releaseBody = @{
     dev = @"
@@ -30,7 +32,6 @@ $releaseBody = @{
 ### Using this build is not recommended!
 ### Download the latest stable build here: https://hsreplay.net/downloads/
 "@
-    squirrel = ""
     velopack = ""
 }[$type]
 
@@ -60,13 +61,11 @@ $responseContent = $response.Content | ConvertFrom-Json
 
 $baseDir = @{
     dev = "dev-builds"
-    squirrel = "builds"
     velopack = "velopack-builds"
 }[$type]
 
 $assetFilter = @{
     dev = "HDT-Installer.exe", "Hearthstone.Deck.Tracker-*.zip", "*.nupkg", "RELEASES", "releases.win.json"
-    squirrel = "HDT-Installer.exe", "*.nupkg", "RELEASES"
     velopack = "HDT-Installer.exe", "*.nupkg", "RELEASES", "releases.win.json"
 }[$type]
 

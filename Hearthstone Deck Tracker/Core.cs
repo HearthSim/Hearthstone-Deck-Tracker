@@ -141,8 +141,6 @@ namespace Hearthstone_Deck_Tracker
 #if(VELOPACK)
 			Updater.ReportInitFailure();
 			Updater.ReportFailedUpdate();
-#else
-			Remote.Config.Loaded += Updater.UpdateVelopackRollout;
 #endif
 			if(BackgroundMode.CheckForUpdates)
 			{
