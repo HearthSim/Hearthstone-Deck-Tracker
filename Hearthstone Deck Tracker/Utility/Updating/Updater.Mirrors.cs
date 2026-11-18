@@ -43,7 +43,7 @@ internal static partial class Updater
 #if(DEV)
 		return (UpdateMirror.Github, MirrorUrls[UpdateMirror.Github]);
 #else
-		var mirror = (UpdateMirror)Config.Instance.SquirrelRemote;
+		var mirror = (UpdateMirror)Config.Instance.UpdateMirror;
 		if(!MirrorUrls.TryGetValue(mirror, out var url))
 			return (UpdateMirror.Github, MirrorUrls[UpdateMirror.Github]);
 		return (mirror, url);
@@ -71,7 +71,7 @@ internal static partial class Updater
 				await Task.Delay(100);
 
 			Log.Info("Testing update mirrors...");
-			var initial = (UpdateMirror)Config.Instance.SquirrelRemote;
+			var initial = (UpdateMirror)Config.Instance.UpdateMirror;
 
 			// Run this in a separate thread so that we get accurate response timing measurements
 			// that are not impacted by other sync stuff happening in the main thread.
@@ -93,7 +93,7 @@ internal static partial class Updater
 			if(!successResults.Any())
 			{
 				Log.Warn($"Could not download any {ReleaseFeedFileName}. Connectivity problems?");
-				Influx.OnSquirrelFindBestRemote("ConnectivityProblems", "None");
+				Influx.OnFindBestMirror("ConnectivityProblems", "None");
 				return;
 			}
 			foreach(var result in results)
@@ -110,21 +110,21 @@ internal static partial class Updater
 			if(github != null && (github == best || github.Duration < 2000 || github.Duration * 0.6 < best.Duration))
 			{
 				Log.Info("Github looks good. Using Github.");
-				Config.Instance.SquirrelRemote = (int)UpdateMirror.Github;
+				Config.Instance.UpdateMirror = (int)UpdateMirror.Github;
 			}
 			else
 			{
 				Log.Info($"Using {best}. Best result.");
-				Config.Instance.SquirrelRemote = (int)best.Mirror;
+				Config.Instance.UpdateMirror = (int)best.Mirror;
 			}
 			Config.Save();
 
-			Influx.OnSquirrelFindBestRemote("Success", best.Mirror.ToString());
-			HSReplayNetClientAnalytics.OnUpdateMirrorChanged(initial, (UpdateMirror)Config.Instance.SquirrelRemote);
+			Influx.OnFindBestMirror("Success", best.Mirror.ToString());
+			HSReplayNetClientAnalytics.OnUpdateMirrorChanged(initial, (UpdateMirror)Config.Instance.UpdateMirror);
 		}
 		catch(Exception e)
 		{
-			Influx.OnSquirrelFindBestRemote("Error", "None");
+			Influx.OnFindBestMirror("Error", "None");
 			Log.Error(e);
 		}
 #endif

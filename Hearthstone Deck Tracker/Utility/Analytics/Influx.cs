@@ -490,7 +490,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			);
 		}
 
-		public static void OnSquirrelFindBestRemote(string result, string remote)
+		public static void OnFindBestMirror(string result, string remote)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;

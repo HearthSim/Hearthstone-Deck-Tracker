@@ -91,7 +91,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(!Config.IsLoaded)
 			{
-				// We may load the config earlier as part of squirrel init
+				// We may load the config earlier as part of Updater.Initialize
 				Config.Load();
 			}
 

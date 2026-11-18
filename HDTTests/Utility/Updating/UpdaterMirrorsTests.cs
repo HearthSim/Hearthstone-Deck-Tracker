@@ -29,15 +29,15 @@ namespace HDTTests.Utility.Updating
 		[TestMethod]
 		public void GetCurrentMirror_ReturnsExpectedValue()
 		{
-			Config.Instance.SquirrelRemote = (int)UpdateMirror.Github;
+			Config.Instance.UpdateMirror = (int)UpdateMirror.Github;
 			var (mirror, url) = Updater.GetCurrentMirror();
 			Assert.AreEqual(mirror, UpdateMirror.Github);
 
-			Config.Instance.SquirrelRemote = (int)UpdateMirror.AwsHongKong;
+			Config.Instance.UpdateMirror = (int)UpdateMirror.AwsHongKong;
 			(mirror, url) = Updater.GetCurrentMirror();
 			Assert.AreEqual(mirror, UpdateMirror.AwsHongKong);
 
-			Config.Instance.SquirrelRemote = 12345;
+			Config.Instance.UpdateMirror = 12345;
 			(mirror, url) = Updater.GetCurrentMirror();
 			Assert.AreEqual(mirror, UpdateMirror.Github); // invalid value defaults to github
 		}
@@ -45,7 +45,7 @@ namespace HDTTests.Utility.Updating
 		[TestCleanup]
 		public void Cleanup()
 		{
-			Config.Instance.SquirrelRemote = (int)UpdateMirror.Github;
+			Config.Instance.UpdateMirror = (int)UpdateMirror.Github;
 		}
 	}
 

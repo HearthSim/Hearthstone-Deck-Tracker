@@ -23,7 +23,7 @@ public static class CardDefsManager
 		{
 			_downloader = new AssetDownloader<string, HearthDb.CardDefs.CardDefs>(
 				Path.Combine(Config.AppDataPath, "CardDefs"),
-				key => (UpdateMirror)Config.Instance.SquirrelRemote switch
+				key => (UpdateMirror)Config.Instance.UpdateMirror switch
 				{
 					UpdateMirror.AwsHongKong =>
 						$"https://hsreplay-assets-hongkong.s3.ap-east-1.amazonaws.com/hearthstonejson/api/v1/latest/CardDefs.{key}.xml",

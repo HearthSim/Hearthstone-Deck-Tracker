@@ -50,12 +50,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			try
 			{
 				var mgr = GetUpdateManager(false);
-				var updateInfo = await SquirrelUpdate(mgr, false, false);
+				var updateInfo = await CheckAndDownloadUpdate(mgr, false, false);
 
 				if(updateInfo == null && Config.Instance.CheckForDevUpdates)
 				{
 					mgr = GetUpdateManager(true);
-					updateInfo = await SquirrelUpdate(mgr, true, false);
+					updateInfo = await CheckAndDownloadUpdate(mgr, true, false);
 				}
 
 				if(updateInfo != null)
@@ -168,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		public static void SquirrelInit()
+		public static void Initialize()
 		{
 			try
 			{
@@ -218,7 +218,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		// Sentry is only initialized after SquirrelInit
+		// Sentry is only initialized after Initialize
 		private static Exception? _initException;
 
 		public static void ReportInitFailure()
@@ -254,11 +254,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				_lastUpdateCheck = DateTime.Now;
 				var mgr = GetUpdateManager(false);
 
-				var updateInfo = await SquirrelUpdate(mgr, false, true);
+				var updateInfo = await CheckAndDownloadUpdate(mgr, false, true);
 				if(updateInfo == null && Config.Instance.CheckForDevUpdates)
 				{
 					mgr = GetUpdateManager(true);
-					updateInfo = await SquirrelUpdate(mgr, true, true);
+					updateInfo = await CheckAndDownloadUpdate(mgr, true, true);
 				}
 
 				if(updateInfo != null)
@@ -293,7 +293,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		private static async Task<UpdateInfo?> SquirrelUpdate(UpdateManager mgr, bool dev, bool isStartupCheck)
+		private static async Task<UpdateInfo?> CheckAndDownloadUpdate(UpdateManager mgr, bool dev, bool isStartupCheck)
 		{
 			try
 			{

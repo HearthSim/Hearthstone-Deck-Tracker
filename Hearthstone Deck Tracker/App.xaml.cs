@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker
 			ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
 #if(INSTALLED)
-			Utility.Updating.Updater.SquirrelInit();
+			Utility.Updating.Updater.Initialize();
 #endif
 
 			SentryReporter.Initialize();

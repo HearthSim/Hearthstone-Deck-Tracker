@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			Config.Instance.BackgroundBehavior = BackgroundBehavior.KeepRunning;
 			Config.Instance.BackgroundModeEnabledAutomatically = true;
 			Config.Instance.StartWithWindows = true;
-			// the startup run key update in SquirrelInit ran before this was enabled
+			// the startup run key update in Updater.Initialize ran before this was enabled
 			RegistryHelper.SetRunKey();
 		}
 #endif

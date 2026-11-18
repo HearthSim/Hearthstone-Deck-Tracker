@@ -1060,10 +1060,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool SortDecksFavoritesFirst = false;
 
-		// Using int here to be robust against enum changes
-		[DefaultValue((int)Utility.Updating.UpdateMirror.Github)]
-		public int SquirrelRemote = (int)Utility.Updating.UpdateMirror.Github;
-
 		[DefaultValue(false)]
 		public bool StartMinimized = false;
 
@@ -1165,6 +1161,11 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(null)]
 		public int? TrackerWindowTop = null;
+
+		// Using int here to be robust against enum changes
+		[DefaultValue((int)Utility.Updating.UpdateMirror.Github)]
+		[XmlElement("SquirrelRemote")]
+		public int UpdateMirror = (int)Utility.Updating.UpdateMirror.Github;
 
 		[DefaultValue(false)]
 		public bool UseAnyUnityWindow = false;
