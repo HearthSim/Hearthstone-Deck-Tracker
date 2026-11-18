@@ -288,6 +288,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 					Config.Instance.Reset(nameof(Config.TavernMarkersPanelExpanded));
 					converted = true;
 				}
+
+				if(configVersion < new Version(1, 60, 7, 0))
+				{
+					// if somebody is on background mode but disabled autostart, they likely opted out
+					if(Config.Instance.BackgroundBehavior == BackgroundBehavior.KeepRunning && !Config.Instance.StartWithWindows)
+					{
+						Config.Instance.StartWithWindowsOptedOut = true;
+						converted = true;
+					}
+				}
 			}
 
 			if(!Config.Instance.DeckPanelOrderLocalPlayer.Contains(DeckPanel.Sideboards))

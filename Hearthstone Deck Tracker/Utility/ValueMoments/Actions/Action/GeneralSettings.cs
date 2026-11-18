@@ -38,6 +38,9 @@ namespace Hearthstone_Deck_Tracker.Utility.ValueMoments.Actions.Action
 		[JsonProperty("start_with_windows")]
 		public bool StartWithWindows { get => Config.Instance.StartWithWindows; }
 
+		[JsonProperty("start_with_windows_opted_out")]
+		public bool StartWithWindowsOptedOut { get => Config.Instance.StartWithWindowsOptedOut; }
+
 		[JsonProperty("start_minimized")]
 		public bool StartMinimized { get => Hearthstone_Deck_Tracker.Utility.BackgroundMode.StartMinimized; }
 

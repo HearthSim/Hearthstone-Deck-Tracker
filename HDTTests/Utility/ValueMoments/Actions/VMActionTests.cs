@@ -143,6 +143,7 @@ namespace HDTTests.Utility.ValueMoments.Actions
 				{ "hdt_general_settings_disabled", new []{
 					"overlay_hide_completely",
 					"start_with_windows",
+					"start_with_windows_opted_out",
 					"start_minimized",
 					"close_to_tray",
 					"minimize_to_tray",

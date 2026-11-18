@@ -364,6 +364,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			RegistryHelper.DeleteRunKey();
 			Config.Instance.StartWithWindows = false;
+			Config.Instance.StartWithWindowsOptedOut = true;
 			Config.Save();
 		}
 

@@ -1066,6 +1066,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool StartWithWindows = false;
 
+		[DefaultValue(false)]
+		public bool StartWithWindowsOptedOut = false;
+
 		[DefaultValue(true)]
 		public bool StatsAutoRefresh = true;
 
