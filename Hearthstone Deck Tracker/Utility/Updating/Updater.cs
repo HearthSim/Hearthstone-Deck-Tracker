@@ -4,9 +4,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 {
 	internal static partial class Updater
 	{
-#if(SQUIRREL)
-		public const string Name = "squirrel";
-#elif(VELOPACK)
+#if(VELOPACK)
 		public const string Name = "velopack";
 #else
 		public const string Name = "none";

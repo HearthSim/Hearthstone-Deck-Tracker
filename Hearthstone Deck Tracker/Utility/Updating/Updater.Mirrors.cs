@@ -28,11 +28,7 @@ internal static partial class Updater
 		[UpdateMirror.AwsHongKong] = "https://hdt-downloads-hongkong.s3.ap-east-1.amazonaws.com"
 	};
 
-#if(VELOPACK)
 	private const string ReleaseFeedFileName = "releases.win.json";
-#else
-	private const string ReleaseFeedFileName = "RELEASES";
-#endif
 
 	private static string GetReleaseFeedUrl(UpdateMirror mirror, string version)
 	{

@@ -98,7 +98,7 @@ jobs:
           SM_CLIENT_CERT_PASSWORD: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
 
       - name: Package
-        run: ./build-scripts/package.ps1 -dev $false -packageVersion ${{ steps.version.outputs.packageVersion }} -updater velopack
+        run: ./build-scripts/package.ps1 -dev $false -packageVersion ${{ steps.version.outputs.packageVersion }}
         env:
           HDT_GITHUB_TOKEN: ${{ secrets.HDT_GITHUB_TOKEN }}
           SM_HOST: ${{ vars.SM_HOST }}
