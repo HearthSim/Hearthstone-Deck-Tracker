@@ -297,6 +297,19 @@ namespace Hearthstone_Deck_Tracker.Utility
 						Config.Instance.StartWithWindowsOptedOut = true;
 						converted = true;
 					}
+
+#if(VELOPACK)
+					// users who emulated background mode in the past get the real deal automatically
+					if(Updating.Updater.IsRunningFromInstall
+					   && Config.Instance.BackgroundBehavior == BackgroundBehavior.Custom && !Config.Instance.BackgroundModeOptedOut
+					   && Config.Instance.StartWithWindows && Config.Instance.StartMinimized
+					   && Config.Instance.MinimizeToTray && Config.Instance.CloseToTray && Config.Instance.CheckForUpdates
+					   && !Config.Instance.StartHearthstoneWithHDT && !Config.Instance.CloseWithHearthstone)
+					{
+						Config.Instance.BackgroundBehavior = BackgroundBehavior.KeepRunning;
+						converted = true;
+					}
+#endif
 				}
 			}
 
